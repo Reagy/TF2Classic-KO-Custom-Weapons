@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V5.3.7
+// Knockout Custom Weapons V5.3.7r1
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 + Tangerine Paint & Grunt's Weapon Addons V2
 // ------------------------------------------------------------------------------------ //
@@ -3003,6 +3003,7 @@ Weapon from: New Old Weapons Pack"
 Sometimes, you can let the rough-types
 do the dirty work for you.
 
+Animations by: 'SedimentarySocks'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"wa2k_marker"
 			"item_iconname"				"wa2k_marker"
@@ -4956,6 +4957,7 @@ Weapon from: New Old Weapons Pack"
 			"item_description"			"
 Contrary to popular belief, this weapon can neither heal nor put out fire.
 
+Model by: 'goldenjohson' 'Metabolic'
 Weapon from: New Old Weapons Pack"						// It does the exact opposite, in fact!
 			"item_logname"				"firehose"
 			"item_iconname"				"firehose"
@@ -5493,6 +5495,7 @@ Weapon from: New Old Weapons Pack"
 			"item_description"			"
 'I'm runnin' outta places to put holes in ya!'
 
+Model by: 'Momo the Momoderator'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"ump45"
 			"item_iconname"				"ump45"
@@ -6006,6 +6009,7 @@ Weapon from: New Old Weapons Pack"
 			"item_description"			"
 'Let's have a go, ya mug!'
 
+Model by: 'SexyRobot'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"revolver_rifle"
 			"item_iconname"				"revolver_rifle"
@@ -6498,6 +6502,7 @@ center of the screen
 
 T'is like music to the ears.
 
+Model by: 'YumYumShisha' 'Kiyoshi' 'Kevinsk' 'Pie_Tony'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"quake_gl"
 			"item_iconname"				"quake_gl"
@@ -7272,6 +7277,7 @@ Weapon from: New Old Weapons Pack"
 
 Old, reliable, and real good at killin' a buncha dopes - what else could ya want?
 
+Model by: 'DanielAwesomo'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"leverrifle"
 			"item_iconname"				"leverrifle"
@@ -7812,6 +7818,7 @@ Weapon from: New Old Weapons Pack"
 Ihht's ehphhthnt ht rhndrhn
 hny bhdyys hn-rhkhgnhyshabhl!
 
+Model by: 'SedimentarySocks' 'BENICE2ME' 'Colteh'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"chemthrower"
 			"item_iconname"				"chemthrower"
@@ -8255,6 +8262,7 @@ Weapon from: New Old Weapons Pack"
 			"item_description"			"
 'Happiness is a warm gun.'
 
+Model from: Open Fortress
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"combat_smg"
 			"item_iconname"				"combat_smg"
@@ -9534,6 +9542,7 @@ Weapon from: New Old Weapons Pack"
 'Oh, I'm sorry, I didn't mean to hitcha'
 No wait, yeah I did.'
 
+Model by: 'Folkye' 'OverPovered' 'La Boite'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"baseball_gun"
 			"item_iconname"				"baseball_gun"
@@ -10293,6 +10302,7 @@ That's gotta hurt in the morning.
 
 'Hit the bricks pal, ya done!'
 
+Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"brick"
 			"item_iconname"				"brick"
@@ -10377,6 +10387,7 @@ That's gotta hurt in the morning.
 
 Anything can be a weapon if you throw hard enough and scream loud enough!
 
+Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"brick"
 			"item_iconname"				"brick"
@@ -10459,6 +10470,7 @@ Weapon from: New Old Weapons Pack"
 			"item_description"			"Throw at enemies to bludgeon them!
 That's gotta hurt in the morning.
 
+Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"brick"
 			"item_iconname"				"brick"
@@ -10543,6 +10555,7 @@ That's gotta hurt in the morning.
 
 Ach, ol' Bessie... split wide open many a skull a' those daft enough to be in me way!
 
+Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"brick"
 			"item_iconname"				"brick"
@@ -10628,6 +10641,7 @@ That's gotta hurt in the morning.
 
 'More rubble, less trouble!'
 
+Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"brick"
 			"item_iconname"				"brick"
@@ -10719,6 +10733,7 @@ That's gotta hurt in the morning.
 
 'Y'ain't to fast for me and my machines now, are ya? Heh, are ya?'
 
+Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"brick"
 			"item_iconname"				"brick"
@@ -10811,6 +10826,7 @@ That's gotta hurt in the morning.
 Blunt trauma should incapacitate them!
 Let me throw another - just to be safe!
 
+Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"brick"
 			"item_iconname"				"brick"
@@ -10903,6 +10919,7 @@ That's gotta hurt in the morning.
 Blimey, do you know how embarassing it is to get killed by a load a' rubble?
 Heh. Well, now ya do.
 
+Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"brick"
 			"item_iconname"				"brick"
@@ -10987,6 +11004,7 @@ That's gotta hurt in the morning.
 
 'Did I throw a wrench into your plans?'
 
+Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"brick"
 			"item_iconname"				"brick"
@@ -11080,6 +11098,7 @@ That's gotta hurt in the morning.
 What a fine old concrete-laden chap!
 I shall name him... 'Burt'.
 
+Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"brick"
 			"item_iconname"				"brick_brickkill"										// Civ gets BRICK KILL! text for funnies
@@ -11659,7 +11678,8 @@ Weapon by: 'Reagy'"
 Well ain't that a mighty fine shirt to go with me gloves
 
 Animations from: Open Fortress
-Weapon by: 'Reagy'"	
+Weapon by: 'Reagy'
+Sentry replacement by: 'rotzloeffel' 'Gadget'"	
 			"item_slot"					"melee"
 			"item_quality"				"rarity2"
 			"min_ilevel"				"1"
@@ -12410,7 +12430,7 @@ Defiled...
 Deep inside...
 The abandoned child...
 
-Model by: ??? (Please help me refind this!)
+Model by: 'CaptainMalk'
 Weapon by: 'Reagy'"
 			"item_logname"				"crocket_launcher"
 			"item_iconname"				"crocket_launcher"
@@ -16247,6 +16267,7 @@ Weapon by: 'Zadrave'"
 
 			Mmphh mmph mppph!
 
+Model by: 'CoBalt'
 Weapon by: 'Zadrave'"
 			"propername"				"1"
 			"item_slot"				"primary"
@@ -16432,13 +16453,14 @@ Weapon by: 'Reagy'"
 // Scout shotgun secondary
 // V5.3.4 New weapon, moved from primary to secondary
 // V5.3.7 Moved back to primary
+// V5.3.7r1 Fixed typo
 //-------------------------------------
 //-------------------------------------		
 		"7059"
 		{
 			"name"						"TF_WEAPON_SCOUT_SHOTGUN" 									
 			"prefab"					"weapon_shotgun" 
-			"item_class"         		"tf_weapon_shotgun_pyro"			
+			"item_class"         		"tf_weapon_shotgun"				
 			"show_in_armory"			"1"													
 			"item_slot"					"primary"
 			"anim_slot"					"primary"					
@@ -16959,11 +16981,12 @@ Weapon by: 'Reagy'"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 // V5.3.7 Moved back to primary
+// V5.3.7r1 Fixed slot bug, oops
 		"7067"																			
 		{
 			"name"						"TF_WEAPON_SPAS12_SCOUT" 									
 			"prefab"					"weapon_shotgun" 
-			"item_class"         		"tf_weapon_shotgun_pyro"			
+			"item_class"         		"tf_weapon_shotgun"			
 			"show_in_armory"			"1"													
 			"item_slot"					"primary"
 			"anim_slot"					"primary"				
@@ -17952,7 +17975,8 @@ Weapon by: 'Reagy'"
 			"item_description"			"
 Something something
 for queen and country?
-  
+ 
+Animations by: 'The Medineer'
 Abomination by: 'Reagy'
 Seriously the fuck is this?
 Weapon by: 'Reagy'"
@@ -19653,6 +19677,7 @@ Weapon by: 'The One Of Wonders'"
 //-----------------------------
 //-----------------------------
 //--PRIMARY BLAST SHOTGUN - 7111--
+// V5.3.7r1 Nerfed
 //-----------------------------
 //-----------------------------
 		"7111"
@@ -19704,7 +19729,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"3.9"
+					"value" 			"1.67"
 				}
 				"mod max primary clip override"
 				{
@@ -19754,12 +19779,12 @@ Weapon by: 'The One Of Wonders'"
 				"Projectile range decreased"
 				{
 					"attribute_class"	"mult_projectile_range"
-					"value"				"0.0525"
+					"value"				"0.045"
 				}
                 "spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"3"
+					"value"				"5"
 				}				
 			}
 			"visuals"
@@ -20731,6 +20756,7 @@ ignores any active resistances
 No alien blokes are gonna keep me down.
 
 Animations by: 'Razur'
+Model by: 'Choev'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_slot"				"secondary"
 			"image_inventory"			"backpack/weapons/w_models/w_mp7"
@@ -20802,6 +20828,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
  
 This'll iron out them pikers.
 
+Model by: 'Ertz' 'mat500'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
@@ -20883,6 +20910,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 'Man, your head's so big
 - you're makin' this easy!'
 
+Model by: 'Mr. Reyne' 'Cloud'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"image_inventory_size_w"		"128"
@@ -21194,6 +21222,7 @@ This'll shock into size ya spooks!
  
 Assault and battery taken literally.
 
+Model by: 'Cobalt'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"bigzap"
 			"item_iconname"				"bigzap"
@@ -21269,6 +21298,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_description"			"
 The one tap champ... not in the Gravel Wars though.
 
+Model by: 'DeRosaJ'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/w_models/w_deagle2"
@@ -21433,6 +21463,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_description"			"
 One... two... three!
 
+Model by: 'Papyesh' 'Jimmis Poo' 'Lazersofa'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"treble_rebel"
 			"item_iconname"				"treble_rebel"
@@ -21608,6 +21639,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 
 If only you were sober enough to not break it...
 
+Model by: 'G o a t K i n g'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"glock_melee"
 			"item_iconname"				"glock_melee"
@@ -21689,6 +21721,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 
 Just because it doesn't work doesn't mean it isn't a weapon, son.
 
+Model by: 'G o a t K i n g'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"glock_melee"
 			"item_iconname"				"glock_melee"
@@ -22337,6 +22370,8 @@ not ideal for fightin', but it works.
 
 'Take care of this thing for me, got it?' - Striker
 
+Model from: Final Combat
+Animations by: 'DudeTheNinja'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/w_models/w_combat_knife"
@@ -22406,6 +22441,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_description"			"
 A memento from a year long past... it still fires true, probably waiting for you.
 
+Model from: Open Fortress
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/w_models/w_walther_p38"
@@ -22452,6 +22488,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_description"			"
 It stopped shooting, but now it started smacking now start standing still ya dope!
 
+Model from: Open Fortress
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"model_world"				"models/weapons/w_models/w_walther_p38_whip.mdl"
 			"model_player"				"models/weapons/v_models/v_walther_p38_whip_scout.mdl"
@@ -22993,6 +23030,7 @@ explode on contact with any object
 
 This Firecannon is just built different.
 
+Model by: 'NeoDement'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"spitfire"
 			"item_iconname"				"spitfire"
@@ -23123,6 +23161,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 
 It's an overglorified flashlight capable of producing rapid pulses of hard light in sufficient quantity as to immolate, maim and otherwise incapacitate the Japanese.
 
+Model by: 'Extra Ram' 'neodos'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"scatter_laser"
 			"item_iconname"				"scatter_laser"
@@ -23516,6 +23555,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_description"			"
 Slow and steady now...
 
+Model by: 'Norman3D' 'Greg' 'BE NICE 2 ME'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"suppressed_suppressor"
 			"item_iconname"				"suppressed_suppressor"
@@ -23665,6 +23705,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 Launches balls of fire that
 explode and ignite enemies on hit
 
+Model by: 'CoBalt'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"combustion_cannon"
 			"item_iconname"				"combustion_cannon"
@@ -24219,6 +24260,7 @@ It isn't poison, these arrows just cause tetanus mate."
 
 Strangely enough, it doesn't come with a scope.
 
+Model by: 'Spike Nitros' 'Hotrod McCoogal'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"tempest"													
 			"item_iconname"				"tempest"													
@@ -24314,6 +24356,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_description"			"
 Grenades are for chumps, real men fire rockets out of their Grenade Launchers!
 
+Model by: 'CoBalt'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"primary"
@@ -24848,6 +24891,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			
 Just got a bigger one than that city boy's conversion!
 
+Model by: 'Spike Nitros' 'Hotrod McCoogal'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"long_tempest"
 			"item_iconname"				"tempest"
@@ -25158,6 +25202,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 I heard the Americans in 'Nam couldn't handle these so they were given to us.
 Dunno what their problem is, I can handle their recoil just fine.
 
+Model originally by: 'Rain*'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"m14"
 			"item_iconname"				"m14"
@@ -26019,6 +26064,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_name"					"Forerunner"
 			"item_description"			"You needed a weapon and now you have it.
 
+Model by: 'Quinnjdq(?)'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons
 Edited by: 'Reagy'"
 			"propername"				"1"
@@ -26546,6 +26592,7 @@ This weapon fires a high damage slug round
 
 Why limit yourself to just one explosion, private!?
 
+Model by: 'Stev the Licentious Trichotomy' 'Gadget' 'Kibbleknight'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"prototype_shotgun"
 			"item_iconname"				"prototype_shotgun"
@@ -26761,6 +26808,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 
 'Bitches LOVE cannons!' - Jeremy Jones
 
+Model by: 'G o a t K i n g'
+Animations by: 'ur kitty'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"silverhand"
 			"item_iconname"				"silverhand"
@@ -27113,6 +27162,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_description"			"
 An Assault Rifle Mislabled as an SMG, how did that happen?
 
+Model from: We love FORTNITE We love FORTNI..
+Animations by: 'The Medineer'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"famas"
 			"item_iconname"				"smg"
