@@ -9787,6 +9787,7 @@ Weapon from: New Old Weapons Pack"
 //------------------------------
 //------------------------------
 //--THERMAL THRUSTER- 4502------ (By Basil PFP / OCsonic)
+// V5.4.7r1 Fixed projectile time bleed
 //------------------------------
 //------------------------------
 		"4502"
@@ -9834,6 +9835,11 @@ Weapon from: New Old Weapons Pack"																		// MIRV used here as a "Seco
 			}
 			"attributes"
 			{
+			    "provide on active"				
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
 				"boots falling stomp"
 				{
 					"attribute_class"	"boots_falling_stomp"
