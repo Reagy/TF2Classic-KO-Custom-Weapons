@@ -1,0 +1,47 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_powder_keg/c_nordic_sticky"
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "2"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[1.5 .5 3]"
+	"$halflambert" "1"
+
+	"$tempvar" "0"
+
+
+	"$basemapalphaphongmask" "1"
+	
+	"$rimlight" "2"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" "1"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+
+
+	}
+
+}

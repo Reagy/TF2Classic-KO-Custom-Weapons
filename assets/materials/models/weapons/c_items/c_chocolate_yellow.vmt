@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/models/weapons/c_items/c_chocolate.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/weapons/c_items/c_chocolate_yellow"
+	}
+}

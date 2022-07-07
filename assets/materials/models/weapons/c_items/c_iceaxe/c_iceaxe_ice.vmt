@@ -1,0 +1,61 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_iceaxe\c_iceaxe"
+//	$lightWarpTexture models\player\pyro\pyro_lightwarp
+//	"$lightwarptexture" "models\weapons\c_items\c_ambassador_lightwarp"
+	"$lightwarptexture" "models\props_forest\icicle_lightwarp"
+	//"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	//"$lightwarptexture" "models/lightwarps/jarate_lightwarp"
+//	"$bumpmap" "models\weapons\c_items\c_frosty_normal"
+
+
+  // 	"$translucent" 1
+
+	$additive 1
+
+	//"$nocull" 1
+
+	"$phong" "1"
+	"$phongexponent" "8"
+	"$phongboost" "0.35"	
+ 	"$phongfresnelranges" "[1 2 4]"
+	"$halflambert" "1"
+	//$phongtint "[.85 .85 1]"
+
+
+
+	"$rimlight" "1"						
+	"$rimlightexponent" "3"				
+	"$rimlightboost" "2"	
+
+	
+
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.55 .6 .8]"
+	//"$envmaptint" "[.1 .1 .1]"
+
+	"$glowcolor" "0"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

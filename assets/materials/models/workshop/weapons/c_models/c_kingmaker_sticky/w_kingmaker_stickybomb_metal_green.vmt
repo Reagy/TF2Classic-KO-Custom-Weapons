@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\workshop\weapons\c_models\c_kingmaker_sticky\w_kingmaker_stickybomb_red.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\workshop\weapons\c_models\c_kingmaker_sticky/w_kingmaker_stickybomb_green"
+	}
+}

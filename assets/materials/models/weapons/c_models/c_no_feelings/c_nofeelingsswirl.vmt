@@ -1,0 +1,34 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/weapons/c_models/c_no_feelings/c_NoFeelingsSwirl"
+	$additive 1
+	$selfillum 1
+	"$nocull" "1"
+	"$model" "1"
+	
+	"$emissiveBlendEnabled"     "1" // Enables effect
+	"$emissiveBlendTexture"     "models/weapons/c_models/c_no_feelings/c_NoFeelingsSwirl"
+	"$emissiveBlendBaseTexture" "models/weapons/c_models/c_no_feelings/c_NoFeelingsSwirl"
+	"$emissiveBlendFlowTexture" "models/weapons/c_models/c_no_feelings/c_NoFeelingsSwirl_flowmap"
+	"$emissiveBlendTint"        "[5 5 5]"
+	"$emissiveBlendScrollVector" "[0.01 0.01]"
+	"$emissiveBlendStrength" 		"1"
+	
+	"$time" "0.0"
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"textureScrollVar" "$basetexturetransform"
+			"textureScrollRate" .05
+			"textureScrollAngle" -20
+		}
+		Sine // a proxy which produces a sine wave
+		{
+			resultVar	$color2 // The shader parameter to be manipulated
+			sineperiod	5
+			sinemin		1
+			sinemax		3
+		}
+	}
+}

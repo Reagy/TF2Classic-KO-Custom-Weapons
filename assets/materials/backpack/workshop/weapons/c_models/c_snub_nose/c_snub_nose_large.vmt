@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture"	 "backpack/workshop/weapons/c_models/c_snub_nose/c_snub_nose_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}

@@ -1,0 +1,71 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/player/items/demo/police_misc"
+	"$bumpmap" "models/player/items/demo/police_misc_normal"
+
+	//"$detail" "effects/tiledfire/fireLayeredSlowTiled512"
+	//"$detailscale" "5"
+	//"$detailblendfactor" .01
+	//"$detailblendmode" 6
+
+	"$yellow" "0"
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+
+	"$phong" "1"
+	"$phongexponent" "50"
+	"$phongboost" "5"
+	"$phongfresnelranges" "[.25 1 4]"
+
+	"$blendtintbybasealpha" "1" 
+ 	"$blendtintcoloroverbase" "0"  
+
+	"$colortint_base"  "{189 59 59}"	// red
+	//"$colortint_base"  "{89 121 140}"	// blue
+	"$colortint_tmp" "[0 0 0]" 
+
+	"$rimlight" "1"
+	"$rimlightexponent" "4"
+	"$rimlightboost" "2"
+
+	"$cloakPassEnabled" "1"
+
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$detail"
+			"animatedtextureframenumvar" "$detailframe"
+			"animatedtextureframerate" 30
+		}
+
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
+
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+
+		"Equals"
+		{
+			"srcVar1" "$yellow"
+			"resultVar" "$color2"
+		}
+		"ItemTintColor"
+		{
+			"resultVar" "$colortint_tmp"
+		}
+		"SelectFirstIfNonZero"
+		{
+			"srcVar1"	"$colortint_tmp"
+			"srcVar2"	"$colortint_base"
+			"resultVar" "$color2"
+		}
+	}
+}

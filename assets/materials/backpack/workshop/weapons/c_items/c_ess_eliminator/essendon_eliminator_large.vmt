@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"backpack/workshop/weapons/c_items/c_ess_eliminator/essendon_eliminator_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}

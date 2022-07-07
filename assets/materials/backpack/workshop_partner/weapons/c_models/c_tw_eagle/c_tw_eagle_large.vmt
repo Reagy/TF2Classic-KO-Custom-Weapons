@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture" 	"backpack/workshop_partner/weapons/c_models/c_tw_eagle/c_tw_eagle_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}

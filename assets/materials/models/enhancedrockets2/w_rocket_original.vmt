@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\enhancedrockets2\w_rocket_base.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\enhancedrockets2\w_rocket_original"
+	}
+}

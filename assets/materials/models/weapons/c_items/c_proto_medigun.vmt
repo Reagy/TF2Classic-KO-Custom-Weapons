@@ -1,0 +1,64 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models/weapons/c_items/c_proto_medigun"
+	
+	"$phong" "1"
+	"$phongexponent" "30"
+	"$phongboost" "1"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[1.5 .5 3]"
+//	"$halflambert" "1"
+
+	"$tempvar" "0"
+
+	"$basephongexponent" "15"
+	"$basephongboost" "5"
+
+
+//	"$selfillum" "1"
+//	"$selfillumtint" "[1 .55 .1]"
+
+	"$basemapalphaphongmask" "1"
+	
+	"$rimlight" "1"						
+	"$rimlightexponent" "4"				
+	"$rimlightboost" "2"
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

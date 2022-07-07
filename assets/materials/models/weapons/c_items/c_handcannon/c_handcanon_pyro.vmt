@@ -1,0 +1,15 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_handcannon/c_handcanon_pyro"
+	"$bumpmap"		"models/weapons/c_items/c_handcannon/c_handcanon_pyro_normal"
+	"$lightwarptexture"		"models/lightwarps/weapon_lightwarp"
+	"$phongexponenttexture"		"models/weapons/c_items/c_handcannon/c_handcanon_pyro_ex"
+	"$phong"		"1"
+	"$phongexponent"		"4"
+	"$phongboost"		"12"
+	"$phongfresnelranges"		"[.25 .5 1]"
+	"$rimlight"		"1"
+	"$rimlightexponent"		"4"
+	"$rimlightboost"		"2"
+
+}

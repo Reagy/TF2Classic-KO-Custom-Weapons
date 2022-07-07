@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/models/weapons/c_models/c_rocketpack/c_rocketpack_red.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/weapons/c_models/c_rocketpack/c_rocketpack_yellow"
+	}
+}

@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\w_grenade_grenadelauncher/w_grenade_gj"
+//	"$baseTexture" "models\weapons\w_grenade_grenadelauncher/w_grenade_neutral"
+//	"$selfillum" "1"
+	"$bumpmap" "models\weapons\w_grenade_grenadelauncher/w_grenade_normal"
+
+	"$phong" "1"
+	"$phongexponent" "35"
+	"$phongboost" "5"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges" "[0.25 0.5 1]"
+}

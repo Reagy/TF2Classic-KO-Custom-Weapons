@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture"		"backpack\workshop\player\items\engineer\c_buffengineer\c_buffengineer_large"
+	"$translucent"		"1"
+}

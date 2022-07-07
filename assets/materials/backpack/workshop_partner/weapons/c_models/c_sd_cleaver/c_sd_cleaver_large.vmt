@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture"	 "backpack/workshop_partner/weapons/c_models/c_sd_cleaver/c_sd_cleaver_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}

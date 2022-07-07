@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\workshop\buildables\sentry_artillery\sentry3_artillery"
+	//"$bumpmap" 	"models\workshop\buildables\sentry_artillery\sentry3_artillery_normal"
+	"$phong" "1"
+	"$phongboost" "7"
+	"$phongexponent" "35"
+	"$lightwarptexture" "models\buildables\sentry1\sentry1_lightwarp"
+	"$phongfresnelranges"	"[.5 1.5 10]"
+  "$basemapalphaphongmask" "1"
+	
+	//"$selfillum" "1"
+  //"$selfillumtint" "[3 3 3]"
+  //"$selfillummask" "models/workshop/buildables/sentry_artillery/sentry3_artillery_illum.vtf"
+
+	"$rimlight" "1"		
+	"$rimlightexponent" "4"				
+	"$rimlightboost" "1.5"
+}

@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture" 	"backpack\mannslaughter\mannslaughter"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}

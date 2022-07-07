@@ -1,0 +1,10 @@
+"Patch"
+{
+	include "materials/models/workshop/player/items/heavy/sbox2014_war_pants/sbox2014_war_pants.vmt"
+	
+	insert
+	{
+	"$colortint_base"		"{ 60 157 70 }"
+	"$color2"		"{ 60 157 70 }"
+	}
+}

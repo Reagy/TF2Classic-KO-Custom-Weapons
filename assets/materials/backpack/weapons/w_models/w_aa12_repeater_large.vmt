@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture" 	"backpack/weapons/w_models/w_aa12_repeater_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}

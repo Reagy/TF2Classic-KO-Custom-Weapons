@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\weapons\c_items\paper.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\weapons\c_items\paper_blue"
+	}
+}

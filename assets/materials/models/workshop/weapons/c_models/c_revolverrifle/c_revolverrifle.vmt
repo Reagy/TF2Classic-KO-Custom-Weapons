@@ -1,0 +1,66 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models\workshop\weapons\c_models\c_revolverrifle/c_revolverrifle.vtf"
+	"$bumpmap" "models\workshop/weapons\c_models\c_revolverrifle/c_revolverrifle_normal.vtf"
+
+//	Zoey was here <3
+
+//	"$lightwarptexture" "models\weapons\c_items/c_ambassador_lightwarp"	
+
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.2 .16 .2]"
+	"$basemapalphaenvmapmask" "1"
+
+	"$phong" "1"
+	"$phongexponent" "30"
+	"$phongboost" "6"	
+
+	"$phongfresnelranges"	"[.25 .5 1]"
+	"$halflambert" "1"
+
+	"$tempvar" "0"
+	
+	"$rimlight" "1"						
+	"$rimlightexponent" "4"				
+	"$rimlightboost" ".5"
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

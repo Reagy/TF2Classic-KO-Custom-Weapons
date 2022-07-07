@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture" 	"backpack/player/items/all_class/all_pan_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}

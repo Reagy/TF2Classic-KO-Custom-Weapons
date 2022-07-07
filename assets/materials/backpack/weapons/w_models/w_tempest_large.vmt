@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\w_models\w_tempest_large"
+	$translucent 1
+	$vertexcolor 1
+}

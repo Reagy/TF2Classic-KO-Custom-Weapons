@@ -1,0 +1,11 @@
+"Patch"
+{
+	include "materials/models/workshop/player/items/heavy/jul13_bagdolier/jul13_bagdolier.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/workshop/player/items/heavy/jul13_bagdolier/jul13_bagdolier_blue_color"
+	"$colortint_base"		"{ 215 150 70 }"
+	"$color2"		"{ 215 150 70 }"
+	}
+}

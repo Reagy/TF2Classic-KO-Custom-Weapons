@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/w_warriors_spirit/w_warriors_spirit_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}

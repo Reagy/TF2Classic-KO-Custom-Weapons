@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "models/weapons/c_models/c_no_feelings/sights/NFIronSightRet"
+	"$model" "1"
+	$additive 1
+	$nocull 1
+	
+}

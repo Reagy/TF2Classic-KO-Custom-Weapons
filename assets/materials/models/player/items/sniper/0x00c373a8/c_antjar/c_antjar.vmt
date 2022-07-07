@@ -1,0 +1,44 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/player/items/sniper/0x00c373a8/c_antjar/c_antjar"
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	
+	"$phong" "1"
+	//"$phongexponent" 25
+	//"$phongfresnelranges" "[4 2 5]"
+	//"$phongboost" "1"
+	"$phongexponent" "2"
+	"$phongboost" "1"
+	"$phongfresnelranges"	"[2 5 3]"
+	"$basemapalphaphongmask" "1"
+
+	"$rimlight" "1"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" ".25"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}
+

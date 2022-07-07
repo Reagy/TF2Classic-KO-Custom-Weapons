@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\weapons\w_grenade_grenadelauncher\w_grenade_dm_red.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\weapons\v_grenadelauncher\v_grenade_dm_blu"
+	}
+}

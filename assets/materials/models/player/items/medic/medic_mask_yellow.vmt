@@ -1,0 +1,10 @@
+"Patch"
+{
+	include "materials/models/player/items/medic/medic_mask_red.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/player/items/medic/medic_mask_yellow"
+//	"$colortint_base" "{120 148 160}"
+	}
+}

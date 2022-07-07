@@ -1,0 +1,41 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\weapons\v_machete\v_knife"
+	"$bumpmap" "models\weapons\v_machete\v_knife_normal"
+	"$normalmapalphaphongmask" "1"
+
+	"$phong" "1"
+	"$phongexponent" "50"
+	"$phongboost" "3"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.25 .5 1]"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "4"	
+	"$rimlightboost" "1"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

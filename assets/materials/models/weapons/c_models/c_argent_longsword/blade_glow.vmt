@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+//Main
+	$basetexture					"models/weapons/c_models/c_Argent_LongSword/Blade_RED_D"
+}

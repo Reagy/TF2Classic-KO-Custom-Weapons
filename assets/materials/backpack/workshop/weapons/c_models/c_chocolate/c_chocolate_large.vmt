@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture"	 "backpack/workshop/weapons/c_models/c_chocolate/c_chocolate_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}

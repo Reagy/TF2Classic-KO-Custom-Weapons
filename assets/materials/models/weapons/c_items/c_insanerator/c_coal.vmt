@@ -1,0 +1,47 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_insanerator/c_coal"
+	"$bumpmap" "models/weapons/c_items/c_insanerator/c_coal_normal"
+
+	"$phong" "1"
+	"$phongexponent" "25"
+	"$phongboost" "5"
+	"$phongtint" "[0.87 0.99 0.96]"
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.25 .5 1]"
+
+//	"$basemapalphaphongmask" "1"
+
+	"$halflambert" "1"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "10"
+	"$rimlightboost" ".5"
+
+	"$selfillum" "1"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

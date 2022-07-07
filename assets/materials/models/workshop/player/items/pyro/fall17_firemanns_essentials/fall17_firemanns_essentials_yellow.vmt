@@ -1,0 +1,10 @@
+"Patch"
+{
+	include "materials/models/workshop/player/items/pyro/fall17_firemanns_essentials/fall17_firemanns_essentials.vmt"
+
+	insert
+	{
+	"$colortint_base"		"{ 218 157 40 }"
+	"$color2"		"{ 218 157 40 }"
+	}
+}

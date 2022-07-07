@@ -1,0 +1,4 @@
+"Patch"
+{
+	include "materials/models/weapons/c_items/c_ekaterina.vmt"
+}

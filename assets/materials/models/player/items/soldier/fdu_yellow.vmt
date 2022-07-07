@@ -1,0 +1,13 @@
+"Patch"
+{
+	include "materials/models/player/items/soldier/fdu.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/player/items/soldier/fdu_yellow"
+
+	"$color2" "{70 58 37}" 
+	"$colortint_base" "{70 58 37}"
+	"$colortint_tmp" "[70 58 37]"
+	}
+}

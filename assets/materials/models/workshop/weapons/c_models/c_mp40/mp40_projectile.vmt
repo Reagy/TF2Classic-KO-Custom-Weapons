@@ -1,0 +1,58 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\workshop\weapons\c_models\c_mp40\mp40_projectile"
+	
+	"$phong" "1"
+	"$phongexponent" "25"
+	"$phongboost" "5"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[0.1 0.6 1]"
+	"$halflambert" "1"
+	
+	"$selfillum" "1"
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"Sine"
+		{
+			"resultVar" $selfillumtint
+			"sinemin" .1
+			"sinemax" 2.00
+			"sineperiod" 0.30
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

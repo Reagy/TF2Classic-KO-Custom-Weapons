@@ -1,0 +1,73 @@
+// ### Written by TF2 Item Material Writer (http://www.hamaloo.co.uk/tf2matwrite/). This file should be in the directory "materials\models\weapons\c_items\" and named "c_coilgun_laika.vmt". ###
+VertexLitGeneric
+{
+	$baseTexture models\weapons\c_items\c_coilgun_laika
+	$bumpMap models\effects\flat_normal
+	
+	$lightWarpTexture models\lightwarps\weapon_lightwarp
+	
+	$phong 1
+	$baseMapAlphaPhongMask 1
+	$phongExponent 15
+	$phongBoost 5
+	$phongFresnelRanges "[0.25 0.5 1]"
+	
+	$rimLight 1
+	$rimLightExponent 4
+	$rimLightBoost 0.35
+	
+	$glowColor 0
+	
+	$basePhongExponent 15
+	$basePhongBoost 5
+	$tempVar 0
+	$commWeapon 0
+	$commAddPhongExponent 30
+	$commAddPhongBoost 22.5
+	
+	$cloakPassEnabled 1
+	
+	Proxies
+	{
+		Weapon_Invis
+		{
+		}
+		ModelGlowColor
+		{
+			resultVar $glowColor
+		}
+		Equals
+		{
+			srcVar1 $glowColor
+			resultVar $color2
+		}
+		CommunityWeapon
+		{
+			resultVar $commWeapon
+		}
+		Multiply
+		{
+			srcVar1 $commWeapon
+			srcVar2 $commAddPhongExponent
+			resultVar $tempVar
+		}
+		Add
+		{
+			srcVar1 $tempVar
+			srcVar2 $basePhongExponent
+			resultVar $phongExponent
+		}
+		Multiply
+		{
+			srcVar1 $commWeapon
+			srcVar2 $commAddPhongBoost
+			resultVar $tempVar
+		}
+		Add
+		{
+			srcVar1 $tempVar
+			srcVar2 $basePhongBoost
+			resultVar $phongBoost
+		}
+	}
+}

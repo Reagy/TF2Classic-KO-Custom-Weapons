@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\conceptflaregun\Flare.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\conceptflaregun\Flare_yellow"
+	}
+}

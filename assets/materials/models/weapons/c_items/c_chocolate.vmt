@@ -1,0 +1,51 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/weapons/c_items/c_chocolate"
+	"$basemapalphaphongmask" 1
+	
+	//phong properties
+	"$phong"	"1"
+	"$phongboost"	"1"
+	"$phongexponent"	"10"
+	"$phongfresnelranges"	"[1 2 2.5]"
+	"$rimlight"	"1"
+	"$rimlightexponent"	"1"
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

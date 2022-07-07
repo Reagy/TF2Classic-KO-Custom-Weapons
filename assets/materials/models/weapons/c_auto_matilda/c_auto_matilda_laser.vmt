@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/weapons/c_auto_matilda/c_auto_matilda_laser"
+	
+	"$translucent" "1"
+}
