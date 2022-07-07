@@ -1,0 +1,18 @@
+VertexLitGeneric
+{
+	$baseTexture models\weapons\c_items\c_huntingshotgun_red
+	$bumpMap models\weapons\c_items\c_huntingshotgun_normal
+	
+	$lightWarpTexture models\weapons\c_items\c_ambassador_lightwarp
+	
+	$phong 1
+	$phongExponentTexture models\weapons\c_items\c_huntingshotgun_exponent
+	$phongBoost 14
+	$phongAlbedoTint 1
+	$phongFresnelRanges "[0.2 0.6 1]"
+	
+	$rimLight 1
+	$rimLightExponent 4
+	$rimLightBoost 2
+	$rimMask 1
+}
