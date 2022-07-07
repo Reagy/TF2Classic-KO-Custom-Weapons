@@ -13136,3 +13136,204 @@
 	"volume"	"1.0"
 	"wave"		")weapons/minibrew/minibrew_wind_down.wav"
 }
+
+// ------------------------------------------------------------------------------------ //
+// Hunting shot
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_HuntingShotgun.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/huntinggun_shoot.wav"
+}
+
+"Weapon_HuntingShotgun.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/huntinggun_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// AK CANNON
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_AKCannon.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/akcannon_fire.wav"
+}
+
+"Weapon_AKCannon.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/akcannon_fire_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// FAL
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_FAL.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/fal_shoot.wav"
+}
+
+"Weapon_FAL.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/fal_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// BRRRT Launcher
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Burster.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/burster_shoot.wav"
+}
+
+"Weapon_Burster.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/burster_shoot_crit.wav"
+}
+
+"Weapon_Burster.Explode"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_98dB"
+	"volume"	"1"
+	"wave"		"weapons/burster_explode1.wav"
+	"wave"		"weapons/burster_explode2.wav"
+	"wave"		"weapons/burster_explode3.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// FAT Launcher
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_FBomb.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/fbomb_shoot.wav"
+}
+
+"Weapon_FBomb.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/fbomb_shoot_crit.wav"
+}
+
+"Weapon_FBomb.Explode"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_98dB"
+	"volume"	"1"
+	"wave"		"weapons/fbomb_explode1.wav"
+	"wave"		"weapons/fbomb_explode2.wav"
+	"wave"		"weapons/fbomb_explode3.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// GOLF LAUNCHER
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_GolfLauncher.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/golflauncher_shoot.wav"
+}
+
+"Weapon_GolfLauncher.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/golflauncher_shoot_crit.wav"
+}
+
+"Weapon_GolfLauncher.Spin"	
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		")weapons/golflauncher_spin.wav"
+}
+
+"Weapon_GolfLauncher.WindUp"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/golflauncher_spin_up.wav"
+}
+"Weapon_GolfLauncher.WindDown"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/golflauncher_spin_down.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// TANK MINIGUN
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_TankMini.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/tankmini_shoot.wav"
+}
+
+"Weapon_TankMini.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/tankmini_shoot_crit.wav"
+}
+
+"Weapon_TankMini.Spin"	
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		")weapons/tankmini_spin.wav"
+}
+
+"Weapon_TankMini.WindUp"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/tankmini_spin_up.wav"
+}
+
+"Weapon_TankMini.WindDown"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/tankmini_spin_down.wav"
+}
