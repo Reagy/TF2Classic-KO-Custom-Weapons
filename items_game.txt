@@ -12503,11 +12503,6 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mult_maxammo_primary"
 					"value"				"0.05" 
 				}
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"5" 
-				}
 				"blast dmg to self increased"
 				{
 					"attribute_class"	"blast_dmg_to_self"
