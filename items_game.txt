@@ -15358,8 +15358,7 @@ Item by: 'Reagy'"
 
 			"item_type_name"				"#TF_Weapon_RocketLauncher"
 			"item_name"						"Rainmaker's Barrage"
-			"item_description"      		"100% crit rate when rocket jumping
-
+			"item_description"      		"
 For when you need just more rocket...
 
 Model by: 'Corvalho'
@@ -15380,6 +15379,11 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
+                "mod crit while airborne"
+                {
+                    "attribute_class"    "voice_pitch_scale"
+                    "value"                "1"
+                }
 				"clip size bonus"
 				{
 					"attribute_class"		"mult_clipsize"
@@ -19149,8 +19153,8 @@ Weapon by: 'Reagy'"
 					"ACT_MP_STAND_SECONDARY"				"ACT_MP_STAND_PRIMARY"
 					"ACT_MP_RUN_SECONDARY"					"ACT_MP_RUN_PRIMARY"
 				}
-				"sound_single_shot"		"Weapon_AR.Single"
-				"sound_burst"			"Weapon_AR.SingleCrit"
+				"sound_single_shot"		"Weapon_FAL.Single"
+				"sound_burst"			"Weapon_FAL.SingleCrit"
 				"sound_reload"			"Weapon_AR.WorldReload"
 				"muzzle_flash"			"muzzle_scattergun"
 				"tracer_effect"			"bullet_scattergun_tracer01"
@@ -19223,8 +19227,8 @@ Weapon by: 'Reagy'"
 			}
 			"visuals"																
 			{
-				"sound_single_shot"		"Weapon_AR.Single"
-				"sound_burst"			"Weapon_AR.SingleCrit"
+				"sound_single_shot"		"Weapon_FAL.Single"
+				"sound_burst"			"Weapon_FAL.SingleCrit"
 				"sound_reload"			"Weapon_AR.WorldReload"
 				"muzzle_flash"			"muzzle_scattergun"
 				"tracer_effect"			"bullet_scattergun_tracer01"
