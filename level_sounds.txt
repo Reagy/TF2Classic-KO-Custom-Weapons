@@ -13337,3 +13337,64 @@
 	"volume"	"1.0"
 	"wave"		")weapons/tankmini_spin_down.wav"
 }
+// ------------------------------------------------------------------------------------ //
+// FLAK GUN
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_FlakGun.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/flakgun_shoot.wav"
+}
+
+"Weapon_FlakGun.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/flakgun_shoot_crit.wav"
+}
+
+"Weapon_FlakGun.Spin"	
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		")weapons/flakgun_spin.wav"
+}
+
+"Weapon_FlakGun.WindUp"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/flakgun_spin_up.wav"
+}
+"Weapon_FlakGun.WindDown"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/flakgun_spin_down.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Chain of Command
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_ChainCommand.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/chaincommand_shoot.wav"
+}
+
+"Weapon_ChainCommand.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/chaincommand_shoot_crit.wav"
+}

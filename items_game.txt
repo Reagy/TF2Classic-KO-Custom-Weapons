@@ -30392,6 +30392,210 @@ Weapon from: Fred's Fight Starters"
 			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
 			"drop_sound"			"#ui/item_metal_weapon_drop.wav"
 		}
+//-------------------------
+//-------------------------
+//--SEWING MACHINE - 9964--
+//-------------------------
+//-------------------------
+		"9964"
+		{
+			"name"						"TF_WEAPON_FLAKCANNON"							
+			"prefab"					"weapon_minigun"
+			"show_in_armory"			"1"
+
+			"item_quality"				"rarity2"
+
+			"propername"				"1"
+			"item_name"					"Flight-breaker Flakker"
+			"item_type_name"			"Automatic Cannon"
+			"item_description"			"This weapon fires massive shells with large spread 
+
+Heavy has now learned how to make giant shotgun shells!
+
+Model by: 'svdl'
+Weapon by: 'The One Of Wonders'"
+			"item_logname" 				"flak_cannon"
+			"item_iconname"				"flak_cannon"
+			"image_inventory"			"backpack/workshop/weapons/c_models/c_sewingmachine/c_sewingmachine"
+			"model_world"				"models/workshop/weapons/c_models/c_sewingmachine/c_sewingmachine.mdl"
+			"model_player"				"models/workshop/weapons/c_models/c_sewingmachine/c_sewingmachine.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"heavy"					"1"
+			}
+			"attributes"																	
+			{
+			    // These are mostly display only.
+			    "damage bonus"
+				{
+					"attribute_class"	"mult_dmg_falloff"
+					"value"				"1.5"
+				}
+			    "spread penalty"
+				{
+					"attribute_class"	"mult_dmg_falloff"
+					"value"				"1.75"
+				}
+			    //Backend stuff aka stuff that actually does things.
+			    "voice pitch scale"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"				"1.5"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"3.75"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.48"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"2.1"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.3"
+				}
+				"crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+			}
+			"visuals"
+			{
+				"sound_double_shot"		"Weapon_FlakGun.Fire"	
+				"sound_burst"			"Weapon_FlakGun.FireCrit"	
+				"sound_special1"		"Weapon_FlakGun.WindUp"	
+				"sound_special2"		"Weapon_FlakGun.WindDown"
+				"sound_special3"		"Weapon_FlakGun.Spin"				
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}	
+//--------------------------------
+//--------------------------------
+//--HEAVY RIFLE PRIMARY - 9965--
+//--------------------------------
+//--------------------------------
+		"9965"
+		{
+			"name"						"TF_WEAPON_HEAVY_RIFLE"
+			"prefab"					"weapon_shotgun"
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"                 "secondary"
+			"item_class"				"tf_weapon_shotgun_primary"
+			"item_quality"				"rarity2"
+
+			"propername"				"1"
+			"item_name"					"Chain of Command"
+			"item_type_name"			"Heavy Pump-Action Rifle"
+			"item_description"			"
+Now this is a real gun! Come get some, maggots!
+
+Model by: 'svdl'
+Weapon by: 'The One Of Wonders'"											
+			"item_logname"				"heavy_rifle"
+			"item_iconname"				"heavy_rifle"
+			"image_inventory"			"backpack/weapons/c_models/c_heavyrifle/c_heavyrifle"
+			"model_world"				"models/weapons/c_models/c_heavyrifle/c_heavyrifle.mdl"
+			"model_player"				"models/weapons/c_models/c_heavyrifle/c_heavyrifle.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"soldier"				"1"
+			}
+			"static_attrs"
+			{
+			    "class select override vcd"			"taunt01_v2"	
+			}
+			"attributes"
+			{
+			    "explosive bullets"
+				{
+					"attribute_class"	"explosive_bullets"
+					"value"				"1"
+				}
+			    "crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+			    "no damage falloff over distance"
+				{
+					"attribute_class"	"mod_no_dmg_falloff"
+					"value"				"1"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"11.0"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.1"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.67"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"1.2"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.5"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.225"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"				"1.4"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_switch_from_wep_deploy_time"
+					"value"				"1.4"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value" 			"0.1"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"blast_dmg_to_self"
+					"value" 			"0.6"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_dmgself_push_force" 
+					"value" 			"0.6"
+				}
+			}
+			"visuals"
+			{
+			    "sound_single_shot"		"Weapon_ChainCommand.Shoot"
+				"sound_burst"			"Weapon_ChainCommand.ShootCrit"
+			}
+		}			
 //--------------------------------
 //--------------------------------
 //-- Secret Joke Weapons :)	 --
