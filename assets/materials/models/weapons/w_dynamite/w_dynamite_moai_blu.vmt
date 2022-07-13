@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\weapons\w_dynamite\w_dynamite_moai.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\weapons\w_dynamite\w_dynamite_moai_blu"
+	}
+}

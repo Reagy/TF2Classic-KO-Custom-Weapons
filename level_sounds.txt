@@ -13398,3 +13398,26 @@
 	"volume"	"1.0"
 	"wave"		")weapons/chaincommand_shoot_crit.wav"
 }
+// ------------------------------------------------------------------------------------ //
+// Moyai
+// ------------------------------------------------------------------------------------ //
+"Weapon_Moyai.Fuse"
+{
+	"channel"	"CHAN_WEAPON"
+	"volume"	"VOL_NORM"
+	"soundlevel"	"SNDLVL_76dB"
+	"wave"		")weapons/moyai_fuse.wav"
+}
+"Weapon_Moyai.Hit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_85dB"
+	"volume"		"1.0"
+	"rndwave"
+	{
+		"wave"		")weapons/moyai_explode.wav"
+		"wave"		")weapons/moyai_explode_sub1.wav"
+		"wave"		")weapons/moyai_explode_sub2.wav"
+		"wave"		")weapons/moyai_explode_sub3.wav"
+	}
+}
