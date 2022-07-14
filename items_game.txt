@@ -16499,6 +16499,7 @@ Weapon by: 'Zadrave'"
 // V5.3.4 New weapon
 // V5.3.4r1 Adjusted rate of fire, damage profile, bullet spread, movement speed when spunup, spinup delay and total ammo pool (due to lower rof it eats ammo less quickly). Removed health penalty and added +25hp bonus. Added an extra 2 bullets to each shot, added movement speed penalty when equipped (its heavy afterall)
 // V5.3.5 Herewegoagain, another balance change, should reduce the fps hit as well when multiple heavies are using it, keeps similar/same constant firing time and ttk
+// V5.3.8 Added negative z force attribute, anything in the air will be forced down to the ground
 //-------------------------------------
 //-------------------------------------		
 		"7058"
@@ -16513,7 +16514,8 @@ Weapon by: 'Zadrave'"
 			"propername"				"1"
 			"item_name"					"Leviathan"
 			"item_type_name"			"Repurposed Aircraft Cannon"
-			"item_description"			"
+			"item_description"			"Knocks airborne enemies out of the air
+
 Heavy found crashed jet
 Gun still good
 
@@ -16594,6 +16596,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"apply z velocity on damage" // Hahaha CIWS BRRRRRRRT rip rainmaker jumpy bois
+				{
+					"attribute_class"		"apply_z_velocity_on_damage"
+					"value"					"-100"
 				}
 			}
 			"visuals"																		
