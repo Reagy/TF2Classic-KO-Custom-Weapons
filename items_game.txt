@@ -12696,7 +12696,7 @@ Weapon by: 'Reagy'"
 				"Blast radius increased"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"2.75" 
+					"value"				"2.0" 
 				}
 				 "mod max primary clip override"
 				{
