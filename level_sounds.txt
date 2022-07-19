@@ -13421,3 +13421,243 @@
 		"wave"		")weapons/moyai_explode_sub3.wav"
 	}
 }
+// ------------------------------------------------------------------------------------ //
+// Solar Flare
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_SFlare.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/solarflare_shoot.wav"
+}
+
+"Weapon_SFlare.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/solarflare_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// THE FUCKING BUZZSAW
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_BuzzSaw.Miss"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_64dB"
+	"volume"	".6"
+	"wave"		")weapons/buzzsaw_swing_miss.wav"
+}
+
+"Weapon_BuzzSaw.MissCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_64dB"
+	"volume"	".6"
+	"wave"		")weapons/buzzsaw_swing_miss_crit.wav"
+}
+
+"Weapon_BuzzSaw.HitFlesh"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		")weapons/buzzsaw_hit_player.wav"
+}
+
+"Weapon_BuzzSaw.HitWorld"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		")weapons/buzzsaw_hit_world.wav"
+
+}
+// ------------------------------------------------------------------------------------ //
+// Spark shotgun
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_SparkShot.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/sparkshotgun_shoot.wav"
+}
+
+"Weapon_SparkShot.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/sparkshotgun_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// RECOILLESS TOOB
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Recoilless.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/recoilless_shoot.wav"
+}
+
+"Weapon_Recoilless.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/recoilless_shoot_crit.wav"
+}
+"Weapon_Recoilless.Explode"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_98dB"
+	"volume"	"1"
+	"wave"		"weapons/recoilless_explode.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Afterburner
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Afterburner.FireStart"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/afterburner_start.wav"
+}
+"Weapon_Afterburner.FireLoop"	
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/afterburner_loop.wav"
+}
+"Weapon_Afterburner.FireLoopCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/afterburner_loop_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Chem flamer thing
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_TearGasSpray.FireStart"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/teargassprayer_start.wav"
+}
+"Weapon_TearGasSpray.FireLoop"	
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/teargassprayer_loop.wav"
+}
+"Weapon_TearGasSpray.FireLoopCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/teargassprayer_loop_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Chem flare thing
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_ChemFlare.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/chemflare_shoot.wav"
+}
+
+"Weapon_ChemFlare.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/chemflare_shoot_crit.wav"
+}
+"Weapon_ChemFlare.Explode"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_98dB"
+	"volume"	"1"
+	"wave"		"weapons/chemflare_explode.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Homebrew flare
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_HomebrewFlare.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/homebrewflare_shoot.wav"
+}
+
+"Weapon_HomebrewFlare.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/homebrewflare_shoot_crit.wav"
+}
+"Weapon_HomebrewFlare.Explode"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_98dB"
+	"volume"	"1"
+	"wave"		"weapons/homebrewflare_explode.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Slam-fire
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_SlamFire.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/slamfire_shoot.wav"
+}
+
+"Weapon_SlamFire.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/slamfire_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// AT Rifle
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_ATRifle.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/atrifle_shoot.wav"
+}
+
+"Weapon_ATRifle.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/atrifle_shoot_crit.wav"
+}
