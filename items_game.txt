@@ -2467,10 +2467,10 @@ Weapon from: New Old Weapons Pack"
 			"item_logname"				"gloves"
 			"item_iconname"				"gloves"
 			"image_inventory"			"backpack/weapons/c_models/c_boxing_gloves/c_boxing_gloves"
-			"model_world"				"models/weapons/w_models/w_boxing_gloves.mdl"
+//			"model_world"				"models/weapons/w_models/w_boxing_gloves.mdl"
 			"model_player"				"models/weapons/v_models/v_boxing_gloves_heavy.mdl"
 			"attach_to_hands"			"2"
-//			"extra_wearable"			"models/weapons/w_models/w_boxing_gloves.mdl"			// So the gloves appear on his hands even when holding other weapons. Dummied out - they're really, REALLY bulky.
+			"extra_wearable"			"models/weapons/w_models/w_boxing_gloves_alt.mdl"			// So the gloves appear on his hands even when holding other weapons. Dummied out - they're really, REALLY bulky.
 			"used_by_classes"
 			{
 				"heavy"					"1"
@@ -2492,7 +2492,7 @@ Weapon from: New Old Weapons Pack"
 					"value"				"1.2"
 				}
 			}
-			"hide_bodygroups_deployed_only"	"1"													// V2.1.5 - I believe this should fix the weird hands bug if a Heavy dies with either of the gloves equipped
+//			"hide_bodygroups_deployed_only"	"1"													// V2.1.5 - I believe this should fix the weird hands bug if a Heavy dies with either of the gloves equipped
 			"visuals"
 			{
 				"player_bodygroups"
@@ -2525,10 +2525,10 @@ Weapon from: New Old Weapons Pack"
 			"item_logname"				"gloves_running_urgently"
 			"item_iconname"				"gloves_running_urgently"
 			"image_inventory"			"backpack/weapons/c_models/c_boxing_gloves_urgency/c_boxing_gloves_urgency"
-			"model_world"				"models/weapons/w_models/w_boxing_gloves_urgent.mdl"
+//			"model_world"				"models/weapons/w_models/w_boxing_gloves_urgent.mdl"
 			"model_player"				"models/weapons/v_models/v_boxing_gloves_urgent_heavy.mdl"
 			"attach_to_hands"			"2"
-//			"extra_wearable"			"models/weapons/w_models/w_boxing_gloves_urgent.mdl"
+			"extra_wearable"			"models/weapons/w_models/w_boxing_gloves_urgent_alt.mdl"
 			"used_by_classes"
 			{
 				"heavy"					"1"
@@ -2565,7 +2565,7 @@ Weapon from: New Old Weapons Pack"
 					"value"				"0.75"
 				}
 			}
-			"hide_bodygroups_deployed_only"	"1"
+//			"hide_bodygroups_deployed_only"	"1"
 			"visuals"
 			{
 				"player_bodygroups"
@@ -3232,10 +3232,11 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Quick Fix"
+			"item_name"					"The Quick-Fix"
 			"item_type_name"			"#TF_Weapon_Medigun_Prototype"
 			"item_description"			"
-Feel the power surging through your body.
+Oh, don't be such a baby, ribs grow back!
+Keep asking, and you'll have 5 more!
 
 Weapon from: New Old Weapons Pack"
 			"image_inventory"			"backpack/weapons/c_models/c_proto_medigun/c_proto_medigun"
@@ -3249,11 +3250,6 @@ Weapon from: New Old Weapons Pack"
 			}
 			"attributes"
 			{
-				"provide on active"
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
 				"lunchbox adds minicrits" 														// This attribute is magic, and I'm honestly not entirely sure what it does.
 				{
 					"attribute_class"	"set_weapon_mode"
@@ -3272,12 +3268,7 @@ Weapon from: New Old Weapons Pack"
 				"ubercharge rate bonus"															// This works.
 				{
 					"attribute_class"	"mult_medigun_uberchargerate"
-					"value"				"1.1"
-				}
-				"health regen"																	// Increased passive health regen while Medic has this medigun!
-				{
-					"attribute_class"	"add_health_regen"
-					"value"				"3"
+					"value"				"1.55"
 				}
 				// Backend stuff
 				"powerup duration"																// Display Only!
@@ -3289,6 +3280,11 @@ Weapon from: New Old Weapons Pack"
 				{
 					"attribute_class"	"add_uber_time"
 					"value"				"0.625"
+				}
+				"ubercharge overheal rate penalty"
+				{
+					"attribute_class"	"mult_medigun_overheal_uberchargerate"
+					"value"				"0.2"
 				}
 			}
 			"visuals"
@@ -3685,11 +3681,11 @@ Weapon from: New Old Weapons Pack"
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.25" 
 				}
-				"mark for death on building pickup"												// Not entirely sure this is functional?
-				{
-					"attribute_class"	"mark_for_death_on_building_pickup"
-					"value"				"1"
-				}
+//				"mark for death on building pickup"												// Not entirely sure this is functional?
+//				{
+//					"attribute_class"	"mark_for_death_on_building_pickup"
+//					"value"				"1"
+//				}
 				"maxammo primary reduced"
 				{
 					"attribute_class"	"mult_maxammo_primary"
@@ -3710,6 +3706,11 @@ Weapon from: New Old Weapons Pack"
 				{
 					"attribute_class"	"custom_projectile_model"
 					"value"				"models/weapons/w_models/w_repair_claw.mdl"
+				}
+				"crit mod disabled"																// whoops lmao I forgot this
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
 				}
 			}
 			"visuals"
@@ -4816,6 +4817,7 @@ Weapon from: New Old Weapons Pack"
 			}
 			"visuals"
 			{
+				"sound_empty"			"Weapon_Null"
 				"sound_single_shot"		"Weapon_Derringer.Single"
 				"sound_burst"			"Weapon_Derringer.SingleCrit"
 				"sound_reload"			"Weapon_Derringer.WorldReload"
@@ -4874,7 +4876,7 @@ Weapon from: New Old Weapons Pack"
 				"metal_pickup_decreased"
 				{
 					"attribute_class"	"mult_metal_pickup"
-					"value" 			"0.34"
+					"value" 			"0.5"
 				}
 			}
 			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
@@ -5045,10 +5047,10 @@ Weapon from: New Old Weapons Pack"
 			"item_quality"				"rarity3"
 			"item_name"					"The Spray n' Pray"
 			"item_type_name"			"Fire Hose"
-			"item_description"			"
-Contrary to popular belief, this weapon can neither heal nor put out fire.
+			"item_description"			"On hit: Gain a short Def. Buff! (1.5s)
 
-Model by: 'goldenjohson' 'Metabolic'
+Contrary to popular belief, this weapon can neither heal nor put out fire
+
 Weapon from: New Old Weapons Pack"						// It does the exact opposite, in fact!
 			"item_logname"				"firehose"
 			"item_iconname"				"firehose"
@@ -5060,33 +5062,39 @@ Weapon from: New Old Weapons Pack"						// It does the exact opposite, in fact!
 			{
 				"pyro"					"1"
 			}
-			"attributes"
+			"attributes"																		// With v2.3.5, wanted to adjust this crusty old thing AGAIN. I think I'm finally happy with it (for now). It's a kinda support flamer that's awful at actual murder, but good at keeping you alive
 			{
-				"weapon burn time increased"
+				"provide on active"
 				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value"				"1.5"
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
 				}
-				"flame size bonus"																// Increases the range to the side of the flames slightly
+				"add condition on hit"
 				{
-					"attribute_class"	"mult_flame_size"
-					"value"				"2.5"
+					"attribute_class"	"add_onhit_addcond_self"
+					"value"				"111 1.5"
+				}
+				"move speed bonus"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"1.15"
 				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.7"
+					"value"				"0.7"
 				}
-				"airblast cost increased"
+				"flame ammopersec increased"
 				{
-					"attribute_class"	"mult_airblast_cost"
-					"value" 			"2.5"
+					"attribute_class"	"mult_flame_ammopersec"
+					"value"				"1.35"
 				}
 			}	
 			"visuals"
 			{
 				"sound_single_shot"		"Weapon_FireHose.FireStart"
 				"sound_special1"		"Weapon_FireHose.FireLoop"
+				"sound_special3"		"Weapon_ChemThrower.WindDown"
 				"sound_burst"			"Weapon_FireHose.FireLoopCrit"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
@@ -5861,13 +5869,11 @@ Edited by: 'Reagy'"
 			"item_quality"				"rarity3"
 			"item_name"					"The Baby-Face's Blaster"
 			"item_type_name"			"#TF_Weapon_Scattergun"
-			"item_description"			"On hit: Gain a huge Speed-Boost that lasts
-until you switch to another weapon!
+			"item_description"			"On hit: Gain a huge Speed-Boost that
+lasts until you switch weapons!
 
 Ey, good luck chasing after
-'dese handsome afterimages, pal!
-
-Weapon from: New Old Weapons Pack"
+'dese handsome afterimages, pal!"
 			"item_logname"				"pep_brawlerblaster"
 			"item_iconname"				"pep_brawlerblaster"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_pep_scattergun/c_pep_scattergun"
@@ -5888,17 +5894,22 @@ Weapon from: New Old Weapons Pack"
 				"add condition on hit"
 				{
 					"attribute_class"	"add_onhit_addcond_self"								// Just enough to proc it once, then the games are on!
-					"value"				"49 0.05"
+					"value"				"49 0.5"												// Enough time to switch ONCE to another weapon of your choice
 				}
 				"speed boost when active"														// Display only! Also technically it's only 40% but shh
 				{
 					"attribute_class"	"mult_torso_scale"
 					"value"				"1.5"
 				}
+//				"move speed penalty"															// Scout spends very little time not boosted, and it goes away when switching weapons, so might as well not bother!
+//				{
+//					"attribute_class"	"mult_player_movespeed"
+//					"value"				"0.90"
+//				}
 				"max health additive penalty"													// Fast as he may be, he can and WILL die to any gust of wind
 				{
 					"attribute_class"	"add_maxhealth"
-					"value"				"-35"
+					"value"				"-25"
 				}
 				"clip size penalty"
 				{
@@ -6459,17 +6470,22 @@ Weapon from: New Old Weapons Pack"
 				"health regen"
 				{
 					"attribute_class"	"add_health_regen"
-					"value"				"4"
+					"value"				"6"
 				}
 				"maxammo secondary increased"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
-					"value" 			"1.5"
+					"value" 			"2"
+				}
+				"maxammo grenades1 increased"
+				{
+					"attribute_class"	"mult_maxammo_grenades1"
+					"value" 			"2"
 				}
 				"max health additive penalty"
 				{
 					"attribute_class"	"add_maxhealth"
-					"value"				"-75"
+					"value"				"-50"
 				}
 				"allowed in medieval mode"
 				{
@@ -8010,12 +8026,11 @@ Weapon from: New Old Weapons Pack"
 			"propername"				"1"
 			"item_quality"				"rarity3"
 			"item_name"					"The Makeshift Mutilator"
-			"item_type_name"			"#TF_Weapon_Flamethrower"
+			"item_type_name"			"Chemical Thrower"
 			"item_description"			"
-Ihht's ehphhthnt ht rhndrhn
-hny bhdyys hn-rhkhgnhyshabhl!
+Spray a lethal cocktail of chemicals over
+your soon-to-be past-enemies!
 
-Model by: 'SedimentarySocks' 'BENICE2ME' 'Colteh'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"chemthrower"
 			"item_iconname"				"chemthrower"
@@ -8027,32 +8042,27 @@ Weapon from: New Old Weapons Pack"
 			{
 				"pyro"					"1"
 			}
-			"attributes"																		// These stats are EXACT, taken directly from an older version of TF2C, with only some minor re-ordering to make more sense.
+			"attributes"																		// With v2.3.5, I totally upended this from its TF2C B4 stats to, this? Kinda a flamer that you have to pay more attention to, to use it. Also, airblast is back!
 			{
-				"damage bonus"
+				"provide on active"
 				{
-					"attribute_class"	"mult_dmg"
-					"value"				"1.25"
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
 				}
-				"fire rate bonus"
+				"heal on kill"
 				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.50"
+					"attribute_class"	"heal_on_kill"
+					"value"				"35"
 				}
-				"mod flamethrower push"
+				"weapon burn time reduced"
 				{
-					"attribute_class"	"set_flamethrower_push_disabled"
-					"value"				"1"
+					"attribute_class"	"mult_wpn_burntime"
+					"value"				"0.15"
 				}
-				"flame size penalty"
+				"weapon burn dmg reduced"
 				{
-					"attribute_class"	"mult_flame_size"
-					"value"				"0.50"
-				}
-				"maxammo primary reduced"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.50"
+					"attribute_class"	"mult_wpn_burndmg"
+					"value" 			"0"
 				}
 			}	
 			"visuals"
@@ -8172,10 +8182,10 @@ Weapon from: New Old Weapons Pack"
 			"item_quality"				"rarity3"
 			"item_name"					"The Flechette Launcher"
 			"item_type_name"			"Flechette Launcher"
-			"item_description"			"Launches explosive Flechettes that automatically detonate after 2 seconds.
-Explosions deal very little knockback.
+			"item_description"			"Launches explosive Flechettes that automatically detonate after 2 seconds
 
-Model by: 'cobalt'
+Explosions deal very little knockback
+
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"flechettegun"
 			"item_iconname"				"flechettegun"
@@ -8190,7 +8200,7 @@ Weapon from: New Old Weapons Pack"
 			"static_attrs"
 			{
 				"override projectile type"				"30"									// Tranq Dart. This is MANDATORY!! For intended behavior, imagine this but it shoots like 4 projectiles-ish
-				"damage bonus hidden"					"3.15"									// 25 dmg max? w/ falloff for distance from explosion splash (this is also how much it does on a direct hit)
+				"damage bonus hidden"					"2.25"									// 18 dmg max? w/ falloff for distance from explosion splash (this is also how much it does on a direct hit)
 				"fire rate penalty hidden"				"1.3"
 				"clip size penalty hidden"				"0.47"
 				"hidden secondary max ammo penalty"		"0.65"
@@ -8216,7 +8226,7 @@ Weapon from: New Old Weapons Pack"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"3" 
+					"value"				"5.5" 
 				}
 				"Projectile speed decreased"
 				{
@@ -9467,15 +9477,13 @@ Weapon from: New Old Weapons Pack"
 			"item_type_name"			"Brass Knuckles"
 			"item_description"			"
 You have 5 seconds to run from tiny base,
-or else Heavy will make you regret choice...
-
-Weapon from: New Old Weapons Pack"
+or else Heavy will make you regret choice..."
 			"item_logname"				"eviction_notice"
 			"item_iconname"				"eviction_notice"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_eviction_notice/c_eviction_notice"
-			"model_world"				"models/weapons/w_models/w_eviction_notice.mdl"
+//			"model_world"				"models/weapons/w_models/w_eviction_notice.mdl"
 			"model_player"				"models/weapons/v_models/v_eviction_notice_heavy.mdl"	// Never noticed until recently, doesn't it hurt to just slap your fist into the palm of your hand if you're wearing BRASS KNUCKLES??? but Heavy's a big boy he can tank the pain
-//			"extra_wearable" 			"models/weapons/w_models/w_eviction_notice.mdl"			// I tried this out, but it doesn't really work as well as I intended...
+			"extra_wearable" 			"models/weapons/w_models/w_eviction_notice_alt.mdl"			// I tried this out, but it doesn't really work as well as I intended...
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -9502,6 +9510,12 @@ Weapon from: New Old Weapons Pack"
 				{
 					"attribute_class"	"mult_dmg"
 					"value"				"0.65"
+				}
+				// Backend stuff
+				"strange restriction type 1"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" 			"-5"
 				}
 			}
 			"visuals"
@@ -9739,13 +9753,12 @@ Weapon from: New Old Weapons Pack"
 'Oh, I'm sorry, I didn't mean to hitcha'
 No wait, yeah I did.'
 
-Model by: 'Folkye' 'OverPovered' 'La Boite'
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"baseball_gun"
-			"item_iconname"				"baseball_gun"
-			"image_inventory"			"backpack/weapons/w_models/w_baseballgun"
-			"model_world"				"models/weapons/w_models/w_baseballgun.mdl"
-			"model_player"				"models/weapons/v_models/v_baseballgun_scout.mdl"		// Don't think too hard about how he reloads it, at least he does SOMETHING unlike the Sniper Crossbow...
+			"item_iconname"				"baseball_gun_alt"
+			"image_inventory"			"backpack/weapons/w_models/w_baseballgun_alt"
+			"model_world"				"models/weapons/w_models/w_baseballgun_alt.mdl"
+			"model_player"				"models/weapons/v_models/v_baseballgun_alt_scout.mdl"	// Don't think too hard about how he reloads it, at least he does SOMETHING unlike the Sniper Crossbow...
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -9754,7 +9767,7 @@ Weapon from: New Old Weapons Pack"
 			"static_attrs"
 			{
 				"override projectile type"				"3"
-				"damage bonus hidden"					"0.65"
+				"damage bonus hidden"					"0.45"
 				"reload time increased hidden"			"0.8"
 				"hidden primary max ammo bonus"			"2"
 			}
