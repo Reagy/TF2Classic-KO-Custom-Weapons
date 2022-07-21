@@ -13661,3 +13661,32 @@
 	"volume"	"1.0"
 	"wave"		")weapons/atrifle_shoot_crit.wav"
 }
+// ------------------------------------------------------------------------------------ //
+// WIDOW MAKER SHOTGUN
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_WidowMaker.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_92dB"
+	"volume"	"0.9"
+	"rndwave"
+	{
+		"wave"		")weapons\widow_maker_shot_01.wav"
+		"wave"		")weapons\widow_maker_shot_02.wav"
+		"wave"		")weapons\widow_maker_shot_03.wav"
+	}
+}
+
+"Weapon_WidowMaker.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_92dB"
+	"volume"	"0.9"
+	"rndwave"
+	{
+		"wave"		")weapons\widow_maker_shot_crit_01.wav"
+		"wave"		")weapons\widow_maker_shot_crit_02.wav"
+		"wave"		")weapons\widow_maker_shot_crit_03.wav"
+	}
+}

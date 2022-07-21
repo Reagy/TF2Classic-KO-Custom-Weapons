@@ -13473,6 +13473,7 @@ Weapon by: 'Reagy'"
 //-------------------------------------
 //-------------------------------------
 // I don't even fucking know
+// V5.3.9 Re-named to avoid confusion with the actual Poacher's Pride
 //-------------------------------------
 //-------------------------------------		
 		"7021"
@@ -13485,7 +13486,7 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
-			"item_name"					"Poacher's Pride"
+			"item_name"					"Bushman's Backyard Blaster"
 			"item_type_name"			"6 Barreled Break-Action Hunting Rifle?"
 			"item_description"			"Fires 6 shots at once
 
@@ -13495,7 +13496,7 @@ Destroyed by: 'swox'
 Weapon by: 'Reagy'"
 			"item_logname"				"poachers_pride"
 			"item_iconname"				"poachers_pride"
-			"image_inventory"			"backpack/weapons/w_models/w_poacherspride"
+			"image_inventory"			"backpack/weapons/w_models/w_backyardblaster"
 			"model_world"				"models/weapons/custom/w_models/w_poacherspride.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_poacherspride.mdl"
 			"attach_to_hands"			"2"
@@ -20248,6 +20249,7 @@ Weapon by: 'The One Of Wonders'"
 //---------------------------
 //--Caber Toss - 7113--
 // V5.3.7 New weapon by Majro
+// V5.3.9 Removed ammo penalty and reduced projectile speed penalty
 //---------------------------
 //---------------------------
 		"7113"
@@ -20305,11 +20307,6 @@ Weapon by: 'Majro'"
 					"value"					"1"
 				}
 				//THE NEGATIVES
-				"maxammo primary reduced"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.66"
-				}
 				"Blast radius decreased" 
 				{
 					"attribute_class"	"mult_explosion_radius"
@@ -20323,7 +20320,7 @@ Weapon by: 'Majro'"
 				"Projectile speed decreased"
 				{
 					"attribute_class" "mult_projectile_speed"
-					"value"				"0.45"
+					"value"				"0.75"
 				}
 					
 				//THE NEUTRAL
@@ -20343,6 +20340,202 @@ Weapon by: 'Majro'"
 		"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 		"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
+//---------------------------
+//---------------------------
+//--Big Mean Mother Hubbard - ????--
+// V5.3.9 New weapon by Majro
+//---------------------------
+//---------------------------		
+"11011" 
+		{
+		"name"						"TF_BMMH_V2"
+		"item_class"				"tf_weapon_shotgun"
+		"show_in_armory"			"1"
+		"item_slot"					"primary"
+		"propername"				"1"
+		"item_name"					"Big Mean Mother Hubbard"
+		"item_type_name"			"Scrap Shotgun"
+		"item_description"			"
+Using spare resources effectively is the pinnacle of practical engineering.
+
+'Original Model by: Oobersli'
+'Edited by: wolfcl0ck'"
+			"item_logname"				"bmmhv2"
+//			"item_iconname"				"tf_projectile_rocket"
+			"image_inventory"			"backpack/weapons/c_models/c_bmmh/c_bmmh"
+			"image_inventory_size_w" "128"
+			"image_inventory_size_h" "82"
+			
+			"model_world"				"models/weapons/c_models/c_bmmh/c_bmmh.mdl"
+			"model_player"				"models/weapons/v_models/v_bmmh.mdl" //Ouch, my OCD.
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"engineer"				"1"
+			}
+
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"5 -2 -10"
+			}
+
+			"attributes"
+			{
+				
+				"hidden secondary max ammo penalty"	//"maxammo primary increased" Christ almighty, it uses your ammo reserve as metal. Why?!
+				{
+					"attribute_class"	"mult_maxammo_metal"
+					"value"				6.25
+				}
+				
+				"mod ammo per shot" //So I have to load up 10 shots every time to shoot 10 shots.
+				{
+					"attribute_class"	"mod_ammo_per_shot"
+					"value"				"20"
+				}
+				
+				"mod use metal ammo type"			//But it needs a metal increase to works, not a primary ammo increase! What?!
+				{
+					"attribute_class"	"mod_use_metal_ammo_type"
+					"value"				"1"
+				}
+				
+				"scattergun no reload single" //Why can't I just shoot 10 of my reserve ammo instead?!?!?
+				{
+					"attribute_class"	"set_scattergun_no_reload_single"
+					"value"				"1"
+				}
+				"hidden secondary max ammo penalty"		//"clip size bonus"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"3.33"
+				}
+								
+				"hidden secondary max ammo penalty" //"Reload time decreased"
+				{
+					"attribute_class"	"mult_reload_time" //Well this IS meant to make it look like it needs no reloading.
+					"value"				"0.1"
+				}
+				
+				"hidden secondary max ammo penalty"	//"fire rate bonus" This is to match the shot speed of the stock shotgun. I hope.
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.9"
+				}
+				
+				
+				
+			}
+			"visuals" //These are TF2 stock sounds so they need to be added I reckon.
+			{
+			"sound_single_shot"		"Weapon_WidowMaker.Single"
+			"sound_burst"			"Weapon_WidowMaker.SingleCrit"
+			"sound_empty"                 "null"				
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		
+		}	
+//---------------------------
+//---------------------------
+//--Sandmate - ????--
+// V5.3.9 New weapon by Majro
+//---------------------------
+//---------------------------			
+"11012" //Replace with whatever you want.
+		{
+			"name"						"TF_WEAPON_SANDMATE"
+			"item_class"				"tf_weapon_grenade_mirv"
+			"show_in_armory"			"1"
+			"item_slot"					"secondary"
+			"anim_slot"					"melee"
+
+			"propername"				"1"
+			"item_name"					"Sandmate"
+			"item_type_name"			"Cricket Ball"
+			"item_description"	"Launches a ball that slows opponents.
+This weapon can NOT be used as a melee weapon.
+
+The hell's this Baseball knock-off?
+
+
+'Model by: Haau'"
+			"item_logname"				"sandmate"
+//			"item_iconname"				"none"
+			"image_inventory"			"backpack/weapons/c_models/c_sandmate\c_sandmate"
+			"image_inventory_size_w" "128"
+			"image_inventory_size_h" "82"
+			
+			"model_world"				"models/weapons/c_models/c_sandmate/c_sandmate.mdl"
+			"model_player"				"models/weapons\v_models\v_sandmate.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"scout"					"1"
+			}
+			
+						"static_attrs"
+			{
+				"override projectile type"				"3"
+				"meter_label"	"Ball" //Oh how I wish this worked.
+				"min_viewmodel_offset"		"10 0 -7"
+			}
+
+						"attributes" {
+
+
+					"tranq on hit"
+					{
+					"attribute_class"	"mod_tranq_onhit"
+					"value"				"5"
+					}
+					
+					"view punch on hit"
+					{
+					"attribute_class"	"add_viewpunch_onhit"
+					"value"				"5"
+					}
+					
+					"hidden secondary max ammo penalty"				//"damage penalty"
+					{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.1665"
+					}
+					
+					"hidden secondary max ammo penalty"				//"Blast radius decreased"
+					{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"0.1"
+					}
+					
+					"hidden secondary max ammo penalty"				//"self dmg push force decreased"
+					{
+					"attribute_class"	"mult_dmgself_push_force"
+					"value"				"0"
+					}
+					
+					"elevate quality"				//"no self blast dmg"
+					{
+					"attribute_class"	"no_self_blast_dmg"
+					"value"				"1"
+					}
+					
+					"custom projectile model"
+					{
+					"attribute_class" "custom_projectile_model"
+					"value"			"models\weapons\w_models\w_cricket_ball.mdl"
+					}
+				}
+			"visuals"
+			{
+				"sound_deploy"			"Weapon_Bat.Draw"
+				"sound_single_shot"		"Weapon_BaseballBat.HitBall"
+				"sound_burst"			"Weapon_BaseballBat.HitBall"
+				"sound_special1"		"TFPlayer.StunImpact"		//Found in stock TF2's game_sounds_player.txt
+			}
+			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
+		}		
 
 //----------------------------------------------
 //----------------------------------------------
@@ -32118,6 +32311,118 @@ Weapon by: 'The One Of Wonders'"
 				"sound_empty"			"Weapon_Null"										
 				"sound_single_shot"		"Weapon_SuperShotGun.Single"
 				"sound_burst"			"Weapon_SuperShotGun.SingleCrit"
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}
+//-------------------------
+//-------------------------
+//--DOUBLE BARREL RIFLE - 9967--
+//-------------------------
+//-------------------------
+		"9967"
+		{
+			"name"						"TF_WEAPON_DOUBLEBARREL_RIFLE"	// Thank god for Kristofer K. we can have this masterpiece of a rifle.
+			"prefab"					"weapon_sniperrifle"
+			"item_class"				"tf_weapon_hunterrifle"
+			"show_in_armory"			"1"
+
+			"propername"				"1"
+			"item_quality"				"rarity1"
+			"item_name"					"Poacher's Pride"
+			"item_type_name"			"Double-Barrel Hunting Rifle"
+			"item_description"			"Weapon deals 33% less headshot damage
+
+Professionals have standards, sometimes you have to be more flexible.
+
+Model by: 'QuestionablyInsane, Retro Mike, Faraxes, Digivee'
+Weapon by: 'The One Of Wonders'"
+			"item_logname"				"doublebarrel_rifle"
+			"item_iconname"				"doublebarrel_rifle"
+			"image_inventory"			"backpack/weapons/w_poacherspride/w_poacherspride"
+			"model_world"				"models/weapons/w_models/w_poacherspride.mdl"
+			"model_player"				"models/weapons/v_models/v_poacherspride_sniper.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"sniper"				"1"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"class_select_revrifle"
+			}
+			"attributes"																		
+			{
+				"no scope" 
+				{
+					"attribute_class"	"mod_no_scope"
+					"value"				"1"
+				}
+				"soft zoom"
+				{
+					"attribute_class"	"mod_sniper_soft_zoom"
+					"value" 			"1"
+				}
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"1.66"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.3"
+				}
+				"aiming movespeed increased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"				"1.67"
+				}
+				"sniper no dmg charge DISPLAY ONLY"
+				{
+					"attribute_class"	"mod_sniper_no_dmg_charge"
+					"value"				"1"
+				}
+				"no damage falloff over distance"
+				{
+					"attribute_class"	"mod_no_dmg_falloff"
+					"value"				"1"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" 			"0.33"
+				}
+				// Backend stuff
+				"voice pitch scale"
+				{
+					"attribute_class"	"headshot_damage_modify"
+					"value"				"0.5"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_RevolverRifle.Single"
+				"sound_burst"			"Weapon_RevolverRifle.SingleCrit"
+				"sound_reload"			"Weapon_HuntingRifle.WorldReload"
+				"animation_replacement"
+				{
+					"ACT_MP_ATTACK_STAND_PRIMARY_DEPLOYED"		"ACT_MP_ATTACK_STAND_PRIMARY_DEPLOYED_ALT"
+					"ACT_MP_ATTACK_CROUCH_PRIMARY_DEPLOYED"		"ACT_MP_ATTACK_CROUCH_PRIMARY_DEPLOYED_ALT"
+					"ACT_MP_ATTACK_SWIM_PRIMARY_DEPLOYED"		"ACT_MP_ATTACK_SWIM_PRIMARY_DEPLOYED_ALT"
+					
+					"ACT_MP_RELOAD_STAND_PRIMARY_DEPLOYED"		"ACT_MP_RELOAD_STAND_PRIMARY_DEPLOYED_ALT"
+					"ACT_MP_RELOAD_CROUCH_PRIMARY_DEPLOYED"		"ACT_MP_RELOAD_CROUCH_PRIMARY_DEPLOYED_ALT"
+					"ACT_MP_RELOAD_SWIM_PRIMARY_DEPLOYED"		"ACT_MP_RELOAD_SWIM_PRIMARY_DEPLOYED_ALT"
+					
+					"ACT_MP_ATTACK_STAND_PRIMARY"				"ACT_MP_ATTACK_STAND_PRIMARY_ALT"
+					"ACT_MP_ATTACK_CROUCH_PRIMARY"				"ACT_MP_ATTACK_CROUCH_PRIMARY_ALT"
+					"ACT_MP_ATTACK_SWIM_PRIMARY"				"ACT_MP_ATTACK_SWIM_PRIMARY_ALT"
+					
+					"ACT_MP_RELOAD_STAND_PRIMARY"				"ACT_MP_RELOAD_STAND_PRIMARY_ALT"
+					"ACT_MP_RELOAD_CROUCH_PRIMARY"				"ACT_MP_RELOAD_CROUCH_PRIMARY_ALT"
+					"ACT_MP_RELOAD_SWIM_PRIMARY"				"ACT_MP_RELOAD_SWIM_PRIMARY_ALT"
+				}
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
