@@ -1,0 +1,60 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/workshop/weapons/c_models/c_big_iron/c_big_iron_gld"
+	"$phongexponenttexture" "models/workshop/weapons/c_models/c_big_iron/c_big_iron_exp"
+	"$bumpmap" "models/workshop/weapons/c_models/c_big_iron/c_big_iron_nrm"
+	"$phong" "1"
+	"$phongexponentfactor" "10"
+	"$phongboost" ".8"	
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	"$phongfresnelranges"	"[.3 .5 3]"
+	"$halflambert" "1"
+	"$glowcolor" "1"
+	"$phongwarptexture"  "models/weapons/c_models/c_ambassador/c_ambassador_phongwarp"
+	"$envmap" "cubemaps/cubemap_gold001"
+//	"$envmaptint" ".3 .3 .3"
+	"$phongalbedotint" "1"
+//	"$basemapalphaphongmask" "1"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "4"	
+	"$rimlightboost" "1"
+
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"$yellow" "0"
+
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}

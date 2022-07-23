@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/models/weapons/c_items/c_army_shotgun.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/weapons/c_items/c_army_shotgun_pyro_ylw"
+	}
+}

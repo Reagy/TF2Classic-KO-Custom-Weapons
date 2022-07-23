@@ -1,0 +1,58 @@
+"VertexlitGeneric"
+{
+	$basetexture "models\weapons\c_items\c_dartgun_spy_dart_fm.vtf"
+	$model 1
+
+	$phong 1
+	$phongexponent 15
+	$phongboost 0.5
+	$phongfresnelranges "[0.75 .5 1.0]"
+
+	//$lightwarptexture "models/player/pyro/pyro_lightwarp"		//player light warp
+	$lightwarptexture "models\lightwarps\weapon_lightwarp"		//weapon light warp
+	//$halflambert 1
+
+	//$BASEMAPALPHAPHONGMASK 1
+
+	$rimlight 1
+	$rimlightexponent 25
+	$rimlightboost 1.0
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

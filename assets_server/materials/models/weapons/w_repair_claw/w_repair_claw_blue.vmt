@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\weapons\w_repair_claw\w_repair_claw_red.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\weapons\w_repair_claw\w_repair_claw_blue"
+	}
+}

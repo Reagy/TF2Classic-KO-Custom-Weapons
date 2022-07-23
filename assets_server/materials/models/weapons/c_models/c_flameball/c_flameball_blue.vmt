@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/models/weapons/c_models/c_flameball/c_flameball.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/weapons/c_models/c_flameball/c_flameball_blue"
+	}
+}

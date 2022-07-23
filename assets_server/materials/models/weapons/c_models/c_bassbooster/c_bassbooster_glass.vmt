@@ -1,0 +1,16 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\weapons\c_models/c_bassbooster/c_bassbooster_glass.vtf"
+	"$translucent" "1"
+	"$additive" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+	}
+}

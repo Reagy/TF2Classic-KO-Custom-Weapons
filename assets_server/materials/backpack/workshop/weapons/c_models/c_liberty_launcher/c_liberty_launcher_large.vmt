@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/workshop/weapons/c_models/c_liberty_launcher/c_liberty_launcher_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}

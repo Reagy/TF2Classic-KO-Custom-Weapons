@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/models/player/items/heavy/xms_heavy_sandvichsafe_decal.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/player/items/heavy/xms_heavy_sandvichsafe_decal_blue"
+	}
+}

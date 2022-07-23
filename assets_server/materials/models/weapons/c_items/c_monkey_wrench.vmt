@@ -1,0 +1,42 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/weapons/c_items/c_monkey_wrench"
+ 
+	"$phong" "1"
+	"$phongexponent" "5"
+	"$phongboost" "8"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[0.25 0.5 1.0]"
+	"$basemapalphaphongmask" "1"
+
+	"$rimlight" "0"
+	"$rimlightexponent" "10"	
+	"$rimlightboost" "1"
+
+	"$glowcolor" "1"
+
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}
+

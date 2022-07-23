@@ -1,0 +1,73 @@
+// ### Written by TF2 Item Material Writer (http://www.hamaloo.co.uk/tf2matwrite/). This file should be in the directory "materials\models\weapons\c_items\" and named "c_stengun.vmt". ###
+VertexLitGeneric
+{
+	$baseTexture models\weapons\c_items\c_stengun
+	$bumpMap models\effects\flat_normal
+	
+	$lightWarpTexture models\lightwarps\weapon_lightwarp
+	
+	$phong 1
+	$baseMapAlphaPhongMask 1
+	$phongExponent 20
+	$phongBoost 4
+	$phongFresnelRanges "[0.25 0.5 1]"
+	
+	$rimLight 1
+	$rimLightExponent 4
+	$rimLightBoost 1
+	
+	$glowColor 0
+	
+	$basePhongExponent 20
+	$basePhongBoost 4
+	$tempVar 0
+	$commWeapon 0
+	$commAddPhongExponent 40
+	$commAddPhongBoost 24.5
+	
+	$cloakPassEnabled 1
+	
+	Proxies
+	{
+		Weapon_Invis
+		{
+		}
+		ModelGlowColor
+		{
+			resultVar $glowColor
+		}
+		Equals
+		{
+			srcVar1 $glowColor
+			resultVar $color2
+		}
+		CommunityWeapon
+		{
+			resultVar $commWeapon
+		}
+		Multiply
+		{
+			srcVar1 $commWeapon
+			srcVar2 $commAddPhongExponent
+			resultVar $tempVar
+		}
+		Add
+		{
+			srcVar1 $tempVar
+			srcVar2 $basePhongExponent
+			resultVar $phongExponent
+		}
+		Multiply
+		{
+			srcVar1 $commWeapon
+			srcVar2 $commAddPhongBoost
+			resultVar $tempVar
+		}
+		Add
+		{
+			srcVar1 $tempVar
+			srcVar2 $basePhongBoost
+			resultVar $phongBoost
+		}
+	}
+}

@@ -1,0 +1,84 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models/weapons/c_items/c_leviathan_blu"
+
+	"$basemapalphaphongmask" "1"
+
+	"$phong" "1"
+	"$phongexponent" "5"
+	"$phongboost" "10"	
+//	"$lightwarptexture" "models\weapons\c_items/c_ambassador_lightwarp"
+	"$lightwarptexture" "models\player\pyro\pyro_lightwarp"
+//	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"	
+
+	"$phongfresnelranges"	"[.25 .5 1]"
+
+	"$tempvar" "0"
+
+	"$basephongexponent" "10"
+	"$basephongboost" "6"
+
+	"$commadd_phongexponent" "30"
+	"$commadd_phongboost" 	"22.5"
+	"$commweapon"		"0"
+	
+	
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "1"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "0.1"										// Boost for ambient cube component of rim lighting
+	
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"CommunityWeapon"
+		{
+			"resultVar" "$commweapon"
+		}
+		"Multiply"
+		{
+			"srcVar1"  "$commweapon"
+			"srcVar2"  "$commadd_phongexponent" 
+			"resultVar" "$tempvar" 
+		}
+		"Add"
+		{
+			"srcVar1"  "$tempvar" 
+			"srcVar2"  "$basephongexponent" 
+			"resultVar" "$phongexponent" 
+		}
+		"Multiply"
+		{
+			"srcVar1"  "$commweapon"
+			"srcVar2"  "$commadd_phongboost" 
+			"resultVar" "$tempvar" 
+		}
+		"Add"
+		{
+			"srcVar1"  "$tempvar" 
+			"srcVar2"  "$basephongboost"
+			"resultVar" "$phongboost" 
+		}
+
+	}
+}
+

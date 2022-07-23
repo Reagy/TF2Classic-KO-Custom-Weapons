@@ -1,0 +1,67 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/workshop/weapons/c_models/c_mob_shotgun/c_mob_shotgun"
+
+	"$basemapalphaphongmask" "1"
+
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "3"
+	"$phongalbedotint" "1"
+
+	"$phongtint" "[0.65 0.7 0.7]"
+	
+	"$lightwarptexture" "models/lightwarps/softened_weapon_lightwarp"
+	"$phongfresnelranges"	"[.3 .5 3]"
+
+	"$halflambert" "1"
+
+	"$envmap" "cubemaps\cubemap_specular001"
+	"$envmaptint" "[.05 .1 .1]"
+
+
+	"$tempvar" "0"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"
+	"$rimlightboost" "1"
+	"$rimmask" "1"
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

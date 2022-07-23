@@ -1,0 +1,48 @@
+"VertexlitGeneric"
+{
+	"$basetexture"	"models\weapons\c_items\c_m14\c_m14_laser"
+
+//	"$selfillum" "1"
+
+	"$translucent" "1"
+	"$additive" "1"
+
+	"$halflambert" "1"
+
+	"$tempvar" "0"
+
+
+	"$basemapalphaphongmask" "1"
+	
+	"$rimlight" "2"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" "0.5"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+
+
+	}
+
+}

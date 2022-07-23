@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/models/workshop/weapons/c_models/c_tele_shotgun/c_tele_shotgun.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/workshop/weapons/c_models/c_tele_shotgun/c_tele_shotgun_blue"
+	}
+}

@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/weapons/torch/torchfire"
+	"$surfaceprop" "Default"
+	"$additive" 1
+	"$translucent" 1
+	"$selfillum"		"1"
+}

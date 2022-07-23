@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\weapons\w_grenade_bomblet\w_bomblet_moai.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\weapons\w_grenade_bomblet\w_bomblet_moai_grn"
+	}
+}

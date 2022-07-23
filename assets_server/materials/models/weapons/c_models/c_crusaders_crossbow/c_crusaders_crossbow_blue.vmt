@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/models/weapons/c_models/c_crusaders_crossbow/c_crusaders_crossbow_red.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/weapons/c_models/c_crusaders_crossbow/c_crusaders_crossbow_blue"
+	}
+}

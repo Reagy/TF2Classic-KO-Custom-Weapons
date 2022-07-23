@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"models\weapons\c_items\c_bucklsr_neutral"
+	
+	"$translucent" "1"
+}

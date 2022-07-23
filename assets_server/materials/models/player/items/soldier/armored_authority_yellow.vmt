@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/models/player/items/soldier/armored_authority.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/player/items/soldier/armored_authority_yellow"
+	}
+}

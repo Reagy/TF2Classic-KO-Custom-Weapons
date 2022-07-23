@@ -1,0 +1,10 @@
+"Patch"
+{
+	include "materials\models\weapons\w_grenade_bouncer\bouncer_grenade.vmt"
+	
+	insert
+	{
+	"$colortint_base"		"{88 133 162}"
+	"$color2"		"{88 133 162}"
+	}
+}

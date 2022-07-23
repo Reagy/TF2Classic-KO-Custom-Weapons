@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/w_poacherspride/w_poacherspride_large"
+	"$translucent" 1
+	$vertexcolor 1		
+	"$ignorez" 1
+}

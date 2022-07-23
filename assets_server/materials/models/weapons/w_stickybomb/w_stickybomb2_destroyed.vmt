@@ -1,0 +1,19 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\weapons\w_stickybomb/w_stickybomb2_destroyed"
+
+	"$phong" "1"
+	"$phongexponent" "50"
+	"$phongboost" ".1"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges" "[0.05 0.1 .2]"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+	}
+}

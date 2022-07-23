@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\weapons\c_w_chainsaw\c_w_chainsaw.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\weapons\c_w_chainsaw\c_w_chainsaw_blue"
+	}
+}

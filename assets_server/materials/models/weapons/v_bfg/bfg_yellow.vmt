@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\weapons\v_bfg\bfg.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\weapons\v_bfg\bfg_yellow"
+	}
+}

@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"backpack/workshop/player/items/soldier/mantreads/mantreads_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}

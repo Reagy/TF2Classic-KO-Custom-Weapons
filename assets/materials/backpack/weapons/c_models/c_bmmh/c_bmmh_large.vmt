@@ -1,6 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" "backpack/weapons/c_models/c_bmmh/c_bmmh_large"
-	"$translucent" 1
-	$vertexcolor 1
-}

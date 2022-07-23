@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/models/weapons/c_items/c_crossbow.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/weapons/c_items/c_crossbow_blue"
+	}
+}

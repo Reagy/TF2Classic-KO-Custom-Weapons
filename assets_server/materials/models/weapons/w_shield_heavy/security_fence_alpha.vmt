@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/weapons/w_shield_heavy/security_fence_alpha"
+	"%compilepassbullets" 1
+	"$surfaceprop" "chainlink"
+	"$nodecal" 1
+	"$nocull" 1
+
+	"$AlphaTest" "1"
+	"$AlphaTestReference" "0.25"
+	"$AllowAlphaToCoverage" "1"
+}

@@ -1,0 +1,63 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\c_items\c_defender"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.085 .085 .1]"
+	"$basealphaenvmapmask"		"1"
+
+
+	"$phong" "1"
+	"$phongexponent" "14"
+	"$phongboost" "4"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.5 .5 3]"
+	"$halflambert" "1"
+
+	"$basemapalphaphongmask" "1"
+
+	// Rim lighting parameters
+	"$rimlight" "1"			
+	"$rimlightexponent" "6"	
+	"$rimlightboost" "0.5"
+
+
+	"360?$color2" "[ 0.5 0.5 0.5 ]"
+
+    //---------------
+    // Visual Effects
+    //---------------
+    "$glowcolor"         "1"
+    "$cloakPassEnabled"     "1"
+    "$yellow"         "0"
+
+    "Proxies"
+    {
+        "ModelGlowColor"
+        {
+            "resultVar"     "$glowcolor"
+        }
+        "Equals"
+        {
+            "srcVar1"      "$glowcolor"
+            "resultVar"     "$selfillumtint"
+        }
+        "Equals"
+        {
+            "srcVar1"      "$glowcolor"
+            "resultVar"     "$color2"
+        }
+        "invis"
+        {
+        }
+        "YellowLevel"
+        {
+            "resultVar"     "$yellow"
+        }
+        "Multiply"
+        {
+            "srcVar1"     "$color2"
+            "srcVar2"     "$yellow"
+            "resultVar"     "$color2"
+        }
+    }
+}

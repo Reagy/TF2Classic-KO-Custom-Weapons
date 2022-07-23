@@ -1,0 +1,68 @@
+"VertexlitGeneric"
+{
+	$basetexture "models\weapons\c_items\c_dartgun_spy_dart_fm.vtf"
+	$model 1
+
+	$nocull 1
+	$alphatest 1
+	$additive 1
+	$alpha 0.1
+
+	$phong 1
+	$phongboost 1.0
+	$phongexponent 25
+	$phongfresnelranges "[0.75 0.75 1.0]"
+
+	$rimlight 1
+	$rimlightexponent  25
+	$rimlightboost 1.1
+
+	$lightwarptexture "models\weapons\c_items/c_ambassador_lightwarp"
+
+	//$basemapalphaphongmask 1
+	$color2 "[0.5 0.5 0.5]"
+
+	$BlendTintByBaseAlpha 1
+	$BlendTintColorOverBase 1.0
+
+	//$colortint_base "{255 150 100}"
+	//$colortint_tmp "[0 0 0]"
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\workshop\weapons\c_models\c_chemthrower\c_chemthrower.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\workshop\weapons\c_models\c_chemthrower\c_chemthrower_blue"
+	}
+}

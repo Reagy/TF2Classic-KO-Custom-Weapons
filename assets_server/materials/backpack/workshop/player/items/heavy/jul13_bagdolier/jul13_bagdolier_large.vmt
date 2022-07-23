@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"backpack/workshop/player/items/heavy/jul13_bagdolier/jul13_bagdolier_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}

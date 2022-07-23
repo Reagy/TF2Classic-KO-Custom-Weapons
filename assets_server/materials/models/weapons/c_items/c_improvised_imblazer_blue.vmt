@@ -1,0 +1,36 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models/weapons/c_items/c_improvised_imblazer_blue" 
+	"$selfillummask" "models/weapons/c_items/c_improvised_imblazer_selfillum" 
+//	selfillummask is i8 vtf		
+	"$selfillum" "1" 
+	
+	"$basemapalphaphongmask" "1" 
+	"$phong" "1" 
+	"$phongexponent" "15" 
+	"$phongboost" "7" 
+	
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	"$phongfresnelranges"	"[.2 .5 1]"
+	"$halflambert" "1"
+
+
+	"$tempvar" "0"
+		
+	"$rimlight" "1"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" ".25"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"$sheenPassEnabled" "1"
+
+	"$sheenmap" 		"cubemaps\cubemap_sheen001"
+	"$sheenmapmask" 		"Effects\AnimatedSheen\animatedsheen0"
+	"$sheenmaptint" 		"[ 1 1 1 ]"
+	"$sheenmapmaskframe" 	"0"
+	"$sheenindex" 		"0"
+
+}

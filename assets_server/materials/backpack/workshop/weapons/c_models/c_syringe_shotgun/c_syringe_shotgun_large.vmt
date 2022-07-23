@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "backpack/workshop/weapons/c_models/c_syringe_shotgun/c_syringe_shotgun_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}

@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\w_models\w_masterkey_large"
+	"$translucent" 1
+}

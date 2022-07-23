@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\workshop\buildables\sentry_artillery\woodbox"
+	//"$bumpmap" 	"models\workshop\buildables\sentry_artillery\woodbox_normal"
+	"$phong" "1"
+	"$phongboost" "1"
+	"$phongexponent" "25"
+	"$lightwarptexture" "models\buildables\sentry1\sentry1_lightwarp"
+  "$phongfresnelranges"	"[.25 .5 1]"
+  "$basemapalphaphongmask" "1"
+	
+	"$rimlight" "1"		
+	"$rimlightexponent" "4"				
+	"$rimlightboost" "1.5"
+}

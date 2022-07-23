@@ -1,0 +1,58 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\weapons\c_items\crl.vtf"
+	
+	"$phong" "1"
+	"$phongexponent" "12"
+	"$phongboost" ".5"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+//	"$lightwarptexture" "models\player\pyro\pyro_lightwarp"
+	"$phongfresnelranges"	"[1.5 .5 3]"
+	"$basemapalphaphongmask" "1"
+	
+	"$tempvar" "0"
+	
+	"$rimlight" "1"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" ".125"
+
+	"360?$color2" "[ 0.4 0.4 0.4 ]"
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

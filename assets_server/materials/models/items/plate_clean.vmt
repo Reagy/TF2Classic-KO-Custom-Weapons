@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\items\plate.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\items\plate_clean"
+	}
+}

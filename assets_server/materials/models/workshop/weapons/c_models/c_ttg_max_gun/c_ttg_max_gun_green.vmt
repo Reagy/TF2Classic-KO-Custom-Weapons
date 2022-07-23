@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/models/workshop/weapons/c_models/c_ttg_max_gun/c_ttg_max_gun.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/workshop/weapons/c_models/c_ttg_max_gun/c_ttg_max_gun_green"
+	}
+}

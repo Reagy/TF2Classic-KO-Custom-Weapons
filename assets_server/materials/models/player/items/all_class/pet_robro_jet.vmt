@@ -1,0 +1,69 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/player/items/all_class/pet_robro_jet"
+	"$bumpmap" "models/effects/flat_normal"
+	"$detail" "effects/tiledfire/fireLayeredSlowTiled512.vtf"
+	"$detailscale" "5"
+	"$detailblendfactor" 0.0
+	"$detailblendmode" 6
+	$additive 1
+	$selfillum 1
+	
+	"$blendtintbybasealpha" "0" 
+	"$blendtintcoloroverbase" "0"  
+
+	"$colortint_base" "{213 72 73}"
+	"$color2" "{213 72 73}"  
+	"$colortint_tmp" "[0 0 0]"
+
+
+
+									// Boost for ambient cube component of rim lighting
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	$offset 0
+	$yellow 0
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$detail"
+			"animatedtextureframenumvar" "$detailframe"
+			"animatedtextureframerate" 30
+		}
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
+		"ItemTintColor"
+		{
+			"resultVar" "$colortint_tmp"
+		}
+		"SelectFirstIfNonZero"
+		{
+			"srcVar1"	"$colortint_tmp"
+			"srcVar2"	"$colortint_base"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+		"Sine" // a proxy which produces a sine wave
+		{
+			resultVar $selfillumtint // The shader parameter to be manipulated
+			sineperiod	0.1
+			sinemin	 	0.6
+			sinemax		1.5 
+		}
+	}
+}
