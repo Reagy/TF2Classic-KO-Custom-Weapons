@@ -1,0 +1,10 @@
+"Patch"
+{
+	include "materials\models\player\shared\red_invun.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/player/pyro/pyro_eyes_red"
+	"$detailblendfactor" "0"
+	}
+}

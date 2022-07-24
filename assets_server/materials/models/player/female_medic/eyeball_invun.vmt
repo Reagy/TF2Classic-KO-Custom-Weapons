@@ -1,0 +1,6 @@
+"UnLitGeneric"
+{
+	"$basetexture"	"models/player/female_medic/eyeball_invun"
+	"$surfaceprop"	"flesh"
+	"$model"		1
+}

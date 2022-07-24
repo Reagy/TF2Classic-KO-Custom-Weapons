@@ -1,0 +1,10 @@
+"Patch"
+{
+	include "materials\models\player\shared\yellow_invun.vmt"
+	
+	insert
+	{
+	"$basetexture" "models/player/female_heavy/female_heavy_head_yellow"
+	}
+}
+

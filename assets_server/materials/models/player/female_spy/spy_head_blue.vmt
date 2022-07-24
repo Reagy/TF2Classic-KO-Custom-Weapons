@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models/player/female_spy/spy_head_red.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/player/female_spy/spy_head_blue"
+	}
+}
