@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V5.3.8
+// Knockout Custom Weapons V5.3.9
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 + Tangerine Paint & Grunt's Weapon Addons V2
 // Adoptions taken from Renaissance Revival V1 by Yakibomb
@@ -5665,6 +5665,7 @@ Weapon from: New Old Weapons Pack"
 Just the right size for me pocket!
 
 Weapon from: New Old Weapons Pack
+Cosmetic by: 'Suomimies55'
 Animations by: 'Indigo'
 Edited by: 'Reagy'"
 			"item_logname"				"snubnose_civ"
@@ -5672,6 +5673,7 @@ Edited by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/w_models/w_snubnose_melee"
 			"model_world"				"models/weapons/custom/w_models/w_backup_plan.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_backup_plan_new.mdl"
+			"extra_wearable"			"models/player/items/civ_bill.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -5679,6 +5681,7 @@ Edited by: 'Reagy'"
 			}
 			"static_attrs"
 			{
+				"class select override vcd"				"taunt01"								// So he isn't posing strangely
 //				"clip size penalty hidden"				"0.5"									// 3 shots!	
 				"hidden secondary max ammo penalty"		"1.5"									// 36 ammo in secondary!
 //				"fire rate penalty hidden"				"0.8"									// Around 14% slower compared to the Shortstop
@@ -7628,117 +7631,6 @@ Weapon from: New Old Weapons Pack"
 				{
 					"attribute_class"	"set_keep_disguise"
 					"value"				"1"
-				}
-				"halloween reload time decreased"
-				{
-					"attribute_class"	"stickybomb_charge_rate"
-					"value" 			"0"
-				}
-				"damage force increase hidden"
-				{
-					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.265"													// Might be an interesting fold - you tell me how this goes!
-				}
-				"hand scale"																	// So you can do SOMETHING against buildings. Averages 40-55 damage, also viewpunches YOU which sucks
-				{
-					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"				"425"
-				}
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_Grenade_Normal.Single"
-				"sound_burst"			"Weapon_Grenade_Normal.Single"
-				"sound_special1"		"Weapon_TripMine.Explode"								// Recycled from CM5K's unused sounds
-				"animation_replacement"
-				{
-					//The Attacking Animations
-					"ACT_MP_ATTACK_STAND_BUILDING"				"ACT_MP_ATTACK_STAND_GRENADE_BUILDING"	// Sapper Placement anim
-					"ACT_MP_ATTACK_CROUCH_BUILDING"				"ACT_MP_ATTACK_STAND_GRENADE_BUILDING"
-					"ACT_MP_ATTACK_SWIM_BUILDING"				"ACT_MP_ATTACK_STAND_GRENADE_BUILDING"
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_nvg_pickup.wav"
-			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
-		}
-// Civ replacement
-		"3443"
-		{
-			"name"						"TF_WEAPON_TRAP_CONC"									// THIS IS FOR FUTURE REFERENCE! Due to a technical bug on TF2C's end, I can't implement this or anything similar to this,
-			"prefab"                    "weapon_umbrella"
-			"item_class"				"tf_weapon_pipebomblauncher"							// and be HAPPY about it, unless they refactor how items in the same "internal slot" conflict. And it's unlikely they will! But, still...
-			"show_in_armory"			"1"
-			"item_slot"					"melee"
-			"anim_slot"					"melee"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-
-//			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"Trap: Concussive Tripmine"
-			"item_type_name"			"Proximity Mine"										// For the record, by the way, this specific setup seems only possible on the SBL - no other weapon has ALL the functions needed, not even the MIRV
-			"item_description"			"Can deploy up to 10 traps at a time. Enemies caught in the blast are concussed!
-
-Tripmines also provide weak knockback
-Use them to get to a ledge in a pinch!
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"tripmine"
-			"item_iconname"				"tripmine"												// Doesn't usually display, but might be useful if I want it to fuck up buildings at some point...?
-			"image_inventory"			"backpack/weapons/w_models/w_tripmine"
-			"model_world"				"models/weapons/w_models/w_tripmine.mdl"
-			"model_player"				"models/weapons/v_models/v_tripmine_spy.mdl"			// Toss animation is recycled from the PASS-TIME Jack
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"civilian"					"1"
-			}
-			"static_attrs"
-			{
-				"mod max primary clip override"			"-1"
-				"damage bonus hidden"					"0.001"									// Just enough for the game to proc debuffs - this does no functional damage even with crits
-				"fire rate penalty hidden"				"2.5"									// So you don't get to spam these. It's like a hair under 2s or so between throws.
-				"hidden secondary max ammo penalty"		"1.7"									// 6 Tripmines to work with, total. 2 batches ignoring ammo refills at any point
-				"min_viewmodel_offset"					"5 -2 -4"
-			}
-			"attributes"
-			{
-				"proximity mines"
-				{
-					"attribute_class"	"mod_sticky_is_proxy"
-					"value" 			"1"
-				}
-				"view punch on hit"
-				{
-					"attribute_class"	"add_viewpunch_onhit"
-					"value" 			"1"														// This doesn't scale - it's either on or it's not.
-				}
-				"tranq on hit"
-				{
-					"attribute_class"	"mod_tranq_onhit"
-					"value" 			"3.5"
-				}
-				"custom projectile model"
-				{
-					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/w_tripmine_projectile.mdl"
-				}
-				// Backend stuff. This needs a lot more hiding than usual...
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_sticky_fizzles"
-					"value" 			"1"
-				}
-				"strange restriction type 2"
-				{
-					"attribute_class"	"add_max_pipebombs"
-					"value" 			"2"
-				}
-				"strange restriction type 3"
-				{
-					"attribute_class"	"no_self_blast_dmg"
-					"value" 			"2"
 				}
 				"halloween reload time decreased"
 				{
@@ -17537,12 +17429,14 @@ Found this in the Office Complex
 Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
+Cosmetic by: 'Suomimies55'
 Weapon by: 'Reagy'"														
 			"item_logname"				"spas_civ"
 			"item_iconname"				"spas"											
 			"image_inventory"			"backpack/weapons/w_models/w_spas" 						
 			"model_world"				"models/weapons/custom/w_models/w_spas_civ.mdl"					
-			"model_player"				"models/weapons/custom/v_models/v_spas_pyro.mdl"			
+			"model_player"				"models/weapons/custom/v_models/v_spas_pyro.mdl"
+			"extra_wearable"			"models/player/items/civ_bill.mdl"			
 			"attach_to_hands"			"2"													
 			"used_by_classes"
 			{		
@@ -20545,6 +20439,7 @@ Weapon by: 'Majro'"
 Check out my new weapon, weapon of choice
 
 Model by: 'A Paint Bucket Named Huey'
+Cosmetic by: 'Suomimies55'
 Original weapon by: 'shualdock'
 Edited by: 'Reagy'"
 			"item_slot"					"melee"
@@ -20558,6 +20453,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"				"models/weapons/custom/w_models/w_shot_civ.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_shot_civ.mdl"
+			"extra_wearable"			"models/player/items/civ_bill.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -20630,6 +20526,7 @@ I'm not a guns fellow, but I'd be lying if I said I've never seen these before
 Engravings clearly give a tactical advantage too!
 
 Model by: 'goldenjohnson' 'Gadget'
+Cosmetic by: 'Suomimies55'
 Original weapon by: 'shualdock'
 Edited by: 'Reagy'"
 			"item_slot"					"melee"
@@ -20643,6 +20540,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"				"models/weapons/custom/w_models/w_pistol_civ.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_pistol_civ.mdl"
+			"extra_wearable"			"models/player/items/civ_bill.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -20681,6 +20579,7 @@ Forces foe target into melee for 5 seconds
 Testing, testing? Lads is this thing on?
 
 Model by: 'XylemTube'
+Cosmetic by: 'Suomimies55'
 Original weapon by: 'shualdock'
 Edited by: 'Reagy'"
 			"item_slot"					"melee"
@@ -20694,6 +20593,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"				"models/weapons/custom/w_models/w_civmic.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_civmic.mdl"
+			"extra_wearable"			"models/player/items/civ_headset.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -20731,6 +20631,7 @@ Edited by: 'Reagy'"
 Ah, just the right size for a spoonful of money!
 
 Model by: 'Jenney Le Baron' 'Shadow Mario'
+Cosmetic by: 'Suomimies55'
 Original weapon by: 'shualdock'
 Edited by: 'Reagy'"
 			"item_slot"					"melee"
@@ -20744,6 +20645,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"				"models/weapons/custom/w_models/w_civspoon.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_civspoon.mdl"
+			"extra_wearable"			"models/player/items/civ_balaclava.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -20789,6 +20691,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"               "models/weapons/custom/w_models/w_firext_civ.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_firext_civ.mdl"
+			"extra_wearable"			"models/player/items/toten_backpack.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -20820,6 +20723,7 @@ Edited by: 'Reagy'"
 
 Good lord, they certainly live up to the name of 'our drunk neighbors'!
 
+Cosmetic by: 'Suomimies55'
 Weapon by: 'shualdock'"
 			"item_slot"					"melee"
 			"item_quality"				"unique"
@@ -20832,6 +20736,7 @@ Weapon by: 'shualdock'"
 			"image_inventory_size_h"	"82"
 			"model_world"				"models/weapons/custom/w_models/w_bottle_civ.mdl"
 			"model_player"				"models/weapons/v_models/v_bottle_demoman.mdl"
+			"extra_wearable"			"models/player/items/civ_chef.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -20877,6 +20782,7 @@ Weapon by: 'shualdock'"
 			"image_inventory_size_h"	"82"
 			"model_world"				"models/weapons/w_models/w_sandwich.mdl"
 			"model_player"				"models/weapons/v_models/v_sandwich_heavy.mdl"
+			"extra_wearable"			"models/player/items/civ_chef.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -20894,18 +20800,19 @@ Weapon by: 'shualdock'"
 		}
 		"8055"
 		{
-		    "item_name"					"Fisticuffs"
+		    "item_name"					"Armstrongs"
 			"prefab"                    "weapon_umbrella"
 			"item_class"                "tf_weapon_fists"
 			"item_type_name"			"#TF_Weapon_Fists"
 			"show_in_armory"            "1"
 			"item_description"			"Utility weapon: Cannot give minicrit boosts
-Deals normal melee damage
+Deals 'normal' melee damage
 
-Meet Mr. and Mrs. Brawlykins. Have at you!
+Lad, I used to box. Could have gone pro if I didn't go to Oxford and get a masters in economics.
 
 Animations by: Open Fortress
 Original weapon by: 'shualdock'
+Cosmetic by: 'Suomimies55'
 Edited by: 'Reagy'"
 			"item_slot"					"melee"
 			"item_quality"				"unique"
@@ -20918,6 +20825,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"               "models/weapons/v_models/v_fist_heavy.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_berserk_fists.mdl"
+			"extra_wearable"			"models/player/items/buff_civ_arms.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -20925,6 +20833,8 @@ Edited by: 'Reagy'"
 			}
 			"static_attrs"
 			{
+				"crit mod disabled hidden"				"0"
+				"damage bonus hidden"					"1.54"
 				"min_viewmodel_offset"					"10 0 -11"
 			}
 			"attributes"
@@ -20957,6 +20867,7 @@ Can repair and speed up building construction, but not add construction
 Is this what turns it off and on again?
 
 Model by: 'ColonelBD'
+Cosmetic by: 'Suomimies55'
 Original weapon by: 'shualdock'
 Edited by: 'Reagy'"
 			"item_slot"					"melee"
@@ -20970,6 +20881,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"               "models/weapons/custom/w_models/w_civwrench.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_civwrench.mdl"
+			"extra_wearable"			"models/player/items/civilian_engineer.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -20997,6 +20909,7 @@ Grants the target 3 seconds of Ubercharge
 Oh don't worry lad, the needle is sharp!
 
 Model by: 'Sierra Foxtrot'
+Cosmetic by: 'Suomimies55'
 Original weapon by: 'shualdock'
 Edited by: 'Reagy'"
 			"item_slot"					"melee"
@@ -21010,6 +20923,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"               "models/weapons/custom/w_models/w_civsaw.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_civsaw.mdl"
+			"extra_wearable"			"models/player/items/civ_medic.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -21043,6 +20957,7 @@ Manual Boost applies to enemies only
 Get to it lads!
 
 Model by: 'Gadget'
+Cosmetic by: 'Suomimies55'
 Original weapon by: 'shualdock'
 Edited by: 'Reagy'"
 			"item_slot"					"melee"
@@ -21056,6 +20971,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"               "models/weapons/custom/w_models/w_civwhip.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_civwhip.mdl"
+			"extra_wearable"			"models/player/items/civ_devo.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -21145,6 +21061,7 @@ Incredible how you can
 See right through me!
   
 Model by: 'IteGood'
+Cosmetic by: 'Suomimies55'
 Original weapon by: 'shualdock'
 Edited by: 'Reagy'"
 			"item_slot"					"melee"
@@ -21158,6 +21075,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"               "models/weapons/custom/w_models/w_knife_civ.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_knife_civ.mdl"
+			"extra_wearable"			"models/player/items/civ_balaclava.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -21180,6 +21098,195 @@ Edited by: 'Reagy'"
 					"attribute_class"	"mult_decloak_rate"
 					"value" 	".01" 
 				}
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}
+		
+		"8060"
+		{
+			"name"						"TF_WEAPON_TRAP_CONC"									// THIS IS FOR FUTURE REFERENCE! Due to a technical bug on TF2C's end, I can't implement this or anything similar to this,
+			"prefab"                    "weapon_umbrella"
+			"item_class"				"tf_weapon_pipebomblauncher"							// and be HAPPY about it, unless they refactor how items in the same "internal slot" conflict. And it's unlikely they will! But, still...
+			"show_in_armory"			"1"
+			"item_slot"					"melee"
+			"anim_slot"					"melee"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+//			"propername"				"1"
+			"item_quality"				"rarity3"
+			"item_name"					"Trap: Concussive Tripmine"
+			"item_type_name"			"Proximity Mine"										// For the record, by the way, this specific setup seems only possible on the SBL - no other weapon has ALL the functions needed, not even the MIRV
+			"item_description"			"Can deploy up to 10 traps at a time. Enemies caught in the blast are concussed!
+
+Tripmines also provide weak knockback
+Use them to get to a ledge in a pinch!
+
+Cosmetic by: 'Suomimies55'
+Weapon from: New Old Weapons Pack"
+			"item_logname"				"tripmine"
+			"item_iconname"				"tripmine"												// Doesn't usually display, but might be useful if I want it to fuck up buildings at some point...?
+			"image_inventory"			"backpack/weapons/w_models/w_tripmine"
+			"model_world"				"models/weapons/w_models/w_tripmine.mdl"
+			"model_player"				"models/weapons/v_models/v_tripmine_spy.mdl"			// Toss animation is recycled from the PASS-TIME Jack
+			"extra_wearable"			"models/player/items/civ_balaclava.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"civilian"					"1"
+			}
+			"static_attrs"
+			{
+				"mod max primary clip override"			"-1"
+				"damage bonus hidden"					"0.001"									// Just enough for the game to proc debuffs - this does no functional damage even with crits
+				"fire rate penalty hidden"				"2.5"									// So you don't get to spam these. It's like a hair under 2s or so between throws.
+				"hidden secondary max ammo penalty"		"1.7"									// 6 Tripmines to work with, total. 2 batches ignoring ammo refills at any point
+				"min_viewmodel_offset"					"5 -2 -4"
+			}
+			"attributes"
+			{
+				"proximity mines"
+				{
+					"attribute_class"	"mod_sticky_is_proxy"
+					"value" 			"1"
+				}
+				"view punch on hit"
+				{
+					"attribute_class"	"add_viewpunch_onhit"
+					"value" 			"1"														// This doesn't scale - it's either on or it's not.
+				}
+				"tranq on hit"
+				{
+					"attribute_class"	"mod_tranq_onhit"
+					"value" 			"3.5"
+				}
+				"custom projectile model"
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/w_models/w_tripmine_projectile.mdl"
+				}
+				// Backend stuff. This needs a lot more hiding than usual...
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mod_sticky_fizzles"
+					"value" 			"1"
+				}
+				"strange restriction type 2"
+				{
+					"attribute_class"	"add_max_pipebombs"
+					"value" 			"2"
+				}
+				"strange restriction type 3"
+				{
+					"attribute_class"	"no_self_blast_dmg"
+					"value" 			"2"
+				}
+				"halloween reload time decreased"
+				{
+					"attribute_class"	"stickybomb_charge_rate"
+					"value" 			"0"
+				}
+				"damage force increase hidden"
+				{
+					"attribute_class"	"mult_dmgself_push_force"
+					"value" 			"0.35"													// Might be an interesting fold - you tell me how this goes!
+				}
+				"hand scale"																	// So you can do SOMETHING against buildings. Averages 40-55 damage, also viewpunches YOU which sucks
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"425"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_Grenade_Normal.Single"
+				"sound_burst"			"Weapon_Grenade_Normal.Single"
+				"sound_special1"		"Weapon_TripMine.Explode"								// Recycled from CM5K's unused sounds
+				"animation_replacement"
+				{
+					//The Attacking Animations
+					"ACT_MP_ATTACK_STAND_BUILDING"				"ACT_MP_ATTACK_STAND_GRENADE_BUILDING"	// Sapper Placement anim
+					"ACT_MP_ATTACK_CROUCH_BUILDING"				"ACT_MP_ATTACK_STAND_GRENADE_BUILDING"
+					"ACT_MP_ATTACK_SWIM_BUILDING"				"ACT_MP_ATTACK_STAND_GRENADE_BUILDING"
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_nvg_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
+		}
+		
+		"8061"
+		{
+		    "item_name"					"Lord of the House"
+			"prefab"                    "weapon_umbrella"
+			"item_type_name"			"Money"
+			"show_in_armory"            "1"
+			"item_description"			"Passive Boost: Minicrit Boost
+Manual Boost (Mouse2): Give friendly 3s of Crit Boost
+
+Get some wonga.
+
+Models by: 'Liney' & 'cobalt'
+Weapon by: 'Reagy'"
+			"item_slot"					"melee"
+			"item_quality"				"rarity3"
+
+			"item_logname"				"dosh"
+			"item_iconname"             "dosh"			
+
+			"image_inventory"			"backpack/weapons/c_models/c_cashgrab"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"model_world"               "models/workshop/weapons/c_models/c_cashgrab/c_cashgrab.mdl"
+			"model_player"				"models/workshop/weapons/v_models/v_cashgrab/v_cashgrab_civ.mdl"
+			"extra_wearable"			"models/hats/civilian_magician/civilian_magician_complete.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"civilian"					"1"
+			}
+			"static_attrs"
+			{
+				"particle on melee hit"					"blood_trail_red_01_money"
+				"class select override vcd"				"taunt01"
+				"melee range multiplier"				"1.7"
+				"melee bounds multiplier"				"1.55"
+			}
+			"attributes"
+			{
+                "civ boost cond override"
+				{
+					"attribute_class"	"add_civ_boost_override"
+					"value" 			"33 0.3" 
+				}
+                "civ boost aura override"
+				{
+					"attribute_class"	"add_civ_aura_override"
+					"value" 			"112 1" 
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.25"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" 			"-75"
+				}
+				"reduced_healing_from_medics"
+				{
+					"attribute_class"	"mult_healing_from_medics"
+					"value"				"0.25"
+				}
+			}
+			"visuals"
+			{
+				"sound_melee_miss"		"Weapon_BoxingGloves.Miss"								// Funny thing, these sounds were ALSO in the game still, and not just the sound scripts, but also the sound files themselves. Guess they were planning on KGB for a bit.
+				"sound_melee_hit"		"Weapon_BoxingGloves.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_BoxingGloves.HitWorld"
+				"sound_burst"			"Weapon_BoxingGloves.MissCrit"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
