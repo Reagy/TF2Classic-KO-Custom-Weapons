@@ -21222,8 +21222,7 @@ Weapon from: New Old Weapons Pack"
 			"prefab"                    "weapon_umbrella"
 			"item_type_name"			"Money"
 			"show_in_armory"            "1"
-			"item_description"			"Passive Boost: Minicrit Boost
-Manual Boost (Mouse2): Give friendly 3s of Crit Boost
+			"item_description"			"Manual Boost (Mouse2): Give friendly 3s of Crit Boost
 
 Get some wonga.
 
@@ -21258,22 +21257,12 @@ Weapon by: 'Reagy'"
                 "civ boost cond override"
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value" 			"33 0.3" 
-				}
-                "civ boost aura override"
-				{
-					"attribute_class"	"add_civ_aura_override"
-					"value" 			"112 1" 
+					"value" 			"33 3" 
 				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
 					"value"				"0.25"
-				}
-				"max health additive penalty"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-75"
 				}
 				"reduced_healing_from_medics"
 				{
@@ -31376,9 +31365,9 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"scout"					"1"
 			}
-			"static_attrs"																		// The base form of this is a very fast-swinging, 25 DMG flurry of punches. Slightly modified for a few classes!
+			"static_attrs"											
 			{
-				"fire rate bonus hidden" 				"0.5"
+				"fire rate bonus hidden" 				"0.8"
 			}
 			"attributes"
 			{
@@ -31390,7 +31379,7 @@ Weapon by: 'The One Of Wonders'"
 		        "damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"2"
+					"value" 			"1.75"
 				}
 				"heal on kill"
 				{
@@ -31410,12 +31399,17 @@ Weapon by: 'The One Of Wonders'"
 				"spread penalty"													
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.5"
+					"value"				"3"
 				}
 				"dmg taken increased"
 				{
 					"attribute_class"	"mult_dmgtaken"
 					"value" 			"2"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_projectile_range"
+					"value" 			"0.075"
 				}
 			}
 			"visuals"
