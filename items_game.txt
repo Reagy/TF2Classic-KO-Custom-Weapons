@@ -31164,7 +31164,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Grimm Omen"
 			"item_type_name"			"Scythe"
-			"item_description"			"A veil of darkness: on hit: invisibility until you die, attacking will make you visible.
+			"item_description"			"The Blade of Death: on hit: deal crits for 3 seconds
 Crits against aiming players
 
 Reap what you sow.
@@ -31183,16 +31183,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "add condition on hit"															
-				{
-					"attribute_class"	"add_onhit_addcond"
-					"value"				"30 3"
-				}
-				"mark for death"																
-				{
-					"attribute_class"	"mark_for_death"
-					"value"				"1"
-				}
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
@@ -31206,7 +31196,7 @@ Weapon by: 'The One Of Wonders'"
 				"move speed bonus"
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"				"1.5"
+					"value"				"1.33"
 				}
 				"fire rate penalty"
 				{
@@ -31231,7 +31221,7 @@ Weapon by: 'The One Of Wonders'"
 				"add condition on hit"
 				{
 					"attribute_class"	"add_onhit_addcond_self"
-					"value"				"64 42069"
+					"value"				"33 3"
 				}
 				"strange restriction type 1"
 				{
