@@ -20055,6 +20055,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}	
 				"bleeding duration"
 				{
 					"attribute_class"	"bleeding_duration"
@@ -20241,7 +20246,7 @@ Original Model by: 'Oobersli'
 Edited by: 'wolfcl0ck'
 Weapon by: 'Majro'"
 			"item_logname"				"bmmhv2"
-//			"item_iconname"				"tf_projectile_rocket"
+//			"item_iconname"				"bmmhv2"
 			"image_inventory"			"backpack/weapons/c_models/c_bmmh/c_bmmh"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
@@ -20341,7 +20346,7 @@ The hell's this Baseball knock-off?
 Model by: 'Haau'
 Weapon by: 'Majro'"
 			"item_logname"				"sandmate"
-//			"item_iconname"				"none"
+//			"item_iconname"				"sandmate"
 			"image_inventory"			"backpack/weapons/c_models/c_sandmate\c_sandmate"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
@@ -21257,7 +21262,7 @@ Weapon by: 'Reagy'"
                 "civ boost cond override"
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value" 			"33 3" 
+					"value" 			"34 3" 
 				}
 				"damage penalty"
 				{
@@ -21699,11 +21704,13 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			
 			"item_name"				"Big Shot"
 			"item_type_name"			"...Sniper Rifle?"
-			"item_description"			"
-'I hate you campers; everybody bloody hates you...'
-Is what that drunkard would say if he didn't have this for a short amount a time.
+			"item_description"			"Headshots deal a reduced 33% damage
+Enemies hit by this weapon are forced downwards
+
+What comes up, must come down!
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
+
 			"item_logname"				"bigsniper"
 			"item_iconname"				"bigsniper"
 			"item_slot"				"primary"
@@ -22276,8 +22283,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_name"				"Gaelic Gat"
 			"item_type_name"			"...Pistol?"
-			"item_description"			"Equalize: Enemies hit by this weapon are stripped to melee for 5 seconds
-
+			"item_description"			"
 If only you were sober enough to not break it...
 
 Model by: 'G o a t K i n g'
@@ -22358,8 +22364,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_name"				"Gaelic Gat"
 			"item_type_name"			"...Pistol?"
-			"item_description"			"Equalize: Enemies hit by this weapon are stripped to melee for 5 seconds
-
+			"item_description"			"
 Just because it doesn't work doesn't mean it isn't a weapon, son.
 
 Model by: 'G o a t K i n g'
@@ -22518,9 +22523,9 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname" 				"tfc_minigun"
 			"item_iconname" 			"tfc_minigun"
 			"image_inventory"			"backpack\weapons\c_models\c_tfc_minigun\c_tfc_minigun"
-			"model_world"				"models/weapons/c_models/c_tfc_minigun/c_tfc_minigun.mdl"
-			"model_player"				"models/weapons/c_models/c_tfc_minigun/c_tfc_minigun.mdl"
-			"attach_to_hands"			"1"
+			"model_world"				"models/weapons/w_models/w_tfc_minigun.mdl"
+			"model_player"				"models/weapons/v_models/v_tfc_minigun_heavy.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"heavy"					"1"
@@ -23138,8 +23143,9 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_name"				"Combat Pistol (Melee)"
 			"item_type_name"			"...Pistol?"
 			"image_inventory"			"backpack/weapons/w_models/w_walther_p38"
-			"item_description"			"
-It stopped shooting, but now it started smacking now start standing still ya dope!
+			"item_description"			"Equalize: Forces the user and target into melee combat for 5 seconds
+
+I can't shoot and neither can you ya dope!
 
 Model from: Open Fortress
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
@@ -27262,6 +27268,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_description"			"Bullet has travel time
 This weapon has damage ramp up
 
+Enemies hit are knocked upwards and away, deals crits against overhealed players
+
 Not this time, mate.
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
@@ -28930,7 +28938,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"min_viewmodel_offset"					"8.5 -6 -5"	
 				"reload time increased hidden"			"0.8"
 				"damage bonus hidden"		"0.3"
-				"fire rate penalty hidden"		"0.06666666666"
+				"fire rate penalty hidden"		"0.09"
 				"clip size penalty hidden"				"5"
 				"hidden primary max ammo bonus"			"5"								// 120
 				"class select override vcd"				"taunt06"
@@ -30042,17 +30050,21 @@ Weapon by: 'The One Of Wonders'"
 		"9095"
 		{
 			"name"						"TF_WEAPON_HEAVY_RIFLE"
-			"prefab"					"weapon_shotgun"
+			"item_class"				"tf_weapon_scattergun"
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
 			"anim_slot"                 "secondary"
-			"item_class"				"tf_weapon_shotgun_primary"
 			"item_quality"				"rarity2"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
 
 			"propername"				"1"
 			"item_name"					"Chain of Command"
 			"item_type_name"			"Heavy Pump-Action Rifle"
 			"item_description"			"This weapon fires large bullets with no damage falloff
+
+Gain mini-crits on hit for a second
 
 Now this is a real gun! Come get some, maggots!
 
@@ -30071,9 +30083,35 @@ Weapon by: 'The One Of Wonders'"
 			"static_attrs"
 			{
 			    "class select override vcd"			"taunt01_v2"	
+				"override projectile type"				"2"	
 			}
 			"attributes"
 			{
+			    "provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}	
+			    "rocket gravity"
+				{
+					"attribute_class"	"mod_rocket_gravity"
+					"value"				"0.5665" 
+				}
+			    "explosive bullets"
+				{
+					"attribute_class"	"explosive_bullets"
+					"value"				"1"
+				}
+			    "heal on kill"															
+				{
+					"attribute_class"	"heal_on_kill"
+					"value"				"40"
+				}
+				"add condition on hit"															
+				{
+					"attribute_class"	"add_onhit_addcond_self"
+					"value"				"112 1"
+				}
 			    "crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -30087,48 +30125,54 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"11.0"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"0.1"
+					"value"				"8"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"0.67"
+					"value"				"0.5"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"1.2"
+					"value"				"1.44444444444444"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.4"
+					"value"				"0.444444444444444"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.225"
+					"value"				"0.7"
+				}
+				"scattergun no reload single"													
+				{
+					"attribute_class"	"set_scattergun_no_reload_single"
+					"value"				"1"
+				}
+				"voice pitch scale"	                      													
+				{
+					"attribute_class"	"mult_explosion_radius"
+			     	"value"				"0.2"
 				}
 				"voice pitch scale"
 				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"1.4"
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"2"
 				}
-				"voice pitch scale"
+				"custom projectile model"														// Fireball projectiles
 				{
-					"attribute_class"	"mult_switch_from_wep_deploy_time"
-					"value"				"1.4"
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/w_models/w_drg_ball.mdl"
 				}
 			}
 			"visuals"
 			{
 			    "sound_single_shot"		"Weapon_ChainCommand.Shoot"
 				"sound_burst"			"Weapon_ChainCommand.ShootCrit"
+				"sound_special1"		"Weapon_Airstrike.Explosion"
 			}
 		}
 
@@ -31172,6 +31216,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "provide on active"    
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
@@ -31210,7 +31259,7 @@ Weapon by: 'The One Of Wonders'"
 				"add condition on hit"
 				{
 					"attribute_class"	"add_onhit_addcond_self"
-					"value"				"33 3"
+					"value"				"34 3"
 				}
 				"strange restriction type 1"
 				{
