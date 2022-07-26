@@ -31398,7 +31398,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"The Payoff"
 			"item_type_name"			"Scattergun"
-			"item_description"			"
+			"item_description"			"This weapon has limited range
 Feeling lucky, punk?
 
 Model by: 'RetroMike'
@@ -31416,7 +31416,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"											
 			{
-				"fire rate bonus hidden" 				"0.8"
+				"fire rate bonus hidden" 				"0.9"
 			}
 			"attributes"
 			{
@@ -31428,12 +31428,12 @@ Weapon by: 'The One Of Wonders'"
 		        "damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"1.75"
+					"value" 			"1.5"
 				}
 				"heal on kill"
 				{
 					"attribute_class"	"heal_on_kill"
-					"value" 			"125"
+					"value" 			"25"
 				}
 				"Reload time decreased"
 				{
@@ -31448,12 +31448,17 @@ Weapon by: 'The One Of Wonders'"
 				"spread penalty"													
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"3"
+					"value"				"2"
 				}
-				"dmg taken increased"
+				"max health additive penalty"
 				{
-					"attribute_class"	"mult_dmgtaken"
-					"value" 			"2"
+					"attribute_class"	"add_maxhealth"
+					"value" 			"-75"
+				}
+				"health from healers reduced"
+				{
+					"attribute_class"	"mult_health_fromhealers"
+					"value" 			"0"
 				}
 				"voice pitch scale"
 				{
@@ -31718,7 +31723,7 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"		"10 0 -6"
-				"hidden secondary max ammo penalty"		"1.2"
+				"hidden secondary max ammo penalty"		"1.33333333333"
 			}
            	"attributes"
             {				
@@ -31735,7 +31740,7 @@ Weapon by: 'Reagy'"
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.95"
+					"value"				"0.9"
 				}
 				"clip size bonus"
 				{
@@ -31747,10 +31752,15 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mult_dmg"
 					"value"				"0.85"
 				}
+				"spread penalty"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"1.66"
+				}
 				"reload time increased"	
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"2.15"
+					"value"				"2"
 				}			
 			}
 			"visuals"
