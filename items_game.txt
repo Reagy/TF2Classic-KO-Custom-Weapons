@@ -31197,7 +31197,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Grimm Omen"
 			"item_type_name"			"Scythe"
-			"item_description"			"The Blade of Death: on hit: deal crits for 3 seconds
+			"item_description"			"
 Crits against aiming players
 
 Reap what you sow.
@@ -31221,6 +31221,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"provide_on_active"
 					"value"				"1"
 				}
+				"critboost on kill"
+				{
+					"attribute_class"	"add_onkill_critboost_time"
+					"value"				"5"
+				}
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
@@ -31236,30 +31241,25 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_player_movespeed"
 					"value"				"1.33"
 				}
+				"self mark for death"
+				{
+					"attribute_class"	"self_mark_for_death"
+					"value"				"1"
+				}
+				"dmg taken increased"
+				{
+					"attribute_class"	"mult_dmgtaken"
+					"value"				"1.2"
+				}
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.5"
+					"value"				"1.33"
 				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}
-				"maxammo primary reduced"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0"
-				}
-				"maxammo secondary reduced"
-				{
-					"attribute_class"	"mult_maxammo_secondary"
-					"value"				"0"
-				}
-				"add condition on hit"
-				{
-					"attribute_class"	"add_onhit_addcond_self"
-					"value"				"34 3"
 				}
 				"strange restriction type 1"
 				{
