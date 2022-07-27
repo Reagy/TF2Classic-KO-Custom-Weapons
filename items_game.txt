@@ -21262,7 +21262,7 @@ Weapon by: 'Reagy'"
                 "civ boost cond override"
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value" 			"34 3" 
+					"value" 			"34 0.3" 
 				}
 				"damage penalty"
 				{
@@ -27966,7 +27966,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"ubercharge rate penalty"
 				{
 					"attribute_class"	"mult_medigun_uberchargerate"
-					"value"				"0.0"
+					"value"				"0.000001"
 				}
 			}
 			"visuals"
