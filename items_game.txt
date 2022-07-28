@@ -33058,6 +33058,73 @@ Weapon from: Fred's Fight Starters"
 			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
 			"drop_sound"			"#ui/item_metal_weapon_drop.wav"
 		}
+		"2038" // Soldier Primary Weapon : Beggar's Bazooka
+		{
+			"name"						"TF_WEAPON_ROCKETLAUNCHER_TRASH"
+			"prefab"					"weapon_rocketlauncher"
+			"show_in_armory"				"1"
+			"propername"					"1"
+			"item_type_name"				"#TF_Weapon_RocketLauncher"
+			"item_name"					"Beggar's Bazooka"
+//Break//
+"item_description"
+"What is better than killing a man with a rocket launcher? Killing a man with a rocket launcher that YOU HAVE MADE!"
+//Break//
+			"item_quality"					"unique"
+			"image_inventory"				"backpack/workshop/weapons/c_models/c_dumpster_device/c_dumpster_device"
+			"model_player"					"models/weapons/c_models/c_dumpster_device/c_dumpster_device.mdl"
+			"model_world"					"models/weapons/c_models/c_dumpster_device/c_dumpster_device.mdl"
+			"attach_to_hands"				"1"
+			"attributes"
+			{
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"			"0.3"
+				}
+				"blast radius decreased"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value" 		"0.8"
+				}
+				"projectile spread angle penalty"
+				{
+					"attribute_class"	"voice_pitch_scale"
+					"value"			"3"
+				}
+				"no primary ammo from dispensers while active"
+				{
+					"attribute_class"	"no_primary_ammo_from_dispensers"
+					"value"	"1"
+				}
+				
+				// HIDDEN
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_reload_time_hidden"
+					"value" 			"1.3"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" "0.75"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.06"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_Does_Dumpster.Single"
+				"sound_burst"			"Weapon_Does_Dumpster.SingleCrit"
+				"sound_reload"			"Weapon_DumpsterRocket.Reload"
+				"sound_special1"		"BaseExplosionEffect.Sound"
+			}
+			"mouse_pressed_sound"			"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}
 	}
 	
 	"attributes"
