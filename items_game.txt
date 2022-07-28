@@ -33058,7 +33058,12 @@ Weapon from: Fred's Fight Starters"
 			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
 			"drop_sound"			"#ui/item_metal_weapon_drop.wav"
 		}
-		"2038" // Soldier Primary Weapon : Beggar's Bazooka
+//--------------------------------
+//--------------------------------
+//-- BEGGARS BAZOOKA - 20001    --
+//--------------------------------
+//--------------------------------
+		"20001" // Soldier Primary Weapon : Beggar's Bazooka
 		{
 			"name"						"TF_WEAPON_ROCKETLAUNCHER_TRASH"
 			"prefab"					"weapon_rocketlauncher"
@@ -33068,7 +33073,10 @@ Weapon from: Fred's Fight Starters"
 			"item_name"					"Beggar's Bazooka"
 //Break//
 "item_description"
-"What is better than killing a man with a rocket launcher? Killing a man with a rocket launcher that YOU HAVE MADE!"
+"What is better than killing a man with a rocket launcher? Killing a man with a rocket launcher that YOU HAVE MADE!
+
+Weapon by: azzy
+"
 //Break//
 			"item_quality"					"unique"
 			"image_inventory"				"backpack/workshop/weapons/c_models/c_dumpster_device/c_dumpster_device"
