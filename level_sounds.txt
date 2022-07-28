@@ -13567,3 +13567,41 @@
 
 	"wave"			")weapons/elites_crit.wav"
 }
+
+// ------------------------------------------------------------------------------------ //
+// Dumpster Rocket Launcher
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Does_Dumpster.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/doom_rocket_launcher.wav"
+}
+
+"Weapon_Does_Dumpster.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/doom_rocket_launcher_crit.wav"
+}
+
+"Weapon_DumpsterRocket.Reload"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"		"1"
+	"pitch"			"100"
+	"wave"			"weapons/dumpster_rocket_reload.wav"
+}
+
+"Weapon_DumpsterRocket.Reload_FP"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1"
+	"pitch"			"100"
+	"wave"			")weapons/dumpster_rocket_reload_fp.wav"
+}
