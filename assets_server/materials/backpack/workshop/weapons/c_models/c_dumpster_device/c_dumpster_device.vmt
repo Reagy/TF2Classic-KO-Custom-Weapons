@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/workshop/weapons/c_models/c_dumpster_device/c_dumpster_device"
+	"$translucent" 1
+	"$vertexcolor" 1
+}
