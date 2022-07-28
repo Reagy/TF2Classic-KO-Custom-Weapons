@@ -33075,8 +33075,7 @@ Weapon from: Fred's Fight Starters"
 "item_description"
 "What is better than killing a man with a rocket launcher? Killing a man with a rocket launcher that YOU HAVE MADE!
 
-Weapon by: azzy
-"
+Weapon by: azzy"
 //Break//
 			"item_quality"					"unique"
 			"image_inventory"				"backpack/workshop/weapons/c_models/c_dumpster_device/c_dumpster_device"
