@@ -1,0 +1,42 @@
+
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/weapons/c_items/knife_affair_red.vtf"
+	"$bumpmap" "models\weapons\c_items/knife_affair_nrm.vtf"
+
+	"$basemapalphaphongmask" 1
+
+	"$phong" "1"
+	"$phongexponent" ".5"
+	"$phongboost" "1"	
+	"$lightwarptexture" "models\player\pyro\pyro_lightwarp"
+
+	"$rimlight" "0.5"
+	"$rimlightexponent" "5"	
+	"$rimlightboost" "0.25"
+
+	"$nocull" 1
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}
