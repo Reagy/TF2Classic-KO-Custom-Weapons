@@ -13567,3 +13567,166 @@
 
 	"wave"			")weapons/elites_crit.wav"
 }
+// ------------------------------------------------------------------------------------ //
+// Worst Nightmare
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_NightRevolver.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"		")weapons\nightrevolver_shoot.wav"
+
+}
+"Weapon_NightRevolver.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"			")weapons/nightrevolver_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Gold Colt
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_GoldColt.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"		")weapons\goldcolt_shoot.wav"
+
+}
+"Weapon_GoldColt.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"			")weapons/goldcolt_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Spy C4 brick
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_SpyC4.Explode"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"		")weapons\explosivecharge_explode.wav"
+
+}
+// ------------------------------------------------------------------------------------ //
+// BOFORS THICC BOI
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_BofortAT.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"rndwave"
+	{
+		"wave"		")weapons\bofors_shoot1.wav"
+		"wave"		")weapons\bofors_shoot2.wav"
+		"wave"		")weapons\bofors_shoot3.wav"
+	}
+}
+"Weapon_BofortAT.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"			")weapons/bofors_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// HEAVY IS SENTRY
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_SentryHeavy.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/sentry_heavy_fire.wav"
+}
+
+"Weapon_SentryHeavy.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/sentry_heavy_fire_crit.wav"
+}
+
+"Weapon_SentryHeavy.Spin"	
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		")weapons/sentry_heavy_spin_loop.wav"
+}
+
+"Weapon_SentryHeavy.WindUp"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/sentry_heavy_spin_up.wav"
+}
+"Weapon_SentryHeavy.WindDown"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/sentry_heavy_spin_down.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// SHAAK
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_SharkRifle.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"		")weapons\shark_shoot.wav"
+
+}
+"Weapon_SharkRifle.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"			")weapons/shark_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Burst Rifle for Engineer
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_EngiBurstRifle.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"		")weapons\burstgun_engi_shoot.wav"
+
+}
+"Weapon_EngiBurstRifle.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"			")weapons/burstgun_engi_shoot_crit.wav"
+}
