@@ -15071,7 +15071,8 @@ Weapon by: 'Reagy'"
 		"7043"
 		{
 			"name"						"TF_WEAPON_M4_SOLDIER"
-			"item_class"				"tf_weapon_nailgun"							
+//			"item_class"				"tf_weapon_nailgun"		
+			"item_class"				"tf_weapon_shotgun_primary"					
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
 			"anim_slot"					"secondary"
@@ -15088,13 +15089,15 @@ Weapon by: 'Reagy'"
 			"item_description"			"
 Some folks are born made to wave the flag
 
-Model by: 'Stiffy360'
+Model from: Open Fortress
 Weapon by: 'Reagy'"
 			"propername"				"1"
 			"anim_slot"					"secondary"
-			"image_inventory"			"backpack/weapons/w_models/w_m4_soldier"
-			"model_world"				"models/weapons/custom/w_models/w_m4_soldier.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_m4_soldier.mdl"
+			"image_inventory"			"backpack/weapons/w_models/w_assaultrifle"
+//			"model_world"				"models/weapons/custom/w_models/w_m4_soldier.mdl"
+//			"model_player"				"models/weapons/custom/v_models/v_m4_soldier.mdl"
+			"model_world"				"models/weapons/custom/w_models/w_assault_rifle_soldier.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_assault_rifle_soldier.mdl"
 			"extra_wearable"			"models/player/items/custom/soldier/going_commando.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -15103,8 +15106,15 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"
 			{
+				"UNIQUE bullets per shot bonus HIDDEN"	"0.1"
+				"scattergun no reload single"			"1"
+				"damage bonus hidden"					"3.8"
+				"clip size penalty hidden"				"5"
+				"fire rate penalty hidden"				"0.2"
+				"hidden primary max ammo bonus"			"3.75"				
+				
 				"override projectile type" 				"1"
-				"hidden primary max ammo bonus"			"0.96"
+//				"hidden primary max ammo bonus"			"0.96"
 				"class select override vcd"				"taunt02_v1"
 				"min_viewmodel_offset"					"5 0 -10"
 			}
@@ -15129,6 +15139,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"add_maxhealth"
 					"value"				"-25"
+				}
+                "Reload time increased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"3.2"
 				}				
 			}
 			"visuals"
@@ -19076,7 +19091,7 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/w_models/w_fal"
 			"model_world"				"models/weapons/custom/w_models/w_fal.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_fal.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_fal_soldier.mdl" // Make a soldier specific one with a faster animation fps
 			"extra_wearable"			"models/player/items/custom/soldier/going_commando.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -19090,7 +19105,7 @@ Weapon by: 'Reagy'"
 				"damage bonus hidden"					"3.8"
 				"clip size penalty hidden"				"3.25"
 				"fire rate penalty hidden"				"0.2"
-				"hidden primary max ammo bonus"			"1.28"
+				"hidden primary max ammo bonus"			"1.9"
 				
 				"override projectile type" 				"1"
 //				"hidden primary max ammo bonus"			"0.96"
@@ -19127,7 +19142,7 @@ Weapon by: 'Reagy'"
                 "Reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"1.15"
+					"value"				"3.2"
 				}					
 			}
 			"visuals"
@@ -20189,8 +20204,8 @@ Weapon by: 'Majro'"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
 
-			"model_world"					"models\weapons\w_models\w_dynamitesfrag.mdl"
-			"model_player"					"models\weapons\v_models\v_dynamitesfrag.mdl"
+			"model_world"					"models\weapons\w_models\w_dynamitesfrag_new.mdl"
+			"model_player"					"models\weapons\v_models\v_dynamitesfrag_new.mdl"
 			"attach_to_hands"				"2"
 			"used_by_classes"
 			{
@@ -20239,7 +20254,7 @@ Weapon by: 'Majro'"
 				"custom projectile model"
 				{
 					"attribute_class" "custom_projectile_model"
-					"value"			"models\weapons\w_models\wp_dynamitefrag.mdl"
+					"value"			"models\weapons\w_models\wp_dynamitesfrag_new.mdl"
 				}
 			}
 			"visuals"
