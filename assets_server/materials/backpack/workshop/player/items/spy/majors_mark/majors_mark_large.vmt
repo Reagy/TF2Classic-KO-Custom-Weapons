@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture"		"backpack/workshop/player/items/spy/majors_mark/majors_mark_large"
+	"$translucent"		"1"
+}

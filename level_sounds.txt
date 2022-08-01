@@ -13730,3 +13730,40 @@
 
 	"wave"			")weapons/burstgun_engi_shoot_crit.wav"
 }
+// ------------------------------------------------------------------------------------ //
+// Foxhounds
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Foxhounds.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/foxhound_shoot.wav"
+}
+"Weapon_Foxhounds.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/foxhound_crit.wav"
+}
+"Weapon_Foxhounds.Draw"
+{
+	"channel"		"CHAN_AUTO"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".5"
+	"wave"			")weapons/foxhound_draw.wav"
+}
+"Weapon_Foxhounds.ReloadSpeech"
+{
+	"channel"		"CHAN_AUTO"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".5"
+	"rndwave"
+	{
+		"wave"		")weapons\foxhound_reloadspeech1.wav"
+		"wave"		")weapons\foxhound_reloadspeech2.wav"
+		"wave"		")weapons\foxhound_reloadspeech3.wav"
+	}
+}
