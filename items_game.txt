@@ -32055,12 +32055,12 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"																
 				{
 					"attribute_class"	"mult_cloak_rate"
-					"value" 			"-0.8"
+					"value" 			"0.2"
 				}
                 "mult decloak rate"																
 				{
 					"attribute_class"	"mult_decloak_rate"
-					"value" 			"0.2"
+					"value" 			"0.4"
 				}
 			}
 			"visuals"
@@ -32470,7 +32470,7 @@ Weapon by: 'The One Of Wonders'"
 			{
 //				"override projectile type" 				"14"
 				"mod max primary clip override"			"-1"
-				"damage bonus hidden"					"2.75"									
+				"damage bonus hidden"					"1.5"									
 				"fire rate penalty hidden"				"10"									
 				"hidden secondary max ammo penalty"		"0.05"									
 				"min_viewmodel_offset"					"5 -2 -4"
@@ -32481,6 +32481,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_sticky_is_proxy"
 					"value" 			"1"
+				}
+				"dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"2.5"
 				}
 				"deploy time increased"
 				{
