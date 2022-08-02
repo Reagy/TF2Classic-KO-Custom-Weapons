@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V5.4
+// Knockout Custom Weapons V5.4r1
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 + Tangerine Paint & Grunt's Weapon Addons V2
 // Adoptions taken from Renaissance Revival V1 by Yakibomb
@@ -19561,6 +19561,7 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Assault and Battering"
 			"item_type_name"			"Riot Sheild"
+			"item_logname"				"democop_shield"
 			"item_description"			"
 You are unable to use a Secondary Weapon while this item is equipped
 
@@ -20409,7 +20410,7 @@ Original Model by: 'Oobersli'
 Edited by: 'wolfcl0ck'
 Weapon by: 'Majro'"
 			"item_logname"				"bmmhv2"
-//			"item_iconname"				"bmmhv2"
+			"item_iconname"				"bmmhv2"
 			"image_inventory"			"backpack/weapons/c_models/c_bmmh/c_bmmh"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
@@ -20509,7 +20510,7 @@ The hell's this Baseball knock-off?
 Model by: 'Haau'
 Weapon by: 'Majro'"
 			"item_logname"				"sandmate"
-//			"item_iconname"				"sandmate"
+			"item_iconname"				"sandmate"
 			"image_inventory"			"backpack/weapons/c_models/c_sandmate\c_sandmate"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
@@ -21270,7 +21271,7 @@ Edited by: 'Reagy'"
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
-		
+		// V5.4r1 Dropped active ammo count and increased fire delay		
 		"8060"
 		{
 			"name"						"TF_WEAPON_TRAP_CONC"									// THIS IS FOR FUTURE REFERENCE! Due to a technical bug on TF2C's end, I can't implement this or anything similar to this,
@@ -21287,7 +21288,8 @@ Edited by: 'Reagy'"
 			"item_quality"				"rarity3"
 			"item_name"					"Trap: Concussive Tripmine"
 			"item_type_name"			"Proximity Mine"										// For the record, by the way, this specific setup seems only possible on the SBL - no other weapon has ALL the functions needed, not even the MIRV
-			"item_description"			"Can deploy up to 10 traps at a time. Enemies caught in the blast are concussed!
+			"item_description"			"Can deploy up to 5 traps at a time.
+Enemies caught in the blast are concussed!
 
 Tripmines also provide weak knockback
 Use them to get to a ledge in a pinch!
@@ -21309,7 +21311,7 @@ Weapon from: New Old Weapons Pack"
 			{
 				"mod max primary clip override"			"-1"
 				"damage bonus hidden"					"0.001"									// Just enough for the game to proc debuffs - this does no functional damage even with crits
-				"fire rate penalty hidden"				"2.5"									// So you don't get to spam these. It's like a hair under 2s or so between throws.
+				"fire rate penalty hidden"				"6.0"									// So you don't get to spam these. It's like a hair under 2s or so between throws.
 				"hidden secondary max ammo penalty"		"1.7"									// 6 Tripmines to work with, total. 2 batches ignoring ammo refills at any point
 				"min_viewmodel_offset"					"5 -2 -4"
 			}
@@ -21344,7 +21346,7 @@ Weapon from: New Old Weapons Pack"
 				"strange restriction type 2"
 				{
 					"attribute_class"	"add_max_pipebombs"
-					"value" 			"2"
+					"value" 			"-3"
 				}
 				"strange restriction type 3"
 				{
@@ -22451,7 +22453,7 @@ If only you were sober enough to not break it...
 
 Model by: 'G o a t K i n g'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
-			"item_logname"				"glock_melee"
+			"item_logname"				"glock_melee_demo"
 			"item_iconname"				"glock_melee"
 			"image_inventory"			"backpack/weapons/w_models/w_tfc_glock"
 			"model_world"				"models/weapons/w_models/w_glock_melee.mdl"
@@ -22532,7 +22534,7 @@ Just because it doesn't work doesn't mean it isn't a weapon, son.
 
 Model by: 'G o a t K i n g'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
-			"item_logname"				"glock_melee"
+			"item_logname"				"glock_melee_soldier"
 			"item_iconname"				"glock_melee"
 			"image_inventory"			"backpack/weapons/w_models/w_tfc_glock"
 			"model_world"				"models/weapons/w_models/w_glock_melee.mdl"
@@ -24470,6 +24472,7 @@ Modified by: 'Reagy'"
 			"show_in_armory"			"1"
 			
 			"item_quality"				"rarity3"
+			"item_logname"				"pda_handy"
 			
 			"propername"				"1"
 			"item_name"					"PDA: Handy Partner"
@@ -26880,8 +26883,8 @@ What? Its not meant to shoot nails?
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons
 Edited by: 'Reagy'"
-			"item_logname"				"nailgun"
-			"item_iconname"				"nailgun"
+			"item_logname"				"hvynailgun"
+			"item_iconname"				"hvynailgun"
 			"image_inventory"			"backpack/weapons/w_models/w_soviet_souvenir"
 			"model_world"				"models/weapons/w_models/w_soviet_souvenir_soldier.mdl"
 			"model_player"				"models/weapons/v_models/v_soviet_souvenir_scout.mdl"
@@ -27851,6 +27854,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"anim_slot"					"FORCE_NOT_USED"								// I actually need these here, for once. This item doesn't load from a prefab, so it needs info for the bounding boxes of the icons!
 			"image_inventory_size_w"	"128"													
 			"image_inventory_size_h"	"82"
+			"item_logname"				"flak_vest"
 
 			"propername"				"1"
 			"item_name"				"Flak Vest"
@@ -27999,6 +28003,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_type_name"			"#TF_Weapon_PDA_Engineer"
 			
 			"item_quality"				"rarity3"
+			"item_logname"				"pipboy"
 			
 			"item_description"			"Slows down the construction speed of all buildings by 33% and increases their metal cost by 20 metal.
 
@@ -28073,6 +28078,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
+			"item_logname"				"totenwerfer"
 			"item_name"					"Totenwerfer"
 			"item_type_name"			"#TF_Weapon_Medigun"
 			"item_description"			"This weapon cannot ÜberCharge
@@ -28336,6 +28342,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
+			"item_logname"				"ghost_wtf"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack\player\items\all_class\pet_robro"
@@ -28384,6 +28391,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
+			"item_logname"				"ghost_wtf"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack\player\items\all_class\pet_robro"
@@ -28434,6 +28442,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
+			"item_logname"				"ghost_wtf"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack\player\items\all_class\pet_robro"
@@ -28482,6 +28491,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
+			"item_logname"				"ghost_wtf"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack\player\items\all_class\pet_robro"
@@ -28535,6 +28545,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
+			"item_logname"				"ghost_wtf"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack\player\items\all_class\pet_robro"
@@ -28583,6 +28594,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
+			"item_logname"				"ghost_wtf"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack\player\items\all_class\pet_robro"
@@ -28631,6 +28643,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"primary"
 			"anim_slot"				"FORCE_NOT_USED"
+			"item_logname"				"ghost_wtf"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack\player\items\all_class\pet_robro"
@@ -28674,6 +28687,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
+			"item_logname"				"ghost_wtf"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack\player\items\all_class\pet_robro"
@@ -28722,6 +28736,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"primary"
 			"anim_slot"				"FORCE_NOT_USED"
+			"item_logname"				"ghost_wtf"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack\player\items\all_class\pet_robro"
@@ -32418,8 +32433,8 @@ Weapon by: 'The One Of Wonders'"
 		"9116"
 		{
 			"name"						"TF_WEAPON_TRAP_EXPLOSIVE"	
-			"prefab"					"weapon_stickybomb_launcher"			
-//			"item_class"				"tf_weapon_pipebomblauncher"							
+//			"prefab"					"weapon_stickybomb_launcher"			
+			"item_class"				"tf_weapon_pipebomblauncher"							
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
 //			"item_slot"					"building"												
@@ -32610,13 +32625,14 @@ Weapon by 'The One Of Wonders'"
 //-------------------
 //-------------------
 //--BIOWASTE GUN- 9118--
+// V5.4r1 This needs rethinking, players absolutely hate it
 //-------------------
 //-------------------
 		"9118"
 		{
 			"name"						"TF_WEAPON_BIOWASTE_GUN"
 			"item_class"			    "tf_weapon_flamethrower"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"primary"
             "anim_slot"                 "secondary"
 
@@ -33475,6 +33491,7 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------------------
 //-------------------------------------
 // Foxhounds			-	9127	 --
+// V5.4r1 Increased damage and rof slightly
 //-------------------------------------
 //-------------------------------------		
 		"9127"
@@ -33530,7 +33547,7 @@ Weapon by: 'Reagy'"
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.6"
+					"value"				"0.5"
 				}
 				"clip size bonus"
 				{
@@ -33540,12 +33557,12 @@ Weapon by: 'Reagy'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.5"
+					"value"				"0.8"
 				}
 				"spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.33"
+					"value"				"2.20"
 				}
 				"reload time increased"	
 				{
@@ -33583,6 +33600,7 @@ Weapon by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 
 			"propername"				"1"
+			"item_logname"				"majors_mark"
 			"item_name"					"Majors Mark"
 			"item_type_name"			"Ballistic Vest"
 			"item_description"			"
@@ -33637,8 +33655,8 @@ Wearable by: 'Reagy'"
 					"value"				"1"
 				}
 			}
-			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
-			"drop_sound"				"#ui/item_pack_drop.wav"
+			"mouse_pressed_sound"		"#weapons/draw_patriot2.wav"
+			"drop_sound"				"#weapons/draw_patriot1.wav"
 		}
 		
 //--------------------------------------------------//
