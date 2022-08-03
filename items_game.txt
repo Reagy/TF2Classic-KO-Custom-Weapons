@@ -28190,10 +28190,15 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			}
 			"attributes"
 			{
+			    "provide on active"																
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
 				"mult airblast refire time"																	// Makes airblast much faster
 				{
 					"attribute_class"	"mult_airblast_refire_time"
-					"value"				"0.5"
+					"value"				"0.8"
 				}
 				"airblast cost decreased"
 				{
@@ -28223,7 +28228,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.6"
+					"value" 			"0.4"
 				}
 				"strange restriction type 1"
 				{
@@ -30984,6 +30989,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "provide on active"																
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
 			    "weapon burn dmg increased"      // 180 damage total, 16 DPS over 11.5 seconds
 				{
 					"attribute_class"	"mult_wpn_burndmg"
@@ -31052,6 +31062,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "provide on active"																
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
 			    "bleeding duration"
 				{
 					"attribute_class"	"bleeding_duration"
@@ -32841,6 +32856,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "provide on active"																
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
 			    "mark for death"         // Visual only, below condition on hit does this attribute's job
 				{
 					"attribute_class"	"mark_for_death"
