@@ -32180,7 +32180,7 @@ Weapon by: 'The One Of Wonders'"
 
 			"item_type_name"			"Revolver"
 			"item_name"				    "High Noon"
-			"item_description"			"A duel to the death: on hit, both you and your target deal increased damage for 3 seconds
+			"item_description"			"A duel to the death: on hit, both you and your target are marked for death for 3 seconds
 Cowardice will be punished: crits vs invisible players.
 
 Speed is key.
@@ -32237,12 +32237,12 @@ Weapon by: 'The One Of Wonders'"
                 "add condition on hit"																
 				{
 					"attribute_class"	"add_onhit_addcond"  
-					"value" 			"112 3"                   
+					"value" 			"30 3"                   
  				}
                 "add condition on hit"																
 				{
 					"attribute_class"	"add_onhit_addcond_self"  
-					"value" 			"112 3"                   
+					"value" 			"30 3"                   
  				}				
 			}
 			"visuals"
@@ -32566,7 +32566,7 @@ Weapon by 'The One Of Wonders'"
 			"image_inventory"			"backpack/weapons/c_models/c_giantspiker/c_giantspiker"
 			"model_world"				"models/weapons/c_models/c_giantspiker/c_giantspiker.mdl"				
 			"model_player"				"models/weapons/c_models/c_giantspiker/v_giantspiker.mdl"
-			"attach_to_hands"			"2"
+			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
 				"medic"					"1"
