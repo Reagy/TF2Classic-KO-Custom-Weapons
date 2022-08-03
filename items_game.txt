@@ -32629,82 +32629,88 @@ Weapon by 'The One Of Wonders'"
 		}
 //-------------------
 //-------------------
-//--BIOWASTE GUN- 9118--
-// V5.4r1 This needs rethinking, players absolutely hate it
+//--AMERICA MUSKET GUN- 9118--
+// V5.4 This was the Waste Disposal, God Speed you magnificent bastard.
 //-------------------
 //-------------------
 		"9118"
 		{
-			"name"						"TF_WEAPON_BIOWASTE_GUN"
-			"item_class"			    "tf_weapon_flamethrower"
-			"show_in_armory"			"0"
-			"item_slot"					"primary"
-            "anim_slot"                 "secondary"
-
-            "image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"			
+			"name"						"TF_WEAPON_MUSKET_SOLDIER"
+			"prefab"					"weapon_shotgun"
+			"show_in_armory"			"1"
+			"item_quality"				"vintage"
+			"item_slot"					"secondary"
+			"item_class"                "tf_weapon_shotgun_soldier"
 
 			"propername"				"1"
-			"item_quality"				"rarity2"
-			"item_logname"				"wastesprayer"
-			"item_iconname"				"wastesprayer"
-			"item_name"					"Waste Disposal"
-			"item_type_name"			"Pressurized Toxic Waste Sprayer"
-			"item_description"			"
-What, I have to get rid of all this filth somehow! 
+			"item_name"					"Second Amendment"
+			"item_type_name"			"Flintlock Musket"
+			"item_description"			"This weapon has one shot at any given time
+
+The key to our constitution, gentlemen! treat her like she's your wife!
 
 Model by: 'svdl'
-Weapon by: 'The One Of Wonders'"
-			"image_inventory"			"backpack/weapons/c_models/c_biomed_gun/c_biomed_gun"
-			"model_world"				"models/weapons/c_models/c_biomed_gun/c_biomed_gun.mdl"
-			"model_player"				"models/weapons/c_models/c_biomed_gun/v_biomed_gun.mdl"
-			"attach_to_hands"			"2"
-			"extra_wearable" 			"models/weapons/c_models/c_biomed_backpack/c_biomed_backpack.mdl"
+Weapon by: 'The One Of Wonders'"											
+			"item_logname"				"musket_shotgun"
+			"item_iconname"				"musket_shotgun"
+			"image_inventory"			"backpack/weapons/c_models/c_muricamusket/c_muricamusket"
+			"model_world"				"models/weapons/c_models/c_murica_musket/c_murica_musket.mdl"
+			"model_player"				"models/weapons/c_models/c_murica_musket/c_murica_musket.mdl"
+			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
-				"medic"					"1"
+				"soldier"				"1"
 			}
 			"attributes"
 			{
-				"voice pitch scale"
+				"mod max primary clip override"
+				{
+					"attribute_class"	"mod_max_primary_clip_override"
+					"value"				"-1"
+				}
+				"mod no reload DISPLAY ONLY"
+				{
+					"attribute_class"	"mod_no_reload_display_only"
+					"value"				"1"
+				}
+				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.2"
+					"value"				"1.1"
 				}
-				"bleeding duration"
+				"bullets per shot bonus"
 				{
-					"attribute_class"	"bleeding_duration"
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"2"
+				}
+				"spread penalty"
+				{
+					"attribute_class"	"mult_spread_scale"
 					"value"				"3"
 				}
-				"voice pitch scale"
+				"maxammo secondary reduced"
 				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"1.5"
+					"attribute_class"	"mult_maxammo_secondary"
+					"value"				"0.05" 
 				}
 				"voice pitch scale"
 				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0"
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"				"1.25"
 				}
-				"strange restriction type 1"
+				"voice pitch scale"
 				{
-					"attribute_class"	"airblast_disabled"
-					"value"				"1"
+					"attribute_class"	"mult_switch_from_wep_deploy_time"
+					"value"				"1.25"
 				}
 			}
 			"visuals"
 			{
-				"player_bodygroups"
-				{
-					"medic_backpack"	"1"
-				}
-				"sound_single_shot"		"Weapon_TearGasSpray.FireStart"
-				"sound_special1"		"Weapon_TearGasSpray.FireLoop"	
-				"sound_burst"			"Weapon_TearGasSpray.FireLoopCrit"
+			    "sound_single_shot"		"Weapon_SuperShotGun.Single"
+				"sound_burst"			"Weapon_SuperShotGun.SingleCrit"
 			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
-		}	
+			"mouse_pressed_sound"		"#weapons/musket_horn1.wav"
+		}
 //----------------------
 //----------------------
 //--FUNNY VTUBER KNIFE - 9119--
