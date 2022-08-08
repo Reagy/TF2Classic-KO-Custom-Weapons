@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials/models/weapons/v_grenadelauncher/v_grenadelauncher.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models/weapons/v_grenadelauncher/v_grenadejumper_green"
-	}
-}

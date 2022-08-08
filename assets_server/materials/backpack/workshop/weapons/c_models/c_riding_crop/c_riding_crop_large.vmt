@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" 	"backpack/workshop/weapons/c_models/c_riding_crop/c_riding_crop_large"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}

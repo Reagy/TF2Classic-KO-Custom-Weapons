@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" 	"backpack\warknife/warknife"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}
