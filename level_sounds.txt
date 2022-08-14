@@ -1214,6 +1214,8 @@
 	"wave"		")weapons/flame_thrower_airblast_rocket_redirect.wav"
 }
 
+
+
 // ------------------------------------------------------------------------------------ //
 // BACK BURNER 
 // ------------------------------------------------------------------------------------ //
@@ -1986,101 +1988,8 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// GATLING
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_Gatling.Reload"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"wave"		"weapons/default_reload.wav"
-}
-
-"Weapon_Gatling.ClipEmpty"	
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"wave"		")weapons/gatling_empty.wav"
-}
-
-"Weapon_Gatling.Spin"	
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"wave"		")weapons/gatling_spin.wav"
-}
-
-"Weapon_Gatling.WindUp"	
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/gatling_wind_up.wav"
-}
-
-
-"Weapon_Gatling.Fire"	
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/gatling_shoot.wav"
-}
-
-"Weapon_Gatling.FireCrit"	
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/gatling_shoot_crit.wav"
-}
-
-"Weapon_Gatling.WindDown"	
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/gatling_wind_down.wav"
-}
-
-"Weapon_Gatling.Draw"
-{
-	"channel"	"CHAN_AUTO"
-	"soundlevel"	"SNDLVL_74dB"
-	"volume"	".5"
-	"wave"		"weapons/draw_minigun_heavy.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
 // TOMISLAV
 // ------------------------------------------------------------------------------------ //
-
-"Weapon_Tomislav.Fire"	
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/tomislav_shoot.wav"
-}
-
-"Weapon_Tomislav.FireCrit"	
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/tomislav_shoot_crit.wav"
-}
-
-"Weapon_Tomislav.WindDown"	
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/tomislav_wind_down.wav"
-}
 
 "Weapon_Tomislav.WindUp"	
 {
@@ -3264,6 +3173,7 @@
 // ------------------------------------------------------------------------------------ //
 // RPG Cow Mangler
 // ------------------------------------------------------------------------------------ //
+
 "Weapon_CowMangler.Explode"
 {
 	"channel"	"CHAN_WEAPON"
@@ -5909,7 +5819,6 @@
 	"wave"		"weapons/cleaver_draw.wav"
 }
 
-
 //-----------------------------------------//
 // SD Sapper
 //-----------------------------------------//
@@ -6536,44 +6445,6 @@
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
 	"wave"		")weapons/winger_shoot_crit.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
-// FRONTIER JUSTICE
-// ------------------------------------------------------------------------------------ //
-"Weapon_FrontierJustice.Single"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/frontier_justice_shoot.wav"
-}
-
-"Weapon_FrontierJustice.SingleCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/frontier_justice_shoot_crit.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
-// FAMILY BUSINESS
-// ------------------------------------------------------------------------------------ //
-"Weapon_FamilyBusiness.Single"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/family_business_shoot.wav"
-}
-
-"Weapon_FamilyBusiness.SingleCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/family_business_shoot_crit.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -7411,39 +7282,6 @@
 		"wave"		")weapons/pipe_hit_world1.wav"
 		"wave"		")weapons/pipe_hit_world2.wav"
 	}
-}
-
-// ------------------------------------------------------------------------------------ //
-// TTG GUNS
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_TTGSamGun.Single"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/bigkill_shoot.wav"
-}
-"Weapon_TTGSamGun.SingleCrit"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/bigkill_shoot_crit.wav"
-}
-"Weapon_TTGMaxGun.Single"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/lugermorph_shoot.wav"
-}
-"Weapon_TTGMaxGun.SingleCrit"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/lugermorph_shoot_crit.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -10387,32 +10225,6 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// Soviet Sweeper
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_AK_Sweeper.Single"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		")weapons\aksweeper_shoot.wav"
-	}
-}
-
-"Weapon_AK_Sweeper.SingleCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		")weapons\aksweeper_shoot_crit.wav"
-	}
-}
-
-// ------------------------------------------------------------------------------------ //
 // Military Pistol
 // ------------------------------------------------------------------------------------ //
 
@@ -11213,25 +11025,6 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// Halo50
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_Halo50.Fire"	
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/halo50_fire.wav"
-}
-"Weapon_Halo50.FireCrit"	
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/halo50_fire_crit.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
 // Big Iron
 // ------------------------------------------------------------------------------------ //
 
@@ -11609,26 +11402,6 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// Smelly poison gun
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_Elephant_Foot.Fire"	
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/oileminigun_shoot.wav"
-}
-
-"Weapon_Elephant_Foot.FireCrit"	
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/oileminigun_shoot_crit.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
 // Big Drill
 // ------------------------------------------------------------------------------------ //
 
@@ -11646,26 +11419,6 @@
     "soundlevel"    "SNDLVL_94dB"
     "volume"    "1.0"
     "wave"        ")weapons/BigDrill_Shoot_crit.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
-// Bass Cannon
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_BASS_Cannon.Fire"    
-{
-    "channel"    "CHAN_WEAPON"
-    "soundlevel"    "SNDLVL_94dB"
-    "volume"    "1.0"
-    "wave"        ")weapons/BassBlaster_shoot.wav"
-}
-
-"Weapon_BASS_Cannon.FireCrit"    
-{
-    "channel"    "CHAN_WEAPON"
-    "soundlevel"    "SNDLVL_94dB"
-    "volume"    "1.0"
-    "wave"        ")weapons/BassBlaster_shoot_crit.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -12099,48 +11852,6 @@
 	"wave"		"weapons/fbomb_explode1.wav"
 	"wave"		"weapons/fbomb_explode2.wav"
 	"wave"		"weapons/fbomb_explode3.wav"
-}
-// ------------------------------------------------------------------------------------ //
-// GOLF LAUNCHER
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_GolfLauncher.Fire"	
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/golflauncher_shoot.wav"
-}
-
-"Weapon_GolfLauncher.FireCrit"	
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/golflauncher_shoot_crit.wav"
-}
-
-"Weapon_GolfLauncher.Spin"	
-{
-	"channel"	"CHAN_ITEM"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"wave"		")weapons/golflauncher_spin.wav"
-}
-
-"Weapon_GolfLauncher.WindUp"	
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/golflauncher_spin_up.wav"
-}
-"Weapon_GolfLauncher.WindDown"	
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/golflauncher_spin_down.wav"
 }
 // ------------------------------------------------------------------------------------ //
 // TANK MINIGUN

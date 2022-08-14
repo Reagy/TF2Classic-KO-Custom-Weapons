@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials/models/weapons/c_items/c_ttg_sam_gun.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models/weapons/c_items/c_ttg_sam_gun_yellow"
-	}
-}
