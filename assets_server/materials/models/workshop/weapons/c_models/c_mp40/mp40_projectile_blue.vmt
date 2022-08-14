@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models\workshop\weapons\c_models\c_mp40\mp40_projectile.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models\workshop\weapons\c_models\c_mp40\mp40_projectile_blue"
-	}
-}

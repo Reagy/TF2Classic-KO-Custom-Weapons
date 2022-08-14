@@ -1138,37 +1138,12 @@ Edited by: 'The One Of Wonders'"
 //-------------------------
 //-------------------------
 //--THE BLUTSAUGER - 3346--
+// V5.4.1 Removed, keeping stats if want to reuse later
 //-------------------------
 //-------------------------
 		"3346"
 		{
-			"name"						"TF_WEAPON_LEECHGUN"
-			"prefab"					"weapon_syringegun"
-			"show_in_armory"			"1"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Blutsauger"
-			"item_type_name"			"#TF_Weapon_SyringeGun"
-			"item_description"			"
-'The healing is not as rewarding
-as the hurting.'
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"blutsauger"
-			"item_iconname"				"blutsauger"
-			"image_inventory"			"backpack/weapons/c_models/c_leechgun/c_leechgun"
-			"model_world"				"models/weapons/w_models/w_leechgun.mdl"
-			"model_player"				"models/weapons/v_models/v_leechgun_medic.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"medic"					"1"
-			}
-			"static_attrs"
-			{
-//				"override projectile type" 				"30"									// This -would- enable a custom Syringe model, but the Tranquilizer Gun projectiles cause a horrific amount of lag...
-			}
+			"show_in_armory"			"0"
 			"attributes"
 			{
 				"heal on hit for rapidfire"
@@ -1181,14 +1156,12 @@ Weapon from: New Old Weapons Pack"
 					"attribute_class"	"add_health_regen"
 					"value"				"-2"
 				}
-				"custom projectile model"														// This does NOT appear to work for normal Syringes! I could change the projectile to a Tranq Dart, and it'd work, but that's laggy.
+				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/w_leech_proj.mdl"
+					"value"				"models/weapons/w_models/w_leech_proj.mdl" // Is being used by other items
 				}
 			}
-			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
-			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
 //------------------------
 //------------------------
@@ -1203,13 +1176,14 @@ Weapon from: New Old Weapons Pack"
 //------------------
 //------------------
 //--THE JAG - 3348--
+// V5.3.1 Disabled, need to remake this as its too good to be left out
 //------------------
 //------------------
 		"3348"
 		{
 			"name"						"TF_WEAPON_JAG"
 			"prefab"					"weapon_wrench"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
@@ -1221,9 +1195,9 @@ For when I ain't got the time to just sit back.
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"wrench_jag"
 			"item_iconname"				"wrench_jag"
-			"image_inventory"			"backpack/workshop/weapons/c_models/c_jag/c_jag"
-			"model_world"				"models/weapons/w_models/w_jag.mdl"
-			"model_player"				"models/weapons/v_models/v_jag_engineer.mdl"
+			"image_inventory"			""
+			"model_world"				"models/weapons/w_models/.mdl"
+			"model_player"				"models/weapons/v_models/.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -1974,64 +1948,6 @@ Weapon from: New Old Weapons Pack"																				// IS THAT A FUCKIN' 「OP
 //---------------------------
 		"3362"
 		{
-			"name"						"TF_WEAPON_SYRINGEGUN_BLEED"
-			"prefab"					"weapon_syringegun"
-			"show_in_armory"			"1"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Aderlasser"										// Name change suggested by KaydemonLP - it suits it better than "Blutstahler" - which isn't even a real word!
-			"item_type_name"			"#TF_Weapon_SyringeGun"
-			"item_description"			"
-As part of the procedure,
-I will need to take your blood - 
-All of it.
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"syringegun_bleed"
-			"item_iconname"				"syringegun_bleed"
-			"image_inventory"			"backpack/weapons/w_models/w_mp40"
-			"model_world"				"models/weapons/w_models/w_mp40.mdl"
-			"model_player"				"models/weapons/v_models/v_mp40_medic.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"medic"					"1"
-			}
-			"static_attrs"
-			{
-//				"override projectile type" 				"30"									// This -would- enable a custom Syringe model, but the Tranquilizer Gun projectiles cause a horrific amount of lag...
-			}
-			"attributes"
-			{
-				"bleeding duration"
-				{
-					"attribute_class"	"bleeding_duration"
-					"value"				"3.5"
-				}
-				"clip size penalty"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"0.5"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.85"
-				}
-				"custom projectile model"
-				{
-					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/w_mp40_proj.mdl"
-				}
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_MP40_Bleed.Single"
-				"sound_burst"			"Weapon_MP40_Bleed.SingleCrit"
-			}
-			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
-			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
 //--------------------------
 //--------------------------
@@ -2180,33 +2096,12 @@ Weapon from: New Old Weapons Pack"
 //-------------------
 //-------------------
 //--QUICK FIX- 3365--
+// 5.4.1 Stats kept, may reuse later
 //-------------------
 //-------------------
 		"3365"
 		{
-			"name"						"TF_WEAPON_QUICK_FIX"
-			"prefab"					"weapon_medigun"
-			"show_in_armory"			"1"
-			"equip_region"				"medigun_backpack"										// ...probably.. vestigial..?
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Quick-Fix"
-			"item_type_name"			"#TF_Weapon_Medigun_Prototype"
-			"item_description"			"
-Oh, don't be such a baby, ribs grow back!
-Keep asking, and you'll have 5 more!
-
-Weapon from: New Old Weapons Pack"
-			"image_inventory"			"backpack/weapons/c_models/c_proto_medigun/c_proto_medigun"
-			"model_world"				"models/weapons/w_models/w_quickfix.mdl"
-			"model_player"				"models/weapons/v_models/v_quickfix_medic.mdl"
-			"attach_to_hands"			"2"
-			"extra_wearable" 			"models/player/items/quickfix_backpack.mdl"
-			"used_by_classes"
-			{
-				"medic"					"1"
-			}
+			"show_in_armory"			"0"
 			"attributes"
 			{
 				"lunchbox adds minicrits" 														// This attribute is magic, and I'm honestly not entirely sure what it does.
@@ -2214,11 +2109,6 @@ Weapon from: New Old Weapons Pack"
 					"attribute_class"	"set_weapon_mode"
 					"value"				"1"														// Setting it to "1" gives it Kritzkrieg particles, though.
 				}
-//				"medigun charge is megaheal"													// This is only partially coded into the game. I don't think it does anything, beyond not making you invincible? It disables sound, too.
-//				{
-//					"attribute_class"	"set_charge_type"
-//					"value"				"2"
-//				}
 				"heal rate bonus"																// This works.
 				{
 					"attribute_class"	"mult_medigun_healrate"
@@ -2246,17 +2136,6 @@ Weapon from: New Old Weapons Pack"
 					"value"				"0.2"
 				}
 			}
-			"visuals"
-			{
-				"player_bodygroups"
-				{
-					"medic_backpack"	"1"
-				}
-				"sound_single_shot"		"Weapon_Quick_Fix.Healing"								// Neither of these sounds work. I'm not sure why.
-				"sound_special2"		"TFPlayer.QuickFixInvulnerableOn"						// On closer inspection, even live TF2 doesn't use any sounds down here in this section. How they get their sounds working is a complete mystery...
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //-----------------------
 //-----------------------
@@ -2923,53 +2802,6 @@ Weapon from: New Old Weapons Pack"
 //---------------------
 		"3382"
 		{
-			"name"						"TF_WEAPON_NAIL_WRENCH"
-			"prefab"					"weapon_wrench"
-			"show_in_armory"			"1"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Southern Hospitality"
-			"item_type_name"			"#TF_Weapon_Wrench"
-			"item_description"			"
-'You were gettin' too big for your britches!'
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"southern_hospitality"
-			"item_iconname"				"southern_comfort_kill"
-			"image_inventory"			"backpack/workshop/weapons/c_models/c_spikewrench/c_spikewrench"
-			"model_world"				"models/weapons/w_models/w_spikewrench.mdl"
-			"model_player"				"models/weapons/v_models/v_spikewrench_engineer.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"engineer"				"1"
-			}
-			"attributes"																		// A lot of this is just a carry-over from the live TF2 variant.
-			{
-				"bleeding duration"
-				{
-					"attribute_class"	"bleeding_duration"
-					"value" 			"5"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.75"
-				}
-				"dmg taken from fire increased"
-				{
-					"attribute_class"	"mult_dmgtaken_from_fire"
-					"value"				"1.20"
-				}
-				"custom projectile model"														// ...? I have no idea if this even works.
-				{
-					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/w_nail.mdl"
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
-			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 //-------------------------
 //-------------------------
@@ -4496,54 +4328,6 @@ Weapon from: New Old Weapons Pack"
 //-----------------------
 		"3431"
 		{
-			"name"						"TF_WEAPON_BATTLENEEDLE"
-			"prefab"					"weapon_bonesaw"
-			"show_in_armory"			"1"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Vita-Saw"
-			"item_type_name"			"#TF_Weapon_Syringe"
-			"item_description"			"
-'Hold still, schweinhund,
-this will only sting for a moment.'
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"battleneedle"
-			"item_iconname"				"battleneedle_color"
-			"image_inventory"			"backpack/workshop/weapons/c_models/c_uberneedle/c_uberneedle"
-			"model_world"				"models/weapons/w_models/w_uberneedle.mdl"				// I had to remove the dynamically moving uber-fluid - both because this wep doesn't use it, and also because it was nightmarish to make a v_model for!
-			"model_player"				"models/weapons/v_models/v_uberneedle_medic.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"medic"					"1"
-			}
-			"attributes"
-			{
-				"heal on kill"
-				{
-					"attribute_class"	"heal_on_kill"
-					"value"				"65"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.6955"
-				}
-				"max health additive penalty"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-15"
-				}
-			}
-			"visuals"
-			{
-				"sound_melee_hit"		"Weapon_UberSaw.HitFlesh"
-				"sound_taunt"			"Taunt.MedicViolinUber"									// Appears to be leftover - nothing uses it by default!
-			}
-			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
-			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 //---------------------------------
 //---------------------------------
@@ -5448,96 +5232,6 @@ Weapon from: New Old Weapons Pack"
 //------------------------
 		"3450"
 		{
-			"name"						"TF_WEAPON_SYRINGE_SHOT"								// NOTE: THIS DEV. VERSION SHOOTS -BULLETS-. This is only to visualize how many projectiles I want it to fire.
-			"prefab"					"weapon_shotgun"										// It will NOT, I repeat NOT shoot bullets under any circumstance in the final version.
-			"show_in_armory"			"1"
-			"item_slot"					"primary"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Hippocratic Suggestion"
-			"item_type_name"			"...Shotgun?"
-			"item_description"			"Lasers are affected by gravity
-
-It's never a bad time for some impromptu
-laser-skull emergency surgery, ja?
-
-(No Syringe Buckshot included... for now)
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"syringe_shot"
-			"item_iconname"				"syringe_shot"
-			"image_inventory"			"backpack/weapons/w_models/w_syringe_shot"
-			"model_world"				"models/weapons/w_models/w_syringe_shot.mdl"
-			"model_player"				"models/weapons/v_models/v_syringe_shot_medic.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"medic"					"1"
-			}
-			"static_attrs"
-			{
-// Syringe Vers
-//				"override projectile type"				"5"										// Syringes! This is MANDATORY!! For intended behavior, imagine this but it shoots like 6 projectiles-ish
-// Laser Vers
-				"override projectile type"				"32"									// Coilgun lasers! Again.
-				"damage bonus hidden"					"7.5"									// Does 45 damage! It's not as much as a regular shotgun, but since Med only needs to hit 1 thing w/ no falloff, doesnt need to be!
-			}
-			"attributes"
-			{
-                "Projectile speed increased"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"2"
-				}
-//				"clip size penalty"																// Would be better with multiple pellets / projectiles, but you spend so much time reloading it hurts
-//				{
-//					"attribute_class"	"mult_clipsize"
-//					"value"				"0.67"
-//				}
-				"maxammo primary reduced"														// Less disposable ammo to use
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.75"
-				}
-// Laser vers
-				"torso scale"
-				{
-					"attribute_class"	"mult_bullets_per_shot"									// Ideally, it shoots 5-6 syringes per shot, if all hit they do normal shotty damage (90)
-					"value"				"0.1"													// For now, shoot one bigboi laser
-				}
-				"hand scale"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.35"													// Low but not absent spread
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.35"
-				}
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_SyringeShot.Single"
-				"sound_burst"    		"Weapon_SyringeShot.SingleCrit"
-				"animation_replacement"
-				{
-					"ACT_MP_ATTACK_STAND_PRIMARY"					"ACT_MP_GESTURE_FLINCH_CHEST"
-					"ACT_MP_ATTACK_CROUCH_PRIMARY"					"ACT_MP_GESTURE_FLINCH_CHEST"
-					"ACT_MP_ATTACK_SWIM_PRIMARY"					"ACT_MP_GESTURE_FLINCH_CHEST"
-
-					"ACT_MP_RELOAD_STAND_PRIMARY_LOOP"				"ACT_MP_RELOAD_STAND_PRIMARY"
-					"ACT_MP_RELOAD_CROUCH_PRIMARY_LOOP"				"ACT_MP_RELOAD_CROUCH_PRIMARY"
-					"ACT_MP_RELOAD_SWIM_PRIMARY_LOOP"				"ACT_MP_RELOAD_SWIM_PRIMARY"
-
-					"ACT_MP_RELOAD_STAND_PRIMARY_END"				"ACT_MP_ATTACK_STAND_PRIMARY"
-					"ACT_MP_RELOAD_CROUCH_PRIMARY_END"				"ACT_MP_ATTACK_CROUCH_PRIMARY"
-					"ACT_MP_RELOAD_SWIM_PRIMARY_END"				"ACT_MP_ATTACK_SWIM_PRIMARY"
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //-----------------------
 //-----------------------
@@ -6044,83 +5738,6 @@ or else Heavy will make you regret choice..."
 //------------------------------
 		"3468"
 		{
-			"name"						"TF_WEAPON_AMPUTATOR"									// The only slightly spicy Live port of the bunch, I had more of a vision of what I wanted this to do and I have plans for the future!
-			"prefab"					"weapon_bonesaw"
-			"item_class"				"tf_weapon_umbrella"									// Sadly, no buff aura attrib, but civ umbrella is still useful for us to use!
-			"show_in_armory"			"1"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Amputator"
-			"item_type_name"			"#TF_Weapon_Bonesaw"
-			"item_description"			"Alt-Fire: Grant an Ally a def. buff! (20s cd)
-
-I was told to 'Grow some thicker skin!'
-Hohoho, what a stroke of medical genius!
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"amputator"
-			"item_iconname"				"amputator"
-			"image_inventory"			"backpack/workshop/weapons/c_models/c_amputator/c_amputator"
-			"model_world"				"models/weapons/w_models/w_amputator.mdl"
-			"model_player"				"models/weapons/v_models/v_amputator_medic.mdl"			// Technically doesn't need an animation for the buff, but figured it would be cute to have it be a quick inspect anim
-			"attach_to_hands"			"2"
-			"extra_wearable" 			"models/player/items/set_doctor.mdl"
-			"used_by_classes"
-			{
-				"medic"				"1"
-			}
-			"static_attrs"																		// Since this is an Umbrella, turn it back into a Bonesaw
-			{
-				"fire rate penalty hidden"				"1.6"
-				"damage bonus hidden"					"1.39"
-				"civ boost cond override"				"111 1.5"								// The defensive buff lasts for about 15s - a pretty good deal!
-			}
-			"attributes"
-			{
-				"provide on active"
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
-				"health regen"
-				{
-					"attribute_class"	"add_health_regen"
-					"value"				"3"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.80"
-				}
-				"deploy time increased"
-				{
-					"attribute_class"	"mult_deploy_time"
-					"value" 			"1.65"
-				}
-				"self mark for death"
-				{
-					"attribute_class"	"self_mark_for_death"
-					"value"				"1"
-				}
-				"special taunt"
-				{
-					"attribute_class"	"special_taunt"
-					"value" 			"1"
-				}
-			}
-			"visuals"
-			{
-				"sound_taunt"			"Taunt.MedicViolin"										// Interesting observation: the Taunt Sound seems tied to the ANIMATION, not the weapon. This is an umbrella, yet if I add this here, Medic plays the violin sound!
-				"animation_replacement"															// Gets this too since the weapon can boost
-				{
-					"ACT_MP_ATTACK_STAND_SECONDARYFIRE"			"ACT_MP_GESTURE_VC_FINGERPOINT_MELEE"
-					"ACT_MP_ATTACK_CROUCH_SECONDARYFIRE"		"ACT_MP_GESTURE_VC_FINGERPOINT_MELEE"
-					"ACT_MP_ATTACK_SWIM_SECONDARYFIRE"			"ACT_MP_GESTURE_VC_FINGERPOINT_MELEE"
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
-			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 //------------------------
 //------------------------
@@ -6285,87 +5902,8 @@ Weapon from: New Old Weapons Pack"
 //--CRUSADER'S CROSSBOW - 4500-- (By Yakibomb)
 //------------------------------
 //------------------------------
-		"4500" 																					// This weapon is by Yakibomb! Revised to fit in with the rest of my pack!
+		"4500"
 		{
-			"name"						"TF_WEAPON_CROSSBOW"
-			"prefab"					"weapon_syringegun"
-			"show_in_armory"			"1"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Crusader's Crossbow"
-			"item_type_name"			"#TF_Weapon_Crossbow"
-			"item_description"			"
-Trust me! These gigantic arrows I am shooting into you are for acupuncture!
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"crusaders_crossbow"
-			"item_iconname"				"crusaders_crossbow"
-			"image_inventory"			"backpack/weapons/c_models/c_crusaders_crossbow/c_crusaders_crossbow"
-			"model_world"				"models/weapons/c_models/c_crusaders_crossbow/c_crusaders_crossbow.mdl"
-			"model_player"				"models/weapons/v_models/v_crusaders_crossbow_medic/v_crusaders_crossbow_medic.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"medic"					"1"
-			}
-			"static_attrs"
-			{
-				"clip size penalty hidden" 				"0.015"									// 1 in the clip
-				"override projectile type"				"30"									// Tranq Dart. Since it only shoots ONE projectile at a time, it won't get laggy. Fine for our purposes!
-				"allowed in medieval mode"				"1"
-			}
-			"attributes"
-			{
-				"damage bonus"																	// Bumps up the damage of one syringe to about 65
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"6.5"
-				}
-                "Projectile speed increased"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.25"
-				}
-				"weapon spread bonus"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.5" 
-				}
-				"maxammo primary reduced"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.255"													// It can be weird with fractions, sometimes??
-				}
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.75"
-				}
-				// Backend stuff
-				"sniper no headshots"
-				{
-					"attribute_class" 	"set_weapon_mode"
-					"value" 			"1"
-				}
-				"heal rate penalty"																// DISPLAY ONLY FLAVOR TEXT
-				{
-					"attribute_class"	"hand_scale"											// To make it display-only
-					"value"				"0"
-				}
-				"custom projectile model"
-				{
-					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/w_arrow.mdl"
-				}
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_CrusadersCrossbow.Single"
-				"sound_burst"			"Weapon_CrusadersCrossbow.SingleCrit"
-			}
-			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
-			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
 //------------------------------
 //------------------------------
@@ -7881,55 +7419,6 @@ Weapon from: New Old Weapons Pack"
 			"mouse_pressed_sound"		"#ui/item_fists_pickup.wav"
 			"drop_sound"				"#ui/item_fists_drop.wav"
 		}
-		
-//-------------------------------------
-//-------------------------------------
-//--ENGI REMOTE UPGRADE WEAPON - 3386-- OBSOLETE - I didn't feel the stats worked too well, nor did they feel great to use. I didn't have anything good to replace it with either.
-// Replaced by New Old
-//-------------------------------------
-//-------------------------------------
-//		"6500"
-//		{
-//			"name"						"TF_WEAPON_REMOTE_UPGRADE"
-//			"prefab"					"weapon_wrench"
-//			"show_in_armory"			"1"
-//
-//			"item_quality"				"rarity2"
-//			"item_name"					"Retired Eureka Effect"
-//			"item_type_name"			"Telemax Wrench"
-//			"item_description"			"
-//An old memento from a time long past. Perhaps this, too, once had unique abilities..."
-//			"item_logname"				"eureka_effect"
-//			"item_iconname"				"eureka_effect"
-//			"image_inventory"			"backpack/workshop/weapons/c_models/c_drg_wrenchmotron/c_drg_wrenchmotron"
-//			"model_world"				"models/weapons/w_models/w_wrenchmotron.mdl"
-//			"model_player"				"models/weapons/v_models/v_wrenchmotron_engineer.mdl"
-//			"attach_to_hands"			"2"
-//			"used_by_classes"
-//			{
-//				"engineer"				"1"
-//			}
-//			"static_attrs"
-//			{
-//				"damage bonus hidden"					"1.05"
-//				"fire rate penalty hidden"				"0.95"
-//			}
-//			"attributes"
-//			{
-//				"turn to gold"
-//				{
-//					"attribute_class"	"ragdolls_become_ash"
-//					"value" 			"1"
-//				}
-//				"voice pitch scale"
-//				{
-//					"attribute_class"	"mult_crit_chance"
-//					"value"				"1.05"
-//				}
-//			}
-//			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
-//			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
-//		}
 		
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--New Custom Weapon Entries----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -13076,13 +12565,14 @@ Weapon by: 'Reagy'"
 //-------------------------------------
 // HL Magnum
 // V5.3.5 New weapon
+// V5.4.1 Disabled, will replace with new assets at some point
 //-------------------------------------
 //-------------------------------------		
 		"7089"
 		{
 			"name"						"TF_WEAPON_357MAGNUM"
 			"prefab"					"weapon_revolver"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity2"
 
@@ -13096,18 +12586,13 @@ Ported by: 'ficool2'
 Weapon by: 'Reagy'"
 			"item_logname"				"magnum_spy"
 			"item_iconname"				"magnum_hl"
-			"image_inventory"			"backpack/weapons/w_models/w_hl2_revolver"
-			"model_world"				"models/weapons/custom/w_models/w_hl2_revolver.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_hl2_revolver.mdl"
+			"image_inventory"			""
+			"model_world"				"models/weapons/custom/w_models/.mdl"
+			"model_player"				"models/weapons/custom/v_models/.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"spy"					"1"
-			}
-			"static_attrs"
-			{
-//				"clip size penalty hidden"				"1.2"
-//				"hidden secondary max ammo penalty"		"1.2"
 			}
 			"attributes"
 			{
@@ -13137,88 +12622,12 @@ Weapon by: 'Reagy'"
 					"value"				"0"
 				}
 			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_HLRevolver.Single"
-				"sound_burst"			"Weapon_HLRevolver.SingleCrit"
-			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
 // V5.3.6 Now on engineer too
 		"7090"
 		{		
-			"name"						"TF_WEAPON_357MAGNUM_ENGINEER"
-            "prefab"					"weapon_pistol"
-            "show_in_armory"			"1"
-
-			"item_quality"				"rarity2"
-
-			"propername"				"0"
-			"item_name"					"Magnum"
-			"item_type_name"			".357 Cal Revolver"
-			"item_description"			"
-[ .357 calibre handgun, acquired ]
-  
-Ported by: 'ficool2'
-Weapon by: 'Reagy'"
-			"item_logname"				"magnum_engineer"
-			"item_iconname"				"magnum_hl"
-			"image_inventory"			"backpack/weapons/w_models/w_hl2_revolver"
-			"model_world"				"models/weapons/custom/w_models/w_hl2_revolver_engineer.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_hl2_revolver.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"engineer"				"1"
-			}
-            "static_attrs"
-            {
-				"hidden secondary max ammo penalty"		"0.18"
-				"clip size penalty hidden"				"0.5"
-			}
-			"attributes"
-			{
-				"damage bonus"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"3.75"
-				}
-				"weapon spread bonus"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.35" 
-				}
-				"reload time increased"	
-				{
-					"attribute_class"	"mult_reload_time"
-					"value"				"1.75"
-				}
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"5.5"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}			
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_HLRevolver.Single"
-				"sound_burst"			"Weapon_HLRevolver.SingleCrit"
-				"sound_reload"			"Weapon_Revolver.WorldReload"
-				"animation_replacement"
-				{
-					"ACT_MP_ATTACK_STAND_SECONDARY"				"ACT_MP_ATTACK_STAND_PRIMARY"
-					"ACT_MP_ATTACK_CROUCH_SECONDARY"			"ACT_MP_ATTACK_CROUCH_PRIMARY"
-					"ACT_MP_ATTACK_SWIM_SECONDARY"				"ACT_MP_ATTACK_SWIM_PRIMARY"
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
-			"drop_sound"				"#ui/item_light_gun_drop.wav"
         }		
 //-------------------------------------
 //-------------------------------------
@@ -16695,83 +16104,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //-------------------------
 		"9009"
 		{
-			"name"						"Magnum Opus"
-			"prefab"					"weapon_pistol"
-			"baseitem" 					"1"
-			"show_in_armory"			"1"
-			
-			"item_quality"				"rarity3"
-			
-			"item_class"				"tf_weapon_pistol"
-			"item_logname"				"deagle_engineer"
-			"item_iconname"				"deagle_engineer"
-			"item_type_name"			"Hand Cannon"
-			"item_name"					"Magnum Opus"
-			"item_description"			"
-The one tap champ... not in the Gravel Wars though.
-
-Model by: 'DeRosaJ'
-Weapon from: Tangerine Paint and Grunt's Weapon Addons"
-			"propername"				"1"
-			"image_inventory"			"backpack/weapons/w_models/w_deagle2"
-			"model_world"				"models/weapons/w_models/w_deagle.mdl"
-			"model_player"				"models/weapons/v_models/v_deagle_engineer.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"engineer"                "secondary"
-			}								
-//           		"static_attrs"															
-//			{
-//				"damage bonus hidden"					"2.66"
-//				"clip size penalty hidden"				"0.6"
-//				"fire rate penalty hidden"				"3.55"
-//				"hidden secondary max ammo penalty"		"0.18"	
-//			}								
-			"attributes"
-			{
-				"damage bonus"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"2.5"
-				}
-				"weapon spread bonus"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.65"
-				}
-				"clip size penalty"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"0.6"
-				}
-				"maxammo secondary reduced"
-				{
-					"attribute_class"	"mult_maxammo_secondary"
-					"value"				"0.175"
-				}
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"3.55"
-				}
-				"deploy time increased"
-				{
-					"attribute_class"	"mult_deploy_time"
-					"value"				"1.25"
-				}
-			}
-			"visuals"																			// This is just for consistency!
-			{
-				"animation_replacement"
-				{	
-					"ACT_MP_ATTACK_STAND_SECONDARY"				"ACT_MP_ATTACK_STAND_PRIMARY"
-					"ACT_MP_ATTACK_CROUCH_SECONDARY"			"ACT_MP_ATTACK_CROUCH_PRIMARY"
-					"ACT_MP_ATTACK_SWIM_SECONDARY"				"ACT_MP_ATTACK_SWIM_PRIMARY"
-				}
-				"sound_single_shot"		"Weapon_DesertEagle.Single"
-				"sound_burst"			"Weapon_DesertEagle.SingleCrit"
-			}
+//			"image_inventory"			"backpack/weapons/w_models/w_deagle2" Keeping for reference, to be used on the Scout deagle
 		}
 //-------------------------
 //-------------------------
@@ -21419,87 +20752,6 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //--------------------------
 		"9079"
 		{
-			"name"						"medic smg"
-			"prefab"					"weapon_syringegun"
-//			"item_class"				"tf_weapon_grenade_mirv"
-			"show_in_armory"			"1"
-//			"item_slot"					"secondary"
-			
-			"item_quality"				"rarity3"
-			
-//			"anim_slot"					"melee"
-//			"image_inventory_size_w"	"128"
-//			"image_inventory_size_h"	"82"
-			"propername"				"1"
-			"item_name"					"Frenchie's Firearm"
-			"item_type_name"			"''Super SMG''"
-			"item_description"			"
-An Assault Rifle Mislabled as an SMG, how did that happen?
-
-Model from: We love FORTNITE We love FORTNI..
-Animations by: 'The Medineer'
-Weapon from: Tangerine Paint and Grunt's Weapon Addons"
-			"item_logname"				"famas"
-			"item_iconname"				"smg"
-			"image_inventory"			"backpack/weapons/w_models/w_smg"
-			"model_world"				"models/weapons/w_models/w_famas_medic.mdl"
-			"model_player"				"models/weapons/v_models/v_famas.mdl"
-//			"extra_wearable"			"models/player/items/demo/demo_scotchbonnet.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"medic"					"1"
-			}
-			"static_attrs"
-			{
-				"override projectile type" 				"1"										// hitscan
-//				"allowed in medieval mode"				"1"
-//				"min_viewmodel_offset"					"10 0 -10"								// Same deal as the gas can.
-			}
-			"attributes"
-			{
-				"fire rate bonus"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.75"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mod_rocket_gravity"											// DISPLAY ONLY
-					"value"				"0.625"
-				}
-				"spread penalty"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"1.33"
-				}
-				"reload time increased"	
-				{
-					"attribute_class"	"mult_reload_time"
-					"value"				"1.2"
-				}	
-				// Backend stuff.
-				"damage bonus hidden"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.5"
-				}
-				"airblast vulnerability multiplier hidden"										// Some attributes have text that displays, but don't work - unfortunately...
-				{
-					"attribute_class"	"mult_clipsize"
-					"value" 			"0.625"
-				}
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_Famas.Single"
-				"sound_burst"			"Weapon_Famas.SingleCrit"
-				"sound_reload"			"Weapon_Famas.WorldReload"
-				"tracer_effect"			"bullet_scattergun_tracer01"						
-//				"tracer_effect"			"bullet_revrrifle_tracer01"									// It's strict, though, so don't expect much out of these.	
-			}
-//			"mouse_pressed_sound"		"#ui/item_paint_can_pickup.wav"
-//			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
 //--------------------
 //--------------------
@@ -25825,6 +25077,7 @@ Weapon by 'The One Of Wonders'"
 			"image_inventory"			"backpack/weapons/c_models/c_giantspiker/c_giantspiker"
 			"model_world"				"models/weapons/c_models/c_giantspiker/c_giantspiker.mdl"				
 			"model_player"				"models/weapons/c_models/c_giantspiker/v_giantspiker.mdl"
+			"extra_wearable" 			"models/player/items/set_doctor.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -27114,6 +26367,7 @@ Weapon from: Fred's Fight Starters"
 //--------------------------------
 //--------------------------------
 //--THE HIT INDUCTION - 9920--
+// Decided to keep this for now
 //--------------------------------
 //--------------------------------
 		"9920"

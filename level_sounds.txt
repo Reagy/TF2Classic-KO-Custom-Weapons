@@ -4422,25 +4422,6 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// CRUSADERS CROSSBOW
-// ------------------------------------------------------------------------------------ //
-"Weapon_CrusadersCrossbow.Single"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_74dB"
-	"volume"	"1"
-	"wave"		")weapons/crusaders_crossbow_shoot.wav"
-}
-
-"Weapon_CrusadersCrossbow.SingleCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_74dB"
-	"volume"	"1"
-	"wave"		")weapons/crusaders_crossbow_shoot_crit.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
 // ARROW EFFECTS
 // ------------------------------------------------------------------------------------ //
 
@@ -6836,25 +6817,6 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// SYRINGEGUN BLEED
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_MP40_Bleed.Single"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/mp40_bleed_shoot.wav"
-}
-"Weapon_MP40_Bleed.SingleCrit"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/mp40_bleed_shoot_crit.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
 // SNIPERRIFLE MINICRIT
 // ------------------------------------------------------------------------------------ //
 
@@ -7738,25 +7700,6 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// Syringe Shotgun
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_SyringeShot.Single"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/syringeshot_shoot.wav"
-}
-"Weapon_SyringeShot.SingleCrit"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/syringeshot_shoot_crit.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
 // TF_Weapon_Brick
 // ------------------------------------------------------------------------------------ //
 
@@ -8483,49 +8426,6 @@
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1"
 	"wave"		"weapons/mk18_worldreload_alt.wav"
-}
-// ------------------------------------------------------------------------------------ //
-// Deagle Engineer
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_DesertEagle.Single"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	".85"
-	"wave"		"weapons/deserteagle.wav"
-}
-
-"Weapon_DesertEagle.SingleCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	".85"
-	"wave"		"weapons/deserteagle_crit.wav"
-}
-
-"Weapon_DesertEagle.MagIn"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	".5"
-	"wave"		"weapons/deserteagle_mag_in.wav"
-}
-
-"Weapon_DesertEagle.MagOut"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	".5"
-	"wave"		"weapons/deserteagle_mag_out.wav"
-}
-
-"Weapon_DesertEagle.Draw"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	".85"
-	"wave"		"weapons/deserteagle_draw.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -10305,50 +10205,6 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// FAMAS
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_Famas.Single"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	".85"
-	"wave"		")weapons/famas_shoot.wav"
-}
-
-"Weapon_Famas.SingleCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	".85"
-	"wave"		")weapons/famas_shoot_crit.wav"
-}
-
-"Weapon_Famas.MagIn"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	".65"
-	"wave"		")weapons/famas_mag_in.wav"
-}
-
-"Weapon_Famas.MagOut"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	".65"
-	"wave"		")weapons/famas_mag_out.wav"
-}
-
-"Weapon_Famas.WorldReload"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	".65"
-	"wave"		")weapons/famas_worldreload.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
 // Combat Assault Rifle
 // ------------------------------------------------------------------------------------ //
 
@@ -11275,70 +11131,6 @@
 	"soundlevel"	"SNDLVL_NORM"
 	
 	"wave"		")weapons/railgun_chargeloop.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
-// HL REVOLVER
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_HLRevolver.Single"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		")weapons/hlrevolver_shoot1.wav"
-		"wave"		")weapons/hlrevolver_shoot2.wav"
-	}
-}
-
-"Weapon_HLRevolver.SingleCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		")weapons/hlrevolver_shoot1_crit.wav"
-		"wave"		")weapons/hlrevolver_shoot2_crit.wav"
-	}
-}
-
-"Weapon_HLRevolver.Reload1"
-{
-	"channel"	"CHAN_STATIC"
-	"volume"	"1"
-	"soundlevel"	"SNDLVL_NORM"
-
-	"wave"		"weapons/hlrevolver_reload_cylinder_open.wav"
-}
-
-"Weapon_HLRevolver.Reload2"
-{
-	"channel"	"CHAN_STATIC"
-	"volume"	"1"
-	"soundlevel"	"SNDLVL_NORM"
-
-	"wave"		"weapons/hlrevolver_reload_cylinder_arm.wav"
-}
-
-"Weapon_HLRevolver.Reload3"
-{
-	"channel"	"CHAN_STATIC"
-	"volume"	"1"
-	"soundlevel"	"SNDLVL_NORM"
-
-	"wave"		"weapons/hlrevolver_reload_cylinder_close.wav"
-}
-
-"Weapon_HLRevolver.WorldReload"
-{
-	"channel"	"CHAN_STATIC"
-	"volume"	"1"
-	"soundlevel"	"SNDLVL_NORM"
-
-	"wave"		"weapons/hlrevolver_worldreload.wav"
 }
 
 // ------------------------------------------------------------------------------------ //

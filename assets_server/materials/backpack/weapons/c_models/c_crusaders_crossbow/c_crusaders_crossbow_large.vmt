@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture"	 "backpack/weapons/c_models/c_crusaders_crossbow/c_crusaders_crossbow_large"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}
