@@ -635,99 +635,6 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// Metal Gloves
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_MetalGloves.Miss"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		"weapons/boxing_gloves_swing1.wav"
-		"wave"		"weapons/boxing_gloves_swing2.wav"
-		"wave"		"weapons/boxing_gloves_swing4.wav"
-	}
-}
-
-"Weapon_MetalGloves.MissCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"wave"		"weapons/fist_swing_crit.wav"
-}
-
-"Weapon_MetalGloves.CritHit"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		")weapons/metal_gloves_hit_crit1.wav"
-		"wave"		")weapons/metal_gloves_hit_crit2.wav"
-		"wave"		")weapons/metal_gloves_hit_crit3.wav"
-		"wave"		")weapons/metal_gloves_hit_crit4.wav"
-	}
-}
-
-"Weapon_MetalGloves.CritEnabled"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"wave"		"weapons/boxing_gloves_crit_enabled.wav"
-}
-
-"Weapon_MetalGloves.HitFlesh"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		")weapons/metal_gloves_hit_flesh1.wav"
-		"wave"		")weapons/metal_gloves_hit_flesh2.wav"
-		"wave"		")weapons/metal_gloves_hit_flesh3.wav"
-		"wave"		")weapons/metal_gloves_hit_flesh4.wav"
-	}
-}
-
-"Weapon_MetalGloves.HitWorld"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		")weapons/metal_gloves_hit_world1.wav"
-		"wave"		")weapons/metal_gloves_hit_world2.wav"
-		"wave"		")weapons/metal_gloves_hit_world3.wav"
-		"wave"		")weapons/metal_gloves_hit_world4.wav"
-	}
-}
-
-
-"Weapon_MetalGloves.HitGlove"
-{
-	"channel"	"CHAN_AUTO"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1"
-	"wave"		"weapons/metal_gloves_hit.wav"
-
-}
-
-"Weapon_MetalGloves.Draw"
-{
-	"channel"	"CHAN_AUTO"
-	"soundlevel"	"SNDLVL_74dB"
-	"volume"	".5"
-	"wave"		"weapons/draw_melee.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
 // Boxing Gloves
 // ------------------------------------------------------------------------------------ //
 
@@ -2172,34 +2079,6 @@
 	}
 }
 
-
-// ------------------------------------------------------------------------------------ //
-// ENFORCER
-// ------------------------------------------------------------------------------------ //
-"Weapon_Enforcer.Single"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		")weapons/tf_spy_enforcer_revolver_01.wav"
-		"wave"		")weapons/tf_spy_enforcer_revolver_02.wav"
-		"wave"		")weapons/tf_spy_enforcer_revolver_03.wav"
-		"wave"		")weapons/tf_spy_enforcer_revolver_04.wav"
-		"wave"		")weapons/tf_spy_enforcer_revolver_05.wav"
-		"wave"		")weapons/tf_spy_enforcer_revolver_06.wav"
-	}
-}
-
-"Weapon_Enforcer.SingleCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/tf_spy_enforcer_revolver_crit.wav"
-}
-
 // ------------------------------------------------------------------------------------ //
 // PISTOL
 // ------------------------------------------------------------------------------------ //
@@ -2349,26 +2228,6 @@
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"	".5"
 	"wave"		"weapons/draw_secondary.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
-// LETRANGER
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_Letranger.Single"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	".85"
-	"wave"		")weapons/letranger_shoot.wav"
-}
-
-"Weapon_Letranger.SingleCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	".85"
-	"wave"		")weapons/letranger_shoot_crit.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -7295,25 +7154,6 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// OLD REV RIFLE
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_RevolverRifle.Single"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/revolver_rifle_shoot.wav"
-}
-"Weapon_RevolverRifle.SingleCrit"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/revolver_rifle_shoot_crit.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
 // ENGI REVOLVER ALT
 // ------------------------------------------------------------------------------------ //
 
@@ -8003,20 +7843,6 @@
 		"wave"		"vo/sniper_jeers04.wav"
 		"wave"		"vo/sniper_jeers08.wav"
 	}
-}
-"Weapon_DMCrossbowSniper.Single"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/crusaders_crossbow_shoot.wav"
-}
-"Weapon_DMCrossbowSniper.SingleCrit"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/crusaders_crossbow_shoot_crit.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
