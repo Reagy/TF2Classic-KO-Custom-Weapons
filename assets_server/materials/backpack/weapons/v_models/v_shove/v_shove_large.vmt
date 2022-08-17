@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/v_models/v_shove/v_shove_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+	"$ignorez"	"1"
+}
