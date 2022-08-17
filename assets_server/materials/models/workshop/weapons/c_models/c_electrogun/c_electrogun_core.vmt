@@ -1,0 +1,51 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\workshop\weapons\c_models\c_electrogun\c_electrogun_core"
+
+
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"	
+
+    	"$phong"                "1"
+    	"$phongexponent"        "17"
+    	"$phongboost"           "7"
+  	"$phongfresnelranges"   "[.25 .5 1]"
+	"$halflambert" "1"
+
+	"$commadd_phongexponent" "20"
+	"$commadd_phongboost" 	"10"
+	"$commweapon"		"0"
+
+	// Rim lighting parameters
+	"$rimlight" "1"			
+	"$rimlightexponent" "4"	
+	"$rimlightboost" "1"
+
+	"$basemapalphaphongmask" "1"
+
+	"$glowcolor" "1"
+	"$selfillum" "1"
+	"$selfillummask" "models\weapons\c_items/c_electrogun_core_illum"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

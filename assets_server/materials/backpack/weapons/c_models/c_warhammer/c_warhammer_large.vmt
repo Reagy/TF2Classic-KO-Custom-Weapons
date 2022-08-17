@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_warhammer\c_warhammer_large"
+	$translucent 1
+	$vertexcolor 1
+}

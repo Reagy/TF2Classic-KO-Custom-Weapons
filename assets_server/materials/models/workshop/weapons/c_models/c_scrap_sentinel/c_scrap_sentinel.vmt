@@ -1,0 +1,110 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/workshop/weapons/c_models/c_scrap_sentinel/c_scrap_sentinel"
+	//"$bumpmap" "models/effects/flat_normal"
+  //"$bumpmap" "models/workshop/weapons/c_models/c_scrap_sentinel/c_scrap_sentinel_normal"
+	//"$bumpmapalphaphongmask" "1"
+  "$basemapalphaphongmask" "1"
+
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "4"
+  "$lightwarptexture" "models/lightwarps/softened_weapon_lightwarp"	
+	//"$lightwarptexture" "models/weapons/c_items/c_ambassador_lightwarp"
+  //"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	//"$phongfresnelranges"	"[.25 .5 1]"
+  "$phongfresnelranges"	"[.3 .5 3]"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"	
+	"$rimlightboost" ".25"
+  
+  "$envmap" "env_cubemap"
+  "$envmaptint" "[ .1 .1 .1 ]"
+  "$basealphaenvmapmask" "1"
+  //"$normalmapalphaenvmapmask" "0"
+  //"$envmapmask" "models/workshop/weapons/c_models/c_scrap_sentinel/c_scrap_sentinel_envmask"
+  
+  // Community weapon stuff:
+  "$tempvar" "0"
+  "$commadd_phongexponent" "20"
+	"$commadd_phongboost" 	"8"
+	"$commweapon"		"0"
+	"$basephongexponent" "15"
+	"$basephongboost" "8"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"$sheenPassEnabled" "1"
+
+	"$sheenmap" 		"cubemaps\cubemap_sheen001"
+	"$sheenmapmask" 		"Effects\AnimatedSheen\animatedsheen0"
+	"$sheenmaptint" 		"[ 1 1 1 ]"
+	"$sheenmapmaskframe" 	"0"
+	"$sheenindex" 		"0"
+
+	"Proxies"
+	{
+    "AnimatedTexture"
+		{
+			"animatedtexturevar"		"$detail"
+			"animatedtextureframenumvar"		"$detailframe"
+			"animatedtextureframerate"		"30"
+		}
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+    
+    // Community weapon stuff:
+    "CommunityWeapon"
+		{
+			"resultVar" "$commweapon"
+		}
+		"Multiply"
+		{
+			"srcVar1"  "$commweapon"
+			"srcVar2"  "$commadd_phongexponent" 
+			"resultVar" "$tempvar" 
+		}
+		"Add"
+		{
+			"srcVar1"  "$tempvar" 
+			"srcVar2"  "$basephongexponent" 
+			"resultVar" "$phongexponent" 
+		}
+		"Multiply"
+		{
+			"srcVar1"  "$commweapon"
+			"srcVar2"  "$commadd_phongboost" 
+			"resultVar" "$tempvar" 
+		}
+		"Add"
+		{
+			"srcVar1"  "$tempvar" 
+			"srcVar2"  "$basephongboost"
+			"resultVar" "$phongboost" 
+		}
+	}
+}
