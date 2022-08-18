@@ -1,6 +1,6 @@
 "VertexlitGeneric"
 {
-	"$basetexture" "models/weapons/c_models/c_syringe_medigun/c_syringe_medigun"
+	"$basetexture" "models/weapons/c_models/c_syringe_medigun/c_syringe_medigun_neutral"
 
 	"$phong" "1"
 	"$phongexponent" "15"

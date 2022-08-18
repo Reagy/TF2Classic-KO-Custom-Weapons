@@ -1334,6 +1334,21 @@ Weapon from: New Old Weapons Pack"
                     "attribute_class"	"pda_remote_deploy"										// Note: Bots don't understand how this works, but generally unintentionally build their stuff anyways!
                     "value"				"1"														// ...except the Teleporters, which almost always remain in the toolbox.
                 }
+				"engineer dispenser build rate multiplier"
+				{
+					"attribute_class"	"dispenser_build_rate_multiplier"
+					"value"				"2.0"
+				}
+				"engineer teleporter build rate multiplier"
+				{
+					"attribute_class"	"teleporter_build_rate_multiplier"
+					"value"				"2.0"
+				}
+				"engineer sentry build rate multiplier"										
+				{
+					"attribute_class"	"sentry_build_rate_multiplier"
+					"value" 			"1.75"
+				}
             }
 			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
@@ -8891,6 +8906,11 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 		"1"
+				}
 				"damage bonus"																
 				{
 					"attribute_class"	"mult_dmg"
@@ -9484,14 +9504,14 @@ Remember to jump before firing.
 
 Hoowee!
 
-Cosmetic by: 'Corvalho'
+Cosmetic by: 'Pie_Tony' 'Tabby'
 Item by: 'Reagy'"
 			"item_slot"					"secondary"
 			"anim_slot"					"secondary"
-			"image_inventory"			"backpack/player/items/engineer/flyboy"
+			"image_inventory"			"backpack/workshop/player/items/pyro/furious_flyer_mk2/furious_flyer_mk2"
 			"model_player"				"models/weapons/v_models/v_rocketpack_pyro.mdl"
 			"attach_to_hands"			"2"
-			"extra_wearable"			"models/player/items/engineer/flyboy.mdl"
+			"extra_wearable"			"models/player/items/engineer/flyboy_new.mdl"
 			"used_by_classes"
 			{
 				"engineer"					"1"
@@ -25496,7 +25516,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Rejection of Medicine"
 			"item_type_name"			"Fusion Blaster"
-			"item_description"			"Alt-Fire: hold to fire a high velocity ricochet laser
+			"item_description"			"Holding to fire builds a high velocity ricochet laser
 
 Weapon recharges ammo over time when not in use 
 
@@ -25847,8 +25867,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"slamblaster_demo"
 			"image_inventory"			"backpack/weapons/c_models/c_slamblaster/c_slamblaster"
 			"model_world"				"models/weapons/c_models/c_slamblaster/c_slamblaster.mdl"
-			"model_player"				"models/weapons/c_models/c_slamblaster/c_slamblaster.mdl"
-			"attach_to_hands"			"1"
+			"model_player"				"models/weapons/v_models/v_slamblaster/v_slamblaster.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"demoman"				"1"
@@ -26090,8 +26110,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"supermag_scout"
 			"image_inventory"			"backpack/weapons/w_models/w_deagle2"
 			"model_world"				"models/weapons/c_models/c_supermagnum_scout/c_supermagnum_scout.mdl"
-			"model_player"				"models/weapons/c_models/c_supermagnum_scout/c_supermagnum_scout.mdl"
-			"attach_to_hands"			"1"
+			"model_player"				"models/weapons/v_models/v_supermagnum_scout/v_supermagnum_scout.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"scout"                "1"
@@ -26686,7 +26706,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Building Upgrader"
 			"item_type_name"			"Fusion Blaster"
-			"item_description"			"Alt-Fire: hold to fire a high velocity ricochet laser
+			"item_description"			"Holding to fire builds a high velocity ricochet laser
 Dealing damage with this weapon repairs and upgrades buildings
 
 Weapon requires a recharge after firing once
@@ -27052,9 +27072,9 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"warhammer"
 			"image_inventory"			"backpack/weapons/c_models/c_warhammer/c_warhammer"
 			"model_world"				"models/weapons/c_models/c_warhammer/c_warhammer.mdl"
-			"model_player"				"models/weapons/c_models/c_warhammer/c_warhammer.mdl"
+			"model_player"				"models/weapons/v_models/v_warhammer/v_warhammer.mdl"
 			"extra_wearable"			"models/player/items/demo/demo_buckethelm.mdl"
-			"attach_to_hands"			"1"		
+			"attach_to_hands"			"2"		
 			"used_by_classes"
 			{
 				"demoman"				"1"
@@ -27212,6 +27232,70 @@ Weapon by 'The One Of Wonders'"
 			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
 			"drop_sound"				"#ui/item_pack_drop.wav"
 		}		
+//-------------------------
+//-------------------------
+//--Magnetic Wrench - 9151--
+//-------------------------
+//-------------------------
+		"9151"
+		{
+			"name"						"TF_WEAPON_MAGNETIC_WRENCH"									
+			"prefab"					"weapon_wrench"
+			"show_in_armory"			"1"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			
+			"item_name"					"Magnetic Horseshoe"
+			"item_type_name"			"#TF_Weapon_Wrench"
+			"item_description"			"
+Magnets, I know how they work...
+
+Model by: 'pathnode'
+Weapon by: 'Reagy'"
+			"item_logname"				"magwrench"
+			"item_iconname"				"magwrench"
+			"image_inventory"			"backpack/weapons/c_models/c_magnetic_horseshoe/c_magnetic_horseshoe"
+			"model_world"				"models/weapons/c_models/c_magnetic_horseshoe/c_magnetic_horseshoe.mdl"
+			"model_player"				"models/weapons/c_models/c_magnetic_horseshoe/c_magnetic_horseshoe.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"engineer"				"1"
+			}
+			"attributes"
+			{
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"engineer building teleporting pickup"
+				{
+					"attribute_class"	"building_teleporting_pickup"
+					"value"				"50"
+				}
+				"add construction on hit"
+				{
+					"attribute_class"	"add_onhit_construction"
+					"value"				"1"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.2"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
+		}		
+		
+		
 //--------------------------------------------------//
 //-- 		Fred's Fight Starters v0.3.1 		  --//
 // v5.3.7 Disabled	some items due to dupes etc		//

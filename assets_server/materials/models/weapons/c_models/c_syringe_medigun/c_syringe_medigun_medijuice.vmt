@@ -1,13 +1,13 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/weapons/c_models/c_syringe_medigun/c_syringe_medigun"
+	"$basetexture" "models/weapons/c_models/c_syringe_medigun/c_syringe_medigun_neutral"
 	
 			 	"$bumpmap" "water/dx80_tfwater001_normal"
 
 	"$bumpmap" "water/tfwater001_normal"
-	"$detail" "models/player/shared/red_uber"
-	"$detailblendfactor" "0.76"
-	"$envmap" "effects/invun_red"
+	"$detail" "models/player/shared/bone_white"
+	"$detailblendfactor" "1"
+	"$envmap" "effects/invun_yellow"
 	"$surfaceprop" "metal"
 	"$halflambert" "1"
 	
