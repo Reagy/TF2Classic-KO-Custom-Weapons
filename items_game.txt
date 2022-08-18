@@ -1315,10 +1315,10 @@ Weapon from: New Old Weapons Pack"
 			"item_quality"				"rarity3"
 			"item_name"					"PDA: Remote Signal"
 			"item_type_name"			"#TF_Weapon_PDA_Engineer"
-			"item_description"			"
-Functions identically to the Construction PDA
+			"item_description"			"Dispenser generates ammo + metal slowly
 
-Weapon from: New Old Weapons Pack"
+Original weapon from: New Old Weapons Pack
+Edited by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/w_models/w_remotesignal_pda"			// Prior to 2.2.5, this used the Rush Order's teamcolored PDA model, but I felt that model fit more on that one.
 			"model_world"				"models/weapons/w_models/w_remotesignal_pda.mdl"		// So, I found a new model for this that ALSO looks like it could remote deploy! Hopefully it works?
 			"model_player"				"models/weapons/v_models/v_remotesignal_pda_engineer.mdl"
@@ -1337,17 +1337,22 @@ Weapon from: New Old Weapons Pack"
 				"engineer dispenser build rate multiplier"
 				{
 					"attribute_class"	"dispenser_build_rate_multiplier"
-					"value"				"2.0"
+					"value"				"3.0"
 				}
 				"engineer teleporter build rate multiplier"
 				{
 					"attribute_class"	"teleporter_build_rate_multiplier"
-					"value"				"2.0"
+					"value"				"3.0"
 				}
 				"engineer sentry build rate multiplier"										
 				{
 					"attribute_class"	"sentry_build_rate_multiplier"
-					"value" 			"1.75"
+					"value" 			"2.5"
+				}
+				"torso scale"
+				{
+					"attribute_class"	"mult_dispenser_rate"									// Dispensers give significantly less ammo and generate less metal per tick of those
+					"value"				"0.5"
 				}
             }
 			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
@@ -4734,7 +4739,8 @@ Weapon from: New Old Weapons Pack"
 Deploy fast-building yet fragile buildings!
 You are unable to upgrade with the Wrench
 
-Weapon from: New Old Weapons Pack"
+Original weapon from: New Old Weapons Pack
+Edited by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/w_models/w_mini_pda"
 			"model_world"				"models/weapons/w_models/w_mini_pda.mdl"
 			"model_player"				"models/weapons/v_models/v_mini_pda_engineer.mdl"
@@ -4753,7 +4759,7 @@ Weapon from: New Old Weapons Pack"
 				"engineer teleporter build rate multiplier" "2.5"
 				// General
 				"building cost reduction" 				"0.8"									// The numbers here aren't perfect, but I can't fine-tune it to all buildings, and the next closest I found with acceptable numbers is... 50% building cost. Which is too much
-				"sentry shoots projectile"				"1"
+//				"sentry shoots projectile"				"1"
 			}
             "attributes"
             {
