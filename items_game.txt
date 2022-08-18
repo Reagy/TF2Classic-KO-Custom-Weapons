@@ -24414,6 +24414,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
 			    "mark for death"         // Visual only, below condition on hit does this attribute's job
 				{
 					"attribute_class"	"mark_for_death"
