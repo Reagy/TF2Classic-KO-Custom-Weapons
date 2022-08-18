@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models\weapons\c_items\c_eternal_reward_red.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models\weapons\c_items\c_eternal_reward_blue"
-	}
-}

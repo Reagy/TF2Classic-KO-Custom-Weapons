@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture"	 "backpack/workshop_partner/weapons/c_models/c_shogun_warfan/c_shogun_warfan_large"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}

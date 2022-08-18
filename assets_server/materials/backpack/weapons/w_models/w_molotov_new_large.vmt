@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" 	"backpack/workshop\player\items\pyro\maniacs_molotovs\maniacs_molotovs_large"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}

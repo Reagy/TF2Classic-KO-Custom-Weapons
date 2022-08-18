@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture"	 "backpack/workshop/weapons/c_models/c_picket/c_picket_large"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}
