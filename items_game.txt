@@ -6944,7 +6944,8 @@ Weapon by: 'Reagy'"
 // V5.3.1 New model added, easily identify who is using fists now
 // V5.3.3 Dropped building health from 150% to 120%
 // V5.3.4r1 Can now upgrade and repair buildings at a heavily decreased rate, can also now remove sappers
-		"7000"
+//		"7000"
+		"9146"
 		{
 			"name"						"TF_WEAPON_ALLFIST_ENGINEER"
 			"tags"
@@ -26878,7 +26879,8 @@ Weapon by: 'The One Of Wonders'"
 //--BUILDING HEALTH PROVIDER - 9146--
 //------------------
 //------------------
-		"9146"
+//		"9146" // Swapped with fists to avoid recompiling plugin
+		"7000"
 		{
 			"name"						"TF_WEAPON_BUILDING_TANKER"
 			"prefab"					"weapon_wrench"
@@ -27484,13 +27486,14 @@ Weapon by: 'The One Of Wonders'"
 If my team won't watch my back for me, I'll do it myself!
 
 Model by: 'Zoeybot'
+Animations by: 'Paysus'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"syringegun_heal"
 			"item_iconname"				"syringegun_heal"
 			"image_inventory"			"backpack/weapons/c_models/c_syringegun_heal/c_syringegun_heal"
 			"model_world"				"models/weapons/c_models/c_syringegun_heal/c_syringegun_heal.mdl"
-			"model_player"				"models/weapons/c_models/c_syringegun_heal/c_syringegun_heal.mdl"
-			"attach_to_hands"			"1"
+			"model_player"				"models/weapons/v_models/v_syringegun_heal/v_syringegun_heal.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"medic"					"1"
@@ -27974,13 +27977,14 @@ Critical hits on burning players deal reduced damage
 Truly a scientific marvel.. I'm so ready to see how it works!
 
 Model by: 'crazy-g'
+Animations by: 'Paysus'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"gooplauncher_medic"
 			"item_iconname"				"gooplauncher_medic"
 			"image_inventory"			"backpack/weapons/c_models/c_goopgun/c_goopgun"
 			"model_world"				"models/weapons/c_models/c_goopgun/c_goopgun.mdl"
-			"model_player"				"models/weapons/c_models/c_goopgun/c_goopgun.mdl"
-			"attach_to_hands"			"1"
+			"model_player"				"models/weapons/v_models/v_goopgun/v_goopgun.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"medic"					"1"
@@ -28276,13 +28280,14 @@ Weapon by: 'The One Of Wonders'"
 Now this is a real knife, boyo! Let me show you it's features up close!
   
 Model by: 'Barno'
+Animations by: 'Kylul' & 'Kiyoshi'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"messer_demo"
 			"item_iconname"				"messer_demo"
 			"image_inventory"			"backpack/weapons/c_models/c_messer/c_messer"
 			"model_world"				"models/weapons/c_models/c_messer/c_messer.mdl"
-			"model_player"				"models/weapons/c_models/c_messer/c_messer.mdl"
-			"attach_to_hands"			"1"
+			"model_player"				"models/weapons/v_models/v_messer/v_messer.mdl"
+			"attach_to_hands"			"2"
             "extra_wearable"			"models/player/items/demo/demo_knighthelm/demo_knighthelm.mdl"			
 			"used_by_classes"
 			{
@@ -28363,13 +28368,14 @@ Weapon by: 'The One Of Wonders'"
 Down with the king, chop off his head and put me in his seat instea- wait a minute!
   
 Model by: 'MrFunreal'
+Animations by: 'Kylul' & 'Kiyoshi'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"kingslayer"
 			"item_iconname"				"kingslayer"
 			"image_inventory"			"backpack/weapons/c_models/c_kingsword/c_kingsword"
 			"model_world"				"models/weapons/c_models/c_kingsword/c_kingsword.mdl"
-			"model_player"				"models/weapons/c_models/c_kingsword/c_kingsword.mdl"
-			"attach_to_hands"			"1"		
+			"model_player"				"models/weapons/v_models/v_kingsword/v_kingsword.mdl"
+			"attach_to_hands"			"2"		
 			"extra_wearable"			"models/player/items/demo/bucket_royale/bucket_royale.mdl"
 			"used_by_classes"
 			{
@@ -28445,6 +28451,7 @@ Pyro got their hands on hardware tools and an instruction booklet, big mistake.
 
 Model by: 'KARMA the BARMAN'
 Ported and edited by: 'Suomimies55'
+Animations from: Open Fortress
 Weapon by: 'The One Of Wonders'"											
 			"item_logname"				"super_railgun_pyro"
 			"item_iconname"				"super_railgun_pyro"
@@ -29751,4 +29758,4 @@ Weapon from: Fred's Fight Starters"
 			"stored_as_integer"	"0"
 		}
 	}
-}	
+}
