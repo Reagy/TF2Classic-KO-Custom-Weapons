@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\weapons\w_goop_proj\w_goop_proj_blue"
+	"$basealphaenvmapmask" "1"
+	"$additive"	1
+	"$nocull" 1
+
+	//phong properties
+	"$phong"	"1"
+	"$phongboost"	"5"
+	"$phongexponent"	"30"
+	"$phongfresnelranges"	"[.2 1 2]"
+	
+	"$rimlight" 1
+	"$rimboost" 8
+	
+	"$glowcolor" "1"
+}
