@@ -7196,15 +7196,15 @@ Weapon by: 'Reagy'"
 			"static_attrs"																	
 			{
 				"class select override vcd"				"class_select_nailgun"					
-				"fire rate bonus hidden"				"0.2"								
-				"reload time increased hidden"			"0.9"								
+				"fire rate bonus hidden"				"0.1"								
+				"reload time increased hidden"			"1.175"								
 			}
 			"attributes"																	
 			{
 				"clip size bonus"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"4.0"
+					"value"				"2.5"
 				}
 				"maxammo secondary increased"
 				{
@@ -7214,12 +7214,12 @@ Weapon by: 'Reagy'"
 				"spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.5"
+					"value"				"6"
 				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.40"
+					"value"				"0.25"
 				}
 			}
 			"visuals"
@@ -9295,6 +9295,11 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mult_maxammo_primary"
 					"value"				"0.50"
 				}
+				 "voice pitch scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.1"
+				}	
 			}
 			"visuals"																		
 			{
@@ -9354,9 +9359,9 @@ Weapon by: 'Reagy'"
 			{
 				"UNIQUE bullets per shot bonus HIDDEN"	"0.1"
 				"scattergun no reload single"			"1"
-				"damage bonus hidden"					"3.8"
+				"damage bonus hidden"					"2.77777777778"
 				"clip size penalty hidden"				"5"
-				"fire rate penalty hidden"				"0.2"
+				"fire rate penalty hidden"				"0.18"
 				"hidden primary max ammo bonus"			"3.75"				
 				
 				"override projectile type" 				"1"
@@ -9374,7 +9379,7 @@ Weapon by: 'Reagy'"
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.70"
+					"value"				"1.33"
 				}
 				"clip size bonus"
 				{
@@ -9390,6 +9395,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_reload_time"
 					"value"				"3.2"
+				}
+                "voice pitch scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.5"
 				}				
 			}
 			"visuals"
@@ -9424,7 +9434,7 @@ Weapon by: 'Reagy'"
 
 			"item_logname"				"thompson_soldier"
 			"item_iconname"				"thompson_soldier"
-			"item_type_name"			""#TF_Weapon_SMG""
+			"item_type_name"			"Submachine Gun"
 			"item_name"					"Johnny Tommy"
 			"item_description"			"
 This gun won us the war!
@@ -9448,7 +9458,7 @@ Weapon by: 'Reagy'"
 				"override projectile type" 				"1"
 				"hidden primary max ammo bonus"			"0.96"
 				"class select override vcd"				"taunt02_v1"
-				"reload time increased hidden"			"1.5"
+				"reload time increased hidden"			"1.1"
 				"min_viewmodel_offset"					"5 0 -10"
 			}
            	"attributes"
@@ -9471,7 +9481,7 @@ Weapon by: 'Reagy'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"0.7"
 				}
 				"spread penalty"
 				{
@@ -12447,7 +12457,7 @@ Weapon by: 'Reagy'"
 			{
 				"UNIQUE bullets per shot bonus HIDDEN"	"0.1"
 				"scattergun no reload single"			"1"
-				"damage bonus hidden"					"3.8"
+				"damage bonus hidden"					"3.11111111111"
 				"clip size penalty hidden"				"3.25"
 				"fire rate penalty hidden"				"0.2"
 				"hidden primary max ammo bonus"			"1.9"
@@ -12467,12 +12477,12 @@ Weapon by: 'Reagy'"
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.85"
+					"value"				"1.8"
 				}
 				"weapon spread bonus"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.75"
+					"value"				"0.33"
 				}
 				"clip size penalty"
 				{
@@ -12487,7 +12497,7 @@ Weapon by: 'Reagy'"
                 "Reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"3.2"
+					"value"				"3.8"
 				}					
 			}
 			"visuals"
@@ -12539,9 +12549,9 @@ Weapon by: 'Reagy'"
 			{
 				"UNIQUE bullets per shot bonus HIDDEN"	"0.1"
 				"scattergun no reload single"			"1"
-				"damage bonus hidden"					"6.6"
+				"damage bonus hidden"					"5"
 				"clip size penalty hidden"				"3.25"
-				"fire rate penalty hidden"				"0.55"
+				"fire rate penalty hidden"				"0.5"
 				"hidden primary max ammo bonus"			"1.28"
 				
 				"class select override vcd"				"taunt01_v2"
@@ -12574,12 +12584,12 @@ Weapon by: 'Reagy'"
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.15"
+					"value" 			"0.33"
 				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.9"
+					"value"				"0.6"
 				}
 				"sniper no charge"
 				{
