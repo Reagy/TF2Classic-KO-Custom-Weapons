@@ -14273,7 +14273,7 @@ Weapon by: 'Majro'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"	"0.66"
+					"value"	"0.5"
 				}
 				
 				"weapon burn dmg reduced"
@@ -22974,12 +22974,12 @@ Weapon by: 'The One Of Wonders'"
 			    "rocket gravity"
 				{
 					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.1" 
+					"value"				"0.8" 
 				}
 			    "voice pitch scale"	                      													
 				{
 					"attribute_class"	"mult_explosion_radius"
-			     	"value"				"0.7"
+			     	"value"				"0.4"
 				}
 				"damage bonus"             // Display Only, rocket projectile for some reason gives you 35% bonus damage anyway.
 				{
