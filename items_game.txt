@@ -9880,35 +9880,38 @@ Wearable by: 'Reagy'"
 		"7050"		
 		{
 			"name"						"TF_WEARABLE_BVEST_SPY"						
-			"item_class"				"tf_wearable"
+			"item_class"				"tf_weapon_club"
 			"show_in_armory"			"1"
 			"item_slot"					"melee"
 
 			"item_quality"				"rarity2"
 
 			"equip_region"				"shirt"											
-			"anim_slot"					"FORCE_NOT_USED"
+			"anim_slot"					"melee"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
+			
+			"item_logname"					"securityvest_spy"
+			"item_iconname"					"securityvest_spy"
 
 			"propername"				"1"
 			"item_name"					"Security Measure"
 			"item_type_name"			"Ballistic Vest"
 			"item_description"			"
-Replaces your Knife
+Replaces your Knife with a Combat Knife
 You are unable to backstab while this item is equipped
 
 Model by: 'NeoDement'
 Wearable by: 'Reagy'"
 			"image_inventory"			"backpack/workshop/player/items/spy/bulletproof/bulletproof"
-			"model_player"				"models/player/items/custom/spy/bulletproof.mdl"
+			"model_world"					"models/weapons/c_models/c_combatknife_gunspy/c_combatknife_gunspy.mdl"
+			"model_player"					"models/weapons/c_models/c_combatknife_gunspy/c_combatknife_gunspy.mdl"
+			"attach_to_hands"				"1"
 			"extra_wearable"			"models/player/items/custom/spy/bulletproof.mdl"
 			"used_by_classes"
 			{
 				"spy"					"1"
 			}
-			"loadondemand"				"1"
-			"act_as_wearable"			"1"
 			"static_attrs"
 			{
 				"class select override vcd"				"taunt03"							
@@ -9950,7 +9953,43 @@ Wearable by: 'Reagy'"
 					"attribute_class"	"allowed_in_medieval_mode"
 					"value"				"1"
 				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"0.76923076923"													
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"0.9"														
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value" 			"0"														
+				}
 			}
+			"visuals"
+            {
+			    "sound_melee_miss"		"Weapon_Knife.Miss"
+				"sound_melee_hit"		"Weapon_Knife.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_Knife.HitWorld"
+				"sound_burst"			"Weapon_Knife.MissCrit"
+                "animation_replacement"
+                {
+                    "ACT_VM_DRAW"    "ACT_ITEM2_VM_DRAW"
+                    "ACT_VM_IDLE"    "ACT_ITEM2_VM_IDLE"
+                    "ACT_VM_HITCENTER"    "ACT_ITEM2_VM_HITCENTER"
+                    "ACT_VM_SWINGHARD"    "ACT_ITEM2_VM_SWINGHARD"
+                    "ACT_BACKSTAB_VM_UP"    "ACT_ITEM2_BACKSTAB_VM_UP"
+                    "ACT_BACKSTAB_VM_DOWN"    "ACT_ITEM2_BACKSTAB_VM_DOWN"
+                    "ACT_BACKSTAB_VM_IDLE"    "ACT_ITEM2_BACKSTAB_VM_IDLE"
+                    "ACT_MELEE_VM_STUN"    "ACT_MELEE_VM_ITEM2_STUN"
+                    "ACT_MELEE_VM_INSPECT_START"    "ACT_ITEM2_VM_INSPECT_START"
+                    "ACT_MELEE_VM_INSPECT_IDLE"        "ACT_ITEM2_VM_INSPECT_IDLE"
+                    "ACT_MELEE_VM_INSPECT_END"        "ACT_ITEM2_VM_INSPECT_END"
+                }
+            }
 			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
 			"drop_sound"				"#ui/item_pack_drop.wav"
 		}
@@ -25121,36 +25160,37 @@ Weapon by: 'Reagy'"
 		"9128"		
 		{
 			"name"						"TF_WEARABLE_BVEST2_SPY"						
-			"item_class"				"tf_wearable"
+			"item_class"				"tf_weapon_club"
 			"show_in_armory"			"1"
 			"item_slot"					"melee"
 
 			"item_quality"				"rarity2"
 
 			"equip_region"				"shirt"											
-			"anim_slot"					"FORCE_NOT_USED"
+			"anim_slot"					"melee"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 
 			"propername"				"1"
 			"item_logname"				"majors_mark"
+			"item_iconname"				"majors_mark"
 			"item_name"					"Majors Mark"
 			"item_type_name"			"Ballistic Vest"
 			"item_description"			"
-Replaces your Knife
+Replaces your Knife with a Combat Knife
 You are unable to backstab while this item is equipped
 
 Model by: 'Big Bob' 'SediSocks'
 Wearable by: 'Reagy'"
 			"image_inventory"			"backpack/workshop/player/items/spy/majors_mark/majors_mark"
-			"model_player"				"models/player/items/custom/spy/the_major.mdl"
+			"model_world"					"models/weapons/c_models/c_combatknife_gunspy/c_combatknife_gunspy.mdl"
+			"model_player"					"models/weapons/c_models/c_combatknife_gunspy/c_combatknife_gunspy.mdl"
+			"attach_to_hands"				"1"
 			"extra_wearable"			"models/player/items/custom/spy/the_major.mdl"
 			"used_by_classes"
 			{
 				"spy"					"1"
 			}
-			"loadondemand"				"1"
-			"act_as_wearable"			"1"
 			"static_attrs"
 			{
 				"class select override vcd"				"taunt03"							
@@ -25187,7 +25227,43 @@ Wearable by: 'Reagy'"
 					"attribute_class"	"allowed_in_medieval_mode"
 					"value"				"1"
 				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"0.76923076923"													
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"0.9"														
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value" 			"0"														
+				}
 			}
+			"visuals"
+            {
+			    "sound_melee_miss"		"Weapon_Knife.Miss"
+				"sound_melee_hit"		"Weapon_Knife.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_Knife.HitWorld"
+				"sound_burst"			"Weapon_Knife.MissCrit"
+                "animation_replacement"
+                {
+                    "ACT_VM_DRAW"    "ACT_ITEM2_VM_DRAW"
+                    "ACT_VM_IDLE"    "ACT_ITEM2_VM_IDLE"
+                    "ACT_VM_HITCENTER"    "ACT_ITEM2_VM_HITCENTER"
+                    "ACT_VM_SWINGHARD"    "ACT_ITEM2_VM_SWINGHARD"
+                    "ACT_BACKSTAB_VM_UP"    "ACT_ITEM2_BACKSTAB_VM_UP"
+                    "ACT_BACKSTAB_VM_DOWN"    "ACT_ITEM2_BACKSTAB_VM_DOWN"
+                    "ACT_BACKSTAB_VM_IDLE"    "ACT_ITEM2_BACKSTAB_VM_IDLE"
+                    "ACT_MELEE_VM_STUN"    "ACT_MELEE_VM_ITEM2_STUN"
+                    "ACT_MELEE_VM_INSPECT_START"    "ACT_ITEM2_VM_INSPECT_START"
+                    "ACT_MELEE_VM_INSPECT_IDLE"        "ACT_ITEM2_VM_INSPECT_IDLE"
+                    "ACT_MELEE_VM_INSPECT_END"        "ACT_ITEM2_VM_INSPECT_END"
+                }
+            }
 			"mouse_pressed_sound"		"#weapons/draw_patriot2.wav"
 			"drop_sound"				"#weapons/draw_patriot1.wav"
 		}
