@@ -11374,7 +11374,9 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Hell Barrier"
 			"item_type_name"			"Energy Shield"
-			"item_description"			"15% damage resistance on wearer
+			"item_description"			"Alt-Fire: jump forward with high velocity! (10 sec cooldown)
+
+15% damage resistance on wearer
 
 You are unable to use a Secondary Weapon while this item is equipped
   
@@ -12855,7 +12857,8 @@ Weapon by: 'Reagy'"
 			"item_name"					"Assault and Battering"
 			"item_type_name"			"Riot Sheild"
 			"item_logname"				"democop_shield"
-			"item_description"			"
+			"item_description"			"Alt-Fire: jump forward with high velocity! (10 sec cooldown)
+			
 You are unable to use a Secondary Weapon while this item is equipped
 
 Model by: 'Elbagast'
@@ -14170,7 +14173,9 @@ Weapon by: 'Majro'"
 			"propername"				"1"
 			"item_name"					"Glory Kill"
 			"item_type_name"			"Berserk Pack"
-			"item_description"			"Cannot give minicrit boosts
+			"item_description"			"Thick of the fight: become marked for death on both miss and hit for 5 seconds
+
+Cannot give minicrit boosts
 
 Rip and tear, lads!
   
@@ -20414,7 +20419,8 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_class"				"tf_wearable"
 			"item_type_name"			"Robot"
 			"item_name"				"Geared Up Ghost"
-			"item_description"			"
+			"item_description"			"Alt-Fire: jump forward with high velocity! (10 sec cooldown)
+
 Eyes up, mercenary.
 
 Wearable from: Tangerine Paint and Grunt's Weapon Addons"
