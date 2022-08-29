@@ -12343,3 +12343,110 @@
 
 	"wave"			")weapons/assaultgun_shoot_crit.wav"
 }
+// ------------------------------------------------------------------------------------ //
+// Heavy syringe gun 2
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_HeavySyringe_Rapid.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.75"
+	"pitch"		"100, 105"
+	
+	"wave"		")weapons/heavysyringe_shoot.wav"
+}
+
+"Weapon_HeavySyringe_Rapid.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.75"
+	"pitch"		"100, 105"
+	
+	"wave"		")weapons/heavysyringe_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Defibrillator
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Defib.Draw"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		"1.0"
+	"wave"			")weapons\defib_start.wav"
+}
+
+"Weapon_Defib.HitFlesh"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.75"
+	
+	"wave"		")weapons/defib_hit.wav"
+}
+
+"Weapon_Defib.HitWorld"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.75"
+	
+	"wave"		")weapons/defib_hit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Goop Gun
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_GoopGun.Single"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"95, 100"
+	
+	"wave"		")weapons/gupgun_fire.wav"
+}
+
+"Weapon_GoopGun.SingleCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"95, 100"
+	
+	"wave"		")weapons/gupgun_fire_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Pyro Rail Cannon
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_RailCannon.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"		")weapons\megarail_gun_fire.wav"
+
+}
+"Weapon_RailCannon.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"			")weapons/megarail_gun_firecrit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Royal Flush
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Cards.WorldReload"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".5"
+	"wave"		"weapons/draw_default.wav"
+}

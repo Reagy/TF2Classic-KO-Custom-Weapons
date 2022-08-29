@@ -1,0 +1,32 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"\models\weapons\c_items\c_doubleshot\c_ds_needle"
+	"$bumpmap" "models/effects/flat_normal"
+	
+	"$rimlight" "1"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" ".25"
+
+	"$selfillum" "1"
+	"$selfillumtint" "[.7 .10 .04]"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

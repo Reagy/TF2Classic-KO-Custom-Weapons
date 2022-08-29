@@ -1,0 +1,72 @@
+"VertexLitGeneric"
+{
+"$basetexture" "models\workshop\weapons\c_models\c_quick_medigun/c_quick_medigun_backpack"
+
+	
+	"$selfillum" "1"
+	"$nodecal" "1"
+	"$phongtint" "[.1 .1 .1]"
+	"$phong" "1"
+	"$phongexponent" "6"
+	"$phongboost" "6"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.4 .4 .4]"
+
+
+    $selfillummask "models\workshop\weapons\c_models\c_quick_medigun/c_quick_medigun_backpack_illum"
+
+	
+	"$lightwarptexture" "models\weapons\c_items\c_ambassador_lightwarp"
+	"$phongfresnelranges"	"[.3 .5 3]"
+	"$glowcolor" "1"
+	"$rimlight" "1"						
+	"$rimlightexponent" "4"				
+	"$rimlightboost" "2"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"StickybombGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"Sine"
+		{
+			"resultVar" $selfillumtint
+			"sinemin" .5
+			"sinemax" 2.3
+			"sineperiod" 2
+		}
+		"Sine"
+		{
+			"resultVar" $phongboost
+			"sinemin" 5
+			"sinemax" 2
+			"sineperiod" 3
+		}
+		"Sine"
+		{
+			"resultVar" $phongexponent
+			"sinemin" 6
+			"sinemax" 2
+			"sineperiod" 4
+		}
+	}
+	
+
+
+}

@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\w_models\w_cards_large"
+	$translucent 1
+	$vertexcolor 1
+}
