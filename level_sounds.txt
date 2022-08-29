@@ -12439,3 +12439,14 @@
 
 	"wave"			")weapons/megarail_gun_firecrit.wav"
 }
+// ------------------------------------------------------------------------------------ //
+// Royal Flush
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Cards.WorldReload"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".5"
+	"wave"		"weapons/draw_default.wav"
+}

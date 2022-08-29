@@ -28861,7 +28861,103 @@ Weapon by: 'The One Of Wonders'"
 				"sound_burst"			"Weapon_Suppressed_Pistol.SingleCrit"
 				"tracer_effect"			"bullet_scattergun_tracer01"
 			}
-		}		
+		}
+//-------------------------
+//-------------------------
+//--Royal Flush Cards- 9168--
+//-------------------------
+//-------------------------
+		"9168"
+		{
+			"name"						"TF_WEAPON_CARDS"							
+			"prefab"					"weapon_grenade_launcher"
+			"show_in_armory"			"1"
+			
+			"item_slot"					"primary"
+			"anim_slot"					"melee"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"item_quality"				"rarity2"
+			
+			"item_name"					"Royal Flush"
+			"item_type_name"			"Deck of Cards"
+			"item_description"			"
+Lets play a game... pick a card
+
+Model by: 'N-Cognito'
+Texture by: 'Reagy'
+Art asset by: 'ChemicalAlia'
+Weapon by: 'Reagy'"
+			"item_logname"				"royal_flush"
+			"item_iconname"				"royal_flush"
+			"image_inventory"			"backpack/weapons/w_models/w_cards"
+			"model_world"				"models/weapons/w_models/w_cards/w_cards.mdl"			
+			"model_player"				"models/weapons/v_models/v_cards/v_cards.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"spy"					"1"
+			}
+			"static_attrs"
+			{
+				"override projectile type" 				"30"	
+				"clip size penalty hidden"				"0.2"
+				"hidden primary max ammo bonus"			"3.2"
+			}
+			"attributes"
+			{
+				"provide on active"																
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"bleeding duration"														
+				{
+					"attribute_class"	"bleeding_duration"
+					"value"				"1"
+				}
+				"mark for death"																
+				{
+					"attribute_class"	"mark_for_death"
+					"value" 			"1"
+				}
+				"add condition on hit"															
+				{
+					"attribute_class"	"add_onhit_addcond"
+					"value"				"30 5"
+				}
+				"dmg penalty vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value" 			"0.459"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.65"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.75"
+				}
+				"custom projectile model"													
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/w_models/w_cards/w_cards_projectile.mdl"	
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_Jarate.Single"
+				"sound_burst"			"Weapon_Jarate.Single"
+				"sound_reload"			"Weapon_Cards.WorldReload"
+			}
+			"mouse_pressed_sound"		"#ui/item_cardboard_pickup.wav"
+			"drop_sound"				"#ui/item_cardboard_drop.wav"
+		}
 //--------------------------------------------------//
 //-- 		Fred's Fight Starters v0.3.1 		  --//
 // v5.3.7 Disabled	some items due to dupes etc		//
