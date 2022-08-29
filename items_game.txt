@@ -28519,12 +28519,12 @@ Weapon by: 'The One Of Wonders'"
 //-----------------------------
 		"9164"
 		{
-			"name"						"TF_WEAPON_SUPERRAILGUN_PYRO"
+			"name"						"TF_WEAPON_SUPERRAILGUN_ENGINEER"
 			"prefab"					"weapon_shotgun"
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
-			"anim_slot"                 "secondary"
-			"item_class"				"tf_weapon_scattergun"
+			"anim_slot"                 "primary"
+			"item_class"				"tf_weapon_shotgun_primary"
 
 			"item_quality"				"rarity2"
 
@@ -28533,21 +28533,21 @@ Weapon by: 'The One Of Wonders'"
 			"item_type_name"			"Experimental Railgun"
 			"item_description"			"This weapon fires perfectly accurate super-heated steel balls
 
-Pyro got their hands on hardware tools and an instruction booklet, big mistake.
+Well ain't that a mighty big gun, hope it don't blow up in my face.
 
 Model by: 'KARMA the BARMAN'
 Ported and edited by: 'Suomimies55'
 Animations from: Open Fortress
 Weapon by: 'The One Of Wonders'"											
-			"item_logname"				"super_railgun_pyro"
-			"item_iconname"				"super_railgun_pyro"
+			"item_logname"				"super_railgun"
+			"item_iconname"				"super_railgun"
 			"image_inventory"			"backpack/weapons/w_models/w_mega_railgun_pyro"
 			"model_world"				"models/weapons/w_models/w_mega_railgun_pyro.mdl"
 			"model_player"				"models/weapons/v_models/v_mega_railgun_pyro.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
-				"pyro"                "primary"
+				"engineer"                "primary"
 			}
 			"static_attrs"
 			{
@@ -28578,7 +28578,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.4"
+					"value" 			"0.8"
 				}
 				"mod max primary clip override"
 				{
@@ -28598,7 +28598,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"5"
+					"value"				"2"
 				}
 				"voice pitch scale"
 				{
