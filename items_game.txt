@@ -28870,7 +28870,8 @@ Weapon by: 'The One Of Wonders'"
 		"9168"
 		{
 			"name"						"TF_WEAPON_CARDS"							
-			"prefab"					"weapon_grenade_launcher"
+// oops			"prefab"					"weapon_grenade_launcher"
+			"item_class"				"tf_weapon_grenadelauncher"
 			"show_in_armory"			"1"
 			
 			"item_slot"					"primary"
