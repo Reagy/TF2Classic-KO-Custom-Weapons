@@ -13682,6 +13682,7 @@ Weapon by: 'Majro'"
 			"image_inventory"			"backpack/weapons/c_models/c_bmmh/c_bmmh"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
+			"item_quality"				"rarity3"
 			
 			"model_world"				"models/weapons/c_models/c_bmmh/c_bmmh.mdl"
 			"model_player"				"models/weapons/v_models/v_bmmh.mdl" //Ouch, my OCD.
@@ -13786,6 +13787,7 @@ Weapon by: 'Majro'"
 			"image_inventory"			"backpack/weapons/c_models/c_sandmate\c_sandmate"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
+			"item_quality"				"rarity3"
 			
 			"model_world"				"models/weapons/c_models/c_sandmate/c_sandmate.mdl"
 			"model_player"				"models/weapons\v_models\v_sandmate.mdl"
@@ -13869,6 +13871,7 @@ Weapon by: 'Majro'"
 			"prefab"				"weapon_medigun"
 			"show_in_armory"			"1"
 			"item_slot"				"secondary"
+			"item_quality"				"rarity3"
 
 
 			"propername"				"1"
@@ -13946,7 +13949,8 @@ Weapon by: 'Majro'"
 			"name"						"TF_WEAPON_SHOVE"								
 			"prefab"					"weapon_umbrella" 											
 			"show_in_armory"			"1"														
-			"item_slot"					"melee"													
+			"item_slot"					"melee"	
+            "item_quality"				"rarity3"			
 
 			"propername"				"1"														
 			"item_name"					"Backhand" 										
@@ -14015,6 +14019,7 @@ Weapon by: 'Majro'"
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
 			"anim_slot"					"secondary"
+			"item_quality"				"rarity3"
 
 
 			"propername"				"1"
@@ -14141,6 +14146,7 @@ Weapon by: 'Majro'"
 			"prefab"                    "weapon_umbrella"
 			"item_class"                "tf_weapon_fists"							
 			"show_in_armory"			"1"
+			"item_quality"				"rarity3"
 
 			"propername"				"1"
 			"item_name"					"Glory Kill"
@@ -14246,6 +14252,7 @@ Repurposed by: 'Majro'"
 			"prefab"					"weapon_Flamethrower"
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
+			"item_quality"				"rarity3"
 
 			"propername"				"1"
 			"item_name"					"Magic Wand" //I prefer the name "Weldkit" though.
@@ -16429,12 +16436,13 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_name"				"Combat Pistol (Melee)"
 			"item_type_name"			"...Pistol?"
 			"image_inventory"			"backpack/weapons/w_models/w_walther_p38"
-			"item_description"			"Equalize: Forces the user and target into melee combat for 5 seconds
+			"item_description"			"Fight Harder: On Hit, gain Mini-Crits for 3 seconds.
 
-I can't shoot and neither can you ya dope!
+Watch these pistol whips knucklehead! they come with extra hurt!
 
 Model from: Open Fortress
-Weapon from: Tangerine Paint and Grunt's Weapon Addons"
+Weapon from: Tangerine Paint and Grunt's Weapon Addons
+Edited by: 'The One Of Wonders'"
 			"model_world"				"models/weapons/w_models/w_walther_p38_whip.mdl"
 			"model_player"				"models/weapons/v_models/v_walther_p38_whip_scout.mdl"
 			"attach_to_hands"			"2"
@@ -16453,46 +16461,20 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"provide_on_active"
 					"value"				"1"
 				}	
-//				"damage applies to sappers"												
-//				{
-//					"attribute_class"	"set_dmg_apply_to_sapper"
-//					"value"				"1"
-//				}
-				"add condition on hit"	
-				{
-					"attribute_class"	"add_onhit_addcond"
-					"value"				"41 5"
-				}
 				"add condition on hit"	
 				{
 					"attribute_class"	"add_onhit_addcond_self"
-					"value"				"41 5"
-				}
-				"single wep deploy time decreased"
-				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"0.8"
+					"value"				"112 3"
 				}
 				"damage penalty"																
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.67"
+					"value"				"0.9"
 				}
-				// Backend stuff
-				"voice pitch scale"
+				"fire rate penalty"																
 				{
-					"attribute_class"	"mult_repair_value"
-					"value"				"0.00"										
-				}
-				"damage force increase hidden"	
-				{
-					"attribute_class"	"mult_construction_value"
-					"value"				"0"
-				}
-				"rocket limited lifetime"									// To hopefully prevent rockets disarming enemies
-				{
-					"attribute_class"	"rocket_lifetime"
-					"value"				"0.1"
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.2"
 				}
 			}
 			"visuals"
@@ -20110,7 +20092,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"heal rate bonus"																// This works.
 				{
 					"attribute_class"	"mult_medigun_healrate"
-					"value" 			"1.8"
+					"value" 			"1.5"
 				}
 				"single wep deploy time decreased"
 				{
