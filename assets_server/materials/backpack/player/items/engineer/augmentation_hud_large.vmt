@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture"		"backpack/player/items/engineer/augmentation_hud_large"
+	"$translucent"		"1"
+}

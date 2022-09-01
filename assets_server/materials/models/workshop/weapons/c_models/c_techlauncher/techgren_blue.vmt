@@ -1,0 +1,41 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\workshop\weapons\c_models\c_techlauncher\techgren_blue"
+	"$bumpmap" "models\workshop\weapons\c_models\c_techlauncher\techgren_norm"
+	"$selfillum" "1"
+
+	
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "4"		
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges" "[0.25 0.5 1]"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "1"	
+	"$rimlightboost" "4"
+	
+	
+	"Proxies"
+	{
+		"Sine"
+		{
+			"resultVar" $selfillumtint
+			"sinemin" .1
+			"sinemax" 2.00
+			"sineperiod" 0.30
+		}
+	}
+
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+	}
+
+}
+

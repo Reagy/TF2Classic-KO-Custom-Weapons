@@ -1,0 +1,77 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"models/workshop/player/items/engineer/more_hud/more_hud_color"
+	"$lightwarptexture"		"models/player/pyro/pyro_lightwarp"
+	"$phongexponenttexture"		"models/workshop/player/items/engineer/more_hud/more_hud_phongexponent"
+	"$phong"		"1"
+	"$phongexponent"		"10.000000"
+	"$phongboost"		"0.001000"
+	"$phongfresnelranges"		"[.25 .5 1]"
+	"$rimlight"		"1"
+	"$rimlightexponent"		"9999.000000"
+	"$rimlightboost"		"0.001000"
+	"$rimmask"		"1"
+	"$blendtintbybasealpha"		"1"
+	"$blendtintcoloroverbase"		"0.000000"
+	"$colortint_base"		"{ 255 100 100 }"
+	"$color2"		"{ 255 100 100 }"
+	"$colortint_tmp"		"[0 0 0]"
+	"$bumpmapalphaphongmask"		"1"
+	"$additive"		"1"
+	"$translucent"		"1"
+	"$alphatest"		"0"
+	"$cloakPassEnabled"		"1"
+	"$detail"		"effects/tiledfire/fireLayeredSlowTiled512"
+	"$detailscale"		"5"
+	"$detailblendfactor"		"0"
+	"$detailblendmode"		"6"
+	"$yellow"		"0"
+	">=DX90"
+	{
+		"$selfillum"		"1"
+	}
+	"$selfillumtint"		"[1.000000 1.000000 1.000000]"
+	"$selfillummask"		"models/workshop/player/items/engineer/more_hud/more_hud_illum"
+	"proxies"
+	{
+		"invis"
+		{
+		}
+		"AnimatedTexture"
+		{
+			"animatedtexturevar"		"$detail"
+			"animatedtextureframenumvar"		"$detailframe"
+			"animatedtextureframerate"		"30"
+		}
+		"BurnLevel"
+		{
+			"resultVar"		"$detailblendfactor"
+		}
+		"ItemTintColor"
+		{
+			"resultVar"		"$colortint_tmp"
+		}
+		"SelectFirstIfNonZero"
+		{
+			"srcVar1"		"$colortint_tmp"
+			"srcVar2"		"$colortint_base"
+			"resultVar"		"$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar"		"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1"		"$color2"
+			"srcVar2"		"$yellow"
+			"resultVar"		"$color2"
+		}
+		"TextureScroll"
+		{
+			"texturescrollvar"		"$basetexturetransform"
+			"texturescrollrate"		"0.070000"
+			"texturescrollangle"		"0"
+		}
+	}
+}

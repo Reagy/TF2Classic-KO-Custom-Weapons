@@ -1,0 +1,14 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "models\workshop\weapons\c_models\c_coil_share/c_coilsparkle"
+	"$model" 1
+	"$Translucent" 1
+
+ 	"Proxies"
+	{
+		"AnimatedTexture"
+	{
+		"animatedTextureVar" "$basetexture"
+		"animatedTextureFrameNumVar" "$frame"
+		"animatedTextureFrameRate" "8"
+}
