@@ -10529,7 +10529,7 @@ Weapon by: 'Reagy'"
 				"minigun spinup time increased"
 				{
 					"attribute_class"	"mult_minigun_spinup_time"
-					"value"				"2.25"
+					"value"				"1.75"
 				}
 				"aiming movespeed decreased"
 				{
@@ -15903,22 +15903,21 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //----------------------
 		"9016"											
 		{
-			"name"						"Ol' Reliable"
+		    "name"						"TF_WEAPON_ASSAULTCANNON_TFC"
 			"prefab"					"weapon_minigun"
 			"show_in_armory"			"1"	
 			
-			"item_quality"				"rarity3"
+			"item_quality"				"rarity2"
 					
 			"propername"				"0"
-			"item_name"				"Ol' Reliable"
+			"item_name"				    "Assault Cannon"
 			"item_type_name"			"#TF_Weapon_Minigun"
-			"item_description"			"Fires nails instead of bullets
+			"item_description"			"This weapon has no damage fall-off
 
-Old gun killed many babies before Sasha.
+This weapon feels strange, like it came from one of my predecessors.
 
 Model by: 'Svdl'
-
-Weapon from: Tangerine Paint and Grunt's Weapon Addons"
+Weapon by: 'The One Of Wonders'"
 			"item_logname" 				"tfc_minigun"
 			"item_iconname" 			"tfc_minigun"
 			"image_inventory"			"backpack\weapons\c_models\c_tfc_minigun\c_tfc_minigun"
@@ -15929,20 +15928,57 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			{
 				"heavy"					"1"
 			}
-			"static_attrs"
-			{
-				"maxammo primary increased"			"1.5"
-				"Projectile speed increased"			"2"
-				"damage bonus"				"3.5"
-				"fire rate penalty"				"1.1"
-				"override projectile type"			"29"
-			}
 			"attributes"
 			{
-				"minigun spinup time increased"
+			    "provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
+			    "no damage falloff over distance"
+				{
+					"attribute_class"	"mod_no_dmg_falloff"
+					"value"				"1"
+				}
+			    "fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"0.9"
+				}
+				"minigun spinup time decreased"
 				{
 					"attribute_class"	"mult_minigun_spinup_time"
-					"value"				"1.25"
+					"value"				"0.7"
+				}
+				"minigun spindown time decreased"
+				{
+					"attribute_class"	"mult_minigun_spindown_time"
+					"value"				"1.33"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"0.8"
+				}
+				"spread penalty"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"1.1" 
+				}
+				"aiming movespeed decreased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"				"0.7"
+				}
+				"no primary ammo from dispensers while active"
+				{
+					"attribute_class"	"no_primary_ammo_from_dispensers"
+					"value"				"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
 				}
 			}
 			"visuals"
@@ -15953,6 +15989,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"sound_special1"		"Weapon_TFC_Minigun.WindUp"
 				"sound_special2"		"Weapon_TFC_Minigun.WindDown"
 				"sound_special3"		"Weapon_TFC_Minigun.Spin"
+				"tracer_effect"			"bullet_scattergun_tracer01"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -16436,7 +16473,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_name"				"Combat Pistol (Melee)"
 			"item_type_name"			"...Pistol?"
 			"image_inventory"			"backpack/weapons/w_models/w_walther_p38"
-			"item_description"			"Fight Harder: On Hit, gain Mini-Crits for 3 seconds.
+			"item_description"			"Fight Harder: on hit, gain mini-crits for 3 seconds.
 
 Watch these pistol whips knucklehead! they come with extra hurt!
 
@@ -24702,7 +24739,7 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Sentry Duty"
 			"item_type_name"			"Improvised Minigun"
-			"item_description"			"This weapon fires sentry gun bullets 
+			"item_description"			"Steadfast: on hit, gain damage resistance for 5 seconds
 
 You cannot move while spun-up
 
@@ -24772,6 +24809,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg"
 					"value" 			"1.77777777778"
 				}
+				"add condition on hit"	
+				{
+					"attribute_class"	"add_onhit_addcond_self"
+					"value"				"111 5"
+				}	
 			}
 			"visuals"																		
 			{
@@ -25228,7 +25270,7 @@ Wearable by: 'Reagy'"
 		}
 //-------------------------------------
 //-------------------------------------
-// ACTUAL ASSAULT CANNON - 9129
+// ASSAULT DOCTRINE - 9129
 //-------------------------------------
 //-------------------------------------		
 		"9129"
@@ -25243,14 +25285,13 @@ Wearable by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Assault Doctrine"
 			"item_type_name"			"Minigun"
-			"item_description"			"This weapon has no damage falloff
-
+			"item_description"			"
 Gun feels familiar, Heavy can't put finger on it..
   
 Model by: 'Sparkwire'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"assaultcannon_heavy"
-			"item_iconname"				"assauntcannon_heavy"
+			"item_logname"				"gunnercannon_heavy"
+			"item_iconname"				"gunnercannon_heavy"
 			"image_inventory"			"backpack/weapons/c_models/c_gunnercannon/c_gunnercannon"
 			"model_world"				"models/weapons/c_models/c_gunnercannon/c_gunnercannon.mdl"
 			"model_player"				"models/weapons/c_models/c_gunnercannon/c_gunnercannon.mdl"
@@ -25261,40 +25302,45 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "no damage falloff over distance"
-				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
-				}
-			    "fire rate bonus"
+				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.9"
+					"value"				"0.8" 
 				}
 				"minigun spinup time decreased"
 				{
 					"attribute_class"	"mult_minigun_spinup_time"
-					"value"				"0.7"
+					"value"				"0.8"
 				}
 				"minigun spindown time decreased"
 				{
 					"attribute_class"	"mult_minigun_spindown_time"
 					"value"				"1.33"
 				}
+				"aiming movespeed increased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"				"1.5"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.75" 
+				}
+				"SET BONUS: dmg from sentry reduced"
+				{
+					"attribute_class"	"dmg_from_sentry_reduced"
+					"value"				"0.5" 
+				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.8"
+					"value" 			"0.85"
 				}
-				"spread penalty"
+				"maxammo primary reduced"
 				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"1.1" 
-				}
-				"aiming movespeed decreased"
-				{
-					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"0.7"
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.5" 
 				}
 				"no primary ammo from dispensers while active"
 				{
@@ -25309,12 +25355,12 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"																		
 			{
-				"sound_empty"			"Weapon_TFC_Minigun.ClipEmpty"
-				"sound_double_shot"		"Weapon_TFC_Minigun.Fire"
-				"sound_burst"			"Weapon_TFC_Minigun.FireCrit"
-				"sound_special1"		"Weapon_TFC_Minigun.WindUp"
-				"sound_special2"		"Weapon_TFC_Minigun.WindDown"
-				"sound_special3"		"Weapon_TFC_Minigun.Spin"			
+				"sound_empty"			"Weapon_MachineGun.ClipEmpty"
+				"sound_double_shot"		"Weapon_AssaultDoctrine.Fire"	
+				"sound_burst"			"Weapon_AssaultDoctrine.FireCrit"	
+				"sound_special1"		"Weapon_TankMini.WindUp"
+				"sound_special2"		"Weapon_TankMini.WindDown"
+				"sound_special3"		"Weapon_TankMini.Spin"	
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -25886,7 +25932,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_type_name"			"Personal Defense Weapon"
 			"item_description"			"Fires bullets instead of syringes
 
-Doctor's endless Duty: on hit: gain damage resistance for 3 seconds
+Doctor's endless Duty: on hit, gain damage resistance for 3 seconds
 
 I will continue to thrive even in war, my oath is not over!
 
@@ -28481,133 +28527,6 @@ Weapon by: 'The One Of Wonders'"
 			"mouse_pressed_sound"		"#ui/item_knife_large_pickup.wav"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}	
-//-----------------------------
-//-----------------------------
-//--SUPER RAILGUN - 9164--
-//-----------------------------
-//-----------------------------
-		"9164"
-		{
-			"name"						"TF_WEAPON_SUPERRAILGUN_ENGINEER"
-			"prefab"					"weapon_shotgun"
-			"show_in_armory"			"1"
-			"item_slot"					"primary"
-			"anim_slot"                 "primary"
-			"item_class"				"tf_weapon_shotgun_primary"
-
-			"item_quality"				"rarity2"
-
-			"propername"				"1"
-			"item_name"					"Devastator"
-			"item_type_name"			"Experimental Railgun"
-			"item_description"			"This weapon fires perfectly accurate super-heated steel balls
-
-Well ain't that a mighty big gun, hope it don't blow up in my face.
-
-Model by: 'KARMA the BARMAN'
-Ported and edited by: 'Suomimies55'
-Animations from: Open Fortress
-Weapon by: 'The One Of Wonders'"											
-			"item_logname"				"super_railgun"
-			"item_iconname"				"super_railgun"
-			"image_inventory"			"backpack/weapons/w_models/w_mega_railgun_pyro"
-			"model_world"				"models/weapons/w_models/w_mega_railgun_pyro.mdl"
-			"model_player"				"models/weapons/v_models/v_mega_railgun_pyro.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"engineer"                "primary"
-			}
-			"static_attrs"
-			{
-				"class select override vcd"				"taunt02_v1"
-			}
-			"attributes"
-			{
-			    "provide on active"													
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
-				"no damage falloff over distance"
-				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
-				}
-				"Set DamageType Ignite"												
-				{
-					"attribute_class"	"set_dmgtype_ignite"
-					"value" 			"1"
-				}
-				"weapon burn dmg increased"
-				{
-					"attribute_class"	"mult_wpn_burndmg"
-					"value" 			"3"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.8"
-				}
-				"mod max primary clip override"
-				{
-					"attribute_class"	"mod_max_primary_clip_override"
-					"value"				"-1"
-				}
-				"mod no reload DISPLAY ONLY"
-				{
-					"attribute_class"	"mod_no_reload_display_only"
-					"value"				"1"
-				}				
-				"weapon burn time reduced"
-				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.1"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"2"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"5"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"1.33"
-				}
-				"ragdolls become ash"
-				{
-					"attribute_class"	"ragdolls_become_ash"
-					"value"				"1"
-				}
-                "voice pitch scale"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.018888888888888"
-				}
-				"dmg taken from crit increased"
-				{
-					"attribute_class"	"mult_dmgtaken_from_crit"
-					"value"				"2"
-				}
-                "crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}				
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_RailCannon.Single"
-				"sound_burst"			"Weapon_RailCannon.SingleCrit"
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
-		}	
 //-----------------------------------
 //-----------------------------------
 //--COP BLASTER - 9165--
@@ -30357,9 +30276,7 @@ Weapon from: Fred's Fight Starters"
 		"20000"
 		{
 		}
-		
 	}
-	
 	"attributes"
 	{
 // Knockout Custom Attributes

@@ -12519,3 +12519,23 @@
 	"volume"	"1.0"
 	"wave"		")weapons/coilrifle_fire_crit.wav"
 }
+
+// ------------------------------------------------------------------------------------ //
+// Assault Doctrine
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_AssaultDoctrine.Fire"	
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/gunnercannon_fire.wav"
+}
+
+"Weapon_AssaultDoctrine.FireCrit"	
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/gunnercannon_fire_crit.wav"
+}
