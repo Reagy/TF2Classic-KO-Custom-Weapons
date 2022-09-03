@@ -23566,23 +23566,17 @@ Weapon by: 'The One Of Wonders'"
 //--DOUBLE BARREL RIFLE - 9109--
 //-------------------------
 //-------------------------
-		"9109"
+		"14"
 		{
-			"name"						"TF_WEAPON_DOUBLEBARREL_RIFLE"	// Thank god for Kristofer K. we can have this masterpiece of a rifle.
+			"name"						"TF_WEAPON_SNIPERRIFLE"	// Thank god for Kristofer K. we can have this masterpiece of a rifle.
 			"prefab"					"weapon_sniperrifle"
 			"item_class"				"tf_weapon_hunterrifle"
-			"show_in_armory"			"1"
+			"baseitem"                  "1"
 
 			"propername"				"1"
-			"item_quality"				"rarity1"
 			"item_name"					"Poacher's Pride"
 			"item_type_name"			"Double-Barrel Hunting Rifle"
-			"item_description"			"Weapon deals 33% less headshot damage
-
-Professionals have standards, sometimes you have to be more flexible.
-
-Model by: 'QuestionablyInsane, Retro Mike, Faraxes, Digivee'
-Weapon by: 'The One Of Wonders'"
+			"item_description"			"Professionals have standards."
 			"item_logname"				"doublebarrel_rifle"
 			"item_iconname"				"doublebarrel_rifle"
 			"image_inventory"			"backpack/weapons/w_poacherspride/w_poacherspride"
@@ -23599,32 +23593,37 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"																		
 			{
-				"no scope" 
+			    "strange restriction type 1"																
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"strange restriction type 1" 
 				{
 					"attribute_class"	"mod_no_scope"
 					"value"				"1"
 				}
-				"soft zoom"
+				"strange restriction type 1"
 				{
 					"attribute_class"	"mod_sniper_soft_zoom"
 					"value" 			"1"
 				}
-				"damage bonus"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
 					"value" 			"1.66"
 				}
-				"fire rate bonus"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"0.3"
 				}
-				"aiming movespeed increased"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"1.67"
+					"value"				"1.4"
 				}
-				"sniper no dmg charge DISPLAY ONLY"
+				"strange restriction type 1"
 				{
 					"attribute_class"	"mod_sniper_no_dmg_charge"
 					"value"				"1"
@@ -23634,7 +23633,7 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_no_dmg_falloff"
 					"value"				"1"
 				}
-				"clip size penalty"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value" 			"0.33"
