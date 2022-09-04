@@ -1,0 +1,10 @@
+"Patch"
+{
+	include "materials\models\player\shared\blue_invun.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\player\pyro_female_tip\hwm/pyro_head_high_blue_invun"
+	"$detailblendfactor" "0"
+	}
+}

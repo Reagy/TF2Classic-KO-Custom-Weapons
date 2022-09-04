@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models/player/pyro/pyro_red.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models/player/pyro/pyro_blue"
-	}
-}
