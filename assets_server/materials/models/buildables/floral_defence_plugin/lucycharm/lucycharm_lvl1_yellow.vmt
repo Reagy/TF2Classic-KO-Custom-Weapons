@@ -1,0 +1,30 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\buildables\floral_defence_plugin\lucycharm\LucyCharm_lvl1_yellow"
+	"$lightwarptexture" "models\buildables\sentry1\Sentry1_lightwarp"
+	"$phongalbedotint" "1"
+	
+	"$phong" "1"
+	//comment out to use the exponent mask
+	"$phongexponent" "25"
+	"$phongboost" "3"
+	
+	"$phongfresnelranges"	"[.25 .5 1]"
+	"$halflambert" "1"
+	"$glowcolor" "1"
+	
+	"$nodecal" "1"
+	
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.02 .02 .02]"
+	
+	"$tempvar" "0"
+
+	//comment out to use the exponent mask
+	"$basephongexponent" "15"
+	"$basephongboost" "10"
+	
+	"$rimlight" "1"		
+	"$rimlightexponent" "0.5"				
+	"$rimlightboost" "1.5"
+}

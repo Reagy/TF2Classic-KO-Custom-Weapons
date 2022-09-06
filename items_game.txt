@@ -1377,7 +1377,7 @@ Build up to 2 Jump Pads to allow your teammates to reach new heights
 
 Jump Pad model by: 'Wendy'
 Weapon from: New Old Weapons Pack"
-			"image_inventory"			"backpack/weapons/w_models/w_jumppad_pda"
+			"image_inventory"			"backpack/weapons/w_models/w_jumppad_pda_new"
 			"model_world"				"models/weapons/w_models/w_jumppad_pda.mdl"
 			"model_player"				"models/weapons/v_models/v_jumppad_pda_engineer.mdl"
 			"attach_to_hands"			"2"
@@ -4741,7 +4741,7 @@ You are unable to upgrade with the Wrench
 
 Original weapon from: New Old Weapons Pack
 Edited by: 'Reagy'"
-			"image_inventory"			"backpack/weapons/w_models/w_mini_pda"
+			"image_inventory"			"backpack/weapons/w_models/w_mini_pda_new"
 			"model_world"				"models/weapons/w_models/w_mini_pda.mdl"
 			"model_player"				"models/weapons/v_models/v_mini_pda_engineer.mdl"
 			"attach_to_hands"			"2"
@@ -5041,11 +5041,21 @@ or else Heavy will make you regret choice..."
 					"attribute_class"	"mult_player_movespeed"									// In the latest Live version, it changed to "speed boost on hit", and I think that would work really well on both this AND the BFB
 					"value"				"1.15"
 				}
+				"critboost on kill"
+				{
+					"attribute_class"	"add_onkill_critboost_time"							
+					"value" 			"3"
+				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.65"
+					"value"				"0.50"
 				}
+				"dmg taken increased"
+				{
+					"attribute_class"	"mult_dmgtaken"
+					"value"				"1.10"
+				}	
 				// Backend stuff
 				"strange restriction type 1"
 				{
@@ -9017,7 +9027,7 @@ Weapon by: 'Reagy'"
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
-					"value"				"1"
+					"value"				"0" // Why was this set to 1?
 				}
 			}	
 			"visuals"
@@ -26989,7 +26999,7 @@ Weapon by: 'The One Of Wonders'
 Sentry replacement by: 'rotzloeffel' 'Gadget'"	
 			"item_logname"				"wrench_tanker"
 			"item_iconname"				"wrench_tanker"
-			"image_inventory"			"backpack/weapons/c_models/c_nailbiter/c_nailbiter"
+			"image_inventory"			"backpack/weapons/c_models/c_nailbiter/c_nailbiter_new"
 			"model_world"				"models/weapons/c_models/c_nailbiter/c_nailbiter.mdl"
 			"model_player"				"models/weapons/c_models/c_nailbiter/c_nailbiter.mdl"
 			"attach_to_hands"			"1"
@@ -29337,7 +29347,7 @@ Well, it's a bit wild but it works just fine.
 
 Model by: 'CoBalt'
 Weapon by: 'The One Of Wonders'
-Sentry replacement by: 'N-Cognito'"	
+Sentry replacement by: 'Pyanodon'"	
 			"item_logname"				"wrench_robot"
 			"item_iconname"				"wrench_robot"
 			"image_inventory"			"backpack/weapons/c_models/c_toothwrench/c_toothwrench"
@@ -29964,6 +29974,282 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"mouse_pressed_sound"		"#ui/item_shovel_pickup.wav"
 			"drop_sound"				"#ui/item_shovel_drop.wav"
+		}
+//------------------------
+//------------------------
+//--CIV FUNNI GUN - 9182--
+//------------------------
+//------------------------
+		"9182"
+		{
+			"name"						"TF_WEAPON_LIBERATOR_CIVILIAN"
+			"prefab"					"weapon_umbrella"
+			"item_class"				"tf_weapon_revolver"
+			"show_in_armory"			"1"
+
+			"propername"				"1"
+			
+			"item_slot"					"melee"			
+			
+			"item_name"					"Lamplighter"
+			"item_type_name"			"Single Shot Disposable Pistol"
+			"item_description"			"Lucky Roll: Increased crit chance
+Civilian cannot handle firearms effectively
+
+Maybe if I use enough of them
+I might be able to sell them off
+for some actual money!
+
+Model by: 'ColonelBD'
+Animations by: 'deskpacito'
+Weapon by: 'Reagy'"
+			"item_logname"				"singleshot_civ"
+			"item_iconname"				"singleshot_civ"
+			"image_inventory"			"backpack/weapons/w_models/w_lamplighter"
+			"model_world"				"models/weapons/custom/w_models/w_lamplighter.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_lamplighter.mdl"
+			"extra_wearable"			"models/player/items/civ_bill.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"civilian"				"1"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt01"								// So he isn't posing strangely
+				"clip size penalty hidden"				"0.1"									// 1 shot
+				"hidden secondary max ammo penalty"		"1.5"									// 36 ammo in secondary!
+				"damage bonus"							"1.25"
+				"crit mod disabled hidden"				"5.0"
+//				"fire rate penalty hidden"				"0.8"									// Around 14% slower compared to the Shortstop
+//				"damage bonus hidden"					"0.10"
+//				"reload time increased hidden"			"0.9"									// Slightly faster reload, to match the Pistol's..?
+//				"fire rate penalty"						"1.2"
+//				"Reload time increased"					"1.25"
+				"min_viewmodel_offset"					"10 0 -11"
+			}
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_MP_ATTACK_STAND_MELEE"					"ACT_MP_GESTURE_FLINCH_CHEST"
+					"ACT_MP_ATTACK_CROUCH_MELEE"				"ACT_MP_GESTURE_FLINCH_CHEST"
+					"ACT_MP_ATTACK_SWIM_MELEE"					"ACT_MP_GESTURE_FLINCH_CHEST"
+				}
+				"sound_reload"			"Weapon_Pistol.WorldReload"
+				"muzzle_flash"			"muzzle_scattergun"								
+				"tracer_effect"			"bullet_scattergun_tracer01"					
+			}
+			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
+			"drop_sound"				"#ui/item_light_gun_drop.wav"
+		}
+//------------------------------
+//------------------------------
+//-- Traumahawk ----- 9183 -----
+//---v5.5.2 Weapon By Colrot ---
+//------------------------------
+//------------------------------
+		"9183"
+		{
+			"name"						"TF_WEAPON_AXWRENCH"
+			"prefab"					"weapon_fireaxe"
+			"item_class"				"tf_weapon_wrench"
+			"show_in_armory"			"1"
+            
+			"propername"				"1"														
+			"item_quality"				"rarity3"
+			"item_name"					"Traumahawk"
+			"item_type_name"			"Improvised Multi Tool"
+			"item_description"			"Does normal damage to buildings.
+Impostor among us: crits vs disguised players
+
+Fitting for some loose screws...
+
+Model By: 'spike nitros'
+Weapon By: 'Colrot'"
+			"item_logname"				"traumahawk"
+			"item_iconname"				"traumahawk"
+			"image_inventory"			"backpack\weapons\c_axwrench\c_axwrench"
+			"model_world"				"models\weapons\c_models\c_axwrench\c_axwrench.mdl"
+			"model_player"		    	"models\weapons\v_models\v_axwrench\v_axwrench.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"pyro"					"1"
+			}
+			"attributes"
+			{
+			     "provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"move speed bonus"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"1.20"
+				}
+				"damage applies to sappers"														
+				{
+					"attribute_class"	"set_dmg_apply_to_sapper"
+					"value"				"1"
+				}
+				"dmg bonus vs buildings hidden"                                                 
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"1.354"
+				}
+				"damage penalty"																
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.754"
+				}
+					"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.25"
+				}
+				 "crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+                "crit vs wet players hidden"				          // 8 (Disguising) + 16 (Disguised) = Anti-Spy Disguise conditions...												
+				{
+					"attribute_class"	"or_crit_vs_playercond"
+					"value" 			"24"
+				}
+				// Backend stuff
+				"voice pitch scale"																
+				{
+					"attribute_class"	"mult_repair_value"
+					"value"				"0.01"													
+				}
+				"ragdolls become ash"
+				{
+					"attribute_class"	"ragdolls_become_ash"
+					"value"				"1"
+				}
+			}
+			"visuals"
+			{
+				"sound_melee_miss"		"Weapon_FireAxe.Miss"
+				"sound_melee_hit"		"Weapon_Machete.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_FireAxe.HitWorld"
+				"sound_burst"			"Weapon_FireAxe.MissCrit"
+				"sound_special1"		"Weapon_FireAxe.HitWorld"								// This would be the Building clinking noise when you hit it with a melee. Changes it to be the same as hitting any other object.
+				"sound_special2"		"Weapon_FireAxe.HitWorld"
+			}
+			"mouse_pressed_sound"		"#ui/item_wood_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_wood_weapon_drop.wav"
+		}
+//------------------------
+//------------------------
+//--GARAND SLAM - 9184--
+//------------------------
+//------------------------
+		"9184"
+		{
+			"name"						"TF_WEAPON_GARANDSLAM"
+			"item_class"				"tf_weapon_scattergun"								
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"					"secondary"
+			
+			"item_quality"				"rarity3"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"propername"				"1"
+			"item_name"					"Garand Slam"
+			"item_type_name"			"Pump Action Rifle"
+			"item_description"			"This weapon has no damage falloff
+This weapon cannot blast jump
+
+Come on and slam!
+Welcome to the Nam!
+Wait no, wrong year
+
+Model by: 'Haau' 'kibbleknight'
+Animations by: 'Kylul'
+Weapon by: 'Reagy'"
+			"item_logname"				"garand_slam"
+			"item_iconname"				"garand_slam"
+			"image_inventory"			"backpack/weapons/w_models/w_garandslam"
+			"model_world"				"models/weapons/custom/w_models/w_garandslam.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_garandslam.mdl"
+			"extra_wearable"			"models/player/items/set_generalformals.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"soldier"				"1"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt02_v1"					
+//				"hidden primary max ammo bonus"			"0.63"
+				"min_viewmodel_offset"					"7 -6 -5"						
+			}
+			"attributes"
+			{
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"4"
+				}
+				"clip size bonus"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"1.4"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.0"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.5"
+				}
+				"no damage falloff over distance"
+				{
+					"attribute_class"	"mod_no_dmg_falloff"
+					"value"				"1"
+				}
+				"damage penalty"																
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.15"
+				}
+				"crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+			}
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"hat"				"1"													
+				}
+				"sound_empty"			"Weapon_Null"										
+				"sound_single_shot"		"Weapon_SuperShotGun.Single"
+				"sound_burst"			"Weapon_SuperShotGun.SingleCrit"
+				"sound_reload"			"Weapon_ShotgunGarand.WorldReload"
+				"sound_special1"		"Weapon_Null"							
+				"animation_replacement"
+				{
+					//The Attacking Animations
+					"ACT_MP_ATTACK_STAND_SECONDARY"				"ACT_MP_ATTACK_STAND_PRIMARY"
+					"ACT_MP_ATTACK_CROUCH_SECONDARY"			"ACT_MP_ATTACK_CROUCH_PRIMARY"
+					"ACT_MP_ATTACK_SWIM_SECONDARY"				"ACT_MP_ATTACK_SWIM_PRIMARY"
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}		
 //--------------------------------------------------//
 //-- 		Fred's Fight Starters v0.3.1 		  --//

@@ -12539,3 +12539,32 @@
 	"volume"	"1.0"
 	"wave"		")weapons/gunnercannon_fire_crit.wav"
 }
+
+// ------------------------------------------------------------------------------------ //
+// Garand Slam
+// ------------------------------------------------------------------------------------ //
+
+
+"Weapon_ShotgunGarand.Cock_Back"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".5"
+	"wave"		"weapons/garand_cock_back.wav"
+}
+
+"Weapon_ShotgunGarand.Cock_Forward"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".5"
+	"wave"		"weapons/garand_cock_forward.wav"
+}
+
+"Weapon_ShotgunGarand.WorldReload"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	".45"
+	"wave"		"weapons/garand_cock_back.wav"
+}
