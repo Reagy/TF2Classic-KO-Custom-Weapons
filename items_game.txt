@@ -5055,12 +5055,6 @@ or else Heavy will make you regret choice..."
 				{
 					"attribute_class"	"mult_dmgtaken"
 					"value"				"1.10"
-				}	
-				// Backend stuff
-				"strange restriction type 1"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-5"
 				}
 			}
 			"visuals"
@@ -30250,6 +30244,45 @@ Weapon by: 'Reagy'"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}
+
+//------------------------
+//------------------------
+//--Remote Sap Test - 9185--
+//------------------------
+//------------------------
+		"9185"
+		{
+			"name"						"TF_WEAPON_BUILDER_SPY_TEST"
+			"prefab"					"weapon_sapper"
+			"show_in_armory"			"1"
+			"item_quality"				"rarity3"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"propername"				"1"
+			"item_name"					"Intermission"
+			"item_type_name"			"Remote Sapper"
+			"item_description"			"Disables buildings for a short amount of time when thrown
+
+Yeet Me: Press R to throw
+
+Model by: 'wowza'
+Weapon by: 'Reagy'"
+			"item_logname"				"intermission"
+			"item_iconname"				"intermission"
+			"model_world"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
+			"model_player"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
+			"attach_to_hands"			"1"
+			"attributes"
+			{
+				"sapper health penalty"											
+				{
+					"attribute_class"	"mult_sapper_health"
+					"value"				"0.25"
+				}
+			}
 		}		
 //--------------------------------------------------//
 //-- 		Fred's Fight Starters v0.3.1 		  --//
