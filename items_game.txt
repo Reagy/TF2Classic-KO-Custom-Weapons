@@ -8383,6 +8383,7 @@ Weapon by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/c_models/c_trashcannon"
 			"model_world"				"models/weapons/custom/c_models/c_trashcannon.mdl"
 			"model_player"				"models/weapons/custom/c_models/c_trashcannon.mdl"
+			"extra_wearable"			"models/player/items/custom/heavy/buff_boi.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
