@@ -92,8 +92,8 @@ public Action Event_player_upgradedobject(Event event, const char[] name, bool d
 {
 	int ent = event.GetInt("index");
 	int level = GetEntProp(ent, Prop_Send, "m_iUpgradeLevel");
-	int g_health = (level * 110)
-	int g_upgrade = (125 * level)
+	int g_health = (level * 200)
+	int g_upgrade = (175 * level)
 	
 	char className[64];
 	GetEntityClassname(ent, className, sizeof(className));
@@ -113,8 +113,8 @@ public Action Event_player_upgradedobject(Event event, const char[] name, bool d
 		
 			if (level == 3)
 			{
-				SetEntProp(ent, Prop_Send, "m_iAmmoRockets", 20)
-				SetEntProp(ent, Prop_Send, "m_iMaxAmmoRockets", 20)
+				SetEntProp(ent, Prop_Send, "m_iAmmoRockets", 12)
+				SetEntProp(ent, Prop_Send, "m_iMaxAmmoRockets", 12)
 			}
 		}
 		else

@@ -18,7 +18,8 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	HookEvent("player_builtobject", Event_player_builtobject);
-	HookEvent("player_carryobject", Event_player_carryobject);
+//	HookEvent("player_carryobject", Event_player_carryobject);
+	HookEvent("player_upgradedobject", Event_player_upgradedobject);
 	HookEvent("player_dropobject", Event_player_dropobject);
 }
 
@@ -95,6 +96,11 @@ public Action Event_player_builtobject(Event event, const char[] name, bool dont
 		{
 			for (int i = 0; i < 4; i++)
 			{
+				if (GetEntProp(ent, Prop_Send, "m_nModelIndexOverrides") == g_blueprints)
+				{
+					SetEntProp(ent, Prop_Send, "m_nModelIndexOverrides", g_minidispenser, _, i);
+					SetEntProp(ent, Prop_Send, "m_iUpgradeLevel", 3);
+				}
 				SetEntProp(ent, Prop_Send, "m_nModelIndexOverrides", g_minidispenser, _, i);
 				SetEntProp(ent, Prop_Send, "m_iUpgradeLevel", 3);
 			}
@@ -103,7 +109,7 @@ public Action Event_player_builtobject(Event event, const char[] name, bool dont
 	return Plugin_Continue;
 }
 
-public Action Event_player_carryobject(Event event, const char[] name, bool dontBroadcast)
+/*public Action Event_player_carryobject(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	int ent = GetEventInt(event, "index");
@@ -122,9 +128,31 @@ public Action Event_player_carryobject(Event event, const char[] name, bool dont
 		}
 	}
 	return Plugin_Continue;
-}
+}*/
 
 public Action Event_player_dropobject(Event event, const char[] name, bool dontBroadcast)
+{
+	int client = GetClientOfUserId(GetEventInt(event, "userid"));
+	int ent = GetEventInt(event, "index");
+	
+	char className[64];
+	GetEntityClassname(ent, className, sizeof(className));
+	if (strcmp(className, "obj_dispenser", true) == 0)
+	{
+		int pda = GetPlayerWeaponSlot(client, 3);
+		if (pda > MaxClients && GetEntProp(pda, Prop_Send, "m_iItemDefinitionIndex") == 3456)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				SetEntProp(ent, Prop_Send, "m_nModelIndexOverrides", g_minidispenser, _, i);
+				SetEntProp(ent, Prop_Send, "m_iUpgradeLevel", 3);
+			}
+		}
+	}
+	return Plugin_Continue;
+}
+
+public Action Event_player_upgradedobject(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	int ent = GetEventInt(event, "index");
