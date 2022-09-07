@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V5.4r1
+// Knockout Custom Weapons V5.5.2
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 + Tangerine Paint & Grunt's Weapon Addons V2
 // Adoptions taken from Renaissance Revival V1 by Yakibomb
@@ -30256,16 +30256,22 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_BUILDER_SPY_TEST"
 			"prefab"					"weapon_sapper"
-			"show_in_armory"			"1"
-			"item_quality"				"rarity3"
-			
+			"item_class"				"tf_weapon_sapper"
+			"item_slot"					"building"
+
+			"image_inventory"			"backpack/weapons/w_models/w_sapper"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 
-			"propername"				"1"
+"baseitem"					"1"
+
+			"show_in_armory"			"1"
+			"item_quality"				"rarity3"
+
 			"item_name"					"Intermission"
 			"item_type_name"			"Remote Sapper"
 			"item_description"			"Disables buildings for a short amount of time when thrown
+Drains cloak when in proximity
 
 Yeet Me: Press R to throw
 
@@ -30274,8 +30280,13 @@ Weapon by: 'Reagy'"
 			"item_logname"				"intermission"
 			"item_iconname"				"intermission"
 			"model_world"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
+//			"model_player"				"models/weapons/v_models/v_remotesap/v_remotesap.mdl" Classic doesn't support custom viewmodels on sappers yet... apparently
 			"model_player"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
 			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"spy"				"1"
+			}
 			"attributes"
 			{
 				"sapper health penalty"											
