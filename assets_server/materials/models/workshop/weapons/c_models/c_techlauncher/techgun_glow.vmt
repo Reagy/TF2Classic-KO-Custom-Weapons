@@ -1,0 +1,31 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\workshop\weapons\c_models\c_techlauncher\techgun.vtf"
+	
+	
+	"$selfillum" "1"
+	"$selfillumtint" "[2 2 2]"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

@@ -1,0 +1,63 @@
+"UnlitTwoTexture"
+{
+	"$baseTexture" "models\weapons\c_items/compsapper_static"
+	"$texture2" "models/vgui/tv_noise"
+//	"$bumpmap" "models\weapons\c_items\compsapper_normal.vtf"
+//	"$envmap" "env_cubemap"
+//	"$envmaptint" "[.2 .2 .2]"
+	"$phong" "1"
+	"$phongexponent" "30"
+	"$phongboost" "1"	
+//	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.25 .5 1]"
+	"$rimlight" "1"
+	"$rimlightexponent" "4"	
+	"$rimlightboost" "1"
+	"$selfillum" "1"
+	"$selfillummask" "models\weapons\c_items/compsapper_static_selfillum"
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"TextureScroll"
+		{
+			"texturescrollvar" "$texture2transform"
+			"texturescrollrate" .6
+			"texturescrollangle" 90
+		}
+
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$texture2"
+			"animatedtextureframenumvar" "$frame2"
+			"animatedtextureframerate" 30
+		}
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$yellow"
+			"resultVar" "$color2"
+		}
+  		"ItemTintColor"
+  		{
+   			"resultVar" "$colortint_tmp"
+  		}
+  		"SelectFirstIfNonZero"
+ 		{
+   			"srcVar1" "$colortint_tmp"
+   			"srcVar2" "$colortint_base"
+   			"resultVar" "$color2"
+  		}
+
+	}
+}

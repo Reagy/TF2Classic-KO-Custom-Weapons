@@ -1,0 +1,22 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\workshop\weapons\c_models\c_coilshotgun/c_coilanim1"
+
+	"$Translucent" 1
+
+	"$bumpmap" "models\workshop\weapons\c_models\c_coilshotgun/c_coilanim1_phong"
+
+	"$phong" "1"
+	"$phongexponent" "35"
+	"$phongboost" "4.5"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[0.2 0.5 1]"
+
+ 	"Proxies"
+	{
+		"AnimatedTexture"
+	{
+		"animatedTextureVar" "$basetexture"
+		"animatedTextureFrameNumVar" "$frame"
+		"animatedTextureFrameRate" "35"
+}

@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture"		"backpack/player/items/engineer/augmentation_spyhunter_large"
+	"$translucent"		"1"
+}

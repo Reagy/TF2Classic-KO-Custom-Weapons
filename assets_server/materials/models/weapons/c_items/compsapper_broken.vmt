@@ -1,0 +1,30 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\c_items/compsapper_broken"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.2 .2 .2]"
+	"$phong" "1"
+	"$phongexponent" "30"
+	"$phongboost" "1"	
+//	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.25 .5 1]"
+	"$translucent" "1"
+	"$rimlight" "1"
+	"$rimlightexponent" "4"	
+	"$rimlightboost" "1"
+
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+//		"AnimatedTexture"
+//		{
+//		"animatedTextureVar" "$basetexture"
+//		"animatedTextureFrameNumVar" "$frame"
+//		"animatedTextureFrameRate" "25"
+//		}
+	}
+}

@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V5.3.9
+// Knockout Custom Weapons V5.5.2
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 & Tangerine Paint & Grunt's Weapon Addons V2
 // ------------------------------------------------------------------------------------ //
@@ -12440,13 +12440,131 @@
 	"wave"			")weapons/megarail_gun_firecrit.wav"
 }
 // ------------------------------------------------------------------------------------ //
-// Royal Flush
+// Rambo
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_Cards.WorldReload"
+"Weapon_R60.Single"	
 {
-	"channel"		"CHAN_STATIC"
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"95, 100"
+	
+	"wave"		")weapons/rambo60_fire.wav"
+}
+
+"Weapon_R60.SingleCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"95, 100"
+	
+	"wave"		")weapons/rambo60_fire_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Spy Hunter Pistol
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_SpyHunter.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/spyhunter_fire.wav"
+}
+
+"Weapon_SpyHunter.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/spyhunter_fire_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Trench gun
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_TrenchGun.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/trench_shoot.wav"
+}
+
+"Weapon_TrenchGun.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/trench_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Coil Rifle
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_CoilRifle.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/coilrifle_fire.wav"
+}
+
+"Weapon_CoilRifle.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/coilrifle_fire_crit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Assault Doctrine
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_AssaultDoctrine.Fire"	
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/gunnercannon_fire.wav"
+}
+
+"Weapon_AssaultDoctrine.FireCrit"	
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/gunnercannon_fire_crit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Garand Slam
+// ------------------------------------------------------------------------------------ //
+
+
+"Weapon_ShotgunGarand.Cock_Back"
+{
+	"channel"	"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_74dB"
-	"volume"		".5"
-	"wave"		"weapons/draw_default.wav"
+	"volume"	".5"
+	"wave"		"weapons/garand_cock_back.wav"
+}
+
+"Weapon_ShotgunGarand.Cock_Forward"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".5"
+	"wave"		"weapons/garand_cock_forward.wav"
+}
+
+"Weapon_ShotgunGarand.WorldReload"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	".45"
+	"wave"		"weapons/garand_cock_back.wav"
 }

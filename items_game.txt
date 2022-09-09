@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V5.4r1
+// Knockout Custom Weapons V5.5.2
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 + Tangerine Paint & Grunt's Weapon Addons V2
 // Adoptions taken from Renaissance Revival V1 by Yakibomb
@@ -1377,7 +1377,7 @@ Build up to 2 Jump Pads to allow your teammates to reach new heights
 
 Jump Pad model by: 'Wendy'
 Weapon from: New Old Weapons Pack"
-			"image_inventory"			"backpack/weapons/w_models/w_jumppad_pda"
+			"image_inventory"			"backpack/weapons/w_models/w_jumppad_pda_new"
 			"model_world"				"models/weapons/w_models/w_jumppad_pda.mdl"
 			"model_player"				"models/weapons/v_models/v_jumppad_pda_engineer.mdl"
 			"attach_to_hands"			"2"
@@ -4741,7 +4741,7 @@ You are unable to upgrade with the Wrench
 
 Original weapon from: New Old Weapons Pack
 Edited by: 'Reagy'"
-			"image_inventory"			"backpack/weapons/w_models/w_mini_pda"
+			"image_inventory"			"backpack/weapons/w_models/w_mini_pda_new"
 			"model_world"				"models/weapons/w_models/w_mini_pda.mdl"
 			"model_player"				"models/weapons/v_models/v_mini_pda_engineer.mdl"
 			"attach_to_hands"			"2"
@@ -5041,16 +5041,20 @@ or else Heavy will make you regret choice..."
 					"attribute_class"	"mult_player_movespeed"									// In the latest Live version, it changed to "speed boost on hit", and I think that would work really well on both this AND the BFB
 					"value"				"1.15"
 				}
+				"critboost on kill"
+				{
+					"attribute_class"	"add_onkill_critboost_time"							
+					"value" 			"3"
+				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.65"
+					"value"				"0.50"
 				}
-				// Backend stuff
-				"strange restriction type 1"
+				"dmg taken increased"
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-5"
+					"attribute_class"	"mult_dmgtaken"
+					"value"				"1.10"
 				}
 			}
 			"visuals"
@@ -5262,7 +5266,8 @@ Weapon from: New Old Weapons Pack"
 			"item_description"			"
 'I had me good eye on ye the whole time!'
 
-Weapon from: New Old Weapons Pack"
+Weapon from: New Old Weapons Pack
+Edited by: 'The One Of Wonders'"
 			"item_logname"				"cyclops"
 			"item_iconname"				"cyclops"
 			
@@ -5287,11 +5292,6 @@ Weapon from: New Old Weapons Pack"
 				{
 					"attribute_class"	"mult_projectile_speed"
 					"value"				"1.15"
-				}
-				"Blast radius decreased"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.3"
 				}
 				"fire rate penalty"
 				{
@@ -6961,8 +6961,7 @@ Weapon by: 'Reagy'"
 Well ain't that a mighty fine shirt to go with me gloves
 
 Animations from: Open Fortress
-Weapon by: 'Reagy'
-Sentry replacement by: 'rotzloeffel' 'Gadget'"	
+Weapon by: 'Reagy'"
 			"item_slot"					"melee"
 			"item_quality"				"rarity2"
 			"min_ilevel"				"1"
@@ -7789,7 +7788,7 @@ Weapon by: 'Reagy'"
 				"bullets per shot bonus"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value" 			"1.13"
+					"value" 			"1.2"
 				}
 				"damage bonus"
 				{
@@ -8384,6 +8383,7 @@ Weapon by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/c_models/c_trashcannon"
 			"model_world"				"models/weapons/custom/c_models/c_trashcannon.mdl"
 			"model_player"				"models/weapons/custom/c_models/c_trashcannon.mdl"
+			"extra_wearable"			"models/player/items/custom/heavy/buff_boi.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -9022,7 +9022,7 @@ Weapon by: 'Reagy'"
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
-					"value"				"1"
+					"value"				"0" // Why was this set to 1?
 				}
 			}	
 			"visuals"
@@ -10189,8 +10189,7 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Drunkard's Wrath"
 			"item_type_name"			"Big Revolver?"
-			"item_description"			"Fires explosive shells
-
+			"item_description"			"
 And then I'll grow yer arse's arse and I'm the grass man, punk yeah heaven's heathen...
   
 Model by: 'FiveEyes'
@@ -10205,17 +10204,8 @@ Weapon by: 'Reagy'"
 			{
 				"demoman"					"1"
 			}
-			"static_attrs"
-			{
-				"override projectile type"				"2"
-			}
 			"attributes"
 			{
-				"rocket gravity"															
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"0.35"
-				}
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
@@ -10239,7 +10229,7 @@ Weapon by: 'Reagy'"
 				"blast radius decreased"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.2"
+					"value"				"0.6"
 				}				
 				"damage penalty"
 				{
@@ -10260,11 +10250,6 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_dmgself_push_force"
 					"value" 			"0.6"
-				}
-				"rocket limited lifetime"															
-				{
-					"attribute_class"	"rocket_lifetime"
-					"value"				"1.2"
 				}
 			}
 			"visuals"																
@@ -10400,8 +10385,8 @@ Weapon by: 'Zadrave'"
 
 			"item_quality"				"rarity2"
 
-			"item_logname"				"lakeside_rl"
-			"item_iconname"				"lakeside_rl"
+			"item_logname"				"flare_launcher"
+			"item_iconname"				"flare_launcher"
 			"item_type_name"			"Flare Gun"
 			"item_class"				"tf_weapon_rocketlauncher"
 			"item_description"			"The Flare Gun, but primary. Shoots flares fast and crits flaming targets.
@@ -10549,7 +10534,7 @@ Weapon by: 'Reagy'"
 				"minigun spinup time increased"
 				{
 					"attribute_class"	"mult_minigun_spinup_time"
-					"value"				"2.25"
+					"value"				"1.75"
 				}
 				"aiming movespeed decreased"
 				{
@@ -10696,11 +10681,6 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_projectile_speed"
 					"value"				"2"
-				}
-				"aiming movespeed increased"
-				{
-					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"2.5"
 				}
 				"mark for death"																
 				{
@@ -10985,7 +10965,7 @@ Weapon by: 'Reagy'"
 			"name"						"TF_WEAPON_SPAS12_DEMO" 									
 			"prefab"					"weapon_shotgun" 
 			"item_class"         		"tf_weapon_shotgun"			
-			"show_in_armory"			"1"													
+			"show_in_armory"			"0"													
 			"item_slot"					"primary"
 			"anim_slot"					"secondary"			
 
@@ -11374,9 +11354,7 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Hell Barrier"
 			"item_type_name"			"Energy Shield"
-			"item_description"			"Alt-Fire: jump forward with high velocity! (10 sec cooldown)
-
-15% damage resistance on wearer
+			"item_description"			"15% damage resistance on wearer
 
 You are unable to use a Secondary Weapon while this item is equipped
   
@@ -12857,8 +12835,7 @@ Weapon by: 'Reagy'"
 			"item_name"					"Assault and Battering"
 			"item_type_name"			"Riot Sheild"
 			"item_logname"				"democop_shield"
-			"item_description"			"Alt-Fire: jump forward with high velocity! (10 sec cooldown)
-			
+			"item_description"			"
 You are unable to use a Secondary Weapon while this item is equipped
 
 Model by: 'Elbagast'
@@ -13710,6 +13687,7 @@ Weapon by: 'Majro'"
 			"image_inventory"			"backpack/weapons/c_models/c_bmmh/c_bmmh"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
+			"item_quality"				"rarity3"
 			
 			"model_world"				"models/weapons/c_models/c_bmmh/c_bmmh.mdl"
 			"model_player"				"models/weapons/v_models/v_bmmh.mdl" //Ouch, my OCD.
@@ -13814,6 +13792,7 @@ Weapon by: 'Majro'"
 			"image_inventory"			"backpack/weapons/c_models/c_sandmate\c_sandmate"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
+			"item_quality"				"rarity3"
 			
 			"model_world"				"models/weapons/c_models/c_sandmate/c_sandmate.mdl"
 			"model_player"				"models/weapons\v_models\v_sandmate.mdl"
@@ -13897,6 +13876,7 @@ Weapon by: 'Majro'"
 			"prefab"				"weapon_medigun"
 			"show_in_armory"			"1"
 			"item_slot"				"secondary"
+			"item_quality"				"rarity3"
 
 
 			"propername"				"1"
@@ -13974,7 +13954,8 @@ Weapon by: 'Majro'"
 			"name"						"TF_WEAPON_SHOVE"								
 			"prefab"					"weapon_umbrella" 											
 			"show_in_armory"			"1"														
-			"item_slot"					"melee"													
+			"item_slot"					"melee"	
+            "item_quality"				"rarity3"			
 
 			"propername"				"1"														
 			"item_name"					"Backhand" 										
@@ -14043,6 +14024,7 @@ Weapon by: 'Majro'"
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
 			"anim_slot"					"secondary"
+			"item_quality"				"rarity3"
 
 
 			"propername"				"1"
@@ -14169,13 +14151,12 @@ Weapon by: 'Majro'"
 			"prefab"                    "weapon_umbrella"
 			"item_class"                "tf_weapon_fists"							
 			"show_in_armory"			"1"
+			"item_quality"				"rarity3"
 
 			"propername"				"1"
 			"item_name"					"Glory Kill"
 			"item_type_name"			"Berserk Pack"
-			"item_description"			"Thick of the fight: become marked for death on both miss and hit for 5 seconds
-
-Cannot give minicrit boosts
+			"item_description"			"Cannot give minicrit boosts
 
 Rip and tear, lads!
   
@@ -14276,6 +14257,7 @@ Repurposed by: 'Majro'"
 			"prefab"					"weapon_Flamethrower"
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
+			"item_quality"				"rarity3"
 
 			"propername"				"1"
 			"item_name"					"Magic Wand" //I prefer the name "Weldkit" though.
@@ -15926,22 +15908,21 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //----------------------
 		"9016"											
 		{
-			"name"						"Ol' Reliable"
+		    "name"						"TF_WEAPON_ASSAULTCANNON_TFC"
 			"prefab"					"weapon_minigun"
 			"show_in_armory"			"1"	
 			
-			"item_quality"				"rarity3"
+			"item_quality"				"rarity2"
 					
 			"propername"				"0"
-			"item_name"				"Ol' Reliable"
+			"item_name"				    "Assault Cannon"
 			"item_type_name"			"#TF_Weapon_Minigun"
-			"item_description"			"Fires nails instead of bullets
+			"item_description"			"This weapon has no damage fall-off
 
-Old gun killed many babies before Sasha.
+This weapon feels strange, like it came from one of my predecessors.
 
 Model by: 'Svdl'
-
-Weapon from: Tangerine Paint and Grunt's Weapon Addons"
+Weapon by: 'The One Of Wonders'"
 			"item_logname" 				"tfc_minigun"
 			"item_iconname" 			"tfc_minigun"
 			"image_inventory"			"backpack\weapons\c_models\c_tfc_minigun\c_tfc_minigun"
@@ -15952,20 +15933,57 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			{
 				"heavy"					"1"
 			}
-			"static_attrs"
-			{
-				"maxammo primary increased"			"1.5"
-				"Projectile speed increased"			"2"
-				"damage bonus"				"3.5"
-				"fire rate penalty"				"1.1"
-				"override projectile type"			"29"
-			}
 			"attributes"
 			{
-				"minigun spinup time increased"
+			    "provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
+			    "no damage falloff over distance"
+				{
+					"attribute_class"	"mod_no_dmg_falloff"
+					"value"				"1"
+				}
+			    "fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"0.9"
+				}
+				"minigun spinup time decreased"
 				{
 					"attribute_class"	"mult_minigun_spinup_time"
-					"value"				"1.25"
+					"value"				"0.7"
+				}
+				"minigun spindown time decreased"
+				{
+					"attribute_class"	"mult_minigun_spindown_time"
+					"value"				"1.33"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"0.8"
+				}
+				"spread penalty"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"1.1" 
+				}
+				"aiming movespeed decreased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"				"0.7"
+				}
+				"no primary ammo from dispensers while active"
+				{
+					"attribute_class"	"no_primary_ammo_from_dispensers"
+					"value"				"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
 				}
 			}
 			"visuals"
@@ -15976,6 +15994,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"sound_special1"		"Weapon_TFC_Minigun.WindUp"
 				"sound_special2"		"Weapon_TFC_Minigun.WindDown"
 				"sound_special3"		"Weapon_TFC_Minigun.Spin"
+				"tracer_effect"			"bullet_scattergun_tracer01"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -16459,12 +16478,13 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_name"				"Combat Pistol (Melee)"
 			"item_type_name"			"...Pistol?"
 			"image_inventory"			"backpack/weapons/w_models/w_walther_p38"
-			"item_description"			"Equalize: Forces the user and target into melee combat for 5 seconds
+			"item_description"			"Fight Harder: on hit, gain mini-crits for 3 seconds.
 
-I can't shoot and neither can you ya dope!
+Watch these pistol whips knucklehead! they come with extra hurt!
 
 Model from: Open Fortress
-Weapon from: Tangerine Paint and Grunt's Weapon Addons"
+Weapon from: Tangerine Paint and Grunt's Weapon Addons
+Edited by: 'The One Of Wonders'"
 			"model_world"				"models/weapons/w_models/w_walther_p38_whip.mdl"
 			"model_player"				"models/weapons/v_models/v_walther_p38_whip_scout.mdl"
 			"attach_to_hands"			"2"
@@ -16483,46 +16503,20 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"provide_on_active"
 					"value"				"1"
 				}	
-//				"damage applies to sappers"												
-//				{
-//					"attribute_class"	"set_dmg_apply_to_sapper"
-//					"value"				"1"
-//				}
-				"add condition on hit"	
-				{
-					"attribute_class"	"add_onhit_addcond"
-					"value"				"41 5"
-				}
 				"add condition on hit"	
 				{
 					"attribute_class"	"add_onhit_addcond_self"
-					"value"				"41 5"
-				}
-				"single wep deploy time decreased"
-				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"0.8"
+					"value"				"112 3"
 				}
 				"damage penalty"																
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.67"
+					"value"				"0.9"
 				}
-				// Backend stuff
-				"voice pitch scale"
+				"fire rate penalty"																
 				{
-					"attribute_class"	"mult_repair_value"
-					"value"				"0.00"										
-				}
-				"damage force increase hidden"	
-				{
-					"attribute_class"	"mult_construction_value"
-					"value"				"0"
-				}
-				"rocket limited lifetime"									// To hopefully prevent rockets disarming enemies
-				{
-					"attribute_class"	"rocket_lifetime"
-					"value"				"0.1"
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.2"
 				}
 			}
 			"visuals"
@@ -17941,17 +17935,12 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"rocket gravity"										
 				{
 					"attribute_class"	"mod_rocket_gravity"
-					"value"				"0.25"
+					"value"				"0.4"
 				}
 				"dmg bonus vs buildings"
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
 					"value"				"1.7"
-				}
-				"projectile speed increased"																
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value" 			"1.45"
 				}
 				"Reload time decreased"
 				{
@@ -17961,11 +17950,6 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.9"
-				}
-				"clip size penalty"
-				{
-					"attribute_class"	"mult_clipsize"
 					"value"				"0.75"
 				}
 				"custom projectile model"
@@ -17999,12 +17983,14 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_name"					"Arsonist's Aria"
 			"item_type_name"			"Fire Hose"
-			"item_description"			"
+			"item_description"			"Weapon has a smaller compression blast that can only extinguish players.
+
 The 'aria' part comes from the screams of the one closest to you.
 
 Incendiary rockets not included.
 
-Weapon from: Tangerine Paint and Grunt's Weapon Addons"
+Weapon from: Tangerine Paint and Grunt's Weapon Addons
+Edited by: 'The One Of Wonders'"
 			"item_logname"				"tfc_firehose"
 			"item_iconname"				"tfc_firehose"
 			"image_inventory"			"backpack/weapons/w_models/w_tfc_flamethrower"
@@ -18017,30 +18003,40 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			}
 			"attributes"
 			{
-				"damage bonus"
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 		"1"
+				}
+				"move speed bonus"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"1.05"
+				}
+				"airblast cost decreased"
+				{
+					"attribute_class"	"mult_airblast_cost"
+					"value"				"0.25"
+				}
+				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.25"
+					"value"				"0.65"
 				}
-				"fire rate bonus"
+				"flame ammopersec increased"
 				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.50"
+					"attribute_class"	"mult_flame_ammopersec"
+					"value"				"2"
 				}
-				"mod flamethrower push"
+				"airblast cannot push players"
 				{
-					"attribute_class"	"set_flamethrower_push_disabled"
-					"value"				"1"
+					"attribute_class"	"airblast_functionality_flags"
+					"value"				"2"
 				}
-				"flame size penalty"
+				"deflection size multiplier"
 				{
-					"attribute_class"	"mult_flame_size"
-					"value"				"0.50"
-				}
-				"maxammo primary reduced"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.50"
+					"attribute_class"	"deflection_size_multiplier"
+					"value"				"0.75"
 				}
 			}	
 			"visuals"
@@ -20138,7 +20134,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"heal rate bonus"																// This works.
 				{
 					"attribute_class"	"mult_medigun_healrate"
-					"value" 			"1.8"
+					"value" 			"1.5"
 				}
 				"single wep deploy time decreased"
 				{
@@ -20419,8 +20415,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_class"				"tf_wearable"
 			"item_type_name"			"Robot"
 			"item_name"				"Geared Up Ghost"
-			"item_description"			"Alt-Fire: jump forward with high velocity! (10 sec cooldown)
-
+			"item_description"			"
 Eyes up, mercenary.
 
 Wearable from: Tangerine Paint and Grunt's Weapon Addons"
@@ -22397,7 +22392,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.8"
+					"value"				"0.35"
 				}
 				"voice pitch scale"
 				{
@@ -23576,23 +23571,17 @@ Weapon by: 'The One Of Wonders'"
 //--DOUBLE BARREL RIFLE - 9109--
 //-------------------------
 //-------------------------
-		"9109"
+		"14"
 		{
-			"name"						"TF_WEAPON_DOUBLEBARREL_RIFLE"	// Thank god for Kristofer K. we can have this masterpiece of a rifle.
+			"name"						"TF_WEAPON_SNIPERRIFLE"	// Thank god for Kristofer K. we can have this masterpiece of a rifle.
 			"prefab"					"weapon_sniperrifle"
 			"item_class"				"tf_weapon_hunterrifle"
-			"show_in_armory"			"1"
+			"baseitem"                  "1"
 
 			"propername"				"1"
-			"item_quality"				"rarity1"
 			"item_name"					"Poacher's Pride"
 			"item_type_name"			"Double-Barrel Hunting Rifle"
-			"item_description"			"Weapon deals 33% less headshot damage
-
-Professionals have standards, sometimes you have to be more flexible.
-
-Model by: 'QuestionablyInsane, Retro Mike, Faraxes, Digivee'
-Weapon by: 'The One Of Wonders'"
+			"item_description"			"Professionals have standards."
 			"item_logname"				"doublebarrel_rifle"
 			"item_iconname"				"doublebarrel_rifle"
 			"image_inventory"			"backpack/weapons/w_poacherspride/w_poacherspride"
@@ -23609,32 +23598,37 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"																		
 			{
-				"no scope" 
+			    "strange restriction type 1"																
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"strange restriction type 1" 
 				{
 					"attribute_class"	"mod_no_scope"
 					"value"				"1"
 				}
-				"soft zoom"
+				"strange restriction type 1"
 				{
 					"attribute_class"	"mod_sniper_soft_zoom"
 					"value" 			"1"
 				}
-				"damage bonus"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
 					"value" 			"1.66"
 				}
-				"fire rate bonus"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"0.3"
 				}
-				"aiming movespeed increased"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"1.67"
+					"value"				"1.4"
 				}
-				"sniper no dmg charge DISPLAY ONLY"
+				"strange restriction type 1"
 				{
 					"attribute_class"	"mod_sniper_no_dmg_charge"
 					"value"				"1"
@@ -23644,7 +23638,7 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_no_dmg_falloff"
 					"value"				"1"
 				}
-				"clip size penalty"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value" 			"0.33"
@@ -24749,7 +24743,7 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Sentry Duty"
 			"item_type_name"			"Improvised Minigun"
-			"item_description"			"This weapon fires sentry gun bullets 
+			"item_description"			"Steadfast: on hit, gain damage resistance for 5 seconds
 
 You cannot move while spun-up
 
@@ -24819,6 +24813,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg"
 					"value" 			"1.77777777778"
 				}
+				"add condition on hit"	
+				{
+					"attribute_class"	"add_onhit_addcond_self"
+					"value"				"111 5"
+				}	
 			}
 			"visuals"																		
 			{
@@ -25275,7 +25274,7 @@ Wearable by: 'Reagy'"
 		}
 //-------------------------------------
 //-------------------------------------
-// ACTUAL ASSAULT CANNON - 9129
+// ASSAULT DOCTRINE - 9129
 //-------------------------------------
 //-------------------------------------		
 		"9129"
@@ -25290,14 +25289,13 @@ Wearable by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Assault Doctrine"
 			"item_type_name"			"Minigun"
-			"item_description"			"This weapon has no damage falloff
-
+			"item_description"			"
 Gun feels familiar, Heavy can't put finger on it..
   
 Model by: 'Sparkwire'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"assaultcannon_heavy"
-			"item_iconname"				"assauntcannon_heavy"
+			"item_logname"				"gunnercannon_heavy"
+			"item_iconname"				"gunnercannon_heavy"
 			"image_inventory"			"backpack/weapons/c_models/c_gunnercannon/c_gunnercannon"
 			"model_world"				"models/weapons/c_models/c_gunnercannon/c_gunnercannon.mdl"
 			"model_player"				"models/weapons/c_models/c_gunnercannon/c_gunnercannon.mdl"
@@ -25308,40 +25306,45 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "no damage falloff over distance"
-				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
-				}
-			    "fire rate bonus"
+				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.9"
+					"value"				"0.8" 
 				}
 				"minigun spinup time decreased"
 				{
 					"attribute_class"	"mult_minigun_spinup_time"
-					"value"				"0.7"
+					"value"				"0.8"
 				}
 				"minigun spindown time decreased"
 				{
 					"attribute_class"	"mult_minigun_spindown_time"
 					"value"				"1.33"
 				}
+				"aiming movespeed increased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"				"1.5"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.75" 
+				}
+				"SET BONUS: dmg from sentry reduced"
+				{
+					"attribute_class"	"dmg_from_sentry_reduced"
+					"value"				"0.5" 
+				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.8"
+					"value" 			"0.85"
 				}
-				"spread penalty"
+				"maxammo primary reduced"
 				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"1.1" 
-				}
-				"aiming movespeed decreased"
-				{
-					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"0.7"
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.5" 
 				}
 				"no primary ammo from dispensers while active"
 				{
@@ -25356,12 +25359,12 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"																		
 			{
-				"sound_empty"			"Weapon_TFC_Minigun.ClipEmpty"
-				"sound_double_shot"		"Weapon_TFC_Minigun.Fire"
-				"sound_burst"			"Weapon_TFC_Minigun.FireCrit"
-				"sound_special1"		"Weapon_TFC_Minigun.WindUp"
-				"sound_special2"		"Weapon_TFC_Minigun.WindDown"
-				"sound_special3"		"Weapon_TFC_Minigun.Spin"			
+				"sound_empty"			"Weapon_MachineGun.ClipEmpty"
+				"sound_double_shot"		"Weapon_AssaultDoctrine.Fire"	
+				"sound_burst"			"Weapon_AssaultDoctrine.FireCrit"	
+				"sound_special1"		"Weapon_TankMini.WindUp"
+				"sound_special2"		"Weapon_TankMini.WindDown"
+				"sound_special3"		"Weapon_TankMini.Spin"	
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -25933,7 +25936,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_type_name"			"Personal Defense Weapon"
 			"item_description"			"Fires bullets instead of syringes
 
-Doctor's endless Duty: on hit: gain damage resistance for 3 seconds
+Doctor's endless Duty: on hit, gain damage resistance for 3 seconds
 
 I will continue to thrive even in war, my oath is not over!
 
@@ -26052,6 +26055,11 @@ Weapon by: 'The One Of Wonders'"
 			}
             "attributes"
             {
+			    "strange restriction type 1"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_explosion_radius"
@@ -26143,7 +26151,7 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Burst Blaster"
 			"item_type_name"			"Explosive Burst Rifle"
-			"item_description"			"Fires 3 round bursts of limited ranged explosives
+			"item_description"			"Fires 3 round bursts of grenades that explode on impact
 
 Now, this! this is one way of claiming life insurances!.
 
@@ -26168,12 +26176,12 @@ Weapon by: 'The One Of Wonders'"
 			    "strange restriction type 1"												
 				{
 					"attribute_class"	"mod_rocket_gravity"
-					"value"				"0.8"
+					"value"				"1.6"
 				}
 			    "voice pitch scale"																
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value" 			"2"
+					"value" 			"1.2"
 				}
 			    "crit mod disabled"															
 				{
@@ -26204,11 +26212,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_explosion_radius"
 					"value"				"0.5"
-				}
-				"rocket limited lifetime"
-				{
-					"attribute_class"	"rocket_lifetime"
-					"value" 			"0.3333333333333"
 				}
 				"scattergun no reload single"													
 				{
@@ -26631,15 +26634,15 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
 				"damage bonus"
 				{
 					"attribute_class"	    "mult_dmg"
 					"value" 				"1.66"
-				}
-				"move speed bonus"                                
-				{
-					"attribute_class"	    "mult_player_movespeed"
-					"value" 				"1.2"
 				}
 				"heal on hit for rapidfire"
 				{
@@ -26651,20 +26654,20 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	    "heal_on_kill"
 					"value" 				"25"
 				}
-				"maxammo primary reduced"
+				"fire rate penalty"
 				{
-					"attribute_class"	    "mult_maxammo_primary"
-					"value" 				"0.001"
+					"attribute_class"	    "mult_postfiredelay"
+					"value" 				"1.25"
 				}
-				"maxammo secondary reduced"
+				"mark self on miss"
 				{
-					"attribute_class"	    "mult_maxammo_secondary"
-					"value" 				"0.001"
+					"attribute_class"	    "self_mark_for_death_on_miss"
+					"value" 				"5"
 				}
-				"cannot pick up intelligence"
+				"dmg taken from crit increased"
 				{
-					"attribute_class"	    "cannot_pick_up_intelligence"
-					"value" 				"1"
+					"attribute_class"	    "mult_dmgtaken_from_crit"
+					"value" 				"2"
 				}
 				"crit mod disabled"
 				{
@@ -26873,7 +26876,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"Building Upgrader"
 			"item_type_name"			"Fusion Blaster"
 			"item_description"			"Holding to fire builds a high velocity ricochet laser
-Dealing damage with this weapon repairs and upgrades buildings
+Dealing damage to enemies with this weapon repairs and upgrades buildings
 
 Weapon requires a recharge after firing once
 
@@ -26987,10 +26990,11 @@ Weapon by: 'The One Of Wonders'"
 They're gonna love the quality of these buildings, son.
 
 Model by: 'Wowza'
-Weapon by: 'The One Of Wonders'"
+Weapon by: 'The One Of Wonders'
+Sentry replacement by: 'rotzloeffel' 'Gadget'"	
 			"item_logname"				"wrench_tanker"
 			"item_iconname"				"wrench_tanker"
-			"image_inventory"			"backpack/weapons/c_models/c_nailbiter/c_nailbiter"
+			"image_inventory"			"backpack/weapons/c_models/c_nailbiter/c_nailbiter_new"
 			"model_world"				"models/weapons/c_models/c_nailbiter/c_nailbiter.mdl"
 			"model_player"				"models/weapons/c_models/c_nailbiter/c_nailbiter.mdl"
 			"attach_to_hands"			"1"
@@ -27119,7 +27123,7 @@ Sentry replacement by: 'rotzloeffel' 'Gadget'"
 			"item_quality"				"rarity2"
 			"item_name"					"Aggressive Frontier"
 			"item_type_name"			"Fusion Cannon"
-			"item_description"			"Launches lasers that explode at medium range
+			"item_description"			"Launches super-heated plasma balls that explode at medium range
 You cannot blast jump with this weapon
 
 Start running, Maggots!
@@ -27140,7 +27144,6 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"class select override vcd"				"taunt01_v2"							
 				"min_viewmodel_offset"					"-5 0 -10"
-                "override projectile type"              "32"
                 "ragdolls become ash"					"1"						
 			}
 			"attributes"
@@ -27204,7 +27207,17 @@ Weapon by: 'The One Of Wonders'"
                 {
                     "attribute_class"    "voice_pitch_scale"
                     "value"                "4"
-                }	
+                }
+                "custom projectile model"
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/w_models/w_drg_ball.mdl"
+				}
+                "damage force increase hidden"
+				{
+					"attribute_class"	"mult_dmgself_push_force"
+					"value" 			"0.0"													
+				}				
 			}
 			"visuals"																			
 			{
@@ -28518,133 +28531,6 @@ Weapon by: 'The One Of Wonders'"
 			"mouse_pressed_sound"		"#ui/item_knife_large_pickup.wav"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}	
-//-----------------------------
-//-----------------------------
-//--SUPER RAILGUN - 9164--
-//-----------------------------
-//-----------------------------
-		"9164"
-		{
-			"name"						"TF_WEAPON_SUPERRAILGUN_ENGINEER"
-			"prefab"					"weapon_shotgun"
-			"show_in_armory"			"1"
-			"item_slot"					"primary"
-			"anim_slot"                 "primary"
-			"item_class"				"tf_weapon_shotgun_primary"
-
-			"item_quality"				"rarity2"
-
-			"propername"				"1"
-			"item_name"					"Devastator"
-			"item_type_name"			"Experimental Railgun"
-			"item_description"			"This weapon fires perfectly accurate super-heated steel balls
-
-Well ain't that a mighty big gun, hope it don't blow up in my face.
-
-Model by: 'KARMA the BARMAN'
-Ported and edited by: 'Suomimies55'
-Animations from: Open Fortress
-Weapon by: 'The One Of Wonders'"											
-			"item_logname"				"super_railgun"
-			"item_iconname"				"super_railgun"
-			"image_inventory"			"backpack/weapons/w_models/w_mega_railgun_pyro"
-			"model_world"				"models/weapons/w_models/w_mega_railgun_pyro.mdl"
-			"model_player"				"models/weapons/v_models/v_mega_railgun_pyro.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"engineer"                "primary"
-			}
-			"static_attrs"
-			{
-				"class select override vcd"				"taunt02_v1"
-			}
-			"attributes"
-			{
-			    "provide on active"													
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
-				"no damage falloff over distance"
-				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
-				}
-				"Set DamageType Ignite"												
-				{
-					"attribute_class"	"set_dmgtype_ignite"
-					"value" 			"1"
-				}
-				"weapon burn dmg increased"
-				{
-					"attribute_class"	"mult_wpn_burndmg"
-					"value" 			"3"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.8"
-				}
-				"mod max primary clip override"
-				{
-					"attribute_class"	"mod_max_primary_clip_override"
-					"value"				"-1"
-				}
-				"mod no reload DISPLAY ONLY"
-				{
-					"attribute_class"	"mod_no_reload_display_only"
-					"value"				"1"
-				}				
-				"weapon burn time reduced"
-				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.1"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"2"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"5"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"1.33"
-				}
-				"ragdolls become ash"
-				{
-					"attribute_class"	"ragdolls_become_ash"
-					"value"				"1"
-				}
-                "voice pitch scale"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.018888888888888"
-				}
-				"dmg taken from crit increased"
-				{
-					"attribute_class"	"mult_dmgtaken_from_crit"
-					"value"				"2"
-				}
-                "crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}				
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_RailCannon.Single"
-				"sound_burst"			"Weapon_RailCannon.SingleCrit"
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
-		}	
 //-----------------------------------
 //-----------------------------------
 //--COP BLASTER - 9165--
@@ -28696,7 +28582,12 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"		"mult_dmgself_push_force"
 					"value" 				"1.25"
-				}	
+				}
+                "Reload time decreased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"0.75"
+				}				
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
@@ -28965,6 +28856,1446 @@ Weapon by: 'Reagy'"
 			"mouse_pressed_sound"		"#ui/item_cardboard_pickup.wav"
 			"drop_sound"				"#ui/item_cardboard_drop.wav"
 		}
+//-------------------------
+//-------------------------
+//--ENGINEER AUGMENTATION 1 - 9169--
+//-------------------------
+//-------------------------
+		"9169"
+		{
+			"name"						"TF_WEARABLE_AUGMENTATION_HUD"									
+			"item_class"				"tf_wearable"
+			"show_in_armory"			"1"
+			"item_slot"					"secondary"
+
+			"equip_region"				"hat"												
+			"anim_slot"					"FORCE_NOT_USED"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			"item_name"					"Augmentation: External HUD"
+			"item_type_name"			"Goggle Augmentation"
+			"item_description"			"
+Replaces your Pistol
+You are unable to use a Secondary Weapon while this item is equipped
+
+Model by: 'Coolchou Zhao'
+Wearable by: 'The One Of Wonders'"
+			"image_inventory"			"backpack/player/items/engineer/augmentation_hud"
+			"model_player"				"models/player/items/engineer/more_hud/more_hud.mdl"
+			"extra_wearable"			"models/player/items/engineer/more_hud/more_hud.mdl"
+			"used_by_classes"
+			{
+				"engineer"					"1"
+			}
+			"loadondemand"				"1"
+			"act_as_wearable"			"1"
+			"attributes"
+			{
+			    "engineer dispenser build rate multiplier"
+				{
+					"attribute_class"	"dispenser_build_rate_multiplier"
+					"value"				"1.25"
+				}
+				"engineer teleporter build rate multiplier"
+				{
+					"attribute_class"	"teleporter_build_rate_multiplier"
+					"value"				"1.33"
+				}
+				"engineer sentry build rate multiplier"
+				{
+					"attribute_class"	"sentry_build_rate_multiplier"
+					"value"				"1.15"
+				}
+			    "health regen"
+				{
+					"attribute_class"	"add_health_regen"
+					"value"				"3"
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
+			"drop_sound"				"#ui/item_pack_drop.wav"
+		}
+//-------------------------
+//-------------------------
+//--ENGINEER AUGMENTATION 2 - 9170--
+//-------------------------
+//-------------------------
+		"9170"
+		{
+			"name"						"TF_WEARABLE_AUGMENTATION_SPYCHECK"									
+			"item_class"				"tf_weapon_pistol_scout"
+			"show_in_armory"			"1"
+			"item_slot"					"secondary"
+
+			"equip_region"				"hat"												
+			"anim_slot"					"secondary"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			"item_name"					"Augmentation: Spy Hunter"
+			"item_type_name"			"Goggle Augmentation"
+			"item_description"			"Primary Perk: Your pistol is replaced with a Spy Blaster.
+Spy Blaster deals critical damage to disguised and cloaked spies.
+
+Model by: 'svdl'
+Wearable Model by: 'Coolchou Zhao'
+Wearable by: 'The One Of Wonders'"
+			"image_inventory"			"backpack/player/items/engineer/augmentation_spyhunter"
+			"model_world"				"models/weapons/c_models/c_augment_spyblaster/c_augment_spyblaster.mdl"
+			"model_player"				"models/weapons/c_models/c_augment_spyblaster/c_augment_spyblaster.mdl"
+			"attach_to_hands"			"1"
+			"extra_wearable"			"models/player/items/engineer/eyehud/eyehud.mdl"
+			"used_by_classes"
+			{
+				"engineer"					"1"
+			}
+			"attributes"
+			{
+			    "crit vs wet players hidden"				          // Lmao crits disguised players, anti-spy gun												
+				{
+					"attribute_class"	"or_crit_vs_playercond"
+					"value" 			"48"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"3"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"1.5"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.5"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.65"
+				}
+                "maxammo primary increased"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"1.25"
+				}				
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_SpyHunter.Shoot"							
+				"sound_burst"			"Weapon_SpyHunter.ShootCrit"
+			}
+			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
+			"drop_sound"				"#ui/item_pack_drop.wav"
+		}
+//-------------------------
+//-------------------------
+//--ENGINEER AUGMENTATION 3 - 9171--
+//-------------------------
+//-------------------------
+		"9171"
+		{
+			"name"						"TF_WEARABLE_AUGMENTATION_TRENCHSHOT"									
+			"item_class"				"tf_weapon_shotgun_hwg"
+			"show_in_armory"			"1"
+			"item_slot"					"secondary"
+
+			"equip_region"				"hat"												
+			"anim_slot"					"primary"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			
+			"item_logname"				"augmentation_trenchgun"
+			"item_iconname"				"augmentation_trenchgun"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			"item_name"					"Augmentation: Mann-Power"
+			"item_type_name"			"Arm Augmentation"
+			"item_description"			"Primary Perk: Replace your pistol with a Trench Shotgun
+
+Model by: 'BenH'
+Wearable Model by: 'Coolchou Zhao'
+Wearable by: 'The One Of Wonders'"
+			"image_inventory"			"backpack/player/items/engineer/augmentation_trench"
+			"model_world"				"models/weapons/c_models/c_augment_trench/c_augment_trench.mdl"
+			"model_player"				"models/weapons/c_models/c_augment_trench/c_augment_trench.mdl"
+			"attach_to_hands"			"1"
+			"extra_wearable"			"models/player/items/engineer/grapple_gauntlet/grapple_gauntlet.mdl"
+			"used_by_classes"
+			{
+				"engineer"					"1"
+			}
+			"attributes"
+			{
+			    "voice pitch scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value" 			"2.5"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"0.6875"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"0.25"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"1.75"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"1.25"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}		
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_TrenchGun.Shoot"						
+				"sound_burst"			"Weapon_TrenchGun.ShootCrit"
+			}
+			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
+			"drop_sound"				"#ui/item_pack_drop.wav"
+		}
+//-------------------------
+//-------------------------
+//--ENGINEER AUGMENTATION 4 - 9172--
+//-------------------------
+//-------------------------
+		"9172"
+		{
+			"name"						"TF_WEARABLE_AUGMENTATION_REACTIONARY"									
+			"item_class"				"tf_wearable"
+			"show_in_armory"			"1"
+			"item_slot"					"secondary"
+
+			"equip_region"				"hat"												
+			"anim_slot"					"FORCE_NOT_USED"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			"item_name"					"Augmentation: Visual Aid"
+			"item_type_name"			"Goggle Augmentation"
+			"item_description"			"
+Replaces your Pistol
+You are unable to use a Secondary Weapon while this item is equipped
+
+Model by: 'Coolchou Zhao'
+Wearable by: 'The One Of Wonders'"
+			"image_inventory"			"backpack/player/items/engineer/augmentation_speed"
+			"model_player"				"models/player/items/engineer/display_goggle/display_goggle.mdl"
+			"extra_wearable"			"models/player/items/engineer/display_goggle/display_goggle.mdl"
+			"used_by_classes"
+			{
+				"engineer"					"1"
+			}
+			"loadondemand"				"1"
+			"act_as_wearable"			"1"
+			"attributes"
+			{
+                "deploy time decreased"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"0.67"
+				}
+                "move speed bonus"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"1.05"
+				}					
+			}
+			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
+			"drop_sound"				"#ui/item_pack_drop.wav"
+		}
+//-----------------------------
+//-----------------------------
+//--ENGINEER COIL RIFLE - 9173--
+//-----------------------------
+//-----------------------------
+		"9173"
+		{
+			"name"						"TF_WEAPON_COILRIFLE_ENGINEER"
+			"prefab"					"weapon_shotgun"
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"                 "primary"
+			"item_class"				"tf_weapon_shotgun_primary"
+
+			"item_quality"				"rarity2"
+
+			"propername"				"1"
+			"item_name"					"Conagher Classic"
+			"item_type_name"			"Experimental Coil Rifle"
+			"item_description"			"Conagher Special: Dealing damage to enemies repairs and upgrades your buildings 
+
+A family pride, going back to the glory days of my grandfather.
+
+Model by: 'Rapoza Dynamica'
+Weapon by: 'The One Of Wonders'"											
+			"item_logname"				"conagher_coil"
+			"item_iconname"				"conagher_coil"
+			"image_inventory"			"backpack/weapons/c_models/c_coilshotgun/c_coilshotgun"
+			"model_world"				"models/weapons/c_models/c_coilshotgun/c_coilshotgun.mdl"
+			"model_player"				"models/weapons/c_models/c_coilshotgun/c_coilshotgun.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"engineer"                "primary"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt02_v1"
+				"override projectile type"              "32"
+			}
+			"attributes"
+			{
+			    "provide on active"													
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"add construction on hit"										
+				{
+					"attribute_class"	"add_onhit_construction"
+					"value" 			"1"
+				}
+				"Set DamageType Ignite"												
+				{
+					"attribute_class"	"set_dmgtype_ignite"
+					"value" 			"1"
+				}
+				"weapon burn dmg increased"
+				{
+					"attribute_class"	"mult_wpn_burndmg"
+					"value" 			"1.25"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"3.33333333333"
+				}			
+				"weapon burn time reduced"
+				{
+					"attribute_class"	"mult_wpn_burntime"
+					"value"				"0.25"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.1"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.5"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.75"
+				}
+				"ragdolls become ash"
+				{
+					"attribute_class"	"ragdolls_become_ash"
+					"value"				"1"
+				}
+                "voice pitch scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.018888888888888"
+				}
+                "crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}				
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_CoilRifle.Shoot"
+				"sound_burst"			"Weapon_CoilRifle.ShootCrit"
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}
+//------------------
+//------------------
+//--COMBAT WRENCH - 9174--
+//------------------
+//------------------
+		"9174"
+		{
+			"name"						"TF_WEAPON_WRENCH_DAMAGE"
+			"prefab"					"weapon_wrench"
+			"show_in_armory"			"1"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			
+			"item_name"					"Construction Combuster"
+			"item_type_name"			"#TF_Weapon_Wrench"
+			"item_description"			"
+Hard-hat thinking meets electrically-powered arson.
+
+Model by: 'neodos'
+Weapon by: 'The One Of Wonders'"
+			"item_logname"				"wrench_combuster"
+			"item_iconname"				"wrench_combuster"
+			"image_inventory"			"backpack/weapons/c_models/c_firewrench/c_firewrench"
+			"model_world"				"models/weapons/c_models/c_firewrench/c_firewrench.mdl"
+			"model_player"				"models/weapons/c_models/c_firewrench/c_firewrench.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"engineer"				"1"
+			}
+			"attributes"
+			{
+			    "provide on active"													
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"Set DamageType Ignite"												
+				{
+					"attribute_class"	"set_dmgtype_ignite"
+					"value" 			"1"
+				}
+				"weapon burn dmg increased"
+				{
+					"attribute_class"	"mult_wpn_burndmg"
+					"value" 			"2"
+				}
+                "dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value" 			"1.75"
+				}			
+				"weapon burn time reduced"
+				{
+					"attribute_class"	"mult_wpn_burntime"
+					"value"				"0.1"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"1.25"
+				}
+				"Construction rate decreased"
+				{
+					"attribute_class"	"mult_construction_value"
+					"value" 			"0.6"
+				}
+				"Repair rate decreased"
+				{
+					"attribute_class"	"mult_repair_value"
+					"value" 			"0.75"
+				}
+				"upgrade rate decrease"
+				{
+					"attribute_class"	"upgrade_rate_mod"
+					"value" 			"0.8"
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
+		}
+//------------------
+//------------------
+//--ROBOT WRENCH - 9175--
+//------------------
+//------------------
+		"9175"
+		{
+			"name"						"TF_WEAPON_WRENCH_ROBOT"
+			"prefab"					"weapon_wrench"
+			"show_in_armory"			"1"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			
+			"item_name"					"Heavy Support"
+			"item_type_name"			"#TF_Weapon_Wrench"
+			"item_description"			"Sentry gun and Dispenser have reduced range 
+Building cost is greatly increased and sentries will not build automatically.
+
+Well, it's a bit wild but it works just fine.
+
+Model by: 'CoBalt'
+Weapon by: 'The One Of Wonders'
+Sentry replacement by: 'Pyanodon'"	
+			"item_logname"				"wrench_robot"
+			"item_iconname"				"wrench_robot"
+			"image_inventory"			"backpack/weapons/c_models/c_toothwrench/c_toothwrench"
+			"model_world"				"models/weapons/c_models/c_toothwrench/c_toothwrench.mdl"
+			"model_player"				"models/weapons/c_models/c_toothwrench/c_toothwrench.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"engineer"				"1"
+			}
+			"attributes"
+			{
+			    "engy building health bonus"
+				{
+					"attribute_class"	"mult_engy_building_health"
+					"value" 			"1.3333333333333333"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"1.15"
+				}
+				"Construction rate decreased"
+				{
+					"attribute_class"	"mult_construction_value"
+					"value" 			"0.4"
+				}
+				"Repair rate decreased"
+				{
+					"attribute_class"	"mult_repair_value"
+					"value" 			"0.4"
+				}
+				"upgrade rate decrease"
+				{
+					"attribute_class"	"upgrade_rate_mod"
+					"value" 			"0.75"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_dispenser_radius"
+					"value" 			"0.75"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"building_cost_reduction"
+					"value" 			"1.53846153846"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mod_teleporter_cost"
+					"value" 			"2"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"sentry_build_rate_multiplier"
+					"value" 			"0.0001"
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
+		}
+//-------------------
+//-------------------
+//--HEAVY SAW TEST - 9176
+//-------------------
+//-------------------
+		"9176"
+		{
+			"name"						"TF_WEAPON_LMG_HEAVY"											
+			"item_class"				"tf_weapon_nailgun"											
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"					"secondary"
+
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			"item_name"					"Roamer's Rifle"
+			"item_type_name"			"Machine Gun"
+			"item_description"			"Heavy will give new weapon a try, what can go wrong?
+
+Model and animations from Open Fortress
+Model Edited by: 'Suomimies55'
+Weapon by: 'The One Of Wonders'"
+			"item_logname" 				"rambo_heavy"
+			"item_iconname" 			"rambo_heavy"
+			"image_inventory"			"backpack/weapons/w_models/w_rambo60"
+			"model_world"				"models/weapons/w_models/w_rambo60.mdl"
+			"model_player"				"models/weapons/v_models/v_rambo60.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"heavy"				"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"0 0 -8"
+				"damage bonus hidden"					"1.66666666666667"
+				"override projectile type"              "1"
+				"class select override vcd"				"taunt03"						
+			}
+			"attributes"
+			{
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"3.6"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"1.1"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value" 			"1.44"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value" 			"1.9"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.67"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_R60.Single"	
+				"sound_burst"			"Weapon_R60.SingleCrit"	
+				"sound_reload"			"Weapon_LMG.WorldReload"
+				"tracer_effect"			"bullet_scattergun_tracer01"
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}
+//-------------------------
+//-------------------------
+//--PRIMED DIRECTIVE - 9177--
+//-------------------------
+//-------------------------
+		"9177"
+		{
+			"name"						"TF_WEAPON_TRAP_LAUNCHER"							
+			"item_class"                "tf_weapon_grenade_mirv"
+			"show_in_armory"			"1"
+
+			"item_quality"				"rarity2"
+			"item_slot"                 "secondary"
+			"anim_slot"                 "secondary"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"propername"				"1"
+			"item_name"					"Primed Directive"
+			"item_type_name"			"Grenade Launcher"
+			"item_description"			"Fires grenades that stick to surfaces, exploding shortly after impact.
+Direct hits on players and buildings do not create explosions.
+
+All this fancy technology is a bloody headache..
+
+Model by: 'svdl'
+Weapon by: 'The One Of Wonders'"
+			"item_logname"				"techtrap_launcher"
+			"item_iconname"				"techtrap_launcher"
+			"image_inventory"			"backpack/weapons/c_models/c_techlauncher/c_techlauncher"
+			"model_world"				"models/weapons/c_models/c_techlauncher/c_techlauncher.mdl"
+			"model_player"				"models/weapons/c_models/c_techlauncher/c_techlauncher.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"demoman"				"1"
+			}
+			"static_attrs"
+			{																		
+				"override projectile type"				 "30"
+			}
+			"attributes"																	
+			{
+			    "provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
+			    "voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"3"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"1.33"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"effectbar_recharge_rate"
+					"value"				"0.3"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.85"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"1.25"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.125"
+				}
+				"crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				"custom projectile model"
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/c_models/c_techlauncher/shellprojectile.mdl"
+				}
+				"rocket limited lifetime"														
+				{
+					"attribute_class"	"rocket_lifetime"
+					"value"				"0.75"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_TrenchLauncher.Fire"
+				"sound_burst"			"Weapon_TrenchLauncher.FireCrit"
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}	
+//-------------------------------------
+//-------------------------------------
+// FIRE SHOTGUN PRIMARY -- 9178
+//-------------------------------------
+//-------------------------------------	
+		"9178"
+		{
+			"name"						"TF_WEAPON_SHOTGUN_FIRESPRAY"
+			"prefab"					"weapon_shotgun"
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"                 "secondary"
+			"item_class"				"tf_weapon_shotgun_primary"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"item_quality"				"rarity2"
+
+			"propername"				"1"
+			"item_name"					"Stainless Scorcher"
+			"item_type_name"			"Incendiary Shotgun"
+			"item_description"			"Heatsink: 50% damage penalty against burning players
+Weapon has limited range.
+
+You just gotta hold the trigger and let it go, you know?
+
+Model by: 'IteGood'
+Weapon by: 'The One Of Wonders'"
+			"item_logname" 				"stainless_shotgun"
+			"item_iconname"				"stainless_shotgun"
+			"image_inventory"			"backpack/weapons/c_models/c_stainless_shotgun/c_stainless_shotgun"
+			"model_world"				"models/weapons/c_models/c_stainless_shotgun/c_stainless_shotgun.mdl"
+			"model_player"				"models/weapons/c_models/c_stainless_shotgun/c_stainless_shotgun.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"pyro"					"1"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt02"						
+			}
+			"attributes"
+			{
+			    "provide on active"													
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"Set DamageType Ignite"												
+				{
+					"attribute_class"	"set_dmgtype_ignite"
+					"value" 			"1"
+				}
+				"heal on afterburn"
+				{
+					"attribute_class"	"add_burn_heals"
+					"value" 			"5"
+				}
+                "weapon burn dmg increased"
+				{
+					"attribute_class"	"mult_wpn_burndmg"
+					"value" 			"1.25"
+				}					
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value" 			"1.6"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"0.85"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"1.66666666667"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"0.75"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"0.75"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"1.8"
+				}
+				"weapon burn time reduced"
+				{
+					"attribute_class"	"mult_wpn_burntime"
+					"value"				"0.5"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+                "voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg_vs_burning"
+					"value"				"0.5"
+				}
+                "voice pitch scale"
+				{
+					"attribute_class"	"mult_projectile_range"
+					"value"				"0.0666666666666666667"
+				}				
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_SparkShot.Shoot"
+				"sound_burst"			"Weapon_SparkShot.ShootCrit"
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}
+//----------------------------
+//----------------------------
+//--NAILGUN BURSTER - 9179--
+//----------------------------
+//----------------------------
+		"9179"
+		{
+			"name"						"TF_WEAPON_BURSTER_NAILGUN"							
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"                 "primary"
+			"item_class"				"tf_weapon_nailgun"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"item_quality"				"rarity2"
+
+			"propername"				"1"
+			"item_name"					"Staple Burster"
+			"item_type_name"			"Nail Gun"
+			"item_description"			"Fires rapid 5-round bursts of nails
+
+I'm gonna make a pin cushion out of you, chucklehead!
+
+Model by: 'svdl'
+Weapon by: 'The One Of Wonders'"
+			"item_logname"				"burstnailgun_scout"
+			"item_iconname"				"burstnailgun_scout"
+			"image_inventory"			"backpack/weapons/c_models/c_nailgun_burst/c_nailgun_burst"
+			"model_world"				"models/weapons/c_models/c_nailgun_burst/c_nailgun_burst.mdl"
+			"model_player"				"models/weapons/c_models/c_nailgun_burst/c_nailgun_burst.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"scout"					"primary"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt01_v3"						
+			}
+			"attributes"
+			{
+			    "crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.2"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"0.4"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.5"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.5"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.76"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_NailgunMetal.Single"
+				"sound_burst"			"Weapon_NailgunMetal.SingleCrit"
+				"sound_empty"			"Null"
+				"sound_reload"			"Null"
+				"animation_replacement"
+                {
+					"ACT_VM_RELOAD_START"     "ACT_VM_IDLE_EMPTY"
+					"ACT_VM_RELOAD"           "ACT_VM_IDLE_EMPTY"
+					"ACT_VM_RELOAD_FINISH"    "ACT_VM_IDLE_EMPTY"
+					
+					"ACT_MP_RELOAD_STAND_PRIMARY"              "ACT_MP_STAND_IDLE"
+	                "ACT_MP_RELOAD_STAND_PRIMARY_LOOP"         "ACT_MP_STAND_IDLE"
+	                "ACT_MP_RELOAD_STAND_PRIMARY_END"          "ACT_MP_STAND_IDLE"
+					"ACT_MP_RELOAD_CROUCH_PRIMARY"             "ACT_MP_CROUCH_IDLE"
+	                "ACT_MP_RELOAD_CROUCH_PRIMARY_LOOP"        "ACT_MP_CROUCH_IDLE"
+	                "ACT_MP_RELOAD_CROUCH_PRIMARY_END"         "ACT_MP_CROUCH_IDLE"
+					"ACT_MP_RELOAD_SWIM_PRIMARY"               "ACT_MP_SWIM"
+	                "ACT_MP_RELOAD_SWIM_PRIMARY_LOOP"          "ACT_MP_SWIM"
+	                "ACT_MP_RELOAD_SWIM_PRIMARY_END"           "ACT_MP_SWIM"
+	                "ACT_MP_RELOAD_AIRWALK_PRIMARY"            "ACT_MP_AIRWALK"
+	                "ACT_MP_RELOAD_AIRWALK_PRIMARY_LOOP"       "ACT_MP_AIRWALK"
+	                "ACT_MP_RELOAD_AIRWALK_PRIMARY_END"        "ACT_MP_AIRWALK"
+                }
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}	
+//----------------------
+//----------------------
+//--DEMO KNIFE- 9180---
+//----------------------
+//----------------------
+		"9180"
+		{
+			"name"						"TF_WEAPON_DEMO_TRENCHKNIFE"
+			"prefab"					"weapon_bottle"											
+			"show_in_armory"			"1"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			"item_name"					"The Trench Shank"
+			"item_type_name"			"Knife"
+			"item_description"			"
+Broken bottles may be sharp, but this is sharper!
+
+Model by: 'CoBalt'
+Weapon by: 'The One Of Wonders'"
+			"item_logname"				"trench_knife"
+			"item_iconname"				"trench_knife"
+			"image_inventory"			"backpack/weapons/c_models/c_trenchknife/c_trenchknife"
+			"model_world"				"models/weapons/c_models/c_trenchknife/c_trenchknife.mdl"
+			"model_player"				"models/weapons/c_models/c_trenchknife/c_trenchknife.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"demoman"				"1"
+			}
+			"attributes"
+			{
+			    "provide on active"													
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"move speed bonus"															
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"1.15"
+				}
+				"damage bonus"															
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.15"
+				}
+				"fire rate bonus"															
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.9"
+				}
+				"dmg taken increased"															
+				{
+					"attribute_class"	"mult_dmgtaken"
+					"value"				"1.15"
+				}
+				"mark self on miss"															
+				{
+					"attribute_class"	"self_mark_for_death_on_miss"
+					"value"				"3"
+				}
+			    "crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+			}
+			"visuals"																			
+			{
+				"sound_melee_miss"		"Weapon_Knife.Miss"
+				"sound_melee_hit"		"Weapon_Club.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_Club.HitWorld"
+				"sound_burst"			"Weapon_Knife.MissCrit"
+			}
+			"mouse_pressed_sound"		"#ui/item_bottle_pickup.wav"
+			"drop_sound"				"#ui/item_bottle_drop.wav"
+		}
+//-------------------------------
+//-------------------------------
+//--SOLDIER KNIFE - 9181-- 
+//-------------------------------
+//-------------------------------
+		"9181"
+		{
+			"name"						"TF_WEAPON_SOLDIER_BOWIEKNIFE"
+			"prefab"					"weapon_shovel"
+			"show_in_armory"			"1"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			"item_name"					"Maggot Mutilator"
+			"item_type_name"			"Knife"
+			"item_description"			"
+No animal, man or magical monstrosity is strong enough to survive this knife, son!
+
+Model by: 'Petachepas'
+Weapon by: 'The One Of Wonders'"
+			"item_logname"				"ww2_bowie"
+			"item_iconname"				"ww2_bowie"
+			"image_inventory" 			"backpack/weapons/c_models/c_ww2_bowie/c_ww2_bowie"
+			"model_world"				"models/weapons/c_models/c_ww2_bowie/c_ww2_bowie.mdl"
+			"model_player"				"models/weapons/c_models/c_ww2_bowie/c_ww2_bowie.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"soldier"				"1"
+			}
+            "attributes"
+            {
+			    "provide on active"													
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"move speed bonus"															
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"1.15"
+				}
+				"damage bonus"															
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.15"
+				}
+				"fire rate bonus"															
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.9"
+				}
+				"dmg taken increased"															
+				{
+					"attribute_class"	"mult_dmgtaken"
+					"value"				"1.15"
+				}
+				"mark self on miss"															
+				{
+					"attribute_class"	"self_mark_for_death_on_miss"
+					"value"				"3"
+				}
+                "crit mod disabled"
+                {
+                    "attribute_class"    "mult_crit_chance"
+                    "value"             "0"
+                }
+			}
+			"visuals"																			
+			{
+				"sound_melee_miss"		"Weapon_Knife.Miss"
+				"sound_melee_hit"		"Weapon_Club.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_Club.HitWorld"
+				"sound_burst"			"Weapon_Knife.MissCrit"
+			}
+			"mouse_pressed_sound"		"#ui/item_shovel_pickup.wav"
+			"drop_sound"				"#ui/item_shovel_drop.wav"
+		}
+//------------------------
+//------------------------
+//--CIV FUNNI GUN - 9182--
+//------------------------
+//------------------------
+		"9182"
+		{
+			"name"						"TF_WEAPON_LIBERATOR_CIVILIAN"
+			"prefab"					"weapon_umbrella"
+			"item_class"				"tf_weapon_revolver"
+			"show_in_armory"			"1"
+
+			"propername"				"1"
+			
+			"item_slot"					"melee"			
+			
+			"item_name"					"Lamplighter"
+			"item_type_name"			"Single Shot Disposable Pistol"
+			"item_description"			"Lucky Roll: Increased crit chance
+Civilian cannot handle firearms effectively
+
+Maybe if I use enough of them
+I might be able to sell them off
+for some actual money!
+
+Model by: 'ColonelBD'
+Animations by: 'deskpacito'
+Weapon by: 'Reagy'"
+			"item_logname"				"singleshot_civ"
+			"item_iconname"				"singleshot_civ"
+			"image_inventory"			"backpack/weapons/w_models/w_lamplighter"
+			"model_world"				"models/weapons/custom/w_models/w_lamplighter.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_lamplighter.mdl"
+			"extra_wearable"			"models/player/items/civ_bill.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"civilian"				"1"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt01"								// So he isn't posing strangely
+				"clip size penalty hidden"				"0.1"									// 1 shot
+				"hidden secondary max ammo penalty"		"1.5"									// 36 ammo in secondary!
+				"damage bonus"							"1.25"
+				"crit mod disabled hidden"				"5.0"
+//				"fire rate penalty hidden"				"0.8"									// Around 14% slower compared to the Shortstop
+//				"damage bonus hidden"					"0.10"
+//				"reload time increased hidden"			"0.9"									// Slightly faster reload, to match the Pistol's..?
+//				"fire rate penalty"						"1.2"
+//				"Reload time increased"					"1.25"
+				"min_viewmodel_offset"					"10 0 -11"
+			}
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_MP_ATTACK_STAND_MELEE"					"ACT_MP_GESTURE_FLINCH_CHEST"
+					"ACT_MP_ATTACK_CROUCH_MELEE"				"ACT_MP_GESTURE_FLINCH_CHEST"
+					"ACT_MP_ATTACK_SWIM_MELEE"					"ACT_MP_GESTURE_FLINCH_CHEST"
+				}
+				"sound_reload"			"Weapon_Pistol.WorldReload"
+				"muzzle_flash"			"muzzle_scattergun"								
+				"tracer_effect"			"bullet_scattergun_tracer01"					
+			}
+			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
+			"drop_sound"				"#ui/item_light_gun_drop.wav"
+		}
+//------------------------------
+//------------------------------
+//-- Traumahawk ----- 9183 -----
+//---v5.5.2 Weapon By Colrot ---
+//------------------------------
+//------------------------------
+		"9183"
+		{
+			"name"						"TF_WEAPON_AXWRENCH"
+			"prefab"					"weapon_fireaxe"
+			"item_class"				"tf_weapon_wrench"
+			"show_in_armory"			"1"
+            
+			"propername"				"1"														
+			"item_quality"				"rarity3"
+			"item_name"					"Traumahawk"
+			"item_type_name"			"Improvised Multi Tool"
+			"item_description"			"Does normal damage to buildings.
+Impostor among us: crits vs disguised players
+
+Fitting for some loose screws...
+
+Model By: 'spike nitros'
+Weapon By: 'Colrot'"
+			"item_logname"				"traumahawk"
+			"item_iconname"				"traumahawk"
+			"image_inventory"			"backpack\weapons\c_axwrench\c_axwrench"
+			"model_world"				"models\weapons\c_models\c_axwrench\c_axwrench.mdl"
+			"model_player"		    	"models\weapons\v_models\v_axwrench\v_axwrench.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"pyro"					"1"
+			}
+			"attributes"
+			{
+			     "provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"move speed bonus"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"1.20"
+				}
+				"damage applies to sappers"														
+				{
+					"attribute_class"	"set_dmg_apply_to_sapper"
+					"value"				"1"
+				}
+				"dmg bonus vs buildings hidden"                                                 
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"1.354"
+				}
+				"damage penalty"																
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.754"
+				}
+					"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.25"
+				}
+				 "crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+                "crit vs wet players hidden"				          // 8 (Disguising) + 16 (Disguised) = Anti-Spy Disguise conditions...												
+				{
+					"attribute_class"	"or_crit_vs_playercond"
+					"value" 			"24"
+				}
+				// Backend stuff
+				"voice pitch scale"																
+				{
+					"attribute_class"	"mult_repair_value"
+					"value"				"0.01"													
+				}
+				"ragdolls become ash"
+				{
+					"attribute_class"	"ragdolls_become_ash"
+					"value"				"1"
+				}
+			}
+			"visuals"
+			{
+				"sound_melee_miss"		"Weapon_FireAxe.Miss"
+				"sound_melee_hit"		"Weapon_Machete.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_FireAxe.HitWorld"
+				"sound_burst"			"Weapon_FireAxe.MissCrit"
+				"sound_special1"		"Weapon_FireAxe.HitWorld"								// This would be the Building clinking noise when you hit it with a melee. Changes it to be the same as hitting any other object.
+				"sound_special2"		"Weapon_FireAxe.HitWorld"
+			}
+			"mouse_pressed_sound"		"#ui/item_wood_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_wood_weapon_drop.wav"
+		}
+//------------------------
+//------------------------
+//--GARAND SLAM - 9184--
+//------------------------
+//------------------------
+		"9184"
+		{
+			"name"						"TF_WEAPON_GARANDSLAM"
+			"item_class"				"tf_weapon_scattergun"								
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"					"secondary"
+			
+			"item_quality"				"rarity3"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"propername"				"1"
+			"item_name"					"Garand Slam"
+			"item_type_name"			"Pump Action Rifle"
+			"item_description"			"This weapon has no damage falloff
+This weapon cannot blast jump
+
+Come on and slam!
+Welcome to the Nam!
+Wait no, wrong year
+
+Model by: 'Haau' 'kibbleknight'
+Animations by: 'Kylul'
+Weapon by: 'Reagy'"
+			"item_logname"				"garand_slam"
+			"item_iconname"				"garand_slam"
+			"image_inventory"			"backpack/weapons/w_models/w_garandslam"
+			"model_world"				"models/weapons/custom/w_models/w_garandslam.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_garandslam.mdl"
+			"extra_wearable"			"models/player/items/set_generalformals.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"soldier"				"1"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt02_v1"					
+//				"hidden primary max ammo bonus"			"0.63"
+				"min_viewmodel_offset"					"7 -6 -5"						
+			}
+			"attributes"
+			{
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"4"
+				}
+				"clip size bonus"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"1.4"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.0"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.5"
+				}
+				"no damage falloff over distance"
+				{
+					"attribute_class"	"mod_no_dmg_falloff"
+					"value"				"1"
+				}
+				"damage penalty"																
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.15"
+				}
+				"crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+			}
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"hat"				"1"													
+				}
+				"sound_empty"			"Weapon_Null"										
+				"sound_single_shot"		"Weapon_SuperShotGun.Single"
+				"sound_burst"			"Weapon_SuperShotGun.SingleCrit"
+				"sound_reload"			"Weapon_ShotgunGarand.WorldReload"
+				"sound_special1"		"Weapon_Null"							
+				"animation_replacement"
+				{
+					//The Attacking Animations
+					"ACT_MP_ATTACK_STAND_SECONDARY"				"ACT_MP_ATTACK_STAND_PRIMARY"
+					"ACT_MP_ATTACK_CROUCH_SECONDARY"			"ACT_MP_ATTACK_CROUCH_PRIMARY"
+					"ACT_MP_ATTACK_SWIM_SECONDARY"				"ACT_MP_ATTACK_SWIM_PRIMARY"
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}
+
+//------------------------
+//------------------------
+//--Remote Sap Test - 9185--
+//------------------------
+//------------------------
+		"9185"
+		{
+			"name"						"TF_WEAPON_BUILDER_SPY_TEST"
+			"prefab"					"weapon_sapper"
+			"item_class"				"tf_weapon_sapper"
+			"item_slot"					"building"
+
+			"image_inventory"			"backpack/weapons/w_models/w_sapper"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+"baseitem"					"1"
+
+			"show_in_armory"			"1"
+			"item_quality"				"rarity3"
+
+			"item_name"					"Intermission"
+			"item_type_name"			"Remote Sapper"
+			"item_description"			"Disables buildings for a short amount of time when thrown
+Drains cloak when in proximity
+
+Yeet Me: Press R to throw
+
+Model by: 'wowza'
+Weapon by: 'Reagy'"
+			"item_logname"				"intermission"
+			"item_iconname"				"intermission"
+			"model_world"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
+//			"model_player"				"models/weapons/v_models/v_remotesap/v_remotesap.mdl" Classic doesn't support custom viewmodels on sappers yet... apparently
+			"model_player"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"spy"				"1"
+			}
+			"attributes"
+			{
+				"sapper health penalty"											
+				{
+					"attribute_class"	"mult_sapper_health"
+					"value"				"0.25"
+				}
+			}
+		}		
 //--------------------------------------------------//
 //-- 		Fred's Fight Starters v0.3.1 		  --//
 // v5.3.7 Disabled	some items due to dupes etc		//
@@ -29275,9 +30606,7 @@ Weapon from: Fred's Fight Starters"
 		"20000"
 		{
 		}
-		
 	}
-	
 	"attributes"
 	{
 // Knockout Custom Attributes

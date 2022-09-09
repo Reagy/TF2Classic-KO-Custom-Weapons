@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\buildables\floral_defence_plugin\lucycharm\LucyCharm_lvl2b"
+	"$translucent" 1
+
+	"$lightwarptexture" "models\buildables\sentry1\Sentry1_lightwarp"
+
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.02 .02 .02]"
+}
