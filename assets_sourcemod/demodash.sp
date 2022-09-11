@@ -14,6 +14,8 @@
 #define DEFAULTMODE "0"
 #define DEFAULTCOOLDOWN "5.0"
 #define DEFAULTREADYSOUNDMODE "1"
+#define DEFAULTRESISTANCEMODE "1"
+#define DEFAULTPARTICLES "1"
 
 // ////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////
@@ -30,7 +32,7 @@ public Plugin myinfo =
 	name = "DemoDash",
 	author = "azzy",
 	description = "Dashing for All Demoman Secondary Slot Wearables",
-	version = "1.0",
+	version = "1.1",
 	url = ""
 }
 
@@ -41,6 +43,8 @@ Handle HeightConvar;
 Handle JumpModeConvar;
 Handle CooldownConvar;
 Handle ReadySoundConvar;
+Handle KnockbackResistanceConvar;
+Handle GlowConvar;
 
 bool InShieldDash[MAXPLAYERS+1];
 
@@ -51,10 +55,14 @@ public void OnPluginStart()
 	JumpModeConvar = CreateConVar("demodash_mode", DEFAULTMODE, "0 = fixed jump height, 1 = dynamic jump height based on X viewangle and jump force");
 	CooldownConvar = CreateConVar("demodash_cooldown", DEFAULTCOOLDOWN, "Cooldown between dashes");
 	ReadySoundConvar = CreateConVar("demodash_readysound", DEFAULTREADYSOUNDMODE, "play sound when dash recharges");
-
-
+	KnockbackResistanceConvar = CreateConVar("demodash_knockbackresistance", DEFAULTRESISTANCEMODE, "give knockback resistance during dash");
+	GlowConvar = CreateConVar("demodash_showparticles", DEFAULTPARTICLES, "give teleporter glow particles during charge");
+	
+	AddNormalSoundHook(Hook_EntitySound);
+	
 	HookEvent("player_death", OnPlayerDeath);
 	HookEvent("player_spawn", OnPlayerSpawn);
+
 	PrecacheSound(SOUND1);
 	PrecacheSound(SOUND2);
 	PrecacheSound(SOUND3);
@@ -63,19 +71,14 @@ public void OnPluginStart()
 
 public void OnClientDisconnect(int client)
 {
-	if(TimerHandle[client])
-	{
-		KillTimer(TimerHandle[client]);
-	}
+	ClearTimer(TimerHandle[client]);
 }
 
 void OnPlayerDeath(Event event, char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
-	if(TimerHandle[client])
-	{
-		KillTimer(TimerHandle[client]);
-	}
+	
+	ClearTimer(TimerHandle[client]);
 }
 
 void OnPlayerSpawn(Event event, char[] name, bool dontBroadcast)
@@ -155,6 +158,19 @@ void PlayDashSound(int client)
 	}
 }
 
+public Action Hook_EntitySound(int clients[MAXPLAYERS], int &numClients, char sample[PLATFORM_MAX_PATH], int &entity, int &channel, float &volume, int &level, int &pitch, int &flags, char soundEntry[PLATFORM_MAX_PATH], int &seed)
+{
+	if(StrContains(sample, SOUND1, false) >= 0 || StrContains(sample, SOUND2, false) >= 0 || StrContains(sample, SOUND2, false) >= 0)
+		if(IsClientInGame(entity) && IsPlayerAlive(entity))
+		{
+			if(GetConVarBool(GlowConvar))
+				TF2_AddCondition(entity, TFCond_TeleportedGlow, 2.0);
+
+			if(GetConVarBool(KnockbackResistanceConvar))
+				TF2_AddCondition(entity, TFCond_MegaHeal, 2.0);
+		}
+}
+
 stock bool IsValidEnt(int ent)
 {
     return ent > MaxClients && IsValidEntity(ent);
@@ -165,3 +181,12 @@ stock int GetWeaponIndex(int weapon)
     return IsValidEnt(weapon) ? GetEntProp(weapon, Prop_Send, "m_iItemDefinitionIndex"):-1;
 }
 
+
+stock void ClearTimer(Handle timer)
+{
+	if (timer != INVALID_HANDLE)
+	{
+		KillTimer(timer);
+		timer = INVALID_HANDLE;
+	}
+}
