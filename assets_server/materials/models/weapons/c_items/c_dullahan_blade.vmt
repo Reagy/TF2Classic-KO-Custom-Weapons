@@ -1,0 +1,32 @@
+"Unlitgeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_dullahan_blade"
+	"$surfaceprop"	"default"
+	"$additive"	1
+	"$model" 1
+	"$nodecal" "1"
+	"$nocull" 0	
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+
+	"Proxies"
+	{
+		"spy_invis"
+		{
+		}
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}
