@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V5.5.2
+// Knockout Custom Weapons V5.5.3
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 + Tangerine Paint & Grunt's Weapon Addons V2
 // Adoptions taken from Renaissance Revival V1 by Yakibomb
@@ -9817,10 +9817,104 @@ Weapon by: 'Reagy'"
 // V5.2 New weapon, fires big rolly boi
 // V5.3.1 Halved recharge time
 // V5.3.5 Removed drawspeed penalties
+// V5.5.3 BACK BABY
 //--------------------------
 //--------------------------
 		"7047"
 		{
+			"name"						"TF_WEAPON_HAGIS"
+			"prefab"					"weapon_grenade_launcher"
+			"item_class"				"tf_weapon_grenade_mirv"
+			"item_slot"					"secondary"
+			"show_in_armory"			"1"
+
+			"propername"				"1"
+			"item_name"					"H.A.G.I.S"
+			"item_type_name"			"#TF_Weapon_GrenadeLauncher"
+			"item_description"			"
+Ka-boom!
+
+Sounds by: 'Sevan'
+Model by: 'Linko'
+Projectile by: 'Jack112'
+Weapon by: 'Reagy'"
+			"item_logname"				"hagis"
+			"item_iconname"				"hagis"
+			"image_inventory"			"backpack/weapons/c_models/c_mirvgrenadelauncher_new"	
+			"model_world"				"models/weapons/custom/c_models/c_mirvgrenadelauncher.mdl"
+			"model_player"				"models/weapons/custom/c_models/c_mirvgrenadelauncher.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"demoman"				"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -9"
+//				"override projectile type"				"3"
+			}
+			"attributes"
+			{
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.15"
+				}
+				"blast radius increased"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"1.35"
+				}
+				"maxammo grenades1 increased"
+				{
+					"attribute_class"	"mult_maxammo_grenades1"
+					"value" 			"3"
+				}
+				"fire rate penalty"																
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"6"
+				}
+				"blast dmg to self increased"
+				{
+					"attribute_class"	"blast_dmg_to_self"
+					"value"				"2.0" 
+				}
+				"reload time increased"	
+				{
+					"attribute_class"	"effectbar_recharge_rate"
+					"value"				"2.5"
+				}
+                "crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}				
+//				"single wep holster time increased"
+//				{
+//					"attribute_class"	"mult_switch_from_wep_deploy_time"
+//					"value" 			"2.0"
+//				}
+//				"deploy time increased"
+//				{
+//					"attribute_class"	"mult_deploy_time"
+//					"value" 			"2.0"
+//				}
+				"custom projectile model"
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/custom/c_models/c_mirvgrenadelauncher_grenade.mdl"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_Hagis.Shoot"
+				"sound_burst"			"Weapon_Hagis.ShootCrit"
+				"sound_reload"			"Weapon_GrenadeLauncher.WorldReload"
+				"sound_special1"		"Weapon_Hagis.Explode"
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //--------------------------
 //--------------------------
@@ -13746,21 +13840,18 @@ Weapon by: 'Majro'"
 				"hidden secondary max ammo penalty"	//"maxammo primary increased" Christ almighty, it uses your ammo reserve as metal. Why?!
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				6.25
+					"value"				"6.25"
 				}
-				
 				"mod ammo per shot" //So I have to load up 10 shots every time to shoot 10 shots.
 				{
 					"attribute_class"	"mod_ammo_per_shot"
 					"value"				"20"
 				}
-				
 				"mod use metal ammo type"			//But it needs a metal increase to works, not a primary ammo increase! What?!
 				{
 					"attribute_class"	"mod_use_metal_ammo_type"
 					"value"				"1"
 				}
-				
 				"scattergun no reload single" //Why can't I just shoot 10 of my reserve ammo instead?!?!?
 				{
 					"attribute_class"	"set_scattergun_no_reload_single"
@@ -13777,15 +13868,11 @@ Weapon by: 'Majro'"
 					"attribute_class"	"mult_reload_time" //Well this IS meant to make it look like it needs no reloading.
 					"value"				"0.1"
 				}
-				
 				"hidden secondary max ammo penalty"	//"fire rate bonus" This is to match the shot speed of the stock shotgun. I hope.
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"0.9"
 				}
-				
-				
-				
 			}
 			"visuals" //These are TF2 stock sounds so they need to be added I reckon.
 			{
@@ -18810,11 +18897,13 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			
 			"item_name"					"Kriss Kutter"
 			"item_type_name"			"#TF_Weapon_SMG"
-			"item_description"			"
+			"item_description"			"Minor Critical Cripple: Deals mini-critical damage to crit-boosted players
+
 'This is just gettin' started'
 
 Model by: 'Choev'
-Weapon from: Tangerine Paint and Grunt's Weapon Addons"
+Weapon from: Tangerine Paint and Grunt's Weapon Addons
+Edited by: 'Reagy'"
 			"item_logname"				"kriss_vector"
 			"item_iconname"				"smg"
 			"image_inventory"			"backpack/weapons/c_models/c_viper/c_viper"
@@ -18830,28 +18919,39 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.85"
+					"value" 			"0.65"
 				}
-				"clip size bonus"																// 40
+				"clip size bonus"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"1.6"
+					"value"				"1.2"
 				}
-				"maxammo secondary increased"
+				"Reload time decreased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"0.65"
+				}
+				"maxammo secondary reduced"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
-					"value" 			"1.6"
+					"value" 			"0.8"
 				}
-				"damage penalty"																// 9
+				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.83"
+					"value"				"0.5"
 				}
 				"spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"2.25"
+					"value"				"2.45"
 				}
+				"crit mod disabled"													
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				// Add the crit magic via plugin
 			}
 			"visuals"
 			{
@@ -29506,6 +29606,7 @@ Weapon by: 'The One Of Wonders'"
 //------------------
 //------------------
 //--ROBOT WRENCH - 9175--
+// V5.3.3 Building mult now matches plugin, 600hp across all buildings
 //------------------
 //------------------
 		"9175"
@@ -29542,7 +29643,7 @@ Sentry replacement by: 'Pyanodon'"
 			    "engy building health bonus"
 				{
 					"attribute_class"	"mult_engy_building_health"
-					"value" 			"1.3333333333333333"
+					"value" 			"2.78"
 				}
 				"fire rate penalty"
 				{
@@ -29676,7 +29777,8 @@ Weapon by: 'The One Of Wonders'"
 		"9177"
 		{
 			"name"						"TF_WEAPON_TRAP_LAUNCHER"							
-			"item_class"                "tf_weapon_grenade_mirv"
+//			"item_class"                "tf_weapon_grenade_mirv"
+			"prefab"					"weapon_stickybomb_launcher"
 			"show_in_armory"			"1"
 
 			"item_quality"				"rarity2"
@@ -29688,10 +29790,8 @@ Weapon by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_name"					"Primed Directive"
-			"item_type_name"			"Grenade Launcher"
-			"item_description"			"Fires grenades that stick to surfaces, exploding shortly after impact.
-Direct hits on players and buildings do not create explosions.
-
+//			"item_type_name"			"Grenade Launcher"
+			"item_description"			"
 All this fancy technology is a bloody headache..
 
 Model by: 'svdl'
@@ -29708,7 +29808,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{																		
-				"override projectile type"				 "30"
+//				"override projectile type"				 "30"
 			}
 			"attributes"																	
 			{
@@ -29717,30 +29817,35 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"provide_on_active"
 					"value"				"1"
 				}
-			    "voice pitch scale"
+				"dmg bonus vs buildings"
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
 					"value"				"2.5"
 				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"0.6"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.3"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.5"
-				}
-				"voice pitch scale"
+//				"voice pitch scale"
+//				{
+//					"attribute_class"	"mult_projectile_speed"
+//					"value"				"0.6"
+//				}
+//				"voice pitch scale"
+//				{
+//					"attribute_class"	"effectbar_recharge_rate"
+//					"value"				"0.3"
+//				}
+				"Blast radius increased"
 				{
 					"attribute_class"	"mult_explosion_radius"
 					"value"				"1.25"
+				}
+				"maxammo secondary reduced"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value" 			"0.5"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.5"
 				}
 				"voice pitch scale"
 				{
@@ -29757,11 +29862,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"custom_projectile_model"
 					"value"				"models/weapons/c_models/c_techlauncher/shellprojectile.mdl"
 				}
-				"rocket limited lifetime"														
-				{
-					"attribute_class"	"rocket_lifetime"
-					"value"				"0.75"
-				}
+//				"rocket limited lifetime"														
+//				{
+//					"attribute_class"	"rocket_lifetime"
+//					"value"				"0.75"
+//				}
 			}
 			"visuals"
 			{
@@ -31888,9 +31993,132 @@ Weapon by: 'The One Of Wonders'"
 					"value"				"0"
 				}
 			}
-			"mouse_pressed_sound"		"#ui/item_bottle_pickup.wav"
-			"drop_sound"				"#ui/item_bottle_drop.wav"
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}	
+//----------------------
+//----------------------
+//--BFG LOL- 9201---
+//----------------------
+//----------------------
+		"9201"
+		{
+			"name"						"TF_WEAPON_BFG_9000"
+			"prefab"					"weapon_rocketlauncher"
+			"item_class"				"tf_weapon_compound_bow"
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"					"primary"
+
+			"propername"				"1"
+			"item_name"					"BFG 9000"
+			"item_type_name"			"Bio Force Gun"
+			"item_description"			"
+(Ominous Music Playing)
+
+Model by: 'ZombiePlasticClock'
+Sounds by: 'Astonov' 'Sevan'
+Original Weapon by: 'Reagy'
+Repurposed by: 'Majro'
+Edited again by: 'Reagy'"
+			"item_logname"				"bfg_9000"
+			"item_iconname"				"bfg_9000"
+			"image_inventory"			"backpack/weapons/c_models/c_bfg/c_bfg.mdl"
+			"model_world"				"models/weapons/c_models/c_bfg/c_bfg.mdl"
+			"model_player"				"models/weapons/v_models/v_bfg/v_bfg.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"soldier"				"1"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt01_v2"
+			}
+			"attributes"
+			{
+				"override projectile type"
+				{
+					"attribute_class"		"override_projectile_type"
+					"value"					"2"
+				}
+				"custom projectile model"
+				{
+					"attribute_class" 		"custom_projectile_model"
+					"value"					"models\weapons\w_models\w_bfg_projectile.mdl"
+				}
+				"centerfire projectile"
+				{
+					"attribute_class" 		"centerfire_projectile"
+					"value"					"1"
+				}
+				"damage bonus"
+				{
+					"attribute_class"		"mult_dmg"
+					"value"					"3.25" 
+				}
+				"Blast radius increased"
+				{
+					"attribute_class"		"mult_explosion_radius"
+					"value"					"1.25" 
+				}
+				"clip size penalty hidden"
+				{
+					"attribute_class"		"mult_clipsize"
+					"value"					"10" 
+				}
+				"Projectile speed decreased"
+				{
+					"attribute_class" 		"mult_projectile_speed"
+					"value"					"0.45"
+				}
+				"dmg penalty vs buildings"
+				{
+					"attribute_class"	 	"mult_dmg_vs_buildings"
+					"value"					"0.2" 
+				}
+				"blast dmg to self increased"
+				{
+					"attribute_class"		"blast_dmg_to_self"
+					"value"					"6.0" 
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	 	"mult_crit_chance"
+					"value"					"0" 
+				}
+				"hidden primary max ammo bonus"
+				{
+					"attribute_class"	 	"mult_maxammo_primary"
+					"value"					"0.25" 
+				}
+				"ragdolls become ash"
+				{
+					"attribute_class"		"ragdolls_become_ash"
+					"value"					"1" 
+				}
+				"scattergun no reload single"
+				{
+					"attribute_class"		 	"set_scattergun_no_reload_single"
+					"value"						"1" 
+				}
+			}
+			"visuals"
+			{
+				"animation_replacement" 													
+				{
+					"ACT_MP_DEPLOYED_IDLE"						"ACT_MP_STAND_PRIMARY"
+					"ACT_MP_DEPLOYED_PRIMARY"					"ACT_MP_RUN_PRIMARY"
+					"ACT_MP_DEPLOYED"							"ACT_MP_RUN_PRIMARY" 
+				}
+				"sound_reload"			"null"
+				"sound_single_shot"		"Weapon_bfg9000.Single"
+				"sound_burst"			"Weapon_bfg9000.Single"
+				"sound_special1"		"Weapon_bfg9000.Explode"
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}
 //--------------------------------------------------//
 //-- 		Fred's Fight Starters v0.3.1 		  --//
 // v5.3.7 Disabled	some items due to dupes etc		//
