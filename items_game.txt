@@ -3999,7 +3999,8 @@ Weapon from: New Old Weapons Pack"
 			"item_quality"				"rarity3"
 			"item_name"					"Combatant Directive"
 			"item_type_name"			"#TF_Weapon_RocketLauncher"
-			"item_description"			"Direct hits have no damage fall-off
+			"item_description"			"Guided Rocket: Alt fire to toggle guided rockets
+Direct hits have no damage fall-off
 
 The duty to serve is no regular duty, son! You must fight until you can fight no more!
 
@@ -21361,7 +21362,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_name"					"Maniac's Burster"
 			"item_type_name"			"Portable Rocket Pod"
-			"item_description"			"
+			"item_description"			"Guided Rocket: Alt fire to toggle guided rockets
+
 I bought this with no safety warranty! that means bad things for all of you!
 
 Model by: 'spike nitros'
