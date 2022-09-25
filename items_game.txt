@@ -28790,6 +28790,7 @@ Art asset by: 'ChemicalAlia'
 Weapon by: 'Reagy'"
 			"item_logname"				"royal_flush"
 			"item_iconname"				"royal_flush"
+			"flip_viewmodel"			"1"
 			"image_inventory"			"backpack/weapons/w_models/w_cards"
 			"model_world"				"models/weapons/w_models/w_cards/w_cards.mdl"			
 			"model_player"				"models/weapons/v_models/v_cards/v_cards.mdl"
