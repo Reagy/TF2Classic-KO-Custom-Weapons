@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture"		"backpack/weapons/c_models/c_sniper_ammobelt/c_sniper_ammobelt_large"
+	"$translucent"		"1"
+}
