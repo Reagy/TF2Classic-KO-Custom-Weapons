@@ -12568,3 +12568,261 @@
 	"volume"	".45"
 	"wave"		"weapons/garand_cock_back.wav"
 }
+// ------------------------------------------------------------------------------------ //
+// MAKESHIFT MINI
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_MakeshiftMinigun.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"	
+	"wave"		")weapons/gas_minigun_shoot_kocw.wav"
+}
+
+"Weapon_MakeshiftMinigun.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"	
+	"wave"		")weapons/gas_minigun_shoot_crit_kocw.wav"
+}
+
+"Weapon_MakeshiftMinigun.Spin"	
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		")weapons/gas_minigun_spin.wav"
+}
+
+"Weapon_MakeshiftMinigun.WindUp"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/gas_minigun_wind_up.wav"
+}
+"Weapon_MakeshiftMinigun.WindDown"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/gas_minigun_wind_down.wav"
+}
+"Weapon_MakeshiftMinigun.ClipEmpty"	
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		")weapons/gas_minigun_empty.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Terrorizer
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Terrorizer.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/terrorizer_shoot.wav"
+}
+
+"Weapon_Terrorize.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/terrorizer_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Rosemary
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Rosemary.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/rosemary_shoot.wav"
+}
+
+"Weapon_Rosemary.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/rosemary_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Fight Finisher 1911
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_1911.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/1911_shoot.wav"
+}
+
+"Weapon_1911.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/1911_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Judge Death
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_JudgeDeath.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/judgedeath_shoot.wav"
+}
+
+"Weapon_JudgeDeath.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/judgedeath_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Meatshot secondary
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_MeatShot.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/shortgun_shoot.wav"
+}
+
+"Weapon_MeatShot.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/shortgun_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Frag bomb launcher
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_FragBombLauncher.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/fragbomblauncher_shoot.wav"
+}
+
+"Weapon_FragBombLauncher.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/fragbomblauncher_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Combustion Cannon revival
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Explothrower.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/explothrower_shoot.wav"
+}
+
+"Weapon_Explothrower.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/explothrower_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// M29
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Dirty44Mag.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/m29_shoot.wav"
+}
+
+"Weapon_Dirty44Mag.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/m29_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Jungle Snipe
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_JungleShotgun.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/jungleshot_shoot.wav"
+}
+
+"Weapon_JungleShotgun.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/jungleshot_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Modern Snipe
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_ModernSnipe.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/modernsnipe_shoot.wav"
+}
+
+"Weapon_ModernSnipe.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/modernsnipe_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// China Lake
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_ConChinaLake.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/conchinalake_shoot.wav"
+}
+
+"Weapon_ConChinaLake.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/conchinalake_shoot_crit.wav"
+}
