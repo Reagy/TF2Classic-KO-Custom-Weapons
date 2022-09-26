@@ -1,0 +1,32 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\workshop\weapons\c_models\c_heavy_duty_sticky_launcher\c_heavy_duty_sticky_blue"
+	"$phong" "1"
+	"$phongtint"	"[.5 .5 1]"
+	"$envmap" "env_cubemap"	
+	"$envmaptint"	"[.3 .3 .3]"
+	"$basemapalphaenvmapmask" "1"
+	"$selfillum" "1"
+	"$phongexponent" "5"
+	"$phongboost" "3"	
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"			
+	"$phongfresnelranges"	"[.3 .5 3]"
+	"$halflambert" "1"
+	"$basemapalphaphongmask" "1"
+	$selfillummask "models\workshop\weapons\c_models\c_heavy_duty_sticky_launcher\c_heavy_duty_sticky_illum"
+	"$rimlight" "1"
+	"$rimlightexponent" "10"	
+	"$rimlightboost" "6"
+	
+"Proxies"
+	{
+
+"Sine"
+		{
+			"resultVar" $selfillumtint
+			"sinemin" .6
+			"sinemax" 2.1
+			"sineperiod" 3
+			}
+	}
+

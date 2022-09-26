@@ -1,0 +1,27 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\weapons\c_thunderhammer"
+		"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" ".5"	
+	"$lightwarptexture" "models/lightwarps/softened_weapon_lightwarp"
+	"$phongfresnelranges"	"[1.5 .5 3]"
+	"$halflambert" "1"
+
+	"$tempvar" "0"
+
+	"$basephongexponent" "20"
+	"$basephongboost" ".5"
+
+	"$commadd_phongexponent" "30"
+	"$commadd_phongboost" 	"22.5"
+	"$commweapon"		"0"
+
+	"$basemapalphaphongmask" "1"
+	
+	"$rimlight" "2"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" ".5"
+
+	"$glowcolor" "1"
+}

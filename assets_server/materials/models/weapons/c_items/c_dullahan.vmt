@@ -1,0 +1,44 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_dullahan"
+	"$basemapalphaphongmask" "1"
+	
+	
+//	"$phongtint" 			"[0.8 1 0.9]"
+	"$phong" "1"
+	"$phongexponent" "1"
+	"$phongboost" "0.5"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+//	"$lightwarptexture" "models\weapons\c_items\c_ambassador_lightwarp"
+	"$phongfresnelranges"	"[.75 .5 1]"
+
+	"$rimlight" "1"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" ".25"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}
+

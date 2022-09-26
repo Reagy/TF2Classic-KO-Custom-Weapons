@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_polar_iceaxe\c_polar_iceaxe_large"
+	$translucent 1
+}
