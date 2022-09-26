@@ -11559,7 +11559,7 @@ Weapon by: 'Reagy'"
 			"item_iconname"				"crucible_sword"
 			"image_inventory"			"backpack/weapons/w_models/w_crucible_longsword"
 			"model_world"				"models/weapons/custom/c_models/c_crucible_longsword.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_crucible_longsword.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_crucible_longsword.mdl"	
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -32759,6 +32759,7 @@ Edited again by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/c_models/c_bfg/c_bfg"
 			"model_world"				"models/weapons/c_models/c_bfg/c_bfg.mdl"
 			"model_player"				"models/weapons/v_models/v_bfg/v_bfg_new.mdl"
+		    "extra_wearable"			"models/player/items/custom/soldier/doomguy.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -32852,6 +32853,10 @@ Edited again by: 'Reagy'"
 				"sound_single_shot"		"Weapon_bfg9000.Single"
 				"sound_burst"			"Weapon_bfg9000.Single"
 				"sound_special1"		"Weapon_bfg9000.Explode"
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
