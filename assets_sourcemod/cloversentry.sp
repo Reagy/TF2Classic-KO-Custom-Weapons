@@ -3,7 +3,7 @@
 #include <sdktools>
 #define PLUGIN_VERSION "2.0"
 
-int g_heavySentryModels[4];
+int g_cloverSentryModels[4];
 int g_SentryModels[4];
 
 public Plugin myinfo =
@@ -55,9 +55,9 @@ void DownloadTable()
 	AddFileToDownloadsTable("materials/models/buildables/floral_defence_plugin/lucycharm/lucycharm_lvl2_green.vtf");
 	AddFileToDownloadsTable("materials/models/buildables/floral_defence_plugin/lucycharm/lucycharm_lvl3_green.vmt");
 
-	g_heavySentryModels[1] = PrecacheModel("models/buildables/sentry_clover1.mdl");
-	g_heavySentryModels[2] = PrecacheModel("models/buildables/sentry_clover2.mdl");
-	g_heavySentryModels[3] = PrecacheModel("models/buildables/sentry_clover3.mdl");
+	g_cloverSentryModels[1] = PrecacheModel("models/buildables/sentry_clover1.mdl");
+	g_cloverSentryModels[2] = PrecacheModel("models/buildables/sentry_clover2.mdl");
+	g_cloverSentryModels[3] = PrecacheModel("models/buildables/sentry_clover3.mdl");
 	
 	g_SentryModels[1] = PrecacheModel("models/buildables/sentry1.mdl")
 	g_SentryModels[2] = PrecacheModel("models/buildables/sentry2.mdl")
@@ -79,7 +79,7 @@ public Action Event_player_builtobject(Event event, const char[] name, bool dont
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				SetEntProp(ent, Prop_Send, "m_nModelIndexOverrides", g_heavySentryModels[level], _, i);
+				SetEntProp(ent, Prop_Send, "m_nModelIndexOverrides", g_cloverSentryModels[level], _, i);
 			}
 			SetEntProp(ent, Prop_Send, "m_iMaxHealth", 250)
 			SetEntProp(ent, Prop_Send, "m_iHealth", 250)
@@ -105,7 +105,7 @@ public Action Event_player_upgradedobject(Event event, const char[] name, bool d
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				SetEntProp(ent, Prop_Send, "m_nModelIndexOverrides", g_heavySentryModels[level], _, i);
+				SetEntProp(ent, Prop_Send, "m_nModelIndexOverrides", g_cloverSentryModels[level], _, i);
 			}
 			SetEntProp(ent, Prop_Send, "m_iMaxHealth", g_health)
 			SetEntProp(ent, Prop_Send, "m_iHealth", g_health)
