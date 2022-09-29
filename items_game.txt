@@ -12961,7 +12961,7 @@ Weapon by: 'Reagy'"
 
 			"propername"				"1"
 			"item_name"					"Assault and Battering"
-			"item_type_name"			"Riot Sheild"
+			"item_type_name"			"Riot Shield"
 			"item_logname"				"democop_shield"
 			"item_description"			"Mouse 2: Charge forward! (10 sec cooldown)
 
@@ -31608,6 +31608,10 @@ Weapon by: 'The One Of Wonders'"
 			"item_type_name"			"Medieval Shield"
 			"item_description"			"Mouse 2: Charge forward! (10 sec cooldown)
 
+Strong Defense: on hit with any of your weapons, gain damage resistance for 3 seconds
+
+Does not work with the Battle Axe or Tale of Tragedy.
+
 You are unable to use a Secondary Weapon while this item is equipped
   
 Model by: 'Mnemosynaut'
@@ -31633,11 +31637,21 @@ Wearable by: 'The One Of Wonders'"
 					"attribute_class"	"mult_player_movespeed"
 					"value"				"1.05"
 				}
+				"max health additive bonus"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value"				"25"
+				}
 				"allowed in medieval mode"
 				{
 					"attribute_class"	"allowed_in_medieval_mode"
 					"value"				"1"
 				}
+				"add condition on hit"																
+				{
+					"attribute_class"	"add_onhit_addcond_self"  
+					"value" 			"111 3"                   
+ 				}
 			}
 			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
 			"drop_sound"				"#ui/item_pack_drop.wav"
@@ -31697,7 +31711,7 @@ Weapon by: 'The One Of Wonders'"
 				"heal on kill"															
 				{
 					"attribute_class"	"heal_on_kill"
-					"value" 			"100"
+					"value" 			"50"
 				}
 				"damage bonus"
 				{
@@ -33528,7 +33542,92 @@ Weapon by: 'Colrot' and 'Mister Mann'"
 			"mouse_pressed_sound"		"#weapons/stand_pick.wav"
 			"drop_sound"				"#weapons/stand_drop.wav"
 		}
-		
+//--------------------------
+//--------------------------
+// MADNESS SIGNPOST - 9218
+//--------------------------
+//--------------------------
+		"9218"																			
+        {
+ 			"name"						"TF_WEAPON_MADNESS_SINGPOST"
+			"prefab"					"weapon_bottle"									
+			"show_in_armory"			"1"
+
+			"item_quality"				"rarity2"
+
+			"propername"				"1"
+			"item_name"					"Warning Sign"
+			"item_type_name"			"Modified sign-post"
+			"item_description"			"
+YA DON'T BLOODY KILL ME, I KILL YOU!
+  
+Model by: 'IteGood'
+Weapon by: 'The One Of Wonders'"
+			"item_logname"				"signpost_axe"
+			"item_iconname"				"signpost_axe"
+			"image_inventory"			"backpack/weapons/c_models/c_madness_signpost/c_madness_signpost"
+			"model_world"				"models/weapons/c_models/c_madness_signpost/c_madness_signpost.mdl"
+			"model_player"				"models/weapons/c_models/c_madness_signpost/c_madness_signpost.mdl"
+			"attach_to_hands"			"1"	
+			"used_by_classes"
+			{
+				"demoman"				"1"
+			}
+			"static_attrs"
+			{
+				"is_a_sword"							"72"								
+				"decapitate type"						"1"								
+				"melee range multiplier"				"1.2"							
+				"melee bounds multiplier"				"1.25"
+			}
+			"attributes"
+			{
+				"provide on active"													
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"damage bonus"															
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"1.9"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.9"
+				}
+				"move speed penalty"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"0.85"
+				}
+				"mark self on miss"															
+				{
+					"attribute_class"	"self_mark_for_death_on_miss"
+					"value"				"3"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+			}
+			"visuals"
+			{
+				"sound_melee_miss"		"Weapon_Sword.Swing"
+				"sound_melee_hit"		"Weapon_Sword.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_Sword.HitWorld"
+				"sound_burst"			"Weapon_Sword.SwingCrit"
+				"sound_special1"		"Weapon_Sword.HitHeads"
+				"sound_single_shot"		"Weapon_Sword.HitFlesh"
+				"sound_single_shot_npc"	"Weapon_Sword.HitWorld"
+				"sound_double_shot"		"Weapon_Sword.HitFlesh"
+				"sound_double_shot_npc"	"Weapon_Sword.HitWorld"
+			}
+			"mouse_pressed_sound"		"#ui/item_knife_large_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
+		}
 		
 //--------------------------------------------------//
 //-- 		Fred's Fight Starters v0.3.1 		  --//
