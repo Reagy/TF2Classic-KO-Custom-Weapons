@@ -1964,6 +1964,7 @@ Weapon from: New Old Weapons Pack"
 			"item_name"					"The Storage Backpack"
 			"item_type_name"			"Backpack"
 			"item_description"			"
+Adds 50 metal to your metal reserve
 Replaces your Shotgun
 You are unable to use a Primary Weapon while this item is equipped
 
@@ -1979,10 +1980,10 @@ Weapon from: New Old Weapons Pack"
 			"act_as_wearable"			"1"
 			"attributes"
 			{
-				"maxammo metal increased"														// 250 metal seems fair. 300 metal seemed like way too much.
+				"strange restriction type 1" //"maxammo metal increased"		// 250 metal seems fair. 300 metal seemed like way too much.
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				"1.5"
+					"value"				"50"
 				}
 				"move speed penalty"															// So you can't bugger off as fast
 				{
@@ -3584,10 +3585,10 @@ Weapon from: New Old Weapons Pack" 														// Have to put it here, since n
 					"attribute_class"	"mod_ammo_per_shot"
 					"value"				"2"
 				}
-				"voice pitch scale"
+				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				"1.6" 
+					"value"				"75" 
 				}
 			}
 			"visuals"
@@ -13840,15 +13841,11 @@ Weapon by: 'Majro'"
 
 			"attributes"
 			{
-				"provide on active"
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}	
-				"hidden secondary max ammo penalty"	//"maxammo primary increased" Christ almighty, it uses your ammo reserve as metal. Why?!
+	
+				"strange restriction type 1"	//"maxammo primary increased" Christ almighty, it uses your ammo reserve as metal. Why?!
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				6.25
+					"value"				"168"
 				}
 				
 				"mod ammo per shot" //So I have to load up 10 shots every time to shoot 10 shots.
@@ -15957,10 +15954,10 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //					"attribute_class"	"mult_reload_time"
 //					"value" 			"1.5"
 //				}
-				"voice pitch scale"
+				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				"1.6" 
+					"value"				"75" 
 				}
 			}
 			"visuals"
@@ -17941,6 +17938,7 @@ Modified by: 'Reagy'"
 			"item_name"					"PDA: Handy Partner"
 			"item_type_name"			"#TF_Weapon_PDA_Engineer"
 			"item_description"			"
+Adds 50 metal to your metal reserve
 Makes support buildings build faster and increases the Dispenser's range at the cost of reducing the Sentry's construction speed by 50%
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
@@ -17969,10 +17967,10 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"teleporter_build_rate_multiplier"
 					"value"				"2.25"
 				}
-				"maxammo metal increased"								
+				"strange restriction type 1"								
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				"1.25"
+					"value"				"75"
 				}
 				"maxammo primary reduced"								
 				{
@@ -20813,6 +20811,8 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_type_name"			"Robot"
 			"item_name"				"Geared Up Ghost"
 			"item_description"			"
+Adds 50 metal to your metal reserve
+
 Eyes up, mercenary.
 
 Wearable from: Tangerine Paint and Grunt's Weapon Addons"
@@ -20836,10 +20836,10 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"mult_maxammo_primary"
 					"value"				"1.5"
 				}
-				"maxammo metal increased"														// 250 metal seems fair. 300 metal seemed like way too much.
+				"strange restriction type 1"								
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				"1.25"
+					"value"				"50"
 				}
 				"allowed in medieval mode"
 				{
@@ -23786,7 +23786,7 @@ This weapon has a higher random critical hit chance
 
 You die instantly to any critical hit and deal increased close range damage.
 
-Your maximum metal count is halved.
+Your maximum metal count is reduced by 100.
 
 Once found in an english river, powerful feelings of atonement manifest from the weapon.
 
@@ -23841,10 +23841,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_clipsize"
 					"value"				"0.66666666666" 
 				}
-				"voice pitch scale"
+				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				"0.5" 
+					"value"				"-100" 
 				}
 			}
 			"visuals"
@@ -25286,11 +25286,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "provide on active"
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}	
+
 			    "crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -25326,10 +25322,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_use_metal_ammo_type"
 					"value"				"1"
 				}
-				"hidden secondary max ammo penalty"	
+				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				"1.6"
+					"value"				"75"
 				}
 				"scattergun no reload single"													
 				{
@@ -26784,6 +26780,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"Buildings are upgraded faster and cost less to build
 
 Buildings have 20% less health
+Your metal count is reduced by 90
 
 Well, looks like I'm the real Engineer around here.
 
@@ -26839,10 +26836,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_construction_value"
 					"value"				"0.15"
 				}
-				"maxammo metal reduced"
+				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				"0.55"
+					"value"				"-90"
 				}
 				"voice pitch scale"
 				{
