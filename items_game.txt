@@ -29286,8 +29286,8 @@ Model by: 'BenH'
 Wearable Model by: 'Coolchou Zhao'
 Wearable by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/player/items/engineer/augmentation_trench"
-			"model_world"				"models/weapons/c_models/c_augment_trench/c_augment_trench.mdl"
-			"model_player"				"models/weapons/c_models/c_augment_trench/c_augment_trench.mdl"
+			"model_world"				"models/weapons/c_models/c_augment_trench/c_augment_trench_new.mdl"
+			"model_player"				"models/weapons/c_models/c_augment_trench/c_augment_trench_new.mdl"
 			"attach_to_hands"			"1"
 			"extra_wearable"			"models/player/items/engineer/grapple_gauntlet/grapple_gauntlet.mdl"
 			"used_by_classes"
