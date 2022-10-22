@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_tfc_automaticrifle\c_tfc_automaticrifle_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+
+}

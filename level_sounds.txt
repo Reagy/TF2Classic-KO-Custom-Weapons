@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V5.5.3
+// Knockout Custom Weapons V5.5.4
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 & Tangerine Paint & Grunt's Weapon Addons V2
 // ------------------------------------------------------------------------------------ //
@@ -4562,7 +4562,7 @@
 
 "Weapon_Sword.Draw"
 {
-	"channel"	"CHAN_STATIC"
+	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"	"1"
 	"wave"		"weapons/draw_sword.wav"
@@ -8084,7 +8084,6 @@
 		"wave"		"weapons/smg_shoot.wav"
 		"wave"		"weapons/ak47_shoot.wav"
 		"wave"		"weapons/tommy_shoot.wav"
-		"wave"		"weapons/p90_shoot.wav"
 		"wave"		"weapons/conventional.wav"
 		"wave"		"weapons/doom_sniper_smg.wav"
 		"wave"		"weapons/pistol_shoot.wav"
@@ -8098,7 +8097,6 @@
 		"wave"		"weapons/smg_shoot_crit.wav"
 		"wave"		"weapons/ak47_shoot_crit.wav"
 		"wave"		"weapons/tommy_shoot_crit.wav"
-		"wave"		"weapons/p90_shoot_crit.wav"
 		"wave"		"weapons/conventional_crit.wav"
 		"wave"		"weapons/doom_sniper_smg_crit.wav"
 		"wave"		"weapons/pistol_shoot_crit.wav"
@@ -8947,48 +8945,6 @@
 	"soundlevel"	"SNDLVL_NORM"
 	"volume"	".5"
 	"wave"		")weapons/r870_reload.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
-// PDW
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_PDW.Single"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"0.5"
-	
-	"wave"		")weapons/p90_shoot.wav"
-}
-
-"Weapon_PDW.SingleCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"0.5"
-	
-	"wave"		")weapons/p90_shoot_crit.wav"
-}
-
-"Weapon_P90.Fire"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1"
-	"pitch"		"95, 100"
-	
-	"wave"		")weapons/p90_fire.wav"
-}
-
-"Weapon_P90.FireCrit"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1"
-	"pitch"		"95, 100"
-	
-	"wave"		")weapons/p90_fire_crit.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -12751,6 +12707,113 @@
 	"wave"		")weapons/explothrower_shoot_crit.wav"
 }
 // ------------------------------------------------------------------------------------ //
+// M29
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Dirty44Mag.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/m29_shoot.wav"
+}
+
+"Weapon_Dirty44Mag.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/m29_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Jungle Snipe
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_JungleShotgun.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/jungleshot_shoot.wav"
+}
+
+"Weapon_JungleShotgun.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/jungleshot_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Modern Snipe
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_ModernSnipe.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/modernsnipe_shoot.wav"
+}
+
+"Weapon_ModernSnipe.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/modernsnipe_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// China Lake
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_ConChinaLake.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/conchinalake_shoot.wav"
+}
+
+"Weapon_ConChinaLake.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/conchinalake_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Stand Proud
+// ------------------------------------------------------------------------------------ //
+
+
+"Weapon_Tsar.MissCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_64dB"
+	"volume"	"1"
+	"wave"		")weapons/stand_crit.wav"
+}
+
+"Weapon_Tsar.HitWorld"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1"
+	"wave"		")weapons/stand_hitworld.wav"
+}
+
+"Weapon_Tsar.HitFlesh"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"		".6"
+	"rndwave"
+	{
+		"wave"		")weapons/stand_hitflesh.wav"
+	}
+}
+// ------------------------------------------------------------------------------------ //
 // BIG FUCKING GUN 9000
 // ------------------------------------------------------------------------------------ //
 "Weapon_bfg9000.Single"
@@ -12801,7 +12864,6 @@
 // ------------------------------------------------------------------------------------ //
 // Hagis
 // ------------------------------------------------------------------------------------ //
-
 "Weapon_Hagis.Shoot"
 {
 	"channel"		"CHAN_WEAPON"
@@ -12822,4 +12884,24 @@
 	"soundlevel"	"SNDLVL_75dB"
 	"volume"		"1.0"
 	"wave"			")weapons/hagis_explode.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Sentry Pistol
+// ------------------------------------------------------------------------------------ //
+"Building_Sentrygun.FireCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/sentry_shoot_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// DISPLACER CANNON
+// ------------------------------------------------------------------------------------ //
+"Weapon_Displacer.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		"1.0"
+	"wave"			")weapons/displacer_fire.wav"
 }
