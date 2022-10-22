@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_touchup\c_touchup_large"
+	$translucent 1
+}

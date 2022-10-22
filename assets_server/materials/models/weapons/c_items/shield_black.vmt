@@ -1,0 +1,45 @@
+"VertexLitGeneric"
+{
+	$baseTexture "models/weapons/c_items/shield_black"
+
+//	"$envmap" "env_cubemap"
+//	"$envmaptint" "[.15 .15 .15]"
+//	"$basemapenvmapmask" "1"
+
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "2"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges" "[0.45 0.7 1]"
+	"$basemapalphaphongmask" "1"
+
+//	"$rimlight" "1"
+//	"$rimlightexponent" "1"	
+//	"$rimlightboost" "1"
+
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}
