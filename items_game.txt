@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V5.5.4
+// Knockout Custom Weapons V5.5.5
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 + Tangerine Paint & Grunt's Weapon Addons V2
 // Adoptions taken from Renaissance Revival V1 by Yakibomb
@@ -11836,6 +11836,7 @@ Weapon by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/w_models/w_fal"
 			"model_world"				"models/weapons/custom/w_models/w_fal.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_fal.mdl"
+			"extra_wearable" 			"models/player/items/medic_messenger_bag.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -15905,6 +15906,7 @@ Edited by: 'The One Of Wonders'"
 //--THE DISPLACER - 9033--
 // V5.1 Slight Nerf
 // V5.2 Buffed back lol, re-added the spread bonus and increased damage slightly
+// Plugin still active, add item to give minicrits and crits on projectile reflect, must use coilgun projectile
 //------------------------
 //------------------------
 		"9033"
@@ -17078,7 +17080,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //---------------------------------
 //---------------------------------
 		"9061"
-       {
+		{
             "name"						"TF_WEAPON_ARTILLERY_LAUNCHER"
             "prefab"					"weapon_grenade_launcher"
             "show_in_armory"			"1"

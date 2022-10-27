@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials/models/workshop/weapons/c_models/c_pitching_machine/c_pitching_machine.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models/workshop/weapons/c_models/c_pitching_machine/c_pitching_machine_green"
-	}
-}
