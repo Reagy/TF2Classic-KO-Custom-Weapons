@@ -1,20 +1,21 @@
 
 "VertexLitGeneric"
 {
+//Actually the outside, sorry.
 
-	"$basetexture" "models/player/shared/bone_white"
+	"$basetexture" "hud/gradient_orange"
 	"$bumpmap" "water/tfwater001_normal"
-	"$detail" "models/player/shared/green_uber"
-	"$detailblendfactor" "0.33"
+	"$detail" "models/player/shared/yellow_uber"
+	"$detailblendfactor" "0.05"
 	$detailblendmode 1
-	"$envmap" "effects/invun_green"
+	"$envmap" "effects/invun_yellow"
 	"$surfaceprop" "metal"
 	"$halflambert" "1"
 
 	"$selfillum" "1"
 	"$selfIllumFresnel" "1"
 	"$selfIllumFresnelMinMaxExp" "[0 18 13]" // 0.0 1.0 1.0 is the default
-
+	
 
 	"$phong" "1"
 	"$phongexponent"  "155"
