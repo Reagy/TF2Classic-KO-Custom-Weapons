@@ -16265,7 +16265,7 @@ Modified by: 'Reagy'"
 			"item_name"					"PDA: Handy Partner"
 			"item_type_name"			"#TF_Weapon_PDA_Engineer"
 			"item_description"			"
-Adds 50 metal to your metal reserve
+Adds 75 metal to your metal reserve
 Makes support buildings build faster and increases the Dispenser's range at the cost of reducing the Sentry's construction speed by 50%
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
