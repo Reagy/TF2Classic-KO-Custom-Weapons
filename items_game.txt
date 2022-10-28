@@ -30302,7 +30302,7 @@ Weapon by: 'Colrot' and 'Mister Mann'"
 				"heal on hit for rapidfire"
 				{
 					"attribute_class"	"add_onhit_addhealth"
-					"value"				"15"
+					"value"				"10"
 				}
 				"add condition on hit"															
 				{
