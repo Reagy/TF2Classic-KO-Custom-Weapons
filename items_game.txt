@@ -6367,7 +6367,8 @@ Weapon by: 'Reagy'"
 			"item_class"				"tf_weapon_club"
 			"item_type_name"			"#TF_Weapon_Fists"
 			"item_name"					"Karate!"
-			"item_description"			"'Nothing personal, mate, I'm just better'
+			"item_description"			"
+Nothing personal, mate, I'm just better.
   
 Model by: 'FiveEyes'
 Weapon by: 'Reagy'"
@@ -6391,6 +6392,19 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"		"10 0 -7"
+			}
+			"attributes"
+			{
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"0.5"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"0.80"
+				}
 			}
 			"visuals"
 			{
@@ -8575,6 +8589,7 @@ Weapon by: 'Reagy'"
 //--------------------------
 //--------------------------
 // The Fortunate Son / Soldier M4
+// V5.5.5 Reverted back to nailgun from feedback
 //--------------------------
 //--------------------------
 		"7043"
@@ -8601,10 +8616,8 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"anim_slot"					"secondary"
 			"image_inventory"			"backpack/weapons/w_models/w_assaultrifle"
-//			"model_world"				"models/weapons/custom/w_models/w_m4_soldier.mdl"
-//			"model_player"				"models/weapons/custom/v_models/v_m4_soldier.mdl"
 			"model_world"				"models/weapons/custom/w_models/w_assault_rifle_soldier.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_assault_rifle_soldier.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_assault_rifle_soldier.mdl" // Needs viewmodel redoing to change fps again
 			"extra_wearable"			"models/player/items/custom/soldier/going_commando.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -8613,10 +8626,6 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"
 			{
-				"damage bonus hidden"					"1.6"
-				"clip size penalty hidden"				"1.2"
-				"fire rate penalty hidden"				"0.8"			
-				
 				"override projectile type" 				"1"
 				"hidden primary max ammo bonus"			"0.96"
 				"class select override vcd"				"taunt02_v1"
@@ -8632,7 +8641,12 @@ Weapon by: 'Reagy'"
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.33"
+					"value"				"1.13"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.65"
 				}
 				"clip size bonus"
 				{
@@ -8647,13 +8661,15 @@ Weapon by: 'Reagy'"
                 "Reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"2.1"
+					"value"				"1.15"
 				}
                 "voice pitch scale"
 				{
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.5"
 				}
+// This makes it far too strong, do we really want 5.3.9 M4 again?
+// Maybe????			
                 "no damage falloff over distance"
 				{
 					"attribute_class"	"mod_no_dmg_falloff"
@@ -11610,13 +11626,13 @@ Weapon by: 'The One Of Wonders'"
 // v5.3.6 New weapon for Soldier, Sniper and Medic
 // V5.3.7 Updated damages for Sniper (15% Penalty) and Medic (10% Bonus)
 // V5.3.8 Modified a few properties to make it stand out more from Medic and Sniper's FAL
+// V5.5.5 Reverted soldier FAL due to feedback
 //--------------------------
 //--------------------------
 		"7101"
 		{
 			"name"						"TF_WEAPON_FAL_SOLDIER"
-//			"item_class"				"tf_weapon_nailgun"	
-			"item_class"				"tf_weapon_shotgun_primary"							
+			"item_class"				"tf_weapon_nailgun"							
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
 			"anim_slot"					"secondary"
@@ -11630,8 +11646,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"fal"
 			"item_type_name"			"Battle Rifle"
 			"item_name"					"Right Arm Of the Free World"
-			"item_description"			"This weapon has high recoil
-
+			"item_description"			"
 Go play your pinko chess game with the Devil, Commie!
 
 Model by: 'Nanodesu64' 'lolripk'
@@ -11639,7 +11654,7 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/w_models/w_fal"
 			"model_world"				"models/weapons/custom/w_models/w_fal.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_fal_soldier.mdl" // Make a soldier specific one with a faster animation fps
+			"model_player"				"models/weapons/custom/v_models/v_fal.mdl"
 			"extra_wearable"			"models/player/items/custom/soldier/going_commando.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -11648,15 +11663,8 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"
 			{
-				"UNIQUE bullets per shot bonus HIDDEN"	"0.1"
-				"scattergun no reload single"			"1"
-				"damage bonus hidden"					"3.11111111111"
-				"clip size penalty hidden"				"3.25"
-				"fire rate penalty hidden"				"0.2"
-				"hidden primary max ammo bonus"			"1.9"
-				
 				"override projectile type" 				"1"
-//				"hidden primary max ammo bonus"			"0.96"
+				"hidden primary max ammo bonus"			"0.96"
 				"class select override vcd"				"taunt02_v2"
 				"min_viewmodel_offset"					"5 0 -10"
 			}
@@ -11670,12 +11678,12 @@ Weapon by: 'Reagy'"
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.8"
+					"value"				"1.85"
 				}
 				"weapon spread bonus"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.33"
+					"value"				"0.75"
 				}
 				"clip size penalty"
 				{
@@ -11690,7 +11698,7 @@ Weapon by: 'Reagy'"
                 "Reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"3.8"
+					"value"				"1.15"
 				}					
 			}
 			"visuals"
@@ -11723,9 +11731,9 @@ Weapon by: 'Reagy'"
 			"item_iconname"				"fal"
 			"item_type_name"			"Battle Rifle"
 			"item_name"					"Right Arm Of the Free World"
-			"item_description"			"This weapon has high recoil
+			"item_description"			"Match-Grade Rounds: This weapon has high recoil
 
-Go play your pinko chess game with the Devil, Commie!
+Now that is the Queen's birthday right there.
 
 Model by: 'Nanodesu64' 'lolripk'
 Weapon by: 'Reagy'"
@@ -11733,6 +11741,7 @@ Weapon by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/w_models/w_fal"
 			"model_world"				"models/weapons/custom/w_models/w_fal.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_fal.mdl"
+			"extra_wearable"			"models/player/items/sniper/sniper_bill.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -11797,6 +11806,10 @@ Weapon by: 'Reagy'"
 			}
 			"visuals"																
 			{
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}
 				"animation_replacement"
 				{
 					"ACT_MP_STAND_SECONDARY"				"ACT_MP_STAND_PRIMARY"
@@ -15734,11 +15747,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_no_reload_display_only"
 					"value"				"1"
 				}
-				"damage bonus"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"1.4"
-				}
+//				"damage bonus"
+//				{
+//					"attribute_class"	"mult_dmg"
+//					"value"				"1.4" // This does too much damage, its a straight upgrade wtf wonder
+//				}
 				"Projectile speed increased"
 				{
 					"attribute_class"	"mult_projectile_speed"
@@ -15748,6 +15761,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.001"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.65"
 				}
 				"maxammo primary reduced"
 				{
@@ -18764,7 +18782,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"image_inventory"			"backpack/weapons/w_models/w_lr550"
 			"model_world"				"models/weapons/w_models/w_lr550_sniper.mdl"
 			"model_player"				"models/weapons/v_models/v_lr550_sniper.mdl"
-			"extra_wearable"			"models/player\items\sniper\sniper_bill.mdl"
+			"extra_wearable"			"models/player/items/sniper/sniper_bill.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -29058,6 +29076,11 @@ Wearable by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"add_health_regen"
 					"value"				"5"
+				}
+				"max health additive bonus" // This was widely requested to be added
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" 			"25"
 				}
 				"maxammo secondary increased"
 				{
