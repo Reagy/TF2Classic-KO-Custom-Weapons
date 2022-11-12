@@ -127,9 +127,10 @@
 			"show_in_armory"			"1"														// IMPORTANT IMPORTANT IMPORTANT!!! You NEED this for unlockables!!! Without this, it won't appear in your inventory to select!
 
 			"item_quality"				"rarity3"												// NEW As of 2.2.5 - a new-ish item quality! It's an off-lavender, not too dissimilar from Stock, and not as visually loud as the Yellow of Unique Quality
-			"item_name"					"The Crowbar" 											// The name of the item.
+			"item_name"					"Crowbar" 											// The name of the item.
 			"item_type_name"			"#TF_Weapon_Crowbar" 									// The kind of item it is, in very simplest terms! Probably the same as the name!
-			"item_description"			"Good for bashing a chucklehead's skull in.
+			"item_description"			"
+Good for bashing a chucklehead's skull in.
 
 Weapon from: New Old Weapons Pack"			// A funny description! Try to keep this short. It can be anything you want, but I'd try to stick with small quotes. Use TF2C's own descriptions as a style-guide.
 			"item_logname"				"crowbar"												// What you see pop up in the console! Probably just copy the internal name you set.
@@ -146,6 +147,24 @@ Weapon from: New Old Weapons Pack"			// A funny description! Try to keep this sh
 			{
 				"min_viewmodel_offset"					"5 0 -10"								// Just a fix to tidy up the viewmodels in Minimal Viewmodel mode! Otherwise they look kinda weird for some weapons - like these allclass melees!
 			}
+			"attributes"
+			{
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.75"
+				}
+				"dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"1.4"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.85"
+				}
+			}
 			"visuals"																			// This is just for consistency!
 			{
 				"sound_melee_miss"		"Weapon_Crowbar.Miss"
@@ -157,13 +176,14 @@ Weapon from: New Old Weapons Pack"			// A funny description! Try to keep this sh
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 		"3301"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_CROWBAR"
 			"prefab"					"weapon_shovel"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Crowbar"
+			"item_name"					"Crowbar"
 			"item_type_name"			"#TF_Weapon_Crowbar"
 			"item_description"			"For bashing supply-crates and anyone
 that dares try to steal them from me!
@@ -194,13 +214,14 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 		"3302"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_CROWBAR"
 			"prefab"					"weapon_fireaxe"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Crowbar"
+			"item_name"					"Crowbar"
 			"item_type_name"			"#TF_Weapon_Crowbar"
 			"item_description"			"
 Weapon from: New Old Weapons Pack"														// No description. Pyro's weapons don't have descriptions, generally, beside the to-the-point descriptive ones.
@@ -229,14 +250,15 @@ Weapon from: New Old Weapons Pack"														// No description. Pyro's weapon
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 		"3303"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_CROWBAR"
 			"prefab"					"weapon_bottle"
 			"item_class"				"tf_weapon_club"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Crowbar"
+			"item_name"					"Crowbar"
 			"item_type_name"			"#TF_Weapon_Crowbar"
 			"item_description"			"They come wide at me, this'll pry their
 eyes right out 'a their noggins!
@@ -272,13 +294,14 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 		"3304"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_CROWBAR"
 			"prefab"					"weapon_fists"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Crowbar"
+			"item_name"					"Crowbar"
 			"item_type_name"			"#TF_Weapon_Crowbar"
 			"item_description"			"Tiny little Crowbar is good for crushing
 tiny boxes and tiny heads.
@@ -322,10 +345,9 @@ Weapon from: New Old Weapons Pack"
 			"anim_slot"					"secondary"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Crowbar"
+			"item_name"					"Crowbar"
 			"item_type_name"			"#TF_Weapon_Crowbar"
-			"item_description"			"Functions identically to the Wrench
-
+			"item_description"			"
 A good ol' number for building construction!
 
 Weapon from: New Old Weapons Pack" 													// Take note of the Unique part at the end. If a weapon has an important function as a stock, it's good to clarify a weapon is a reskin of that.
@@ -342,6 +364,19 @@ Weapon from: New Old Weapons Pack" 													// Take note of the Unique part 
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"5 0 -10"
+			}
+			"attributes"
+			{
+				"dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"2.0"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.5"
+				}
 			}
 			"visuals"
 			{
@@ -361,13 +396,14 @@ Weapon from: New Old Weapons Pack" 													// Take note of the Unique part 
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 		"3306"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_CROWBAR"
 			"prefab"					"weapon_bonesaw"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Crowbar"
+			"item_name"					"Crowbar"
 			"item_type_name"			"#TF_Weapon_Crowbar"
 			"item_description"			"Truly, a good Doctor's weapon of choice!
 
@@ -397,13 +433,14 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 		"3307"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_CROWBAR"
 			"prefab"					"weapon_club"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Crowbar"
+			"item_name"					"Crowbar"
 			"item_type_name"			"#TF_Weapon_Crowbar"
 			"item_description"			"An ol' Crowbar is always handy in the field.
 
@@ -439,7 +476,7 @@ Weapon from: New Old Weapons Pack"
 			"show_in_armory"			"1"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Crowbar"
+			"item_name"					"Crowbar"
 			"item_type_name"			"#TF_Weapon_Crowbar"
 			"item_description"			"Functions identically to the Knife
 
@@ -472,13 +509,14 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 		"3309"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_CROWBAR"
 			"prefab"					"weapon_umbrella"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Crowbar"
+			"item_name"					"Crowbar"
 			"item_type_name"			"#TF_Weapon_Crowbar"
 			"item_description"			"Functions identically to the Umbrella
 
@@ -528,9 +566,10 @@ Weapon from: New Old Weapons Pack"
 			"show_in_armory"			"1"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Frying Pan"
+			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
-			"item_description"			"
+			"item_description"			"Greasy: Slows down target on hit for 2s
+
 Oh, what's the matter, you can't hear me? Here, lemme fix that, pal.
 
 Weapon from: New Old Weapons Pack"
@@ -555,6 +594,11 @@ Weapon from: New Old Weapons Pack"
 					"attribute_class"	"strange_restriction_type_1"							// This, in theory, means that it doesn't even frickin' do anything accidentally if they add in a Rage modifier (a-la Buff Banner)
 					"value"				"100"
 				}
+				"UNIQUE tranq on hit HIDDEN"														
+				{
+					"attribute_class"	"mod_tranq_onhit"
+					"value"				"2.0"
+				}
 			}
 			"visuals"
 			{
@@ -567,13 +611,14 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_metal_pot_drop.wav"
 		}
 		"3311"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_shovel"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Frying Pan"
+			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
 			"item_description"			"This Frying Pan has seen the
 horrors of War - and of spoiled soup!
@@ -603,14 +648,15 @@ Weapon from: New Old Weapons Pack"
 			"mouse_pressed_sound"		"#ui/item_metal_pot_pickup.wav"
 			"drop_sound"				"#ui/item_metal_pot_drop.wav"
 		}
+//		Remove this - V5.5.5
 		"3312"
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_fireaxe"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Frying Pan"
+			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
 			"item_description"			"
 
@@ -641,16 +687,17 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_metal_pot_drop.wav"
 		}
 		"3313"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_bottle"
 			"item_class"				"tf_weapon_club"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Frying Pan"
+			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
-			"item_description"			"The taste 'a bacon-grease is nary pleasant.
+			"item_description"			"taste 'a bacon-grease is nary pleasant.
 
 Weapon from: New Old Weapons Pack"
 			"item_logname"				"fryingpan"
@@ -683,13 +730,14 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_metal_pot_drop.wav"
 		}
 		"3314"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_fists"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Frying Pan"
+			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
 			"item_description"			"I have killed mother bear with this.
 I will kill tiny-baby men with this, too.
@@ -727,14 +775,15 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_metal_pot_drop.wav"
 		}
 		"3315"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_wrench"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"anim_slot"					"secondary"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Frying Pan"
+			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
 			"item_description"			"Functions identically to the Wrench
 
@@ -782,13 +831,14 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_metal_pot_drop.wav"
 		}
 		"3316"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_bonesaw"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Frying Pan"
+			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
 			"item_description"			"My Diagnosis: 'Chronic Acoustic Trauma'!
 
@@ -819,13 +869,14 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_metal_pot_drop.wav"
 		}
 		"3317"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_club"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Frying Pan"
+			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
 			"item_description"			"Must-have for cooking and bludgeoning
 in the great outdoors!
@@ -856,13 +907,14 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_metal_pot_drop.wav"
 		}
 		"3318"
+//		Remove this - V5.5.5
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_knife"											// YES, YOU CAN BACKSTAB WITH THIS!!
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Frying Pan"
+			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
 			"item_description"			"Functions identically to the Knife
 
@@ -901,9 +953,11 @@ Weapon from: New Old Weapons Pack"
 			"show_in_armory"			"1"
 
 			"item_quality"				"rarity3"
-			"item_name"					"The Frying Pan"
+			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
-			"item_description"			"Functions identically to the Umbrella
+			"item_description"			"Extra Greasy: Slows down target on hit for 5s
+
+Functions identically to the Umbrella
 
 When I'm having a fine breakfast one moment, and running for my life the next!
 
@@ -913,6 +967,7 @@ Weapon from: New Old Weapons Pack"
 			"image_inventory"			"backpack/player/items/all_class/all_pan"
 			"model_world"				"models/weapons/w_models/w_frying_pan_civilian.mdl"
 			"model_player"				"models/weapons/v_models/v_frying_pan_civilian.mdl"
+			"extra_wearable"			"models/player/items/civ_chef.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -929,6 +984,16 @@ Weapon from: New Old Weapons Pack"
 				{
 					"attribute_class"	"strange_restriction_type_1"
 					"value"				"100"
+				}
+				"UNIQUE tranq on hit HIDDEN"														
+				{
+					"attribute_class"	"mod_tranq_onhit"
+					"value"				"5.0"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.9"
 				}
 			}
 			"visuals"
@@ -1187,7 +1252,7 @@ Edited by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Jag"
+			"item_name"					"Jag"
 			"item_type_name"			"#TF_Weapon_Wrench"
 			"item_description"			"
 For when I ain't got the time to just sit back.
@@ -1247,7 +1312,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Original"
+			"item_name"					"Original"
 			"item_type_name"			"#TF_Weapon_RocketLauncher"
 			"item_description"			"Rockets are fired from the
 center of the screen
@@ -1420,7 +1485,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Tactical Retreat"
+			"item_name"					"Tactical Retreat"
 			"item_type_name"			"#TF_Weapon_Watch" //Speed Watch
 			"item_description"			"
 For when things get out of hand.
@@ -1485,7 +1550,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Killing Gloves of Boxing"
+			"item_name"					"Killing Gloves of Boxing"
 			"item_type_name"			"#TF_Weapon_Gloves"
 			"item_description"			"
 'I am going to kill you,
@@ -1543,7 +1608,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Gloves of Running Urgently"
+			"item_name"					"Gloves of Running Urgently"
 			"item_type_name"			"#TF_Weapon_Gloves"
 			"item_description"			"
 Tiny cowards think they can run from me?
@@ -1703,7 +1768,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Six-Shooter"
+			"item_name"					"Six-Shooter"
 			"item_type_name"			"#TF_Weapon_Revolver"
 			"item_description"			"Just need one ol' gun and six shots.
 
@@ -1776,7 +1841,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Ol' Brimstone"
+			"item_name"					"Ol' Brimstone"
 			"item_type_name"			"Pump-Action Grenade Launcher"
 			"item_description"			"
 A wee lad in a mask was in a mighty hurry and left this pretty bloody thing behind.
@@ -1872,7 +1937,7 @@ Weapon from: New Old Weapons Pack"																				// IS THAT A FUCKIN' 「OP
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Marksman's Marker"
+			"item_name"					"Marksman's Marker"
 			"item_type_name"			"#TF_Weapon_SniperRifle"
 			"item_description"			"Mark multiple opponents for death! (3s each)
 
@@ -1961,7 +2026,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Storage Backpack"
+			"item_name"					"Storage Backpack"
 			"item_type_name"			"Backpack"
 			"item_description"			"
 Adds 50 metal to your metal reserve
@@ -2213,7 +2278,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Mantreads"
+			"item_name"					"Mantreads"
 			"item_type_name"			"#TF_Wearable_Boots"
 			"item_description"			"
 
@@ -2291,7 +2356,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Trust Fund"
+			"item_name"					"Trust Fund"
 			"item_type_name"			"Commemorative Trophy"
 			"item_description"			"This weapon cannot provide Mini-Crit Boosts
 
@@ -2388,7 +2453,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Firecannon"										// Sheesh. It took a while to figure out what I wanted this to be.
+			"item_name"					"Firecannon"										// Sheesh. It took a while to figure out what I wanted this to be.
 			"item_type_name"			"#TF_Weapon_FlareGun"
 			"item_description"			"
 Fires incendiary shells that 
@@ -2523,7 +2588,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Covert Operator"
+			"item_name"					"Covert Operator"
 			"item_type_name"			"Derringer"
 			"item_description"			"On hit enemy: You get a silent debuff
 Stay out of sight!
@@ -2611,7 +2676,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Warsaw Fact"
+			"item_name"					"Warsaw Fact"
 			"item_type_name"			"Chainsaw"
 			"item_description"			"This weapon has limited range
 
@@ -2721,7 +2786,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Spray n' Pray"
+			"item_name"					"Spray n' Pray"
 			"item_type_name"			"Fire Hose"
 			"item_description"			"On hit: Gain a short Def. Buff! (1.5s)
 
@@ -2796,17 +2861,27 @@ Weapon from: New Old Weapons Pack"						// It does the exact opposite, in fact!
 		"3412"
 		{
 			"name"						"TF_WEAPON_BOTTLE_RUM"
-			"prefab"					"weapon_bottle"											// Not super amazing, but I did want another Bottle-type item.										
+//			"prefab"					"weapon_bottle"											// Not super amazing, but I did want another Bottle-type item.
+
+			"item_class"				"tf_weapon_lunchbox"							
+			"show_in_armory"			"1"
+			"item_slot"					"secondary"
+			"anim_slot"					"melee"
+
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
 			"show_in_armory"			"1"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Scottish Handshake"
-			"item_type_name"			"#TF_Weapon_Bottle"
+			"item_name"					"Scottish Handshake"
+			"item_type_name"			"#TF_Weapon_Lunchbox"
 			"item_description"			"
 How about another drink this time, eh?
 
-Weapon from: New Old Weapons Pack"
+Weapon from: New Old Weapons Pack
+Modified by: 'Reagy'"
 			"item_logname"				"scotland_shard"
 			"item_iconname"				"scotland_shard"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_scotland_shard/c_scotland_shard"
@@ -2820,6 +2895,24 @@ Weapon from: New Old Weapons Pack"
 			"static_attrs"
 			{
 				"SET BONUS: chance of hunger decrease"		"1.07"
+			}
+			"attributes"
+			{
+				"heal on hit for slowfire"
+				{
+					"attribute_class"	"strange_restriction_type_1"						
+					"value"				"120"
+				}
+				"deploy time increased"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"1.25"
+				}
+				"custom projectile model"
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/custom/c_models/c_caffeine.mdl"			
+				}
 			}
 			"visuals"																			// This is for future reference!
 			{
@@ -2857,7 +2950,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Standard Issue"
+			"item_name"					"Standard Issue"
 			"item_type_name"			"#TF_Weapon_Pistol"
 			"item_description"			"
 'Hey knucklehead, you ain't gonna win.'
@@ -2927,7 +3020,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Deep Dive"											// IS THAT A - okay I'll stop.
+			"item_name"					"Deep Dive"											// IS THAT A - okay I'll stop.
 			"item_type_name"			"#TF_Weapon_SMG"
 			"item_description"			"
 'I'm runnin' outta places to put holes in ya!'
@@ -3082,7 +3175,7 @@ Edited by: 'Reagy'"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Quickiebomb Launcher"
+			"item_name"					"Quickiebomb Launcher"
 			"item_type_name"			"#TF_Weapon_PipeBombLauncher"
 			"item_description"			"
 'If you were huntin' trouble, lad, ya found it!'
@@ -3183,7 +3276,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Cloak and Dagger"
+			"item_name"					"Cloak and Dagger"
 			"item_type_name"			"#TF_Weapon_Watch"
 			"item_description"			"This item cloaks and decloaks slowly
 
@@ -3266,7 +3359,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Pneumatic Pulverizer"
+			"item_name"					"Pneumatic Pulverizer"
 			"item_type_name"			"#TF_Weapon_NailGun"
 			"item_description"			"Default Clip: 25 Nails
 
@@ -3335,7 +3428,7 @@ Weapon from: New Old Weapons Pack" 														// Have to put it here, since n
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Arms-Deal Armament"
+			"item_name"					"Arms-Deal Armament"
 			"item_type_name"			"Bandolier"
 			"item_description"			"
 Replaces your Minigun
@@ -3413,7 +3506,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Trailblazer"
+			"item_name"					"Trailblazer"
 			"item_type_name"			"#TF_Weapon_GrenadeLauncher"
 			"item_description"			"Grenades are fired from the
 center of the screen
@@ -3483,7 +3576,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Saboteur"
+			"item_name"					"Saboteur"
 			"item_type_name"			"#TF_Weapon_Tranq"
 			"item_description"			"
 So long as they do not bleed on my suit - this should go quite smoothly.
@@ -3570,7 +3663,7 @@ Edited by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Soviet Silencer"
+			"item_name"					"Soviet Silencer"
 			"item_type_name"			"#TF_Weapon_Shotgun"
 			"item_description"			"
 Baby would do well to shut up,
@@ -3870,7 +3963,7 @@ Weapon edited by: 'Reagy'"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Scarlet Rose"
+			"item_name"					"Scarlet Rose"
 			"item_type_name"			"#TF_Weapon_Knife"
 			"item_description"			"
 You must think fast, and kill faster,
@@ -3994,7 +4087,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Screaming Eagle"
+			"item_name"					"Screaming Eagle"
 			"item_type_name"			"Machine Gun"
 			"item_description"			"
 'Last one alive, lock the door!'
@@ -4070,7 +4163,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Market Gardener"
+			"item_name"					"Market Gardener"
 			"item_type_name"			"#TF_Weapon_Shovel"
 			"item_description"			"
 Boots on the ground won't cut it, soldier.
@@ -4129,7 +4222,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Makeshift Mutilator"
+			"item_name"					"Makeshift Mutilator"
 			"item_type_name"			"Chemical Thrower"
 			"item_description"			"
 Spray a lethal cocktail of chemicals over
@@ -4249,7 +4342,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Ullapool Caber"
+			"item_name"					"Ullapool Caber"
 			"item_type_name"			"...Hand Grenade?"
 			"item_description"			"100% critical hit vs aiming players
 
@@ -4391,7 +4484,7 @@ Edited by: 'Reagy'"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Dispenserizer"
+			"item_name"					"Dispenserizer"
 			"item_type_name"			"Building Launcher"
 			"item_description"			"
 Launch an explosive Mini-Dispenser
@@ -4483,7 +4576,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Bushman's Ballista"
+			"item_name"					"Bushman's Ballista"
 			"item_type_name"			"#TF_Weapon_Crossbow"
 			"item_description"			"Fires explosive crossbow bolts
 
@@ -4599,7 +4692,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Eviction Notice"
+			"item_name"					"Eviction Notice"
 			"item_type_name"			"Brass Knuckles"
 			"item_description"			"
 You have 5 seconds to run from tiny base,
@@ -4798,7 +4891,7 @@ Edited by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Thermal Thruster"
+			"item_name"					"Thermal Thruster"
 			"item_type_name"			"Jetpack"
 			"item_description"			"Jetpack has 2 charges of boost,
 with a 12 second recharge time each
@@ -4949,7 +5042,7 @@ Weapon from: New Old Weapons Pack"																		// MIRV used here as a "Seco
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Rocket Jumper"
+			"item_name"					"Rocket Jumper"
 			"item_type_name"			"Training Tool"
 			"item_description"			"
 For when I want to take to the skies
@@ -5012,7 +5105,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Sticky Jumper"
+			"item_name"					"Sticky Jumper"
 			"item_type_name"			"Training Tool"
 			"item_description"			"
 For when I don't want tae lose more
@@ -5110,7 +5203,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Brickhouse Beatdown"
+			"item_name"					"Brickhouse Beatdown"
 			"item_type_name"			"Concrete Brick"
 			"item_description"			"Throw at enemies to bludgeon them!
 That's gotta hurt in the morning.
@@ -5195,7 +5288,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Brickhouse Beatdown"
+			"item_name"					"Brickhouse Beatdown"
 			"item_type_name"			"Concrete Brick"
 			"item_description"			"Throw at enemies to bludgeon them!
 That's gotta hurt in the morning.
@@ -5280,7 +5373,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Brickhouse Beatdown"
+			"item_name"					"Brickhouse Beatdown"
 			"item_type_name"			"Concrete Brick"
 			"item_description"			"Throw at enemies to bludgeon them!
 That's gotta hurt in the morning.
@@ -5363,7 +5456,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Brickhouse Beatdown"
+			"item_name"					"Brickhouse Beatdown"
 			"item_type_name"			"Concrete Brick"
 			"item_description"			"Throw at enemies to bludgeon them!
 That's gotta hurt in the morning.
@@ -5449,7 +5542,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Brickhouse Beatdown"
+			"item_name"					"Brickhouse Beatdown"
 			"item_type_name"			"Concrete Brick"
 			"item_description"			"Throw at enemies to bludgeon them!
 That's gotta hurt in the morning.
@@ -5541,7 +5634,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Brickhouse Beatdown"
+			"item_name"					"Brickhouse Beatdown"
 			"item_type_name"			"Concrete Brick"
 			"item_description"			"Throw at enemies to bludgeon them!
 That's gotta hurt in the morning.
@@ -5621,97 +5714,8 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_default_drop.wav"
 		}
 		"5021"
+// Remove this - V5.5.5
 		{
-			"name"						"TF_WEAPON_BRICK"
-			"item_class"				"tf_weapon_grenade_mirv"
-			"show_in_armory"			"1"														// DISABLED - Slot Conflict issues lead to more problems than I know how to fix currently...
-			"item_slot"					"primary"
-			"anim_slot"					"melee"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Brickhouse Beatdown"
-			"item_type_name"			"Concrete Brick"
-			"item_description"			"Throw at enemies to bludgeon them!
-That's gotta hurt in the morning.
-
-Blunt trauma should incapacitate them!
-Let me throw another - just to be safe!
-
-Model by: 'Sims_Doc'
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"brick"
-			"item_iconname"				"brick"
-			"image_inventory"			"backpack/weapons/w_models/w_brick"
-			"model_world"				"models/weapons/w_models/w_brick_medic.mdl"
-			"model_player"				"models/weapons/v_models/v_brick_demo.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"medic"					"1"
-			}
-			"static_attrs"																		// Stats are the SAME across all permutations - feel free to copy across all of them!
-			{
-				"override projectile type" 				"3"
-				"damage bonus hidden"					"0.255"
-				"allowed in medieval mode"				"1"
-				"min_viewmodel_offset"					"10 0 -10"
-
-				"bleeding duration"						"2"
-				"maxammo grenades1 increased"			"3"
-				"fire rate penalty"						"1.75"
-				"crit mod disabled"						"0"
-				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
-			}
-			"attributes"
-			{
-				// Backend stuff.
-				"mult_item_meter_charge_rate"
-				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.7"
-				}
-				"hand scale"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.1"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.25"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"blast_dmg_to_self"
-					"value" 			"0"
-				}
-				"damage force increase hidden"
-				{
-					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.2"
-				}
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_Grenade_Normal.Single"
-				"sound_burst"			"Weapon_Grenade_Normal.Single"
-				"sound_special1"		"Weapon_Brick.Hit"
-				"sound_special2"		"Weapon_Brick.Hit"
-				"sound_special3"		"Weapon_Grenade_Normal.Single"
-				"animation_replacement"
-				{
-					//The Attacking Animations
-					"ACT_MP_ATTACK_STAND_PRIMARY"				"ACT_MP_ATTACK_STAND_MELEE"
-					"ACT_MP_ATTACK_CROUCH_PRIMARY"				"ACT_MP_ATTACK_CROUCH_MELEE"
-					"ACT_MP_ATTACK_SWIM_PRIMARY"				"ACT_MP_ATTACK_SWIM_MELEE"
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_default_pickup.wav"
-			"drop_sound"				"#ui/item_default_drop.wav"
 		}
 		"5022"
 		{
@@ -5726,7 +5730,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Brickhouse Beatdown"
+			"item_name"					"Brickhouse Beatdown"
 			"item_type_name"			"Concrete Brick"
 			"item_description"			"Throw at enemies to bludgeon them!
 That's gotta hurt in the morning.
@@ -5800,97 +5804,8 @@ Weapon from: New Old Weapons Pack"
 			"drop_sound"				"#ui/item_default_drop.wav"
 		}
 		"5023"
+// Remove this - V5.5.5
 		{
-			"name"						"TF_WEAPON_BRICK"
-			"item_class"				"tf_weapon_grenade_mirv"
-			"show_in_armory"			"1"														// DISABLED - Slot Conflict issues lead to more problems than I know how to fix currently...
-			"item_slot"					"primary"
-			"anim_slot"					"building"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Brickhouse Beatdown"
-			"item_type_name"			"Concrete Brick"
-			"item_description"			"Throw at enemies to bludgeon them!
-That's gotta hurt in the morning.
-
-'Did I throw a wrench into your plans?'
-
-Model by: 'Sims_Doc'
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"brick"
-			"item_iconname"				"brick"
-			"image_inventory"			"backpack/weapons/w_models/w_brick"
-			"model_world"				"models/weapons/w_models/w_brick_spy.mdl"
-			"model_player"				"models/weapons/v_models/v_brick_scout.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"spy"					"1"
-			}
-			"static_attrs"																		// Stats are the SAME across all permutations - feel free to copy across all of them!
-			{
-				"override projectile type" 				"3"
-				"damage bonus hidden"					"0.255"
-				"allowed in medieval mode"				"1"
-				"min_viewmodel_offset"					"10 0 -10"
-
-				"keep disguise"							"1"										// Since this STILL breaks the Sapper slot, have this active as a small bonus I guess...
-				"bleeding duration"						"2"										// ADD A UNIQUE CASE TO NOT LET SPY SPEAK WHEN THROWING WHILE DISGUISED!!!!!!!!!!!!!!!!!!!!!!!!
-				"maxammo grenades1 increased"			"3"
-				"fire rate penalty"						"1.75"
-				"crit mod disabled"						"0"
-				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
-			}
-			"attributes"
-			{
-				// Backend stuff.
-				"mult_item_meter_charge_rate"
-				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.7"
-				}
-				"hand scale"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.1"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.25"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"blast_dmg_to_self"
-					"value" 			"0"
-				}
-				"damage force increase hidden"
-				{
-					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.2"
-				}
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_Grenade_Normal.Single"
-				"sound_burst"			"Weapon_Grenade_Normal.Single"
-				"sound_special1"		"Weapon_Brick.Hit"
-				"sound_special2"		"Weapon_Brick.Hit"
-				"sound_special3"		"Weapon_Grenade_Normal.Single"
-				"animation_replacement"
-				{
-					//The Attacking Animations
-					"ACT_MP_ATTACK_STAND_BUILDING"				"ACT_MP_ATTACK_STAND_MELEE"
-					"ACT_MP_ATTACK_CROUCH_BUILDING"				"ACT_MP_ATTACK_CROUCH_MELEE"
-					"ACT_MP_ATTACK_SWIM_BUILDING"				"ACT_MP_ATTACK_SWIM_MELEE"
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_default_pickup.wav"
-			"drop_sound"				"#ui/item_default_drop.wav"
 		}
 		"5024"
 		{
@@ -5905,7 +5820,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Brickhouse Beatdown"
+			"item_name"					"Brickhouse Beatdown"
 			"item_type_name"			"Concrete Brick"
 			"item_description"			"Throw at enemies to bludgeon them!
 That's gotta hurt in the morning.
@@ -5997,7 +5912,7 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Knuckle Sandvich"
+			"item_name"					"Knuckle Sandvich"
 			"item_type_name"			"#TF_Weapon_Fists"
 			"item_description"			"'Put 'em up, pal!'
 
@@ -6035,50 +5950,6 @@ Weapon from: New Old Weapons Pack"
 		}
 		"5027"
 		{
-			"name"						"TF_WEAPON_DM_FISTS"
-			"item_class"				"tf_weapon_fists"
-			"show_in_armory"			"1"
-			"item_slot"					"melee"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Knuckle Sandvich"
-			"item_type_name"			"#TF_Weapon_Fists"
-			"item_description"			"
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"dm_fists"
-			"item_iconname"				"dm_fists"
-			"image_inventory"			"backpack/weapons/v_models/v_berserk"
-			"model_player"				"models/weapons/v_models/v_berserk.mdl"					// Possible alt; the zombie claws (also from OF)
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"pyro"					"1"
-			}
-			"static_attrs"
-			{
-				"fire rate bonus hidden" 				"0.5"
-				"damage bonus hidden"					"0.39"
-				"min_viewmodel_offset"					"8 0 -6"
-			}
-			"visuals"
-			{
-				"sound_melee_miss"		"Weapon_Fist.Miss"
-				"sound_melee_hit"		"Weapon_Fist.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_Fist.HitWorld"
-				"sound_burst"			"Weapon_Fist.MissCrit"
-				"animation_replacement"
-				{
-					"ACT_MP_ATTACK_STAND_MELEE_SECONDARY"		"ACT_MP_ATTACK_STAND_MELEE"
-					"ACT_MP_ATTACK_CROUCH_MELEE_SECONDARY"		"ACT_MP_ATTACK_CROUCH_MELEE"
-					"ACT_MP_ATTACK_SWIM_MELEE_SECONDARY"		"ACT_MP_ATTACK_SWIM_MELEE"
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_fists_pickup.wav"
-			"drop_sound"				"#ui/item_fists_drop.wav"
 		}
 		"5028"
 		{
@@ -6092,9 +5963,11 @@ Weapon from: New Old Weapons Pack"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_name"					"The Knuckle Sandvich"
+			"item_name"					"Drunkard Brawling"
 			"item_type_name"			"#TF_Weapon_Fists"
-			"item_description"			"'Oh, I'm gonna beat you
+			"item_description"			"On Hit: Lose up to 10 health
+
+'Oh, I'm gonna beat you
 so hard - you'll have a twitch!'
 
 Weapon from: New Old Weapons Pack"
@@ -6112,6 +5985,25 @@ Weapon from: New Old Weapons Pack"
 				"fire rate bonus hidden" 				"0.5"
 				"damage bonus hidden"					"0.39"
 				"min_viewmodel_offset"					"8 0 -6"
+			}
+			"attributes"
+			{
+				"heal on kill" // "heal on hit for rapidfire"
+				{
+					"attribute_class"	"heal_on_kill"
+					"value"				"50"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.35"
+				}
+				// Backend stuff
+				"strange restriction type 1"													// So you don't start with totally full health on transforming - more impactful for light classes
+				{
+					"attribute_class"	"add_onhit_addhealth" // "heal_on_kill"
+					"value"				"-10"
+				}
 			}
 			"visuals"
 			{
@@ -6131,94 +6023,9 @@ Weapon from: New Old Weapons Pack"
 		}
 		"5029"
 		{
-			"name"						"TF_WEAPON_DM_FISTS"
-			"item_class"				"tf_weapon_fists"
-			"show_in_armory"			"1"
-			"item_slot"					"melee"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Knuckle Sandvich"
-			"item_type_name"			"#TF_Weapon_Fists"
-			"item_description"			"'Let us fight, man vs. tiny baby man.'
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"dm_fists"
-			"item_iconname"				"dm_fists"
-			"image_inventory"			"backpack/weapons/v_models/v_berserk"
-			"model_player"				"models/weapons/v_models/v_fist_heavy.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"heavy"					"1"														// Originally, I just left this out, but decided it'd be funny to give Heavy this as well for no good reason!
-			}
-			"static_attrs"
-			{
-				"fire rate bonus hidden" 				"0.5"
-				"damage bonus hidden"					"0.39"
-				"min_viewmodel_offset"					"8 0 -6"
-			}
-			"visuals"
-			{
-				"sound_melee_miss"		"Weapon_Fist.Miss"
-				"sound_melee_hit"		"Weapon_Fist.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_Fist.HitWorld"
-				"sound_burst"			"Weapon_Fist.MissCrit"
-			}
-			"mouse_pressed_sound"		"#ui/item_fists_pickup.wav"
-			"drop_sound"				"#ui/item_fists_drop.wav"
 		}
 		"5031"
 		{
-			"name"						"TF_WEAPON_DM_FISTS"
-			"item_class"				"tf_weapon_fists"
-			"show_in_armory"			"1"
-			"item_slot"					"melee"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"The Knuckle Sandvich"
-			"item_type_name"			"#TF_Weapon_Fists"
-			"item_description"			"'All I can tell you about this next
-procedure, is that it will be excruciating!'
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"dm_fists"
-			"item_iconname"				"dm_fists"
-			"image_inventory"			"backpack/weapons/v_models/v_berserk"
-			"model_player"				"models/weapons/v_models/v_berserk.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"medic"					"1"
-			}
-			"static_attrs"
-			{
-				"fire rate bonus hidden" 				"0.5"
-				"damage bonus hidden"					"0.39"
-				"min_viewmodel_offset"					"8 0 -6"
-			}
-			"visuals"
-			{
-				"sound_melee_miss"		"Weapon_Fist.Miss"
-				"sound_melee_hit"		"Weapon_Fist.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_Fist.HitWorld"
-				"sound_burst"			"Weapon_Fist.MissCrit"
-				"animation_replacement"
-				{
-					"ACT_MP_ATTACK_STAND_MELEE_SECONDARY"		"ACT_MP_ATTACK_STAND_MELEE"
-					"ACT_MP_ATTACK_CROUCH_MELEE_SECONDARY"		"ACT_MP_ATTACK_CROUCH_MELEE"
-					"ACT_MP_ATTACK_SWIM_MELEE_SECONDARY"		"ACT_MP_ATTACK_SWIM_MELEE"
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_fists_pickup.wav"
-			"drop_sound"				"#ui/item_fists_drop.wav"
 		}
 		
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -7247,7 +7054,7 @@ Weapon by: 'Reagy'"
 //-------------------------------------		
 		"7017"
 		{
-			"name"						"The Sandvich"
+			"name"						"Sandvich"
 			"prefab"					"weapon_sandvich"
 			"show_in_armory"			"1"
 
@@ -8148,63 +7955,11 @@ Weapon by: 'Reagy'"
 //--------------------------
 //--------------------------
 // 357
+// Remove this - V5.5.5
 //--------------------------
 //--------------------------
 		"7035"	
 		{
-			"name"						"TF_WEAPON_357"
-			"prefab"					"weapon_revolver"
-			
-			"show_in_armory"			"1"
-			"item_logname"				"357"
-			"item_iconname"				"357"
-
-			"item_quality"				"rarity2"
-
-			"item_type_name"			"#TF_Weapon_Revolver"
-			"item_name"				    "Three Fifty Seven"
-			"item_description"			"
-Not quite the most powerful handgun in the world...
-  
-Model by: 'IteGood'
-Weapon by: 'Reagy'"
-			"propername"				"1"
-			"image_inventory"			"backpack/weapons/c_models/c_357"
-			"model_world"				"models/weapons/custom/c_models/c_357.mdl"
-			"model_player"				"models/weapons/custom/c_models/c_357.mdl"
-			"attach_to_hands"			"1"
-			"used_by_classes"
-			{
-				"spy"                "1"
-			}
-			"attributes"
-			{
-				"provide on active"
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 		"1"
-				}
-				"damage bonus"																
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"1.15"
-				}
-				"SET BONUS: quiet unstealth"
-				{
-					"attribute_class"	"set_quiet_unstealth"
-					"value" 		"1"
-				}	
-				"spread penalty"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"2.5"
-				}
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_Ambassador.Single"
-				"sound_burst"			"Weapon_Ambassador.SingleCrit"
-			}
 		}
 //--------------------------
 //--------------------------
@@ -8985,6 +8740,8 @@ Weapon by: 'Reagy'"
 			"item_class"				"tf_weapon_grenade_mirv"
 			"item_slot"					"secondary"
 			"show_in_armory"			"1"
+			
+			"item_quality"				"rarity2"
 
 			"propername"				"1"
 			"item_name"					"H.A.G.I.S"
@@ -9293,7 +9050,7 @@ Wearable by: 'Reagy'"
 // The W.A.L.L
 // V5.2 New wearable?
 // V5.3 Resistance now 50% instead of 95%, can still be stacked with Robo
-// V5.3.1 Renamed to "The Slightly Immovable W.A.L.L", can now move at 47HU/s when active
+// V5.3.1 Renamed to "Slightly Immovable W.A.L.L", can now move at 47HU/s when active
 // V5.3.4r1 Adjusted damage resistance to 65% as robo no longer applies 20%, reduced medic healing by 100% when active
 // V5.3.7 Damage resistance now 50% (previously 35%), movement penalty lowered to 55%, +3hp/s health regen when active
 // V5.4 Added crit resistance and also now is almost (literally) immovable by knockback and airblast
@@ -9674,7 +9431,7 @@ Weapon by: 'Zadrave'"
 			"item_iconname"				"flare_launcher"
 			"item_type_name"			"Flare Gun"
 			"item_class"				"tf_weapon_rocketlauncher"
-			"item_description"			"The Flare Gun, but primary. Shoots flares fast and crits flaming targets.
+			"item_description"			"Flare Gun, but primary. Shoots flares fast and crits flaming targets.
 
 			Mmphh mmph mppph!
 
@@ -10333,7 +10090,7 @@ Weapon by: 'Reagy'"
 //-------------------------------------
 //-------------------------------------
 // Express Coffee
-// V5.3.5 New weapon, multiclass
+// V5.3.5 New weapon
 //-------------------------------------
 //-------------------------------------	
 		"7083"			
@@ -10342,7 +10099,7 @@ Weapon by: 'Reagy'"
 			"item_class"				"tf_weapon_lunchbox"							
 			"show_in_armory"			"1"
 			"item_slot"					"secondary"
-			"anim_slot"					"melee"
+			"anim_slot"					"secondary"
 
 			"item_quality"				"rarity2"
 
@@ -10363,11 +10120,7 @@ Item by: 'Reagy'"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
-				"soldier"				"1"
-				"demoman"				"1"
 				"engineer"				"1"
-				"medic"					"1"
-				"sniper"				"1"
 			}
 			"static_attrs"
 			{
@@ -10389,15 +10142,19 @@ Item by: 'Reagy'"
 					"attribute_class"	"mult_deploy_time"
 					"value"				"1.25"
 				}
-				"move speed penalty"
-				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.85"
-				}
 				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
 					"value"				"models/weapons/custom/c_models/c_caffeine.mdl"			
+				}
+			}
+			"visuals"
+			{
+				"animation_replacement"															// These are a much more neutral position to hold stuff from than melee - so we'll use that!
+				{
+					"ACT_MP_ATTACK_STAND_SECONDARY"				"ACT_MP_ATTACK_STAND_MELEE"
+					"ACT_MP_ATTACK_CROUCH_SECONDARY"			"ACT_MP_ATTACK_CROUCH_MELEE"
+					"ACT_MP_ATTACK_SWIM_SECONDARY"				"ACT_MP_ATTACK_SWIM_MELEE"
 				}
 			}
 			"mouse_pressed_sound"		"#ui/item_cardboard_pickup.wav"
@@ -10686,7 +10443,7 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Crucible Long Sword"
 			"item_type_name"			"Demonic Sword"
-			"item_description"			"The blade of the Slayer: this weapon has massive range
+			"item_description"			"blade of the Slayer: this weapon has massive range
 Deals huge damage to burning players
 
 We will send unto them... only you.
@@ -10844,7 +10601,7 @@ Weapon by: 'Reagy'"
 				"damage bonus hidden"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0"
+					"value"				"0.01"
 				}
 				"strange restriction type 1"
 				{
@@ -11235,84 +10992,11 @@ Weapon by: 'The One Of Wonders'"
 //--------------------------
 //--------------------------
 //--QUICKDRAW CLOAK REVOLVER - 9075
+// Remove this - V5.5.5
 //--------------------------
 //--------------------------
 		"7096"	
 		{
-			"name"						"TF_WEAPON_QUICKDRAW"
-			"prefab"					"weapon_revolver"
-			"baseitem" 					"1"
-			"show_in_armory"			"1"
-
-			"item_quality"				"rarity2"
-
-			"item_logname"				"quickdraw_spy"
-			"item_iconname"				"quickdraw_spy"
-			"item_type_name"			"Revolver"
-			"item_name"				    "Quick-draw"
-			"item_description"			"Weapon significantly reduces cloak/de-cloak times while active
-
-For when you need to get out of a pinch fast, any way necessary.
-
-Model by: 'umklaidet'
-Weapon by: 'The One Of Wonders'"
-			"propername"				"1"
-			"image_inventory"			"backpack/weapons/c_models/c_quickdraw"
-			"model_world"				"models/weapons/c_models/c_quickdraw/c_quickdraw_spy.mdl"
-			"model_player"				"models/weapons/c_models/c_quickdraw/c_quickdraw_spy.mdl"
-			"attach_to_hands"			"1"
-			"used_by_classes"
-			{
-				"spy"                "1"
-			}
-			"attributes"
-			{
-			    "provide on active"																
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
-				"single wep deploy time decreased"
-				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"0.4"
-				}
-				"voice pitch scale"																
-				{
-					"attribute_class"	"mult_cloak_rate"
-					"value" 			"-0.8"
-				}
-                "mult decloak rate"																
-				{
-					"attribute_class"	"mult_decloak_rate"
-					"value" 			"0.4"
-				}
-                "cloak regen rate increased"																
-				{
-					"attribute_class"	"mult_cloak_meter_regen_rate"
-					"value" 			"1.35"
-				}				
-				"damage penalty"																
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.8"
-				}	
-				"spread penalty"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"1.35"
-				}
-                "cloak consume rate increased"																
-				{
-					"attribute_class"	"mult_cloak_meter_consume_rate"
-					"value" 			"1.5"
-				}				
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_Jury.Single"
-				"sound_burst"			"Weapon_Jury.SingleCrit"
-			}
 		}
 //----------------------
 //----------------------
@@ -13840,57 +13524,9 @@ Edited by: 'Reagy'"
 // V5.3.2r1 Changed from passive to manual boost
 // V5.3.3 New model and name!
 // V5.3.5 Changed from speed boost to forcing target into melee for 10 seconds
+// Remove this - V5.5.5
 		"8050"
 		{
-		    "item_name"					"Provocative Broadcaster"
-			"prefab"                    "weapon_umbrella"
-			"item_type_name"			"Microphone"
-			"show_in_armory"            "1"
-			"item_description"			"Manual Boost (Mouse2): Blind rage!
-Forces foe target into melee for 5 seconds
-
-Testing, testing? Lads is this thing on?
-
-Model by: 'XylemTube'
-Cosmetic by: 'Suomimies55'
-Original weapon by: 'shualdock'
-Edited by: 'Reagy'"
-			"item_slot"					"melee"
-			"item_quality"				"unique"
-
-			"item_logname"				"civ_bat"
-			"item_iconname"				"civ_bat"	
-
-			"image_inventory"			"backpack\weapons\w_models\w_civmic"
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-			"model_world"				"models/weapons/custom/w_models/w_civmic.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_civmic.mdl"
-			"extra_wearable"			"models/player/items/civ_headset.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"civilian"					"1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset"					"10 0 -11"
-			}
-			"attributes"
-			{
-                "civ boost cond override"
-				{
-					"attribute_class"	"add_civ_boost_override"
-					"value" 			"41 0.5" 
-				}
-				"civ boost targets enemies"
-				{
-					"attribute_class"	"add_civ_boost_enemies"
-					"value" 	"1" 
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 // V5.3.3 New model and name!
 		"8051"
@@ -14033,7 +13669,7 @@ Weapon by: 'shualdock'"
 // V5.3.2r1 Fixed restock, was using wrong prefab
 		"8054"
 		{
-			"name"						"The Sandvich"										
+			"name"						"Sandvich"										
 			"prefab"					"weapon_sandvich" 										
 			"show_in_armory"			"0" // Disabled
 			
@@ -14893,7 +14529,7 @@ Edited by: 'The One Of Wonders'"
 //------------------------------
 		"9013"
 		{
-			"name"						"The Gaelic Gat"
+			"name"						"Gaelic Gat"
 			"prefab"					"weapon_bottle"
 			"show_in_armory"			"1"
 			
@@ -14974,7 +14610,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 		}
 		"9014"
 		{
-			"name"						"The Gaelic Gat"
+			"name"						"Gaelic Gat"
 			"prefab"					"weapon_shovel"
 			"show_in_armory"			"1"
 			
@@ -15160,7 +14796,7 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------
 		"9017"
 		{
-			"name"						"The Ambassador"
+			"name"						"Ambassador"
 			"prefab"					"weapon_revolver"
 			
 			
@@ -15231,7 +14867,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //----------------------------
 		"9018"
 		{
-			"name"						"The Full Throttle"
+			"name"						"Full Throttle"
 			"prefab"					"weapon_shotgun"
 			"show_in_armory"			"1"
 			
@@ -15319,7 +14955,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //----------------------------
 		"9019"
 		{
-			"name"						"The Lead Spitter"
+			"name"						"Lead Spitter"
 			"prefab"					"weapon_shotgun"
 			"show_in_armory"			"1"
 			
@@ -15388,7 +15024,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //-----------------------------------
 		"9020"
 		{
-			"name"						"The Ground W.A.S.P."
+			"name"						"Ground W.A.S.P."
 			"prefab"					"weapon_rocketlauncher"
 			
 			
@@ -15494,7 +15130,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //--------------------------
 		"9023"
 		{
-			"name"						"The Striker's Shank"
+			"name"						"Striker's Shank"
 			"prefab"					"weapon_club"
 			
 			
@@ -15799,7 +15435,7 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------------
 		"9032"
 		{
-			"name"						"The Pilot Light"
+			"name"						"Pilot Light"
 			"item_class"				"tf_weapon_flaregun"									// Defined manually only to avoid the display-only crit attribute that's on the flaregun prefab!
 			"show_in_armory"			"1"
 			"item_slot"					"secondary"
@@ -15937,7 +15573,7 @@ Edited by: 'The One Of Wonders'"
 //---------------------
 		"9034"
 		{
-			"name"						"The Healer's Shield"
+			"name"						"Healer's Shield"
 			"prefab"					"weapon_bonesaw"
 			"show_in_armory"			"1"
 			
@@ -16016,7 +15652,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //-------------------------------
 		"9035"
 		{
-			"name"						"The Scrap Sentinel"
+			"name"						"Scrap Sentinel"
 			"prefab"					"weapon_pistol"									// Defined manually so Scout doesn't have it!
 			"show_in_armory"			"1"
 			"baseitem"				"1"
@@ -16096,7 +15732,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //----------------------------
 		"9037"
 		{
-			"name"						"The Silencer"
+			"name"						"Silencer"
 			"prefab"					"weapon_scattergun"
 			
 			"show_in_armory"			"1"
@@ -16167,12 +15803,10 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 // V5.4 Moved to spy
 //-----------------------
 //-----------------------
-		"9038"
+	"9038"
 		{
 			"name"						"TF_WEAPON_SPISTOL_SPY"
 			"prefab"					"weapon_revolver"
-//			"prefab"					"weapon_pistol"
-//			"item_class"				"tf_weapon_pistol"
 			"show_in_armory"			"1"
 			
 			"item_quality"				"rarity3"
@@ -16211,21 +15845,26 @@ Modified by: 'Reagy'"
 					"attribute_class"	"set_quiet_unstealth"
 					"value" 		"1"
 				}	
+				"no damage falloff over distance"
+				{
+					"attribute_class"	"mod_no_dmg_falloff"
+					"value"				"1"
+				}
 				"clip size bonus"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"1.15" 
+					"value"				"1.95" 
 				}
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.33"
+					"value"				"0.35"
 				}
-//				"move speed penalty"
-//				{
-//					"attribute_class"	"mult_player_movespeed"
-//					"value"				"0.75"
-//				}
+				"spread penalty"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"1.5"
+				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
@@ -16249,7 +15888,7 @@ Modified by: 'Reagy'"
 //------------------------
 		"9039"																
 		{
-			"name"						"The Handy Partner"
+			"name"						"Handy Partner"
 			"prefab"					"weapon_pda"
 			"show_in_armory"			"1"
 			
@@ -16962,7 +16601,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //---------------------
 		"9059"
 		{
-			"name"						"The County Killer"
+			"name"						"County Killer"
 			"prefab"					"weapon_sniperrifle"
 			"show_in_armory"			"1"
 			
@@ -17174,7 +16813,7 @@ Weapon by: 'The One Of Wonders'"
 //--------------------------------
 		"9062"
 		{
-			"name"						"The Massachusetts Marauder"
+			"name"						"Massachusetts Marauder"
 			"prefab"					"weapon_bat"
 			"show_in_armory"			"1"
 			
@@ -17263,7 +16902,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //--------------------------
 		"9064"
 		{
-			"name"						"The Malicious Mac"
+			"name"						"Malicious Mac"
 			"item_class"					"tf_weapon_pistol"
 			"show_in_armory"			"1"
 			
@@ -17344,7 +16983,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //-------------------------------
 		"9065"
 		{
-			"name"						"The Jetsetter"
+			"name"						"Jetsetter"
 			"prefab"					"weapon_pistol"
 			
 			
@@ -17431,7 +17070,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 		}
 		"9066"
 		{
-			"name"						"The Jetsetter"
+			"name"						"Jetsetter"
 			"prefab"					"weapon_pistol"
 			
 			
@@ -17618,7 +17257,7 @@ Slows down the construction speed of all buildings by 50% and increases their me
 //-----------------------------
 		"9072"
 		{
-			"name"						"The Masterkey"						
+			"name"						"Masterkey"						
 			"prefab"					"weapon_wrench"								
 			"show_in_armory"			"1"
 			
@@ -17726,7 +17365,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //---------------------------------
 		"9075"
 		{
-			"name"						"The Silverhand"
+			"name"						"Silverhand"
 			"prefab"					"weapon_revolver"
 			"show_in_armory"			"1"
 			
@@ -17807,7 +17446,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //----------------------
 		"9076"
 		{
-			"name"						"The Firestarter"
+			"name"						"Firestarter"
 			"prefab"					"weapon_bat"
 			"show_in_armory"			"1"
 			
@@ -17924,7 +17563,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //-------------------------------
 		"9078"																				// This is a wearable vest for Soldier that gives him faster movement and more ammo - in exchange for an item slot. Hmm. Better think about it, yeah?
 		{
-			"name"						"The Flak Vest"
+			"name"						"Flak Vest"
 			"item_class"				"tf_wearable"											// Yes! This is a wearable item - like the Gunboats, or the Cozy Camper from live.
 			"show_in_armory"			"1"
 			
@@ -18072,7 +17711,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //-----------------------
 		"9081"
 		{
-			"name"						"The Totenwerfer"
+			"name"						"Totenwerfer"
 			"prefab"					"weapon_medigun"
 			"show_in_armory"			"1"
 			"equip_region"				"medigun_backpack"										// ...probably.. vestigial..?
@@ -18182,7 +17821,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //--------------------------------
 		"19880"
 		{
-			"name"						"The Geared Up Ghost (Scout)"
+			"name"						"Geared Up Ghost (Scout)"
 			"prefab"					"weapon_armor"
 			
 			"item_quality"				"rarity3"			
@@ -18231,7 +17870,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 		}
 		"19881"
 		{
-			"name"						"The Geared Up Ghost (Soldier)"
+			"name"						"Geared Up Ghost (Soldier)"
 			"prefab"					"weapon_armor"
 				
 			"item_quality"				"rarity3"			
@@ -18282,7 +17921,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 		}
 		"19882"
 		{
-			"name"						"The Geared Up Ghost (Pyro)"
+			"name"						"Geared Up Ghost (Pyro)"
 			"prefab"					"weapon_armor"
 				
 			"item_quality"				"rarity3"			
@@ -18331,7 +17970,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 		}
 		"19883"
 		{
-			"name"						"The Geared Up Ghost (Demoman)"
+			"name"						"Geared Up Ghost (Demoman)"
 			"prefab"					"weapon_armor"
 				
 			"item_quality"				"rarity3"			
@@ -18386,7 +18025,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 		}
 		"19884"
 		{
-			"name"						"The Geared Up Ghost (Heavy)"
+			"name"						"Geared Up Ghost (Heavy)"
 			"prefab"					"weapon_armor"
 					
 			"item_quality"				"rarity3"			
@@ -18435,7 +18074,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 		}
 		"19885"
 		{
-			"name"						"The Geared Up Ghost (Engineer)"
+			"name"						"Geared Up Ghost (Engineer)"
 			"prefab"					"weapon_armor"
 						
 			"item_quality"				"rarity3"			
@@ -18486,7 +18125,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 		}
 		"19886"
 		{
-			"name"						"The Geared Up Ghost (Medic)"
+			"name"						"Geared Up Ghost (Medic)"
 			"prefab"					"weapon_armor"
 				
 			"item_quality"				"rarity3"			
@@ -18530,7 +18169,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 		}
 		"19887"
 		{
-			"name"						"The Geared Up Ghost (Sniper)"
+			"name"						"Geared Up Ghost (Sniper)"
 			"prefab"					"weapon_armor"
 			
 			"item_quality"				"rarity3"			
@@ -18579,7 +18218,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 		}
 		"19888"
 		{
-			"name"						"The Geared Up Ghost (Spy)"
+			"name"						"Geared Up Ghost (Spy)"
 			"prefab"					"weapon_armor"
 			
 			"item_quality"				"rarity3"			
@@ -18652,23 +18291,26 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 //-------------------
 		"19891"																					// This one's for you, EmiRebellion
 		{
-			"name"						"The Patriot"
+			"name"						"Patriot"
 			"prefab"					"weapon_pistol"	
-			"item_class"				"tf_weapon_smg"
+//			"item_class"				"tf_weapon_smg"
+			"item_class"				"tf_weapon_nailgun"
 			"show_in_armory"			"1"
 			"item_logname"				"patriot"
 			"item_iconname"				"patriot"
 			"item_type_name"			"Carbine"
 			"item_quality"				"rarity3"
-			"item_name"				"The Patriot"
-			"item_description"			"Jams after every sixth shot
+			"item_name"					"Patriot"
+			"item_description"			"Cut down to size: Deals critical hits against overhealed players 
+Defective: Jams after every sixth shot
 
 What a thrill...
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
-			"item_slot"				"secondary"
-			"anim_slot"				"item2"
+//			"item_slot"					"secondary"
+			"item_slot"					"primary"
+			"anim_slot"					"item2"
 			"image_inventory"			"backpack/weapons/w_models/w_patriot"
 			"model_world"				"models/weapons/w_models/w_patriot.mdl"
 			"model_player"				"models/weapons/v_models/v_patriot.mdl"
@@ -18679,6 +18321,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			}
 			"static_attrs"
 			{
+				"override projectile type" 				"1"	
 //				"clip size penalty hidden"				"1.4"
 //				"hidden secondary max ammo penalty"		"0.94"									// 0.93 for 2 clips reserve, 1.4 for 3 clips reserve (3 & 4 total respectively)
 				"hidden secondary max ammo penalty"		"1.2"
@@ -18759,14 +18402,14 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //----------------------------
 		"19892"
 		{
-			"name"						"The Plastic Perforator"
+			"name"						"Plastic Perforator"
 			"prefab"					"weapon_sniperrifle"
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
 			"anim_slot"					"secondary"
 			"item_class"				"tf_weapon_hunterrifle"
 			"propername"				"1"
-			"item_name"					"The Plastic Perforator"
+			"item_name"					"Plastic Perforator"
 			"item_type_name"			"Assault Rifle"
 			"item_quality"				"rarity3"
 			"item_description"			"Alt-Fire: Aim down the scope for a chance at a headshot
@@ -19671,7 +19314,7 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_FRAG"
 			"item_class"				"tf_weapon_grenade_mirv"
-			"prefab"					"medieval_base use_soldier use_demoman"
+			"prefab"					"medieval_base use_soldier"
 			"show_in_armory"			"1"
 			"tags"
 			{
@@ -20049,7 +19692,7 @@ Weapon from: Renaissance Revival"
 			}
 			
 			"item_type_name"			"#TF_Weapon_Grenade"
-			"propername"				"1"
+			"propername"				"0"
 			"item_name"					"Whiff of Olde Brimstone"
 			"item_description"			"
 Weapon from: Renaissance Revival"
@@ -20254,7 +19897,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Buzz-killing Machine"
 			"item_type_name"			"Circular Buzzsaw"
-			"item_description"			"Cut down to size: deals critical hits against overhealed players 
+			"item_description"			"Cut down to size: Deals critical hits against overhealed players 
 
 Sometimes the best way to do hard work is to just kill.
 
@@ -21195,7 +20838,7 @@ Weapon by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
-			"item_name"					"The Payoff"
+			"item_name"					"Payoff"
 			"item_type_name"			"Scattergun"
 			"item_description"			"This weapon has limited range
 Feeling lucky, punk?
@@ -21593,7 +21236,7 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 			"item_name"					"Time-warp"
 			"item_type_name"			"Special prototype time-warp device"
-			"item_description"			"cloak instantly and move at maximum speed while cloaked for a brief moment!
+			"item_description"			"Cloak instantly and move at maximum speed while cloaked for a brief moment!
 
 Catch me if you can, I'll be foreseeing your death!
 
@@ -23462,7 +23105,7 @@ Weapon by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
-			"item_name"					"The Cut Above"
+			"item_name"					"Cut Above"
 			"item_type_name"			"Short Sword"
 			"item_description"			"Cut them up and chop them down: on hit, gain mini-crits for a second 
 
@@ -26313,7 +25956,7 @@ Weapon by: 'Reagy'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.65"
+					"value"				"0.85"
 				}
 				"fire rate penalty"
 				{
@@ -28006,7 +27649,7 @@ Weapon by: 'The One Of Wonders'"
 				"clip size penalty"													
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"0.2"
+					"value"				"0.4"
 				}
 				"spread penalty"													
 				{
@@ -30435,7 +30078,107 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"mouse_pressed_sound"		"#ui/item_knife_large_pickup.wav"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
-		}	
+		}
+//-------------------------
+//-------------------------
+//--Civ Royal Flush Cards- 9219--
+//-------------------------
+//-------------------------
+		"9219"
+		{
+			"name"						"TF_WEAPON_CARDS_CIV"	
+			"prefab"                    "weapon_umbrella"			
+			"item_class"				"tf_weapon_grenadelauncher"
+			"show_in_armory"			"1"
+			
+			"item_slot"					"melee"
+			"item_quality"				"unique"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"item_quality"				"rarity2"
+			
+			"item_name"					"Royal Flush"
+			"item_type_name"			"Deck of Cards"
+			"item_description"			"Lucky Roll: Increased crit chance
+
+Lets play a game... pick a card
+
+Model by: 'N-Cognito'
+Texture by: 'Reagy'
+Art asset by: 'ChemicalAlia'
+Weapon by: 'Reagy'"
+			"item_logname"				"royal_flush_civ"
+			"item_iconname"				"royal_flush"
+			"image_inventory"			"backpack/weapons/w_models/w_cards"
+			"model_world"				"models/weapons/w_models/w_cards/w_cards.mdl"			
+			"model_player"				"models/weapons/v_models/v_cards/v_cards.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"civilian"					"1"
+			}
+			"static_attrs"
+			{
+				"override projectile type" 				"30"	
+				"clip size penalty hidden"				"0.2"
+				"hidden primary max ammo bonus"			"3.2"
+				"crit mod disabled hidden"				"10.0"
+			}
+			"attributes"
+			{
+				"provide on active"																
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"bleeding duration"														
+				{
+					"attribute_class"	"bleeding_duration"
+					"value"				"1"
+				}
+				"mark for death"																
+				{
+					"attribute_class"	"mark_for_death"
+					"value" 			"1"
+				}
+				"add condition on hit"															
+				{
+					"attribute_class"	"add_onhit_addcond"
+					"value"				"30 5"
+				}
+				"Reload time decreased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value" 			"0.85"
+				}
+				"dmg penalty vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value" 			"0.459"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.65"
+				}
+				"custom projectile model"													
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/w_models/w_cards/w_cards_projectile.mdl"	
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_Jarate.Single"
+				"sound_burst"			"Weapon_Jarate.Single"
+				"sound_reload"			"Weapon_Cards.WorldReload"
+			}
+			"mouse_pressed_sound"		"#ui/item_cardboard_pickup.wav"
+			"drop_sound"				"#ui/item_cardboard_drop.wav"
+		}
+		
 //--------------------------------------------------//
 //-- 		Fred's Fight Starters v0.3.1 		  --//
 // v5.3.7 Disabled	some items due to dupes etc		//
