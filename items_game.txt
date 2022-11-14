@@ -18379,6 +18379,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"sound_single_shot"		"Weapon_M4.Single"
 				"sound_burst"			"Weapon_M4.SingleCrit"
 				"sound_reload"			"Weapon_Patriot.WorldReload"
+				"tracer_effect"			"bullet_scattergun_tracer01"
 				"sound_empty"			"Null"
 				"animation_replacement"
 				{
@@ -19427,7 +19428,7 @@ Weapon by: 'The One Of Wonders'"
 			    "spread penalty"
 				{
 					"attribute_class"	"mult_dmg_falloff"
-					"value"				"1.75"
+					"value"				"1.55"
 				}
 			    //Backend stuff aka stuff that actually does things.
 				"voice pitch scale"
@@ -19449,6 +19450,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_maxammo_primary"
 					"value"				"0.3"
+				}
+				"voice pitch scale"															
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.85"
 				}
 				"crit mod disabled"															
 				{
@@ -22837,15 +22843,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg"
 					"value"				"2"
 				}
-				"clip size bonus"
+				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"1.33"
-				}
-				"mod ammo per shot" 
-				{
-					"attribute_class"	"mod_ammo_per_shot"
-					"value"				"2"
+					"value"				"0.67"
 				}
 				"spread penalty"
 				{
@@ -23008,89 +23009,6 @@ Weapon by: 'The One Of Wonders'"
 //-----------------------------------
 		"9133"
 		{
-			"name"						"TF_WEAPON_FUSION_BLASTER"
-			"show_in_armory"			"1"
-			"item_class"                "tf_weapon_grenade_mirv"
-			"item_slot"                 "secondary"
-			"anim_slot"                 "primary"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-			
-			"item_quality"				"rarity2"
-			"item_name"					"Rejection of Medicine"
-			"item_type_name"			"Fusion Blaster"
-			"item_description"			"Holding to fire builds a high velocity ricochet laser
-
-Weapon recharges ammo over time when not in use 
-
-They told me that healing was important, they shouldn't have given me this then!
-
-Model by: 'BANG!'
-Weapon by: 'The One Of Wonders'"
-			"item_logname"				"laserblaster_medic"
-			"item_iconname"				"laserblaster_medic"
-			"image_inventory"			"backpack/weapons/c_models/c_laserblaster/c_laserblaster"
-			"model_world"				"models/weapons/c_models/c_laserblaster/c_laserblaster.mdl"
-			"model_player"				"models/weapons/c_models/c_laserblaster/c_laserblaster.mdl"
-			"attach_to_hands"			"1"
-			"used_by_classes"
-			{
-				"medic"					"1"
-			}
-			"static_attrs"
-			{
-				"override projectile type"   "32"
-				"class select override vcd"			"taunt02"	
-			}
-			"attributes"
-			{
-			    "heal on hit for rapidfire"
-				{
-					"attribute_class"	"add_onhit_addhealth"
-					"value"				"9"
-				}
-			    "voice pitch scale"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.67"
-				}
-			    "energy weapon no ammo" 															
-				{
-					"attribute_class"	"see_enemy_health"
-					"value" 			"1"
-				}
-			    "voice pitch scale"																
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.05"
-				}
-				"voice pitch scale"																
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.2"
-				}
-				"voice pitch scale"																
-				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value" 			"0.05"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_maxammo_grenades1"
-					"value" 			"50"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mod_charge_time"
-					"value" 			"0.01"
-				}
-			}
-			"visuals"
-			{
-			    "sound_single_shot"		"Weapon_Laserblaster.Single"								
-				"sound_burst"			"Weapon_Laserblaster.SingleCrit"
-			}
 		}
 //-----------------------
 //-----------------------
@@ -23175,7 +23093,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Guardian Angel"
 			"item_type_name"			"Medi Gun"
-			"item_description"			"Provides 25% damage resistance to wearer while active
+			"item_description"			"Provides 25% damage resistance and crit negation to the user while active
 Resistance does not apply to the healing patient.
 
 We shall fight until the very end!
@@ -23237,12 +23155,17 @@ Weapon by: 'The One Of Wonders'"
 				"move speed penalty"
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value" 			"0.75"
+					"value" 			"0.8"
 				}
 				"voice pitch scale"																
 				{
 					"attribute_class"	"mult_dmgtaken"
 					"value"				"0.75"
+				}
+				"voice pitch scale"											
+				{
+					"attribute_class"	"mult_dmgtaken_from_crit"
+					"value"				" 0.33333333333333333"
 				}
 			}
 			"visuals"
@@ -24636,25 +24559,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"provide_on_active"
 					"value"				"1"
 				}
-                "damage bonus"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"1.33"
-				}				
-			    "Projectile speed increased"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value" 			"1.6"
-				}
-				"fire rate bonus"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.67"
-				}
 				"mod no reload DISPLAY ONLY"
 				{
 					"attribute_class"	"mod_no_reload_display_only"
 					"value"				"1"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"0.85"
 				}
 				"mod max primary clip override"
 				{
@@ -24664,22 +24577,12 @@ Weapon by: 'The One Of Wonders'"
 				"spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value" 			"1.5"
-				}
-				"dmg taken increased"
-				{
-					"attribute_class"	"mult_dmgtaken"
-					"value" 			"1.15"
-				}
-				"health drain"
-				{
-					"attribute_class"	"add_health_regen"
-					"value" 			"-6"
+					"value" 			"1.25"
 				}
 				"move speed penalty"
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value" 			"0.6"
+					"value" 			"0.85"
 				}
 				"crit mod disabled"															
 				{
@@ -24749,11 +24652,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg"
 					"value" 			"0.9"
 				}				
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"1.15"
-				}
 				"crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -24820,7 +24718,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"	
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"2.25"
+					"value" 			"3.375"
 				}
 				"voice pitch scale"
 				{
@@ -24923,7 +24821,7 @@ Weapon by: 'The One Of Wonders'"
 			    "voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"5"
+					"value"				"4"
 				}
 				"voice pitch scale"
 				{
@@ -25006,7 +24904,7 @@ Weapon by: 'The One Of Wonders'"
 				"health drain"																
 				{
 					"attribute_class"	"add_health_regen"
-					"value" 			"-25"
+					"value" 			"-12"
 				}
 				"ubercharge rate penalty"				 // These disable Ubercharge, even from Uber on hit Primaries											
 				{
@@ -25184,10 +25082,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_GOOP_LAUNCHER"
 			"prefab"                    "weapon_syringegun"
-			"item_class"                "tf_weapon_pistol_scout"
 			"show_in_armory"			"1"
-			"item_slot"                 "secondary"
-			"anim_slot"                 "primary"
 
 			"item_quality"				"rarity2"
 			
@@ -25238,17 +25133,17 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"																
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value" 			"0.65"
+					"value" 			"0.8"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.3333333333333333"
+					"value"				"1.9"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"0.5"
+					"value"				"0.15"
 				}
 				"voice pitch scale"
 				{
@@ -25278,7 +25173,7 @@ Weapon by: 'The One Of Wonders'"
                 "strange restriction type 3"
 				{
 					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.5"
+					"value"				"1.15"
 				}				
 				"voice pitch scale"      
 				{
@@ -27693,15 +27588,15 @@ Weapon by: 'The One Of Wonders'"
 		"9191"
 		{
 			"name"						"TF_WEAPON_SURVIVAL_BAT"
-			"prefab"					"weapon_bat"
-            "item_class"                "tf_weapon_umbrella"			
+			"prefab"					"weapon_bat"			
 			"show_in_armory"			"1"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
 			"item_name"					"Un-Chained Fury"
 			"item_type_name"			"Bat"
-			"item_description"			"Hunter's Mark: Alt-Fire (Mouse2) to mark a single enemy for death! (20 sec cooldown)
+			"item_description"			"Smash Bat: on hit, gain mini-crits for a second and take a small amount of damage
+Weapon has a significantly higher random critical hit chance
 
 If I've got my eyes on you, let it be known you ain't walking home tonight.
 
@@ -27724,16 +27619,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"provide_on_active"
 					"value" 			"1"
 				}
-				"civ boost cond override"													
-				{
-					"attribute_class"	"add_civ_boost_override"
-					"value"				"30 0.5"
-				}
-				"civ boost targets enemies"													
-				{
-					"attribute_class"	"add_civ_boost_enemies"
-					"value"				"1"
-				}
 				"damage bonus"													
 				{
 					"attribute_class"	"mult_dmg"
@@ -27749,10 +27634,25 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"1.33"
 				}
-				"crit mod disabled"													
+				"mark self on miss"											
+				{
+					"attribute_class"	"self_mark_for_death_on_miss"
+					"value"				"2"
+				}
+				"voice pitch scale"													
 				{
 					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
+					"value"				"3.0"
+				}
+				"add condition on hit"																
+				{
+					"attribute_class"	"add_onhit_addcond_self"  
+					"value" 			"112 1"                   
+ 				}
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"add_onhit_addhealth" 
+					"value"				"-5"
 				}
 			}
 			"visuals"
@@ -29055,9 +28955,9 @@ Weapon by: 'The One Of Wonders'"
 			"name"						"TF_WEAPON_HEAVY_SHOTGUN_CHINALAKE"
 			"prefab"					"weapon_shotgun"
 			"show_in_armory"			"1"
-			"item_slot"					"primary"
+			"item_slot"					"secondary"
 			"anim_slot"                 "secondary"
-			"item_class"				"tf_weapon_shotgun_primary"
+			"item_class"				"tf_weapon_shotgun_hwg"
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
@@ -29074,7 +28974,6 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/weapons/c_models/c_china_lake_heavy/c_china_lake_heavy"
 			"model_world"				"models/weapons/c_models/c_china_lake_heavy/c_china_lake_heavy.mdl"
 			"model_player"				"models/weapons/c_models/c_china_lake_heavy/c_china_lake_heavy.mdl"
-			"extra_wearable"			"models/player/items/heavy_bagdolier_ammobelt.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -29095,7 +28994,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"10"
+					"value"				"8"
 				}
 				"voice pitch scale"
 				{
@@ -29110,6 +29009,11 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_reload_time"
+					"value"				"1.2"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_deploy_time"
 					"value"				"1.2"
 				}
 				"custom projectile model"
