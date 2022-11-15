@@ -8372,7 +8372,7 @@ Weapon by: 'Reagy'"
 			"anim_slot"					"secondary"
 			"image_inventory"			"backpack/weapons/w_models/w_assaultrifle"
 			"model_world"				"models/weapons/custom/w_models/w_assault_rifle_soldier.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_assault_rifle_soldier.mdl" // Needs viewmodel redoing to change fps again
+			"model_player"				"models/weapons/custom/v_models/v_assault_rifle_soldier_new.mdl"
 			"extra_wearable"			"models/player/items/custom/soldier/going_commando.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
