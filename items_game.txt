@@ -6988,7 +6988,7 @@ Weapon by: 'Reagy'"
 			"item_iconname"				"texas_doublebarrel"
 			"image_inventory"			"backpack/weapons/w_models/w_supershot"
 			"model_world"				"models/weapons/custom/w_models/w_supershot_engineer.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_supershot_engineer.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_supershot_engineer_new.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -9961,7 +9961,7 @@ Weapon by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/w_models/w_spas" 						
 			"model_world"				"models/weapons/custom/w_models/w_spas_medic.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_spas_pyro.mdl"
-			"extra_wearable"			"models/player/items/custom/medic/the_tie.mdl"			
+			"extra_wearable"			"models/player/items/custom/medic/the_tie_new.mdl"			
 			"attach_to_hands"			"2"													
 			"used_by_classes"
 			{		
@@ -10450,12 +10450,14 @@ We will send unto them... only you.
 Rip and tear, until it is done!
   
 Model by: 'Choev'
+Cosmetic by: 'emrfish6' 'frying dutchman'
 Weapon by: 'Reagy'"
 			"item_logname"				"crucible_sword"
 			"item_iconname"				"crucible_sword"
 			"image_inventory"			"backpack/weapons/w_models/w_crucible_longsword"
 			"model_world"				"models/weapons/custom/c_models/c_crucible_longsword.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_crucible_longsword.mdl"	
+			"model_player"				"models/weapons/custom/v_models/v_crucible_longsword.mdl"
+			"extra_wearable"			"models/player/items/demo/demo_sheath.mdl"			
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -11589,6 +11591,7 @@ Weapon by: 'Reagy'"
 //--Jolly Rancher - 7103--
 // V5.3.9 New model
 // V5.4 No longer best engineer primary and no longer beats the frying pan in terms of crit rate
+// V5.5.5 New animations, doesn't eat the screen anymore
 //---------------------------
 //---------------------------
 		"7104"
@@ -11609,13 +11612,13 @@ This weapon has no damage falloff
 Son, this gun that won the west..
 
 Model by: 'Batandy'
-Animations by: 'Indigo'
+Animations by: 'Domivu'
 Weapon by: 'Reagy'"
 			"item_logname"				"jollyrancher"
 			"item_iconname"				"jollyrancher"
 			"image_inventory"			"backpack/weapons/w_models/w_leverrifle_engineer_new"
 			"model_world"				"models/weapons/custom/w_models/w_leverrifle_engineer_new.mdl"					
-			"model_player"				"models/weapons/custom/v_models/v_leverrifle_engineer_new.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_leverrifle_engineer_new1.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -24358,8 +24361,8 @@ Weapon by: 'The One Of Wonders'"
 				"sound_double_shot"		"Weapon_Sword.HitFlesh"
 				"sound_double_shot_npc"	"Weapon_Sword.HitWorld"
 			}
-			"mouse_pressed_sound"		"#ui/item_knife_large_pickup.wav"
-			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
+			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
+			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
 //-------------------------
 //-------------------------
@@ -25405,6 +25408,7 @@ Now this is a real knife, boyo! Let me show you it's features up close!
   
 Model by: 'Barno'
 Animations by: 'Kylul' & 'Kiyoshi'
+Cosmetic by: '[unassigned]' 'emrfish6' 'frying dutchman'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"messer_demo"
 			"item_iconname"				"messer_demo"
@@ -25412,7 +25416,7 @@ Weapon by: 'The One Of Wonders'"
 			"model_world"				"models/weapons/c_models/c_messer/c_messer.mdl"
 			"model_player"				"models/weapons/v_models/v_messer/v_messer.mdl"
 			"attach_to_hands"			"2"
-            "extra_wearable"			"models/player/items/demo/demo_knighthelm/demo_knighthelm.mdl"			
+            "extra_wearable"			"models/player/items/demo/demo_knighthelm/demo_knighthelm_new.mdl"			
 			"used_by_classes"
 			{
 				"demoman"				"1"
@@ -25483,6 +25487,7 @@ Down with the king, chop off his head and put me in his seat instea- wait a minu
   
 Model by: 'MrFunreal'
 Animations by: 'Kylul' & 'Kiyoshi'
+Cosmetic by: 'NeoDement' 'Square' 'Harry' 'emrfish6' 'frying dutchman'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"kingslayer"
 			"item_iconname"				"kingslayer"
@@ -25490,7 +25495,7 @@ Weapon by: 'The One Of Wonders'"
 			"model_world"				"models/weapons/c_models/c_kingsword/c_kingsword.mdl"
 			"model_player"				"models/weapons/v_models/v_kingsword/v_kingsword.mdl"
 			"attach_to_hands"			"2"		
-			"extra_wearable"			"models/player/items/demo/bucket_royale/bucket_royale.mdl"
+			"extra_wearable"			"models/player/items/demo/bucket_royale/bucket_royale_new.mdl"
 			"used_by_classes"
 			{
 				"demoman"				"1"
@@ -26838,8 +26843,8 @@ Weapon by: 'The One Of Wonders'"
 				"sound_melee_hit_world"	"Weapon_Club.HitWorld"
 				"sound_burst"			"Weapon_Knife.MissCrit"
 			}
-			"mouse_pressed_sound"		"#ui/item_bottle_pickup.wav"
-			"drop_sound"				"#ui/item_bottle_drop.wav"
+			"mouse_pressed_sound"		"#ui/item_knife_large_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 //-------------------------------
 //-------------------------------
@@ -27225,12 +27230,13 @@ Drains cloak when in proximity
 Yeet Me: Press R to throw
 
 Model by: 'wowza'
+Cosmetic by: 'blueNES' 'YeetGod'
 Weapon by: 'Reagy'"
 			"item_logname"				"intermission"
 			"item_iconname"				"intermission"
 			"model_world"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
-//			"model_player"				"models/weapons/v_models/v_remotesap/v_remotesap.mdl" Classic doesn't support custom viewmodels on sappers yet... apparently
 			"model_player"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
+			"extra_wearable" 			"models/workshop/player/items/spy/stylish_satchel/stylish_satchel.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -28107,6 +28113,7 @@ Sword instantly kills burning players.
   
 Model by: 'Mnemosynaut, svdl'
 Animations by: 'Kylul' & 'Kiyoshi'
+Cosmetic by: 'GetGrenade' 'emrfish6' 'frying dutchman'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"dullahan_blade"
 			"item_iconname"				"dullahan_blade"
@@ -28114,7 +28121,7 @@ Weapon by: 'The One Of Wonders'"
 			"model_world"				"models/weapons/c_models/c_dullahan/c_dullahan.mdl"
 			"model_player"				"models/weapons/c_models/c_dullahan/c_dullahan.mdl"
 			"attach_to_hands"			"1"		
-			"extra_wearable"			"models/player/items/demo/deadking_head/deadking_head.mdl"
+			"extra_wearable"			"models/player/items/demo/deadking_head/deadking_head_new.mdl"
 			"used_by_classes"
 			{
 				"demoman"				"1"
@@ -28402,8 +28409,8 @@ Weapon by: 'The One Of Wonders'"
 					"value"				"0"
 				}
 			}
-			"mouse_pressed_sound"		"#ui/item_bottle_pickup.wav"
-			"drop_sound"				"#ui/item_bottle_drop.wav"
+			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
+			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
 //--------------------------
 //--------------------------
@@ -28886,12 +28893,14 @@ Weapon by: 'The One Of Wonders'"
 Running out of ammo is no excuse to stop fighting! you will fight until you die or are the last maggot standing!
 
 Model by: 'grampa' soldier'
+Cosmetic by: 'emrfish6' 'frying dutchman'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"bayonet_blade"
 			"item_iconname"				"bayonet_blade"
 			"image_inventory" 			"backpack/weapons/c_models/c_bayonet_blade/c_bayonet_blade"
 			"model_world"				"models/weapons/c_models/c_bayonet_blade/c_bayonet_blade.mdl"
 			"model_player"				"models/weapons/c_models/c_bayonet_blade/c_bayonet_blade.mdl"
+			"extra_wearable"			"models/player/items/demo/demo_sheath.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -29917,12 +29926,14 @@ Weapon by: 'Colrot' and 'Mister Mann'"
 YA DON'T BLOODY KILL ME, I KILL YOU!
   
 Model by: 'IteGood'
+Cosmetic by: 'emrfish6' 'frying dutchman'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"signpost_axe"
 			"item_iconname"				"signpost_axe"
 			"image_inventory"			"backpack/weapons/c_models/c_madness_signpost/c_madness_signpost"
 			"model_world"				"models/weapons/c_models/c_madness_signpost/c_madness_signpost.mdl"
 			"model_player"				"models/weapons/c_models/c_madness_signpost/c_madness_signpost.mdl"
+			"extra_wearable"			"models/player/items/demo/demo_sheath.mdl"
 			"attach_to_hands"			"1"	
 			"used_by_classes"
 			{
