@@ -473,12 +473,14 @@ Weapon from: New Old Weapons Pack"
 		{
 			"name"						"TF_WEAPON_CROWBAR"
 			"prefab"					"weapon_knife"											// YES, you can backstab with this!
+			"item_class"				"tf_weapon_club"
 			"show_in_armory"			"1"
 
 			"item_quality"				"rarity3"
 			"item_name"					"Crowbar"
 			"item_type_name"			"#TF_Weapon_Crowbar"
-			"item_description"			"Functions identically to the Knife
+			"item_description"			"
+You are unable to backstab while this item is equipped
 
 A tool for infiltration - and self-defense.
 
@@ -497,6 +499,24 @@ Weapon from: New Old Weapons Pack"
 			{
 				"min_viewmodel_offset"					"5 0 -10"
 				"special taunt"							"1"										// For weapons that have taunts that actually do stuff, put this so it doesn't get interrupted by other taunts! (Like Thriller)
+			}
+			"attributes"
+			{
+				"dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"2.0"
+				}
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.10"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
 			}
 			"visuals"
 			{
@@ -6983,6 +7003,7 @@ Lock, stock and two smoking barrels
 Better start praying boy
 
 Model edit by: 'DereBobblet'
+Animations from: Open Fortress - openfortress.fun
 Weapon by: 'Reagy'"
 			"item_logname"				"texas_doublebarrel"
 			"item_iconname"				"texas_doublebarrel"
@@ -7593,7 +7614,8 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Ant-a-Jar"
 			"item_type_name"			"Jar of Soldier Ants"
-			"item_description"			"
+			"item_description"			"Ant Assist: This item can 'blast jump', no damage is taken
+
 Mean little buggers these are
   
 Model by: 'Reagy'
@@ -7792,7 +7814,7 @@ Weapon by: 'Reagy'"
 			"item_iconname"				"bigiron"
 			"image_inventory"			"backpack/weapons/w_models/w_bigiron"
 			"model_world"				"models/weapons/custom/w_models/w_bigiron_engineer.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_bigiron_engineer.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_bigiron_engineer_new.mdl"
 			"extra_wearable"			"models/player/items/engineer/spurs.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -19246,7 +19268,10 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 			"item_name"					"Moyai"
 			"item_type_name"			"Rock"
-			"item_description"			"
+			"item_description"			"Sacred Spirit: This item can 'blast jump', no damage is taken
+
+Throwing rocks at people, its not a stone!
+
 Weapon by: 'Reagy'"
 			"item_logname"				"moyai"
 			"item_iconname"				"moyai"
@@ -19256,8 +19281,7 @@ Weapon by: 'Reagy'"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
-				"demoman"					"1"
-				"soldier"					"1"
+				"sniper"					"1"
 			}
 			"static_attrs"
 			{
@@ -19269,6 +19293,7 @@ Weapon by: 'Reagy'"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/custom/w_models/w_moyai_mirv_demo_projectile.mdl"
+				"centerfire projectile"					"1"
 			}
 			"attributes"
 			{
@@ -19295,7 +19320,7 @@ Weapon by: 'Reagy'"
 				"damage force increase hidden"
 				{
 					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.2"
+					"value" 			"0.35"
 				}
 			}
 			"visuals"
@@ -19324,7 +19349,6 @@ Weapon by: 'Reagy'"
 			{
 				"can_deal_gib_damage"					"1"
 				"can_deal_damage"						"1"
-				"can_be_equipped_by_soldier_or_demo"	"1"
 				"can_deal_critical_damage"				"1"
 				"can_deal_long_distance_damage"			"1"
 			}
@@ -19348,13 +19372,14 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"10 0 -10"
-				
 				"custom projectile model"				"models/weapons/w_models/w_grenade_frag.mdl"
 				"fire rate bonus hidden"				"1.33"
 				"override projectile type"				"3"
 //				"maxammo grenades1 increased"			"3"
-				"effect bar recharge rate increased"	"0.25"
+				"effect bar recharge rate increased"	"0.5"
 				"no damage falloff over distance"		"1"
+				"maxammo grenades1 increased"			"2"
+				"centerfire projectile"					"1"
 			}
 			"attributes"
 			{
@@ -19366,9 +19391,9 @@ Weapon by: 'Reagy'"
 				"damage bonus hidden"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.4"
+					"value"				"0.75"
 				}
-				"crit mod disabled hidden"
+				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
@@ -21496,7 +21521,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Soul Stamper"
 			"item_type_name"			"Modified stamp seal"
-			"item_description"			"Seal the deal.
+			"item_description"			"
+Seal the deal.
 
 Model by: 'bulka96'
 Weapon by: 'The One Of Wonders'"
@@ -27213,7 +27239,7 @@ Weapon by: 'Reagy'"
 			"item_class"				"tf_weapon_sapper"
 			"item_slot"					"building"
 
-			"image_inventory"			"backpack/weapons/w_models/w_sapper"
+			"image_inventory"			"backpack/weapons/c_models/c_remotesap"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 
