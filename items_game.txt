@@ -3850,7 +3850,7 @@ Edited by: 'The One Of Wonders'"
 
 For optimal effect, place barrels within ass-kicking distance of your enemy.
 
-Weapon from: New Old Weapons Pack / Open Fortress
+Weapon from: New Old Weapons Pack / Open Fortress - openfortress.fun
 Weapon edited by: 'Reagy'"
 			"item_logname"				"dm_ssg"
 			"item_iconname"				"dm_ssg"
@@ -6242,7 +6242,7 @@ Weapon by: 'Reagy'"
 
 Well ain't that a mighty fine shirt to go with me gloves
 
-Animations from: Open Fortress
+Animations from: Open Fortress - openfortress.fun
 Weapon by: 'Reagy'"
 			"item_slot"					"melee"
 			"item_quality"				"rarity2"
@@ -8366,7 +8366,7 @@ Weapon by: 'Reagy'"
 			"item_name"					"Fortunate Son"
 			"item_description"			"Some folks are born made to wave the flag
 
-Model from: Open Fortress
+Model from: Open Fortress - openfortress.fun
 Weapon by: 'Reagy'"
 			"propername"				"1"
 			"anim_slot"					"secondary"
@@ -10559,7 +10559,7 @@ You cannot attack with this item
 EXCUSE ME!
 I'M IN NEED OF MEDICAL ATTENTION!
 
-Model from: Open Fortress
+Model from: Open Fortress - openfortress.fun
 Cosmetic by: 'FiveEyes' 'Stev the Recalcitrant Epizeuxis' 'Sims_doc'
 Weapon by: 'Reagy'"
 			"item_logname"				"medkit"
@@ -13039,7 +13039,7 @@ Weapon by: 'Majro'"
 
 Rip and tear, lads!
   
-Original Model and Animations from Open Fortress
+Original Model and Animations from Open Fortress - openfortress.fun
 Original Weapon by: 'Reagy'
 Repurposed by: 'Majro'"
 			"item_logname"				"glorykill"
@@ -13722,7 +13722,7 @@ Deals 'normal' melee damage
 
 Lad, I used to box. Could have gone pro if I didn't go to Oxford and get a masters in economics.
 
-Animations by: Open Fortress
+Animations by: Open Fortress - openfortress.fun
 Original weapon by: 'shualdock'
 Cosmetic by: 'Suomimies55'
 Edited by: 'Reagy'"
@@ -15225,7 +15225,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_description"			"
 A memento from a year long past... it still fires true, probably waiting for you.
 
-Model from: Open Fortress
+Model from: Open Fortress - openfortress.fun
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/w_models/w_walther_p38"
@@ -15273,7 +15273,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 
 Watch these pistol whips knucklehead! they come with extra hurt!
 
-Model from: Open Fortress
+Model from: Open Fortress - openfortress.fun
 Weapon from: Tangerine Paint and Grunt's Weapon Addons
 Edited by: 'The One Of Wonders'"
 			"model_world"				"models/weapons/w_models/w_walther_p38_whip.mdl"
@@ -19334,7 +19334,7 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 			"item_name"					"Frag Grenade"
 			"item_description"			"
-Animations by: 'Kiyoshi'
+Animations and viewmodel from: Pre-Fortress 2 - prefortress.com
 Weapon by: 'Reagy'"
 			"item_slot"					"secondary"
 			"anim_slot"					"melee"
@@ -19343,7 +19343,7 @@ Weapon by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/w_models/w_grenade_frag"
 			
 			"model_world"				"models/weapons/w_models/w_grenade_frag.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_grenade_frag.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_grenade_frag_new.mdl"
 
 			"static_attrs"
 			{

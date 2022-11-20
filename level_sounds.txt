@@ -12366,3 +12366,21 @@
 	"volume"		"1.0"
 	"wave"			")weapons/displacer_fire.wav"
 }
+// ------------------------------------------------------------------------------------ //
+// Frag Grenade
+// ------------------------------------------------------------------------------------ //
+"Weapon_Grenade.PullPin"
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"0.35"
+	"wave"		")weapons/grenade_pin_pull.wav"
+}
+// Leftover from PF2, don't need the file as Classic already has it under another name
+"Weapon_Grenade_Mirv.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_94dB"
+	"wave"		")weapons/mirv_swing.wav"
+}
