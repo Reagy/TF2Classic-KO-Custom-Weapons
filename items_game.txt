@@ -7826,7 +7826,7 @@ Weapon by: 'Reagy'"
             "static_attrs"
             {
 				"fire rate penalty hidden"				"3.8"
-				"hidden secondary max ammo penalty"		"0.18"					
+				"hidden secondary max ammo penalty"		"0.175"					
 			}
 			"attributes"
 			{
@@ -13436,7 +13436,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 			"model_world"				"models/weapons/custom/w_models/w_shot_civ.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_shot_civ.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_shot_civ_new.mdl"
 			"extra_wearable"			"models/player/items/civ_bill.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -15410,11 +15410,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_no_reload_display_only"
 					"value"				"1"
 				}
-//				"damage bonus"
-//				{
-//					"attribute_class"	"mult_dmg"
-//					"value"				"1.4" // This does too much damage, its a straight upgrade wtf wonder
-//				}
 				"Projectile speed increased"
 				{
 					"attribute_class"	"mult_projectile_speed"
@@ -15449,10 +15444,90 @@ Weapon by: 'The One Of Wonders'"
 //------------------------
 //--ENGINEER TRANQ- 9031--
 // V5.3.1 Slightly tweaked damage profile
+// V5.5.5 Moved to Civ
 //------------------------
 //------------------------
 		"9031"
 		{
+			"name"						"The T.R.A.N.Q"							
+			"prefab"					"weapon_umbrella"
+			"item_class"				"tf_weapon_pistol"
+			"show_in_armory"			"1"
+			
+			"item_quality"				"rarity3"
+			
+			"propername"				"1"
+			"item_name"					"T.R.A.N.Q." 									// Still can't think of its acronym
+			"item_type_name"			"#TF_Weapon_Tranq"
+			"item_description"			"Fires tranquilizer darts
+
+For stopping a Heavy in their tracks.
+
+Weapon from: Tangerine Paint and Grunt's Weapon Addons"
+			"item_logname"				"military_pistol_tranq"
+			"item_iconname"				"military_pistol_tranq"
+			"image_inventory"			"backpack/weapons/w_models/w_military_pistol"
+			"model_world"				"models/weapons/w_models/w_military_pistol_civ.mdl"
+			"model_player"				"models/weapons/v_models/v_military_pistol_engineer.mdl"
+			"extra_wearable"			"models/player/items/civ_bill.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"civilian"					"1"
+			}
+           	"static_attrs"																
+           	{
+				"override projectile type"				"30"					// Tranq Dart									
+			}
+			"attributes"
+			{
+				"tranq on hit"																	
+				{
+					"attribute_class"	"mod_tranq_onhit"
+					"value"				"1.0"
+				}
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.333333333"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.25" 
+				}
+				"maxammo secondary reduced"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value" 			"0.3"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.5"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"5"
+				}
+			}
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_MP_ATTACK_STAND_MELEE"					"ACT_MP_GESTURE_FLINCH_CHEST"
+					"ACT_MP_ATTACK_CROUCH_MELEE"				"ACT_MP_GESTURE_FLINCH_CHEST"
+					"ACT_MP_ATTACK_SWIM_MELEE"					"ACT_MP_GESTURE_FLINCH_CHEST"
+				}
+				"sound_reload"			"Weapon_Pistol.WorldReload"
+				"sound_single_shot"		"Weapon_1911.Shoot"
+				"sound_burst"			"Weapon_1911.ShootCrit"
+				"muzzle_flash"			"muzzle_scattergun"								
+				"tracer_effect"			"bullet_scattergun_tracer01"					
+			}
+			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
+			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
 //-------------------------------
 //-------------------------------
@@ -29551,8 +29626,8 @@ Repurposed by: 'Majro'"
 			"item_logname"				"heartbreaker"
 			"item_iconname"				"heartbreaker"
 			"image_inventory"			"backpack/weapons/v_models/v_heart/v_heart"
-			"model_world"				"models/weapons\custom\w_models\w_heart.mdl"
-			"model_player"				"models/weapons\custom\v_models\v_heart.mdl"
+			"model_world"				"models/weapons\custom\w_models\w_heart_new.mdl"
+			"model_player"				"models/weapons\custom\v_models\v_heart_new.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -29568,7 +29643,7 @@ Repurposed by: 'Majro'"
 				"custom projectile model"
 				{
 					"attribute_class" "custom_projectile_model"
-					"value"			"models/weapons/gibs/w_heart_bullet.mdl"
+					"value"			"models/weapons/gibs/w_heart_bullet_new.mdl"
 				}
 					
 				
