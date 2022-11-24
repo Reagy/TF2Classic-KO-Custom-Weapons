@@ -7614,7 +7614,9 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Ant-a-Jar"
 			"item_type_name"			"Jar of Soldier Ants"
-			"item_description"			"Ant Assist: This item can 'blast jump', no damage is taken
+			"item_description"			"Ammo pickups do not give ammo
+Recharges over time
+Ant Assist: This item can 'blast jump', no damage is taken
 
 Mean little buggers these are
   
@@ -19168,7 +19170,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_SCOUT_THROWABLE"
 			"item_class"				"tf_weapon_grenade_mirv"							
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 			
 			"item_quality"				"rarity3"
 			
@@ -19178,18 +19180,22 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 			
-			"item_logname"				""
-			"item_iconname"				""
+			"item_logname"				"throwing_knives"
+			"item_iconname"				"throwing_knives"
 			"item_type_name"			"Throwable"
-			"item_name"					""
-			"item_description"			"You 'needed' a weapon and now you have it...?
+			"item_name"					"Throwing Knives"
+			"item_description"			"Set of 3 throwing knives
+Ammo pickups do not give ammo
+Recharges over time
 
-Model by: ''
+iS ThAt A 「J0J0」 ReEeReNcE
+
+Model by: 'Harry.tf'
 Weapon by: 'Reagy'"
 			"propername"				"1"
-			"image_inventory"			""
-			"model_world"				"models/weapons/custom/w_models/.mdl"
-			"model_player"				"models/weapons/custom/v_models/.mdl"
+			"image_inventory"			"backpack/weapons/c_models/c_throwingknife"
+			"model_world"				"models/weapons/custom/c_models/c_throwingknife/c_throwingknife.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_throwingknife/v_throwingknife.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -19197,10 +19203,10 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"
 			{
-				"override projectile type" 				"2"									
+				"override projectile type" 				"30"									
 				"damage bonus hidden"					"0.334"								
 				"allowed in medieval mode"				"1"
-				"UNIQUE maxammo grenades1 HIDDEN"		"12"
+				"UNIQUE maxammo grenades1 HIDDEN"		"3"
 				"min_viewmodel_offset"					"10 0 -10"
 				"no damage falloff over distance"		"1"
 			}
@@ -19209,7 +19215,7 @@ Weapon by: 'Reagy'"
 				"custom projectile model"													
 				{
 					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/custom/w_models/_projectile.mdl"	
+					"value"				"models/weapons/custom/c_models/c_throwingknife/c_throwingknife_pro.mdl"	
 				}
 				"mult_item_meter_charge_rate"												
 				{
@@ -19224,7 +19230,7 @@ Weapon by: 'Reagy'"
 				"strange restriction type 1"													
 				{
 					"attribute_class"	"mod_rocket_gravity"
-					"value"				"0.5"
+					"value"				"1.5"
 				}
 				"voice pitch scale"															
 				{
@@ -19268,7 +19274,9 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 			"item_name"					"Moyai"
 			"item_type_name"			"Rock"
-			"item_description"			"Sacred Spirit: This item can 'blast jump', no damage is taken
+			"item_description"			"Ammo pickups do not give ammo
+Recharges over time
+Sacred Spirit: This item can 'blast jump', no damage is taken
 
 Throwing rocks at people, its not a stone!
 
@@ -19357,7 +19365,9 @@ Weapon by: 'Reagy'"
 			"propername"				"0"
 			"item_quality"				"rarity2"
 			"item_name"					"Frag Grenade"
-			"item_description"			"
+			"item_description"			"Ammo pickups do not give ammo
+Recharges over time
+
 Animations and viewmodel from: Pre-Fortress 2 - prefortress.com
 Weapon by: 'Reagy'"
 			"item_slot"					"secondary"
@@ -19640,6 +19650,8 @@ Weapon by: 'The One Of Wonders'"
 		//	"propername"				"1"
 			"item_name"					"Big Ol' Bouncin' Betty"
 			"item_description"			"Bombs are very bouncy
+Ammo pickups do not give ammo
+Recharges over time
  
 Ohh she's a beaut'
 
@@ -19728,7 +19740,9 @@ Weapon from: Renaissance Revival"
 			"item_type_name"			"#TF_Weapon_Grenade"
 			"propername"				"0"
 			"item_name"					"Whiff of Olde Brimstone"
-			"item_description"			"
+			"item_description"			"Ammo pickups do not give ammo
+Recharges over time
+
 Weapon from: Renaissance Revival"
 			"item_slot"					"secondary"
 			"anim_slot"					"ITEM2"
@@ -21802,7 +21816,9 @@ Weapon by 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Second Amendment"
 			"item_type_name"			"Flintlock Musket"
-			"item_description"			"Air Superiority: weapon deploys much faster while rocket jumping
+			"item_description"			"Ammo pickups do not give ammo
+Recharges over time
+Air Superiority: weapon deploys much faster while rocket jumping
 
 This weapon has one shot at any given time and reloads automatically
 
@@ -21902,9 +21918,9 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity4"
 			"item_name"					"Unholy Reckoning"
 			"item_type_name"			"Accursed throwing knife"
-			"item_description"			"Cursed of the Shattered Empress: 
-
-You die instantly to any damage taken while this weapon is active
+			"item_description"			"Ammo pickups do not give ammo
+Recharges over time
+Cursed of the Shattered Empress: You die instantly to any damage taken while this weapon is active
 
 Cannot use sapper until thrown
 
@@ -23956,7 +23972,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Building Upgrader"
 			"item_type_name"			"Fusion Blaster"
-			"item_description"			"Holding to fire builds a high velocity ricochet laser
+			"item_description"			"Ammo pickups do not give ammo
+Holding to fire builds a high velocity ricochet laser
 Dealing damage to enemies with this weapon repairs and upgrades buildings
 
 Weapon requires a recharge after firing once
