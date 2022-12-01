@@ -3800,11 +3800,6 @@ Edited by: 'The One Of Wonders'"
 					"attribute_class"	"mult_clipsize"
 					"value"				"0.25"
 				}
-				"Reload time increased"
-				{
-					"attribute_class"	"mult_reload_time"
-					"value"				"1.25"
-				}
 				"Blast radius decreased"
 				{
 					"attribute_class"	"mult_explosion_radius"
@@ -3897,11 +3892,11 @@ Weapon edited by: 'Reagy'"
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"-0.25"
 				}
-				"max health additive bonus"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value"				"25"
-				}
+				"move speed bonus"
+                {
+                    "attribute_class"    "mult_player_movespeed"
+                    "value"                "1.1"
+                }
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
@@ -4097,10 +4092,10 @@ Weapon from: New Old Weapons Pack"
 		"3444"
 		{
 			"name"						"TF_WEAPON_LMG"											// This weapon went through a lot of growing pains, and it still needs work. But, here it is for now!
-			"item_class"				"tf_weapon_smg"											// The idea is to eventually have it push you backwards midair a-la the M249 from Opposing Force. Obviously, not quite possible yet, but soon...
 			"show_in_armory"			"1"
-			"item_slot"					"secondary"
+			"item_slot"					"primary"
 			"anim_slot"					"secondary"
+			"item_class"				"tf_weapon_hunterrifle"
 
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
@@ -4109,10 +4104,10 @@ Weapon from: New Old Weapons Pack"
 			"item_quality"				"rarity3"
 			"item_name"					"Screaming Eagle"
 			"item_type_name"			"Machine Gun"
-			"item_description"			"
-'Last one alive, lock the door!'
+			"item_description"			"'Last one alive, lock the door!'
 
-Weapon from: New Old Weapons Pack"
+Weapon from: New Old Weapons Pack
+Edited by: 'The One Of Wonders'"
 			"item_logname" 				"lmg"
 			"item_iconname" 			"lmg"
 			"image_inventory"			"backpack/weapons/w_models/w_lmg"
@@ -4126,40 +4121,45 @@ Weapon from: New Old Weapons Pack"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"0 0 -8"
-				"damage bonus hidden"					"1.25"
+				"class select override vcd"				"taunt07"
 			}
 			"attributes"
 			{
-				"clip size bonus"
+			    "voice pitch scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"0.55"
+				}
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"2"
+					"value"				"13.33333333333"
 				}
-				"fire rate bonus"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.8"
+					"value" 			"0.096"
 				}
-				"maxammo secondary increased"
+				"voice pitch scale"
 				{
-					"attribute_class"	"mult_maxammo_secondary"
-					"value" 			"1.345"
+					"attribute_class"	"mult_maxammo_primary"
+					"value" 			"6.66666666667"
 				}
-				"Reload time increased"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_reload_time"
 					"value" 			"1.65"
 				}
-				"spread penalty"
+				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"3.5"
+					"value"				"0.025"
 				}
-//				"apply self knockback"															// If this works, this pushes you veeery slightly back with each shot. It's not enough to fly, but it can modify your jumps if you shoot backward or down!
-//				{
-//					"attribute_class"	"apply_self_knockback"
-//					"value"				"35"
-//				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"unimplemented_mod_sniper_no_charge" // No aiming with a machine gun, maggot!
+					"value"				"1"														
+				}
 			}
 			"visuals"
 			{
@@ -7575,7 +7575,7 @@ Weapon by: 'Reagy'"
 				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/dirty_bomb_projectile.mdl"
+					"value"				"models/props_soho/trashbag001.mdl"
 				}
 			}
 			"visuals"																
@@ -12152,13 +12152,15 @@ Weapon by: 'The One Of Wonders'"
 		"7110"
 		{
 			"name"						"TF_WEAPON_DEMO_MACHINEGUN"		
-			"prefab"					"weapon_stickybomb_launcher"
-			"item_class"				"tf_weapon_smg"
+			"item_class"				"tf_weapon_hunterrifle"
 			"show_in_armory"			"1"
 			"anim_slot"					"primary"
-			"item_slot"					"secondary"
+			"item_slot"					"primary"
 
 			"item_quality"				"rarity2"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
 
 			"propername"				"1"
 			"item_name"					"Drunken Fury"
@@ -12178,6 +12180,11 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"demoman"				"1"
 			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"0 0 -8"
+				"class select override vcd"				"taunt07"
+			}
 			"attributes"																	
 			{
 // No Fun Allowed
@@ -12189,42 +12196,53 @@ Weapon by: 'The One Of Wonders'"
 //					"attribute_class"	"explosive_bullets"
 //					"value"				"1"
 //				}	
-				"clip size bonus"
+                "dmg bonus vs buildings"
 				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"2"
-				}
-				"maxammo secondary increased"
-				{
-					"attribute_class"	"mult_maxammo_secondary"
-					"value" 			"1.345"
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"1.33"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.66666667"
+					"value" 			"0.3"
 				}
-                "spread penalty"
+				"voice pitch scale"
 				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"1.67"
+					"attribute_class"	"mult_clipsize"
+					"value"				"13.33333333333"
 				}
-				"fire rate penalty"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.1"
+					"value" 			"0.05"
 				}
-				"crit mod disabled"															
+				"voice pitch scale"
 				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
+					"attribute_class"	"mult_maxammo_primary"
+					"value" 			"6.66666666667"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value" 			"1.2"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.066666666666667"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"unimplemented_mod_sniper_no_charge" // No aiming with a machine gun, maggot!
+					"value"				"1"														
 				}
 			}
 			"visuals"
 			{
 				"sound_single_shot"		"Weapon_Demo_MG.Fire"
 				"sound_burst"			"Weapon_Demo_MG.FireCrit"
-				"muzzle_flash"			"muzzle_grenadelauncher"				
+				"muzzle_flash"			"muzzle_grenadelauncher"
+                "tracer_effect"			"bullet_scattergun_tracer01"				
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -16370,6 +16388,11 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.70"
 				}
+				"damage penalty"															
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.9"
+				}
 				"reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
@@ -16431,6 +16454,11 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				{
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.70"
+				}
+				"damage penalty"															
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.9"
 				}
 				"reload time increased"
 				{
@@ -16496,6 +16524,11 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.70"
 				}
+				"damage penalty"															
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.9"
+				}
 				"reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
@@ -16559,6 +16592,11 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				{
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.70"
+				}
+				"damage penalty"															
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.9"
 				}
 				"reload time increased"
 				{
@@ -18815,6 +18853,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_reload_time"
 					"value"				"0.9"
 				}
+				"move speed bonus"
+                {
+                    "attribute_class"    "mult_player_movespeed"
+                    "value"                "1.1"
+                }
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
@@ -18916,7 +18959,7 @@ Weapon by: 'The One Of Wonders'"
                 "move speed penalty"
                 {
                     "attribute_class"    "mult_player_movespeed"
-                    "value"                "0.7"
+                    "value"                "0.85"
                 }
                 "no primary ammo from dispensers while active"
                 {
@@ -18927,11 +18970,6 @@ Weapon by: 'The One Of Wonders'"
                 {
                     "attribute_class"    "blast_dmg_to_self"
                     "value"                "5"
-                }	
-                "dmg taken increased"
-                {
-                    "attribute_class"    "mult_dmgtaken"
-                    "value"                "1.1"
                 }					
 				"crit mod disabled"
 				{
@@ -19878,14 +19916,16 @@ Weapon from: Renaissance Revival"
 		{
 			"name"						"TF_WEAPON_SOLAR_FLAMER"			
 			"prefab"					"weapon_flamethrower"
-			"item_class"				"tf_weapon_rocketlauncher"	
+			"item_slot"					"primary"
+			"anim_slot"                 "primary"
+			"item_class"				"tf_weapon_scattergun"
 			"show_in_armory"			"1"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
 			"item_name"					"Solar Flare"
 			"item_type_name"			"Energy Fireball Launcher"
-			"item_description"			"This weapon fires short-range combustion blasts
+			"item_description"			"Reach for the Stars: this weapon can be used to blast jump
 
 Pyro reassures you that it's just a bad sunburn.
 
@@ -19901,18 +19941,12 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"pyro"					"1"
 			}
+			"static_attrs"
+			{
+				"override projectile type" 				"2"
+			}
 			"attributes"
 			{
-			    "provide on active"    // For whatever reason, some attributes bleed over...
-				{
-					"attribute_class"	"provide_on_active"
-					"value"				"1"
-				}
-			    "mod max primary clip override"
-				{
-					"attribute_class"	"mod_max_primary_clip_override"
-					"value"				"-1"
-				}
 				"rocket gravity"
 				{
 					"attribute_class"	"mod_rocket_gravity"
@@ -19922,11 +19956,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"custom_projectile_model"
 					"value"				"models/weapons/w_models/w_drg_ball.mdl"
-				}
-				"rocket limited lifetime"						// Explodes effectively instantly 					
-				{
-					"attribute_class"	"rocket_lifetime"
-					"value"				"0.15"
 				}
 				"voice pitch scale"                         
 				{
@@ -19943,16 +19972,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"add_onhit_addhealth_vs_burning"
 					"value"				"25"
 				}
-				"damage penalty"
-				{
-					"attribute_class"	"set_scattergun_no_reload_single"
-					"value"				"0.6"
-				}
-				"maxammo primary reduced"
-				{
-					"attribute_class"	"bleeding_duration"
-					"value"				"0.5"
-				}
 				"airblast disabled"								// Rocket Launcher so.. yea, figures.
 				{
 					"attribute_class"	"strange_restriction_type_1"
@@ -19961,7 +19980,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.33"
+					"value"				"5"
 				}
 				"voice pitch scale"
 				{
@@ -19973,16 +19992,31 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_projectile_speed"
 					"value"				"2"
 				}
-				"voice pitch scale"                            // Fire blast, not a proper explosion.
+				"voice pitch scale"                            // This weapon can be used to.. pyro jump?
 				{
 					"attribute_class"	"mult_dmgself_push_force"
-					"value"				"0"
+					"value"				"6"
 				}
-				"voice pitch scale"                            // No self damage.
+				"voice pitch scale"                            
 				{
 					"attribute_class"	"blast_dmg_to_self"
-					"value"				"0"
+					"value"				"0.5"
 				}
+				"scattergun no reload single"													
+				{
+					"attribute_class"	"set_scattergun_no_reload_single"
+					"value"				"1"
+				}	
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"1.5"
+				}
+				"projectile spread angle penalty"
+                {
+                    "attribute_class"    "voice_pitch_scale"
+                    "value"                "3"
+                }	
 			}	
 			"visuals"
 			{
@@ -21190,7 +21224,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"1.66"
+					"value" 			"1.8"
 				}
 				"voice pitch scale"
 				{
@@ -21881,7 +21915,6 @@ Weapon by 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_MUSKET_SOLDIER"
 			"prefab"					"weapon_shotgun"
-			"item_class"                "tf_weapon_grenade_mirv"
 			"show_in_armory"			"1"
 			"item_quality"				"vintage"
 			"item_slot"					"secondary"
@@ -21891,11 +21924,9 @@ Weapon by 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Second Amendment"
 			"item_type_name"			"Flintlock Musket"
-			"item_description"			"Ammo pickups do not give ammo
-Recharges over time
-Air Superiority: weapon deploys much faster while rocket jumping
+			"item_description"			"Air Superiority: weapon deploys much faster while rocket jumping
 
-This weapon has one shot at any given time and reloads automatically
+This weapon has one shot at any given time
 
 The key to our constitution, gentlemen! treat her like she's your wife!
 
@@ -21930,14 +21961,14 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.06"
+					"value"				"0.5"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"20"
+					"value"				"4"
 				}
-				"strange restriction type 1"
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.075"
@@ -21959,8 +21990,8 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"voice pitch scale"	
 				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.25"
+					"attribute_class"	"mult_maxammo_secondary"
+					"value"				"0.04"
 				}
 			}
 			"visuals"
@@ -24200,7 +24231,7 @@ Sentry replacement by: 'rotzloeffel' 'Gadget'"
 				"upgrade rate decrease"										
 				{
 					"attribute_class"	"upgrade_rate_mod"
-					"value" 			"0.8"
+					"value" 			"0.5"
 				}
 			}
 			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
@@ -24256,10 +24287,10 @@ Sentry replacement by: 'rotzloeffel' 'Gadget'"
 					"attribute_class"	"mult_dmg_vs_buildings"
 					"value" 			"0.8"
 				}
-				"no metal from dispensers while active"
+				"damage penalty"
 				{
-					"attribute_class"	"no_metal_from_dispensers_while_active"
-					"value" 			"1"
+					"attribute_class"	    "mult_dmg"
+					"value" 				"0.6"
 				}
 				// Hidden build rate bonuses
 				"voice pitch scale"
@@ -24326,16 +24357,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_rocket_gravity"
 					"value"				"1.2"
 				}
-				"Set DamageType Ignite"												
-				{
-					"attribute_class"	"set_dmgtype_ignite"
-					"value" 			"1"
-				}
-				"weapon burn dmg increased"
-				{
-					"attribute_class"	"mult_wpn_burndmg"
-					"value" 			"4"
-				}
                 "move speed bonus"
 				{
 					"attribute_class"	"mult_player_movespeed"
@@ -24359,17 +24380,12 @@ Weapon by: 'The One Of Wonders'"
 				"damage penalty"
 				{
 					"attribute_class"	    "mult_dmg"
-					"value" 				"0.6"
+					"value" 				"0.8"
 				}
 				"dmg penalty vs buildings"										
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
 					"value" 			"0.3"
-				}
-				"weapon burn time reduced"
-				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.2"
 				}
 				"strange restriction type 1"
                 {
@@ -26440,11 +26456,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_wpn_burntime"
 					"value"				"0.1"
 				}
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"1.25"
-				}
 				"Construction rate decreased"
 				{
 					"attribute_class"	"mult_construction_value"
@@ -26634,6 +26645,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"0.125"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"1.5"
 				}
 				"crit mod disabled"															
 				{
@@ -30435,15 +30451,10 @@ Weapon from: Fred's Fight Starters"
 			}
 			"attributes"
 			{
-				"fire rate bonus"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.75"
-				}
 				"Construction rate increased"
 				{
 					"attribute_class"	"mult_construction_value"
-					"value"				"1.66"
+					"value"				"1.5"
 				}
 				"Repair rate decreased"
 				{
