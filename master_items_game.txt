@@ -26729,7 +26729,7 @@ Weapon by: 'The One Of Wonders'"
 				"heal on afterburn"
 				{
 					"attribute_class"	"add_burn_heals"
-					"value" 			"3"
+					"value" 			"2"
 				}
                 "weapon burn dmg increased"
 				{
@@ -30302,7 +30302,7 @@ Weapon by: 'The One Of Wonders'"
 				"move speed penalty"
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.7"
+					"value"				"0.9"
 				}
 			}
 			"visuals"
