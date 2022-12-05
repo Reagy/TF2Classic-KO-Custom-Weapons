@@ -6949,7 +6949,7 @@ Weapon by: 'Reagy'"
 				"damage bonus hidden"	
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"3.125"
+					"value" 			"2.22222222222"
 				}
 				"no damage falloff over distance"
 				{
@@ -6960,6 +6960,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
 					"value"				"0.25"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
 				}
 			}
 			"visuals"
@@ -10852,11 +10857,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"provide_on_active"
 					"value"				"1"
-				}
-			    "no damage falloff over distance"
-				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
 				}	
 				"move speed bonus"
 				{
@@ -12231,7 +12231,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"13.33333333333"
+					"value"				"8.33333333333"
 				}
 				"voice pitch scale"
 				{
@@ -12241,7 +12241,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value" 			"6.66666666667"
+					"value" 			"6.25"
 				}
 				"voice pitch scale"
 				{
@@ -16922,6 +16922,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
             "item_name"					"Artisan's Artillery"
 			"item_type_name"			"Artillery Cannon"
 			"item_description"			"Fires straight-shooting artillery shells that explode on impact
+Shells explode shortly after impacting the ground or flying too far 
 
 Fire away, boyos!
 
@@ -16939,15 +16940,10 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{																	
-				"override projectile type" 				"1"
+				"override projectile type" 				"30"
 			}
             "attributes"
             {
-			    "explosive bullets"
-				{
-					"attribute_class"	"explosive_bullets"
-					"value"				"1"
-				}
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
@@ -16957,17 +16953,22 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"2"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"1.1"
+					"value"				"1.35"
 				}
 				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
 					"value"				"models/weapons/w_models/w_artillery_grenade_demo.mdl"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				"rocket limited lifetime"														
+				{
+					"attribute_class"	"rocket_lifetime"
+					"value"				"0.85"
 				}
             }
 			"visuals"
@@ -17770,6 +17771,11 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
 					"value"				"1.5"
+				}
+				"maxammo grenades1 increased"
+				{
+					"attribute_class"	"mult_maxammo_grenades1"
+					"value" 			"2"
 				}
 				"move speed bonus"															// Makes you move at the same speed as Medic
 				{
@@ -20904,11 +20910,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_sniper_soft_zoom"
 					"value" 			"1"
-				}
-                "explosive bullets"
-				{
-					"attribute_class"	"explosive_bullets"
-					"value"				"1"
 				}
 				"damage bonus"
 				{
@@ -27139,15 +27140,15 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity3"
 			"item_name"					"Traumahawk"
 			"item_type_name"			"Improvised Multi Tool"
-			"item_description"			"Does normal damage to buildings.
-Impostor among us: crits vs disguised players
+			"item_description"			"100% damage bonus vs buildings
+			Impostor Detection: crits vs disguised players
 
-Fitting for some loose screws...
+			Fitting for some loose screws...
 
-Model By: 'spike nitros'
-Weapon By: 'Colrot'"
-			"item_logname"				"traumahawk"
-			"item_iconname"				"traumahawk"
+			Model By: 'spike nitros'
+			Weapon By: Colrot"
+			"item_logname"				"sledgehammer"
+			"item_iconname"				"sledgehammer"
 			"image_inventory"			"backpack\weapons\c_axwrench\c_axwrench"
 			"model_world"				"models\weapons\c_models\c_axwrench\c_axwrench.mdl"
 			"model_player"		    	"models\weapons\v_models\v_axwrench\v_axwrench.mdl"
@@ -27156,6 +27157,10 @@ Weapon By: 'Colrot'"
 			{
 				"pyro"					"1"
 			}
+			"static_attrs"
+			{
+					 "dmg bonus vs buildings hidden"     "3.65"
+			}
 			"attributes"
 			{
 			     "provide on active"
@@ -27163,25 +27168,20 @@ Weapon By: 'Colrot'"
 					"attribute_class"	"provide_on_active"
 					"value" 			"1"
 				}
-				"move speed bonus"
+				"SET BONUS: dmg from sentry reduced"
 				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"1.20"
+					"attribute_class"	"dmg_from_sentry_reduced"
+					"value"				"0.75" 
 				}
-				"damage applies to sappers"														
+					"damage applies to sappers"														
 				{
 					"attribute_class"	"set_dmg_apply_to_sapper"
 					"value"				"1"
 				}
-				"dmg bonus vs buildings hidden"                                                 
-				{
-					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"				"1.354"
-				}
-				"damage penalty"																
+				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.754"
+					"value"				"0.55"
 				}
 					"fire rate penalty"
 				{
@@ -28941,9 +28941,7 @@ Weapon by: 'The One Of Wonders'"
 
 			"item_name"				    "Number 29"
 			"item_type_name"			"Heavy Revolver"
-			"item_description"			"This weapon has no damage fall-off
-
-Do you feel lucky? well, do you???
+			"item_description"			"Do you feel lucky? well, do you???
 
 Model by: 'Ertz'
 Weapon by: 'The One Of Wonders'"
@@ -28989,13 +28987,7 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}
-				// backend stuff	
-                "no damage falloff over distance"
-				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
-				}				
+				}			
 			}
 			"visuals"
 			{
@@ -30140,7 +30132,8 @@ Weapon by: 'The One Of Wonders'"
 			
 			"item_name"					"Royal Flush"
 			"item_type_name"			"Deck of Cards"
-			"item_description"			"Lucky Roll: Increased crit chance
+			"item_description"			"Civilian cannot throw cards effectively
+Lucky Roll: Increased crit chance
 
 Lets play a game... pick a card
 
@@ -30200,12 +30193,27 @@ Weapon by: 'Reagy'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.65"
+					"value"				"0.3"
 				}
+				"strange restriction type 1"
+                {
+                    "attribute_class"    "mult_spread_scale"
+                    "value"                "0.06"
+				}	
+				"projectile spread angle penalty"
+                {
+                    "attribute_class"    "voice_pitch_scale"
+                    "value"                "4"
+                }
 				"custom projectile model"													
 				{
 					"attribute_class"	"custom_projectile_model"
 					"value"				"models/weapons/w_models/w_cards/w_cards_projectile.mdl"	
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mod_rocket_gravity"
+					"value"				"1.1"
 				}
 			}
 			"visuals"
