@@ -4132,7 +4132,7 @@ Edited by: 'The One Of Wonders'"
 			    "voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.55"
+					"value" 			"0.45"
 				}
 				"voice pitch scale"
 				{
@@ -12226,7 +12226,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.3"
+					"value" 			"0.223"
 				}
 				"voice pitch scale"
 				{
@@ -30244,10 +30244,10 @@ Weapon by: 'The One Of Wonders'"
 
 			"item_logname" 				"relic_minigun"
 			"item_iconname" 			"relic_minigun"
-			"image_inventory"			"backpack/weapons/w_models/w_lmg"
-			"model_world"				"models/weapons/w_models/w_lmg.mdl"
-			"model_player"				"models/weapons/v_models/v_lmg_soldier.mdl"
-			"attach_to_hands"			"2"
+			"image_inventory"			"backpack/workshop/weapons/c_models/c_more_gun/c_more_gun"
+			"model_world"				"models/workshop/weapons/c_models/c_more_gun/c_more_gun.mdl"
+			"model_player"				"models/workshop/weapons/c_models/c_more_gun/c_more_gun.mdl"
+			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
 				"engineer"				"1"
@@ -30307,6 +30307,10 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"
 			{
+			    "animation_replacement"
+                {
+                    "ACT_VM_PRIMARYATTACK"    "ACT_VM_PRIMARYATTACK_SPECIAL"
+                }
 				"sound_single_shot"		"Weapon_LMG.Single"
 				"sound_burst"			"Weapon_LMG.SingleCrit"
 				"sound_reload"			"Weapon_LMG.WorldReload"
