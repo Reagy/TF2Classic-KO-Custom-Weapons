@@ -7085,7 +7085,7 @@ Weapon by: 'Reagy'"
 //-------------------------------------		
 		"7017"
 		{
-			"name"						"Sandvich"
+			"name"						"The Sandvich"
 			"prefab"					"weapon_sandvich"
 			"show_in_armory"			"1"
 
