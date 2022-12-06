@@ -26526,7 +26526,7 @@ Sentry replacement by: 'Pyanodon'"
 				"Construction rate decreased"
 				{
 					"attribute_class"	"mult_construction_value"
-					"value" 			"0.4"
+					"value" 			"0.6"
 				}
 				"Repair rate decreased"
 				{
@@ -26536,12 +26536,12 @@ Sentry replacement by: 'Pyanodon'"
 				"upgrade rate decrease"
 				{
 					"attribute_class"	"upgrade_rate_mod"
-					"value" 			"0.75"
+					"value" 			"0.8"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dispenser_radius"
-					"value" 			"0.75"
+					"value" 			"0.9"
 				}
 				"voice pitch scale"
 				{
