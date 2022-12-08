@@ -1,11 +1,12 @@
 
 "VertexLitGeneric"
 {
+//Actually the inside, sorry.
 
-	"$basetexture" "models/player/shared/bone_white"
+	"$basetexture"  "models/player/shared/green_uber"
 	"$bumpmap" "water/tfwater001_normal"
-	"$detail" "models/player/shared/green_uber"
-	"$detailblendfactor" "0.33"
+	"$detail" "models/player/shared/bone_white"
+	"$detailblendfactor" ".25"
 	$detailblendmode 1
 	"$envmap" "effects/invun_green"
 	"$surfaceprop" "metal"
@@ -14,13 +15,14 @@
 	"$selfillum" "1"
 	"$selfIllumFresnel" "1"
 	"$selfIllumFresnelMinMaxExp" "[0 18 13]" // 0.0 1.0 1.0 is the default
+	$selfillumtint "[1 1 1]"
 
 
 	"$phong" "1"
 	"$phongexponent"  "155"
 	"$phongboost" "1"	
 	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
-	"$phongfresnelranges"	"[5 1 8]"
+	"$phongfresnelranges"	"[1 1 8]"
 	
 	// Rim lighting parameters
 	"$rimlight" "1"		
