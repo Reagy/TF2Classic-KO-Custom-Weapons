@@ -1,0 +1,273 @@
+"Games"
+{
+    "tf2classic"
+    {
+        "Offsets"
+        {
+			//pointer to player contained in CTFPlayerShared
+			"CTFPlayerShared::m_pOuter"
+			{
+				"linux"		"1200"
+			}
+			
+			"CTFPlayer::OnTakeDamage"
+			{
+				"linux"		"63"
+			}
+			
+			"CTFGameRules::GetCaptureValueForPlayer"
+			{
+				"linux"		"154"
+			}
+			
+			//float CWeaponMedigun::GetTargetRange()
+			"CWeaponMedigun::GetTargetRange"
+			{
+				"linux"		"448"
+			}
+			
+			//float CAttributeManager::ApplyAttributeFloat( float flValue, const CBaseEntity *pEntity, string_t strAttributeClass )
+			"CAttributeManager::ApplyAttributeFloat"
+			{
+				"linux"		"3"
+			}
+			
+			
+			"CEconEntity::GetAttributeManager"
+			{
+				"linux"		"225"
+			}
+			"CTFPlayer::GetAttributeManager"
+			{
+				"linux"		"471"
+			}
+			
+			
+        }
+		
+		"Functions"
+		{
+			
+			
+			"CTFBaseRocket::DetonateThink"
+			{
+				"signature"		"CTFBaseRocket::DetonateThink"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
+			
+			"CTFPlayer::OnTakeDamage"
+			{
+				"offset"		"CTFPlayer::OnTakeDamage"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"int"
+				"this"			"entity"
+				"arguments"
+				{
+					"damageinfo"
+					{
+						"type"	"objectptr"
+					}
+				}
+			}
+			
+			"CTFPlayerShared::Burn"
+			{
+				"signature"		"CTFPlayerShared::Burn"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"address"
+				"arguments"
+				{
+					"attacker"
+					{
+						"type"	"cbaseentity"
+					}
+					"weapon"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			"CTFPlayerShared::Heal"
+			{
+				"signature"		"CTFPlayerShared::Heal"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"address"
+				"arguments"
+				{
+					"target"
+					{
+						"type"	"cbaseentity"
+					}
+					"amount"
+					{
+						"type"	"float"
+					}
+					"object"
+					{
+						"type"	"cbaseentity"
+					}
+					"isdispenser"
+					{
+						"type"	"bool"
+					}
+				}
+			}
+			"CTFPlayerShared::StopHealing"
+			{
+				"signature"		"CTFPlayerShared::StopHealing"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"address"
+				"arguments"
+				{
+					"target"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			
+			"CTFGameRules::GetCaptureValueForPlayer"
+			{
+				"offset"		"CTFGameRules::GetCaptureValueForPlayer"
+				"hooktype"		"gamerules"
+				"callconv"		"thiscall"
+				"return"		"int"
+				"this"			"address"
+				"arguments"
+				{
+					"player"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			
+			"CAttributeManager::ApplyAttributeFloat"
+			{
+				"offset"		"CAttributeManager::ApplyAttributeFloat"
+				"hooktype"		"raw"
+				"callconv"		"thiscall"
+				"return"		"float"
+				"this"			"address"
+				"arguments"
+				{
+					"value"
+					{
+						"type"	"float"
+					}
+					"target"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			
+			"CTFBaseRocket::Spawn"
+			{
+				"signature"		"CTFBaseRocket::Spawn"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
+			
+			"CTFWeaponBase::ApplyOnHitAttributes"
+			{
+				"signature"		"CTFWeaponBase::ApplyOnHitAttributes"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"inflictor"
+					{
+						"type"	"cbaseentity"
+					}
+					"player"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			
+			"CWeaponMedigun::AllowedToHealTarget"
+			{
+				"signature"		"CWeaponMedigun::AllowedToHealTarget"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+				"arguments"
+				{
+					"target"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+		}
+		
+		"Signatures"
+		{
+			"CBaseEntity::SetNextThink"
+			{
+				"library"	"server"
+				"linux"		"@_ZN11CBaseEntity12SetNextThinkEfPKc"
+			}
+			
+			"CTFBaseRocket::Spawn"
+			{
+				"library"	"server"
+				"linux"		"@_ZN13CTFBaseRocket5SpawnEv"
+			}
+			"CTFBaseRocket::DetonateThink"
+			{
+				"library"	"server"
+				"linux"		"@_ZN13CTFBaseRocket13DetonateThinkEv"
+			}
+			
+			"CTFPlayer::GetEntityForLoadoutSlot"
+			{
+				"library"	"server"
+				"linux"		"@_ZNK9CTFPlayer23GetEntityForLoadoutSlotE14ETFLoadoutSlot"
+			}
+			"CTFPlayer::GetMedigunCharge"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFPlayer19MedicGetChargeLevelEv"
+			}
+			
+			"CTFPlayerShared::Burn"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared4BurnEP9CTFPlayerP13CTFWeaponBase"
+			}
+			"CTFPlayerShared::Heal"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared4HealEP9CTFPlayerfP11CBaseObjectb"
+			}
+			"CTFPlayerShared::StopHealing"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared11StopHealingEP9CTFPlayer"
+			}
+			
+			"CTFWeaponBase::ApplyOnHitAttributes"
+			{
+				"library"	"server"
+				"linux"		"@_ZN13CTFWeaponBase20ApplyOnHitAttributesEP11CBaseEntityP9CTFPlayerRK15CTakeDamageInfo"
+			}
+			
+			"CWeaponMedigun::AllowedToHealTarget"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CWeaponMedigun19AllowedToHealTargetEP11CBaseEntity"
+			}
+		}
+    }
+}
