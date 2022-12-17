@@ -32,7 +32,7 @@ public Plugin myinfo =
 	name = "TF2Classic-DamageConditions",
 	author = "azzy",
 	description = "Expansion upon TF2Classic's condition related attributes",
-	version = "2.1",
+	version = "2.1.4096",
 	url = ""
 }
 
@@ -56,8 +56,16 @@ public void OnClientPutInServer(int client)
 
 public Action OnTakeDamage(int victim, int& attacker, int& inflictor, float& damage, int& damageType, int& weapon, float damageForce[3], float damagePosition[3], int damagecustom)
 {
+	/* 
+		so for reasons beyond any mortal comprehension sometimes entity indexes come in at 4096 indices higher than they're supposed to
+		i can't even begin to process why this would happen in the first place so we'll just do this instead
+	*/
+	if(weapon > 4096) weapon -= 4096;
+	if(attacker > 4096) attacker -= 4096;
+	if(inflictor > 4096) inflictor -= 4096;
+
 	if(weapon == -1)
-		return Plugin_Continue;
+		return Plugin_Changed;
 
 	int weaponIndex;
 
@@ -112,7 +120,7 @@ public Action OnTakeDamage(int victim, int& attacker, int& inflictor, float& dam
 		}
 	}
 
-	return Plugin_Continue;
+	return Plugin_Changed;
 }
 
 Action Hook_RemoveMinicrits(int victim)
