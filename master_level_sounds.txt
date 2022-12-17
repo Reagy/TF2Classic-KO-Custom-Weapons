@@ -11537,29 +11537,26 @@
 
 }
 // ------------------------------------------------------------------------------------ //
-// BOFORS THICC BOI
+// M2 HEAVY MACHINE GUN
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_BofortAT.Single"
+"Weapon_M2HB.Fire"
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
-	"rndwave"
-	{
-		"wave"		")weapons\bofors_shoot1.wav"
-		"wave"		")weapons\bofors_shoot2.wav"
-		"wave"		")weapons\bofors_shoot3.wav"
-	}
+	"wave"		")weapons\m2hb_fire.wav"
+	
 }
-"Weapon_BofortAT.SingleCrit"
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
 
-	"wave"			")weapons/bofors_shoot_crit.wav"
+"Weapon_M2HB.FireCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/m2hb_fire_crit.wav"
 }
+
 // ------------------------------------------------------------------------------------ //
 // HEAVY IS SENTRY
 // ------------------------------------------------------------------------------------ //
@@ -11687,7 +11684,7 @@
 // HEATER 
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_M2HB.Single"
+"Weapon_Heater.Single"
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
@@ -11700,7 +11697,7 @@
 	}
 
 }
-"Weapon_M2HB.SingleCrit"
+"Weapon_Heater.SingleCrit"
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
@@ -12383,4 +12380,27 @@
 	"volume"	"1.0"
 	"soundlevel"	"SNDLVL_94dB"
 	"wave"		")weapons/mirv_swing.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// Relic
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_RelicMG.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"90, 96"
+	
+	"wave"		")weapons/relicmachine_fire.wav"
+}
+
+"Weapon_RelicMG.SingleCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"90, 96"
+	
+	"wave"		")weapons/relicmachine_fire_crit.wav"
 }
