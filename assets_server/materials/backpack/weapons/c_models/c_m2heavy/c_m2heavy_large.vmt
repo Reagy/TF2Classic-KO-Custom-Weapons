@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture"	 "backpack/weapons/c_models/c_m2heavy/c_m2heavy_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}

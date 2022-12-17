@@ -1,0 +1,54 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/corkscrew/corkscrew"
+                "$bumpmap" "models/weapons/corkscrew/corkscrew_normal"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.35 .35 .35]"
+                 "$normalmapalphaenvmapmask" "1"
+
+
+	"$phong" "1"
+	"$phongexponent" "25"
+	"$phongboost" "5"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.25 .5 1]"
+
+	"$tempvar" "0"
+
+	"$basephongexponent" "25"
+	"$basephongboost" "5"
+
+	"$commadd_phongexponent" "30"
+	"$commadd_phongboost" 	"22.5"
+	"$commweapon"		"0"
+
+
+	"$rimlight" "1"
+	"$rimlightexponent" "4"	
+	"$rimlightboost" "1.5"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

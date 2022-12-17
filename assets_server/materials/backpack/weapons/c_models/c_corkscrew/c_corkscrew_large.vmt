@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_corkscrew/c_corkscrew_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}
