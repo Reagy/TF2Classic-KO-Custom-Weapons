@@ -14,10 +14,10 @@ int wrenchList[MAXPLAYERS + 1];
 
 //sentry levels start at 1 and not 0 lmao
 static int i_heavySentryHealth[] =	{0, 175, 220, 330};
-static int i_heavySentryCost[] =	{0, 200, 250, 0};
+static int i_heavySentryCost[] =	{0, 200, 275, 0};
 
-static int i_cloverSentryHealth[] =	{0, 250, 400, 600};
-static int i_cloverSentryCost[] =	{0, 200, 350, 0};
+static int i_cloverSentryHealth[] =	{0, 200, 300, 500};
+static int i_cloverSentryCost[] =	{0, 175, 400, 0};
 
 #define IRONCLAD_CONSTRUCTION 7000
 #define HEAVY_SUPPORT 9175
