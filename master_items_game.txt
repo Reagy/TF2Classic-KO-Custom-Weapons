@@ -17968,11 +17968,11 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"sentry_build_rate_multiplier"
 					"value"				"2"
 				}
-				"sentry shoots projectile"
-				{
-					"attribute_class"	"set_sentry_projectile"
-					"value"				"2"
-				}
+//				"sentry shoots projectile"
+//				{
+//					"attribute_class"	"set_sentry_projectile"
+//					"value"				"2"
+//				}
 //				"upgrade rate decrease"
 //				{
 //					"attribute_class"	"upgrade_rate_mod"
