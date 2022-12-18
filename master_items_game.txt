@@ -6805,28 +6805,31 @@ Weapon by: 'Reagy'"
 //-------------------------------------
 		"7009"
 		{
-			"name"						"TF_WEAPON_RECURVE"
+			"name"						"TF_WEAPON_BACKWOOD_BOW"
 			"prefab"					"weapon_huntsman"
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
-			"item_name"					"'Classic' Recurve"
+			"item_name"					"Backwood Modified Bow"
 			"item_type_name"			"#TF_Weapon_CompoundBow"
 			"item_description"			"
-A more 'refined' bow for the 'gentleman'...
-Did we mention the explosive arrow tips?"
-			"item_logname"				"bow_recurve"
-			"item_iconname"				"huntsman"
-			"image_inventory"			"backpack/weapons/w_models/w_classic_bow"
-			"model_world"				"models/weapons/custom/w_models/w_classic_bow.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_classic_bow.mdl"
-			"attach_to_hands"			"2"
-//			"used_by_classes"
-//			{
-//				"sniper"					"1"
-//			}
+Now this is a real bushman's modification.
+
+Model by: 'Nicolas'
+Weapon by: 'Reagy'
+Modified by: 'The One Of Wonders'"
+			"item_logname"				"bow_backwood"
+			"item_iconname"				"bow_backwood"
+			"image_inventory"			"backpack/weapons/c_models/c_exploderbow/c_exploderbow"
+			"model_world"				"models/weapons/c_models/c_exploder_bow/c_exploder_bow.mdl"
+			"model_player"				"models/weapons/c_models/c_exploder_bow/c_exploder_bow.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"sniper"					"1"
+			}
 			"static_attrs"
 			{
 				"no damage falloff over distance"		"1"									
@@ -6835,6 +6838,11 @@ Did we mention the explosive arrow tips?"
 			}
 			"attributes"
 			{
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value"				"1"
+				}
 				"explosive bullets"															
 				{
 					"attribute_class"	"strange_restriction_type_1"
@@ -6863,7 +6871,7 @@ Did we mention the explosive arrow tips?"
 				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/custom/w_models/w_classic_arrow.mdl"
+					"value"				"models/weapons/c_models/c_exploder_bow/c_exploder_bow_arrow.mdl"
 				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
@@ -22667,32 +22675,41 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------------------
 		"9120"
 		{
-			"name"						"TF_WEAPON_BACKWOOD_BOW"
+			"name"						"TF_WEAPON_MODERN_COMPOUND_BOW"
 			"prefab"					"weapon_huntsman"
 			"show_in_armory"			"1"
 
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
-			"item_name"					"Backwood Modified Bow"
-			"item_type_name"			"Modified Bow"
+			"item_name"					"Modern Compound"
+			"item_type_name"			"#TF_Weapon_CompoundBow"
 			"item_description"			"
-Now this is a real bushman's modification.
+The latest in bow technology, this beaut packs a punch!
 
-Model by: 'Nicolas'
-Weapon by: 'The One Of Wonders'"
-			"item_logname"				"bow_backwood"
-			"item_iconname"				"bow_backwood"
-			"image_inventory"			"backpack/weapons/c_models/c_exploderbow/c_exploderbow"
-			"model_world"				"models/weapons/c_models/c_exploder_bow/c_exploder_bow.mdl"
-			"model_player"				"models/weapons/c_models/c_exploder_bow/c_exploder_bow.mdl"
-			"attach_to_hands"			"1"
+Model by: 'RubbishBinMan'
+Weapon by: 'The One Of Wonders'
+Modified by: 'Reagy'"
+
+			"flip_viewmodel"			"0"
+
+			"item_logname"				"bow_compound"
+			"item_iconname"				"bow_compound"
+			"image_inventory"			"backpack/weapons/w_models/w_classic_bow"
+			"model_world"				"models/weapons/custom/w_models/w_classic_bow.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_classic_bow.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"sniper"					"1"
 			}
 			"attributes"
 			{
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value"				"1"
+				}
 			    "fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
@@ -22742,7 +22759,7 @@ Weapon by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_name"					"Alternative Big Game Hunter"
-			"item_type_name"			"Heavy Bow"
+			"item_type_name"			"#TF_Weapon_CompoundBow"
 			"item_description"			"
 For when you need the extra fat men to drop dead.
 
@@ -22760,6 +22777,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value"				"1"
+				}
 				"damage bonus" // Funnily enough, this weapon's damage shit is fucking messy at least when going up
 				{
 					"attribute_class"	"mult_explosion_radius"
@@ -23177,9 +23199,9 @@ You are unable to backstab while this item is equipped
 Model by: 'Big Bob' 'SediSocks'
 Wearable by: 'Reagy'"
 			"image_inventory"			"backpack/workshop/player/items/spy/majors_mark/majors_mark"
-			"model_world"					"models/weapons/c_models/c_combatknife_gunspy/c_combatknife_gunspy.mdl"
-			"model_player"					"models/weapons/c_models/c_combatknife_gunspy/c_combatknife_gunspy.mdl"
-			"attach_to_hands"				"1"
+			"model_world"				"models/weapons/c_models/c_combatknife_gunspy/c_combatknife_gunspy.mdl"
+			"model_player"				"models/weapons/c_models/c_combatknife_gunspy/c_combatknife_gunspy.mdl"
+			"attach_to_hands"			"1"
 			"extra_wearable"			"models/player/items/custom/spy/the_major.mdl"
 			"used_by_classes"
 			{
@@ -26495,6 +26517,9 @@ Model by: 'N-Cognito'
 Texture by: 'Reagy'
 Art asset by: 'ChemicalAlia'
 Weapon by: 'Reagy'"
+
+			"flip_viewmodel"			"1"
+
 			"item_logname"				"royal_flush"
 			"item_iconname"				"royal_flush"
 			"image_inventory"			"backpack/weapons/w_models/w_cards"
@@ -27477,7 +27502,7 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_quality"				"rarity2"
 			"item_name"					"Trench Shank"
-			"item_type_name"			"Knife"
+			"item_type_name"			"#TF_Weapon_Knife"
 			"item_description"			"
 Broken bottles may be sharp, but this is sharper!
 
@@ -27555,7 +27580,7 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_quality"				"rarity2"
 			"item_name"					"Maggot Mutilator"
-			"item_type_name"			"Knife"
+			"item_type_name"			"#TF_Weapon_Knife"
 			"item_description"			"
 No animal, man or magical monstrosity is strong enough to survive this knife, son!
 
@@ -29896,6 +29921,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"BFG 9000"
 			"item_type_name"			"Bio Force Gun"
 			"item_description"			"Holding the fire button increases damage
+
 (Ominous Music Playing)
 
 Model by: 'ZombiePlasticClock'
@@ -30608,6 +30634,9 @@ Model by: 'N-Cognito'
 Texture by: 'Reagy'
 Art asset by: 'ChemicalAlia'
 Weapon by: 'Reagy'"
+
+			"flip_viewmodel"			"1"
+
 			"item_logname"				"royal_flush_civ"
 			"item_iconname"				"royal_flush"
 			"image_inventory"			"backpack/weapons/w_models/w_cards"
