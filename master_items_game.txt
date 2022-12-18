@@ -11059,7 +11059,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"5.55555555556"
+					"value"				"5.0"
 				}
 				"voice pitch scale"
 				{
@@ -30786,7 +30786,7 @@ Weapon by: 'The One Of Wonders'"
 			    "voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.2"
+					"value" 			"0.15"
 				}
 				"voice pitch scale"
 				{
@@ -30801,7 +30801,7 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.075"
+					"value"				"0.0965"
 				}
 				"strange restriction type 1"
 				{
