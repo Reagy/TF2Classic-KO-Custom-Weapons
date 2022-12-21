@@ -19,7 +19,7 @@ public Plugin myinfo =
 	name = "Bug Fix: Afterburn Source",
 	author = "Noclue",
 	description = "Fixes issue with afterburn source.",
-	version = "1.0",
+	version = "1.1",
 	url = "no"
 }
 
@@ -27,16 +27,21 @@ public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
 	hPlayerBurn = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::Burn" );
-	hPlayerBurn.Enable( Hook_Post, Detour_Burn );
+	if( !hPlayerBurn.Enable( Hook_Post, Detour_Burn ) ) {
+		SetFailState("Detour for CTFPlayerShared::Burn failed");
+	}
 }
 
-//void CTFPlayerShared::Burn( CTFPlayer *pAttacker, CTFWeaponBase *pWeapon /*= NULL*/, float flFlameDuration /*= -1.0f*/ )
+//void CTFPlayerShared::Burn( CTFPlayer *pAttacker, CTFWeaponBase *pWeapon /*= NULL*/ )
 MRESReturn Detour_Burn( Address pThis, DHookParam hParams ) {
 	int iPlayer = GetPlayerFromShared( pThis );
 	int iWeapon = view_as<int>( hParams.Get( 2 ) );
 
-	bool bVictimIsPyro = TF2_GetPlayerClass( iPlayer ) == TFClass_Pyro;
-	float flFlameLife = bVictimIsPyro ? TF_BURNING_FLAME_LIFE_PYRO : TF_BURNING_FLAME_LIFE;
+	float flFlameLife = TF_BURNING_FLAME_LIFE;
+	if( TF2_GetPlayerClass( iPlayer ) == TFClass_Pyro && AttribHookFloat( 0.0, iWeapon, "custom_burn_pyro" ) == 0.0 )
+		flFlameLife = TF_BURNING_FLAME_LIFE_PYRO;		
+
+	//it should be safe to do attribute checks without verification since pWeapon MUST be a CTFWeaponBase
 	flFlameLife = AttribHookFloat( flFlameLife, iWeapon, "mult_wpn_burntime" );
 
 	SetEntPropFloat( iPlayer, Prop_Send, "m_flFlameRemoveTime", GetGameTime() + flFlameLife );
