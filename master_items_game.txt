@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V5.5.6
+// Knockout Custom Weapons V5.5.7
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 + Tangerine Paint & Grunt's Weapon Addons V2
 // Adoptions taken from Renaissance Revival V1 by Yakibomb
@@ -6158,7 +6158,6 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 			"min_ilevel"				"1"
 			"max_ilevel"				"1"
-			"baseitem"					"1"
 			"show_in_armory"			"1"
 			"item_logname"				"spy_chop"
 			"item_iconname"				"spy_chop"
@@ -6226,7 +6225,6 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 			"min_ilevel"				"1"
 			"max_ilevel"				"1"
-			"baseitem"					"1"
 			"show_in_armory"			"1"
 			"image_inventory"			"backpack/weapons/v_models/v_fist_heavy"
 			"model_player"				"models/weapons/custom/v_models/v_berserk_fists.mdl"
@@ -6279,7 +6277,6 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 			"min_ilevel"				"1"
 			"max_ilevel"				"1"
-			"baseitem"					"1"
 			"item_logname"				"sniper_karate"
 			"item_iconname"				"sniper_karate"
 			"show_in_armory"			"1"
@@ -6344,7 +6341,6 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 			"min_ilevel"				"1"
 			"max_ilevel"				"1"
-			"baseitem"					"1"
 			"show_in_armory"			"1"
 			"item_logname"				"engineer_fists"
 			"item_iconname"				"engineer_fists"
@@ -8224,7 +8220,6 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_INJUSTE"
 			"prefab"					"weapon_revolver"
-			"baseitem" 					"1"
 			"show_in_armory"			"1"
 
 			"item_quality"				"rarity2"
@@ -8319,7 +8314,6 @@ Weapon by: 'Reagy'"
 			"name"						"TF_WEAPON_JURY"
 			"prefab"                    "weapon_revolver"
 			"item_class"				"tf_weapon_scattergun"
-			"baseitem" 					"1"
 			"show_in_armory"			"1"
 			
 			"item_slot"					"primary"
@@ -9619,7 +9613,6 @@ Weapon by: 'Zadrave'"
 			"name"						"TF_WEAPON_FLARELAUNCHER"
 			"item_name"					"Flare Launcher"
 			"prefab"					"weapon_shotgun"
-			"baseitem" 					"1"
 			"show_in_armory"			"1"
 
 			"item_quality"				"rarity2"
@@ -10393,7 +10386,6 @@ Item by: 'Reagy'"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 			
-			"baseitem" 					"1"
 			"show_in_armory"			"1"
 			"item_logname"				"taucannon_soldier"
 			"item_iconname"				"taucannon"
@@ -16238,7 +16230,6 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"name"						"Scrap Sentinel"
 			"prefab"					"weapon_pistol"									// Defined manually so Scout doesn't have it!
 			"show_in_armory"			"1"
-			"baseitem"				"1"
 			
 			"item_quality"				"rarity3"
 			
@@ -16602,7 +16593,6 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 		{
 			"name"						"TF_WEAPON_LAKESIDE_PRIDE"
 			"prefab"					"weapon_shotgun"
-			"baseitem" 					"1"
 			
 			"item_quality"				"rarity3"
 			
@@ -22023,7 +22013,6 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_HEAVY_REVOLVER"
 			"prefab"					"weapon_revolver"
-			"baseitem" 					"1"
 			"show_in_armory"			"1"
 			"propername"				"1"
 
@@ -22107,7 +22096,6 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_COLT_REVOLVER"
 			"prefab"					"weapon_revolver"
-			"baseitem" 					"1"
 			"show_in_armory"			"1"
 			"propername"				"1"
 
@@ -27953,8 +27941,6 @@ Weapon by: 'Reagy'"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 
-"baseitem"					"1"
-
 			"show_in_armory"			"1"
 			"item_quality"				"rarity2"
 
@@ -28417,7 +28403,6 @@ Weapon by: 'The One Of Wonders'"
 			"name"						"TF_WEAPON_GILDED_SHOTGUNREVOLVER"
 			"prefab"                    "weapon_revolver"
 			"item_class"				"tf_weapon_scattergun"
-			"baseitem" 					"1"
 			"show_in_armory"			"1"
 			
 			"item_slot"					"primary"
