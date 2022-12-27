@@ -10809,7 +10809,7 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"		"10 0 -6"
-				"effect bar recharge rate increased"	"0.33"
+				"effect bar recharge rate increased"	"0.3"
 			}
 			"attributes"
 			{
@@ -31684,7 +31684,7 @@ Weapon by: 'Reagy'"
 				"effect bar recharge rate increased"
 				{
 					"attribute_class"	"effectbar_recharge_rate"
-					"value" 			".25"
+					"value" 			"0.40"
 				}
 				"strange restriction type 1"
 				{
