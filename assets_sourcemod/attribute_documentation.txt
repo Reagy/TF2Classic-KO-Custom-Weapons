@@ -1,0 +1,75 @@
+NOTE: attributes toggled by providing a value other than 0 will not work when the attribute type is "value_is_percentage"
+the attribute is internally checked against the number 0, multiplying by 0 does nothing (learned this the hard way)
+
+custom_uber_scales_damage (checked against weapon):
+	when added to a weapon, scales damage dealt with the weapon
+	from 10% to 100% based on the player's ubercharge level
+	
+	values (use value_is_additive):
+		enabled with any non-zero value
+	
+custom_rocket_homing (checked against weapon):
+	enables the player to toggle half-life 2 style rocket tracking
+	with the m2 button. currently only works weapons that fire the soldier's rockets
+	
+	values (use value_is_additive):
+		enabled with any non-zero value
+		
+custom_rocket_homing_rate (checked against weapon):
+	controls the rate at which the rocket tracks the cursor
+	
+	values (use value_is_additive):
+		any number between 0 and 1
+		when set to zero the tracking rate is perfect
+		
+custom_burn_pyro (checked against weapon):
+	enables weapons to apply afterburn to enemy pyros normally
+	
+	values (use value_is_additive):
+		enabled with any non-zero value
+	
+	
+custom_sentry_type (globally checked):
+custom_dispenser_type (globally checked):
+custom_teleporter_type (globally checked):
+	overrides the type of building in a slot
+	these CANNOT have multiple items in different slots modify the same building type,
+	having more than one item equipped will add their values together, producing strange results
+	
+	values (use value_is_additive):
+		buildings default to 0 when no override is present
+		sentry:
+			0: normal
+			1: mini (not implemented)
+			2: artillery
+			3: lucycharm
+		dispenser:
+			0: normal
+			1: mini
+			2: nothing yet
+			3: nothing yet
+		teleporter:
+			0: normal behavior
+			1: mini (not implemented)
+			2: jump pad (only sets model, vanilla attribute is needed to apply behavior)
+			3: nothing yet
+		
+custom_dispenser_heal_rate (globally checked):
+	scales the healing rate of dispenser
+	
+	values (use value_is_percentage):
+		any non-negative number
+	
+custom_leap_ability (globally checked):
+	enables the newly rebranded leap ability
+	
+	values (use value_is_additive):
+		any value above 0 enables the feature
+		value is used as recharge time in seconds
+		
+custom_capture_rate (globally checked):
+	modifies capture rate by the value provided
+	i haven't tested this one very well, may cause issues
+	
+	values (use value_is_additive):
+		any number
