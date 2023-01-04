@@ -10,6 +10,12 @@
 				"linux"		"1200"
 			}
 			
+			//pointer to CEconItemView on CEconEntity
+			"CEconEntity::m_Item"
+			{
+				"linux"		"1168"
+			}
+			
 			"CTFPlayer::OnTakeDamage"
 			{
 				"linux"		"63"
@@ -18,6 +24,11 @@
 			"CTFGameRules::GetCaptureValueForPlayer"
 			{
 				"linux"		"154"
+			}
+			
+			"CTFWeaponBase::GetFireRate"
+			{
+				"linux"		"295"
 			}
 			
 			//float CWeaponMedigun::GetTargetRange()
@@ -41,13 +52,22 @@
 			{
 				"linux"		"471"
 			}
-			
-			
+			"CTFPlayer::GetAttributeContainer"
+			{
+				"linux"		"472"
+			}
         }
 		
 		"Functions"
 		{
-			
+			"CTFWeaponBase::GetFireRate"
+			{
+				"offset"		"CTFWeaponBase::GetFireRate"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"float"
+				"this"			"entity"
+			}
 			
 			"CTFBaseRocket::DetonateThink"
 			{
@@ -175,6 +195,13 @@
 				"return"		"void"
 				"this"			"entity"
 			}
+			"CTFProjectile_SentryRocket::Spawn"
+			{
+				"signature"		"CTFProjectile_SentryRocket::Spawn"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
 			
 			"CTFWeaponBase::ApplyOnHitAttributes"
 			{
@@ -209,10 +236,43 @@
 					}
 				}
 			}
+			
+			"CObjectDispenser::GetHealRate"
+			{
+				"signature"		"CObjectDispenser::GetHealRate"
+				"callconv"		"thiscall"
+				"return"		"float"
+				"this"			"entity"
+			}
+			"CObjectTeleporter::TeleporterDoJump"
+			{
+				"signature"		"CObjectTeleporter::TeleporterDoJump"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"player"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
 		}
 		
 		"Signatures"
 		{
+			"CEconItemView::IterateAttributes"
+			{
+				"library"	"server"
+				"linux"		"@_ZN13CEconItemView17IterateAttributesE8string_t"
+			}
+			"CEconEntity::GetItem"
+			{
+				"library"	"server"
+				"linux"		"@_ZN11CEconEntity7GetItemEv"
+			}
+		
 			"CBaseEntity::SetNextThink"
 			{
 				"library"	"server"
@@ -228,6 +288,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTFBaseRocket13DetonateThinkEv"
+			}
+			"CTFProjectile_SentryRocket::Spawn"
+			{
+				"library"	"server"
+				"linux"		"@_ZN26CTFProjectile_SentryRocket5SpawnEv"
 			}
 			
 			"CTFPlayer::GetEntityForLoadoutSlot"
@@ -267,6 +332,22 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN14CWeaponMedigun19AllowedToHealTargetEP11CBaseEntity"
+			}
+			
+			"CBaseObject::GetConstructionMultiplier"
+			{
+				"library"	"server"
+				"linux"		"@_ZN11CBaseObject25GetConstructionMultiplierEv"
+			}
+			"CObjectDispenser::GetHealRate"
+			{
+				"library"	"server"
+				"linux"		"@_ZN16CObjectDispenser11GetHealRateEv"
+			}
+			"CObjectTeleporter::TeleporterDoJump"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CObjectTeleporter16TeleporterDoJumpEP9CTFPlayer"
 			}
 		}
     }
