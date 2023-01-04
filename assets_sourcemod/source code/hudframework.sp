@@ -21,7 +21,7 @@ Handle hHudSync;
 enum {
 	RTF_PERCENTAGE = 1 << 1,	//display value as a percentage
 	RTF_DING = 1 << 2,			//play sound when fully charged
-	//RTF_ = 1 << 1,
+	RTF_RECHARGES = 1 << 3,
 	//RTF_ = 1 << 1,
 	//RTF_ = 1 << 1,
 }
@@ -32,13 +32,19 @@ enum struct ResourceTracker {
 	float flValue;
 	float flMax;
 	float flRechargeRate;
+
+	bool HasFlags( int iCheckFlags ) {
+		return ( this.iFlags & iCheckFlags ) == iCheckFlags;
+	}
 }
 #define TRACKERMAXSIZE sizeof(ResourceTracker)
 #define UPDATEINTERVAL 0.2
 
 public void OnPluginStart() {
 	hHudSync = CreateHudSynchronizer();
+#if defined DEBUG
 	RegConsoleCmd("sm_hf_test", Command_Test, "test");
+#endif
 }
 
 public void OnMapStart() {
@@ -185,7 +191,7 @@ void Tracker_Recharge( int iPlayer, int iIndex ) {
 	ResourceTracker hTracker;
 
 	hResources[iPlayer].GetArray(iIndex, hTracker );
-	if(hTracker.flValue != 100.0 && hTracker.flValue + hTracker.flRechargeRate >= 100.0 ) EmitGameSoundToClient( iPlayer, "TFPlayer.Recharged" );
+	if(hTracker.flValue != 100.0 && hTracker.flValue + hTracker.flRechargeRate >= 100.0 && hTracker.HasFlags( RTF_DING ) ) EmitGameSoundToClient( iPlayer, "TFPlayer.Recharged" );
 	hTracker.flValue = FloatClamp( hTracker.flValue + hTracker.flRechargeRate, 0.0, 100.0 );
 	
 	hResources[iPlayer].SetArray(iIndex, hTracker );
@@ -194,9 +200,10 @@ void Tracker_Recharge( int iPlayer, int iIndex ) {
 //generates the string for a single tracker entry
 void Tracker_CreateString( ResourceTracker hTracker, char sBuffer[64] ) {
 	Format( sBuffer, sizeof( sBuffer ), "%s: %-.0f", hTracker.sName, hTracker.flValue );
-	StrCat( sBuffer, sizeof( sBuffer ), "%%");
+	if( hTracker.HasFlags(RTF_PERCENTAGE) ) StrCat( sBuffer, sizeof( sBuffer ), "%%");
 }
 
+#if defined DEBUG
 Action Command_Test(int client, int args)
 {
 	if(args < 1) return Plugin_Handled;
@@ -207,3 +214,4 @@ Action Command_Test(int client, int args)
 
 	return Plugin_Handled;
 }
+#endif
