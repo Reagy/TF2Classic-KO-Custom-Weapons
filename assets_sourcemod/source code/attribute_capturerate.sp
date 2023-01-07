@@ -17,13 +17,15 @@ public Plugin myinfo =
 	url = "no"
 }
 
-public void OnPluginStart() {
+public void OnMapStart() {
 	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
 	hGetCaptureValue = DynamicHook.FromConf( hGameConf, "CTFGameRules::GetCaptureValueForPlayer" );
 	if( !hGetCaptureValue.HookGamerules( Hook_Pre, Hook_GetCaptureValue ) ) {
 		SetFailState( "Hook setup for CTFGameRules::GetCaptureValueForPlayer failed" );
 	}
+
+	delete hGameConf;
 }
 
 MRESReturn Hook_GetCaptureValue( Address aThis, DHookReturn hReturn, DHookParam hParam ) {
