@@ -4552,11 +4552,6 @@ Edited by: 'Reagy'"
 			}
             "attributes"
             {
-				"torso scale"
-				{
-					"attribute_class"	"mult_dispenser_rate"									// Dispensers give significantly less ammo and generate less metal per tick of those
-					"value"				"0.5"
-				}
 				"hand scale"
 				{
 					"attribute_class"	"mult_engy_building_health"								// Sentry and Dispenser have 100 health
@@ -8217,7 +8212,7 @@ Weapon by: 'Reagy'"
 What weird weapon! Heavy likes to cook bears with this.
 
 Model by: 'Rozzy'
-Weapon by: 'Reagy'"
+Weapon by: 'The One Of Wonders'"
 			"item_logname" 				"laika_iii"
 			"item_iconname"				"laika_iii"
 			"image_inventory"			"backpack/weapons/c_models/c_laika_lasercannon/c_laika_lasercannon"
@@ -17530,6 +17525,12 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
+				// Attribute for custom buildings
+				"strange restriction type 1"
+				{
+					"attribute_class"	"custom_sentry_type"
+					"value" 			"1" // Mini
+				}
 			}
 			"visuals"
 			{
@@ -23838,20 +23839,14 @@ Weapon by: 'The One Of Wonders'"
 		"9144"
 		{
 			"name"						"TF_WEAPON_TOMMYGUN_SNIPER"		
-			"item_class"				"tf_weapon_nailgun"
+			"prefab"				    "weapon_smg"
 			"show_in_armory"			"1"
-			"anim_slot"					"secondary"
-			"item_slot"					"primary"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-
-
+		
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
 			"item_name"					"Lil' Mate"
-			"item_type_name"			"Submachine Gun"
+			"item_type_name"			"SMG"
 			"item_description"			"
 You best smile when I show you my Lil' Mate while you can.
 
@@ -23867,37 +23862,47 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"sniper"				"1"
 			}
-			"static_attrs"
-			{
-				"override projectile type" 				"1"
-				"class select override vcd"				"taunt02_v1"
-			}
 			"attributes"																	
 			{
-				"voice pitch scale"
+			    "damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.1"
+				}
+			    "fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.85"
+				}
+				"clip size bonus"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"2"
 				}
-				"voice pitch scale"
+				"maxammo secondary increased"
 				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value" 			"0.8"
+					"attribute_class"	"mult_maxammo_secondary"
+					"value" 			"1.33333333333"
 				}
-                "voice pitch scale"
+                "spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
 					"value"				"1.2"
 				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.7"
-				}
-				"voice pitch scale"
+				"reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
 					"value"				"1.45"
+				}
+				"deploy time increased"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"1.2"
+				}
+				"move speed penalty"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"0.95"
 				}
 				"crit mod disabled"															
 				{
@@ -26788,7 +26793,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"Maggot Mutilator"
 			"item_type_name"			"#TF_Weapon_Knife"
 			"item_description"			"Double-Edged Blade: this weapons deals critical hits to enemies wielding the Maggot Mutilator or Trench Shank
-			
+
 No animal, man or magical monstrosity is strong enough to survive this knife, son!
 
 Model by: 'Petachepas'
