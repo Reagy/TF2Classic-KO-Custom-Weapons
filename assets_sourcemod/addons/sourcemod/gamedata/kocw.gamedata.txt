@@ -151,6 +151,24 @@
 					}
 				}
 			}
+			"CTFPlayerShared::CalculateObjectCost"
+			{
+				"signature"		"CTFPlayerShared::CalculateObjectCost"
+				"callconv"		"thiscall"
+				"return"		"int"
+				"this"			"address"
+				"arguments"
+				{
+					"player"
+					{
+						"type"	"cbaseentity"
+					}
+					"type"
+					{
+						"type"	"int"
+					}
+				}
+			}
 			
 			"CTFGameRules::GetCaptureValueForPlayer"
 			{
@@ -237,6 +255,13 @@
 				}
 			}
 			
+			"CObjectSentrygun::Attack"
+			{
+				"signature"		"CObjectSentrygun::Attack"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
 			"CObjectDispenser::GetHealRate"
 			{
 				"signature"		"CObjectDispenser::GetHealRate"
@@ -321,6 +346,11 @@
 				"library"	"server"
 				"linux"		"@_ZN15CTFPlayerShared11StopHealingEP9CTFPlayer"
 			}
+			"CTFPlayerShared::CalculateObjectCost"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared19CalculateObjectCostEP9CTFPlayeri"
+			}
 			
 			"CTFWeaponBase::ApplyOnHitAttributes"
 			{
@@ -338,6 +368,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN11CBaseObject25GetConstructionMultiplierEv"
+			}
+			"CObjectSentrygun::Attack"
+			{
+				"library"	"server"
+				"linux"		"@_ZN16CObjectSentrygun6AttackEv"
 			}
 			"CObjectDispenser::GetHealRate"
 			{
