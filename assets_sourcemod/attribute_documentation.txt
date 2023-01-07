@@ -40,7 +40,7 @@ custom_teleporter_type (globally checked):
 		buildings default to 0 when no override is present
 		sentry:
 			0: normal
-			1: mini (not implemented)
+			1: mini
 			2: artillery
 			3: lucycharm
 		dispenser:
@@ -59,6 +59,12 @@ custom_dispenser_heal_rate (globally checked):
 	
 	values (use value_is_percentage):
 		any non-negative number
+	
+custom_sentry_damage (globally checked):
+	scales the damage of sentry guns
+	
+	values (use value_is_percentage):
+		any number
 	
 custom_leap_ability (globally checked):
 	enables the newly rebranded leap ability
