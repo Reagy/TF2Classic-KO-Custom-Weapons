@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V5.5.7
+// Knockout Custom Weapons V5.5.5
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 & Tangerine Paint & Grunt's Weapon Addons V2
 // ------------------------------------------------------------------------------------ //
@@ -10019,15 +10019,15 @@
 	"channel"	"CHAN_ITEM"
 	"soundlevel"	"SNDLVL_NORM"
 	"volume"	"1.0"
-	"wave"		")weapons/laika_spin.wav"
+	"wave"		")weapons/laika_spin_loop.wav"
 }
 
-"Weapon_Laika.WindUp"	
+"Weapon_Laika.SpinUp"	
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"wave"		")weapons/laika_wind_up.wav"
+	"wave"		")weapons/laika_spin_up.wav"
 }
 
 
@@ -10047,12 +10047,12 @@
 	"wave"		")weapons/laika_fire_crit.wav"
 }
 
-"Weapon_Laika.WindDown"	
+"Weapon_Laika.StopSpin"	
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"wave"		")weapons/laika_wind_down.wav"
+	"wave"		")weapons/laika_spin_stop.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -12405,56 +12405,34 @@
 	"wave"		")weapons/relicmachine_fire_crit.wav"
 }
 // ------------------------------------------------------------------------------------ //
-// FESTIVE TWIG!
+// MOLOTOV
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_Twig.Swing"
+"Weapon_MolotovLauncher.Single"
 {
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		"weapons\twig_swing1.wav"
-		"wave"		"weapons\twig_swing2.wav"
-		"wave"		"weapons\twig_swing3.wav"
-	}
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/molotovlauncher_shoot.wav"
 }
-
-"Weapon_Twig.MissCrit"
+"Weapon_MolotovLauncher.SingleCrit"
 {
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_64dB"
-	"volume"	"1"
-	"rndwave"
-	{
-		"wave"		")weapons/twig_swing_crit1.wav"
-		"wave"		")weapons/twig_swing_crit2.wav"
-	}
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/molotovlauncher_shoot_crit.wav"
 }
-
-"Weapon_Twig.HitWorld"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1"
-	"rndwave"
-	{
-		"wave"		")weapons/twig_hit1.wav"
-		"wave"		")weapons/twig_hit2.wav"
-		"wave"		")weapons/twig_hit3.wav"
-	}
-}
-
-"Weapon_Twig.HitFlesh"
+"Weapon_Molotov.Explode"
 {
 	"channel"		"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"		".6"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"0.85"
+	"pitch"			"95,105"
 	"rndwave"
 	{
-		"wave"		")weapons/twig_hit1.wav"
-		"wave"		")weapons/twig_hit2.wav"
-		"wave"		")weapons/twig_hit3.wav"
+		"wave"		")weapons\molotov_detonate_1.wav"
+		"wave"		")weapons\molotov_detonate_2.wav"
+		"wave"		")weapons\molotov_detonate_3.wav"
+		"wave"		")weapons\molotov_detonate_4.wav"
 	}
 }
