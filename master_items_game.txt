@@ -11520,15 +11520,20 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_cloak_meter_consume_rate"
 					"value"				"0.8"
 				}
-				"cloak regen rate decreased"											
-				{
-					"attribute_class"	"mult_cloak_meter_regen_rate"
-					"value"				"0.3"
-				}
 				"mark self on miss"											
 				{
 					"attribute_class"	"self_mark_for_death_on_miss"
 					"value"				"10"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.1"
+				}
+				"deploy time increased"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"1.15"
 				}
 			}
 			"visuals"
