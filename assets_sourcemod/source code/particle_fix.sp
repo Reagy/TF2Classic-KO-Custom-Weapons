@@ -23,6 +23,8 @@ public void OnMapStart() {
 	PrecacheParticleEffect("laser_tracer_green_crit");
 	PrecacheParticleEffect("laser_tracer_yellow");
 	PrecacheParticleEffect("laser_tracer_yellow_crit");
+
+	AddFileToDownloadsTable("particles/laser_tracers.pcf");
 }
 
 //thank you internet people
