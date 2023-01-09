@@ -32,9 +32,10 @@ public Action Event_Inventory( Handle hEvent, const char[] sName, bool bDontBroa
 	int iPlayer = GetClientOfUserId( iUser );
 
 	if( iPlayer < MaxClients ) {
-		bCanLeap[iPlayer] = AttribHookFloat( 0.0, iPlayer, "custom_enable_leap" ) != 0.0;
+		float flValue = AttribHookFloat( 0.0, iPlayer, "custom_leap_ability" );
+		bCanLeap[iPlayer] = flValue != 0.0;
 		if( bCanLeap[iPlayer] )
-			Tracker_Create( iPlayer, LEAPKEYNAME, 100.0, 10.0 );
+			Tracker_Create( iPlayer, LEAPKEYNAME, 100.0, flValue );
 		else
 			Tracker_Remove( iPlayer, LEAPKEYNAME );
 	}
