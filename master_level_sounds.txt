@@ -12436,3 +12436,57 @@
 		"wave"		")weapons\molotov_detonate_4.wav"
 	}
 }
+// ------------------------------------------------------------------------------------ //
+// FESTIVE TWIG!
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Twig.Swing"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"rndwave"
+	{
+		"wave"		"weapons\twig_swing1.wav"
+		"wave"		"weapons\twig_swing2.wav"
+		"wave"		"weapons\twig_swing3.wav"
+	}
+}
+
+"Weapon_Twig.MissCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_64dB"
+	"volume"	"1"
+	"rndwave"
+	{
+		"wave"		")weapons/twig_swing_crit1.wav"
+		"wave"		")weapons/twig_swing_crit2.wav"
+	}
+}
+
+"Weapon_Twig.HitWorld"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1"
+	"rndwave"
+	{
+		"wave"		")weapons/twig_hit1.wav"
+		"wave"		")weapons/twig_hit2.wav"
+		"wave"		")weapons/twig_hit3.wav"
+	}
+}
+
+"Weapon_Twig.HitFlesh"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"		".6"
+	"rndwave"
+	{
+		"wave"		")weapons/twig_hit1.wav"
+		"wave"		")weapons/twig_hit2.wav"
+		"wave"		")weapons/twig_hit3.wav"
+	}
+}
