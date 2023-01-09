@@ -16,9 +16,13 @@ public Plugin myinfo =
 public void OnMapStart() {
 	PrecacheEffect("ParticleEffect");
 	PrecacheParticleEffect("laser_tracer_red");
+	PrecacheParticleEffect("laser_tracer_red_crit");
 	PrecacheParticleEffect("laser_tracer_blue");
+	PrecacheParticleEffect("laser_tracer_blue_crit");
 	PrecacheParticleEffect("laser_tracer_green");
+	PrecacheParticleEffect("laser_tracer_green_crit");
 	PrecacheParticleEffect("laser_tracer_yellow");
+	PrecacheParticleEffect("laser_tracer_yellow_crit");
 }
 
 //thank you internet people
