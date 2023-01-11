@@ -8253,7 +8253,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"	
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.4"
+					"value" 			"0.5"
 				}	
 				"voice pitch scale"	
 				{
@@ -8274,11 +8274,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"custom_burn_pyro" // yes, this sets other pyros on fire god save us all.
 					"value"				"1"													
-				}	
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.3"
 				}	
 			}
 			"visuals"
@@ -11172,7 +11167,7 @@ Wearable by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_HEAVY_HEAVYMACHINEGUN"
 			"prefab"					"weapon_minigun"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"primary"
 
 			"item_quality"				"rarity2"
@@ -11221,6 +11216,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_player_movespeed"
 					"value"				"0.85"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"1.33"
 				}
 				"voice pitch scale"
 				{
@@ -11525,20 +11525,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_cloak_meter_consume_rate"
 					"value"				"0.8"
 				}
+				"cloak regen rate decreased"											
+				{
+					"attribute_class"	"mult_cloak_meter_regen_rate"
+					"value"				"0.3"
+				}
 				"mark self on miss"											
 				{
 					"attribute_class"	"self_mark_for_death_on_miss"
 					"value"				"10"
-				}
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.1"
-				}
-				"deploy time increased"
-				{
-					"attribute_class"	"mult_deploy_time"
-					"value"				"1.15"
 				}
 			}
 			"visuals"
@@ -12406,7 +12401,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.3333333333333333333"
+					"value" 			"0.2"
 				}				
 				"weapon burn time reduced"
 				{
@@ -13634,8 +13629,9 @@ Weapon by: 'Majro'"
 			"propername"				"0"
 			"item_name"					"Searing Skewer"
 			"item_type_name"			"Flare Crossbow"
-			"item_description"			"This weapon can deal headshots
+			"item_description"			"Piercing Ignition: This weapon can set other Pyros on fire.
 
+Old warfare methods stand the test of time, this is no exception.
 
 Model by: 'goober of the goof'
 Weapon by: 'Majro'
@@ -13656,7 +13652,7 @@ Name by: 'The One of Wonders'"
 			
 			"static_attrs"
 			{																	
-				"override projectile type" 				"8"
+				"override projectile type" 				"30"
 			}
 			"attributes"
 			{
@@ -13665,15 +13661,12 @@ Name by: 'The One of Wonders'"
 			{
 				"attribute_class"	"set_dmgtype_ignite"
 				"value"				"1"
-			}
-				
-			"projectile penetration"
-			{
-				"attribute_class"	"projectile_penetration"
-				"value"				"1"
-			}
-				
-				
+			}	
+			"strange restriction type 1"
+				{
+					"attribute_class"	"custom_burn_pyro" // yes, this sets other pyros on fire god save us all.
+					"value"				"1"													
+				}	
 			}
 			"visuals" //Using Crusaders' sounds because I have no idea what else to use.
 			{
@@ -16341,7 +16334,8 @@ Edited by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"VogelJager"           // If you translate the name in english it means Bird Hunter which is the opposite of medic's interest in his pet Archimedes :p
 			"item_type_name"			"#TF_Weapon_Shotgun"
-			"item_description"			"
+			"item_description"			"Medical Malpractice: This weapon fires slugs that mark enemies for death for 3 seconds.
+
 Hmmm it seems here that you have lead poising on you're chest - Let me make zhat worse for you!
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
@@ -16355,27 +16349,31 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			{
 				"medic"				"1"
 			}
+			"static_attrs"
+			{
+				"override projectile type"				"30"
+			}
 			"attributes"
 			{
-				"bullets per shot bonus"
+				"add condition on hit"					 // Mark for death										
 				{
-					"attribute_class" 	"mult_bullets_per_shot"
-					"value" 			"1.8"
+					"attribute_class"	"add_onhit_addcond"
+					"value"				"30 3"
 				}
-				"damage penalty"
+				"mark for death"					// Display only											
+				{
+					"attribute_class"	"mark_for_death"
+					"value"				"1"
+				}
+				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.50"
+					"value"				"4.0"
 				}
-				"spread penalty"
+				"voice pitch scale"
 				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"1.25"
-				}
-				"max health additive penalty"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-15"
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.4"
 				}
 				"crit mod disabled"															
 				{
@@ -16988,11 +16986,6 @@ Weapon by: 'The One Of Wonders'"
 					"value" 			"1.67"
 				}
 				// Backend stuff
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.35"
-				}
 				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
@@ -18194,8 +18187,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_class"				"tf_wearable"
 			"item_type_name"			"Robot"
 			"item_name"				"Geared Up Ghost"
-			"item_description"			"Mouse 2: Charge forward! (10 sec cooldown)
-
+			"item_description"			"
 Eyes up, mercenary.
 
 Wearable from: Tangerine Paint and Grunt's Weapon Addons"
@@ -19154,7 +19146,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.3"
+					"value"				"0.5"
 				}
 				"minigun spinup time decreased"
 				{
@@ -19179,7 +19171,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.2"
+					"value"				"1.33"
 				}
 				"reduced_healing_from_medics"
 				{
@@ -20125,7 +20117,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"      
 				{
 					"attribute_class"	"mult_wpn_burndmg"
-					"value" 			"5"
+					"value" 			"9"
 				}	
 				"SET BONUS: dmg from sentry reduced"
 				{
@@ -20161,12 +20153,12 @@ Weapon by: 'The One Of Wonders'"
                 "voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg_vs_burning"
-					"value"				"0.1"
+					"value"				"0.25"
 				}
                 "voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"				"0.2"
+					"value"				"0.45"
 				}	
                 "strange restriction type 1"
 				{
@@ -20996,11 +20988,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"provide_on_active"
 					"value" 			"1"
 				}
-		        "damage bonus"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"1.5"
-				}
 				"heal on kill"
 				{
 					"attribute_class"	"heal_on_kill"
@@ -21020,11 +21007,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_spread_scale"
 					"value"				"2"
-				}
-				"max health additive penalty"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-75"
 				}
 				"health from healers reduced"
 				{
@@ -23324,7 +23306,7 @@ Weapon by: 'The One Of Wonders'"
 			"static_attrs"
 			{
 				"override projectile type"				"2"										
-				"damage bonus hidden"					"1.03333333"
+				"damage bonus hidden"					"0.85"
 				"class select override vcd"				"taunt02_v1"
 			}
             "attributes"
@@ -24652,7 +24634,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"	
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"3.375"
+					"value" 			"2.1"
 				}
 				"voice pitch scale"
 				{
@@ -25301,7 +25283,7 @@ Weapon by: 'The One Of Wonders'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.9"
+					"value"				"0.75"
 				}
 				"fire rate penalty"
 				{
@@ -29470,14 +29452,14 @@ Weapon by: 'Majro'"
 		}
 //----------------------
 //----------------------
-//--Heartbreaker- 9214---
+//--Heartbreaker- 9214----- REMOVED
 //----------------------
 //----------------------
 		"9214"
 		{	
 			"name"						"TF_WEAPON_HEARTBREAKER"								// NOTE: THIS DEV. VERSION SHOOTS -BULLETS-. This is only to visualize how many projectiles I want it to fire.
 			"prefab"					"weapon_shotgun"										// It will NOT, I repeat NOT shoot bullets under any circumstance in the final version.
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"primary"
 			"anim_slot"					"melee"
 			"item_quality"				"rarity3"
@@ -30009,6 +29991,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+				"mod no reload DISPLAY ONLY"
+				{
+					"attribute_class"		"mod_no_reload_display_only"
+					"value"					"1"
+				}
 				"heal on hit for rapidfire"
 				{
 					"attribute_class"	"add_onhit_addhealth"
@@ -30017,32 +30004,32 @@ Weapon by: 'The One Of Wonders'"
 			    "voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.177"
+					"value" 			"0.15"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.075"
+					"value" 			"0.02"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value" 			"0.5"
+					"value" 			"0.001"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value" 			"3.33333333333"
+					"value" 			"2.0"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value" 			"4.16666666667"
+					"value" 			"6"
 				}
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.066666666666667"
+					"value"				"0.0965"
 				}
 				"strange restriction type 1"
 				{
