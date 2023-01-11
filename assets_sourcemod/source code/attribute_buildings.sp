@@ -550,6 +550,9 @@ void SetBuildingModel( int iBuilding, bool bIsUpgrading ) {
 }
 
 void CheckBuildings( int iPlayer ) {
+	if( !( iPlayer < MaxClients && IsPlayerAlive( iPlayer ) ) )
+		return;
+
 	if( TF2_GetPlayerClass( iPlayer ) != TFClass_Engineer ) {
 		g_iBuildingTypes[iPlayer] = { 0, 0, 0 };
 		return;
@@ -606,6 +609,7 @@ void SetupObjectHooks( int iEntity ) {
  * @param bSilent     Destroy buildings silently
  */
 void DetonatedOwnedObjects( int iPlayer, int iType, int iMode = 0, bool bSilent = false ) {
+	PrintToServer( "[BUILDING]: DetonateOwnedObjects, Player: %i Type: %i Mode: %i", iPlayer, iType, iMode );
 	SDKCall( hDetonateOwned, iPlayer, iType, iMode, bSilent );
 }
 
@@ -618,6 +622,7 @@ void DetonatedOwnedObjects( int iPlayer, int iType, int iMode = 0, bool bSilent 
  * @return            Index of building at index
  */
 int GetObject( int iPlayer, int iIndex ) {
+	PrintToServer( "[BUILDING]: GetObject, Player: %i Building: %i", iPlayer, iIndex );
 	return SDKCall( hGetObject, iPlayer, iIndex );
 }
 
@@ -628,6 +633,7 @@ int GetObject( int iPlayer, int iIndex ) {
  * @return            Amount of buildings
  */
 int GetObjectCount( int iPlayer ) {
+	PrintToServer( "[BUILDING]: GetObjectCount, Player: %i", iPlayer );
 	return SDKCall( hObjectCount, iPlayer );
 }
 
