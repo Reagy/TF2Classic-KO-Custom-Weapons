@@ -8253,7 +8253,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"	
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.5"
+					"value" 			"0.4"
 				}	
 				"voice pitch scale"	
 				{
@@ -8274,6 +8274,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"custom_burn_pyro" // yes, this sets other pyros on fire god save us all.
 					"value"				"1"													
+				}	
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_wpn_burntime"
+					"value"				"0.3"
 				}	
 			}
 			"visuals"
@@ -20153,12 +20158,12 @@ Weapon by: 'The One Of Wonders'"
                 "voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg_vs_burning"
-					"value"				"0.25"
+					"value"				"0.1"
 				}
                 "voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"				"0.45"
+					"value"				"0.2"
 				}	
                 "strange restriction type 1"
 				{
@@ -29991,11 +29996,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-				"mod no reload DISPLAY ONLY"
-				{
-					"attribute_class"		"mod_no_reload_display_only"
-					"value"					"1"
-				}
 				"heal on hit for rapidfire"
 				{
 					"attribute_class"	"add_onhit_addhealth"
@@ -30004,32 +30004,32 @@ Weapon by: 'The One Of Wonders'"
 			    "voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.15"
+					"value" 			"0.177"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.02"
+					"value" 			"0.075"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value" 			"0.001"
+					"value" 			"0.5"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value" 			"2.0"
+					"value" 			"3.33333333333"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value" 			"6"
+					"value" 			"4.16666666667"
 				}
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.0965"
+					"value"				"0.066666666666667"
 				}
 				"strange restriction type 1"
 				{
