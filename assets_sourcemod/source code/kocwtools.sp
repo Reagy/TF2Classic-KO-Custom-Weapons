@@ -9,6 +9,7 @@
 //inventory
 Handle hEconGetAttributeManager;
 Handle hPlayerGetAttributeManager;
+Handle hPlayerGetAttributeContainer;
 Handle hApplyAttributeFloat;
 
 Handle hGetEntitySlot;
@@ -71,7 +72,6 @@ public void OnPluginStart() {
 	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CEconEntity::GetAttributeManager");
 	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
 	hEconGetAttributeManager = EndPrepSDKCall();
-
 	if(!hEconGetAttributeManager)
 		PrintToServer("SDKCall setup for CEconEntity::GetAttributeManager failed");
 
@@ -80,9 +80,15 @@ public void OnPluginStart() {
 	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CTFPlayer::GetAttributeManager");
 	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
 	hPlayerGetAttributeManager = EndPrepSDKCall();
-
 	if(!hPlayerGetAttributeManager)
 		PrintToServer("SDKCall setup for CTFPlayer::GetAttributeManager failed");
+
+	StartPrepSDKCall(SDKCall_Player);
+	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CTFPlayer::GetAttributeContainer");
+	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
+	hPlayerGetAttributeContainer = EndPrepSDKCall();
+	if(!hPlayerGetAttributeContainer)
+		PrintToServer("SDKCall setup for CTFPlayer::GetAttributeContainer failed");
 
 	//CAttributeManager::ApplyAttributeFloat( float flValue, const CBaseEntity *pEntity, string_t strAttributeClass )
 	StartPrepSDKCall(SDKCall_Raw);
@@ -92,7 +98,6 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter(SDKType_CBaseEntity, SDKPass_Pointer); //pentity
 	PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain); //strattributeclass
 	hApplyAttributeFloat = EndPrepSDKCall();
-
 	if(!hApplyAttributeFloat)
 		PrintToServer("SDKCall setup for CAttributeManager::ApplyAttributeFloat failed");
 
@@ -169,7 +174,7 @@ public void OnMapEnd() {
 
 public any Native_AllocPooledString( Handle hPlugin, int iParams ) {
 	int iBuffer;
-	GetNativeStringLength( 3, iBuffer );
+	GetNativeStringLength( 1, iBuffer );
 	char[] sAllocPool = new char[ ++iBuffer ];
 	GetNativeString( 1, sAllocPool, iBuffer );
 
@@ -203,7 +208,7 @@ stock Address AllocPooledString( const char[] sValue ) {
 /*
 	ATTRIBUTE FLOAT FUNCTIONS
 
-	AttribHookValue is the function internally used to get attribute data.
+	AttribHookValue is the function internally used to get float attribute data.
 	It simply locates the AttributeManager of the provided entity and calls it's ApplyAttributeFloat/ApplyAttributeString function.
 	The function is a template function, and every version except the string_t version was inlined by the compiler, so it's behavior has to be recreated manually.
 */
@@ -211,15 +216,23 @@ stock Address AllocPooledString( const char[] sValue ) {
 //native float AttribHookFloat( float flValue, int iEntity, const char[] sAttributeClass );
 public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
 	float flValue = GetNativeCell( 1 );
-	int	iEntity = GetNativeCell( 2 );
+	int iEntity = GetNativeCell( 2 );
+
+	if( !( IsValidEdict( iEntity ) && HasEntProp( iEntity, Prop_Send, "m_AttributeManager" ) ) )
+		return flValue;
 	
 	int iBuffer;
 	GetNativeStringLength( 3, iBuffer );
 	char[] sAttributeClass = new char[ ++iBuffer ];
 	GetNativeString( 3, sAttributeClass, iBuffer );
 
-	Address aManager = iEntity < MaxClients ? SDKCall( hPlayerGetAttributeManager, iEntity ) : SDKCall( hEconGetAttributeManager, iEntity );
 	Address aStringAlloc = AllocPooledString( sAttributeClass ); //string needs to be allocated before the function will recognize it
+	Address aManager;
+	if( iEntity <= MaxClients )
+		aManager = SDKCall( hPlayerGetAttributeManager, iEntity );
+	else
+		aManager = SDKCall( hEconGetAttributeManager, iEntity );
+		
 	return SDKCall( hApplyAttributeFloat, aManager, flValue, iEntity, aStringAlloc );
 }
 
@@ -273,6 +286,13 @@ static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 		SetFailState( "Failed to get member offset %s", sKey );
 	}
 	return aOffs;
+}
+
+any LoadFromEntity( int iEntity, int iOffset, NumberType iSize = NumberType_Int32 ) {
+	return LoadFromAddress( GetEntityAddress( iEntity ) + view_as<Address>( iOffset ), iSize );
+}
+void StoreToEntity( int iEntity, int iOffset, any anValue, NumberType iSize = NumberType_Int32 ) {
+	StoreToAddress( GetEntityAddress( iEntity ) + view_as<Address>( iOffset ), anValue, iSize );
 }
 
 /*
