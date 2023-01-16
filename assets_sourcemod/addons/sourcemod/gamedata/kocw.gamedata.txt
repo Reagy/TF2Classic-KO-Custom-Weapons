@@ -4,51 +4,13 @@
     {
         "Offsets"
         {
-			//pointer to player contained in CTFPlayerShared
-			"CTFPlayerShared::m_pOuter"
-			{
-				"linux"		"1200"
-			}
-			
-			//pointer to CEconItemView on CEconEntity
-			"CEconEntity::m_Item"
-			{
-				"linux"		"1168"
-			}
-			
+            //player
+        
 			"CTFPlayer::OnTakeDamage"
 			{
 				"linux"		"63"
 			}
-			
-			"CTFGameRules::GetCaptureValueForPlayer"
-			{
-				"linux"		"154"
-			}
-			
-			"CTFWeaponBase::GetFireRate"
-			{
-				"linux"		"295"
-			}
-			
-			//float CWeaponMedigun::GetTargetRange()
-			"CWeaponMedigun::GetTargetRange"
-			{
-				"linux"		"448"
-			}
-			
-			//float CAttributeManager::ApplyAttributeFloat( float flValue, const CBaseEntity *pEntity, string_t strAttributeClass )
-			"CAttributeManager::ApplyAttributeFloat"
-			{
-				"linux"		"3"
-			}
-			
-			
-			"CEconEntity::GetAttributeManager"
-			{
-				"linux"		"225"
-			}
-			"CTFPlayer::GetAttributeManager"
+            "CTFPlayer::GetAttributeManager"
 			{
 				"linux"		"471"
 			}
@@ -56,26 +18,87 @@
 			{
 				"linux"		"472"
 			}
+			"CTFPlayerShared::m_pOuter" //pointer to player contained in CTFPlayerShared
+			{
+				"linux"		"1200"
+			}
+            
+            "CTFGameRules::GetCaptureValueForPlayer"
+			{
+				"linux"		"154"
+			}
+            
+            //buildings
+            
+            "CBaseObject::StartBuilding"
+            {
+                "linux"     "328"
+            }
+            "CBaseObject::OnGoActive"
+            {
+                "linux"     "340"
+            }
+            "CBaseObject::CanBeUpgraded"
+            {
+                "linux"     "345"
+            }
+            "CBaseObject::StartUpgrading"
+            {
+                "linux"     "346"
+            }
+            "CBaseObject::FinishUpgrading"
+            {
+                "linux"     "347"
+            }
+            "CBaseObject::MakeCarriedObject"
+            {
+                "linux"     "350"
+            }
+            "CBaseObject::m_iGoalUpgradeLevel"
+            {
+                "linux"     "2044"
+            }
+            "CObjSentrygun::m_flNextAttack"
+            {
+                "linux"     "2392"
+            }
+            "CObjSentrygun::m_iBaseTurnRate"
+            {
+                "linux"     "2404"
+            }
+            
+            
+            //weapons
+            
+			"CTFWeaponBase::GetFireRate"
+			{
+				"linux"		"295"
+			}
+			"CWeaponMedigun::GetTargetRange"
+			{
+				"linux"		"448"
+			}
+			
+			"CAttributeManager::ApplyAttributeFloat"
+			{
+				"linux"		"3"
+			}
+			
+            //econ
+            
+			"CEconEntity::GetAttributeManager"
+			{
+				"linux"		"225"
+			}
+			"CEconEntity::m_Item" //pointer to CEconItemView on CEconEntity
+			{
+				"linux"		"1168"
+			}
         }
 		
 		"Functions"
 		{
-			"CTFWeaponBase::GetFireRate"
-			{
-				"offset"		"CTFWeaponBase::GetFireRate"
-				"hooktype"		"entity"
-				"callconv"		"thiscall"
-				"return"		"float"
-				"this"			"entity"
-			}
-			
-			"CTFBaseRocket::DetonateThink"
-			{
-				"signature"		"CTFBaseRocket::DetonateThink"
-				"callconv"		"thiscall"
-				"return"		"void"
-				"this"			"entity"
-			}
+			//player
 			
 			"CTFPlayer::OnTakeDamage"
 			{
@@ -92,7 +115,6 @@
 					}
 				}
 			}
-			
 			"CTFPlayerShared::Burn"
 			{
 				"signature"		"CTFPlayerShared::Burn"
@@ -169,14 +191,109 @@
 					}
 				}
 			}
-			
-			"CTFGameRules::GetCaptureValueForPlayer"
+            
+            "CTFGameRules::GetCaptureValueForPlayer"
 			{
 				"offset"		"CTFGameRules::GetCaptureValueForPlayer"
 				"hooktype"		"gamerules"
 				"callconv"		"thiscall"
 				"return"		"int"
 				"this"			"address"
+				"arguments"
+				{
+					"player"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			
+            //buildings
+            
+            "CBaseObject::StartBuilding"
+            {
+                "offset"        "CBaseObject::StartBuilding"
+                "callconv"      "thiscall"
+                "return"        "void"
+                "this"          "entity"
+                "arguments"
+                {
+                    "player"
+                    {
+                        "type"  "cbaseentity"
+                    }
+                }
+            }
+            "CBaseObject::OnGoActive"
+            {
+                "offset"        "CBaseObject::OnGoActive"
+                "callconv"      "thiscall"
+                "return"        "void"
+                "this"          "entity"
+            }
+            "CBaseObject::CanBeUpgraded"
+            {
+                "offset"        "CBaseObject::CanBeUpgraded"
+                "callconv"      "thiscall"
+                "return"        "bool"
+                "this"          "entity"
+                "arguments"
+                {
+                    "player"
+                    {
+                        "type"  "cbaseentity"
+                    }
+                }
+            }
+            "CBaseObject::StartUpgrading"
+            {
+                "offset"        "CBaseObject::StartUpgrading"
+                "callconv"      "thiscall"
+                "return"        "void"
+                "this"          "entity"
+            }
+            "CBaseObject::FinishUpgrading"
+            {
+                "offset"        "CBaseObject::FinishUpgrading"
+                "callconv"      "thiscall"
+                "return"        "void"
+                "this"          "entity"
+            }
+            "CBaseObject::MakeCarriedObject"
+            {
+                "offset"        "CBaseObject::MakeCarriedObject"
+                "callconv"      "thiscall"
+                "return"        "void"
+                "this"          "entity"
+                "arguments"
+                {
+                    "player"
+                    {
+                        "type"  "cbaseentity"
+                    }
+                }
+            }
+            
+            "CObjectSentrygun::Attack"
+			{
+				"signature"		"CObjectSentrygun::Attack"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
+			"CObjectDispenser::GetHealRate"
+			{
+				"signature"		"CObjectDispenser::GetHealRate"
+				"callconv"		"thiscall"
+				"return"		"float"
+				"this"			"entity"
+			}
+			"CObjectTeleporter::TeleporterDoJump"
+			{
+				"signature"		"CObjectTeleporter::TeleporterDoJump"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
 				"arguments"
 				{
 					"player"
@@ -206,20 +323,7 @@
 				}
 			}
 			
-			"CTFBaseRocket::Spawn"
-			{
-				"signature"		"CTFBaseRocket::Spawn"
-				"callconv"		"thiscall"
-				"return"		"void"
-				"this"			"entity"
-			}
-			"CTFProjectile_SentryRocket::Spawn"
-			{
-				"signature"		"CTFProjectile_SentryRocket::Spawn"
-				"callconv"		"thiscall"
-				"return"		"void"
-				"this"			"entity"
-			}
+			//weapons
 			
 			"CTFWeaponBase::ApplyOnHitAttributes"
 			{
@@ -239,6 +343,14 @@
 					}
 				}
 			}
+            "CTFWeaponBase::GetFireRate"
+			{
+				"offset"		"CTFWeaponBase::GetFireRate"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"float"
+				"this"			"entity"
+			}
 			
 			"CWeaponMedigun::AllowedToHealTarget"
 			{
@@ -255,72 +367,36 @@
 				}
 			}
 			
-			"CObjectSentrygun::Attack"
+            //projectiles
+            
+			"CTFBaseRocket::Spawn"
 			{
-				"signature"		"CObjectSentrygun::Attack"
+				"signature"		"CTFBaseRocket::Spawn"
 				"callconv"		"thiscall"
 				"return"		"void"
 				"this"			"entity"
 			}
-			"CObjectDispenser::GetHealRate"
+			"CTFBaseRocket::DetonateThink"
 			{
-				"signature"		"CObjectDispenser::GetHealRate"
-				"callconv"		"thiscall"
-				"return"		"float"
-				"this"			"entity"
-			}
-			"CObjectTeleporter::TeleporterDoJump"
-			{
-				"signature"		"CObjectTeleporter::TeleporterDoJump"
+				"signature"		"CTFBaseRocket::DetonateThink"
 				"callconv"		"thiscall"
 				"return"		"void"
 				"this"			"entity"
-				"arguments"
-				{
-					"player"
-					{
-						"type"	"cbaseentity"
-					}
-				}
 			}
+			"CTFProjectile_SentryRocket::Spawn"
+			{
+				"signature"		"CTFProjectile_SentryRocket::Spawn"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
+            
 		}
 		
 		"Signatures"
 		{
-			"CEconItemView::IterateAttributes"
-			{
-				"library"	"server"
-				"linux"		"@_ZN13CEconItemView17IterateAttributesE8string_t"
-			}
-			"CEconEntity::GetItem"
-			{
-				"library"	"server"
-				"linux"		"@_ZN11CEconEntity7GetItemEv"
-			}
-		
-			"CBaseEntity::SetNextThink"
-			{
-				"library"	"server"
-				"linux"		"@_ZN11CBaseEntity12SetNextThinkEfPKc"
-			}
-			
-			"CTFBaseRocket::Spawn"
-			{
-				"library"	"server"
-				"linux"		"@_ZN13CTFBaseRocket5SpawnEv"
-			}
-			"CTFBaseRocket::DetonateThink"
-			{
-				"library"	"server"
-				"linux"		"@_ZN13CTFBaseRocket13DetonateThinkEv"
-			}
-			"CTFProjectile_SentryRocket::Spawn"
-			{
-				"library"	"server"
-				"linux"		"@_ZN26CTFProjectile_SentryRocket5SpawnEv"
-			}
-			
-			"CTFPlayer::GetEntityForLoadoutSlot"
+            //player
+            "CTFPlayer::GetEntityForLoadoutSlot"
 			{
 				"library"	"server"
 				"linux"		"@_ZNK9CTFPlayer23GetEntityForLoadoutSlotE14ETFLoadoutSlot"
@@ -330,6 +406,21 @@
 				"library"	"server"
 				"linux"		"@_ZN9CTFPlayer19MedicGetChargeLevelEv"
 			}
+            "CTFPlayer::DetonateOwnedObjectsOfType"
+            {
+                "library"   "server"
+                "linux"     "@_ZN9CTFPlayer26DetonateOwnedObjectsOfTypeEiib"
+            }
+            "CTFPlayer::GetObject"
+            {
+                "library"   "server"
+                "linux"     "@_ZN9CTFPlayer9GetObjectEi"
+            }
+            "CTFPlayer::GetObjectCount"
+            {
+                "library"   "server"
+                "linux"     "@_ZN9CTFPlayer14GetObjectCountEv"
+            }
 			
 			"CTFPlayerShared::Burn"
 			{
@@ -351,24 +442,19 @@
 				"library"	"server"
 				"linux"		"@_ZN15CTFPlayerShared19CalculateObjectCostEP9CTFPlayeri"
 			}
-			
-			"CTFWeaponBase::ApplyOnHitAttributes"
-			{
-				"library"	"server"
-				"linux"		"@_ZN13CTFWeaponBase20ApplyOnHitAttributesEP11CBaseEntityP9CTFPlayerRK15CTakeDamageInfo"
-			}
-			
-			"CWeaponMedigun::AllowedToHealTarget"
-			{
-				"library"	"server"
-				"linux"		"@_ZN14CWeaponMedigun19AllowedToHealTargetEP11CBaseEntity"
-			}
-			
-			"CBaseObject::GetConstructionMultiplier"
+            
+            //buildings
+            
+            "CBaseObject::GetConstructionMultiplier"
 			{
 				"library"	"server"
 				"linux"		"@_ZN11CBaseObject25GetConstructionMultiplierEv"
 			}
+            "CBaseObject::DestroyScreens"
+            {
+                "library"   "server"
+                "linux"     "@_ZN11CBaseObject14DestroyScreensEv"
+            }
 			"CObjectSentrygun::Attack"
 			{
 				"library"	"server"
@@ -383,6 +469,59 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN17CObjectTeleporter16TeleporterDoJumpEP9CTFPlayer"
+			}
+            
+            //weapons
+            
+            "CTFWeaponBase::ApplyOnHitAttributes"
+			{
+				"library"	"server"
+				"linux"		"@_ZN13CTFWeaponBase20ApplyOnHitAttributesEP11CBaseEntityP9CTFPlayerRK15CTakeDamageInfo"
+			}
+			
+			"CWeaponMedigun::AllowedToHealTarget"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CWeaponMedigun19AllowedToHealTargetEP11CBaseEntity"
+			}
+            
+            //projectiles
+            
+            "CTFBaseRocket::Spawn"
+			{
+				"library"	"server"
+				"linux"		"@_ZN13CTFBaseRocket5SpawnEv"
+			}
+			"CTFBaseRocket::DetonateThink"
+			{
+				"library"	"server"
+				"linux"		"@_ZN13CTFBaseRocket13DetonateThinkEv"
+			}
+			"CTFProjectile_SentryRocket::Spawn"
+			{
+				"library"	"server"
+				"linux"		"@_ZN26CTFProjectile_SentryRocket5SpawnEv"
+			}
+            
+            //econ
+            
+			"CEconItemView::IterateAttributes"
+			{
+				"library"	"server"
+				"linux"		"@_ZN13CEconItemView17IterateAttributesE8string_t"
+			}
+			"CEconEntity::GetItem"
+			{
+				"library"	"server"
+				"linux"		"@_ZN11CEconEntity7GetItemEv"
+			}
+		
+            //other
+        
+			"CBaseEntity::SetNextThink"
+			{
+				"library"	"server"
+				"linux"		"@_ZN11CBaseEntity12SetNextThinkEfPKc"
 			}
 		}
     }
