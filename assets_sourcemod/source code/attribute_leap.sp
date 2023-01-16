@@ -33,7 +33,7 @@ public Action Event_Inventory( Handle hEvent, const char[] sName, bool bDontBroa
 	int iUser = GetEventInt( hEvent, "userid" );
 	int iPlayer = GetClientOfUserId( iUser );
 
-	if( iPlayer < MaxClients ) {
+	if( iPlayer <= MaxClients ) {
 		float flValue = AttribHookFloat( 0.0, iPlayer, "custom_leap_ability" );
 		bCanLeap[iPlayer] = flValue != 0.0;
 		if( bCanLeap[iPlayer] )
@@ -83,7 +83,7 @@ void PlayerLeap( int iPlayer, float flAngles[3] ) {
 	
 	flForwardVel[0] *= flForce;
 	flForwardVel[1] *= flForce;
-	flForwardVel[2] = FloatClamp( flForwardVel[2] * flForce, 300.0, 3000.0 );
+	flForwardVel[2] = FloatClamp( flForwardVel[2] * flForce, 260.0, 3000.0 );
 		
 	GetEntPropVector( iPlayer, Prop_Data, "m_vecVelocity", flPlayerVel );
 	AddVectors( flPlayerVel, flForwardVel, flFinalVel );
