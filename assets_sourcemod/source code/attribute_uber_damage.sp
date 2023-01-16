@@ -48,10 +48,6 @@ public Action Hook_TakeDamageUber( int victim, int &attacker, int &inflictor, fl
 	if(inflictor >= 4096) inflictor -= 4096;
 
 	if( !IsValidEntity( weapon ) ) return Plugin_Changed; //can't return plugin_continue because it will try to return the original broken indexes
-	
-	static char sBuff[64];
-	GetEntityClassname(weapon, sBuff, 64);
-	if( strcmp("obj_sentrygun", sBuff) == 0 ) return Plugin_Changed; 
 
 	float flUberScale = AttribHookFloat( 0.0, weapon, "custom_uber_scales_damage" );
 	if( flUberScale == 0.0 ) return Plugin_Changed;
