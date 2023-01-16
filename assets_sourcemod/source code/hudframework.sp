@@ -20,7 +20,7 @@ Handle hHudSync;
 
 enum {
 	RTF_PERCENTAGE = 1 << 1,	//display value as a percentage
-	RTF_DING = 1 << 2,			//play sound when fully charged
+	RTF_DING = 1 << 2,		//play sound when fully charged
 	RTF_RECHARGES = 1 << 3,
 	//RTF_ = 1 << 1,
 	//RTF_ = 1 << 1,
@@ -42,16 +42,28 @@ enum struct ResourceTracker {
 
 public void OnPluginStart() {
 	hHudSync = CreateHudSynchronizer();
+
+	for(int i = 0; i < sizeof(hResources); i++) {
+		if( hResources[i] )
+			hResources[i].Clear();
+			
+		hResources[i] = new ArrayList(TRACKERMAXSIZE);
+	}
+
 #if defined DEBUG
 	RegConsoleCmd("sm_hf_test", Command_Test, "test");
 #endif
 }
 
 public void OnMapStart() {
-	for(int i = 0; i < MaxClients; i++) {
+	CreateTimer( UPDATEINTERVAL, Timer_TrackerThink, 0, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
+
+	for(int i = 0; i < sizeof(hResources); i++) {
+		if( hResources[i] )
+			hResources[i].Clear();
+
 		hResources[i] = new ArrayList(TRACKERMAXSIZE);
 	}
-	CreateTimer( UPDATEINTERVAL, Timer_TrackerThink, 0, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
 }
 
 public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] sError, int iErrorMax ) {
@@ -63,13 +75,19 @@ public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] sError, int iEr
 	return APLRes_Success;
 }
 
+public void OnClientDisconnect( int iClient ) {
+	if( iClient >= 0 && iClient < sizeof( hResources ) )
+		hResources[iClient].Clear();
+}
+
 Action Timer_TrackerThink( Handle hTimer ) {
 	for ( int i = 1; i <= MaxClients; i++ ) {
-		if ( IsClientInGame( i ) && !IsFakeClient( i ) ) {
+		if ( IsClientInGame( i ) ) {
 			for( int j = 0; j < hResources[i].Length; j++ ) {
 				Tracker_Recharge( i, j );
 			}
-			Tracker_Display( i );
+			if( !IsFakeClient( i ) ) 
+				Tracker_Display( i );
 		}
 	}
 	return Plugin_Continue;
@@ -173,6 +191,7 @@ void Tracker_Display( int iPlayer ) {
 	static char sFinal[256];
 	static char sBuffer[64];
 	sFinal = "";
+
 	for( int i = 0; i < hResources[iPlayer].Length; i++ ) {
 		ResourceTracker hTracker;
 		hResources[iPlayer].GetArray( i, hTracker );
