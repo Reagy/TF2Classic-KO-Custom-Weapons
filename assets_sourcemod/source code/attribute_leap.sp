@@ -21,7 +21,9 @@ bool bCanLeap[MAXPLAYERS+1];
 public void OnPluginStart() {
 	HookEvent( "post_inventory_application", Event_Inventory, EventHookMode_Post );
 	HookEvent( "player_death", Event_PlayerDeath, EventHookMode_Post );
+}
 
+public void OnMapStart() {
 	PrecacheSound( "player/demo_charge_windup1.wav" );
 	PrecacheSound( "player/demo_charge_windup2.wav" );
 	PrecacheSound( "player/demo_charge_windup3.wav" );
