@@ -10,6 +10,10 @@
 			{
 				"linux"		"63"
 			}
+			"CTFPlayer::TakeHealth"
+			{
+				"linux"		"65"
+			}
             "CTFPlayer::GetAttributeManager"
 			{
 				"linux"		"471"
@@ -18,6 +22,7 @@
 			{
 				"linux"		"472"
 			}
+			
 			"CTFPlayerShared::m_pOuter" //pointer to player contained in CTFPlayerShared
 			{
 				"linux"		"1200"
@@ -70,6 +75,18 @@
             
             //weapons
             
+			"CTFWeaponBase::Holster"
+			{
+				"linux"		"261"
+			}
+			"CTFWeaponBase::ItemPostFrame"
+			{
+				"linux"		"271"
+			}
+			"CTFWeaponBase::SecondaryAttack"
+			{
+				"linux"		"286"
+			}
 			"CTFWeaponBase::GetFireRate"
 			{
 				"linux"		"295"
@@ -114,6 +131,26 @@
 						"type"	"objectptr"
 					}
 				}
+			}
+			"CTFPlayer::TakeHealth"
+			{
+				"offset"		"CTFPlayer::TakeHealth"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"int"
+				"this"			"entity"
+				"arguments"
+				{
+					"amount"
+					{
+						"type"	"float"
+					}
+					"flags"
+					{
+						"type"	"int"
+					}
+				}
+				
 			}
 			"CTFPlayerShared::Burn"
 			{
@@ -343,6 +380,14 @@
 					}
 				}
 			}
+			"CTFWeaponBase::ItemPostFrame"
+			{
+				"offset"		"CTFWeaponBase::ItemPostFrame"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
             "CTFWeaponBase::GetFireRate"
 			{
 				"offset"		"CTFWeaponBase::GetFireRate"
@@ -350,6 +395,29 @@
 				"callconv"		"thiscall"
 				"return"		"float"
 				"this"			"entity"
+			}
+			"CTFWeaponBase::SecondaryAttack"
+			{
+				"offset"		"CTFWeaponBase::SecondaryAttack"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
+			"CTFWeaponBase::Holster"
+			{
+				"offset"		"CTFWeaponBase::Holster"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+				"arguments"
+				{
+					"switchto"
+					{
+						"type"	"cbaseentity"
+					}
+				}
 			}
 			
 			"CWeaponMedigun::AllowedToHealTarget"
@@ -365,6 +433,20 @@
 						"type"	"cbaseentity"
 					}
 				}
+			}
+			"CWeaponMedigun::HealTargetThink"
+			{
+				"signature"		"CWeaponMedigun::HealTargetThink"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
+			"CWeaponMedigun::GetHealSound"
+			{
+				"signature"		"CWeaponMedigun::GetHealSound"
+				"callconv"		"thiscall"
+				"return"		"charptr"
+				"this"			"entity"
 			}
 			
             //projectiles
@@ -483,6 +565,16 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN14CWeaponMedigun19AllowedToHealTargetEP11CBaseEntity"
+			}
+			"CWeaponMedigun::HealTargetThink"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CWeaponMedigun15HealTargetThinkEv"
+			}
+			"CWeaponMedigun::GetHealSound"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CWeaponMedigun12GetHealSoundEv"
 			}
             
             //projectiles
