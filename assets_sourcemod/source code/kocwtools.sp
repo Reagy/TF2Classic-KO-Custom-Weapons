@@ -31,7 +31,7 @@ public Plugin myinfo =
 	author = "Noclue",
 	description = "Standard functions for custom weapons.",
 	version = "1.0",
-	url = "no"
+	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
 
