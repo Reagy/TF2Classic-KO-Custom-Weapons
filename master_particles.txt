@@ -1,0 +1,4 @@
+particles_manifest
+{
+    file    "particles/laser_tracers.pcf"
+}

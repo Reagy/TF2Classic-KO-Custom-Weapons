@@ -2,7 +2,6 @@
 #pragma newdecls required
 
 #include <sourcemod>
-#include <tf2c>
 #include <sdkhooks>
 #include <dhooks>
 #include <kocwtools>
@@ -12,7 +11,7 @@ public Plugin myinfo =
 	name = "Attribute: Uber Damage Scale",
 	author = "Noclue",
 	description = "Ubercharge Damage attribute.",
-	version = "1.0",
+	version = "1.1",
 	url = "no"
 }
 
@@ -25,7 +24,7 @@ public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] error, int err_
 
 public void OnPluginStart() {
 	if( bLateLoad ) {
-		for(int i = 1; i <= MaxClients; i++) {
+		for(int i = 1; i < MaxClients; i++) {
 			if( IsValidEntity( i ) ) {
 				SDKHook( i, SDKHook_OnTakeDamage, Hook_TakeDamageUber );
 			}
@@ -44,16 +43,16 @@ public Action Hook_TakeDamageUber( int victim, int &attacker, int &inflictor, fl
 		so for reasons beyond any mortal comprehension sometimes entity indexes come in at 4096 indices higher than they're supposed to
 		i can't even begin to process why this would happen in the first place so we'll just do this instead
 	*/
-	if(weapon > 4096) weapon -= 4096;
-	if(attacker > 4096) attacker -= 4096;
-	if(inflictor > 4096) inflictor -= 4096;
+	if(weapon >= 4096) weapon -= 4096;
+	if(attacker >= 4096) attacker -= 4096;
+	if(inflictor >= 4096) inflictor -= 4096;
 
 	if( !IsValidEntity( weapon ) ) return Plugin_Changed; //can't return plugin_continue because it will try to return the original broken indexes
-
+	
 	static char sBuff[64];
 	GetEntityClassname(weapon, sBuff, 64);
-
 	if( strcmp("obj_sentrygun", sBuff) == 0 ) return Plugin_Changed; 
+
 	float flUberScale = AttribHookFloat( 0.0, weapon, "custom_uber_scales_damage" );
 	if( flUberScale == 0.0 ) return Plugin_Changed;
 

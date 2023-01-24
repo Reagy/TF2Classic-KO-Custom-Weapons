@@ -10019,15 +10019,15 @@
 	"channel"	"CHAN_ITEM"
 	"soundlevel"	"SNDLVL_NORM"
 	"volume"	"1.0"
-	"wave"		")weapons/laika_spin.wav"
+	"wave"		")weapons/laika_spin_loop.wav"
 }
 
-"Weapon_Laika.WindUp"	
+"Weapon_Laika.SpinUp"	
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"wave"		")weapons/laika_wind_up.wav"
+	"wave"		")weapons/laika_spin_up.wav"
 }
 
 
@@ -10047,12 +10047,12 @@
 	"wave"		")weapons/laika_fire_crit.wav"
 }
 
-"Weapon_Laika.WindDown"	
+"Weapon_Laika.StopSpin"	
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"wave"		")weapons/laika_wind_down.wav"
+	"wave"		")weapons/laika_spin_stop.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -12403,6 +12403,38 @@
 	"pitch"		"90, 96"
 	
 	"wave"		")weapons/relicmachine_fire_crit.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// MOLOTOV
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_MolotovLauncher.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/molotovlauncher_shoot.wav"
+}
+"Weapon_MolotovLauncher.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/molotovlauncher_shoot_crit.wav"
+}
+"Weapon_Molotov.Explode"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"0.85"
+	"pitch"			"95,105"
+	"rndwave"
+	{
+		"wave"		")weapons\molotov_detonate_1.wav"
+		"wave"		")weapons\molotov_detonate_2.wav"
+		"wave"		")weapons\molotov_detonate_3.wav"
+		"wave"		")weapons\molotov_detonate_4.wav"
+	}
 }
 // ------------------------------------------------------------------------------------ //
 // FESTIVE TWIG!
