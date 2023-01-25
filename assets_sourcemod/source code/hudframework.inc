@@ -8,5 +8,5 @@
  */
 native void		Tracker_Create( int iPlayer, const char sName[32], float flStartAt = 100.0, float flRechargeRate = 0.0 );
 native void		Tracker_Remove( int iPlayer, const char sName[32] );
-native float	Tracker_GetValue( int iPlayer, const char sName[32] );
+native float		Tracker_GetValue( int iPlayer, const char sName[32] );
 native void		Tracker_SetValue( int iPlayer, const char sName[32] );

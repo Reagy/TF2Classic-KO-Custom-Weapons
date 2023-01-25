@@ -1,3 +1,11 @@
+#if defined _kocw_included
+	#endinput
+#endif
+#define _kocw_included
+
+#include <tf2c>
+#include <stocksoup/memory>
+
 native float 	AttribHookFloat( float fValue, int iEntity, const char[] sAttributeClass );
 native void 	AttribHookString( char[] buffer, int iEntity, const char[] sAttributeClass );
 
@@ -7,34 +15,191 @@ native int		GetEntityInSlot( int iPlayer, int iSlot );
 native void 	SetNextThink( int iEntity, float flNextThink, const char[] sThinkContext );
 native float 	GetNextThink( int iEntity, const char[] sThinkContext );
 
+/**
+ * Returns index of the player belonging to a CTFPlayerShared object
+ * 
+ * @param aShared     Location in memory of a CTFPlayerShared object
+ * @return            Index of player
+ */
 native int		GetPlayerFromShared( Address aShared );
+
+native void		ApplyPushFromDamage( int iPlayer, Address tfInfo, float vecDir[3] );
 
 /*
 	MATH FUNCTIONS
 */
 
-stock float ClampFloat(float flValue, float flMin, float flMax) {
-	if (flValue > flMax) {
-		return flMax;
-	} else if (flValue < flMin) {
-		return flMin;
-	}
+/**
+ * I can't belive that SourcePawn doesn't have this
+ * 
+ * @param v1     Parameter 1
+ * @param v2     Parameter 2
+ * @return       Value of lowest parameter
+ */
+stock float MinFloat( float v1, float v2 ) {
+	if( v1 < v2 ) return v1;
+	return v2;
+}
+
+/**
+ * I can't belive that SourcePawn doesn't have this
+ * 
+ * @param v1     Parameter 1
+ * @param v2     Parameter 2
+ * @return       Value of largest parameter
+ */
+stock float MaxFloat( float v1, float v2 ) {
+	if( v1 > v2) return v1;
+	return v2;
+}
+
+stock float FloatClamp( float flValue, float flMin, float flMax ) {
+	if( flValue >= flMax ) return flMax;
+	if( flValue <= flMin) return flMin;
 	return flValue;
 }
 
+stock int IntClamp( int iValue, int iMin, int iMax ) {
+	if( iValue >= iMax ) return iMax;
+	if( iValue <= iMin) return iMin;
+	return iValue;
+}
+
 // Remap a value in the range [A,B] to [C,D].
-stock float RemapVal( float flVal, float flA, float flB, float flC, float flD )
-{
+stock float RemapVal( float flVal, float flA, float flB, float flC, float flD ) {
 	if ( flA == flB )
 		return flVal >= flB ? flD : flC;
 	return flC + (flD - flC) * (flVal - flA) / (flB - flA);
 }
-stock float RemapValClamped( float flVal, float flA, float flB, float flC, float flD )
-{
+stock float RemapValClamped( float flVal, float flA, float flB, float flC, float flD ) {
 	if ( flA == flB )
 		return flVal >= flB ? flD : flC;
 	float flCVal = (flVal - flA) / (flB - flA);
-	flCVal = ClampFloat( flCVal, 0.0, 1.0 );
+	flCVal = FloatClamp( flCVal, 0.0, 1.0 );
 
 	return flC + (flD - flC) * flCVal;
+}
+
+/*
+	MEMORY FUNCTIONS
+*/
+
+stock any LoadFromAddressOffset( Address aAddress, int iOffset, NumberType eNumberType ) {
+	return LoadFromAddress( aAddress + view_as< Address >( iOffset ), eNumberType );
+}
+stock void StoreToAddressOffset( Address aAddress, int iOffset, any aValue, NumberType eNumberType ) {
+	StoreToAddress( aAddress + view_as< Address >( iOffset ), aValue, eNumberType );
+}
+
+stock any LoadFromEntity( int iEntity, int iOffset, NumberType iSize = NumberType_Int32 ) {
+	return LoadFromAddressOffset( GetEntityAddress( iEntity ), iOffset, iSize );
+}
+stock void StoreToEntity( int iEntity, int iOffset, any anValue, NumberType iSize = NumberType_Int32 ) {
+	StoreToAddressOffset( GetEntityAddress( iEntity ), iOffset, anValue, iSize );
+}
+
+/*
+	GAME EVENT DEFINES
+*/
+
+#define EVENT_BUILTOBJECT		"player_builtobject"		//"userid", "object" (type), "index"
+#define EVENT_UPGRADEOBJECT		"player_upgradedobject"		//"userid", "object" (type), "index", "isbuilder"
+#define EVENT_CARRYOBJECT		"player_carryobject"		//"userid", "object" (type), "index"
+#define EVENT_DROPOBJECT		"player_dropobject"			//"userid", "object" (type), "index"
+#define EVENT_REMOVEOBJECT		"object_removed"			//"userid", "objecttype", "index"
+#define EVENT_DESTROYOBJECT		"object_destroyed"			//"userid", "attacker", "assister", "weapon" (name), "weaponid", "objecttype", "index", "was_building"
+
+
+#define EVENT_POSTINVENTORY		"post_inventory_application"
+
+/*
+	Custom Damage Handling
+*/
+
+enum {
+	DI_INFLICTOR = 36,
+	DI_ATTACKER = 40,
+	DI_WEAPON = 44,
+
+	DI_DAMAGE = 48,
+	DI_BASEDAMAGE = 52,
+
+	DI_DAMAGEFLAGS = 60,
+	DI_DAMAGECUSTOM = 64,
+
+	DI_CRITTYPE = 100,
+}
+
+enum {
+	CT_NONE = 0,
+	CT_MINI = 1,
+	CT_FULL = 2
+}
+
+forward void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo );
+forward void OnTakeDamagePostTF( int iTarget, Address aTakeDamageInfo );
+forward void OnTakeDamageAliveTF( int iTarget, Address aTakeDamageInfo );
+
+methodmap TFDamageInfo {
+	public TFDamageInfo( Address aInfo ) {
+		return view_as<TFDamageInfo>( aInfo );
+	}
+
+	property int iInflictor {
+		public get() { return LoadEntityHandleFromAddress( view_as< Address >( this ) + view_as< Address >( DI_INFLICTOR ) ); }
+		public set( int iEntity ) { StoreEntityHandleToAddress( view_as< Address >( this ) + view_as< Address >( DI_INFLICTOR ), iEntity ); }
+	}
+	property int iAttacker {
+		public get() { return LoadEntityHandleFromAddress( view_as< Address >( this ) + view_as< Address >( DI_ATTACKER ) ); }
+		public set( int iEntity ) { StoreEntityHandleToAddress( view_as< Address >( this ) + view_as< Address >( DI_ATTACKER ), iEntity ); }
+	}
+	property int iWeapon {
+		public get() { return LoadEntityHandleFromAddress( view_as< Address >( this ) + view_as< Address >( DI_WEAPON ) ); }
+		public set( int iEntity ) { StoreEntityHandleToAddress( view_as< Address >( this ) + view_as< Address >( DI_WEAPON ), iEntity ); }
+	}
+
+	property float flDamage {
+		public get() { return LoadFromAddressOffset( view_as< Address >( this ), DI_DAMAGE, NumberType_Int32 ); }
+		public set( float iValue ) { StoreToAddressOffset( view_as< Address >( this ), DI_DAMAGE, iValue, NumberType_Int32 ); }
+	}
+	property float flBaseDamage {
+		public get() { return LoadFromAddressOffset( view_as< Address >( this ), DI_BASEDAMAGE, NumberType_Int32 ); }
+		public set( float iValue ) { StoreToAddressOffset( view_as< Address >( this ), DI_BASEDAMAGE, iValue, NumberType_Int32 ); }
+	}
+
+	property int iFlags {
+		public get() { return LoadFromAddressOffset( view_as< Address >( this ), DI_DAMAGEFLAGS, NumberType_Int32 ); }
+		public set( int iValue ) { StoreToAddressOffset( view_as< Address >( this ), DI_DAMAGEFLAGS, iValue, NumberType_Int32 ); }
+	}
+
+	property int iCritType {
+		public get() { return LoadFromAddressOffset( view_as< Address >( this ), DI_CRITTYPE, NumberType_Int32 ); }
+		public set( int iValue ) { StoreToAddressOffset( view_as< Address >( this ), DI_CRITTYPE, iValue, NumberType_Int32 ); }
+	}
+}
+
+/*
+	MISC FUNCTIONS
+*/
+
+stock bool IsValidPlayer( int iPlayer ) {
+	return iPlayer > 0 && iPlayer <= MaxClients;
+}
+
+
+stock void ParentModel( int iChild, int iParent, const char[] szAttach = "" ) {
+	SetVariantString( "!activator" );
+	AcceptEntityInput( iChild, "SetParent", iParent, iChild, 0 );
+	if( !StrEqual( "", szAttach ) ) {
+		SetVariantString( szAttach );
+		AcceptEntityInput( iChild, "SetParentAttachment", iChild, iChild, 0 );
+	}
+}
+
+stock int FindModelString( int iModelIndex, char[] szModelString, int iStringSize ) {
+	static int iStringTable = INVALID_STRING_TABLE;
+	if ( iStringTable == INVALID_STRING_TABLE ) {
+		iStringTable = FindStringTable( "modelprecache" );
+	}
+	return ReadStringTable( iStringTable, iModelIndex, szModelString, iStringSize );
 }
