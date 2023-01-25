@@ -4,7 +4,8 @@
 #include <sourcemod>
 #include <sdktools>
 #include <dhooks>
-#include <stocksoup/memory>
+
+#include <kocwtools>
 
 //inventory
 Handle hEconGetAttributeManager;
@@ -19,7 +20,15 @@ Handle hGetMedigunCharge;
 Handle hSetNextThink;
 
 //damage
-//DynamicHook hOnTakeDamage;
+DynamicHook hOnTakeDamage;
+DynamicHook hOnTakeDamageAlive;
+DynamicDetour hModifyRules;
+
+GlobalForward g_OnTakeDamageTF;
+GlobalForward g_OnTakeDamagePostTF;
+GlobalForward g_OnTakeDamageAliveTF;
+
+Handle hApplyPushFromDamage;
 
 Address offs_CTFPlayerShared_pOuter;
 
@@ -35,10 +44,10 @@ public Plugin myinfo =
 }
 
 
-//bool bLateLoad = false;
+bool bLateLoad = false;
 public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_max ) {
 
-	//bLateLoad = late;
+	bLateLoad = late;
 
 	//string functions
 	CreateNative( "AllocPooledString", Native_AllocPooledString );
@@ -57,7 +66,14 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 	//memory functions
 	CreateNative( "GetPlayerFromShared", Native_GetPlayerFromShared );
 
+	//damage functions
+	CreateNative( "ApplyPushFromDamage", Native_ApplyPushFromDamage );
+
+	RegPluginLibrary( "kocwtools" );
+
 	return APLRes_Success;
+
+	
 }
 
 public void OnPluginStart() {
@@ -145,27 +161,53 @@ public void OnPluginStart() {
 		DAMAGE FUNCTIONS
 	*/
 
-	/*hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CTFPlayer::OnTakeDamage" );
-	HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Pre);
+	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CTFPlayer::OnTakeDamage" );
+	hOnTakeDamageAlive = DynamicHook.FromConf( hGameConf, "CTFPlayer::OnTakeDamageAlive" );
+	hModifyRules = DynamicDetour.FromConf( hGameConf, "CTFGameRules::ApplyOnDamageModifyRules" );
+
+	hModifyRules.Enable( Hook_Pre, Detour_ApplyOnDamageModifyRulesPre );
+	hModifyRules.Enable( Hook_Post, Detour_ApplyOnDamageModifyRulesPost );
+
+	StartPrepSDKCall( SDKCall_Player );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayer::ApplyPushFromDamage" );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByValue );
+	hApplyPushFromDamage = EndPrepSDKCall();
+	if ( !hApplyPushFromDamage )
+		SetFailState( "SDKCall setup for CTFPlayer::ApplyPushFromDamage failed" );
 
 	if( bLateLoad ) {
 		for(int i = 1; i <= MaxClients; i++) {
 			if( IsValidEntity( i ) && IsClientInGame( i ) ) {
-				PrintToServer("%i", i);
 				hOnTakeDamage.HookEntity( Hook_Pre, i, Hook_OnTakeDamagePre );
 				hOnTakeDamage.HookEntity( Hook_Post, i, Hook_OnTakeDamagePost );
+				hOnTakeDamageAlive.HookEntity( Hook_Pre, i, Hook_OnTakeDamageAlivePre );
 			}
 		}
-	}*/
+	}
 
 	offs_CTFPlayerShared_pOuter = GameConfGetAddressOffset( hGameConf, "CTFPlayerShared::m_pOuter" );
 
 	delete hGameConf;
+
+	g_OnTakeDamageTF = new GlobalForward( "OnTakeDamageTF", ET_Ignore, Param_Cell, Param_Cell );
+	g_OnTakeDamagePostTF = new GlobalForward( "OnTakeDamagePostTF", ET_Ignore, Param_Cell, Param_Cell );
+	g_OnTakeDamageAliveTF = new GlobalForward( "OnTakeDamageAliveTF", ET_Ignore, Param_Cell, Param_Cell );
 }
 
 
 public void OnMapEnd() {
 	g_AllocPooledStringCache.Clear();
+}
+
+public void OnClientConnected( int iClient ) {
+	if( IsValidEdict( iClient ) )
+		RequestFrame( DoPlayerHooks, iClient );
+}
+void DoPlayerHooks( int iPlayer ) {
+	hOnTakeDamage.HookEntity( Hook_Pre, iPlayer, Hook_OnTakeDamagePre );
+	hOnTakeDamage.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamagePost );
+	hOnTakeDamageAlive.HookEntity( Hook_Pre, iPlayer, Hook_OnTakeDamageAlivePre );
 }
 
 /*
@@ -280,19 +322,21 @@ int GetPlayerFromSharedAddress( Address pShared ) {
 	return GetEntityFromAddress( pOuter );
 }
 
+public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
+	int iPlayer = GetNativeCell( 1 );
+	Address aDamageInfo = GetNativeCell( 2 );
+	float vecDir[3]; 
+	GetNativeArray( 3, vecDir, 3 );
+
+	return SDKCall( hApplyPushFromDamage, iPlayer, aDamageInfo, vecDir );
+} 
+
 static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 	Address aOffs = view_as<Address>( GameConfGetOffset( hGamedata, sKey ) );
 	if ( aOffs == view_as<Address>( -1 ) ) {
 		SetFailState( "Failed to get member offset %s", sKey );
 	}
 	return aOffs;
-}
-
-any LoadFromEntity( int iEntity, int iOffset, NumberType iSize = NumberType_Int32 ) {
-	return LoadFromAddress( GetEntityAddress( iEntity ) + view_as<Address>( iOffset ), iSize );
-}
-void StoreToEntity( int iEntity, int iOffset, any anValue, NumberType iSize = NumberType_Int32 ) {
-	StoreToAddress( GetEntityAddress( iEntity ) + view_as<Address>( iOffset ), anValue, iSize );
 }
 
 /*
@@ -307,24 +351,16 @@ void StoreToEntity( int iEntity, int iOffset, any anValue, NumberType iSize = Nu
 //12/16/20: damage source vector
 //24/28/32/: damage reported vector
 
-//36: inflictor
-//40: attacker
-//44: weapon
-
 //48: damage
-//52: max damage
-//56: base damage
+//52: some kind of "base damage"
 
-//60: m_bitsDamageType
-//64: m_iDamageCustom
-//72: m_iDamageStats appears to be unused
-//76: m_iAmmoType appears to be unused
-//80: m_iDamagedOtherPlayers appears to be unused
-//84: m_iPlayerPenetrationCount appears to be unused
+//72: appears to be unused
+//76: appears to be unused
+//80: appears to be unused
+//84: appears to be unused
 //88: m_flDamageBonus
 //92: some sort of consecutive hit detection
 //96: 0 always
-//100: crit type, game never seems to change from zero
 
 //104: null
 //108: ???
@@ -336,30 +372,73 @@ void StoreToEntity( int iEntity, int iOffset, any anValue, NumberType iSize = Nu
 //288 ???
 //292/296/300: appears to be more coordinate data
 
-/*enum {
+//player
+//6048:	bSeeCrit
+//6049:	bMiniCrit
+//6050: bShowDisguisedCrit
+
+//6502: effect types
+
+//TakeDamageInfo offsets
+
+enum {
 	DMG_CRITICAL = 20,
 	DMG_USEDISTANCEMOD = 21,
 
 }
 
-#define value 48
+//forward void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo );
 MRESReturn Hook_OnTakeDamagePre( int iThis, DHookReturn hReturn, DHookParam hParams ) {
-	
-	Address aDamageInfo = hParams.GetAddress( 1 );
-	
-	//StoreToAddress( aDamageInfo + view_as<Address>(96), 1, NumberType_Int32 );
-	//StoreToAddress( aDamageInfo + view_as<Address>(48), 69.0, NumberType_Int32 );
-	int pls = LoadFromAddress( aDamageInfo + view_as<Address>(value) , NumberType_Int32 );
-	PrintToServer("%i %f", pls, pls);
+	Call_StartForward( g_OnTakeDamageTF );
 
-	return MRES_Ignored;
+	Call_PushCell( iThis );
+	Call_PushCell( hParams.GetAddress( 1 ) );
+
+	Call_Finish();
+
+	return MRES_Handled;
 }
+//forward void OnTakeDamagePostTF( int iTarget, Address aTakeDamageInfo );
 MRESReturn Hook_OnTakeDamagePost( int iThis, DHookReturn hReturn, DHookParam hParams ) {
-	
-	Address aDamageInfo = hParams.GetAddress( 1 );
-	
-	int pls = LoadFromAddress( aDamageInfo + view_as<Address>(value) , NumberType_Int32 );
-	PrintToServer("%i %f", pls, pls);
+	Call_StartForward( g_OnTakeDamagePostTF );
 
-	return MRES_Ignored;
-}*/
+	Call_PushCell( iThis );
+	Call_PushCell( hParams.GetAddress( 1 ) );
+
+	Call_Finish();
+
+	return MRES_Handled;
+}
+//forward void OnTakeDamageAliveTF( int iTarget, Address aTakeDamageInfo );
+MRESReturn Hook_OnTakeDamageAlivePre( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	Call_StartForward( g_OnTakeDamageAliveTF );
+
+	Call_PushCell( iThis );
+	Call_PushCell( hParams.GetAddress( 1 ) );
+
+	Call_Finish();
+
+	return MRES_Handled;
+}
+
+
+MRESReturn Detour_ApplyOnDamageModifyRulesPre( Address aThis, DHookReturn hReturn, DHookParam hParams ) {
+	//TFDamageInfo tfInfo = TFDamageInfo( hParams.GetAddress( 1 ) );
+	//tfInfo.iCritType = CT_MINI;
+
+	return MRES_Handled;
+}
+MRESReturn Detour_ApplyOnDamageModifyRulesPost( Address aThis, DHookReturn hReturn, DHookParam hParams ) {
+	TFDamageInfo tfInfo = TFDamageInfo( hParams.GetAddress( 1 ) );
+	int iTarget = hParams.Get( 2 );
+	//bool bCanDamage = hParams.Get( 3 );
+
+	if( tfInfo.iCritType == CT_MINI ) {
+		tfInfo.iFlags = tfInfo.iFlags & ~( 1 << 20);
+		StoreToEntity( iTarget, 6049, 1, NumberType_Int8 );
+		StoreToEntity( iTarget, 6502, 1, NumberType_Int32 );
+	}
+
+	return MRES_Handled;
+	
+}
