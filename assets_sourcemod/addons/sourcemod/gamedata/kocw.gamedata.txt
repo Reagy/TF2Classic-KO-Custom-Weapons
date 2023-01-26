@@ -14,6 +14,10 @@
 			{
 				"linux"		"65"
 			}
+			"CTFPlayer::OnTakeDamageAlive"
+			{
+				"linux"		"274"
+			}
             "CTFPlayer::GetAttributeManager"
 			{
 				"linux"		"471"
@@ -132,6 +136,21 @@
 					}
 				}
 			}
+			"CTFPlayer::OnTakeDamageAlive"
+			{
+				"offset"		"CTFPlayer::OnTakeDamageAlive"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"int"
+				"this"			"entity"
+				"arguments"
+				{
+					"damageinfo"
+					{
+						"type"	"objectptr"
+					}
+				}
+			}
 			"CTFPlayer::TakeHealth"
 			{
 				"offset"		"CTFPlayer::TakeHealth"
@@ -228,6 +247,13 @@
 					}
 				}
 			}
+			"CTFPlayerShared::HealNegativeConds"
+			{
+				"signature"		"CTFPlayerShared::HealNegativeConds"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"address"
+			}
             
             "CTFGameRules::GetCaptureValueForPlayer"
 			{
@@ -241,6 +267,90 @@
 					"player"
 					{
 						"type"	"cbaseentity"
+					}
+				}
+			}
+			"CTFGameRules::ApplyOnDamageModifyRules"
+			{
+				"signature"		"CTFGameRules::ApplyOnDamageModifyRules"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"address"
+				"arguments"
+				{
+					"damageinfo"
+					{
+						"type"	"objectptr"
+					}
+					"target"
+					{
+						"type"	"cbaseentity"
+					}
+					"candamage"
+					{
+						"type"	"bool"
+					}
+				}
+			}
+			"CTFGameRules::ApplyOnDamageAliveModifyRules"
+			{
+				"signature" "CTFGameRules::ApplyOnDamageAliveModifyRules"
+				"callconv"	"thiscall"
+				"return"	"float"
+				"this"		"address"
+				"arguments"
+				{
+					"damageinfo"
+					{
+						"type"	"objectptr"
+					}
+					"target"
+					{
+						"type"	"cbaseentity"
+					}
+					"damagemodifyextras"
+					{
+						"type"	"objectptr"
+					}
+				}
+			}
+			"CTFPlayerShared::GetBuffedMaxHealth"
+			{
+				"signature"	"CTFPlayerShared::GetBuffedMaxHealth"
+				"callconv"	"thiscall"
+				"return"	"int"
+				"this"		"address"
+			}
+			"CTFPlayerShared::GetHealerByIndex"
+			{
+				"signature"	"CTFPlayerShared::GetHealerByIndex"
+				"callconv"	"thiscall"
+				"return"	"cbaseentity"
+				"this"		"address"
+				"arguments"
+				{
+					"index"
+					{
+						"type"	"int"
+					}
+				}
+			}
+			
+			"CBulletsTraceFilter::ShouldHitEntity"
+			{
+				"signature"	"CBulletsTraceFilter::ShouldHitEntity"
+				"callconv"	"thiscall"
+				"return"	"bool"
+				"this"		"address"
+				"arguments"
+				{
+					"target"
+					{
+						"type"	"cbaseentity"
+					}
+					"contentsmask"
+					{
+						"type"	"int"
 					}
 				}
 			}
@@ -503,6 +613,11 @@
                 "library"   "server"
                 "linux"     "@_ZN9CTFPlayer14GetObjectCountEv"
             }
+			"CTFPlayer::ApplyPushFromDamage"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFPlayer19ApplyPushFromDamageERK15CTakeDamageInfo6Vector"
+			}
 			
 			"CTFPlayerShared::Burn"
 			{
@@ -523,6 +638,21 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN15CTFPlayerShared19CalculateObjectCostEP9CTFPlayeri"
+			}
+			"CTFPlayerShared::HealNegativeConds"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared17HealNegativeCondsEv"
+			}
+			"CTFPlayerShared::GetHealerByIndex"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared16GetHealerByIndexEi"
+			}
+			"CTFPlayerShared::GetBuffedMaxHealth"
+			{
+				"library"	"server"
+				"linux"		"@_ZNK15CTFPlayerShared18GetMaxBuffedHealthEv"
 			}
             
             //buildings
@@ -614,6 +744,23 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN11CBaseEntity12SetNextThinkEfPKc"
+			}
+			
+			"CTFGameRules::ApplyOnDamageModifyRules"
+			{
+				"library"	"server"
+				"linux"		"@_ZN12CTFGameRules24ApplyOnDamageModifyRulesER15CTakeDamageInfoP11CBaseEntityb"
+			}
+			"CTFGameRules::ApplyOnDamageAliveModifyRules"
+			{
+				"library"	"server"
+				"linux"		"@_ZN12CTFGameRules29ApplyOnDamageAliveModifyRulesERK15CTakeDamageInfoP11CBaseEntityRNS_20DamageModifyExtras_tE"
+			}
+			
+			"CBulletsTraceFilter::ShouldHitEntity"
+			{
+				"library"	"server"
+				"linux"		"@_ZN19CBulletsTraceFilter15ShouldHitEntityEP13IHandleEntityi"
 			}
 		}
     }
