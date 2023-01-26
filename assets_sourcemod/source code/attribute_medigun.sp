@@ -18,6 +18,10 @@ DynamicHook	hMedigunHolster;
 
 DynamicDetour hStartHeal;
 DynamicDetour hStopHeal;
+DynamicDetour hGetBuffedHealth;
+
+Handle hGetHealerIndex;
+Handle hGetMaxHealth;
 
 public Plugin myinfo =
 {
@@ -28,12 +32,14 @@ public Plugin myinfo =
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
-bool bIsHealEnemy[MAXPLAYERS+1] = { false, ... };
-
-int g_iDummyGuns[MAXPLAYERS+1][2];
+int g_iDummyGuns[MAXPLAYERS+1] = { -1, ... };
 int g_iBeamEmitters[MAXPLAYERS+1][2];
 int g_iBeamTargetPoints[MAXPLAYERS+1] = { -1, ... };
-int g_iOldTargets[MAXPLAYERS+1] = { -1, ... };
+
+int g_iOldTargets[MAXPLAYERS+1] = { 69420, ... };
+bool g_bOldCharging[MAXPLAYERS+1] = { false, ... };
+
+float g_flMultTable[MAXPLAYERS+1] = { 0.5, ... }; //cached maximum overheal for mediguns
 
 bool bLateLoad;
 public APLRes AskPluginLoad2( Handle myself, bool bLate, char[] error, int err_max ) {
@@ -44,8 +50,7 @@ public APLRes AskPluginLoad2( Handle myself, bool bLate, char[] error, int err_m
 
 public void OnPluginStart() {
 	HookEvent( EVENT_POSTINVENTORY,	Event_PostInventory );
-	HookEvent( "player_death",	Event_PlayerKilled );
-	
+	HookEvent( EVENT_PLAYERDEATH,	Event_PlayerKilled );
 
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
@@ -69,6 +74,21 @@ public void OnPluginStart() {
 	if( !hStopHeal.Enable( Hook_Pre, Detour_HealStopPre ) ) {
 		SetFailState( "Detour setup for CTFPlayerShared::StopHealing failed" );
 	}
+	hGetBuffedHealth = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::GetBuffedMaxHealth" );
+	if( !hGetBuffedHealth.Enable( Hook_Post, Detour_GetBuffedMaxHealth ) ) {
+		SetFailState( "Detour setup for CTFPlayerShared::GetBuffedMaxHealth failed" );
+	}
+	
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetHealerByIndex" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hGetHealerIndex = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Player );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::GetMaxHealth" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	hGetMaxHealth = EndPrepSDKCall();
 
 	delete hGameConf;
 
@@ -80,11 +100,13 @@ public void OnPluginStart() {
 	}
 
 	for( int i = 0; i < sizeof(g_iBeamEmitters); i++ ) {
-		g_iDummyGuns[i][0] = -1;
-		g_iDummyGuns[i][1] = -1;
 		g_iBeamEmitters[i][0] = -1;
 		g_iBeamEmitters[i][1] = -1;
 	}
+}
+
+public void OnMapStart() {
+	PrecacheSound( "weapons/angel_shield_on.wav" );
 }
 
 Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadcast ) {
@@ -98,11 +120,11 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	static char szWeaponName[64];
 	GetEntityClassname( iMedigun, szWeaponName, sizeof(szWeaponName) );
 	if( StrEqual( szWeaponName, "tf_weapon_medigun" ) ) {
-		CreateDummyGun( iPlayer, iMedigun, true );
-		CreateDummyGun( iPlayer, iMedigun, false );
-
+		CreateDummyGun( iPlayer, iMedigun );
 		SetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget", -1 );
 		g_iOldTargets[iPlayer] = 69420;
+
+		g_flMultTable[iPlayer] = AttribHookFloat( 0.5, iPlayer, "custom_maximum_overheal" );
 	}
 	return Plugin_Continue;
 }
@@ -114,8 +136,7 @@ Action Event_PlayerKilled( Event hEvent, const char[] szName, bool bDontBroadcas
 	DeleteBeamEmitter( iPlayer, false );
 	DeleteBeamEmitter( iPlayer, true );
 	DeleteBeamTarget( iPlayer );
-	DeleteDummyGun( iPlayer, true );
-	DeleteDummyGun( iPlayer, false );
+	DeleteDummyGun( iPlayer );
 	
 	return Plugin_Continue;
 }
@@ -124,8 +145,7 @@ public void OnClientDisconnect( int iClient ) {
 	DeleteBeamEmitter( iClient, true );
 	DeleteBeamEmitter( iClient, false );
 
-	DeleteDummyGun( iClient, true );
-	DeleteDummyGun( iClient, false );
+	DeleteDummyGun( iClient );
 
 	DeleteBeamTarget( iClient );
 }
@@ -137,12 +157,71 @@ public void OnEntityCreated( int iThis, const char[] szClassname ) {
 	HookMedigun( iThis );
 }
 
+MRESReturn Detour_GetBuffedMaxHealth( Address aThis, DHookReturn hReturn ) {
+	int iPlayer = GetPlayerFromShared( aThis );
+	int iMaxBase = SDKCall( hGetMaxHealth, iPlayer );
+
+	float flLargestMult = 0.0;
+	int iHealers = GetEntProp( iPlayer, Prop_Send, "m_nNumHealers" );
+
+	if( iHealers == 0 )
+		flLargestMult = 0.5;
+	else for( int i = 0; i < iHealers; i++ ) {
+		Address aHealer = SDKCall( hGetHealerIndex, aThis, i );
+		int iIndex = GetEntityFromAddress( aHealer );
+		if( !IsValidPlayer( iIndex ) )
+			continue;
+
+		float flNewMult = g_flMultTable[iIndex];
+		flLargestMult = MaxFloat( flLargestMult, flNewMult );
+	}
+
+	flLargestMult *= AttribHookFloat( 1.0, iPlayer, "custom_maximum_overheal_self" );
+
+	int iDiff = RoundToCeil( float( iMaxBase ) * flLargestMult );
+
+	iDiff /= 5;
+	iDiff *= 5;
+
+	hReturn.Value = MaxInt( iMaxBase + iDiff, iMaxBase );
+	return MRES_ChangedOverride;
+}
+
+MRESReturn Hook_MedigunHolster( int iThis ) {
+	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
+
+	if( IsValidPlayer( iOwner ) ) {
+		DeleteBeamEmitter( iOwner, true );
+		DeleteBeamEmitter( iOwner, false );
+
+		DeleteBeamTarget( iOwner );
+
+		SetEntPropEnt( iThis, Prop_Send, "m_hHealingTarget", -1 );
+		g_iOldTargets[iOwner] = 69420;
+	}
+	return MRES_Handled;
+}
+
+MRESReturn Hook_MedigunSecondaryPost( int iThis ) {
+	switch( RoundToNearest( AttribHookFloat( 0.0, iThis, "custom_medigun_type" ) ) ) {
+	case 1: 
+		return AngelGunUber( iThis );
+	case 2:
+		return BioGunUber( iThis );
+	}
+
+	return MRES_Ignored;
+}
+
 void HookMedigun( int iMedigun ) {
 	hMedigunSecondary.HookEntity( Hook_Post, iMedigun, Hook_MedigunSecondaryPost );
 	hMedigunPostframe.HookEntity( Hook_Post, iMedigun, Hook_ItemPostFrame );
 	hMedigunHolster.HookEntity( Hook_Post, iMedigun, Hook_MedigunHolster );
 }
 
+/*
+	CUSTOM MEDI BEAM
+*/
 
 #define EF_BONEMERGE                (1 << 0)
 #define EF_NOSHADOW                 (1 << 4)
@@ -172,7 +251,7 @@ static char szMedicParticles[][][] = {
 	{
 		"biowastepump_invulnstatus_fullcharge_%s",
 		"biowastepump_beam_%s",
-		"biowastepump_beam_enemy_%s"
+		"biowastepump_beam_enemy"
 	}
 };
 
@@ -189,23 +268,29 @@ static char szTeamStrings[][] = {
 	"yellow"
 };
 
+//forces particle systems to respect settransmit
+public void SetFlags(int iEdict) 
+{ 
+	SetEdictFlags(iEdict, 0);
+} 
+
 void CreateMedibeamString( char[] szBuffer, int iBufferSize, int iWeapon ) {
-	int iBeam = 2;//RoundToFloor( AttribHookFloat( 0.0, iWeapon, "custom_medibeamtype" ) );
+	int iBeam = RoundToFloor( AttribHookFloat( 0.0, iWeapon, "custom_medibeamtype" ) );
 	int iMode = GetHealingMode( iWeapon );
 	int iTeam = GetEntProp( iWeapon, Prop_Send, "m_iTeamNum" ) - 2;
 
 	Format( szBuffer, iBufferSize, szMedicParticles[ iBeam ][ iMode ], szTeamStrings[ iTeam ] );
 }
-
 int GetHealingMode( int iWeapon ) {
 	int iHealTarget = GetEntPropEnt( iWeapon, Prop_Send, "m_hHealingTarget" );
 	int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwnerEntity" );
 
 	if( iHealTarget != -1 ) {
-		if( TF2_GetClientTeam( iHealTarget ) != TF2_GetClientTeam( iOwner ) && AttribHookFloat( 0.0, iWeapon, "custom_biowastepump" ) != 0.0 )
+		int iType = RoundToFloor( AttribHookFloat( 0.0, iWeapon, "custom_medigun_type" ) );
+		if( TF2_GetClientTeam( iHealTarget ) != TF2_GetClientTeam( iOwner ) && iType == 2 )
 			return MODE_UBER;
 
-		if( GetEntProp( iWeapon, Prop_Send, "m_bChargeRelease" ) )
+		if( GetEntProp( iWeapon, Prop_Send, "m_bChargeRelease" ) && iType != 2 )
 			return MODE_UBER;
 
 		return MODE_HEALING;
@@ -214,18 +299,16 @@ int GetHealingMode( int iWeapon ) {
 	return MODE_CHARGED;
 }
 
-/*
-	So what we need to do here is create a dummy gun to act as an attachment point for the new medibeam,
-	since that point doesn't exist to the server for... reasons.
-	It's not perfectly aligned with the barrel but it works at least.
+/* 
+	Parenting of the player's weapons only appears to happen locally, so what we're doing here is creating a dummy prop to parent the beam to
 */
 
-int GetDummyGun( int iPlayer, bool bClient ) {
-	return g_iDummyGuns[ iPlayer ][ view_as<int>( bClient ) ];
+int GetDummyGun( int iPlayer ) {
+	return g_iDummyGuns[ iPlayer ];
 }
-int CreateDummyGun( int iPlayer, int iMedigun, bool bClient ) {
-	if( GetDummyGun( iPlayer, bClient ) != -1 )
-		DeleteDummyGun( iPlayer, bClient );
+int CreateDummyGun( int iPlayer, int iMedigun ) {
+	if( GetDummyGun( iPlayer ) != -1 )
+		DeleteDummyGun( iPlayer );
 
 	int iDummyGun = CreateEntityByName( "prop_dynamic_override" );
 	static char szModelName[64];
@@ -237,33 +320,26 @@ int CreateDummyGun( int iPlayer, int iMedigun, bool bClient ) {
 	ActivateEntity( iDummyGun );
 
 	SetEntProp( iDummyGun, Prop_Send, "m_fEffects", 32|EF_BONEMERGE|EF_NOSHADOW|EF_NORECEIVESHADOW|EF_PARENT_ANIMATES);
-
-	int iTarget;
-	if( bClient ) {
-		iTarget = GetEntPropEnt( iPlayer, Prop_Send, "m_hViewModel" );
-		ParentModel( iDummyGun, iTarget, "weapon_bone_l" );
-	}
-	else {
-		ParentModel( iDummyGun, iMedigun, "weapon_bone_l" );
-	}
+	ParentModel( iDummyGun, iMedigun, "weapon_bone_l" );
 
 	SetFlags(iDummyGun);
-	g_iDummyGuns[ iPlayer ][ view_as<int>( bClient ) ] = iDummyGun;
+
+	g_iDummyGuns[ iPlayer ] = iDummyGun;
 	return iDummyGun;
 }
-void DeleteDummyGun( int iPlayer, bool bClient ) {
-	int iDummyGun = g_iDummyGuns[ iPlayer ][ view_as<int>( bClient ) ];
+void DeleteDummyGun( int iPlayer ) {
+	int iDummyGun = g_iDummyGuns[ iPlayer ];
 	if( IsValidEntity( iDummyGun ) ) {
 		RemoveEntity( iDummyGun );
 	}
 
-	g_iDummyGuns[ iPlayer ][ view_as<int>( bClient ) ] = -1;
+	g_iDummyGuns[ iPlayer ] = -1;
 }
 
-public void SetFlags(int iEdict) 
-{ 
-	SetEdictFlags(iEdict, 0);
-} 
+/*
+	We need 2 different info_particle_systems: one parented to the first person weapon only visible in first person,
+	and one in third person, visible to everyone else
+*/
 
 int GetBeamEmitter( int iPlayer, bool bClient ) { 
 	return g_iBeamEmitters[ iPlayer ][ view_as<int>(bClient) ];
@@ -277,14 +353,17 @@ int CreateBeamEmitter( int iPlayer, bool bClient ) {
 	g_iBeamEmitters[ iPlayer ][ view_as<int>(bClient) ] = iEmitter;
 	SetBeamParticle( iPlayer, bClient );
 
+	SetFlags(iEmitter);
+	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_EmitterTransmit );
+
 	DispatchSpawn( iEmitter );
 	ActivateEntity( iEmitter );
 	
 	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iPlayer );
+	//janky hack: store the behavior of the emitter in some dataprop that isn't used
 	SetEntProp( iEmitter, Prop_Data, "m_iHealth", view_as<int>(bClient) );
 
-	SetFlags(iEmitter);
-	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_EmitterTransmit );
+	
 
 	return iEmitter;
 }
@@ -296,20 +375,6 @@ void DeleteBeamEmitter( int iPlayer, bool bClient ) {
 	}
 	g_iBeamEmitters[ iPlayer ][ view_as<int>(bClient) ] = -1;
 }
-
-Action Hook_EmitterTransmit( int iEntity, int iClient ) {
-	SetFlags( iEntity );
-	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" );
-	bool bIsClientEmitter = GetEntProp( iEntity, Prop_Data, "m_iHealth" ) == 1;
-
-	
-	if( iClient == iOwner ) {
-		return bIsClientEmitter ? Plugin_Continue : Plugin_Handled;
-		
-	}
-	return bIsClientEmitter ? Plugin_Handled : Plugin_Continue;
-}
-
 void SetBeamParticle( int iPlayer, bool bClient ) {
 	static char szBeamName[64];
 	int iWeapon = GetEntityInSlot( iPlayer, 1 );
@@ -323,6 +388,40 @@ void SetBeamParticle( int iPlayer, bool bClient ) {
 	CreateMedibeamString( szBeamName, sizeof( szBeamName ), iWeapon );
 	DispatchKeyValue( GetBeamEmitter( iPlayer, bClient ), "effect_name", szBeamName );
 }
+
+Action Hook_EmitterTransmit( int iEntity, int iClient ) {
+	SetFlags( iEntity );
+	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" );
+	//janky hack: store the behavior of the emitter in some dataprop that isn't used
+	bool bIsClientEmitter = GetEntProp( iEntity, Prop_Data, "m_iHealth" ) == 1;
+
+	
+	if( iClient == iOwner ) {
+		return bIsClientEmitter ? Plugin_Continue : Plugin_Handled;
+		
+	}
+	return bIsClientEmitter ? Plugin_Handled : Plugin_Continue;
+}
+
+void AttachBeam_FPS( int iPlayer, int iWeapon ) {
+	int iEmitter = GetBeamEmitter( iPlayer, true );
+	bool bIsCModel = GetEntProp( iWeapon, Prop_Send, "m_iViewModelType" ) == 1;
+
+	int iViewmodel = GetEntPropEnt( iPlayer, Prop_Send, "m_hViewModel" );
+	ParentModel( iEmitter, iViewmodel, bIsCModel ? "weapon_bone_l" : "muzzle" );
+	SetFlags( iEmitter );
+}
+void AttachBeam_TPS( int iPlayer ) {
+	int iEmitter = GetBeamEmitter( iPlayer, false );
+	int iDummy = GetDummyGun( iPlayer );
+	ParentModel( iEmitter, iDummy, "muzzle" );
+	SetFlags( iEmitter );
+}
+
+/*
+	Attaching the beam directly to a player directs to their feet, so we
+	need a new object to act as a target point.
+*/
 
 void CreateBeamTargetPoint( int iPlayer, int iTargetPlayer ) {
 	if( g_iBeamTargetPoints[ iPlayer ] != -1 ) {
@@ -357,28 +456,6 @@ void DeleteBeamTarget( int iPlayer ) {
 	g_iBeamTargetPoints[ iPlayer ] = -1;
 }
 
-void AttachBeam_FPS( int iPlayer, int iWeapon ) {
-	int iEmitter = GetBeamEmitter( iPlayer, true );
-	bool bIsCModel = GetEntProp( iWeapon, Prop_Send, "m_iViewModelType" ) == 1;
-
-	if( bIsCModel ) {
-		int iDummy = GetDummyGun( iPlayer, true );
-		ParentModel( iEmitter, iDummy, "muzzle" );
-		SetFlags( iEmitter );
-	}
-	else {
-		int iViewmodel = GetEntPropEnt( iPlayer, Prop_Send, "m_hViewModel" );
-		ParentModel( iEmitter, iViewmodel, "muzzle" );
-		SetFlags( iEmitter );
-	}
-}
-void AttachBeam_TPS( int iPlayer, int iWeapon ) {
-	int iEmitter = GetBeamEmitter( iPlayer, false );
-	int iDummy = GetDummyGun( iPlayer, false );
-	ParentModel( iEmitter, iDummy, "muzzle" );
-	SetFlags( iEmitter );
-}
-
 void UpdateMedigunBeam( int iPlayer ) {
 	int iWeapon = GetEntPropEnt( iPlayer, Prop_Send, "m_hActiveWeapon" );
 
@@ -395,7 +472,7 @@ void UpdateMedigunBeam( int iPlayer ) {
 	CreateBeamEmitter( iPlayer, false );
 	CreateBeamEmitter( iPlayer, true );
 	AttachBeam_FPS( iPlayer, iWeapon );
-	AttachBeam_TPS( iPlayer, iWeapon );
+	AttachBeam_TPS( iPlayer );
 
 	if( iHealTarget != -1 ) {
 		CreateBeamTargetPoint( iPlayer, iHealTarget );
@@ -412,42 +489,25 @@ void UpdateMedigunBeam( int iPlayer ) {
 }
 
 
+
 MRESReturn Hook_ItemPostFrame( int iThis ) {
 	int iTarget = GetEntPropEnt( iThis, Prop_Send, "m_hHealingTarget" );
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
 
+	bool bOldCharging = view_as<bool>( GetEntProp( iThis, Prop_Send, "m_bChargeRelease" ) );
+
 	if( iTarget != g_iOldTargets[ iOwner ] ) {
-		PrintToServer("%i %i", iTarget, g_iOldTargets[ iOwner ] );
 		UpdateMedigunBeam( iOwner );
 	}
-	g_iOldTargets[ iOwner ] = iTarget;
-
-	return MRES_Handled;
-}
-
-MRESReturn Hook_MedigunHolster( int iThis ) {
-	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
-
-	if( iOwner >= 0 && iOwner < MAXPLAYERS ) {
-		DeleteBeamEmitter( iOwner, true );
-		DeleteBeamEmitter( iOwner, false );
-
-		DeleteBeamTarget( iOwner );
-
-		SetEntPropEnt(  iThis, Prop_Send, "m_hHealingTarget", -1 );
-		g_iOldTargets[iOwner] = 69420;
+	else if( g_bOldCharging[ iOwner ] != bOldCharging ) {
+		UpdateMedigunBeam( iOwner );
 	}
+
+
+	g_iOldTargets[ iOwner ] = iTarget;
+	g_bOldCharging[ iOwner ] = bOldCharging;
+
 	return MRES_Handled;
-}
-
-MRESReturn Hook_MedigunSecondaryPost( int iThis ) {
-	if( AttribHookFloat( 0.0, iThis, "custom_angelgun" ) != 0.0 )
-		return AngelGunUber( iThis );
-
-	if( AttribHookFloat( 0.0, iThis, "custom_biowastepump" ) != 0.0 )
-		return BioGunUber( iThis );
-
-	return MRES_Ignored;
 }
 
 /*
@@ -456,7 +516,6 @@ MRESReturn Hook_MedigunSecondaryPost( int iThis ) {
 
 #define BWP_TOXIN_MULTIPLIER 2.0 //multiplier for the amount of time that toxin should be added while healing enemies
 
-
 MRESReturn Detour_MedigunThinkPost( int iThis ) {
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
 	int iTarget = GetEntPropEnt( iThis, Prop_Send, "m_hHealingTarget" );
@@ -464,34 +523,42 @@ MRESReturn Detour_MedigunThinkPost( int iThis ) {
 	if( iOwner < 1 || iOwner > MaxClients || iTarget < 1 || iTarget > MaxClients )
 		return MRES_Ignored;
 
-	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iOwner ) )
+	if( RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_medigun_type" ) ) != 2 )
 		return MRES_Ignored;
 
-	if( AttribHookFloat( 0.0, iThis, "custom_biowastepump" ) == 0.0 )
-		return MRES_Ignored;
+	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iOwner ) ) {
+		if( !HasCustomCond( iTarget, TFCC_TOXINPATIENT ) ) {
+			AddCustomCond( iTarget, TFCC_TOXINPATIENT );
+			SetCustomCondSourcePlayer( iTarget, TFCC_TOXINPATIENT, iOwner );
+			SetCustomCondSourceWeapon( iTarget, TFCC_TOXINPATIENT, iThis );
+		}
 
+		SetCustomCondDuration( iTarget, TFCC_TOXINPATIENT, 0.5, false );
+		return MRES_Handled;
+	}
+		
 	if( !HasCustomCond( iTarget, TFCC_TOXIN ) ) {
 		AddCustomCond( iTarget, TFCC_TOXIN );
 		SetCustomCondSourcePlayer( iTarget, TFCC_TOXIN, iOwner );
 		SetCustomCondSourceWeapon( iTarget, TFCC_TOXIN, iThis );
-	}
-		
-	SetCustomCondDuration( iTarget, TFCC_TOXIN, MEDIGUN_THINK_INTERVAL * 2, true );
+		SetCustomCondDuration( iTarget, TFCC_TOXIN, 0.6, true );
+	} else	
+		SetCustomCondDuration( iTarget, TFCC_TOXIN, MEDIGUN_THINK_INTERVAL * BWP_TOXIN_MULTIPLIER, true );
+
 	return MRES_Handled;
 }
 
 MRESReturn Detour_AllowedToHealPre( int iThis, DHookReturn hReturn, DHookParam hParams ) {
-	float flIsPump = AttribHookFloat( 0.0, iThis, "custom_biowastepump" );
-	if( flIsPump == 0.0 ) return MRES_Ignored;
+	int iIsPump = RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_medigun_type" ) );
+	if( iIsPump != 2 ) return MRES_Ignored;
 
 	hReturn.Value = false;
 
 	int iHealer = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
 	int iTarget = hParams.Get( 1 );
 
-	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iHealer ) ) return MRES_Ignored;
-
-	bIsHealEnemy[iHealer] = true;
+	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iHealer ) )
+		return MRES_Ignored;
 
 	hReturn.Value = true;
 	return MRES_Supercede;
@@ -502,7 +569,8 @@ MRESReturn Detour_HealStartPre( Address aThis, DHookParam hParams ) {
 	int iTarget = GetPlayerFromShared( aThis );
 	int iHealer = hParams.Get( 1 );
 
-	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iHealer ) ) return MRES_Ignored;
+	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iHealer ) )
+		return MRES_Ignored;
 
 	return MRES_Supercede;
 }
@@ -510,10 +578,8 @@ MRESReturn Detour_HealStopPre( Address aThis, DHookParam hParams ) {
 	int iTarget = GetPlayerFromShared( aThis );
 	int iHealer = hParams.Get( 1 );
 
-	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iHealer ) ) return MRES_Ignored;
-
-	bIsHealEnemy[iHealer] = false;
-	PrintToServer("stopped healing enemy");
+	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iHealer ) ) 
+		return MRES_Ignored;
 
 	return MRES_Supercede;
 }
@@ -536,17 +602,23 @@ MRESReturn AngelGunUber( int iThis ) {
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
 	
 	bool bAppliedCharge = false;
-	if( !HasCustomCond( iOwner, TFCC_ANGELSHIELD ) ) {
-		AddCustomCond( iOwner, TFCC_ANGELSHIELD );
-		bAppliedCharge = true;
-	}
-
 	int iTarget = GetEntPropEnt( iThis, Prop_Send, "m_hHealingTarget" );
 	if( iTarget > 0 && iTarget <= MaxClients && IsPlayerAlive( iTarget ) ) {
 		if( !HasCustomCond( iTarget, TFCC_ANGELSHIELD ) ) {
+			EmitSoundToAll( "weapons/angel_shield_on.wav", iTarget );
 			AddCustomCond( iTarget, TFCC_ANGELSHIELD );
+			SetCustomCondSourcePlayer( iTarget, TFCC_ANGELSHIELD, iOwner );
+			SetCustomCondSourceWeapon( iTarget, TFCC_ANGELSHIELD, iThis );
 			bAppliedCharge = true;
 		}
+	}
+
+	if( !HasCustomCond( iOwner, TFCC_ANGELSHIELD ) ) {
+		AddCustomCond( iOwner, TFCC_ANGELSHIELD );
+		if( !bAppliedCharge ) EmitSoundToAll( "weapons/angel_shield_on.wav", iOwner );
+		SetCustomCondSourcePlayer( iOwner, TFCC_ANGELSHIELD, iOwner );
+		SetCustomCondSourceWeapon( iOwner, TFCC_ANGELSHIELD, iThis );
+		bAppliedCharge = true;
 	}
 
 	if( bAppliedCharge ) {

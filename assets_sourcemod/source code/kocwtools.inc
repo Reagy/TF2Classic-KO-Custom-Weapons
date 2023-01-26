@@ -29,25 +29,10 @@ native void		ApplyPushFromDamage( int iPlayer, Address tfInfo, float vecDir[3] )
 	MATH FUNCTIONS
 */
 
-/**
- * I can't belive that SourcePawn doesn't have this
- * 
- * @param v1     Parameter 1
- * @param v2     Parameter 2
- * @return       Value of lowest parameter
- */
 stock float MinFloat( float v1, float v2 ) {
 	if( v1 < v2 ) return v1;
 	return v2;
 }
-
-/**
- * I can't belive that SourcePawn doesn't have this
- * 
- * @param v1     Parameter 1
- * @param v2     Parameter 2
- * @return       Value of largest parameter
- */
 stock float MaxFloat( float v1, float v2 ) {
 	if( v1 > v2) return v1;
 	return v2;
@@ -58,6 +43,16 @@ stock float FloatClamp( float flValue, float flMin, float flMax ) {
 	if( flValue <= flMin) return flMin;
 	return flValue;
 }
+
+stock int MinInt( int v1, int v2 ) {
+	if( v1 < v2 ) return v1;
+	return v2;
+}
+stock int MaxInt( int v1, int v2 ) {
+	if( v1 > v2) return v1;
+	return v2;
+}
+
 
 stock int IntClamp( int iValue, int iMin, int iMax ) {
 	if( iValue >= iMax ) return iMax;
