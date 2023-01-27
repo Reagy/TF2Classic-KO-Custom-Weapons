@@ -12,6 +12,7 @@
 
 DynamicDetour	hCanTargetMedigun;
 DynamicDetour	hMedigunThink;
+DynamicDetour	hMedigunHealrate;
 DynamicHook	hMedigunSecondary;
 DynamicHook	hMedigunPostframe;
 DynamicHook	hMedigunHolster;
@@ -22,6 +23,8 @@ DynamicDetour hGetBuffedHealth;
 
 Handle hGetHealerIndex;
 Handle hGetMaxHealth;
+Handle hCallHealRate;
+Handle hCallHeal;
 
 public Plugin myinfo =
 {
@@ -51,6 +54,7 @@ public APLRes AskPluginLoad2( Handle myself, bool bLate, char[] error, int err_m
 public void OnPluginStart() {
 	HookEvent( EVENT_POSTINVENTORY,	Event_PostInventory );
 	HookEvent( EVENT_PLAYERDEATH,	Event_PlayerKilled );
+	HookEvent( "player_chargedeployed", Event_DeployUber );
 
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
@@ -61,6 +65,10 @@ public void OnPluginStart() {
 	hMedigunThink = DynamicDetour.FromConf( hGameConf, "CWeaponMedigun::HealTargetThink" );
 	if( !hMedigunThink.Enable( Hook_Post, Detour_MedigunThinkPost ) ) {
 		SetFailState( "Detour setup for CWeaponMedigun::HealTargetThink failed" );
+	}
+	hMedigunHealrate = DynamicDetour.FromConf( hGameConf, "CWeaponMedigun::GetHealRate" );
+	if( !hMedigunHealrate.Enable( Hook_Post, Detour_MediHealRate ) ) {
+		SetFailState( "Detour setup for CWeaponMedigun::GetHealRate failed" );
 	}
 	hMedigunSecondary = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::SecondaryAttack" );
 	hMedigunPostframe = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::ItemPostFrame" );
@@ -80,6 +88,14 @@ public void OnPluginStart() {
 	}
 	
 	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::Heal" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_ByValue, VDECODE_FLAG_ALLOWNULL );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hCallHeal = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetHealerByIndex" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
@@ -89,6 +105,11 @@ public void OnPluginStart() {
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::GetMaxHealth" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	hGetMaxHealth = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CWeaponMedigun::GetHealRate" );
+	PrepSDKCall_SetReturnInfo( SDKType_Float, SDKPass_Plain );
+	hCallHealRate = EndPrepSDKCall();
 
 	delete hGameConf;
 
@@ -584,7 +605,7 @@ MRESReturn Detour_HealStopPre( Address aThis, DHookParam hParams ) {
 	return MRES_Supercede;
 }
 
-MRESReturn BioGunUber( int iThis ) {
+MRESReturn BioGunUber( int iMedigun ) {
 	return MRES_Ignored;
 }
 
@@ -592,39 +613,73 @@ MRESReturn BioGunUber( int iThis ) {
 	GUARDIAN ANGEL
 */
 
-MRESReturn AngelGunUber( int iThis ) {
-	SetEntProp( iThis, Prop_Send, "m_bChargeRelease", false );
+MRESReturn AngelGunUber( int iMedigun ) {
+	SetEntProp( iMedigun, Prop_Send, "m_bChargeRelease", false );
 
-	float flChargeLevel = GetEntPropFloat( iThis, Prop_Send, "m_flChargeLevel" );
+	float flChargeLevel = GetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel" );
 	if( flChargeLevel < 0.25 )
 		return MRES_Ignored;
 
-	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
+	int iOwner = GetEntPropEnt( iMedigun, Prop_Send, "m_hOwnerEntity" );
 	
 	bool bAppliedCharge = false;
-	int iTarget = GetEntPropEnt( iThis, Prop_Send, "m_hHealingTarget" );
+	int iTarget = GetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget" );
 	if( iTarget > 0 && iTarget <= MaxClients && IsPlayerAlive( iTarget ) ) {
-		if( !HasCustomCond( iTarget, TFCC_ANGELSHIELD ) ) {
-			EmitSoundToAll( "weapons/angel_shield_on.wav", iTarget );
+		if( !HasCustomCond( iTarget, TFCC_ANGELSHIELD ) && !HasCustomCond( iTarget, TFCC_ANGELINVULN ) ) {
+			EmitSoundToAll( "weapons/angel_shield_on.wav", iTarget, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEVOL, 0.75 );
 			AddCustomCond( iTarget, TFCC_ANGELSHIELD );
 			SetCustomCondSourcePlayer( iTarget, TFCC_ANGELSHIELD, iOwner );
-			SetCustomCondSourceWeapon( iTarget, TFCC_ANGELSHIELD, iThis );
+			SetCustomCondSourceWeapon( iTarget, TFCC_ANGELSHIELD, iMedigun );
 			bAppliedCharge = true;
 		}
 	}
 
-	if( !HasCustomCond( iOwner, TFCC_ANGELSHIELD ) ) {
+	if( !HasCustomCond( iOwner, TFCC_ANGELSHIELD ) && !HasCustomCond( iTarget, TFCC_ANGELINVULN ) ) {
 		AddCustomCond( iOwner, TFCC_ANGELSHIELD );
-		if( !bAppliedCharge ) EmitSoundToAll( "weapons/angel_shield_on.wav", iOwner );
+		EmitSoundToAll( "weapons/angel_shield_on.wav", iOwner, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEVOL, 0.75 );
 		SetCustomCondSourcePlayer( iOwner, TFCC_ANGELSHIELD, iOwner );
-		SetCustomCondSourceWeapon( iOwner, TFCC_ANGELSHIELD, iThis );
+		SetCustomCondSourceWeapon( iOwner, TFCC_ANGELSHIELD, iMedigun );
 		bAppliedCharge = true;
 	}
 
 	if( bAppliedCharge ) {
-		SetEntPropFloat( iThis, Prop_Send, "m_flChargeLevel", flChargeLevel - 0.25 );
+		SetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel", flChargeLevel - 0.25 );
 		return MRES_Handled;
 	}
 
 	return MRES_Ignored;
+}
+
+MRESReturn Detour_MediHealRate( int iMedigun, DHookReturn hReturn ) {
+	if( GetEntProp( iMedigun, Prop_Send, "m_bChargeRelease" ) && AttribHookFloat( 0.0, iMedigun, "custom_medigun_type" ) == 3.0 ) {
+		float flRes = hReturn.Value;
+		hReturn.Value = 108.0;
+		return MRES_ChangedOverride;
+	}
+	return MRES_Ignored;
+}
+
+Action Event_DeployUber( Event hEvent, const char[] szName, bool bDontBroadcast ) {
+	int iHealer = hEvent.GetInt( "userid" );
+	iHealer = GetClientOfUserId( iHealer );
+	
+	int iMedigun = GetEntityInSlot( iHealer, 1 );
+	if( !HasEntProp( iMedigun, Prop_Send, "m_bChargeRelease" ) )
+		return Plugin_Continue;
+
+	int iTarget = GetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget" );
+
+	if( !IsValidPlayer( iTarget ) )
+		return Plugin_Continue;
+
+	if( AttribHookFloat( 0.0, iMedigun, "custom_medigun_type" ) != 3.0 )
+		return Plugin_Continue;
+
+	Address aShared = GetEntityAddress( iTarget ) + view_as<Address>( 4264 );
+
+	float flHealRate = SDKCall( hCallHealRate, iMedigun );
+	PrintToServer("%f", flHealRate);
+	SDKCall( hCallHeal, aShared, iHealer, flHealRate, -1, false );
+
+	return Plugin_Continue;
 }

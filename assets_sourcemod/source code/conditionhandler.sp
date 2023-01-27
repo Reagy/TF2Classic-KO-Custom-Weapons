@@ -44,6 +44,8 @@ enum struct EffectProps {
 EffectProps	ePlayerConds[MAXPLAYERS+1][TFCC_LAST];
 int		iPlayerCondFlags[MAXPLAYERS+1][COND_BITFIELDS];
 
+int g_iAngelShields[MAXPLAYERS+1][2];
+
 DynamicHook hTakeHealth;
 DynamicDetour hHealConds;
 
@@ -84,6 +86,11 @@ public void OnPluginStart() {
 
 	if( !bLateLoad )
 		return;
+
+	for( int i = 0; i < MAXPLAYERS+1; i++ ) {
+		g_iAngelShields[i][0] = -1;
+		g_iAngelShields[i][1] = -1;
+	}
 
 	//lateload
 	for( int i = 1; i <= MaxClients; i++ ) {
@@ -143,6 +150,10 @@ int GetFlagArrayBit( int iCond ) {
 	return ( 1 << iIndex );
 }
 
+bool IsNegativeCond( int iCond ) {
+	return iCond == TFCC_TOXIN;
+}
+
 /*
 	Copious amounts of boilerplate
 */
@@ -154,7 +165,10 @@ public any Native_AddCond( Handle hPlugin, int iNumParams ) {
 	return AddCond( iPlayer, iEffect );
 }
 bool AddCond( int iPlayer, int iCond ) {
-	if( HasCond( iPlayer, iCond ) ) return false;
+	if( HasCond( iPlayer, iCond ) ) 
+		return false;
+	if( IsNegativeCond( iCond ) && ( HasCond( iPlayer, TFCC_ANGELSHIELD ) || HasCond( iPlayer, TFCC_ANGELINVULN ) ) )
+		return false;
 
 	bool bGaveCond = false;
 	switch( iCond ) {
@@ -176,11 +190,13 @@ bool AddCond( int iPlayer, int iCond ) {
 	}
 	}
 
-	int iBit = GetFlagArrayBit( iCond );
-	int iOffset = GetFlagArrayOffset( iCond );
-	iPlayerCondFlags[ iPlayer ][ iOffset ] |= iBit;
+	if( bGaveCond ) {
+		int iBit = GetFlagArrayBit( iCond );
+		int iOffset = GetFlagArrayOffset( iCond );
+		iPlayerCondFlags[ iPlayer ][ iOffset ] |= iBit;
 
-	ePlayerConds[iPlayer][iCond].flRemoveTime = GetGameTime();
+		ePlayerConds[iPlayer][iCond].flRemoveTime = GetGameTime();
+	}
 
 	return bGaveCond;
 }
@@ -287,7 +303,7 @@ public any Native_GetCondSourcePlayer( Handle hPlugin, int iNumParams ) {
 	return GetCondSourcePlayer( iPlayer, iEffect );
 }
 int GetCondSourcePlayer( int iPlayer, int iCond ) {
-	return ePlayerConds[iPlayer][iCond].iEffectSource;
+	return EntRefToEntIndex( ePlayerConds[iPlayer][iCond].iEffectSource );
 }
 public any Native_SetCondSourcePlayer( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell(1);
@@ -298,7 +314,7 @@ public any Native_SetCondSourcePlayer( Handle hPlugin, int iNumParams ) {
 	return 0;
 }
 void SetCondSourcePlayer( int iPlayer, int iCond, int iSource ) {
-	ePlayerConds[iPlayer][iCond].iEffectSource = iSource;
+	ePlayerConds[iPlayer][iCond].iEffectSource = EntIndexToEntRef( iSource );
 }
 
 //cond weapon source
@@ -309,7 +325,7 @@ public any Native_GetCondSourceWeapon( Handle hPlugin, int iNumParams ) {
 	return GetCondSourceWeapon( iPlayer, iEffect );
 }
 int GetCondSourceWeapon( int iPlayer, int iCond ) {
-	return ePlayerConds[iPlayer][iCond].iEffectWeapon;
+	return EntRefToEntIndex( ePlayerConds[iPlayer][iCond].iEffectWeapon );
 }
 public any Native_SetCondSourceWeapon( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell(1);
@@ -320,7 +336,7 @@ public any Native_SetCondSourceWeapon( Handle hPlugin, int iNumParams ) {
 	return 0;
 }
 void SetCondSourceWeapon( int iPlayer, int iCond, int iWeapon ) {
-	ePlayerConds[iPlayer][iCond].iEffectWeapon = iWeapon;
+	ePlayerConds[iPlayer][iCond].iEffectWeapon = EntIndexToEntRef( iWeapon );
 }
 
 /*
@@ -343,16 +359,42 @@ MRESReturn Detour_HealNegativeConds( Address aThis, DHookReturn hReturn ) {
 	TOXIN
 */
 
+static char szToxinParticle[] = "toxin_particles";
+int g_iToxinEmitters[MAXPLAYERS+1] = { -1, ... };
+
 const float	TOXIN_FREQUENCY		= 0.5; //tick interval in seconds
 const float	TOXIN_DAMAGE		= 2.0; //damage per tick
 const float	TOXIN_HEALING_MULT	= 0.5; //multiplier for healing while under toxin
 
 bool AddToxin( int iPlayer ) {
 	ePlayerConds[iPlayer][TFCC_TOXIN].hTick = CreateTimer( 0.1, TickToxin, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
-	//start particle effect here
-
 	EmitSoundToAll( "items/powerup_pickup_plague_infected_loop.wav",  iPlayer, SNDCHAN_STATIC );
+
+	RemoveToxinEmitter( iPlayer );
+
+	//int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
+	int iEmitter = CreateEntityByName( "info_particle_system" );
+	DispatchKeyValue( iEmitter, "effect_name", szToxinParticle );
+
+	float vecPos[3]; GetClientAbsOrigin( iPlayer, vecPos );
+	TeleportEntity( iEmitter, vecPos );
+
+	ParentModel( iEmitter, iPlayer );
+
+	DispatchSpawn( iEmitter );
+	ActivateEntity( iEmitter );
+	AcceptEntityInput( iEmitter, "Start" );
+
+	g_iToxinEmitters[iPlayer] = EntIndexToEntRef( iEmitter );
 	return true;
+}
+
+void RemoveToxinEmitter( int iPlayer ) {
+	int iEmitter = EntRefToEntIndex( g_iToxinEmitters[iPlayer] );
+	if( iEmitter != -1 ) {
+		RemoveEntity( iEmitter );
+	}
+	g_iToxinEmitters[iPlayer] = -1;
 }
 
 Action TickToxin( Handle hTimer, int iPlayer ) {
@@ -382,6 +424,7 @@ Action TickToxin( Handle hTimer, int iPlayer ) {
 
 void RemoveToxin( int iPlayer ) {
 	StopSound( iPlayer, SNDCHAN_STATIC, "items/powerup_pickup_plague_infected_loop.wav" );
+	RemoveToxinEmitter( iPlayer );
 }
 
 #if defined DEBUG
@@ -462,10 +505,9 @@ Action TickToxinPatient( Handle hTimer, int iPlayer ) {
 */
 
 const int ANGSHIELD_HEALTH = 120;
-const float ANGSHIELD_DURATION = 2.5;
+const float ANGSHIELD_DURATION = 3.0;
 
 //0 contains the index of the shield, 1 contains the material manager used for the damage effect
-int iAngelShields[MAXPLAYERS+1][2];
 float flLastDamagedShield[MAXPLAYERS+1];
 
 static char szShieldMats[][] = {
@@ -475,11 +517,22 @@ static char szShieldMats[][] = {
 	"models/effects/resist_shield/resist_shield_yellow"
 };
 
+int GetAngelShield( int iPlayer, int iType ) {
+	return EntRefToEntIndex( g_iAngelShields[iPlayer][iType] );
+}
+
 bool AddAngelShield( int iPlayer ) {
 	ePlayerConds[iPlayer][TFCC_ANGELSHIELD].hTick = CreateTimer( ANGSHIELD_DURATION, ExpireAngelShield, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
 	ePlayerConds[iPlayer][TFCC_ANGELSHIELD].iLevel = ANGSHIELD_HEALTH;
 
 	flLastDamagedShield[iPlayer] = GetGameTime();
+
+	if( IsValidEntity( GetAngelShield( iPlayer, 0 ) ) ) {
+		RemoveEntity( GetAngelShield( iPlayer, 0 ) );
+	}
+	if( IsValidEntity( GetAngelShield( iPlayer, 1 ) ) ) {
+		RemoveEntity( GetAngelShield( iPlayer, 1 ) );
+	}
 
 	int iNewShield = CreateEntityByName( "prop_dynamic" );
 	SetEntityModel( iNewShield, "models/effects/resist_shield/resist_shield.mdl" );
@@ -493,7 +546,7 @@ bool AddAngelShield( int iPlayer ) {
 	SDKHook( iNewShield, SDKHook_SetTransmit, Hook_NewShield );
 
 	DispatchSpawn( iNewShield );
-	iAngelShields[iPlayer][0] = iNewShield;
+	g_iAngelShields[iPlayer][0] = EntIndexToEntRef( iNewShield );
 
 	int iNewManager = CreateEntityByName( "material_modify_control" );
 
@@ -503,7 +556,14 @@ bool AddAngelShield( int iPlayer ) {
 	DispatchKeyValue( iNewManager, "materialVar", "$shield_falloff" );
 
 	DispatchSpawn( iNewManager );
-	iAngelShields[iPlayer][1] = iNewManager;
+	g_iAngelShields[iPlayer][1] = EntIndexToEntRef( iNewManager );
+
+	TF2_RemoveCondition( iPlayer, TFCond_Bleeding );
+	TF2_RemoveCondition( iPlayer, TFCond_OnFire );
+	TF2_RemoveCondition( iPlayer, TFCond_KingRune ); //tranq
+
+	RemoveCond( iPlayer, TFCC_TOXIN );
+	
 
 	return true;
 }
@@ -517,28 +577,28 @@ void RemoveAngelShield( int iPlayer ) {
 
 	if( bBroken ) {
 		AddCond( iPlayer, TFCC_ANGELINVULN );
-		CreateTimer( 0.5, RemoveAngelShield2, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
+		CreateTimer( ANGINVULN_DURATION, RemoveAngelShield2, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
 		return;
 	}
 
 	EmitSoundToAll( "weapons/buffed_off.wav", iPlayer, SNDCHAN_AUTO, 100 );
 
-	if( IsValidEntity( iAngelShields[iPlayer][0] ) ) {
-		RemoveEntity( iAngelShields[iPlayer][0] );
+	if( IsValidEntity( GetAngelShield( iPlayer, 0 ) ) ) {
+		RemoveEntity( GetAngelShield( iPlayer, 0 ) );
 	}
-	if( IsValidEntity( iAngelShields[iPlayer][1] ) ) {
-		RemoveEntity( iAngelShields[iPlayer][1] );
+	if( IsValidEntity( GetAngelShield( iPlayer, 1 ) ) ) {
+		RemoveEntity( GetAngelShield( iPlayer, 1 ) );
 	}
 
-	iAngelShields[iPlayer][0] = INVALID_ENT_REFERENCE;
-	iAngelShields[iPlayer][1] = INVALID_ENT_REFERENCE;
+	g_iAngelShields[iPlayer][0] = -1;
+	g_iAngelShields[iPlayer][1] = -1;
 }
 
 static char szShieldKillParticle[][] = {
-	"medic_hadcharge_red",
-	"medic_hadcharge_blue",
-	"medic_hadcharge_green",
-	"medic_hadcharge_yellow"
+	"angel_shieldbreak_red",
+	"angel_shieldbreak_blue",
+	"angel_shieldbreak_green",
+	"angel_shieldbreak_yellow"
 };
 
 Action RemoveAngelShield2( Handle hTimer, int iPlayer ) {
@@ -548,6 +608,9 @@ Action RemoveAngelShield2( Handle hTimer, int iPlayer ) {
 	int iEmitter = CreateEntityByName( "info_particle_system" );
 	DispatchKeyValue( iEmitter, "effect_name", szShieldKillParticle[iTeam] );
 
+	float vecPos[3]; GetClientAbsOrigin( iPlayer, vecPos );
+	TeleportEntity( iEmitter, vecPos );
+
 	ParentModel( iEmitter, iPlayer );
 
 	DispatchSpawn( iEmitter );
@@ -555,17 +618,24 @@ Action RemoveAngelShield2( Handle hTimer, int iPlayer ) {
 
 	AcceptEntityInput( iEmitter, "Start" );
 
-	
+	CreateTimer( 1.0, RemoveEmitter, EntIndexToEntRef( iEmitter ), TIMER_FLAG_NO_MAPCHANGE );
 
-	if( IsValidEntity( iAngelShields[iPlayer][0] ) ) {
-		RemoveEntity( iAngelShields[iPlayer][0] );
+	if( IsValidEntity( GetAngelShield( iPlayer, 0 ) ) ) {
+		RemoveEntity( GetAngelShield( iPlayer, 0 ) );
 	}
-	if( IsValidEntity( iAngelShields[iPlayer][1] ) ) {
-		RemoveEntity( iAngelShields[iPlayer][1] );
+	if( IsValidEntity( GetAngelShield( iPlayer, 1 ) ) ) {
+		RemoveEntity( GetAngelShield( iPlayer, 1 ) );
 	}
 
-	iAngelShields[iPlayer][0] = INVALID_ENT_REFERENCE;
-	iAngelShields[iPlayer][1] = INVALID_ENT_REFERENCE;
+	g_iAngelShields[iPlayer][0] = -1;
+	g_iAngelShields[iPlayer][1] = -1;
+
+	return Plugin_Continue;
+}
+Action RemoveEmitter( Handle hTimer, int iEmitter ) {
+	iEmitter = EntRefToEntIndex( iEmitter );
+	if( iEmitter != -1 )
+		RemoveEntity( iEmitter );
 
 	return Plugin_Continue;
 }
@@ -577,6 +647,34 @@ void AngelShieldTakeDamage( int iTarget, TFDamageInfo tfInfo ) {
 	GetEntPropVector( iTarget, Prop_Send, "m_vecOrigin", vecTarget );
 
 	int iInflictor = tfInfo.iInflictor;
+
+	//temporary hack to allow blast jumping
+	if( tfInfo.iAttacker == iTarget )
+		return;
+
+	Event eFakeDamage = CreateEvent( "player_hurt", true );
+	eFakeDamage.SetInt( "userid", GetClientUserId( iTarget ) );
+	eFakeDamage.SetInt( "health", 300 );
+	eFakeDamage.SetInt( "attacker", GetClientUserId( tfInfo.iAttacker ) );
+	eFakeDamage.SetInt( "damageamount", RoundToFloor( tfInfo.flDamage ) );
+	eFakeDamage.SetInt( "custom", 0 );
+	eFakeDamage.SetBool( "showdisguisedcrit", false );
+	eFakeDamage.SetBool( "crit", false );
+	eFakeDamage.SetBool( "minicrit", false );
+	eFakeDamage.SetBool( "allseecrit", false );
+
+	int iIndex = GetEntSendPropOffs( tfInfo.iWeapon, "m_iItemDefinitionIndex", true );
+	int iWeaponID = iIndex == -1 ? 0 : GetEntData( tfInfo.iWeapon, iIndex ); 
+
+	eFakeDamage.SetInt( "weaponid", iWeaponID );
+	eFakeDamage.SetInt( "bonuseffect", 2 );
+
+	eFakeDamage.SetFloat( "x", vecTarget[0] );
+	eFakeDamage.SetFloat( "y", vecTarget[1] );
+	eFakeDamage.SetFloat( "z", vecTarget[2] );
+
+	eFakeDamage.Fire();
+
 	if( IsValidEdict( iInflictor ) ) {
 		float vecInflictor[3];
 		GetEntPropVector( iInflictor, Prop_Send, "m_vecOrigin", vecInflictor );
@@ -590,7 +688,6 @@ void AngelShieldTakeDamage( int iTarget, TFDamageInfo tfInfo ) {
 	tfInfo.flDamage = 0.0;
 
 	EmitGameSoundToAll( "Player.ResistanceHeavy", iTarget );
-	
 
 	if( ePlayerConds[iTarget][TFCC_ANGELSHIELD].iLevel <= 0 ) {
 		RemoveCond( iTarget, TFCC_ANGELSHIELD );
@@ -604,12 +701,17 @@ void AngelShieldTakeDamage( int iTarget, TFDamageInfo tfInfo ) {
 
 void ManageAngelShields() {
 	for( int i = 1; i <= MaxClients; i++ ) {
-		if( !IsClientInGame( i ) || !IsValidEntity( iAngelShields[ i ][ 0 ] ) )
+		int iAngelShield = GetAngelShield( i, 0 );
+		if( !IsClientInGame( i ) || iAngelShield == -1 )
 			continue;
 
 		float flVecPos[3];
 		GetEntPropVector( i, Prop_Send, "m_vecOrigin", flVecPos );
-		TeleportEntity( iAngelShields[ i ][ 0 ], flVecPos );
+		TeleportEntity( GetAngelShield( i, 0 ), flVecPos );
+
+		int iAngelManager = GetAngelShield( i, 1 );
+		if( iAngelManager == -1 )
+			continue;
 
 		float flLastDamaged = GetGameTime() - flLastDamagedShield[ i ];
 
@@ -619,7 +721,7 @@ void ManageAngelShields() {
 		FloatToString(flShieldFalloff, szFalloff, 8);
 
 		SetVariantString( szFalloff );
-		AcceptEntityInput( iAngelShields[ i ][ 1 ], "SetMaterialVar" );
+		AcceptEntityInput( iAngelManager, "SetMaterialVar" );
 	}
 }
 
