@@ -6233,6 +6233,7 @@ Weapon from: New Old Weapons Pack"
 			"image_inventory"			"backpack/weapons/w_models/w_brick"
 			"model_world"				"models/weapons/w_models/w_brick_civilian.mdl"
 			"model_player"				"models/weapons/v_models/v_brick_demo.mdl"
+			"extra_wearable"			"models/player/items/civ_balaclava.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -30519,6 +30520,171 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}
+//-------------------------
+//-------------------------
+//-- Heavy Double Barrel - 9225--
+//-------------------------
+//-------------------------
+		"9225"
+		{
+			"name"						"TF_WEAPON_HEAVY_DOUBLEBARREL"
+			"prefab"					"weapon_shotgun"
+			"show_in_armory"			"1"
+			"item_slot"					"secondary"
+
+			"propername"				"1"
+			"item_quality"				"rarity3"
+			"item_name"					"Baikal Boomstick"
+			"item_type_name"			"#TF_Weapon_Shotgun"
+			"item_description"			"Gun for bear hunt, is good.
+
+Model by: 'Haau' 'VitreousGlassy'
+Weapon by: 'Reagy'"
+			"item_logname" 				"hwg_doublebarrel"
+			"item_iconname" 			"hwg_doublebarrel"
+			"image_inventory"			"backpack/weapons/c_models/c_baikal_boomstick/c_baikal_boomstick"
+			"model_world"				"models/weapons/custom/w_models/w_baikal_boomstick.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_baikal_boomstick.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"heavy"					"1"
+			}
+			"static_attrs"
+			{
+				"reload time increased hidden"			"2.2666"					
+			}
+			"attributes"
+			{
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"0.35"
+				}
+				"bullets per shot bonus"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value" 			"1.2"
+				}
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"1.2"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.8"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" 			"0.33333333333"
+				}
+				"scattergun no reload single"
+				{
+					"attribute_class"	"set_scattergun_no_reload_single"
+					"value"				"1"
+				}
+				"mod ammo per shot"
+				{
+					"attribute_class"	"mod_ammo_per_shot"
+					"value"				"2"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}	
+			}
+			"visuals"
+			{
+			    "sound_single_shot"		"Weapon_HuntingShotgun.Fire"
+				"sound_burst"			"Weapon_HuntingShotgun.FireCrit"
+				"sound_reload"			"Weapon_SuperShotGun.WorldReload"
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}	
+//-------------------------
+//-------------------------
+//-- Damage Control - 9226--
+//-------------------------
+//-------------------------
+		"9226"				
+		{
+			"name"						"TF_WEAPON_CROSSBOW"
+			"prefab"					"weapon_syringegun"
+			"show_in_armory"			"1"
+
+			"propername"				"1"
+			"item_quality"				"rarity3"
+			"item_name"					"The Damage Control"
+			"item_type_name"			"#TF_Weapon_Crossbow"
+			"item_description"			"Damage increase based of Ubercharge
+
+The cost-effective solution is to quell the affected masses than finding the cure...
+
+Model by: 'blues in g'
+Weapon by: 'Colrot'"
+			"item_logname"				"damage_control"
+			"item_iconname"				"damage_control"
+			"image_inventory"			"backpack\weapons\c_models\c_damage_control"
+			"model_world"				"models\weapons\c_models\c_damage_control\c_damage_control.mdl"
+			"model_player"				"models\weapons\v_models\v_damage_control\v_damage_control.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"medic"					"1"
+			}
+			"static_attrs"
+			{
+				"clip size penalty hidden" 				"0.015"									// 1 in the clip
+				"override projectile type"				"30"								        
+				"allowed in medieval mode"				"1"
+				"damage bonus hidden"					"14"                                   //at Full Uber, does 140
+				"fire rate penalty hidden"				"1.75"
+				"hidden primary max ammo bonus"		    "0.2"
+				"weapon spread bonus hidden"            ".75"
+				"Projectile speed increased hidden"     "1.25"
+			}
+			"attributes"
+			{
+				"add uber charge on hit"
+				{
+					"attribute_class"	"add_onhit_ubercharge"
+					"value"				"-0.15"
+				}		
+                "reload time increased"	
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"1.2"
+				}				
+				"sniper no headshots"
+				{
+					"attribute_class" 	"set_weapon_mode"
+					"value" 			"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"1"
+				}
+				//plugin stuff
+				"strange restriction type 3"
+                {
+                    "attribute_class"    	"custom_uber_scales_damage"
+                    "value"                	"1"
+                }
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_CompoundBow.Single"
+				"sound_burst"			"Weapon_CompoundBow.SingleCrit"
+			}
+			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
+			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}		
 //--------------------------------------------------//
 //-- 		Fred's Fight Starters v0.3.1 		  --//
