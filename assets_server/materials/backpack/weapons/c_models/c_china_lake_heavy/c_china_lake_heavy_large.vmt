@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture"	 "backpack/weapons/c_models/c_china_lake_heavy/c_china_lake_heavy_large"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}
