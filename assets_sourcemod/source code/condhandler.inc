@@ -7,14 +7,17 @@ enum {
 	TFCC_TOXIN = 0,
 	TFCC_TOXINUBER,
 	TFCC_TOXINPATIENT,
+
 	TFCC_ANGELSHIELD,
 	TFCC_ANGELINVULN,
+
+	TFCC_QUICKUBER,
 
 	TFCC_LAST
 }
 
 native bool AddCustomCond( int iPlayer, int iEffect );
-native void RemoveCustomCond( int iPlayer, int iEffect );
+native bool RemoveCustomCond( int iPlayer, int iEffect );
 
 native bool HasCustomCond( int iPlayer, int iEffect );
 

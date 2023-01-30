@@ -10,7 +10,7 @@ native float 	AttribHookFloat( float fValue, int iEntity, const char[] sAttribut
 native void 	AttribHookString( char[] buffer, int iEntity, const char[] sAttributeClass );
 
 native float	GetMedigunCharge( int iPlayer );
-native int		GetEntityInSlot( int iPlayer, int iSlot );
+native int	GetEntityInSlot( int iPlayer, int iSlot );
 
 native void 	SetNextThink( int iEntity, float flNextThink, const char[] sThinkContext );
 native float 	GetNextThink( int iEntity, const char[] sThinkContext );
@@ -22,8 +22,11 @@ native float 	GetNextThink( int iEntity, const char[] sThinkContext );
  * @return            Index of player
  */
 native int		GetPlayerFromShared( Address aShared );
+native Address		GetSharedFromPlayer( int iPlayer );
 
 native void		ApplyPushFromDamage( int iPlayer, Address tfInfo, float vecDir[3] );
+
+native int		FindEntityInSphere( int iStartEntity, float vecSearchPoint[3], float flRadius );
 
 /*
 	MATH FUNCTIONS
@@ -117,6 +120,10 @@ stock void StoreToEntity( int iEntity, int iOffset, any anValue, NumberType iSiz
 */
 
 enum {
+	DI_FORCEX = 0,
+	DI_FORCEY = 4,
+	DI_FORCEZ = 8,
+
 	DI_INFLICTOR = 36,
 	DI_ATTACKER = 40,
 	DI_WEAPON = 44,
@@ -139,6 +146,7 @@ enum {
 forward void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo );
 forward void OnTakeDamagePostTF( int iTarget, Address aTakeDamageInfo );
 forward void OnTakeDamageAliveTF( int iTarget, Address aTakeDamageInfo );
+forward void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo );
 
 methodmap TFDamageInfo {
 	public TFDamageInfo( Address aInfo ) {
@@ -179,6 +187,17 @@ methodmap TFDamageInfo {
 	property int iCritType {
 		public get() { return LoadFromAddressOffset( view_as< Address >( this ), DI_CRITTYPE, NumberType_Int32 ); }
 		public set( int iValue ) { StoreToAddressOffset( view_as< Address >( this ), DI_CRITTYPE, iValue, NumberType_Int32 ); }
+	}
+
+	public void GetDamageForce( float flBuffer[3] ) {
+		flBuffer[0] = LoadFromAddressOffset( view_as< Address >( this ), DI_FORCEX, NumberType_Int32 );
+		flBuffer[1] = LoadFromAddressOffset( view_as< Address >( this ), DI_FORCEY, NumberType_Int32 );
+		flBuffer[2] = LoadFromAddressOffset( view_as< Address >( this ), DI_FORCEZ, NumberType_Int32 );
+	}
+	public void SetDamageForce( float flX, float flY, float flZ ) {
+		StoreToAddressOffset( view_as< Address >( this ), DI_FORCEX, flX, NumberType_Int32 );
+		StoreToAddressOffset( view_as< Address >( this ), DI_FORCEY, flY, NumberType_Int32 );
+		StoreToAddressOffset( view_as< Address >( this ), DI_FORCEZ, flZ, NumberType_Int32 );
 	}
 }
 

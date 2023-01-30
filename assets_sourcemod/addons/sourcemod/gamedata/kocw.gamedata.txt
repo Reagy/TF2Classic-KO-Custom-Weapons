@@ -18,6 +18,10 @@
 			{
 				"linux"		"274"
 			}
+			"CTFPlayer::GetMaxHealth"
+			{
+				"linux"		"469"
+			}
             "CTFPlayer::GetAttributeManager"
 			{
 				"linux"		"471"
@@ -25,6 +29,11 @@
 			"CTFPlayer::GetAttributeContainer"
 			{
 				"linux"		"472"
+			}
+			
+			"CTFPlayer::m_Shared"
+			{
+				"linux"		"4264"
 			}
 			
 			"CTFPlayerShared::m_pOuter" //pointer to player contained in CTFPlayerShared
@@ -252,6 +261,27 @@
 				"signature"		"CTFPlayerShared::HealNegativeConds"
 				"callconv"		"thiscall"
 				"return"		"bool"
+				"this"			"address"
+			}
+			"CTFPlayerShared::RecalculateChargeEffects"
+			{
+				"signature"		"CTFPlayerShared::RecalculateChargeEffects"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"address"
+				"arguments"
+				{
+					"instant"
+					{
+						"type"	"bool"
+					}
+				}
+			}
+			"CTFPlayerShared::"
+			{
+				"signature"		"CTFPlayerShared::"
+				"callconv"		"thiscall"
+				"return"		"void"
 				"this"			"address"
 			}
             
@@ -551,6 +581,13 @@
 				"return"		"void"
 				"this"			"entity"
 			}
+			"CWeaponMedigun::GetHealRate"
+			{
+				"signature"		"CWeaponMedigun::GetHealRate"
+				"callconv"		"thiscall"
+				"return"		"float"
+				"this"			"entity"
+			}
 			"CWeaponMedigun::GetHealSound"
 			{
 				"signature"		"CWeaponMedigun::GetHealSound"
@@ -654,6 +691,11 @@
 				"library"	"server"
 				"linux"		"@_ZNK15CTFPlayerShared18GetMaxBuffedHealthEv"
 			}
+			"CTFPlayerShared::RecalculateChargeEffects"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared24RecalculateChargeEffectsEb"
+			}
             
             //buildings
             
@@ -701,10 +743,10 @@
 				"library"	"server"
 				"linux"		"@_ZN14CWeaponMedigun15HealTargetThinkEv"
 			}
-			"CWeaponMedigun::GetHealSound"
+			"CWeaponMedigun::GetHealRate"
 			{
 				"library"	"server"
-				"linux"		"@_ZN14CWeaponMedigun12GetHealSoundEv"
+				"linux"		"@_ZN14CWeaponMedigun11GetHealRateEv"
 			}
             
             //projectiles
@@ -744,6 +786,12 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN11CBaseEntity12SetNextThinkEfPKc"
+			}
+			
+			"CGlobalEntityList::FindEntityInSphere"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CGlobalEntityList18FindEntityInSphereEP11CBaseEntityRK6Vectorf"
 			}
 			
 			"CTFGameRules::ApplyOnDamageModifyRules"
