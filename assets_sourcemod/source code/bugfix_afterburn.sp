@@ -19,7 +19,7 @@ public Plugin myinfo =
 	name = "Bug Fix: Afterburn Source",
 	author = "Noclue",
 	description = "Fixes issue with afterburn source.",
-	version = "1.1",
+	version = "1.2",
 	url = "no"
 }
 
@@ -41,9 +41,11 @@ MRESReturn Detour_Burn( Address pThis, DHookParam hParams ) {
 	if( TF2_GetPlayerClass( iPlayer ) == TFClass_Pyro && AttribHookFloat( 0.0, iWeapon, "custom_burn_pyro" ) == 0.0 )
 		flFlameLife = TF_BURNING_FLAME_LIFE_PYRO;		
 
-	//it should be safe to do attribute checks without verification since pWeapon MUST be a CTFWeaponBase
 	flFlameLife = AttribHookFloat( flFlameLife, iWeapon, "mult_wpn_burntime" );
 
-	SetEntPropFloat( iPlayer, Prop_Send, "m_flFlameRemoveTime", GetGameTime() + flFlameLife );
+	float flNewRemoveTime = GetGameTime() + flFlameLife;
+	if( flNewRemoveTime > GetEntPropFloat( iPlayer, Prop_Send, "m_flFlameRemoveTime" ) )
+		SetEntPropFloat( iPlayer, Prop_Send, "m_flFlameRemoveTime", flNewRemoveTime );
+
 	return MRES_Handled;
 }

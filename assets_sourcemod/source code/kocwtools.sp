@@ -19,6 +19,8 @@ Handle hGetMedigunCharge;
 //think
 Handle hSetNextThink;
 
+Handle hFindInRadius;
+
 //damage
 DynamicHook hOnTakeDamage;
 DynamicHook hOnTakeDamageAlive;
@@ -27,10 +29,12 @@ DynamicDetour hModifyRules;
 GlobalForward g_OnTakeDamageTF;
 GlobalForward g_OnTakeDamagePostTF;
 GlobalForward g_OnTakeDamageAliveTF;
+GlobalForward g_OnTakeDamageAlivePostTF;
 
 Handle hApplyPushFromDamage;
 
 Address offs_CTFPlayerShared_pOuter;
+Address offs_CTFPlayer_mShared;
 
 StringMap g_AllocPooledStringCache;
 
@@ -39,7 +43,7 @@ public Plugin myinfo =
 	name = "KOCW Tools",
 	author = "Noclue",
 	description = "Standard functions for custom weapons.",
-	version = "1.0",
+	version = "1.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -65,9 +69,12 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 
 	//memory functions
 	CreateNative( "GetPlayerFromShared", Native_GetPlayerFromShared );
+	CreateNative( "GetSharedFromPlayer", Native_GetSharedFromPlayer );
 
 	//damage functions
 	CreateNative( "ApplyPushFromDamage", Native_ApplyPushFromDamage );
+
+	CreateNative( "FindEntityInSphere", Native_EntityInRadius );
 
 	RegPluginLibrary( "kocwtools" );
 
@@ -179,20 +186,28 @@ public void OnPluginStart() {
 	if( bLateLoad ) {
 		for(int i = 1; i <= MaxClients; i++) {
 			if( IsValidEntity( i ) && IsClientInGame( i ) ) {
-				hOnTakeDamage.HookEntity( Hook_Pre, i, Hook_OnTakeDamagePre );
-				hOnTakeDamage.HookEntity( Hook_Post, i, Hook_OnTakeDamagePost );
-				hOnTakeDamageAlive.HookEntity( Hook_Pre, i, Hook_OnTakeDamageAlivePre );
+				DoPlayerHooks( i );
 			}
 		}
 	}
 
 	offs_CTFPlayerShared_pOuter = GameConfGetAddressOffset( hGameConf, "CTFPlayerShared::m_pOuter" );
+	offs_CTFPlayer_mShared = GameConfGetAddressOffset( hGameConf, "CTFPlayer::m_Shared" );
+
+	StartPrepSDKCall( SDKCall_EntityList );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CGlobalEntityList::FindEntityInSphere" );
+	PrepSDKCall_SetReturnInfo( SDKType_CBaseEntity, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL | VDECODE_FLAG_ALLOWWORLD );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	hFindInRadius = EndPrepSDKCall();
 
 	delete hGameConf;
 
 	g_OnTakeDamageTF = new GlobalForward( "OnTakeDamageTF", ET_Ignore, Param_Cell, Param_Cell );
 	g_OnTakeDamagePostTF = new GlobalForward( "OnTakeDamagePostTF", ET_Ignore, Param_Cell, Param_Cell );
 	g_OnTakeDamageAliveTF = new GlobalForward( "OnTakeDamageAliveTF", ET_Ignore, Param_Cell, Param_Cell );
+	g_OnTakeDamageAlivePostTF = new GlobalForward( "OnTakeDamageAlivePostTF", ET_Ignore, Param_Cell, Param_Cell );
 }
 
 
@@ -208,6 +223,15 @@ void DoPlayerHooks( int iPlayer ) {
 	hOnTakeDamage.HookEntity( Hook_Pre, iPlayer, Hook_OnTakeDamagePre );
 	hOnTakeDamage.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamagePost );
 	hOnTakeDamageAlive.HookEntity( Hook_Pre, iPlayer, Hook_OnTakeDamageAlivePre );
+	hOnTakeDamageAlive.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamageAlivePost );
+}
+
+public any Native_EntityInRadius( Handle hPlugin, int iParams ) {
+	int iStart = GetNativeCell( 1 );
+	float vecSource[3]; GetNativeArray( 2, vecSource, 3 );
+	float flRadius = GetNativeCell( 3 );	
+
+	return SDKCall( hFindInRadius, iStart, vecSource, flRadius );
 }
 
 /*
@@ -260,8 +284,10 @@ public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
 	float flValue = GetNativeCell( 1 );
 	int iEntity = GetNativeCell( 2 );
 
-	if( !( IsValidEdict( iEntity ) && HasEntProp( iEntity, Prop_Send, "m_AttributeManager" ) ) )
+	if( !( IsValidEdict( iEntity ) && HasEntProp( iEntity, Prop_Send, "m_AttributeManager" ) ) ){
+		PrintToServer("fuck you lmao");
 		return flValue;
+	}
 	
 	int iBuffer;
 	GetNativeStringLength( 3, iBuffer );
@@ -316,10 +342,14 @@ public int Native_GetPlayerFromShared( Handle hPlugin, int iParams ) {
 	Address aShared = GetNativeCell( 1 );
 	return GetPlayerFromSharedAddress( aShared );
 }
-
 int GetPlayerFromSharedAddress( Address pShared ) {
 	Address pOuter = DereferencePointer( pShared + offs_CTFPlayerShared_pOuter );
 	return GetEntityFromAddress( pOuter );
+}
+
+public any Native_GetSharedFromPlayer( Handle hPlugin, int iParams ) {
+	int iPlayer = GetNativeCell( 1 );
+	return GetEntityAddress( iPlayer ) + view_as<Address>( offs_CTFPlayer_mShared );
 }
 
 public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
@@ -412,6 +442,17 @@ MRESReturn Hook_OnTakeDamagePost( int iThis, DHookReturn hReturn, DHookParam hPa
 //forward void OnTakeDamageAliveTF( int iTarget, Address aTakeDamageInfo );
 MRESReturn Hook_OnTakeDamageAlivePre( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	Call_StartForward( g_OnTakeDamageAliveTF );
+
+	Call_PushCell( iThis );
+	Call_PushCell( hParams.GetAddress( 1 ) );
+
+	Call_Finish();
+
+	return MRES_Handled;
+}
+//forward void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo );
+MRESReturn Hook_OnTakeDamageAlivePost( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	Call_StartForward( g_OnTakeDamageAlivePostTF );
 
 	Call_PushCell( iThis );
 	Call_PushCell( hParams.GetAddress( 1 ) );
