@@ -11075,7 +11075,7 @@ Weapon by: 'Reagy'"
 			
 			"model_world"				"models/weapons/custom/w_models/w_classic_medkit_paintrain_reference.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_classic_medkit_new.mdl"
-			"extra_wearable"			"models/player/items/custom/medic/medical_emergency.mdl"
+			"extra_wearable"			"models/player/items/civ_medic.mdl"
 			"attach_to_hands"			"2"		
 			"used_by_classes"
 			{
@@ -30833,6 +30833,57 @@ Item by: 'Reagy'"
 			}
 			"mouse_pressed_sound"		"#weapons/sentry_finish.wav"
 			"drop_sound"				"#weapons/sentry_upgrading7.wav"
+		}
+//--------------------------------
+//--------------------------------
+//-- Problem Solver - 9228--
+//--------------------------------
+//--------------------------------
+		"9227"
+		{
+			"name"						"TF_SOLDIER_MACE"
+			"prefab"					"weapon_shovel"
+			"show_in_armory"			"1"
+			
+			"item_quality"				"rarity2"
+			
+			"propername"				"1"
+			"item_name"					"Problem Solver"
+			"item_type_name"			"Mace"
+			"item_description"			"
+Just because it doesn't work doesn't mean it isn't a weapon, son.
+
+Model by: 'svdl'
+Animations by: 'Kylul' 'N-Cognito'"
+			"item_logname"				"mace_soldier"
+			"item_iconname"				"mace_soldier"
+			"image_inventory"			""
+			"model_world"				"models/weapons/custom/w_models/w_problemsolver.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_problemsolver.mdl"
+			"attach_to_hands"			"2"
+			
+			"used_by_classes"
+			{
+				"soldier"				"1"
+			}
+			"attributes"
+			{
+				"single wep deploy time decreased"
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"				"0.67"
+				}
+			}
+			"visuals"
+			{
+				"sound_melee_miss"		"Weapon_Crowbar.Miss"
+				"sound_melee_hit"		"Weapon_Bottle.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_Crowbar_HL1.HitWorld"
+				"sound_burst"			"Weapon_Crowbar.MissCrit"
+				"sound_special1"		"Weapon_FireAxe.HitWorld"
+			}
+			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}		
 //--------------------------------------------------//
 //-- 		Fred's Fight Starters v0.3.1 		  --//
