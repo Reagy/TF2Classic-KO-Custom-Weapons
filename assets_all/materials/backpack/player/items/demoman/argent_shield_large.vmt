@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" 	"backpack/player/items/demoman/argent_shield_large"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}

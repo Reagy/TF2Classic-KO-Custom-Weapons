@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials/models/weapons/c_models/c_slapping_glove/c_slapping_glove.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models/weapons/c_models/c_slapping_glove/w_slapping_glove"
-	}
-}
