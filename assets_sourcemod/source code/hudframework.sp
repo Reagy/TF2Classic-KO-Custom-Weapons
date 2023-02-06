@@ -99,8 +99,9 @@ public any Native_TrackerCreate( Handle hPlugin, int iNumParams ) {
 	static char sName[32]; GetNativeString( 2, sName, 32 );
 	float flStartAt = GetNativeCell( 3 );
 	float flRechargeTime = GetNativeCell( 4 );
+	int iFlags = GetNativeCell( 5 );
 
-	Tracker_Create( iPlayer, sName, flStartAt, flRechargeTime );
+	Tracker_Create( iPlayer, sName, flStartAt, flRechargeTime, iFlags );
 
 	return 0;
 }
@@ -147,7 +148,7 @@ public any Native_TrackerGetValue( Handle hPlugin, int iNumParams ) {
 }
 float Tracker_GetValue( int iPlayer, const char sName[32] ) {
 	int iLoc = Tracker_Find( iPlayer, sName );
-	if( iLoc == -1 ) return -1.0;
+	if( iLoc == -1 ) return 0.0;
 
 	ResourceTracker hTracker;
 	hResources[iPlayer].GetArray( iLoc, hTracker );
@@ -170,7 +171,7 @@ void Tracker_SetValue( int iPlayer, const char sName[32], float flValue ) {
 
 	ResourceTracker hTracker;
 	hResources[iPlayer].GetArray( iLoc, hTracker );
-	if( flValue >= 100.0) EmitGameSoundToClient( iPlayer, "TFPlayer.Recharged" );
+	if( flValue >= 100.0 && hTracker.HasFlags( RTF_DING ) ) EmitGameSoundToClient( iPlayer, "TFPlayer.Recharged" );
 	hTracker.flValue = flValue;
 	hResources[iPlayer].SetArray( iLoc, hTracker );
 }
@@ -199,6 +200,10 @@ void Tracker_Display( int iPlayer ) {
 		Tracker_CreateString( hTracker, sBuffer );
 
 		StrCat( sFinal, sizeof(sFinal), sBuffer );
+
+		if( hTracker.HasFlags( RTF_PERCENTAGE ) )
+			StrCat( sFinal, sizeof(sFinal), "%");
+
 		StrCat( sFinal, sizeof(sFinal), "\n");
 	}
 

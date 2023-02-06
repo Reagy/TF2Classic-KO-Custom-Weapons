@@ -7,7 +7,7 @@
 #include <stocksoup/memory>
 
 native float 	AttribHookFloat( float fValue, int iEntity, const char[] sAttributeClass );
-native void 	AttribHookString( char[] buffer, int iEntity, const char[] sAttributeClass );
+native void	AttribHookString( const char[] szInput, int iEntity, const char[] szAttribute, char[] szOutput, int iMaxLen );
 
 native float	GetMedigunCharge( int iPlayer );
 native int	GetEntityInSlot( int iPlayer, int iSlot );
@@ -114,6 +114,17 @@ stock void StoreToEntity( int iEntity, int iOffset, any anValue, NumberType iSiz
 
 
 #define EVENT_POSTINVENTORY		"post_inventory_application"
+
+/*
+	CUSTOM ATTRIBUTE DEFINES
+*/
+
+#define ATR_MEDIGUN_TYPE	"custom_medigun_type"		//(ADDITIVE) 0: Default Behavior, 1: Guardian Angel, 2: Bio Waste Pump, 3: Totenwerfer
+#define ATR_MEDIGUN_BEAM	"custom_medibeamtype"		//(ADDITIVE) 0: Stock Medigun, 1: Kritzkrieg, 2: Overhealer, 3: Bio Waste Pump
+#define ATR_MEDIGUN_OVERHEAL	"custom_maximum_overheal"	//(MULTI) Scales maximum overheal from medigun
+#define ATR_SELF_OVERHEAL	"custom_maximum_overheal_self"	//(MULTI) Scales maximum overheal on self
+
+#define ATR_ONHIT_TOXIN		"custom_onhit_toxin"		//(TOGGLE) Applies toxin on hit
 
 /*
 	Custom Damage Handling

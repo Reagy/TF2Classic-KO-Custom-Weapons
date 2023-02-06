@@ -13,6 +13,8 @@ enum {
 
 	TFCC_QUICKUBER,
 
+	TFCC_RADIALHEAL,
+
 	TFCC_LAST
 }
 
