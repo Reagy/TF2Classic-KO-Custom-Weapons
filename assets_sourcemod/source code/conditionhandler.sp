@@ -159,10 +159,8 @@ Action Command_Test( int iClient, int iArgs ) {
 #endif
 
 int GetFlagArrayOffset( int iCond ) {
-	if( iCond < 32 )
-		return 0;
-
-	return ( iCond / 32 ) - 1;
+	if( iCond == 0 ) return 0;
+	return ( iCond / 32 );
 }
 int GetFlagArrayBit( int iCond ) {
 	int iIndex = iCond % 32 ;
@@ -184,6 +182,9 @@ public any Native_AddCond( Handle hPlugin, int iNumParams ) {
 	return AddCond( iPlayer, iEffect );
 }
 bool AddCond( int iPlayer, int iCond ) {
+	if( iCond < 0 || iCond >= TFCC_LAST )
+		return false;
+
 	if( HasCond( iPlayer, iCond ) ) 
 		return false;
 	if( IsNegativeCond( iCond ) && ( HasCond( iPlayer, TFCC_ANGELSHIELD ) || HasCond( iPlayer, TFCC_ANGELINVULN ) ) )
@@ -245,6 +246,9 @@ public any Native_RemoveCond( Handle hPlugin, int iNumParams ) {
 	return RemoveCond( iPlayer, iEffect );
 }
 bool RemoveCond( int iPlayer, int iCond ) {
+	if( iCond < 0 || iCond >= TFCC_LAST )
+		return false;
+
 	if( !HasCond( iPlayer, iCond ) )
 		return false;
 
@@ -508,14 +512,15 @@ void CheckApplyToxin( int iTarget, TFDamageInfo tfInfo ) {
 	if( !IsValidPlayer(iAttacker) )
 		return;
 
-	if( RoundToNearest( AttribHookFloat( 0.0, iWeapon, "custom_onhit_toxin" ) ) == 0 )
+	float flAttrib = AttribHookFloat( 0.0, iWeapon, "custom_onhit_toxin" );
+	if( flAttrib == 0.0 )
 		return;
 
 	if( tfInfo.flDamage > 0.0 ) {
 		AddCond( iTarget, TFCC_TOXIN );
 
 		float flCurrentDuration = GetCondDuration( iTarget, TFCC_TOXIN );
-		float flNewDuration = MinFloat( flCurrentDuration + 1.0, 10.0 );
+		float flNewDuration = MinFloat( flCurrentDuration + flAttrib, 10.0 );
 
 		SetCondDuration( iTarget, TFCC_TOXIN, flNewDuration );
 		SetCondSourcePlayer( iTarget, TFCC_TOXIN, iAttacker );
@@ -961,3 +966,7 @@ void RemoveQuickUber( int iPlayer ) {
 	TF2_RemoveCondition( iPlayer, TFCond_MegaHeal );
 	ClientCommand( iPlayer, "r_screenoverlay 0");
 }
+
+/*
+	RADIAL HEAL
+*/

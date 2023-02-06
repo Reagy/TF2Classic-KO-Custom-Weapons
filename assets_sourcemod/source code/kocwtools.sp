@@ -12,6 +12,7 @@ Handle hEconGetAttributeManager;
 Handle hPlayerGetAttributeManager;
 Handle hPlayerGetAttributeContainer;
 Handle hApplyAttributeFloat;
+Handle hAttribHookString;
 
 Handle hGetEntitySlot;
 Handle hGetMedigunCharge;
@@ -58,7 +59,7 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 
 	//inventory functions
 	CreateNative( "AttribHookFloat", Native_AttribHookFloat );
-	//CreateNative( "AttribHookString", Native_AttribHookString );
+	CreateNative( "AttribHookString", Native_AttribHookString );
 
 	CreateNative( "GetMedigunCharge", Native_GetMedigunCharge );
 	CreateNative( "GetEntityInSlot", Native_GetEntitySlot );
@@ -85,6 +86,8 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
+
+	HookEvent( EVENT_POSTINVENTORY, Event_PostInventory, EventHookMode_Post );
 
 	/*
 		INVENTORY FUNCTIONS
@@ -123,6 +126,16 @@ public void OnPluginStart() {
 	hApplyAttributeFloat = EndPrepSDKCall();
 	if(!hApplyAttributeFloat)
 		PrintToServer("SDKCall setup for CAttributeManager::ApplyAttributeFloat failed");
+
+	//string_t CAttributeManager::AttribHookValue<string_t>(string_t, char const*, CBaseEntity const*)
+	StartPrepSDKCall( SDKCall_Static );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAttributeManager::AttribHookValue<string_t>" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain ); 	//string_t
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer ); 	//string_t
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); 	//string_t
+	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer ); 		//char
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer ); 	//CBaseEntity
+	hAttribHookString = EndPrepSDKCall();
 
 	//CEconEntity *CTFPlayer::GetEntityForLoadoutSlot( int iSlot )
 	StartPrepSDKCall( SDKCall_Player );
@@ -215,9 +228,21 @@ public void OnMapEnd() {
 	g_AllocPooledStringCache.Clear();
 }
 
+bool g_bPlayerHooked[MAXPLAYERS+1] = { false, ... };
+
+Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadcast ) {
+	int iPlayer = hEvent.GetInt( "userid" );
+	iPlayer = GetClientOfUserId( iPlayer );
+
+	if( !g_bPlayerHooked[ iPlayer ] ) {
+		DoPlayerHooks( iPlayer );
+		g_bPlayerHooked[ iPlayer ] = true;
+	}
+
+	return Plugin_Continue;
+}
 public void OnClientConnected( int iClient ) {
-	if( IsValidEdict( iClient ) )
-		RequestFrame( DoPlayerHooks, iClient );
+	g_bPlayerHooked[iClient] = false;
 }
 void DoPlayerHooks( int iPlayer ) {
 	hOnTakeDamage.HookEntity( Hook_Pre, iPlayer, Hook_OnTakeDamagePre );
@@ -285,7 +310,6 @@ public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
 	int iEntity = GetNativeCell( 2 );
 
 	if( !( IsValidEdict( iEntity ) && HasEntProp( iEntity, Prop_Send, "m_AttributeManager" ) ) ){
-		PrintToServer("fuck you lmao");
 		return flValue;
 	}
 	
@@ -302,6 +326,39 @@ public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
 		aManager = SDKCall( hEconGetAttributeManager, iEntity );
 		
 	return SDKCall( hApplyAttributeFloat, aManager, flValue, iEntity, aStringAlloc );
+}
+
+
+//native void AttribHookString( const char[] szInput, int iEntity, const char[] szAttribute, char[] szOutput, int iMaxLen );
+public any Native_AttribHookString( Handle hPlugin, int iParams ) {
+	int iBufferLength;
+	
+	GetNativeStringLength( 1, iBufferLength );
+	char[] szInput = new char[ ++iBufferLength ];
+	GetNativeString( 1, szInput, iBufferLength );
+	
+	int iEntity = GetNativeCell(2);
+
+	GetNativeStringLength( 3, iBufferLength );
+	char[] szAttributeClass = new char[ ++iBufferLength ];
+	GetNativeString( 3, szAttributeClass, iBufferLength );
+	
+	// string needs to be pooled for caching purposes
+	Address pInput = AllocPooledString( szInput );
+	
+	iBufferLength = GetNativeCell( 5 );
+	char[] szOutput = new char[ iBufferLength ];
+	
+	Address pOutput;
+	Address aResult;
+	pOutput = SDKCall( hAttribHookString, aResult, pInput, szAttributeClass, iEntity );
+	
+	// read from the output string_t
+	LoadStringFromAddress( DereferencePointer( pOutput ), szOutput, iBufferLength );
+	
+	int iWritten;
+	SetNativeString( 4, szOutput, iBufferLength, .bytes = iWritten );
+	return iWritten;
 }
 
 public any Native_GetEntitySlot( Handle hPlugin, int iParams ) {
