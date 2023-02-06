@@ -366,25 +366,6 @@
 				}
 			}
 			
-			"CBulletsTraceFilter::ShouldHitEntity"
-			{
-				"signature"	"CBulletsTraceFilter::ShouldHitEntity"
-				"callconv"	"thiscall"
-				"return"	"bool"
-				"this"		"address"
-				"arguments"
-				{
-					"target"
-					{
-						"type"	"cbaseentity"
-					}
-					"contentsmask"
-					{
-						"type"	"int"
-					}
-				}
-			}
-			
             //buildings
             
             "CBaseObject::StartBuilding"
@@ -518,6 +499,10 @@
 					{
 						"type"	"cbaseentity"
 					}
+					"takedamageinfo"
+					{
+						"type"	"objectptr"
+					}
 				}
 			}
 			"CTFWeaponBase::ItemPostFrame"
@@ -558,6 +543,14 @@
 						"type"	"cbaseentity"
 					}
 				}
+			}
+			
+			"CTFCoilGun::GetProjectileSpeed"
+			{
+				"signature"		"CTFCoilGun::GetProjectileSpeed"
+				"callconv"		"thiscall"
+				"return"		"float"
+				"this"			"entity"
 			}
 			
 			"CWeaponMedigun::AllowedToHealTarget"
@@ -615,6 +608,27 @@
 			"CTFProjectile_SentryRocket::Spawn"
 			{
 				"signature"		"CTFProjectile_SentryRocket::Spawn"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
+			"CTFProjectile_Coil::RocketTouch"
+			{
+				"signature"		"CTFProjectile_Coil::RocketTouch"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			"CBaseProjectile::ResetCollideWithTeammates"
+			{
+				"signature"		"CBaseProjectile::ResetCollideWithTeammates"
 				"callconv"		"thiscall"
 				"return"		"void"
 				"this"			"entity"
@@ -749,6 +763,12 @@
 				"linux"		"@_ZN14CWeaponMedigun11GetHealRateEv"
 			}
             
+			"CTFCoilGun::GetProjectileSpeed"
+			{
+				"library"	"server"
+				"linux"		"@_ZN10CTFCoilGun18GetProjectileSpeedEv"
+			}
+			
             //projectiles
             
             "CTFBaseRocket::Spawn"
@@ -766,7 +786,17 @@
 				"library"	"server"
 				"linux"		"@_ZN26CTFProjectile_SentryRocket5SpawnEv"
 			}
-            
+            "CTFProjectile_Coil::RocketTouch"
+			{
+				"library"	"server"
+				"linux"		"@_ZN18CTFProjectile_Coil11RocketTouchEP11CBaseEntity"
+			}
+			"CBaseProjectile::ResetCollideWithTeammates"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CBaseProjectile25ResetCollideWithTeammatesEv"
+			}
+			
             //econ
             
 			"CEconItemView::IterateAttributes"
@@ -778,6 +808,12 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN11CEconEntity7GetItemEv"
+			}
+			
+			"CAttributeManager::AttribHookValue<string_t>"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CAttributeManager15AttribHookValueI8string_tEET_S2_PKcPK11CBaseEntity"
 			}
 		
             //other
@@ -803,12 +839,6 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN12CTFGameRules29ApplyOnDamageAliveModifyRulesERK15CTakeDamageInfoP11CBaseEntityRNS_20DamageModifyExtras_tE"
-			}
-			
-			"CBulletsTraceFilter::ShouldHitEntity"
-			{
-				"library"	"server"
-				"linux"		"@_ZN19CBulletsTraceFilter15ShouldHitEntityEP13IHandleEntityi"
 			}
 		}
     }
