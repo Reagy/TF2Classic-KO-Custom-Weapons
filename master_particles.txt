@@ -1,4 +1,5 @@
 particles_manifest
 {
     file    "particles/laser_tracers.pcf"
+	file    "particles/scattershock_fx.pcf"
 }
