@@ -6828,14 +6828,19 @@ Weapon by: 'Reagy'"
 //-------------------------------------
 //-------------------------------------
 // MAC10
+// V5.6 - Reverted back to primary
 //-------------------------------------
 //-------------------------------------		
 		"7006"
 		{
-			"name"						"TF_WEAPON_MAC"
-			"prefab"					"weapon_pistol"
+			"name"						"TF_WEAPON_MAC"						
 			"show_in_armory"			"1"
+			"item_slot"					"primary"
 			"anim_slot"					"secondary"
+			"item_class"				"tf_weapon_nailgun"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
 
 			"item_quality"				"rarity2"
 
@@ -6859,29 +6864,30 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"																	
 			{
-				"class select override vcd"				"class_select_nailgun"												
+				"class select override vcd"				"class_select_nailgun"		
+				"override projectile type" 				"1"					
 			}
-			"attributes"																	
+			"attributes"
 			{
 			    "fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.175"
+					"value"				"0.5"
 				}
 				"clip size bonus"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"1.25"
+					"value"				"1.2"
 				}
-				"maxammo secondary increased"
+				"maxammo primary reduced"
 				{
-					"attribute_class"	"mult_maxammo_secondary"
-					"value"				"2.5"
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.72"
 				}
 				"spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"2"
+					"value"				"1.25"
 				}
 				"damage penalty"
 				{
