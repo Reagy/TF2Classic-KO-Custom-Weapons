@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture" 	"backpack/weapons/c_models/c_soldier_spikemace/c_soldier_spikemace_large"
+	"$translucent"	"1"
+	"$vertexcolor"	"1"
+	"$ignorez"	"1"
+}
