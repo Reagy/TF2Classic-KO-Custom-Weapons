@@ -11668,9 +11668,7 @@ Weapon by: 'Reagy'"
 		"7102"
 		{
 			"name"						"TF_WEAPON_FAL_SNIPER"
-			"prefab"					"weapon_sniperrifle"
-//			"item_class"				"tf_weapon_hunterrifle"		
-			"item_class"				"tf_weapon_shotgun_primary"				
+			"item_class"				"tf_weapon_hunterrifle"		
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
 			"anim_slot"					"secondary"
@@ -11684,9 +11682,8 @@ Weapon by: 'Reagy'"
 			"item_iconname"				"fal"
 			"item_type_name"			"Battle Rifle"
 			"item_name"					"Right Arm Of the Free World"
-			"item_description"			"Match-Grade Rounds: This weapon has high recoil
-
-Long live the king! bloody hell... 
+			"item_description"			"
+Long live the king! Bloody hell... 
 
 Model by: 'Nanodesu64' 'lolripk'
 Weapon by: 'Reagy'"
@@ -11702,17 +11699,12 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"
 			{
-				"UNIQUE bullets per shot bonus HIDDEN"	"0.1"
 				"scattergun no reload single"			"1"
-				"damage bonus hidden"					"5"
 				"clip size penalty hidden"				"3.25"
-				"fire rate penalty hidden"				"0.5"
-				"hidden primary max ammo bonus"			"1.28"
-				
+//				"fire rate penalty hidden"				"0.5"
+				"hidden primary max ammo bonus"			"1.7"
 				"class select override vcd"				"taunt01_v2"
 				"min_viewmodel_offset"					"5 0 -10"
-//				"hidden primary max ammo bonus"			"1.667"
-//				"clip size penalty hidden"				"3.25"
 			}
            	"attributes"
             {
@@ -11721,41 +11713,36 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mod_no_scope"
 					"value"				"1"
 				}
-			    "no damage falloff over distance"
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"no damage falloff over distance"
 				{
 					"attribute_class"	"mod_no_dmg_falloff"
 					"value"				"1"
 				}
-				"torso scale"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0"
-				}
 				"heal on hit for rapidfire"
 				{
 					"attribute_class"	"add_onhit_addhealth"
-					"value"				"2"
+					"value"				"10"
 				}
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.33"
+					"value" 			"0.4"
 				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.6"
+					"value"				"0.75"
 				}
-				"sniper no charge"
-				{
-					"attribute_class"	"unimplemented_mod_sniper_no_charge"
-					"value"				"1"
-				}
-				"sniper no headshots"
-				{
-					"attribute_class" "set_weapon_mode"
-					"value" 			"1"
-				}
+				"strange restriction type 1"
+                {
+                    "attribute_class"    "mult_spread_scale"
+                    "value"              "0.04"
+				}	
                 "crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -11776,8 +11763,6 @@ Weapon by: 'Reagy'"
 				"sound_single_shot"		"Weapon_FAL.Single"
 				"sound_burst"			"Weapon_FAL.SingleCrit"
 				"sound_reload"			"Weapon_AR.WorldReload"
-				"muzzle_flash"			"muzzle_scattergun"
-				"tracer_effect"			"bullet_scattergun_tracer01"
 			}
 			"mouse_pressed_sound"		"ui/item_light_gun_pickup.wav"
 			"drop_sound"				"ui/item_light_gun_drop.wav"
@@ -13590,12 +13575,10 @@ Name by: 'The One of Wonders'"
 					"value"				"1"													
 				}	
 			}
-			"visuals" //Using Crusaders' sounds because I have no idea what else to use.
+			"visuals"
 			{
-
-				"sound_single_shot"	"Weapon_CrusadersCrossbow.Single"
-				"sound_burst"	"Weapon_CrusadersCrossbow.SingleCrit"
-		
+				"sound_single_shot"		"Weapon_CompoundBow.Single"
+				"sound_burst"			"Weapon_CompoundBow.SingleCrit"
 			}
 			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
@@ -15793,90 +15776,6 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //------------------------
 		"9048"
 		{
-			"name"						"TF_WEAPON_TFC_FLAMETHROWER"
-			"prefab"					"weapon_flamethrower"
-			"show_in_armory"			"1"
-			
-			"item_quality"				"rarity3"
-			
-			"propername"				"1"
-			"item_name"					"Arsonist's Aria"
-			"item_type_name"			"Fire Hose"
-			"item_description"			"This weapon has no damage fall-off
-
-The 'aria' part comes from the screams of the one closest to you.
-
-Incendiary rockets not included.
-
-Weapon from: Tangerine Paint and Grunt's Weapon Addons
-Edited by: 'The One Of Wonders'"
-			"item_logname"				"tfc_firehose"
-			"item_iconname"				"tfc_firehose"
-			"image_inventory"			"backpack/weapons/w_models/w_tfc_flamethrower"
-			"model_world"				"models/weapons/w_models/w_tfc_flamethrower.mdl"
-			"model_player"				"models/weapons/v_models/v_tfc_flamethrower_pyro.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"pyro"					"1"
-			}
-			"attributes"
-			{
-				"provide on active"
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 		"1"
-				}
-				"move speed bonus"
-				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"1.05"
-				}
-				"airblast cost decreased"
-				{
-					"attribute_class"	"mult_airblast_cost"
-					"value"				"0.5"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.9"
-				}
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"3"
-				}
-				"flame ammopersec increased"
-				{
-					"attribute_class"	"mult_flame_ammopersec"
-					"value"				"1.33"
-				}
-				"deflection size multiplier"
-				{
-					"attribute_class"	"deflection_size_multiplier"
-					"value"				"0.75"
-				}
-				"no damage falloff over distance"
-				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}	
-			}	
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_FireHose.FireStart"
-				"sound_special1"		"Weapon_FireHose.FireLoop"
-				"sound_special3"		"Weapon_ChemThrower.WindDown"
-				"sound_burst"			"Weapon_FireHose.FireLoopCrit"
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //-----------------------------------
 //-----------------------------------
@@ -30193,6 +30092,7 @@ Weapon by: 'The One Of Wonders'"
 Gun for bear hunt, is good.
 
 Model by: 'Haau' 'VitreousGlassy'
+Animations by: 'Kylul'
 Weapon by: 'Reagy'"
 			"item_logname" 				"hwg_doublebarrel"
 			"item_iconname" 			"hwg_doublebarrel"
