@@ -995,7 +995,7 @@ Weapon from: New Old Weapons Pack"
 			}
 			"static_attrs"
 			{
-				"class select override vcd"				"taunt06"								// So he isn't posing strangely with the Pan. The pose looks really odd for shorter items, too.
+				"class select override vcd"				"taunt01"
 				"min_viewmodel_offset"					"5 0 -10"
 			}
 			"attributes"
@@ -9300,7 +9300,7 @@ Wearable by: 'Reagy'"
 			}
 			"static_attrs"
 			{
-				"class select override vcd"				"taunt03"							
+				"class select override vcd"				"taunt05"							
 			}
 			"attributes"
 			{
@@ -10335,6 +10335,7 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"
 			{
+				"class select override vcd"				"taunt01"
 				"min_viewmodel_offset"					"5 -2 -10"
 				"clip size penalty hidden"				"1.4"
 				"damage bonus hidden"					"0.75"
@@ -10966,6 +10967,7 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"
 			{
+				"class select override vcd"				"taunt01"
 				"min_viewmodel_offset"		"10 0 -6"
 				"effect bar recharge rate increased"	"0.33"
 			}
@@ -13643,6 +13645,7 @@ Edited by: 'Reagy'"
 			}
 			"static_attrs"
 			{
+				"class select override vcd"				"taunt01"
 				"min_viewmodel_offset"					"10 0 -11"
 //				"bullets per shot bonus"				"10"
 //				"reload time decreased"					"0.35"
@@ -13731,6 +13734,7 @@ Edited by: 'Reagy'"
 			}
 			"static_attrs"
 			{
+				"class select override vcd"				"taunt01"
 				"min_viewmodel_offset"					"10 0 -11"
 				"fire rate penalty"						"1.2"
 				"Reload time increased"					"1.1"
@@ -13899,6 +13903,7 @@ Edited by: 'Reagy'"
 			}
 			"static_attrs"
 			{
+				"class select override vcd"				"taunt01"
 				"min_viewmodel_offset"					"10 0 -11"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
@@ -13945,6 +13950,7 @@ Edited by: 'Reagy'"
 			}
 			"static_attrs"
 			{
+				"class select override vcd"				"taunt01"
 				"min_viewmodel_offset"					"10 0 -11"
 			}
 			"attributes"
@@ -14151,8 +14157,8 @@ Weapon by: 'The One Of Wonders'"
 			}	
             "static_attrs"
 			{
-				"class select override vcd"			"taunt02"	
-			}			
+				"class select override vcd"				"class_select_nailgun"			
+			}		
 			"attributes"
 			{
 				"voice pitch scale"
@@ -15126,8 +15132,9 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			{
 				"civilian"					"1"
 			}
-           	"static_attrs"																
-           	{
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt01"
 				"override projectile type"				"30"					// Tranq Dart									
 			}
 			"attributes"
@@ -22379,7 +22386,7 @@ Wearable by: 'Reagy'"
 			}
 			"static_attrs"
 			{
-				"class select override vcd"				"taunt03"							
+				"class select override vcd"				"taunt05"							
 			}
 			"attributes"
 			{
@@ -22716,9 +22723,9 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"scout"                "1"
 			}
-			"static_attrs"
+            "static_attrs"
 			{
-				"class select override vcd"			"taunt02"	
+				"class select override vcd"				"class_select_nailgun"			
 			}
 			"attributes"
 			{
@@ -26571,9 +26578,9 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"scout"					"primary"
 			}
-			"static_attrs"
+            "static_attrs"
 			{
-				"class select override vcd"				"taunt01_v3"						
+				"class select override vcd"				"taunt01_vocal01"			
 			}
 			"attributes"
 			{
@@ -29527,6 +29534,7 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"
 			{
+				"class select override vcd"				"taunt01"
 				"override projectile type" 				"30"	
 				"clip size penalty hidden"				"0.2"
 				"hidden primary max ammo bonus"			"3.2"
@@ -31670,6 +31678,7 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"
 			{
+				"class select override vcd"				"taunt01"
 				"particle on melee hit"					"mini_fireworks"
 				"class select override vcd"				"taunt01"
 			}
