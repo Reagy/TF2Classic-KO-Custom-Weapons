@@ -8,6 +8,19 @@ custom_uber_scales_damage (checked against weapon):
 	values (use value_is_additive):
 		enabled with any non-zero value
 	
+custom_leap_ability (globally checked):
+	enables the newly rebranded leap ability
+	
+	values (use value_is_additive):
+		any value above 0 enables the feature
+		value is used as recharge time in seconds
+		
+custom_capture_rate (globally checked):
+	modifies capture rate by the value provided
+	
+	values (use value_is_additive):
+		any number
+	
 custom_rocket_homing (checked against weapon):
 	enables the player to toggle half-life 2 style rocket tracking
 	with the m2 button. currently only works weapons that fire the soldier's rockets
@@ -65,17 +78,35 @@ custom_sentry_damage (globally checked):
 	
 	values (use value_is_percentage):
 		any number
-	
-custom_leap_ability (globally checked):
-	enables the newly rebranded leap ability
-	
-	values (use value_is_additive):
-		any value above 0 enables the feature
-		value is used as recharge time in seconds
 		
-custom_capture_rate (globally checked):
-	modifies capture rate by the value provided
-	i haven't tested this one very well, may cause issues
+custom_sentry_firerate (globally checked):
+	scales the amount of time between bullets fired by sentry guns
+	lower values increase the rate of fire and larger ones reduce it
 	
-	values (use value_is_additive):
+	values (use value_is_percentage):
 		any number
+		
+custom_sentry_turnspeed (globally checked):
+	scales the speed at which a sentry gun turns
+	
+	values (use value_is_percentage):
+		any number
+	
+		
+custom_customcond_onhit (checked against weapon):
+	adds a plugin condition to victim on hit
+	formatted as "<condition id> <duration>" e.g. "5 2.0"
+	
+	attribute MUST be of "attribute_type" "string"
+	values (string):
+		1: Toxin
+			Deals 2 damage every half second
+			Reduces all healing by 50%
+
+custom_addcond_onkill (checked against weapon):
+	adds a vanilla condition to the attacker on kill
+	formatted as "<condition id> <duration>" e.g. "5 2.0"
+	
+	attribute MUST be of "attribute_type" "string"
+	values (string):
+		Any vanilla condition
