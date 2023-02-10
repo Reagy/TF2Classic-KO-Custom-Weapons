@@ -13141,11 +13141,7 @@ Repurposed by: 'Majro'"
 				"civilian"				"1"
 			}
 			"static_attrs"
-			{
-				"is_a_sword"							"72"								
-				"decapitate type"						"1"								
-				"melee range multiplier"				"1.25"							
-				"melee bounds multiplier"				"1.35"
+			{							
 				"min_viewmodel_offset"					"8 0 -6"
 			}
 			"attributes"
@@ -13849,6 +13845,8 @@ Edited by: 'Reagy'"
 			{
 				"crit mod disabled hidden"				"0"
 				"damage bonus hidden"					"1.54"
+				"melee range multiplier"				"1.25"							
+				"melee bounds multiplier"				"1.35"
 				"min_viewmodel_offset"					"10 0 -11"
 			}
 			"attributes"
