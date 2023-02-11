@@ -214,8 +214,6 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	int iPlayer = hEvent.GetInt( "userid" );
 	iPlayer = GetClientOfUserId( iPlayer );
 
-	//SetEntPropFloat( iPlayer, Prop_Data, "m_flGravity", 0.9 );
-
 	g_flMultTable[iPlayer] = AttribHookFloat( 0.5, iPlayer, "custom_maximum_overheal" );
 	if( RoundToFloor( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) == CMEDI_OATH ) {
 		StartRadialHeal( iPlayer );
@@ -226,10 +224,6 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 		g_bRadiusHealer[ iPlayer ] = false;
 		Tracker_Remove( iPlayer, "Rage" );
 	}
-
-	static char szFuck[128];
-	AttribHookString( "test", iPlayer, "custom_projectile_model", szFuck, sizeof( szFuck ) );
-	PrintToServer( "here's the thing: %s", szFuck );
 
 	//do oathbreaker projectile setup here
 
@@ -296,7 +290,7 @@ MRESReturn Detour_GetBuffedMaxHealth( Address aThis, DHookReturn hReturn ) {
 		if( !IsValidPlayer( iIndex ) )
 			continue;
 
-		float flNewMult = g_flMultTable[iIndex];
+		float flNewMult = g_flMultTable[ iIndex ];
 		flLargestMult = MaxFloat( flLargestMult, flNewMult );
 	}
 
@@ -425,6 +419,16 @@ void HookMedigun( int iMedigun ) {
 	hMedigunHolster.HookEntity( Hook_Post, iMedigun, Hook_MedigunHolster );
 }
 
+bool ValidHealTarget( int iHealer, int iPatient ) {
+	int iOwnerTeam = GetClientTeam( iHealer );
+	int iTargetTeam = GetClientTeam( iPatient );
+	int iDisguiseTeam = GetEntProp( iPatient, Prop_Send, "m_nDisguiseTeam" );
+
+	bool bCloaked = TF2_IsPlayerInCondition( iPatient, TFCond_Cloaked );
+
+	return ( iOwnerTeam == iTargetTeam || iOwnerTeam == iDisguiseTeam ) && !bCloaked;
+}
+
 /*
 	CUSTOM MEDI BEAM
 */
@@ -492,10 +496,10 @@ int GetHealingMode( int iWeapon ) {
 
 	if( iHealTarget != -1 ) {
 		int iType = RoundToFloor( AttribHookFloat( 0.0, iWeapon, "custom_medigun_type" ) );
-		if( TF2_GetClientTeam( iHealTarget ) != TF2_GetClientTeam( iOwner ) && iType == CMEDI_BWP )
+		if( !ValidHealTarget( iOwner, iHealTarget ) && iType == CMEDI_BWP )
 			return MODE_UBER;
 
-		if( GetEntProp( iWeapon, Prop_Send, "m_bChargeRelease" ) && iType != 2 )
+		if( GetEntProp( iWeapon, Prop_Send, "m_bChargeRelease" ) && iType != CMEDI_BWP )
 			return MODE_UBER;
 
 		return MODE_HEALING;
@@ -621,15 +625,12 @@ void AttachBeam_TPS( int iPlayer ) {
 }
 
 /*
-	Attaching the beam directly to a player directs to their feet, so we
-	need a new object to act as a target point.
+	Attaching the beam directly to a player directs to their feet
+	so we need a new object to act as a target point.
 */
 
 void CreateBeamTargetPoint( int iPlayer, int iTargetPlayer ) {
-	if( g_iBeamTargetPoints[ iPlayer ] != -1 ) {
-		RemoveEntity( g_iBeamTargetPoints[ iPlayer ] );
-		g_iBeamTargetPoints[ iPlayer ] = -1;
-	}
+	DeleteBeamTarget( iPlayer );
 
 	int iPoint = CreateEntityByName( "prop_dynamic_override" );
 	DispatchKeyValue( iPoint, "model", "models/error.mdl");
@@ -648,10 +649,10 @@ void CreateBeamTargetPoint( int iPlayer, int iTargetPlayer ) {
 	DispatchSpawn( iPoint );
 	SetEntProp( iPoint, Prop_Send, "m_fEffects", 32|EF_NOSHADOW|EF_NORECEIVESHADOW );
 
-	g_iBeamTargetPoints[ iPlayer ] = iPoint;
+	g_iBeamTargetPoints[ iPlayer ] = EntIndexToEntRef( iPoint );
 }
 void DeleteBeamTarget( int iPlayer ) {
-	int iTarget = g_iBeamTargetPoints[ iPlayer ];
+	int iTarget = EntRefToEntIndex( g_iBeamTargetPoints[ iPlayer ] );
 	if( IsValidEntity( iTarget ) )
 		RemoveEntity( iTarget );
 
@@ -733,7 +734,7 @@ MRESReturn Detour_MedigunThinkPost( int iThis ) {
 	if( RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_medigun_type" ) ) != CMEDI_BWP )
 		return MRES_Ignored;
 
-	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iOwner ) ) {
+	if( ValidHealTarget( iOwner, iTarget ) ) {
 		if( !HasCustomCond( iTarget, TFCC_TOXINPATIENT ) ) {
 			AddCustomCond( iTarget, TFCC_TOXINPATIENT );
 			SetCustomCondSourcePlayer( iTarget, TFCC_TOXINPATIENT, iOwner );
@@ -763,7 +764,7 @@ MRESReturn Detour_AllowedToHealPre( int iThis, DHookReturn hReturn, DHookParam h
 	int iHealer = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
 	int iTarget = hParams.Get( 1 );
 
-	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iHealer ) )
+	if( ValidHealTarget( iHealer, iTarget ) )
 		return MRES_Ignored;
 
 	hReturn.Value = true;
@@ -775,19 +776,24 @@ MRESReturn Detour_HealStartPre( Address aThis, DHookParam hParams ) {
 	int iTarget = GetPlayerFromShared( aThis );
 	int iHealer = hParams.Get( 1 );
 
-	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iHealer ) )
+	if( ValidHealTarget( iHealer, iTarget ) )
 		return MRES_Ignored;
 
 	return MRES_Supercede;
 }
 MRESReturn Detour_HealStopPre( Address aThis, DHookParam hParams ) {
-	int iTarget = GetPlayerFromShared( aThis );
+	/*int iTarget = GetPlayerFromShared( aThis );
 	int iHealer = hParams.Get( 1 );
 
-	if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iHealer ) ) 
+	int iOwnerTeam = GetClientTeam( iOwner );
+	int iTargetTeam = GetClientTeam( iTarget );
+	int iDisguiseTeam = GetEntProp( iTarget, Prop_Send, "m_nDisguiseTeam" );
+
+	if( iOwnerTeam == iTargetTeam || iOwnerTeam == iDisguiseTeam )
 		return MRES_Ignored;
 
-	return MRES_Supercede;
+	return MRES_Supercede;*/
+	return MRES_Ignored;
 }
 
 /*
@@ -916,6 +922,11 @@ void CreateRadialEmitter( int iPlayer ) {
 
 	ParentModel( iEmitter, iPlayer );
 
+	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iPlayer );
+
+	SetFlags(iEmitter);
+	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_RadialParticle );
+
 	DispatchSpawn( iEmitter );
 	ActivateEntity( iEmitter );
 	AcceptEntityInput( iEmitter, "Start" );
@@ -965,7 +976,7 @@ Action Timer_RadialHeal( Handle hTimer, int iPlayer ) {
 		if( iTarget == iPlayer )
 			continue;
 
-		if( TF2_GetClientTeam( iTarget ) != TF2_GetClientTeam( iPlayer ) )
+		if( !ValidHealTarget( iPlayer, iTarget ) )
 			continue;
 
 		bIsInRadius[ iTarget ] = true;
@@ -1015,9 +1026,13 @@ Action Timer_RadialHeal( Handle hTimer, int iPlayer ) {
 void CreatePatientRadialParticles( int iPlayer ) {
 	RemovePatientRadialParticles( iPlayer );
 
-	PrintToServer("test");
+	int iDisguise = GetEntProp( iPlayer, Prop_Send, "m_nDisguiseTeam" );
+	int iTeam;
+	if( iDisguise != 0 )
+		iTeam = iDisguise - 2;
+	else
+		iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 
-	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	int iEmitter = CreateEntityByName( "info_particle_system" );
 
 	DispatchKeyValue( iEmitter, "effect_name", g_szOathHealParticles[ iTeam ] );
@@ -1026,6 +1041,11 @@ void CreatePatientRadialParticles( int iPlayer ) {
 	TeleportEntity( iEmitter, vecPos );
 
 	ParentModel( iEmitter, iPlayer );
+
+	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iPlayer );
+
+	SetFlags(iEmitter);
+	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_RadialParticle );
 
 	DispatchSpawn( iEmitter );
 	ActivateEntity( iEmitter );
@@ -1049,6 +1069,16 @@ void RemovePatientRadialParticles( int iPlayer ) {
 		RemoveEntity( iEmitter );
 
 	g_iRadialPatientEmitters[ iPlayer ] = -1;
+}
+
+Action Hook_RadialParticle( int iEntity, int iClient ) {
+	SetFlags( iEntity );
+	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" );
+
+	if( iClient == iOwner ) {
+		return Plugin_Handled;
+	}
+	return Plugin_Continue;
 }
 
 MRESReturn Hook_ProjectileSpeed( int iThis, DHookReturn hReturn ) {
@@ -1086,8 +1116,7 @@ MRESReturn Detour_CoilTouch( int iThis, DHookParam hParams ) {
 	float flDamage = LoadFromEntity( iThis, 1204 );
 
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
-	bool bSpyGetsHealed = false;
-	if( TF2_GetClientTeam( iOwner ) != TF2_GetClientTeam( iOther ) && !bSpyGetsHealed ) {
+	if( !ValidHealTarget( iOwner, iOther ) ) {
 		StoreToEntity( iThis, 1204, flDamage * 0.25, NumberType_Int32 );
 		return MRES_Ignored;
 	}

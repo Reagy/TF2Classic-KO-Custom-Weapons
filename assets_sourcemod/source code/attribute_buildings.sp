@@ -12,7 +12,7 @@ public Plugin myinfo = {
 	name = "Attribute: Buildings",
 	author = "Noclue",
 	description = "Attributes for sentries.",
-	version = "1.0",
+	version = "1.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -117,7 +117,6 @@ DynamicHook hFinishUpgrade;
 DynamicHook hOnGoActive;
 DynamicHook hMakeCarry;
 DynamicHook hCanUpgrade;
-//DynamicDetour hGetCost;
 DynamicDetour hSentryAttack;
 DynamicDetour hDispHeal;
 DynamicDetour hTeleJump;
@@ -226,14 +225,30 @@ public void OnMapStart() {
 
 	PrecacheSound( "weapons/sentry_shoot_mini.wav" );
 
+	PrecacheSound( "weapons/buildings/Ironclad_Shoot1.wav" );
+	PrecacheSound( "weapons/buildings/Ironclad_Shoot2.wav" );
+	PrecacheSound( "weapons/buildings/Ironclad_Shoot3.wav" );
+	PrecacheSound( "weapons/buildings/Ironclad_Scan1.wav" );
+	PrecacheSound( "weapons/buildings/Ironclad_Scan2.wav" );
+	PrecacheSound( "weapons/buildings/Ironclad_Scan3.wav" );
+	PrecacheSound( "weapons/buildings/Ironclad_Spot.wav" );
+	PrecacheSound( "weapons/buildings/Ironclad_Spot_Client.wav" );
+
+	PrecacheSound( "weapons/buildings/LucyCharm_Shoot1.wav" );
+	PrecacheSound( "weapons/buildings/LucyCharm_Shoot2.wav" );
+	PrecacheSound( "weapons/buildings/LucyCharm_Shoot3.wav" );
+	PrecacheSound( "weapons/buildings/LucyCharm_Scan1.wav" );
+	PrecacheSound( "weapons/buildings/LucyCharm_Scan2.wav" );
+	PrecacheSound( "weapons/buildings/LucyCharm_Scan3.wav" );
+	PrecacheSound( "weapons/buildings/LucyCharm_Spot.wav" );
+	PrecacheSound( "weapons/buildings/LucyCharm_Spot_Client.wav" );
+
 	AddNormalSoundHook( Hook_BuildingSounds );
 }
-
 
 /*
 	Building Callbacks
 */
-
 
 //called when a building is created or placed from carry
 MRESReturn Hook_StartBuilding( int iThis ) {
@@ -244,25 +259,27 @@ MRESReturn Hook_StartBuilding( int iThis ) {
 	int iPlayer = GetEntPropEnt( iThis, Prop_Send, "m_hBuilder" );
 	int iOverride = g_iBuildingTypes[ iPlayer ][ iType ];
 
-	if( iType == OBJ_DISPENSER ) {
+	switch( iType ) {
+	case OBJ_DISPENSER: {
 		if( iOverride == DISPENSER_MINI ) {
 			SetEntProp( iThis, Prop_Send, "m_iHighestUpgradeLevel", 0 );
 			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );
 		}
 	}
-	else if( iType == OBJ_TELEPORTER ) {
+	case OBJ_TELEPORTER: {
 		if( iOverride == TELEPORT_JUMP ) {
 			SetEntProp( iThis, Prop_Send, "m_iHighestUpgradeLevel", 0 );
-			//SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );
 		}
 	}
-	else if( iType == OBJ_SENTRYGUN ) {
+	case OBJ_SENTRYGUN: {
+		SetSentryRotate( iThis );
 		if( iOverride == SENTRY_MINI ) {
 			SetEntProp( iThis, Prop_Send, "m_iHighestUpgradeLevel", 0 );
-			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );
-			SetSentryRotate( iThis, 8 );
+			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );	
 		}
 	}
+	}
+
 	return MRES_Handled;
 }
 //called when a building activates at level 1 only
@@ -310,11 +327,6 @@ MRESReturn Hook_CanBeUpgraded( int iThis, DHookReturn hReturn ) {
 	}
 	return MRES_Ignored;
 }
-/*MRESReturn Hook_GetCost( int iThis, DHookReturn hReturn, DHookParam hParams ) {
-	hReturn.Value = 
-	return MRES_ChangedOverride;
-}*/
-
 
 //good thing multithreading was a joke in 2007
 float flOldAttack;
@@ -322,6 +334,7 @@ MRESReturn Detour_SentryAttackPre( int iThis ) {
 	float flNextAttack = LoadFromEntity( iThis, g_iNextAttackOffset );
 	flOldAttack = flNextAttack;
 
+	//PrintToServer("%f", GetEntPropFloat( iThis, Prop_Send, "m_flPlaybackRate" ) );
 	return MRES_Handled;
 }
 MRESReturn Detour_SentryAttack( int iThis ) {
@@ -342,25 +355,27 @@ MRESReturn Detour_SentryAttack( int iThis ) {
 
 //returns the health per second of a dispenser
 MRESReturn Detour_GetHealRate( int iThis, DHookReturn hReturn ) {
-	bool bChanged = false;
+	int iChanged = false;
 	float flNewValue = hReturn.Value;
 	if( IsBuildingMini( iThis ) ) {
 		flNewValue = 15.0;
-		bChanged = true;
+		iChanged++;
 	}
 	
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hBuilder" );
-	if( iOwner > 0 && iOwner <= MaxClients ) {
+	if( IsValidPlayer( iOwner ) ) {
 		float flOldValue = flNewValue;
 		flNewValue = AttribHookFloat( flNewValue, iOwner, "custom_dispenser_healrate" );
-		if( !bChanged ) bChanged = flOldValue != flNewValue;
+
+		if( flNewValue != flOldValue )
+			iChanged++;
 	}
 	
-	if( bChanged ) {
+	if( iChanged ) {
 		hReturn.Value = flNewValue;
 		return MRES_Supercede;
 	}
-	return bChanged ? MRES_Supercede : MRES_Handled;
+	return MRES_Ignored;
 }
 
 //called when a jump pad is used
@@ -381,19 +396,19 @@ Action Hook_BuildingSounds( int iClients[MAXPLAYERS], int& iNumClients, char sSa
 		return Plugin_Continue;
 
 	int iBuilder = GetEntPropEnt( iEntity, Prop_Send, "m_hBuilder" );
-	if( iBuilder == -1 || iBuilder > MaxClients )
+	if( !IsValidPlayer( iBuilder ) )
 		return Plugin_Continue;
 
 	int iType = GetEntProp( iEntity, Prop_Send, "m_iObjectType" );
 	switch( iType ) {
 	case OBJ_SENTRYGUN: 
-		return SentrySoundHook( iEntity, sSample, iPitch );
+		return SentrySoundHook( iEntity, sSample, iPitch, iLevel );
 	}
 
 	return Plugin_Continue;
 }
 
-Action SentrySoundHook( int iBuilding, char sSample[PLATFORM_MAX_PATH], int &iPitch ) {
+Action SentrySoundHook( int iBuilding, char sSample[PLATFORM_MAX_PATH], int &iPitch, int &iLevel ) {
 	switch( GetBuildingOverride( iBuilding ) ) {
 	case SENTRY_MINI: {
 		if( StrContains( sSample, "weapons/sentry_shoot", true ) != -1 ) {
@@ -406,10 +421,40 @@ Action SentrySoundHook( int iBuilding, char sSample[PLATFORM_MAX_PATH], int &iPi
 		}
 	}
 	case SENTRY_ARTILLERY: {
-
+		if( StrContains( sSample, "weapons/sentry_shoot", true ) != -1 ) {
+			sSample = "weapons/buildings/Ironclad_Shoot1.wav";
+			return Plugin_Changed;
+		} 
+		else if( StrContains( sSample, "weapons/sentry_scan", true ) != -1 ) {
+			Format( sSample, PLATFORM_MAX_PATH, "weapons/buildings/Ironclad_Scan%i.wav", GetEntProp( iBuilding, Prop_Send, "m_iUpgradeLevel" ) );
+			return Plugin_Changed;
+		}
+		else if( StrEqual( sSample, "weapons/sentry_spot.wav", true ) ) {
+			sSample = "weapons/buildings/Ironclad_Spot.wav";
+			return Plugin_Changed;
+		}
+		else if( StrEqual( sSample, "weapons/sentry_spot_client.wav", true ) ) {
+			sSample = "weapons/buildings/Ironclad_Spot_Client.wav";
+			return Plugin_Changed;
+		}
 	}
 	case SENTRY_CLOVER: {
-		
+		if( StrContains( sSample, "weapons/sentry_shoot", true ) != -1 ) {
+			Format( sSample, PLATFORM_MAX_PATH, "weapons/buildings/LucyCharm_Shoot%i.wav", GetEntProp( iBuilding, Prop_Send, "m_iUpgradeLevel" ) );
+			return Plugin_Changed;
+		} 
+		else if( StrContains( sSample, "weapons/sentry_scan", true ) != -1 ) {
+			Format( sSample, PLATFORM_MAX_PATH, "weapons/buildings/LucyCharm_Scan%i.wav", GetEntProp( iBuilding, Prop_Send, "m_iUpgradeLevel" ) );
+			return Plugin_Changed;
+		}
+		else if( StrEqual( sSample, "weapons/sentry_spot.wav", true ) ) {
+			sSample = "weapons/buildings/LucyCharm_Spot.wav";
+			return Plugin_Changed;
+		}
+		else if( StrEqual( sSample, "weapons/sentry_spot_client.wav", true ) ) {
+			sSample = "weapons/buildings/LucyCharm_Spot_Client.wav";
+			return Plugin_Changed;
+		}
 	}
 	}
 
@@ -422,7 +467,7 @@ Action SentrySoundHook( int iBuilding, char sSample[PLATFORM_MAX_PATH], int &iPi
 
 
 public void OnEntityCreated( int iEntity, const char[] sClassname ) {
-	if( iEntity > 0 && iEntity <= MaxClients ) {
+	if( IsValidPlayer( iEntity ) ) {
 		SDKHook( iEntity, SDKHook_OnTakeDamage, Hook_OnTakeDamage );
 		return;
 	}
@@ -560,7 +605,7 @@ void SetBuildingModel( int iBuilding, bool bIsUpgrading ) {
 }
 
 void CheckBuildings( int iPlayer ) {
-	if( !( iPlayer <= MaxClients && IsPlayerAlive( iPlayer ) ) )
+	if( !IsValidPlayer( iPlayer ) )
 		return;
 
 	if( TF2_GetPlayerClass( iPlayer ) != TFClass_Engineer ) {
@@ -568,9 +613,9 @@ void CheckBuildings( int iPlayer ) {
 		return;
 	}
 
-	int iSentryType = 	RoundFloat( AttribHookFloat( 0.0, iPlayer, "custom_sentry_type" ) );
-	int iDispenserType = 	RoundFloat( AttribHookFloat( 0.0, iPlayer, "custom_dispenser_type" ) );
-	int iTeleporterType = 	RoundFloat( AttribHookFloat( 0.0, iPlayer, "custom_teleporter_type" ) );
+	int iSentryType = 	RoundToNearest( AttribHookFloat( 0.0, iPlayer, "custom_sentry_type" ) );
+	int iDispenserType = 	RoundToNearest( AttribHookFloat( 0.0, iPlayer, "custom_dispenser_type" ) );
+	int iTeleporterType = 	RoundToNearest( AttribHookFloat( 0.0, iPlayer, "custom_teleporter_type" ) );
 
 	if( g_iBuildingTypes[iPlayer][OBJ_DISPENSER] != iDispenserType ) {
 		DetonatedOwnedObjects( iPlayer, OBJ_DISPENSER );
@@ -637,8 +682,14 @@ void DestroyScreens( int iBuilding ) {
 
 
 //sets the rotation speed of a sentry gun
-void SetSentryRotate( int iBuilding, int iSpeed ) {
-	StoreToEntity( iBuilding, g_iTurnSpeedOffset, iSpeed );
+void SetSentryRotate( int iBuilding ) {
+	int iBuilder = GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" );
+
+	float flSpeed = AttribHookFloat( 6.0, iBuilder, "custom_sentry_turnspeed" );
+	if( IsBuildingMini( iBuilding ) )
+		flSpeed *= 1.35;
+
+	StoreToEntity( iBuilding, g_iTurnSpeedOffset, RoundToNearest( flSpeed ) );
 }
 
 void CreateSirenParticle( int iBuilding ) {
@@ -686,15 +737,15 @@ void DestroySirenParticle( int iBuilding ) {
 }
 
 void Lateload() {
-	for(int i = 1; i < MaxClients; i++) {
+	for(int i = 1; i <= MaxClients; i++) {
 		if( !IsClientInGame( i ) )
 			continue;
 
 		SDKHook( i, SDKHook_OnTakeDamage, Hook_OnTakeDamage );
 
-		int iSentryType = 		RoundFloat( AttribHookFloat( 0.0, i, "custom_sentry_type" ) );
-		int iDispenserType = 	RoundFloat( AttribHookFloat( 0.0, i, "custom_dispenser_type" ) );
-		int iTeleporterType = 	RoundFloat( AttribHookFloat( 0.0, i, "custom_teleporter_type" ) );
+		int iSentryType = 	RoundToNearest( AttribHookFloat( 0.0, i, "custom_sentry_type" ) );
+		int iDispenserType = 	RoundToNearest( AttribHookFloat( 0.0, i, "custom_dispenser_type" ) );
+		int iTeleporterType = 	RoundToNearest( AttribHookFloat( 0.0, i, "custom_teleporter_type" ) );
 
 		g_iBuildingTypes[i][OBJ_TELEPORTER]	= iTeleporterType;
 		g_iBuildingTypes[i][OBJ_DISPENSER]	= iDispenserType;
