@@ -12,7 +12,7 @@ Handle hEconGetAttributeManager;
 Handle hPlayerGetAttributeManager;
 Handle hPlayerGetAttributeContainer;
 Handle hApplyAttributeFloat;
-Handle hAttribHookString;
+Handle hIterateAttributes;
 
 Handle hGetEntitySlot;
 Handle hGetMedigunCharge;
@@ -99,7 +99,7 @@ public void OnPluginStart() {
 	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
 	hEconGetAttributeManager = EndPrepSDKCall();
 	if(!hEconGetAttributeManager)
-		PrintToServer("SDKCall setup for CEconEntity::GetAttributeManager failed");
+		SetFailState("SDKCall setup for CEconEntity::GetAttributeManager failed");
 
 	//CTFPlayer::GetAttributeManager(void)
 	StartPrepSDKCall(SDKCall_Player);
@@ -107,14 +107,14 @@ public void OnPluginStart() {
 	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
 	hPlayerGetAttributeManager = EndPrepSDKCall();
 	if(!hPlayerGetAttributeManager)
-		PrintToServer("SDKCall setup for CTFPlayer::GetAttributeManager failed");
+		SetFailState("SDKCall setup for CTFPlayer::GetAttributeManager failed");
 
 	StartPrepSDKCall(SDKCall_Player);
 	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CTFPlayer::GetAttributeContainer");
 	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
 	hPlayerGetAttributeContainer = EndPrepSDKCall();
 	if(!hPlayerGetAttributeContainer)
-		PrintToServer("SDKCall setup for CTFPlayer::GetAttributeContainer failed");
+		SetFailState("SDKCall setup for CTFPlayer::GetAttributeContainer failed");
 
 	//CAttributeManager::ApplyAttributeFloat( float flValue, const CBaseEntity *pEntity, string_t strAttributeClass )
 	StartPrepSDKCall(SDKCall_Raw);
@@ -125,17 +125,13 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain); //strattributeclass
 	hApplyAttributeFloat = EndPrepSDKCall();
 	if(!hApplyAttributeFloat)
-		PrintToServer("SDKCall setup for CAttributeManager::ApplyAttributeFloat failed");
+		SetFailState("SDKCall setup for CAttributeManager::ApplyAttributeFloat failed");
 
-	//string_t CAttributeManager::AttribHookValue<string_t>(string_t, char const*, CBaseEntity const*)
-	StartPrepSDKCall( SDKCall_Static );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAttributeManager::AttribHookValue<string_t>" );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain ); 	//string_t
-	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer ); 	//string_t
-	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); 	//string_t
-	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer ); 		//char
-	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer ); 	//CBaseEntity
-	hAttribHookString = EndPrepSDKCall();
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CEconItemView::IterateAttributes" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hIterateAttributes = EndPrepSDKCall();
 
 	//CEconEntity *CTFPlayer::GetEntityForLoadoutSlot( int iSlot )
 	StartPrepSDKCall( SDKCall_Player );
@@ -329,36 +325,43 @@ public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
 }
 
 
-//native void AttribHookString( const char[] szInput, int iEntity, const char[] szAttribute, char[] szOutput, int iMaxLen );
-public any Native_AttribHookString( Handle hPlugin, int iParams ) {
-	int iBufferLength;
-	
-	GetNativeStringLength( 1, iBufferLength );
-	char[] szInput = new char[ ++iBufferLength ];
-	GetNativeString( 1, szInput, iBufferLength );
-	
-	int iEntity = GetNativeCell(2);
+/*
+	i tried for several hours to try and read string attributes like a normal person but it always had bizarre issues i couldn't figure out
+	so we're down to the most basic level and manually scanning the attribute list
+	honestly this was a hail-mary last resort so i'm glad it works
+	this will probably break if you try to scan a non-string attribute and it can't be used on the player but whatever it works
+*/
 
-	GetNativeStringLength( 3, iBufferLength );
+//native int AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
+public any Native_AttribHookString( Handle hPlugin, int iParams ) {
+	int iEntity = GetNativeCell( 3 );
+	
+	int iBufferLength;
+	GetNativeStringLength( 4, iBufferLength );
 	char[] szAttributeClass = new char[ ++iBufferLength ];
-	GetNativeString( 3, szAttributeClass, iBufferLength );
+	GetNativeString( 4, szAttributeClass, iBufferLength );
 	
-	// string needs to be pooled for caching purposes
-	Address pInput = AllocPooledString( szInput );
-	
-	iBufferLength = GetNativeCell( 5 );
-	char[] szOutput = new char[ iBufferLength ];
-	
-	Address pOutput;
-	Address aResult;
-	pOutput = SDKCall( hAttribHookString, aResult, pInput, szAttributeClass, iEntity );
-	
-	// read from the output string_t
-	LoadStringFromAddress( DereferencePointer( pOutput ), szOutput, iBufferLength );
-	
-	int iWritten;
-	SetNativeString( 4, szOutput, iBufferLength, .bytes = iWritten );
-	return iWritten;
+	Address aWeapon = GetEntityAddress( iEntity );
+
+	int iItemOffset = 1168; //offset of m_Item
+	if( !HasEntProp( iEntity, Prop_Send, "m_Item") ) {
+		SetNativeString( 1, "", GetNativeCell( 2 ) );
+		return 0;
+	}
+		
+	Address aStringAlloc = AllocPooledString( szAttributeClass );
+	Address aAttribute = SDKCall( hIterateAttributes, aWeapon + view_as<Address>( iItemOffset ), aStringAlloc );
+
+	if( aAttribute == Address_Null ) {
+		SetNativeString( 1, "", GetNativeCell( 2 ) );
+		return 0;
+	}
+
+	static char szValue[64];
+	LoadStringFromAddress( aAttribute + view_as<Address>( 12 ), szValue, 64 );
+
+	SetNativeString( 1, szValue, GetNativeCell( 2 ) );
+	return 1;
 }
 
 public any Native_GetEntitySlot( Handle hPlugin, int iParams ) {

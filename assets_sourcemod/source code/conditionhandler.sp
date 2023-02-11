@@ -52,6 +52,9 @@ int g_iAngelShields[MAXPLAYERS+1][2];
 
 DynamicHook hTakeHealth;
 DynamicDetour hHealConds;
+DynamicDetour hApplyOnHit;
+
+DynamicHook hOnKill;
 
 Handle hCallTakeHealth;
 Handle hGetBuffedMaxHealth;
@@ -90,6 +93,13 @@ public void OnPluginStart() {
 	hTakeHealth = DynamicHook.FromConf( hGameConf, "CTFPlayer::TakeHealth" );
 	hHealConds = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::HealNegativeConds" );
 	hHealConds.Enable( Hook_Post, Detour_HealNegativeConds );
+
+	hApplyOnHit = DynamicDetour.FromConf( hGameConf, "CTFWeaponBase::ApplyOnHitAttributes" );
+	hApplyOnHit.Enable( Hook_Post, Detour_OnHit );
+
+	hOnKill = new DynamicHook( 68, HookType_Entity, ReturnType_Void, ThisPointer_CBaseEntity );
+	hOnKill.AddParam( HookParamType_CBaseEntity );
+	hOnKill.AddParam( HookParamType_ObjectPtr );
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::TakeHealth" );
@@ -131,8 +141,24 @@ public void OnClientConnected( int iClient ) {
 		RequestFrame( DoPlayerHooks, iClient );
 }
 
+MRESReturn Hook_OnPlayerKill( int iThis, DHookParam hParams ) {
+	//int iVictim = hParams.Get( 1 );
+	TFDamageInfo tfInfo = TFDamageInfo( hParams.GetAddress( 2 ) );
+
+	int iAttacker = tfInfo.iAttacker;
+	int iWeapon = tfInfo.iWeapon;
+
+	if( !IsValidPlayer( iAttacker ) || !IsValidEdict( iWeapon ) )
+		return MRES_Ignored;
+
+	CheckOnKillCond( iAttacker, iWeapon );
+
+	return MRES_Handled;
+}
+
 void DoPlayerHooks( int iPlayer ) {
 	hTakeHealth.HookEntity( Hook_Pre, iPlayer, Hook_TakeHealth );
+	hOnKill.HookEntity( Hook_Post, iPlayer, Hook_OnPlayerKill );
 }
 
 public void OnMapStart() {
@@ -394,6 +420,52 @@ MRESReturn Detour_HealNegativeConds( Address aThis, DHookReturn hReturn ) {
 	return MRES_ChangedOverride;
 }
 
+MRESReturn Detour_OnHit( int iWeapon, DHookParam hParams ) {
+	//int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwnerEntity" );
+	//int iSomething = hParams.Get( 1 );
+	int iVictim = hParams.Get( 2 );
+	TFDamageInfo tfInfo =  TFDamageInfo( hParams.GetAddress( 3 ) );
+
+	CheckOnHitCustomCond( iVictim, iWeapon, tfInfo );
+
+	return MRES_Handled;
+}
+
+void CheckOnHitCustomCond( int iVictim, int iWeapon, TFDamageInfo tfInfo ) {
+	static char szAttribute[64];
+	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_inflictcustom_onhit" ) == 0 )
+		return;
+
+	char szExplode[3][64];
+	ExplodeString( szAttribute, " ", szExplode, 3, sizeof( szAttribute ) );
+
+	int iCond = StringToInt( szExplode[0] );
+	float flDuration = StringToFloat( szExplode[1] );
+
+	//don't apply more toxin from toxin dot
+	if( iCond == TFCC_TOXIN && tfInfo.iFlags & DMG_PHYSGUN )
+		return;
+
+	AddCond( iVictim, iCond );
+	SetCondSourcePlayer( iVictim, iCond, tfInfo.iAttacker );
+	SetCondSourceWeapon( iVictim, iCond, iWeapon );
+	SetCondDuration( iVictim, iCond, flDuration, true );
+}
+
+void CheckOnKillCond( int iAttacker, int iWeapon ) {
+	static char szAttribute[64];
+	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_addcond_onkill" ) == 0 )
+		return;
+
+	char szExplode[3][64];
+	ExplodeString( szAttribute, " ", szExplode, 3, sizeof( szAttribute ) );
+
+	int iCond = StringToInt( szExplode[0] );
+	float flDuration = StringToFloat( szExplode[1] );
+
+	TF2_AddCondition( iAttacker, iCond, flDuration, iAttacker );
+}
+
 /*
 	TOXIN
 */
@@ -458,8 +530,7 @@ Action TickToxin( Handle hTimer, int iPlayer ) {
 		iDamageWeapon = 0;
 	
 	//todo: prevent this from applying more toxin
-	SDKHooks_TakeDamage( iPlayer, iDamagePlayer, iDamagePlayer, TOXIN_DAMAGE, DMG_SLASH, iDamageWeapon );
-
+	SDKHooks_TakeDamage( iPlayer, iDamagePlayer, iDamagePlayer, TOXIN_DAMAGE, DMG_GENERIC | DMG_PHYSGUN, iDamageWeapon, NULL_VECTOR, NULL_VECTOR, false );
 	
 	ePlayerConds[iPlayer][TFCC_TOXIN].hTick = CreateTimer( MinFloat( GetCondDuration( iPlayer, TFCC_TOXIN ), TOXIN_FREQUENCY ), TickToxin, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
 	
@@ -502,29 +573,6 @@ void ToxinTakeDamage( TFDamageInfo tfInfo ) {
 	
 	if( HasCond( iAttacker, TFCC_TOXINPATIENT ) ) {
 		tfInfo.iCritType = CT_MINI;
-	}
-}
-
-void CheckApplyToxin( int iTarget, TFDamageInfo tfInfo ) {
-	int iAttacker = tfInfo.iAttacker;
-	int iWeapon = tfInfo.iWeapon;
-
-	if( !IsValidPlayer(iAttacker) )
-		return;
-
-	float flAttrib = AttribHookFloat( 0.0, iWeapon, "custom_onhit_toxin" );
-	if( flAttrib == 0.0 )
-		return;
-
-	if( tfInfo.flDamage > 0.0 ) {
-		AddCond( iTarget, TFCC_TOXIN );
-
-		float flCurrentDuration = GetCondDuration( iTarget, TFCC_TOXIN );
-		float flNewDuration = MinFloat( flCurrentDuration + flAttrib, 10.0 );
-
-		SetCondDuration( iTarget, TFCC_TOXIN, flNewDuration );
-		SetCondSourcePlayer( iTarget, TFCC_TOXIN, iAttacker );
-		SetCondSourceWeapon( iTarget, TFCC_TOXIN, iWeapon );
 	}
 }
 
@@ -885,10 +933,6 @@ public void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo ) {
 		AngelShieldTakeDamagePost( iTarget );
 	if( HasCond( iTarget, TFCC_ANGELINVULN ) )
 		AngelInvulnTakeDamagePost( iTarget );
-}
-public void OnTakeDamagePostTF( int iTarget, Address aTakeDamageInfo ) {
-	TFDamageInfo tfInfo = TFDamageInfo( aTakeDamageInfo );
-	CheckApplyToxin( iTarget, tfInfo );
 }
 
 /*
