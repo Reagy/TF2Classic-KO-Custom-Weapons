@@ -92,8 +92,42 @@ custom_sentry_turnspeed (globally checked):
 	values (use value_is_percentage):
 		any number
 	
+	
+custom_medigun_type (globally checked):
+	used exclusively to activate the custom behavior of mediguns
+	not generally very useful
+	
+	values (use value_is_additive):
+		0: none
+		1: guardian angel
+		2: bio waste pump
+		3: totenwerfer
+		4: oathbreaker
 		
-custom_customcond_onhit (checked against weapon):
+custom_medibeamtype (globally checked):
+	sets the particle effect used by the mediguns
+	defaults to 0 when unspecified
+	
+	values (use value_is_additive):
+		0: stock medibeam
+		1: kritzkrieg
+		2: overhealer
+		3: bio waste pump
+		
+custom_maximum_overheal (globally checked):
+	affects the maximum amount of overheal that the medigun can dispense
+	when multiple medics heal the same target the highest value is used
+	
+	values (value_is_percentage):
+		any number
+	
+custom_maximum_overheal_self (globally checked):
+	multiplies the maximum overheal of the owner
+	
+	values (value_is_percentage):
+		any number
+		
+custom_inflictcustom_onhit (checked against weapon):
 	adds a plugin condition to victim on hit
 	formatted as "<condition id> <duration>" e.g. "5 2.0"
 	
@@ -102,6 +136,7 @@ custom_customcond_onhit (checked against weapon):
 		1: Toxin
 			Deals 2 damage every half second
 			Reduces all healing by 50%
+			Duration unaffected by mediguns
 
 custom_addcond_onkill (checked against weapon):
 	adds a vanilla condition to the attacker on kill
