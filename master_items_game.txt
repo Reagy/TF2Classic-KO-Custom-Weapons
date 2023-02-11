@@ -6444,6 +6444,7 @@ Modified by: 'Reagy'"
 //-------------------------------------
 //-------------------------------------
 // V5.3.4r1 Turned into MannChop
+// V5.6 Given backstab on disguise, silent cloak, massively reduced damage and melee range
 		"6996"
 		{
 			"name"						"TF_WEAPON_ALLFIST_SPY"
@@ -6455,7 +6456,11 @@ Modified by: 'Reagy'"
 //			"item_class"				"tf_weapon_fists"
 			"item_type_name"			"#TF_Weapon_Fists"
 			"item_name"					"MannChop"
-			"item_description"			"For when discretion is advised...
+			"item_description"			"Reduced melee range
+
+Silent Assassin: Disguise is kept on attack
+
+For when discretion is advised...
   
 Model by: 'heinous' 'Zxo Pink' 'The Winglet'
 Weapon by: 'Reagy'"
@@ -6478,18 +6483,40 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"
 			{
-				"min_viewmodel_offset"		"10 0 -7"
+				"min_viewmodel_offset"					"10 0 -7"
+				"melee range multiplier"				"0.55"							
+				"melee bounds multiplier"				"0.55"					
+			}
+			"attributes"
+			{
+			    "provide on active"
+				{
+					"attribute_class"		"provide_on_active"
+					"value"					"1"
+				}
+				"SET BONUS: quiet unstealth"
+				{
+					"attribute_class"		"set_quiet_unstealth"
+					"value" 				"1"
+				}
+				"keep disguise KNIFE"
+				{
+					"attribute_class"		"set_keep_disguise"
+					"value" 				"1"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"		"mult_postfiredelay"
+					"value" 				"1.15"
+				}
+				"damage penalty"
+				{
+					"attribute_class"		"mult_dmg"
+					"value" 				"0.25"
+				}
 			}
 			"visuals"
 			{
-				"animation_replacement"
-				{
-					"ACT_VM_IDLE"		"ACT_FISTS_VM_IDLE"
-					"ACT_VM_HITLEFT"	"ACT_FISTS_VM_HITLEFT"
-					"ACT_VM_HITRIGHT"	"ACT_FISTS_VM_HITRIGHT"
-					"ACT_VM_SWINGHARD"	"ACT_FISTS_VM_SWINGHARD"
-					"ACT_VM_DRAW"		"ACT_FISTS_VM_DRAW"
-				}
 				"styles"
 				{
 					"0"
@@ -7952,6 +7979,7 @@ Weapon by: 'Reagy'"
 			"item_type_name"			"Jar of Soldier Ants"
 			"item_description"			"Ammo pickups do not give ammo
 Recharges over time
+
 Ant Assist: This item can 'blast jump', no damage is taken
 
 Mean little buggers these are
@@ -8231,7 +8259,9 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Battle Axe"
 			"item_type_name"			"Axe"
-			"item_description"			"Demoknight Melee: this weapon has slower deploy and holster times
+			"item_description"			"
+Demoknight Melee: this weapon has slower deploy and holster times
+
 Striker's Wrath: Gain mini-crits on hit for a second
 
 This ain't your woodcutters axe boyo
@@ -8354,7 +8384,8 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Laika III"
 			"item_type_name"			"Laser Cannon"
-			"item_description"			"Soviet Prototype: This weapon fires a large laser beam that causes violent burns
+			"item_description"			"
+Soviet Prototype: This weapon fires a large laser beam that causes violent burns
 
 What weird weapon! Heavy likes to cook bears with this.
 
@@ -8764,7 +8795,8 @@ Weapon by: 'Reagy'"
 			"item_iconname"				"m4_soldier"
 			"item_type_name"			"Assault Rifle"
 			"item_name"					"Fortunate Son"
-			"item_description"			"Some folks are born made to wave the flag
+			"item_description"			"
+Some folks are born made to wave the flag
 
 Model from: Open Fortress - openfortress.fun
 Weapon by: 'Reagy'"
@@ -9398,6 +9430,8 @@ Wearable by: 'Reagy'"
 // V5.3.4r1 Adjusted damage resistance to 65% as robo no longer applies 20%, reduced medic healing by 100% when active
 // V5.3.7 Damage resistance now 50% (previously 35%), movement penalty lowered to 55%, +3hp/s health regen when active
 // V5.4 Added crit resistance and also now is almost (literally) immovable by knockback and airblast
+// V5.6 Increased HP regen + health bonus when active, Tank Duty has more effective HP than this and can deal damage, wat
+// 		- Yes knife can still instantly kill from backstab
 //--------------------------
 //--------------------------
 		"7052"		
@@ -9411,7 +9445,8 @@ Wearable by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Slightly Immovable W.A.L.L"
 			"item_type_name"			"SWAT Shield"
-			"item_description"			"On deploy 50% damage resistance.
+			"item_description"			"
+Bulwark: On deploy 50% general damage resistance, improved crit and airblast resistance.
 
 Only Heavy can use such an outrageously heavy thing...
 
@@ -9446,22 +9481,32 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"provide_on_active"
 					"value" 			"1"
 				}
+				"boots falling stomp"
+				{
+					"attribute_class"	"boots_falling_stomp"
+					"value" 			"1"
+				}
+				"max health additive bonus"											
+				{
+					"attribute_class"	"add_maxhealth"
+					"value"				"200"
+				}
 				"damage bonus hidden"
 				{
 					"attribute_class"	"mult_dmgtaken"
 					"value"				"0.5"
 				}
-				"damage force reduction"
+				"damage force reduction HIDDEN"
 				{
 					"attribute_class"	"damage_force_reduction"
 					"value"				"0.05"
 				}
-				"airblast vulnerability multiplier"
+				"airblast vulnerability multiplier HIDDEN"
 				{
 					"attribute_class"	"airblast_vulnerability_multiplier"
 					"value"				"0.05"
 				}
-				"dmg taken from crit reduced"											
+				"dmg taken from crit reduced HIDDEN"											
 				{
 					"attribute_class"	"mult_dmgtaken_from_crit"
 					"value"				"0.333333333333333333333"
@@ -9469,28 +9514,12 @@ Weapon by: 'Reagy'"
 				"health regen"											
 				{
 					"attribute_class"	"add_health_regen"
-					"value"				"3"
-				}
-				// Magical shit to make it 100% on description
-				"aiming movespeed decreased"
-				{
-					"attribute_class"	"weapon_stattrak_module_scale"
-					"value"				"0.6"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"0.0"
+					"value"				"15"
 				}
 				"move speed penalty"
 				{
-					"attribute_class"	"weapon_stattrak_module_scale"
-					"value"				"0.45"
-				}
-				"weapon_stattrak_module_scale"
-				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.6"
+					"value"				"0.45"
 				}
 				"kill eater"
 				{
@@ -9521,6 +9550,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mod_armor_footsteps"
 					"value"				"2"
+				}				
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
 				}				
 			}
 			"visuals"
@@ -9700,7 +9734,7 @@ Weapon by: 'Reagy'"
 			"item_class"				"tf_weapon_rocketlauncher"
 			"item_description"			"Flare Gun, but primary. Shoots flares fast and crits flaming targets.
 
-			Mmphh mmph mppph!
+Mmphh mmph mppph!
 
 Model by: 'CoBalt'
 Weapon by: 'Zadrave'"
@@ -9770,6 +9804,7 @@ Weapon by: 'Zadrave'"
 // V5.3.4r1 Adjusted rate of fire, damage profile, bullet spread, movement speed when spunup, spinup delay and total ammo pool (due to lower rof it eats ammo less quickly). Removed health penalty and added +25hp bonus. Added an extra 2 bullets to each shot, added movement speed penalty when equipped (its heavy afterall)
 // V5.3.5 Herewegoagain, another balance change, should reduce the fps hit as well when multiple heavies are using it, keeps similar/same constant firing time and ttk
 // V5.3.8 Added negative z force attribute, anything in the air will be forced down to the ground
+// V5.6 Tweaked movement speed, its still slow but not painfully anymore
 //-------------------------------------
 //-------------------------------------		
 		"7058"
@@ -9784,7 +9819,8 @@ Weapon by: 'Zadrave'"
 			"propername"				"1"
 			"item_name"					"Leviathan"
 			"item_type_name"			"Repurposed Aircraft Cannon"
-			"item_description"			"CIWS Engage: Knocks airborne enemies out of the air
+			"item_description"			"
+CIWS Engage: Knocks airborne enemies out of the air
 
 Heavy found crashed jet
 Gun still good
@@ -9836,7 +9872,7 @@ Weapon by: 'Reagy'"
 				"aiming movespeed decreased"
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"0.3"
+					"value"				"0.4"
 				}
 				"single wep deploy time increased"												
 				{
@@ -9868,6 +9904,11 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mod_no_dmg_falloff"
 					"value"				"1"
 				}	
+				"boots falling stomp HIDDEN"
+				{
+					"attribute_class"	"boots_falling_stomp"
+					"value" 			"1"
+				}
 			}
 			"visuals"																		
 			{
@@ -9944,7 +9985,8 @@ Weapon by: 'Reagy'"
 			"propername"				"0"												
 			"item_name"					"SPAS-12" 									
 			"item_type_name"			"#TF_Weapon_Shotgun" 												
-			"item_description"			"Found this in the Office Complex
+			"item_description"			"
+Found this in the Office Complex
 Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
@@ -9989,7 +10031,8 @@ Weapon by: 'Reagy'"
 			"propername"				"0"												
 			"item_name"					"SPAS-12" 									
 			"item_type_name"			"#TF_Weapon_Shotgun" 												
-			"item_description"			"Found this in the Office Complex
+			"item_description"			"
+Found this in the Office Complex
 Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
@@ -10034,7 +10077,8 @@ Weapon by: 'Reagy'"
 			"propername"				"0"												
 			"item_name"					"SPAS-12" 									
 			"item_type_name"			"#TF_Weapon_Shotgun" 												
-			"item_description"			"Found this in the Office Complex
+			"item_description"			"
+Found this in the Office Complex
 Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
@@ -10079,7 +10123,8 @@ Weapon by: 'Reagy'"
 			"propername"				"0"												
 			"item_name"					"SPAS-12" 									
 			"item_type_name"			"#TF_Weapon_Shotgun" 												
-			"item_description"			"Found this in the Office Complex
+			"item_description"			"
+Found this in the Office Complex
 Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
@@ -10127,7 +10172,8 @@ Weapon by: 'Reagy'"
 			"propername"				"0"												
 			"item_name"					"SPAS-12" 									
 			"item_type_name"			"#TF_Weapon_Shotgun" 												
-			"item_description"			"Found this in the Office Complex
+			"item_description"			"
+Found this in the Office Complex
 Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
@@ -10173,7 +10219,8 @@ Weapon by: 'Reagy'"
 			"propername"				"0"												
 			"item_name"					"SPAS-12" 									
 			"item_type_name"			"#TF_Weapon_Shotgun" 												
-			"item_description"			"Found this in the Office Complex
+			"item_description"			"
+Found this in the Office Complex
 Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
@@ -10218,7 +10265,8 @@ Weapon by: 'Reagy'"
 			"propername"				"0"												
 			"item_name"					"SPAS-12" 									
 			"item_type_name"			"#TF_Weapon_Shotgun" 												
-			"item_description"			"Found this in the Office Complex
+			"item_description"			"
+Found this in the Office Complex
 Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
@@ -10265,7 +10313,8 @@ Weapon by: 'Reagy'"
 			"propername"				"0"												
 			"item_name"					"SPAS-12" 									
 			"item_type_name"			"#TF_Weapon_Shotgun" 												
-			"item_description"			"Found this in the Office Complex
+			"item_description"			"
+Found this in the Office Complex
 Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
@@ -10634,7 +10683,9 @@ Wearable by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Marauder's Axe"
 			"item_type_name"			"Demonic Axe"
-			"item_description"			"Demoknight Melee: this weapon has slower deploy and holster times
+			"item_description"			"
+Demoknight Melee: this weapon has slower deploy and holster times
+
 Axe of the Marauder: This weapon has an extended range
 Deals increased damage to burning players
 
@@ -10740,7 +10791,8 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Crucible Long Sword"
 			"item_type_name"			"Demonic Sword"
-			"item_description"			"blade of the Slayer: this weapon has massive range
+			"item_description"			"
+Blade of the Slayer: this weapon has massive range
 Deals huge damage to burning players
 
 We will send unto them... only you.
@@ -11183,6 +11235,7 @@ Wearable by: 'Reagy'"
 			"item_name"					"Oppressive Force"
 			"item_type_name"			"Heavy Machine Gun"
 			"item_description"			"This weapon fires single, powerful bullets per shot
+
 Ha! now this is a weapon made for Heavy!
   
 Model by: 'Snood'
@@ -11608,7 +11661,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"fal"
 			"item_type_name"			"Battle Rifle"
 			"item_name"					"Right Arm Of the Free World"
-			"item_description"			"Go play your pinko chess game with the Devil, Commie!
+			"item_description"			"
+Go play your pinko chess game with the Devil, Commie!
 
 Model by: 'Nanodesu64' 'lolripk'
 Weapon by: 'Reagy'"
@@ -11801,8 +11855,10 @@ Weapon by: 'Reagy'"
 			"item_iconname"				"fal"
 			"item_type_name"			"Battle Rifle"
 			"item_name"					"Right Arm Of the Free World"
-			"item_description"			"Illicit Hardware: this weapon has a higher fire rate and reduced damage
-...Don't tell Soldier about how I got this...!
+			"item_description"			"
+Illicit Hardware: This weapon has a higher fire rate and reduced damage
+
+A marvel of not-german engineering... don't tell Soldier about how I got this!
 
 Model by: 'Nanodesu64' 'lolripk'
 Weapon by: 'Reagy'"
@@ -11899,7 +11955,7 @@ Weapon by: 'Reagy'"
 			"item_description"			"100% critical hit vs overhealed players
 This weapon has no damage falloff
 
-Son, this gun that won the west..
+Son, this the gun that won the west..
 
 Model by: 'Batandy'
 Animations by: 'Domivu'
@@ -12837,57 +12893,54 @@ Weapon by: 'Majro'"
 				"meter_label"	"Ball" //Oh how I wish this worked.
 				"min_viewmodel_offset"		"10 0 -7"
 			}
-
-						"attributes" {
-
-
-					"tranq on hit"
-					{
+			"attributes" {
+				"tranq on hit"
+				{
 					"attribute_class"	"mod_tranq_onhit"
 					"value"				"1.5"
-					}
+				}
 					
-					"view punch on hit"
-					{
+				"view punch on hit"
+				{
 					"attribute_class"	"add_viewpunch_onhit"
 					"value"				"1.5"
-					}
+				}
 					
-					"hidden secondary max ammo penalty"				//"damage penalty"
-					{
+				"hidden secondary max ammo penalty"				//"damage penalty"
+				{
 					"attribute_class"	"mult_dmg"
 					"value"				"0.1665"
-					}
+				}
 					
-					"hidden secondary max ammo penalty"				//"Blast radius decreased"
-					{
+				"hidden secondary max ammo penalty"				//"Blast radius decreased"
+				{
 					"attribute_class"	"mult_explosion_radius"
 					"value"				"0.1"
-					}
+				}
 					
-					"hidden secondary max ammo penalty"				//"self dmg push force decreased"
-					{
+				"hidden secondary max ammo penalty"				//"self dmg push force decreased"
+				{
 					"attribute_class"	"mult_dmgself_push_force"
 					"value"				"0"
-					}
+				}
 					
-					"elevate quality"				//"no self blast dmg"
-					{
+				"elevate quality"				//"no self blast dmg"
+				{
 					"attribute_class"	"no_self_blast_dmg"
 					"value"				"1"
-					}
+				}
 					
-					"custom projectile model"
-					{
+				"custom projectile model"
+				{
 					"attribute_class" "custom_projectile_model"
 					"value"			"models\weapons\w_models\w_cricket_ball.mdl"
-					}
-					"crit mod disabled"
+				}
+				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
-				}
+			}
 			"visuals"
 			{
 				"sound_deploy"			"Weapon_Bat.Draw"
@@ -12953,7 +13006,7 @@ Weapon by: 'Majro'"
 					"value"				"200"
 				}
 				"strange restriction type 1"
-								{
+				{
 					"attribute_class"	"apply_z_velocity_on_damage"
 					"value"				"275"
 				}
@@ -12995,7 +13048,6 @@ Weapon by: 'Majro'"
 			"item_name"					"BL4STIN-A1000"
 			"item_type_name"			"Laser Gun"
 			"item_description"			"Projectiles travel in an arc
-
 
 Space weapons were just not made with gravity in mind.
 
@@ -13226,7 +13278,8 @@ Repurposed by: 'Majro'"
 			"propername"				"1"
 			"item_name"					"Magic Wand" //I prefer the name "Weldkit" though.
 			"item_type_name"			"Welding Kit"
-			"item_description"			"Blood Boil: This weapon mini-crits bleeding players
+			"item_description"			"
+Blood Boil: This weapon mini-crits bleeding players
 
 Model by: 'Svdl'
 Weapon by: 'Majro'"
@@ -13303,7 +13356,6 @@ Weapon by: 'Majro'"
 			"item_name"					"Glacial Gouger"
 			"item_type_name"			"Ice Axe"
 			"item_description"			"
-
 Model by: 'Ona', 'Flubbman' and 'Sedimentaryocks'
 Weapon by: 'Majro'"
 			"item_logname"				"polar_iceaxe"
@@ -13550,7 +13602,8 @@ Weapon by: 'Majro'"
 			"propername"				"0"
 			"item_name"					"Searing Skewer"
 			"item_type_name"			"Flare Crossbow"
-			"item_description"			"Piercing Ignition: This weapon can set other Pyros on fire.
+			"item_description"			"
+Piercing Ignition: This weapon can set other Pyros on fire.
 
 Old warfare methods stand the test of time, this is no exception.
 
@@ -13815,7 +13868,8 @@ Edited by: 'Reagy'"
 			"item_class"                "tf_weapon_fists"
 			"item_type_name"			"#TF_Weapon_Fists"
 			"show_in_armory"            "1"
-			"item_description"			"Utility weapon: Cannot give minicrit boosts
+			"item_description"			"
+Utility weapon: Cannot give minicrit boosts
 Deals 'normal' melee damage
 
 Lad, I used to box. Could have gone pro if I didn't go to Oxford and get a masters in economics.
@@ -13873,7 +13927,8 @@ Edited by: 'Reagy'"
 			"item_class"                "tf_weapon_wrench"
 			"item_type_name"			"#TF_Weapon_Wrench"
 			"show_in_armory"            "1"
-			"item_description"			"Utility Weapon: Cannot give minicrit boosts
+			"item_description"			"
+Utility Weapon: Cannot give minicrit boosts
 Can repair and speed up building construction, but not add construction
 
 Is this what turns it off and on again?
@@ -13920,7 +13975,8 @@ Edited by: 'Reagy'"
 			"prefab"                    "weapon_umbrella"
 			"item_type_name"			"Whip"
 			"show_in_armory"            "1"
-			"item_description"			"Manual Boost (Mouse2): Marked for Death
+			"item_description"			"
+Manual Boost (Mouse2): Marked for Death
 Manual Boost applies to enemies only
 
 Get to it lads!
@@ -14029,7 +14085,8 @@ I know a quite rotund fellow who would have an interest in this."
 			"prefab"                    "weapon_umbrella"
 			"item_type_name"			"Money"
 			"show_in_armory"            "1"
-			"item_description"			"Manual Boost (Mouse2): Give friendly 5s of Crit Boost
+			"item_description"			"
+Manual Boost (Mouse2): Give friendly 5s of Crit Boost
 
 Get some wonga.
 
@@ -14139,7 +14196,8 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Elimination Imperative"
 			"item_type_name"			"Magnum Pistol"
-			"item_description"			"Kicks like a mule, kills my enemies harder!
+			"item_description"			"
+Kicks like a mule, kills my enemies harder!
 
 Model by: 'DeRosaJ'
 Weapon by: 'The One Of Wonders'"
@@ -14876,7 +14934,9 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_type_name"			"#TF_Weapon_Pistol"
 //			"item_quality"				"vintage"
 			"item_name"				"Combat Pistol"
-			"item_description"			"Fight Harder: on hit, gain mini-crits for 2 seconds.
+			"item_description"			"
+Fight Harder: on hit, gain mini-crits for 2 seconds.
+
 A memento from a year long past... it still fires true, probably waiting for you.
 
 Model from: Open Fortress - openfortress.fun
@@ -14938,7 +14998,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_name"				"Combat Pistol (Melee)"
 			"item_type_name"			"...Pistol?"
 			"image_inventory"			"backpack/weapons/w_models/w_walther_p38"
-			"item_description"			"Fight Harder: on hit, gain mini-crits for 3 seconds.
+			"item_description"			"
+Fight Harder: on hit, gain mini-crits for 3 seconds.
 
 Watch these pistol whips knucklehead! they come with extra hurt!
 
@@ -15213,7 +15274,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_name"					"Pilot Light"										
 			"item_type_name"			"#TF_Weapon_FlareGun"
-			"item_description"			"Fuel to the fire: Deals double damage to burning players
+			"item_description"			"
+Fuel to the fire: Deals double damage to burning players
 
 Fires straight-moving incendiary shells that 
 explode on contact with any object
@@ -15449,7 +15511,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_iconname"				"silencer"
 			"item_type_name"			"#TF_WEAPON_SCATTERGUN"
 			"item_name"				"Silencer"
-			"item_description"			"On Hit: Gain a protective aura for 3 seconds
+			"item_description"			"
+On Hit: Gain a protective aura for 3 seconds
 
 Shhh! I've got somethin' to say - so shut up before this gun shuts you up!
 
@@ -15816,7 +15879,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_name"					"VogelJager"           // If you translate the name in english it means Bird Hunter which is the opposite of medic's interest in his pet Archimedes :p
 			"item_type_name"			"#TF_Weapon_Shotgun"
-			"item_description"			"Medical Malpractice: This weapon fires slugs that mark enemies for death for 3 seconds.
+			"item_description"			"
+Medical Malpractice: This weapon fires slugs that mark enemies for death for 3 seconds.
 
 Hmmm it seems here that you have lead poising on you're chest - Let me make zhat worse for you!
 
@@ -16205,7 +16269,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_type_name"			"Lever-Action Rifle"
 			"item_description"			"This weapon deals reduced headshot damage
 
-Sometimes i'm able to spin flip the lever on the bugger though - But I just can't get it right.
+Sometimes I'm able to spin the lever on the bugger... but I just can't get it right.
 
 Model by: 'Svdl'
 Animations by: 'Sparkwire'
@@ -17946,7 +18010,8 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_type_name"			"Carbine"
 			"item_quality"				"rarity3"
 			"item_name"					"Patriot"
-			"item_description"			"Defective: Jams after every sixth shot
+			"item_description"			"
+Defective: Jams after every sixth shot
 
 What a thrill...
 
@@ -18259,7 +18324,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Marshall's Mortar"
 			"item_type_name"			"Mortar"
-			"item_description"			"Aim and Fire: Holding the fire button will increase your rocket's damage.
+			"item_description"			"
+Aim and Fire: Holding the fire button will increase your rocket's damage.
 
 Do not use in indoor spaces to avoid self-destruction.
 
@@ -18548,7 +18614,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Tank Duty"
 			"item_type_name"			"Special Equipment"
-			"item_description"			"Unstoppable Force: This item grants a special minigun primary weapon.
+			"item_description"			"
+Unstoppable Force: This item grants a special minigun primary weapon.
 You have 30% passive damage resistance with this item equipped.
 
 You must not know who I am, I will tell you who I am.
@@ -18781,6 +18848,7 @@ Weapon by: 'Reagy'"
 			"item_type_name"			"Rock"
 			"item_description"			"Ammo pickups do not give ammo
 Recharges over time
+
 Sacred Spirit: This item can 'blast jump', no damage is taken
 
 Throwing rocks at people, its not a stone!
@@ -19327,7 +19395,8 @@ Weapon from: Renaissance Revival"
 			"item_quality"				"rarity2"
 			"item_name"					"Solar Flare"
 			"item_type_name"			"Energy Fireball Launcher"
-			"item_description"			"Reach for the Stars: this weapon can be used to blast jump
+			"item_description"			"
+Reach for the Stars: this weapon can be used to blast jump
 This weapon deals critical damage to blast-jumping enemies
 
 Pyro reassures you that it's just a bad sunburn.
@@ -19462,7 +19531,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Buzz-killing Machine"
 			"item_type_name"			"Circular Buzzsaw"
-			"item_description"			"Cut down to size: Deals mini-crit damage against overhealed players 
+			"item_description"			"
+Cut down to size: Deals mini-crit damage against overhealed players 
 
 Sometimes the best way to do hard work is to just kill.
 
@@ -19536,7 +19606,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Shaolin Sprayer"
 			"item_type_name"			"Improvised Flamethrower"
-			"item_description"			"Volatile Fire: This weapon has a strong burst of initial damage
+			"item_description"			"
+Volatile Fire: This weapon has a strong burst of initial damage
 Flames can set other pyros on fire.
 
 It's surprisingly deadlier than it looks.
@@ -20116,7 +20187,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Slam-Fire"
 			"item_type_name"			"Shotgun"
-			"item_description"			"Puff and Slam: 33% damage bonus vs burning players
+			"item_description"			"
+Puff and Slam: 33% damage bonus vs burning players
 
 You just gotta hold the trigger and let it go, you know?
 
@@ -20499,12 +20571,10 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Broken Mann's Legacy"
 			"item_type_name"			"Accursed Shotgun"
-			"item_description"			"Curse of the Broken Mann:
-
+			"item_description"			"
+Curse of the Broken Mann:
 This weapon has a higher random critical hit chance 
-
 You deal increased close range damage but die instantly to any mini-crit or crit damage
-
 Your maximum metal count is reduced by 100.
 
 Once found in an english river, powerful feelings of atonement manifest from the weapon.
@@ -20887,7 +20957,8 @@ Weapon by: 'The One Of Wonders'"
 
 			"item_type_name"			"Revolver"
 			"item_name"				    "Your Darkest Nightmare"
-			"item_description"			"Power of Spy-Tech: On hit, deal increased damage for 1 second.
+			"item_description"			"
+Power of Spy-Tech: On hit, deal increased damage for 1 second.
 Deals crits against disguised enemies.
 
 Close combat is ugly business, especially when it involves a big gun.
@@ -20970,7 +21041,8 @@ Weapon by: 'The One Of Wonders'"
 
 			"item_type_name"			"Revolver"
 			"item_name"				    "High Noon"
-			"item_description"			"Desperado: This weapon mini-crits Texas Star and other High Noon users.
+			"item_description"			"
+Desperado: This weapon mini-crits Texas Star and other High Noon users.
 Any coward who goes invisible to escape will receive critical damage from this weapon.
 
 Speed is key.
@@ -21332,7 +21404,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Blood Donor"
 			"item_type_name"			"Giant bio-mechanical augmentation"
-			"item_description"			"Life Steal: on hit, gain damage resistance for a second
+			"item_description"			"
+Life Steal: On hit, gain damage resistance for a second
 
 They told me not to dabble into such mad science, but where's the fun in that!
 
@@ -21424,7 +21497,8 @@ Weapon by 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Second Amendment"
 			"item_type_name"			"Flintlock Musket"
-			"item_description"			"Air Superiority: weapon deploys much faster while rocket jumping
+			"item_description"			"
+Air Superiority: Weapon deploys much faster while rocket jumping
 
 This weapon has one shot at any given time, ammo regenerates after 3 seconds.
 
@@ -21531,6 +21605,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_type_name"			"Accursed throwing knife"
 			"item_description"			"Ammo pickups do not give ammo
 Recharges over time
+
 Cursed of the Shattered Empress: You die instantly to any damage taken while this weapon is active
 
 Cannot use sapper until thrown
@@ -21780,7 +21855,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"EM Eliminator"
 			"item_type_name"			"Electro-magnetic Cannon"
-			"item_description"			"Electrifying Payload: This weapon fires a powerful spread of electric bolts with short range.
+			"item_description"			"
+Electrifying Payload: This weapon fires a powerful spread of electric bolts with short range.
 
 Didn't your papa tell you not to play with magnets?
 
@@ -21898,10 +21974,9 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Beatophone"
 			"item_type_name"			"Gramophone...?"
-			"item_description"			"Curse of the Noise-maker: This item plays music while holding the secondary fire button!
-
+			"item_description"			"
+Curse of the Noise-maker: This item plays music while holding the secondary fire button!
 Firing this weapon produces a stream of electricity.
-
 Any electric shocks you deliver will mark you for death.
 
 Embrace the ultimate power that is electrically-charged music.
@@ -22029,7 +22104,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Van De Graaf Wraff"
 			"item_type_name"			"Tesla-Energy Device"
-			"item_description"			"Lethal Discharge: This weapon fires an extremely powerful short-range spread of electricity.
+			"item_description"			"
+Lethal Discharge: This weapon fires an extremely powerful short-range spread of electricity.
 
 Heavy will now show you the power of electric shocks!
 
@@ -22786,7 +22862,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Cut Above"
 			"item_type_name"			"Short Sword"
-			"item_description"			"Cut them up and chop them down: on hit, gain mini-crits for a second 
+			"item_description"			"
+Cut them up and chop them down: On hit, gain mini-crits for a second 
 
 It may not be useful as a saw.. but oh boy does it kill wonderfully!
 
@@ -23172,7 +23249,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Malicious Multi-Tool"
 			"item_type_name"			"Multi-Purpose Shotgun"
-			"item_description"			"Two dark sides to a Coin: This weapon fires a wide spread of pellets with short range.
+			"item_description"			"
+Two dark sides to a Coin: This weapon fires a wide spread of pellets with short range.
 
 Enemies damage by this weapon will take critical damage from the Malicious Multi-Tool melee weapon.
 
@@ -23276,7 +23354,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Malicious Multi-Tool"
 			"item_type_name"			"Multi-Purpose Shotgun"
-			"item_description"			"Two dark sides to a Coin: This weapon deals 35% increased damage to burning players.
+			"item_description"			"
+Two dark sides to a Coin: This weapon deals 35% increased damage to burning players.
 
 Enemies damaged by the Malicous Multi-Tool primary weapon will take critical damage from this weapon.
 
@@ -24139,7 +24218,9 @@ Sentry replacement by: 'rotzloeffel' 'Gadget'"
 			"propername"				"1"
 			"item_name"					"Crown Crusher"
 			"item_type_name"			"Warhammer"
-			"item_description"			"Demoknight Melee: this weapon has slower deploy and holster times
+			"item_description"			"
+Demoknight Melee: this weapon has slower deploy and holster times
+
 Heavy Impact: enemies with damage resistance conditions take mini-crit damage
 Does not apply to passive damage resistance 
 
@@ -24639,8 +24720,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Heart Stopper"
 			"item_type_name"			"Portable Defibrillator"
-			"item_description"			"Special Hand in Medicine: This weapon drains 25% ubercharge on hit from the user
-
+			"item_description"			"
+Special Hand in Medicine: This weapon drains 25% ubercharge on hit from the user.
 Higher Ubercharge percentage increases damage dealt.
 
 Just because it can save your life doesn't mean it can't KILL YOU.
@@ -24734,7 +24815,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Booster Shot"
 			"item_type_name"			"Medi Gun"
-			"item_description"			"Overcharge: Your health rapidly decays while this weapon is active
+			"item_description"			"
+Overcharge: Your health rapidly decays while this weapon is active.
 This weapon cannot gain Ubercharge at all.
 
 This is a sacrifice I'm willing to take! I've done worse things anyway haha-
@@ -25210,7 +25292,9 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Landsknecht's Long-knife"
 			"item_type_name"			"Large Messer"
-			"item_description"			"Demoknight Melee: this weapon has slower deploy and holster times
+			"item_description"			"
+Demoknight Melee: this weapon has slower deploy and holster times
+
 Now this is a real knife, boyo! Let me show you it's features up close!
   
 Model by: 'Barno'
@@ -25304,7 +25388,9 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Kingslayer"
 			"item_type_name"			"Claymore"
-			"item_description"			"Demoknight Melee: this weapon has slower deploy and holster times
+			"item_description"			"
+Demoknight Melee: this weapon has slower deploy and holster times
+
 Down with the king, chop off his head and put me in his seat instea- wait a minute!
   
 Model by: 'MrFunreal'
@@ -25394,6 +25480,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"L.A.W"
 			"item_type_name"			"Guided Missile Launcher"
 			"item_description"			"Alt-fire (Mouse2): Toggle user control of rockets!
+
 Upgraded tracking package: This weapon has improved rocket control, direct impacts have no damage fall-off
 
 Witness the beauty of a master at work.
@@ -25746,7 +25833,8 @@ Wearable by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Augmentation: Spy Hunter"
 			"item_type_name"			"Goggle Augmentation"
-			"item_description"			"Primary Perk: Your pistol is replaced with a Spy Blaster.
+			"item_description"			"
+Primary Perk: Your pistol is replaced with a Spy Blaster.
 Spy Blaster deals critical damage to disguised and cloaked spies.
 
 Model by: 'svdl'
@@ -25831,7 +25919,8 @@ Wearable by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Augmentation: Mann-Power"
 			"item_type_name"			"Arm Augmentation"
-			"item_description"			"Primary Perk: Replace your pistol with a Trench Shotgun
+			"item_description"			"
+Primary Perk: Replace your pistol with a Trench Shotgun
 
 Model by: 'BenH'
 Wearable Model by: 'Coolchou Zhao'
@@ -25962,7 +26051,8 @@ Wearable by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Conagher Classic"
 			"item_type_name"			"Experimental Coil Rifle"
-			"item_description"			"Conagher Special: Dealing damage to enemies repairs and upgrades your buildings 
+			"item_description"			"
+Conagher Special: Dealing damage to enemies repairs and upgrades your buildings 
 
 A family pride, going back to the glory days of my grandfather.
 
@@ -26242,7 +26332,8 @@ Sentry replacement by: 'Pyanodon'"
 			"item_quality"				"rarity2"
 			"item_name"					"Hydraulic Hammers"
 			"item_type_name"			"Hydraulic Gloves"
-			"item_description"			"Amplified Force: Enemies hit will be sent flying backwards.
+			"item_description"			"
+Amplified Force: Enemies hit will be sent flying backwards.
 
 I punch harder than strongest man in the world! 
 
@@ -26437,8 +26528,9 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Stainless Scorcher"
 			"item_type_name"			"Incendiary Shotgun"
-			"item_description"			"Heatsink: 50% damage penalty against burning players
-Weapon has limited range.
+			"item_description"			"Weapon has limited range.
+
+Heatsink: 50% damage penalty against burning players
 
 You just gotta hold the trigger and let it go, you know?
 
@@ -26657,7 +26749,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Trench Shank"
 			"item_type_name"			"#TF_Weapon_Knife"
-			"item_description"			"Double-Edged Blade: this weapons deals critical hits to enemies wielding the Trench Shank or Maggot Mutilator
+			"item_description"			"
+Double-Edged Blade: this weapons deals critical hits to enemies wielding the Trench Shank or Maggot Mutilator
 
 Broken bottles may be sharp, but this is sharper!
 
@@ -26747,7 +26840,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Maggot Mutilator"
 			"item_type_name"			"#TF_Weapon_Knife"
-			"item_description"			"Double-Edged Blade: this weapons deals critical hits to enemies wielding the Maggot Mutilator or Trench Shank
+			"item_description"			"
+Double-Edged Blade: this weapons deals critical hits to enemies wielding the Maggot Mutilator or Trench Shank
 
 No animal, man or magical monstrosity is strong enough to survive this knife, son!
 
@@ -26841,8 +26935,9 @@ Weapon by: 'The One Of Wonders'"
 			
 			"item_name"					"Lamplighter"
 			"item_type_name"			"Single Shot Disposable Pistol"
-			"item_description"			"Lucky Roll: Increased crit chance
-Civilian cannot handle firearms effectively
+			"item_description"			"Civilian cannot handle firearms effectively
+
+Lucky Roll: Increased crit chance
 
 Maybe if I use enough of them
 I might be able to sell them off
@@ -26908,12 +27003,13 @@ Weapon by: 'Reagy'"
 			"item_name"					"Traumahawk"
 			"item_type_name"			"Improvised Multi Tool"
 			"item_description"			"100% damage bonus vs buildings
-			Impostor Detection: crits vs disguised players
 
-			Fitting for some loose screws...
+Impostor Detection: Crits vs disguised players
 
-			Model By: 'spike nitros'
-			Weapon By: Colrot"
+Fitting for some loose screws...
+
+Model By: 'spike nitros'
+Weapon By: 'Colrot'"
 			"item_logname"				"sledgehammer"
 			"item_iconname"				"sledgehammer"
 			"image_inventory"			"backpack\weapons\c_axwrench\c_axwrench"
@@ -27325,7 +27421,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Rosemary"
 			"item_type_name"			"Scattergun"
-			"item_description"			"Critical Cripple: Deals critical damage to crit-boosted players
+			"item_description"			"
+Critical Cripple: Deals critical damage to crit-boosted players
 
 Don't you even think about it, you moron..!
 
@@ -27408,7 +27505,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Meatshot Eater"
 			"item_type_name"			"Shotgun"
-			"item_description"			"Well-Grilled: on hit, become immune to fire for 2 seconds
+			"item_description"			"
+Well-Grilled: on hit, become immune to fire for 2 seconds
 Deals 35% more damage to burning players
 
 Cooking on gas over here!
@@ -27496,7 +27594,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Un-Chained Fury"
 			"item_type_name"			"Bat"
-			"item_description"			"Smash Bat: on hit, gain mini-crits for a second and take a small amount of damage
+			"item_description"			"
+Smash Bat: On hit, gain mini-crits for a second and take a small amount of damage
 Weapon has a significantly higher random critical hit chance
 
 If I've got my eyes on you, let it be known you ain't walking home tonight.
@@ -28017,11 +28116,10 @@ Wearable by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Tale of Tragedy"
 			"item_type_name"			"Accursed Sword"
-			"item_description"			"Curse of the Dark Tale: 
+			"item_description"			"
+Curse of the Dark Tale: 
 On hitting an enemy, you are forced to use this weapon until you die.
-
 Sword pierces resistances and crits against overhealed players.
-
 Sword instantly kills burning players.
   
 Model by: 'Mnemosynaut, svdl'
@@ -28248,7 +28346,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Helper's Hammer"
 			"item_type_name"			"Sledgehammer"
-			"item_description"			"Technical Assistant: this weapon can boost construction speed and repair friendly buildings
+			"item_description"			"
+Technical Assistant: this weapon can boost construction speed and repair friendly buildings
 
 Well, I guess we owe that little building man a little something now and then...
 
@@ -28492,7 +28591,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Ammo'd-Up Australian"
 			"item_type_name"			"Special Equipment"
-			"item_description"			"Special modifications: You gain access to a modified SMG primary weapon
+			"item_description"			"
+Special modifications: You gain access to a modified SMG primary weapon
 
 You should've kept lying down, because now i'm gonna fill you full of holes.
 
@@ -28664,7 +28764,8 @@ Weapon by: 'The One Of Wonders'"
 
 			"item_name"				    "Number 29"
 			"item_type_name"			"Heavy Revolver"
-			"item_description"			"Do you feel lucky? well, do you???
+			"item_description"			"
+Do you feel lucky? well, do you???
 
 Model by: 'Ertz'
 Weapon by: 'The One Of Wonders'"
@@ -29407,7 +29508,7 @@ Weapon by: 'Colrot' and 'Mister Mann'"
 					"attribute_class"	"mult_postfiredelay"
 					"value" 			".30"
 				}
-						"damage force reduction"
+				"damage force reduction"
 				{
 					"attribute_class"	"damage_force_reduction"
 					"value"				"0.67"
@@ -29509,6 +29610,7 @@ Weapon by: 'Colrot' and 'Mister Mann'"
 			"item_name"					"Royal Flush"
 			"item_type_name"			"Deck of Cards"
 			"item_description"			"Civilian cannot throw cards effectively
+
 Lucky Roll: Increased crit chance
 
 Lets play a game... pick a card
@@ -29625,7 +29727,8 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 			"item_name"					"Rust Valley Relic"
 			"item_type_name"			"Machine Gun..?"
-			"item_description"			"Constructed from a long-dead mining facility...
+			"item_description"			"
+Constructed from a long-dead mining facility...
 
 Model by: 'Hau'
 Weapon by: 'The One Of Wonders'"
@@ -29928,8 +30031,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Aberrant Atrocity"
 			"item_type_name"			"Improvised Hybrid Assault Weapon"
-			"item_description"			"Duality of Death: Unscoped fire releases a full-auto spray of bullets
-
+			"item_description"			"
+Duality of Death: Unscoped fire releases a full-auto spray of bullets
 Zooming in fires higher-power precision shots that deal headshot damage
 
 Now I'm going to have to make a necklace out of you.
@@ -30350,9 +30453,9 @@ Questioned by: 'The One Of Wonders'"
 
 			"item_name"					"Gorey Gladiator"
 			"item_type_name"			"Suit of Armour"
-			"item_description"			"Gladiator's Wrath: Passive: Dealing damage grants mini-crits for one second.
+			"item_description"			"
+Gladiator's Wrath: Passive: Dealing damage grants mini-crits for one second.
 Primary fire: Nearby enemies will bleed for 5 seconds and grant you mini-crits.
-
 Gladiator's Wrath Primary fire has a 10 second cooldown.
 
 This weapon replaces your secondary weapon!
@@ -30482,7 +30585,8 @@ Weapon by 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Brute Basher"
 			"item_type_name"			"Spike Mace"
-			"item_description"			"Soldierknight Melee: this weapon has slower deploy and holster times
+			"item_description"			"
+Soldierknight Melee: This weapon has slower deploy and holster times
 
 - deranged screaming -
 
@@ -30584,9 +30688,9 @@ Weapon by: 'The One Of Wonders'"
 
 			"item_name"					"Centurion Command"
 			"item_type_name"			"Suit of Armour"
-			"item_description"			"Centurion's Might: Passive: Dealing damage marks enemies for death and gain damage resistance for 5 seconds.
+			"item_description"			"
+Centurion's Might: Passive: Dealing damage marks enemies for death and gain damage resistance for 5 seconds.
 Primary Fire: Mark nearby enemies for death and gain damage resistance for 5 seconds.
-
 Centurion's Might Primary fire has a 10 second cooldown.
 
 This weapon replaces your secondary weapon!
@@ -30717,7 +30821,8 @@ Weapon by 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Iron Will"
 			"item_type_name"			"Short Sword"
-			"item_description"			"Morality Boost: Alt-Fire (Mouse2) to provide a teammate with damage resistance! (20 sec cooldown)
+			"item_description"			"
+Morality Boost: Alt-Fire (Mouse2) to provide a teammate with damage resistance! (20 sec cooldown)
 
 Listen here maggot! you're walking home alive whether you want to or not! Now get fighting!
 
@@ -31729,6 +31834,55 @@ Weapon by: 'Reagy'"
 // Knockout Custom Attributes
 		"7500"
 		{
+			"name"	"damage force reduction HIDDEN"
+			"attribute_class"	"damage_force_reduction"
+			"description_string"	"#Attrib_DamageForceReduction"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"7501"
+		{
+			"name"	"airblast vulnerability multiplier HIDDEN"
+			"attribute_class"	"airblast_vulnerability_multiplier"
+			"description_string"	"#Attrib_AirBlastVulnerabilityMultipier"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"7502"
+		{
+			"name"	"dmg taken from crit reduced HIDDEN"
+			"attribute_class"	"mult_dmgtaken_from_crit"
+			"description_string"	"#Attrib_DmgTaken_From_Crit_Reduced"
+			"description_format"	"value_is_inverted_percentage"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"armory_Desc"	"on_wearer"
+			"stored_as_integer"	"0"
+		}
+		"7503"
+		{
+			"name"	"dmg taken from crit increased HIDDEN"
+			"attribute_class"	"mult_dmgtaken_from_crit"
+			"description_string"	"#Attrib_DmgTaken_From_Crit_Increased"
+			"description_format"	"value_is_percentage"
+			"hidden"	"1"
+			"effect_type"	"negative"
+			"armory_Desc"	"on_wearer"
+			"stored_as_integer"	"0"
+		}
+		"7504"
+		{
+			"name"	"boots falling stomp HIDDEN"
+			"attribute_class"	"boots_falling_stomp"
+			"description_string"	"#Attrib_BootsFallingStomp"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
 		}
 		
 // Fred's Attributes
