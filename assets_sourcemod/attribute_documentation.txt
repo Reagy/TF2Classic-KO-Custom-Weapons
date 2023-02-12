@@ -95,7 +95,7 @@ custom_sentry_turnspeed (globally checked):
 	
 custom_medigun_type (globally checked):
 	used exclusively to activate the custom behavior of mediguns
-	not generally very useful
+	not generally very useful outside of the weapon they were designed for
 	
 	values (use value_is_additive):
 		0: none
@@ -105,7 +105,7 @@ custom_medigun_type (globally checked):
 		4: oathbreaker
 		
 custom_medibeamtype (globally checked):
-	sets the particle effect used by the mediguns
+	sets the beam particle effect used by the mediguns
 	defaults to 0 when unspecified
 	
 	values (use value_is_additive):
@@ -145,3 +145,12 @@ custom_addcond_onkill (checked against weapon):
 	attribute MUST be of "attribute_type" "string"
 	values (string):
 		Any vanilla condition
+		
+custom_resist_customcond (checked against weapon):
+	scales damage taken from enemies suffering a specific plugin condition
+	formatted as "<condition id> <duration>" e.g. "5 2.0"
+	as of 5.6 only works while the weapon is active
+	
+	attribute MUST be of "attribute_type" "string"
+	values (string):
+		Any custom condition
