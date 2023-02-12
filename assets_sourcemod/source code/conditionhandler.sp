@@ -259,6 +259,9 @@ public any Native_HasCond( Handle hPlugin, int iNumParams ) {
 	return HasCond( iPlayer, iEffect );
 }
 bool HasCond( int iPlayer, int iCond ) {
+	if( !IsValidPlayer( iPlayer ) )
+		return false;
+
 	int iFlag = GetFlagArrayBit( iCond );
 	int iOffset = GetFlagArrayOffset( iCond );
 
@@ -424,6 +427,10 @@ MRESReturn Detour_OnHit( int iWeapon, DHookParam hParams ) {
 	//int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwnerEntity" );
 	//int iSomething = hParams.Get( 1 );
 	int iVictim = hParams.Get( 2 );
+
+	if( hParams.IsNull( 1 ) )
+		return MRES_Ignored;
+
 	TFDamageInfo tfInfo =  TFDamageInfo( hParams.GetAddress( 3 ) );
 
 	CheckOnHitCustomCond( iVictim, iWeapon, tfInfo );
@@ -431,13 +438,82 @@ MRESReturn Detour_OnHit( int iWeapon, DHookParam hParams ) {
 	return MRES_Handled;
 }
 
+
+public void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo ) {
+	TFDamageInfo tfInfo = TFDamageInfo( aTakeDamageInfo );
+
+	//CheckMultDamageAttrib( iTarget, tfInfo );
+	CheckMultDamageAttribCustom( iTarget, tfInfo );
+
+	if( HasCond( iTarget, TFCC_TOXIN ) )
+		ToxinTakeDamage( tfInfo );
+
+	if( HasCond( iTarget, TFCC_ANGELSHIELD ) )
+		AngelShieldTakeDamage( iTarget, tfInfo );
+	if( HasCond( iTarget, TFCC_ANGELINVULN ) )
+		AngelInvulnTakeDamage( iTarget );
+}
+public void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo ) {
+	if( HasCond( iTarget, TFCC_ANGELSHIELD ) )
+		AngelShieldTakeDamagePost( iTarget );
+	if( HasCond( iTarget, TFCC_ANGELINVULN ) )
+		AngelInvulnTakeDamagePost( iTarget );
+}
+
+void CheckMultDamageAttribCustom( int iTarget, TFDamageInfo tfInfo ) {
+	int iAttacker = tfInfo.iAttacker;
+
+	if( !HasEntProp( iTarget, Prop_Send, "m_hActiveWeapon" ) )
+		return;
+
+	int iWeapon = GetEntPropEnt( iTarget, Prop_Send, "m_hActiveWeapon" );
+	if( iWeapon == -1 )
+		return;
+
+	static char szAttribute[64];
+	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_resist_customcond" ) == 0 ) {
+		return;
+	}
+		
+	static char szExplode[2][64];
+	ExplodeString( szAttribute, " ", szExplode, 2, sizeof( szAttribute ) );
+
+	int iCond = StringToInt( szExplode[0] );
+	float flMult = StringToFloat( szExplode[1] );
+
+	if( HasCond( iAttacker, iCond ) ) {
+		tfInfo.flDamage *= flMult;
+		EmitGameSoundToAll( "Player.ResistanceMedium", iTarget );
+	}
+}
+
+/*void CheckMultDamageAttrib( int iTarget, TFDamageInfo tfInfo ) {
+	int iAttacker = tfInfo.iAttacker;
+	int iWeapon = tfInfo.iWeapon;
+
+	static char szAttribute[64];
+	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_resist_cond" ) == 0 )
+		return;
+
+	static char szExplode[2][64];
+	ExplodeString( szAttribute, " ", szExplode, 2, sizeof( szAttribute ) );
+
+	int iCond = StringToInt( szExplode[0] );
+	float flMult = StringToFloat( szExplode[1] );
+
+	if( TF2_IsPlayerInCondition( iAttacker, view_as<TFCond>( iCond ) ) ) {
+		tfInfo.flDamage *= flMult;
+		EmitGameSoundToAll( "Player.ResistanceMedium", iTarget );
+	}	
+}*/
+
 void CheckOnHitCustomCond( int iVictim, int iWeapon, TFDamageInfo tfInfo ) {
 	static char szAttribute[64];
 	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_inflictcustom_onhit" ) == 0 )
 		return;
 
-	char szExplode[3][64];
-	ExplodeString( szAttribute, " ", szExplode, 3, sizeof( szAttribute ) );
+	static char szExplode[2][64];
+	ExplodeString( szAttribute, " ", szExplode, 2, sizeof( szAttribute ) );
 
 	int iCond = StringToInt( szExplode[0] );
 	float flDuration = StringToFloat( szExplode[1] );
@@ -457,14 +533,15 @@ void CheckOnKillCond( int iAttacker, int iWeapon ) {
 	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_addcond_onkill" ) == 0 )
 		return;
 
-	char szExplode[3][64];
-	ExplodeString( szAttribute, " ", szExplode, 3, sizeof( szAttribute ) );
+	static char szExplode[2][64];
+	ExplodeString( szAttribute, " ", szExplode, 2, sizeof( szAttribute ) );
 
 	int iCond = StringToInt( szExplode[0] );
 	float flDuration = StringToFloat( szExplode[1] );
 
-	TF2_AddCondition( iAttacker, iCond, flDuration, iAttacker );
+	TF2_AddCondition( iAttacker, view_as<TFCond>( iCond ), flDuration, iAttacker );
 }
+
 
 /*
 	TOXIN
@@ -915,24 +992,6 @@ void AngelInvulnTakeDamage( int iTarget ) {
 }
 void AngelInvulnTakeDamagePost( int iTarget ) {
 	TF2_RemoveCondition( iTarget, TFCond_UberchargedOnTakeDamage );
-}
-
-public void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo ) {
-	TFDamageInfo tfInfo = TFDamageInfo( aTakeDamageInfo );
-
-	if( HasCond( iTarget, TFCC_TOXIN ) )
-		ToxinTakeDamage( tfInfo );
-
-	if( HasCond( iTarget, TFCC_ANGELSHIELD ) )
-		AngelShieldTakeDamage( iTarget, tfInfo );
-	if( HasCond( iTarget, TFCC_ANGELINVULN ) )
-		AngelInvulnTakeDamage( iTarget );
-}
-public void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo ) {
-	if( HasCond( iTarget, TFCC_ANGELSHIELD ) )
-		AngelShieldTakeDamagePost( iTarget );
-	if( HasCond( iTarget, TFCC_ANGELINVULN ) )
-		AngelInvulnTakeDamagePost( iTarget );
 }
 
 /*

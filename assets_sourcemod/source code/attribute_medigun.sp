@@ -19,7 +19,7 @@ DynamicHook	hMedigunPostframe;
 DynamicHook	hMedigunHolster;
 
 DynamicDetour hStartHeal;
-DynamicDetour hStopHeal;
+//DynamicDetour hStopHeal;
 DynamicDetour hGetBuffedHealth;
 DynamicDetour hUpdateCharge;
 
@@ -100,10 +100,10 @@ public void OnPluginStart() {
 	if( !hStartHeal.Enable( Hook_Pre, Detour_HealStartPre ) ) {
 		SetFailState( "Detour setup for CTFPlayerShared::Heal failed" );
 	}
-	hStopHeal = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::StopHealing" );
+	/*hStopHeal = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::StopHealing" );
 	if( !hStopHeal.Enable( Hook_Pre, Detour_HealStopPre ) ) {
 		SetFailState( "Detour setup for CTFPlayerShared::StopHealing failed" );
-	}
+	}*/
 	hGetBuffedHealth = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::GetBuffedMaxHealth" );
 	if( !hGetBuffedHealth.Enable( Hook_Post, Detour_GetBuffedMaxHealth ) ) {
 		SetFailState( "Detour setup for CTFPlayerShared::GetBuffedMaxHealth failed" );
@@ -781,8 +781,8 @@ MRESReturn Detour_HealStartPre( Address aThis, DHookParam hParams ) {
 
 	return MRES_Supercede;
 }
-MRESReturn Detour_HealStopPre( Address aThis, DHookParam hParams ) {
-	/*int iTarget = GetPlayerFromShared( aThis );
+/*MRESReturn Detour_HealStopPre( Address aThis, DHookParam hParams ) {
+	int iTarget = GetPlayerFromShared( aThis );
 	int iHealer = hParams.Get( 1 );
 
 	int iOwnerTeam = GetClientTeam( iOwner );
@@ -792,9 +792,8 @@ MRESReturn Detour_HealStopPre( Address aThis, DHookParam hParams ) {
 	if( iOwnerTeam == iTargetTeam || iOwnerTeam == iDisguiseTeam )
 		return MRES_Ignored;
 
-	return MRES_Supercede;*/
-	return MRES_Ignored;
-}
+	return MRES_Supercede;
+}*/
 
 /*
 	GUARDIAN ANGEL
@@ -808,12 +807,18 @@ MRESReturn AngelGunUber( int iMedigun ) {
 		return MRES_Ignored;
 
 	int iOwner = GetEntPropEnt( iMedigun, Prop_Send, "m_hOwnerEntity" );
+	int iTarget = GetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget" );
 
 	bool bAppliedCharge = false;
-	int iTarget = GetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget" );
+	if( !HasCustomCond( iOwner, TFCC_ANGELSHIELD ) && !HasCustomCond( iOwner, TFCC_ANGELINVULN ) ) {
+		AddCustomCond( iOwner, TFCC_ANGELSHIELD );
+		SetCustomCondSourcePlayer( iOwner, TFCC_ANGELSHIELD, iOwner );
+		SetCustomCondSourceWeapon( iOwner, TFCC_ANGELSHIELD, iMedigun );
+		bAppliedCharge = true;
+	}
+	
 	if( IsValidPlayer( iTarget ) && IsPlayerAlive( iTarget ) ) {
 		if( !HasCustomCond( iTarget, TFCC_ANGELSHIELD ) && !HasCustomCond( iTarget, TFCC_ANGELINVULN ) ) {
-			EmitSoundToAll( "weapons/angel_shield_on.wav", iTarget, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEVOL, 0.75 );
 			AddCustomCond( iTarget, TFCC_ANGELSHIELD );
 			SetCustomCondSourcePlayer( iTarget, TFCC_ANGELSHIELD, iOwner );
 			SetCustomCondSourceWeapon( iTarget, TFCC_ANGELSHIELD, iMedigun );
@@ -821,19 +826,12 @@ MRESReturn AngelGunUber( int iMedigun ) {
 		}
 	}
 
-	if( !HasCustomCond( iOwner, TFCC_ANGELSHIELD ) && !HasCustomCond( iOwner, TFCC_ANGELINVULN ) ) {
-		AddCustomCond( iOwner, TFCC_ANGELSHIELD );
-		EmitSoundToAll( "weapons/angel_shield_on.wav", iOwner, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEVOL, 0.75 );
-		SetCustomCondSourcePlayer( iOwner, TFCC_ANGELSHIELD, iOwner );
-		SetCustomCondSourceWeapon( iOwner, TFCC_ANGELSHIELD, iMedigun );
-		bAppliedCharge = true;
-	}
-
 	if( bAppliedCharge ) {
+		EmitSoundToAll( "weapons/angel_shield_on.wav", iOwner, SNDCHAN_WEAPON, SNDLEVEL_NORMAL );
 		SetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel", flChargeLevel - 0.25 );
 		return MRES_Handled;
 	}
-		
+	
 	return MRES_Ignored;
 }
 
