@@ -6445,6 +6445,8 @@ Modified by: 'Reagy'"
 //-------------------------------------
 // V5.3.4r1 Turned into MannChop
 // V5.6 Given backstab on disguise, silent cloak, massively reduced damage and melee range
+// 	- Item renamed from MannChop to Contract Killer
+//  - Couldn't do the head tho, classic doesn't support facial flexes on weables and it clipped too much, f
 		"6996"
 		{
 			"name"						"TF_WEAPON_ALLFIST_SPY"
@@ -6455,7 +6457,7 @@ Modified by: 'Reagy'"
 			"prefab"					"weapon_knife"
 //			"item_class"				"tf_weapon_fists"
 			"item_type_name"			"#TF_Weapon_Fists"
-			"item_name"					"MannChop"
+			"item_name"					"Contract Killer"
 			"item_description"			"Reduced melee range
 
 Silent Assassin: Disguise is kept on attack
@@ -6463,6 +6465,7 @@ Silent Assassin: Disguise is kept on attack
 For when discretion is advised...
   
 Model by: 'heinous' 'Zxo Pink' 'The Winglet'
+Cosmetics by: 'Ertz' 'Kibbleknight'
 Weapon by: 'Reagy'"
 			"item_slot"					"melee"
 			"item_quality"				"rarity2"
@@ -6471,9 +6474,9 @@ Weapon by: 'Reagy'"
 			"show_in_armory"			"1"
 			"item_logname"				"spy_chop"
 			"item_iconname"				"spy_chop"
-			"image_inventory"			"backpack/weapons/v_models/v_fist_heavy"
-//			"model_player"				"models/weapons/custom/v_models/v_berserk_fists.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_spy_chop.mdl"
+			"image_inventory"			"backpack/workshop/player/items/spy/spy_maskless_bald/spy_maskless_bald"
+			"model_player"				"models/weapons/custom/v_models/v_spy_chop_new.mdl"
+			"extra_wearable"			"models/player/items/custom/spy/hitman.mdl"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 			"attach_to_hands"			"2"
@@ -6529,8 +6532,8 @@ Weapon by: 'Reagy'"
 					}
 				}
 			}
-			"mouse_pressed_sound"		"#ui/item_fists_pickup.wav"
-			"drop_sound"				"#ui/item_fists_drop.wav"
+			"mouse_pressed_sound"		"#ui/hitman_pickup.wav"
+			"drop_sound"				"#ui/hitman_pickup.wav"
 		}
 //-------------------------------------
 //-------------------------------------
