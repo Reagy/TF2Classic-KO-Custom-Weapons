@@ -115,6 +115,63 @@
 	"items"
 	{
 
+		//this needs to be here to add the custom medibeam attribute
+		"33"
+		{
+			"name"						"The Kritzkrieg"
+			"prefab"					"valve weapon_medigun"
+			"show_in_armory"			"1"
+			"item_name"					"#TF_Unique_Achievement_Medigun1"
+			"item_description"			"#TF_Unique_Achievement_Medigun1_Desc"
+			"propername"				"1"
+			"equip_region"				"medigun_backpack"
+			"image_inventory"			"backpack/weapons/w_models/w_kritzkrieg"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"model_world"				"models/weapons/w_models/w_kritzkrieg.mdl"
+			"model_player"				"models/weapons/v_models/v_kritzkrieg_medic.mdl"
+			"extra_wearable" 			"models/player/items/kritzkrieg_backpack.mdl"
+			"attach_to_hands"			"2"
+			"min_ilevel"				"8"
+			"max_ilevel"				"8"
+			"attributes"
+			{
+				"lunchbox adds minicrits"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"				"1"
+				}
+				"medigun charge is crit boost"
+				{
+					"attribute_class"	"set_charge_type"
+					"value"				"1"
+				}
+				"ubercharge rate bonus"
+				{
+					"attribute_class"	"mult_medigun_uberchargerate"
+					"value"				"1.25"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value"				"1"
+				}
+				
+				"scattergun no reload single"
+				{
+					"attribute_class"	"custom_medibeamtype"
+					"value"				"1"
+				}
+			}
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"medic_backpack"			"1"
+				}
+			}
+		}
+
 //--------------------------------
 //--------------------------------
 //--CROWBAR STUFF - 3300 ~ 3309 --
@@ -11195,7 +11252,7 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEARABLE_BVEST_MEDIC"
 			"prefab"					"weapon_medigun"
-			"item_class"				"tf_weapon_medigun"						
+			"item_class"				"tf_wearable"				
 			"show_in_armory"			"1"
 			"item_slot"					"secondary"
 			"anim_slot"					"secondary"
@@ -11205,10 +11262,8 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Oathbreaker"
 			"item_type_name"			"Ballistic Vest"
-			"item_description"			"This item provides passive healing to nearby allies.
-Healing increases your primary weapon damage.
-
-Healing provides no Ubercharge
+			"item_description"			"Automatically heals nearby teammates
+Healing builds rage, increasing damage dealt by up to 30%
 
 Just a little bit of extra protection...
 
@@ -11217,24 +11272,14 @@ Wearable by: 'Reagy'"
 			"item_logname"				"bvest_medic"
 			"item_iconname"				"what"
 			"image_inventory"			"backpack/workshop/player/items/medic/tactivest/tactivest"
-			"extra_wearable"			"models/player/items/custom/medic/medic_vest.mdl"
-			"model_world"				"models/weapons/c_models/c_medigun/c_medigun.mdl"
-			"model_player"				"models/weapons/v_models/v_medigun_medic.mdl"
-			"attach_to_hands"			"2"
+			"model_player"				"models/player/items/custom/medic/medic_vest.mdl"
+
 			"used_by_classes"
 			{
 				"medic"				"1"
 			}
-			"static_attrs"
-			{
-			}
 			"attributes"
 			{
-			    "strange restriction type 1" // sets this item's custom properties
-				{
-					"attribute_class"	"custom_medigun_type"
-					"value" 			"4"
-				}
 				"max health additive bonus"
 				{
 					"attribute_class"	"add_maxhealth"
@@ -11243,33 +11288,25 @@ Wearable by: 'Reagy'"
 				"maxammo primary increased"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value" 			"2"
+					"value" 			"2.0"
 				}
-				"heal rate penalty"													
+				
+				"hidden secondary max ammo penalty"
 				{
-					"attribute_class"	"mult_medigun_healrate"								
-					"value"				"0.5"
+					"attribute_class"	"custom_maximum_overheal"
+					"value"				"0.0"
 				}
-				"ubercharge rate penalty"
+
+				"kill eater score type"
 				{
-					"attribute_class"	"mult_medigun_uberchargerate"
-					"value"				"0.00001"
-				}
-				"ubercharge overheal rate penalty"
-				{
-					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"0.000000000001"
-				}
-				"allowed in medieval mode"
-				{
-					"attribute_class"	"allowed_in_medieval_mode"
-					"value"				"1"
+					"attribute_class"	"custom_medigun_type"
+					"value"				"4"
 				}
 			}
 			"visuals"
 			{
-			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
-			"drop_sound"				"#ui/item_pack_drop.wav"
+				"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
+				"drop_sound"				"#ui/item_pack_drop.wav"
 			}
 		}
 //------------------------
@@ -17113,7 +17150,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				"engineer sentry build rate multiplier"	
 				{
 					"attribute_class"	"sentry_build_rate_multiplier"
-					"value"				"2"
+					"value"				"2.5"
 				}
 				"damage penalty"
 				{
@@ -17131,21 +17168,6 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"custom_sentry_type"
 					"value" 			"1" // Mini
 				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"custom_sentry_damage"
-					"value"				"0.5"
-				}	
-				"voice pitch scale"
-				{
-					"attribute_class"	"custom_sentry_firerate"
-					"value"				"0.75"
-				}	
-				"voice pitch scale"
-				{
-					"attribute_class"	"custom_sentry_turnspeed"
-					"value"				"1.35"
-				}	
 			}
 			"visuals"
 			{
@@ -17531,7 +17553,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //-----------------------
 		"9081"
 		{
-			"name"						"Totenwerfer"
+			"name"						"TF_WEAPON_TOTENWERFER"
 			"prefab"					"weapon_medigun"
 			"show_in_armory"			"1"
 			"equip_region"				"medigun_backpack"										// ...probably.. vestigial..?
@@ -17541,15 +17563,14 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"totenwerfer"
 			"item_name"					"Totenwerfer"
 			"item_type_name"			"#TF_Weapon_Medigun"
-			"item_description"			"This weapon provides a Mega-Heal Ubercharge.
+			"item_description"			"ÜberCharge increases healing to 300% and grants immunity to movement-impairing effects
 
 Try to kill zhim now, I dare you!
 
-Weapon from: Tangerine Paint and Grunt's Weapon Addons"
+Weapon by: 'Noclue'"
 			"image_inventory"			"backpack/weapons/w_models/w_totenwerfer"
-			"model_world"				"models/weapons/w_models/w_totenwerfer.mdl"
-			"model_player"				"models/weapons/v_models/v_totenwerfer_medic.mdl"
-			"attach_to_hands"			"2"
+			"model_player"				"models/weapons/c_models/c_totenwerfer/c_totenwerfer.mdl"
+			"attach_to_hands"			"1"
 			"extra_wearable" 			"models/player/items/toten_backpack.mdl"
 			"used_by_classes"
 			{
@@ -17557,30 +17578,37 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			}
 			"attributes"
 			{
-				"strange restriction type 1"  // this is basically a port of the quick fix.			
-			    {
-				    "attribute_class"	"custom_medigun_type"
-				    "value"				"3"
-			    }
-				"heal rate bonus"																
+				"heal rate bonus"
 				{
 					"attribute_class"	"mult_medigun_healrate"
-					"value" 			"1.5"
+					"value"				"1.5"
 				}
-				"single wep deploy time decreased"
+				"ubercharge rate bonus"
 				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"0.8"
+					"attribute_class"	"mult_medigun_uberchargerate"
+					"value"				"1.1"
 				}
-				"switch from wep deploy time decreased"
+				"overheal penalty"
 				{
-					"attribute_class"	"mult_switch_from_wep_deploy_time"
-					"value"				"0.8"
+					"attribute_class"	"custom_maximum_overheal"
+					"value"				"0.5"
 				}
-				"ubercharge overheal rate penalty"
+
+				"kill eater score type"
 				{
-					"attribute_class"	"mult_medigun_overheal_uberchargerate"
+					"attribute_class"	"custom_medigun_type"
+					"value"				"3"
+				}
+				"scattergun no reload single"
+				{
+					"attribute_class"	"custom_medibeamtype"
 					"value"				"0"
+				}
+				
+				"lunchbox adds minicrits"
+				{
+					"attribute_class"	"set_charge_type"
+					"value"				"2"
 				}
 			}
 			"visuals"
@@ -22991,18 +23019,13 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Guardian Angel"
 			"item_type_name"			"Medi Gun"
-			"item_description"			"This medi-gun's Ubercharge deploys damage bubbles that consume 25% charge.
-All damage taken is absorbed by the damage bubbles, breaking once enough damage is absorbed.
-			
-Provides 20% damage resistance and crit negation to the user while active
-Resistance does not apply to the healing patient.
+			"item_description"			"Übercharge provides a resistance bubble that blocks up to 120 damage
 
 We shall fight until the very end!
 
 Model by: 'svdl'
-Weapon by: 'The One Of Wonders'"
+Weapon by: 'Noclue'"
 			"image_inventory"			"backpack/weapons/c_models/c_defense_medigun/c_defense_medigun"
-			"model_world"				"models/weapons/c_models/c_defense_medigun/c_defense_medigun.mdl"
 			"model_player"				"models/weapons/c_models/c_defense_medigun/c_defense_medigun.mdl"
 			"attach_to_hands"			"1"
 			"extra_wearable" 			"models/weapons/c_models/c_defense_backpack/c_defense_backpack.mdl"
@@ -23012,51 +23035,44 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "strange restriction type 1"	// sets the guardian angel's uber mode													
-				{
-					"attribute_class"	"custom_medigun_type"
-					"value" 			"1"
-				}
-				"heal rate bonus"																
-				{
-					"attribute_class"	"mult_medigun_healrate"
-					"value" 			"1.45"
-				}
-				"ubercharge rate bonus"															
+				"ubercharge rate bonus"
 				{
 					"attribute_class"	"mult_medigun_uberchargerate"
-					"value"				"1.55"
+					"value"				"1.66"
 				}
-				// Backend stuff
-				"powerup duration"																
+				"powerup max charges"
 				{
-					"attribute_class"	"strange_restriction_type_1"
+					"attribute_class"	"dummy"
 					"value"				"4"
 				}
-				"voice pitch scale"																
+				"powerup duration"
 				{
-					"attribute_class"	"add_uber_time"
-					"value"				"0.5"
+					"attribute_class"	"dummy"
+					"value"				"3"
 				}
-				"ubercharge overheal rate penalty" // No overheal
+				
+				"kill eater score type"
+				{
+					"attribute_class"	"custom_medigun_type"
+					"value"				"1"
+				}
+				"scattergun no reload single"
+				{
+					"attribute_class"	"custom_medibeamtype"
+					"value"				"2"
+				}
+				
+				
+				"ubercharge overheal rate penalty"
 				{
 					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"0.0001"
+					"value"				"0.25"
 				}
-				"move speed penalty"
+				
+				"lunchbox adds minicrits" //disables vanilla uber behavior
 				{
-					"attribute_class"	"mult_player_movespeed"
-					"value" 			"0.9"
-				}
-				"voice pitch scale"																
-				{
-					"attribute_class"	"mult_dmgtaken"
-					"value"				"0.8"
-				}
-				"voice pitch scale"											
-				{
-					"attribute_class"	"mult_dmgtaken_from_crit"
-					"value"				" 0.33333333333333333"
+					"attribute_class"	"set_charge_type"
+					"value"				"2"
 				}
 			}
 			"visuals"
@@ -24176,12 +24192,12 @@ Sentry replacement by: 'rotzloeffel' 'Gadget'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"custom_sentry_damage"
-					"value"				"1.33"
+					"value"				"1.5"
 				}	
 				"voice pitch scale"
 				{
 					"attribute_class"	"custom_sentry_firerate"
-					"value"				"1.25"
+					"value"				"1.4"
 				}	
 				"voice pitch scale"
 				{
@@ -31901,6 +31917,171 @@ Weapon by: 'Reagy'"
 			}	
 			"mouse_pressed_sound"		"#weapons/stand_pick.wav"
 			"drop_sound"				"#weapons/stand_drop.wav"		
+		}
+		
+//--------------------------------
+//--------------------------------
+//-- BIO WASTE PUMP - 9935--
+//--------------------------------
+//--------------------------------
+
+		"9935"
+		{
+			"name"						"TF_WEAPON_BIOWASTEPUMP"
+			"prefab"					"weapon_medigun"
+			"show_in_armory"			"1"
+			"item_name"					"Bio Waste Pump"
+			"item_type_name"			"War Crime"
+			"item_description"			"Target enemies to apply Toxin
+Patients deal Mini-Crits to Toxified enemies
+ÜberCharge creates a cloud of Toxic gas around yourself and friendly heal target
+
+Model by: 'svdl'
+Weapon by: 'Noclue'"
+			"propername"				"1"
+			"equip_region"				"medigun_backpack"
+			"image_inventory"			"backpack/weapons/c_models/c_biomed_gun/c_biomed_gun"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"84"
+			"model_player"				"models/weapons/c_models/c_biomed_gun/c_biomed_gun.mdl"
+			"extra_wearable"			"models/weapons/c_models/c_biomed_backpack/c_biomed_backpack.mdl"
+			"attach_to_hands"			"1"
+			"min_ilevel"				"8"
+			"max_ilevel"				"8" 
+			"attributes"
+			{
+				"ubercharge rate bonus"
+				{
+					"attribute_class"	"mult_medigun_uberchargerate"
+					"value"				"1.33"
+				}
+				"heal rate penalty" 					 									
+				{
+					"attribute_class"	"mult_medigun_healrate"
+					"value"				"0.8"														
+				}
+				"mod soldier buff type"
+				{
+					"attribute_class"	"custom_medigun_type"
+					"value"				"2"
+				}
+				"scattergun no reload single"
+				{
+					"attribute_class"	"custom_medibeamtype"
+					"value"				"3"
+				}
+				
+				"lunchbox adds minicrits"
+				{
+					"attribute_class"	"set_charge_type"
+					"value"				"2"
+				}
+			}
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"medic_backpack"			"1"
+				}
+			}
+		}
+
+//--------------------------------
+//--------------------------------
+//-- LEIDWERFER - 9936--
+//--------------------------------
+//--------------------------------
+		
+		"9936"
+		{
+			"name"						"TF_WEAPON_LEIDWERFER"
+			"prefab"					"weapon_syringegun"
+			"item_type_name"			"War Crime"
+			"show_in_armory"			"1"
+			"item_name"					"Leidwerfer"
+			"item_logname"				"leidwerfer"
+			"item_iconname"				"leidwerfer"
+			"item_description"			"On hit: Apply 1 second of Toxin to target (stacks up to 10 seconds)
+			
+Model by: 'svdl'
+Weapon by: 'Noclue'"
+			"propername"				"1"
+			"image_inventory"			"backpack/weapons/c_models/c_leechgun/c_leechgun"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"128"
+			"model_player"				"models/weapons/c_models/c_leechgun/c_leechgun.mdl"
+			"attach_to_hands"			"1"
+			"min_ilevel"				"8"
+			"max_ilevel"				"8"
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"0.6"
+				}
+				"custom projectile model"
+				{
+					"attribute_class"	"custom_inflictcustom_onhit"
+					"value"				"0 1.0"
+				}
+			}
+		}
+		
+//--------------------------------
+//--------------------------------
+//-- OUTBREAKER - 9937--
+//--------------------------------
+//--------------------------------
+		
+		"9937"
+		{
+			"name"						"TF_WEAPON_OUTBREAKER"
+			"prefab"					"weapon_bonesaw"
+			"item_logname"				"outbreaker"
+			"item_iconname"				"outbreaker"
+			"show_in_armory"			"1"
+			"item_type_name"			"War Crime"
+			"item_name"					"Outbreaker"
+			"item_description"			"On hit: Apply 5 seconds of Toxin to target (stacks up to 10 seconds)
+Take 35% reduced damage from targets inflicted with Toxin
+			
+Model by: 'svdl'
+Weapon by: 'Noclue'"
+			"propername"				"1"
+			"image_inventory"			"backpack/weapons/c_models/c_biosyringe/c_biosyringe"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"model_player"				"models/weapons/c_models/c_biosyringe/c_biosyringe.mdl"
+			"attach_to_hands"			"1"
+			"attributes"
+			{
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.4"
+				}
+				"custom projectile model"
+				{
+					"attribute_class"	"custom_inflictcustom_onhit"
+					"value"				"0 5.0"
+				}
+				"cosmetic taunt sound"
+				{
+					"attribute_class"	"custom_resist_customcond"
+					"value"				"0 0.65"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}	
+			}
 		}
 
 //--------------------------------

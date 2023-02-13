@@ -20,7 +20,7 @@ Handle hHudSync;
 
 enum {
 	RTF_PERCENTAGE = 1 << 1,	//display value as a percentage
-	RTF_DING = 1 << 2,			//play sound when fully charged
+	RTF_DING = 1 << 2,		//play sound when fully charged
 	RTF_RECHARGES = 1 << 3,
 	//RTF_ = 1 << 1,
 	//RTF_ = 1 << 1,
@@ -42,16 +42,28 @@ enum struct ResourceTracker {
 
 public void OnPluginStart() {
 	hHudSync = CreateHudSynchronizer();
+
+	for(int i = 0; i < sizeof(hResources); i++) {
+		if( hResources[i] )
+			hResources[i].Clear();
+			
+		hResources[i] = new ArrayList(TRACKERMAXSIZE);
+	}
+
 #if defined DEBUG
 	RegConsoleCmd("sm_hf_test", Command_Test, "test");
 #endif
 }
 
 public void OnMapStart() {
-	for(int i = 0; i < MaxClients; i++) {
+	CreateTimer( UPDATEINTERVAL, Timer_TrackerThink, 0, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
+
+	for(int i = 0; i < sizeof(hResources); i++) {
+		if( hResources[i] )
+			hResources[i].Clear();
+
 		hResources[i] = new ArrayList(TRACKERMAXSIZE);
 	}
-	CreateTimer( UPDATEINTERVAL, Timer_TrackerThink, 0, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
 }
 
 public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] sError, int iErrorMax ) {
@@ -63,13 +75,19 @@ public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] sError, int iEr
 	return APLRes_Success;
 }
 
+public void OnClientDisconnect( int iClient ) {
+	if( iClient >= 0 && iClient < sizeof( hResources ) )
+		hResources[iClient].Clear();
+}
+
 Action Timer_TrackerThink( Handle hTimer ) {
 	for ( int i = 1; i <= MaxClients; i++ ) {
-		if ( IsClientInGame( i ) && !IsFakeClient( i ) ) {
+		if ( IsClientInGame( i ) ) {
 			for( int j = 0; j < hResources[i].Length; j++ ) {
 				Tracker_Recharge( i, j );
 			}
-			Tracker_Display( i );
+			if( !IsFakeClient( i ) ) 
+				Tracker_Display( i );
 		}
 	}
 	return Plugin_Continue;
@@ -81,8 +99,9 @@ public any Native_TrackerCreate( Handle hPlugin, int iNumParams ) {
 	static char sName[32]; GetNativeString( 2, sName, 32 );
 	float flStartAt = GetNativeCell( 3 );
 	float flRechargeTime = GetNativeCell( 4 );
+	int iFlags = GetNativeCell( 5 );
 
-	Tracker_Create( iPlayer, sName, flStartAt, flRechargeTime );
+	Tracker_Create( iPlayer, sName, flStartAt, flRechargeTime, iFlags );
 
 	return 0;
 }
@@ -129,7 +148,7 @@ public any Native_TrackerGetValue( Handle hPlugin, int iNumParams ) {
 }
 float Tracker_GetValue( int iPlayer, const char sName[32] ) {
 	int iLoc = Tracker_Find( iPlayer, sName );
-	if( iLoc == -1 ) return -1.0;
+	if( iLoc == -1 ) return 0.0;
 
 	ResourceTracker hTracker;
 	hResources[iPlayer].GetArray( iLoc, hTracker );
@@ -152,7 +171,7 @@ void Tracker_SetValue( int iPlayer, const char sName[32], float flValue ) {
 
 	ResourceTracker hTracker;
 	hResources[iPlayer].GetArray( iLoc, hTracker );
-	if( flValue >= 100.0) EmitGameSoundToClient( iPlayer, "TFPlayer.Recharged" );
+	if( flValue >= 100.0 && hTracker.HasFlags( RTF_DING ) ) EmitGameSoundToClient( iPlayer, "TFPlayer.Recharged" );
 	hTracker.flValue = flValue;
 	hResources[iPlayer].SetArray( iLoc, hTracker );
 }
@@ -173,6 +192,7 @@ void Tracker_Display( int iPlayer ) {
 	static char sFinal[256];
 	static char sBuffer[64];
 	sFinal = "";
+
 	for( int i = 0; i < hResources[iPlayer].Length; i++ ) {
 		ResourceTracker hTracker;
 		hResources[iPlayer].GetArray( i, hTracker );
@@ -180,6 +200,10 @@ void Tracker_Display( int iPlayer ) {
 		Tracker_CreateString( hTracker, sBuffer );
 
 		StrCat( sFinal, sizeof(sFinal), sBuffer );
+
+		if( hTracker.HasFlags( RTF_PERCENTAGE ) )
+			StrCat( sFinal, sizeof(sFinal), "%");
+
 		StrCat( sFinal, sizeof(sFinal), "\n");
 	}
 
