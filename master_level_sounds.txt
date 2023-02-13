@@ -12576,7 +12576,6 @@
 		"wave"		")weapons/Beatophone_Loop.wav"
 		"wave"		")weapons/Beatophone_Loop_B.wav"
 		"wave"		")weapons/Beatophone_Loop_C.wav"
-		"wave"		")weapons/Beatophone_Loop_D.wav"
 	}
 }
 
