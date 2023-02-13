@@ -113,6 +113,10 @@
 			{
 				"linux"		"3"
 			}
+			"CAttributeManager::ApplyAttributeString"
+			{
+				"linux"		"4"
+			}
 			
             //econ
             
