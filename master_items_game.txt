@@ -178,164 +178,18 @@ Weapon from: New Old Weapons Pack"			// A funny description! Try to keep this sh
 		"3301"
 //		Remove this - V5.5.5
 		{
-			"name"						"TF_WEAPON_CROWBAR"
-			"prefab"					"weapon_shovel"
-			"show_in_armory"			"0"
-
-			"item_quality"				"rarity3"
-			"item_name"					"Crowbar"
-			"item_type_name"			"#TF_Weapon_Crowbar"
-			"item_description"			"For bashing supply-crates and anyone
-that dares try to steal them from me!
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"crowbar"
-			"item_iconname"				"crowbar"
-			"image_inventory"			"backpack/weapons/w_models/w_crowbar"
-			"model_world"				"models/weapons/w_models/w_crowbar_soldier.mdl"
-			"model_player"				"models/weapons/v_models/v_crowbar_soldier.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"soldier"				"1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset"					"5 0 -10"
-			}
-			"visuals"
-			{
-				"sound_melee_miss"		"Weapon_Crowbar.Miss"
-				"sound_melee_hit"		"Weapon_Crowbar.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_Crowbar_HL1.HitWorld"
-				"sound_burst"			"Weapon_Crowbar.MissCrit"
-			}
-			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
-			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 		"3302"
 //		Remove this - V5.5.5
 		{
-			"name"						"TF_WEAPON_CROWBAR"
-			"prefab"					"weapon_fireaxe"
-			"show_in_armory"			"0"
-
-			"item_quality"				"rarity3"
-			"item_name"					"Crowbar"
-			"item_type_name"			"#TF_Weapon_Crowbar"
-			"item_description"			"
-Weapon from: New Old Weapons Pack"														// No description. Pyro's weapons don't have descriptions, generally, beside the to-the-point descriptive ones.
-			"item_logname"				"crowbar"
-			"item_iconname"				"crowbar"
-			"image_inventory"			"backpack/weapons/w_models/w_crowbar"
-			"model_world"				"models/weapons/w_models/w_crowbar_pyro.mdl"
-			"model_player"				"models/weapons/v_models/v_crowbar_pyro.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"pyro"					"1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset"					"5 0 -10"
-			}
-			"visuals"
-			{
-				"sound_melee_miss"		"Weapon_Crowbar.Miss"
-				"sound_melee_hit"		"Weapon_Crowbar.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_Crowbar_HL1.HitWorld"
-				"sound_burst"			"Weapon_Crowbar.MissCrit"
-			}
-			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
-			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 		"3303"
 //		Remove this - V5.5.5
 		{
-			"name"						"TF_WEAPON_CROWBAR"
-			"prefab"					"weapon_bottle"
-			"item_class"				"tf_weapon_club"
-			"show_in_armory"			"0"
-
-			"item_quality"				"rarity3"
-			"item_name"					"Crowbar"
-			"item_type_name"			"#TF_Weapon_Crowbar"
-			"item_description"			"They come wide at me, this'll pry their
-eyes right out 'a their noggins!
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"crowbar"
-			"item_iconname"				"crowbar"
-			"image_inventory"			"backpack/weapons/w_models/w_crowbar"
-			"model_world"				"models/weapons/w_models/w_crowbar_demoman.mdl"
-			"model_player"				"models/weapons/v_models/v_crowbar_demoman.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"demoman"				"1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset"					"5 0 -10"
-			}
-			"visuals"
-			{
-				"sound_melee_miss"		"Weapon_Crowbar.Miss"
-				"sound_melee_hit"		"Weapon_Crowbar.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_Crowbar_HL1.HitWorld"
-				"sound_burst"			"Weapon_Crowbar.MissCrit"
-				"sound_special1"		"Weapon_Null"											// From here on are sounds for the Bottle variant. But, I'm not actually switching this over, since in 2.0.2, the bottle has some hardcoded glass particles on hit when it's "broken"...
-				"sound_single_shot"		"Weapon_Crowbar.HitFlesh"
-				"sound_single_shot_npc"	"Weapon_Crowbar_HL1.HitWorld"
-				"sound_double_shot"		"Weapon_Crowbar.HitFlesh"
-				"sound_double_shot_npc"	"Weapon_Crowbar_HL1.HitWorld"
-			}	
-			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
-			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 		"3304"
 //		Remove this - V5.5.5
 		{
-			"name"						"TF_WEAPON_CROWBAR"
-			"prefab"					"weapon_fists"
-			"show_in_armory"			"0"
-
-			"item_quality"				"rarity3"
-			"item_name"					"Crowbar"
-			"item_type_name"			"#TF_Weapon_Crowbar"
-			"item_description"			"Tiny little Crowbar is good for crushing
-tiny boxes and tiny heads.
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"crowbar"
-			"item_iconname"				"crowbar"
-			"image_inventory"			"backpack/weapons/w_models/w_crowbar"
-			"model_world"				"models/weapons/w_models/w_crowbar_heavy.mdl"			// Heavy usually doesn't have the animations for non-Fist melees - so I had to improvise. It's on bip_hand_r instead!
-			"model_player"				"models/weapons/v_models/v_crowbar_heavy.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"heavy"					"1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset"					"5 0 -10"
-			}
-			"visuals"
-			{
-				"sound_melee_miss"		"Weapon_Crowbar.Miss"
-				"sound_melee_hit"		"Weapon_Crowbar.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_Crowbar_HL1.HitWorld"
-				"sound_burst"			"Weapon_Crowbar.MissCrit"
-				"animation_replacement"															// This is a bit weird - but this essentially makes him always do his crit-punch animation when swinging. As it so happens - the hand he holds the melee with is in that hand!
-				{
-					"ACT_MP_ATTACK_STAND_MELEE"					"ACT_MP_ATTACK_STAND_MELEE_SECONDARY"
-					"ACT_MP_ATTACK_CROUCH_MELEE"				"ACT_MP_ATTACK_CROUCH_MELEE_SECONDARY"
-					"ACT_MP_ATTACK_SWIM_MELEE"					"ACT_MP_ATTACK_SWIM_MELEE_SECONDARY"
-				}
-			}	
-			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
-			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 		"3305"
 		{
@@ -4634,76 +4488,11 @@ Weapon from: New Old Weapons Pack"
 //-------------------------------
 //--MARKET GARDENER DEMO - 3455-- THIS WEAPON IS IN AN INCOMPLETE STATE AND I'LL WORK ON IT MORE
 // V5.4.1 Disabled, assets kept for now
+// V5.6 Assets removed for cleanup
 //-------------------------------
 //-------------------------------
 		"3455"
 		{
-			"name"						"TF_WEAPON_CABER"
-			"prefab"					"weapon_bottle"
-			"show_in_armory"			"0"
-
-			"propername"				"1"
-			"item_quality"				"rarity3"
-			"item_name"					"Ullapool Caber"
-			"item_type_name"			"...Hand Grenade?"
-			"item_description"			"100% critical hit vs aiming players
-
-High-yield Scottish face removal.
-A sober person would throw it...
-
-Weapon from: New Old Weapons Pack"
-			"item_logname"				"ullapool_caber"
-			"item_iconname"				"ullapool_caber"										// This has an alternate ver called 'ullapool_caber_explosion'
-			"image_inventory" 			"backpack/workshop/weapons/c_models/c_caber/c_caber"
-			"model_world"				"models/weapons/w_models/w_caber.mdl"
-			"model_player"				"models/weapons/v_models/v_caber_demoman.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"demoman"				"1"
-			}
-			"attributes"
-			{
-				"provide on active"
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
-                "mod crit while airborne"
-                {
-                    "attribute_class"    "voice_pitch_scale"
-                    "value"                "1"
-                }
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.2"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.6454"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"or_crit_vs_playercond"
-					"value"				"6"														// Bitflags! These add up to... crits vs. Aiming(2) and Zoomed(4) players. It might also affect Heavies but I dont know.
-				}
-			}
-			"visuals"
-			{
-				"sound_melee_miss"		"Weapon_Crowbar.Miss"
-				"sound_melee_hit"		"Weapon_Fishwhacker.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_Crowbar.HitWorld"
-				"sound_burst"			"Weapon_Crowbar.MissCrit"
-				"sound_special1"		"Weapon_AirBurster.Explode"
-				"sound_single_shot"		"Weapon_Fishwhacker.HitFlesh"
-				"sound_single_shot_npc"	"Weapon_Crowbar.HitWorld"
-				"sound_double_shot"		"Weapon_Fireaxe.HitFlesh"
-				"sound_double_shot_npc"	"Weapon_Fireaxe.HitWorld"
-			}
-			"mouse_pressed_sound"		"#ui/item_wood_weapon_pickup.wav"
-			"drop_sound"				"#ui/item_wood_weapon_drop.wav"
 		}
 //----------------------------
 //----------------------------
@@ -5010,7 +4799,6 @@ Edited by: 'Reagy'"
 			"item_logname"				"eviction_notice"
 			"item_iconname"				"eviction_notice"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_eviction_notice/c_eviction_notice"
-//			"model_world"				"models/weapons/w_models/w_eviction_notice.mdl"
 			"model_player"				"models/weapons/v_models/v_eviction_notice_heavy.mdl"	// Never noticed until recently, doesn't it hurt to just slap your fist into the palm of your hand if you're wearing BRASS KNUCKLES??? but Heavy's a big boy he can tank the pain
 			"extra_wearable" 			"models/weapons/w_models/w_eviction_notice_alt.mdl"			// I tried this out, but it doesn't really work as well as I intended...
 			"attach_to_hands"			"2"
@@ -25107,105 +24895,6 @@ Weapon by: 'The One Of Wonders'"
 //---------------------
 		"9160"
 		{
-			"name"						"TF_WEAPON_LAHTI_GUN"
-			"prefab"					"weapon_aagun"											
-			"show_in_armory"			"0"
-
-			"propername"				"1"
-			"item_quality"				"rarity2"
-			"item_name"					"Finnish Fury"
-			"item_type_name"			"Anti-Tank Rifle"
-			"item_description"			"Fires Incendiary Tracer Shells 
-Critical damage vs burning players deals reduced damage.
-
-This is a very good gun from brother of another mother.
-
-Model by: 'Suomimies55'
-Weapon by: 'The One Of Wonders'" 													
-			"item_logname"				"lahti_heavy"
-			"item_iconname"				"lahti_heavy"
-			"image_inventory"			"backpack/weapons/w_models/w_lahti"
-			"model_world"				"models/weapons/w_models/w_lahti.mdl"
-			"model_player"				"models/weapons/v_models/v_lahti_heavy.mdl"				
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"heavy"					"1"
-			}
-			"static_attrs"
-			{
-			    "override projectile type"   "6"
-			}
-			"attributes"																	
-			{
-			    "crit vs burning players"													
-				{
-					"attribute_class"	"mult_player_aiming_movespeed"
-					"value" 			"1"
-				}
-				"voice pitch scale"																
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value" 			"1.65"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"2"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.4"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_dmg_vs_burning"
-					"value"				"0.025"
-				}
-                "voice pitch scale"
-				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.25"
-				}
-				"voice pitch scale"	
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.85"
-				}
-                "centerfire projectile"															
-				{
-					"attribute_class"	"centerfire_projectile"
-					"value"				"1"
-				}
-                "crit mod disabled"															
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}				
-				"custom projectile model"
-				{
-					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/bfb.mdl"
-				}	
-			}
-			"visuals"																			
-			{
-				"sound_empty"			"Weapon_AAGun.ClipEmpty"
-                "sound_single_shot"		"Weapon_SharkRifle.Single"
-				"sound_burst"			"Weapon_SharkRifle.SingleCrit"
-				"sound_double_shot"		"Weapon_SharkRifle.Single"
-				"sound_special1"		"Weapon_Airstrike.Explode"
-				"animation_replacement"
-				{
-					//The Attacking Animations
-					"ACT_MP_ATTACK_STAND_PRIMARY"				"ACT_MP_ATTACK_STAND_SECONDARY"
-					"ACT_MP_ATTACK_CROUCH_PRIMARY"				"ACT_MP_ATTACK_CROUCH_SECONDARY"
-					"ACT_MP_ATTACK_SWIM_PRIMARY"				"ACT_MP_ATTACK_SWIM_SECONDARY"
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //-------------------------------
 //-------------------------------
@@ -29346,107 +29035,6 @@ Weapon by: 'Majro'"
 //----------------------
 		"9214"
 		{	
-			"name"						"TF_WEAPON_HEARTBREAKER"								// NOTE: THIS DEV. VERSION SHOOTS -BULLETS-. This is only to visualize how many projectiles I want it to fire.
-			"prefab"					"weapon_shotgun"										// It will NOT, I repeat NOT shoot bullets under any circumstance in the final version.
-			"show_in_armory"			"0"
-			"item_slot"					"primary"
-			"anim_slot"					"melee"
-			"item_quality"				"rarity3"
-
-			"propername"				"1"
-			"item_name"					"Heartbreaker"
-			"item_type_name"			"Bucket of Organs"
-			"item_description"			"Hearts are affected by gravity
-
-Please sir, have a heart! And another! And another! And...
-
-
-Original Weapon from: New Old Weapons Pack
-Repurposed by: 'Majro'"
-			"item_logname"				"heartbreaker"
-			"item_iconname"				"heartbreaker"
-			"image_inventory"			"backpack/weapons/v_models/v_heart/v_heart"
-			"model_world"				"models/weapons\custom\w_models\w_heart_new.mdl"
-			"model_player"				"models/weapons\custom\v_models\v_heart_new.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"medic"					"1"
-			}
-			"static_attrs"
-			{
-				"override projectile type"				"30"									// Tranquiliser Darts!
-				"damage bonus hidden"					"7.5"									// Does 45 damage! It's not as much as a regular shotgun, but since Med only needs to hit 1 thing w/ no falloff, doesnt need to be!
-			}
-			"attributes"
-			{
-				"custom projectile model"
-				{
-					"attribute_class" "custom_projectile_model"
-					"value"			"models/weapons/gibs/w_heart_bullet_new.mdl"
-				}
-					
-				
-				"mod max primary clip override" 
-				{
-					"attribute_class"	"mod_max_primary_clip_override"
-					"value"				-1
-				}
-
-				"mod no reload DISPLAY ONLY"
-				{
-					"attribute_class"		"mod_no_reload_display_only"
-					"value"					"1"
-				}
-				
-				"view punch on hit"
-				{
-					"attribute_class"		"add_viewpunch_onhit"
-					"value"					"1"
-				}
-				//The Rest.
-				"torso scale"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"0.5"
-				}
-
-				"maxammo primary reduced"														// Less disposable ammo to use
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.75"
-				}
-
-				"hand scale"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.35"													// Low but not absent spread
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.35"
-				}
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.5"
-				}
-				"crit mod disabled"															
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}
-			}
-			"visuals"
-			{
-				"sound_single_shot"		Weapon_Grenade_Mirv.Throw
-				"sound_burst"			Weapon_Grenade_Mirv.ThrowCrit
-				
-
-			}
-			"mouse_pressed_sound"		"#ui/item_gooey_pickup.wav"
-			"drop_sound"				"#ui/hitsound_squasher.wav"	
 		}
 //----------------------
 //----------------------
