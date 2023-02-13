@@ -6403,14 +6403,14 @@
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
-	"wave"			")weapons/machinegun_shoot.wav"
+	"wave"			")weapons/machinegun_shoot_new.wav"
 }
 "Weapon_MachineGun.FireCrit"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
-	"wave"			")weapons/machinegun_shoot_crit.wav"
+	"wave"			")weapons/machinegun_shoot_crit_new.wav"
 }
 "Weapon_MachineGun.WindUp"	
 {
