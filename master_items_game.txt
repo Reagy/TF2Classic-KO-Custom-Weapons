@@ -16960,21 +16960,6 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"custom_sentry_type"
 					"value" 			"1" // Mini
 				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"custom_sentry_damage"
-					"value"				"0.5"
-				}	
-				"voice pitch scale"
-				{
-					"attribute_class"	"custom_sentry_firerate"
-					"value"				"0.75"
-				}	
-				"voice pitch scale"
-				{
-					"attribute_class"	"custom_sentry_turnspeed"
-					"value"				"1.35"
-				}	
 			}
 			"visuals"
 			{
@@ -19812,11 +19797,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "bleeding duration"
-				{
-					"attribute_class"	"bleeding_duration"
-					"value"				"3"
-				}	
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
