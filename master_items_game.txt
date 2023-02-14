@@ -31608,7 +31608,7 @@ Weapon by: 'Noclue'"
 			"item_logname"				"leidwerfer"
 			"item_iconname"				"leidwerfer"
 			"item_description"			"On hit: Apply 1 second of Toxin to target (stacks up to 10 seconds)
-			
+
 Model by: 'svdl'
 Weapon by: 'Noclue'"
 			"propername"				"1"
@@ -31651,7 +31651,7 @@ Weapon by: 'Noclue'"
 			"item_name"					"Outbreaker"
 			"item_description"			"On hit: Apply 5 seconds of Toxin to target (stacks up to 10 seconds)
 Take 35% reduced damage from targets inflicted with Toxin
-			
+
 Model by: 'svdl'
 Weapon by: 'Noclue'"
 			"propername"				"1"
