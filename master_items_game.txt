@@ -22804,7 +22804,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_DEFENSE_ANGEL"
 			"prefab"					"weapon_medigun"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"equip_region"				"medigun_backpack"										
 
 			"propername"				"1"
@@ -23100,7 +23100,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 		    "name"						"TF_WEAPON_WOODCUTTER_SHOTGUN"
 			"prefab"					"weapon_shotgun"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"primary"
 			"anim_slot"                 "secondary"
 			"item_class"				"tf_weapon_shotgun_primary"
@@ -23212,7 +23212,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 		    "name"						"TF_WEAPON_WOODCUTTER_AXE"
 			"prefab"					"weapon_fireaxe"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
