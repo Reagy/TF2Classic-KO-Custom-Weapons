@@ -19791,7 +19791,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"Chemical Catastrophe"
 			"item_type_name"			"Tear gas flamethrower hybrid..?"
 			"item_description"			"
-Deadly Mixture: This weapon applies Toxin to enemies for 5 seconds.
+Deadly Mixture: This weapon applies 1 second of Toxin to target (stacks up to 10 seconds)
 Medics affected by Toxin have reduced healing from their medi-guns.
 
 This weapon has improved compression blast properties
@@ -19845,7 +19845,7 @@ Weapon by: 'The One Of Wonders'"
                 "min_viewmodel_offset"
 				{
 					"attribute_class"	"custom_inflictcustom_onhit"
-					"value"				"1 5"
+					"value"				"0 1"
 				}				
 			}	
 			"visuals"
