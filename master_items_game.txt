@@ -6338,6 +6338,7 @@ Weapon by: 'Reagy'"
 				"min_viewmodel_offset"					"10 0 -7"
 				"melee range multiplier"				"0.55"							
 				"melee bounds multiplier"				"0.55"					
+				"class select override vcd"				"taunt05"							
 			}
 			"attributes"
 			{
@@ -11070,6 +11071,10 @@ Wearable by: 'Reagy'"
 			{
 				"medic"				"1"
 			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt02_v1"
+			}
 			"attributes"
 			{
 				"max health additive bonus"
@@ -11097,9 +11102,9 @@ Wearable by: 'Reagy'"
 			}
 			"visuals"
 			{
+			}
 				"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
 				"drop_sound"				"#ui/item_pack_drop.wav"
-			}
 		}
 //------------------------
 //------------------------
@@ -19825,7 +19830,7 @@ Weapon by: 'The One Of Wonders'"
                 "min_viewmodel_offset"
 				{
 					"attribute_class"	"custom_inflictcustom_onhit"
-					"value"				"0 1.0"
+					"value"				"1 5"
 				}				
 			}	
 			"visuals"
@@ -30166,7 +30171,7 @@ Weapon by 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-				"class select override vcd"				"taunt03"								
+				"class select override vcd"				"taunt03_v3"								
 			}
 			"attributes"
 			{
@@ -30401,7 +30406,7 @@ Weapon by 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-				"class select override vcd"				"taunt03"								
+				"class select override vcd"				"taunt03_v2"								
 			}
 			"attributes"
 			{
@@ -31622,7 +31627,7 @@ Weapon by: 'Noclue'"
 		
 		"9937"
 		{
-			"name"						"TF_WEAPON_OUTBREAKER"
+			"name"						"The Ubersaw"
 			"prefab"					"weapon_bonesaw"
 			"item_logname"				"outbreaker"
 			"item_iconname"				"outbreaker"
@@ -31666,7 +31671,12 @@ Weapon by: 'Noclue'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}	
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value"				"1"
+				}
 			}
 		}
 
