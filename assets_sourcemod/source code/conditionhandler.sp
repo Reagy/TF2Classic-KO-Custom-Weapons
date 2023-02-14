@@ -360,6 +360,12 @@ public any Native_SetCondDuration( Handle hPlugin, int iNumParams ) {
 	return 0;
 }
 void SetCondDuration( int iPlayer, int iCond, float flDuration, bool bAdd = false ) {
+	if( iCond == TFCC_TOXIN && bAdd ) {
+		flDuration = MinFloat( ePlayerConds[iPlayer][iCond].flRemoveTime + flDuration, GetGameTime() + 10.0 );
+		ePlayerConds[iPlayer][iCond].flRemoveTime = flDuration;
+		return;
+	}
+
 	ePlayerConds[iPlayer][iCond].flRemoveTime = bAdd ? ePlayerConds[iPlayer][iCond].flRemoveTime + flDuration : GetGameTime() + flDuration;
 }
 
