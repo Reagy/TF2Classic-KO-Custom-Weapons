@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" 	"backpack\condimentcannon\condimentcannon"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}

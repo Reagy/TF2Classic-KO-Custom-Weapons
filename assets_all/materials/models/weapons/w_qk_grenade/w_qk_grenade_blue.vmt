@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models\weapons\w_qk_grenade\w_qk_grenade_red.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models\weapons\w_qk_grenade\w_qk_grenade_blue"
-	}
-}

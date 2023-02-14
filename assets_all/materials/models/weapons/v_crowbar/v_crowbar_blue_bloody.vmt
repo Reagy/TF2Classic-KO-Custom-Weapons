@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials/models/weapons/v_crowbar/v_crowbar_bloody.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models/weapons/v_crowbar/v_crowbar_blue_bloody"
-	}
-}

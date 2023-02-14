@@ -1,0 +1,43 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models\player\items\romansword\romansword_grn"
+
+	"$nocull" "1"
+
+	"$phong" "1"
+	"$phongexponent" "5"
+	"$phongboost" "10"	
+	
+	"$phongfresnelranges"	"[.25 .5 1]"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "10"	
+	"$rimlightboost" "20"
+
+	"360?$color2" "[ 0.9 0.8 0.8 ]"
+
+	"$glowcolor" "1"
+	
+	// cloaking
+	"$cloakpassenabled" "1"
+	"proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"modelglowcolor"
+		{
+			"resultvar" "$glowcolor"
+		}
+		"equals"
+		{
+			"srcvar1"  "$glowcolor"
+			"resultvar" "$selfillumtint"
+		}
+		"equals"
+		{
+			"srcvar1"  "$glowcolor"
+			"resultvar" "$color2"
+		}
+	}
+}

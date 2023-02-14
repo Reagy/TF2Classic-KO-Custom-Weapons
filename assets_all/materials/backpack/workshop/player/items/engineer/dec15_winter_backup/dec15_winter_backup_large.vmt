@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture"	"backpack/workshop/player/items/engineer/dec15_winter_backup/dec15_winter_backup_large"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}

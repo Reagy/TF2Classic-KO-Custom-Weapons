@@ -11,8 +11,8 @@ public Plugin myinfo =
 	name = "Attribute: Leap Ability",
 	author = "Noclue",
 	description = "Leaping attribute.",
-	version = "1.0",
-	url = "no"
+	version = "1.1",
+	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
 bool bCanLeap[MAXPLAYERS+1];
@@ -21,19 +21,21 @@ bool bCanLeap[MAXPLAYERS+1];
 public void OnPluginStart() {
 	HookEvent( "post_inventory_application", Event_Inventory, EventHookMode_Post );
 	HookEvent( "player_death", Event_PlayerDeath, EventHookMode_Post );
+}
 
+public void OnMapStart() {
 	PrecacheSound( "player/demo_charge_windup1.wav" );
 	PrecacheSound( "player/demo_charge_windup2.wav" );
 	PrecacheSound( "player/demo_charge_windup3.wav" );
 }
 
-public Action Event_Inventory( Handle hEvent, const char[] sName, bool bDontBroadcast ) {
-	int iUser = GetEventInt( hEvent, "userid" );
-	int iPlayer = GetClientOfUserId( iUser );
+public Action Event_Inventory( Event hEvent, const char[] sName, bool bDontBroadcast ) {
+	int iPlayer = hEvent.GetInt( "userid" );
+	iPlayer = GetClientOfUserId( iPlayer );
 
-	if( iPlayer < MaxClients ) {
+	if( IsValidPlayer( iPlayer ) ) {
 		float flValue = AttribHookFloat( 0.0, iPlayer, "custom_leap_ability" );
-		bCanLeap[iPlayer] = flValue != 0.0;
+		bCanLeap[iPlayer] = flValue != 0.0 && TF2_GetPlayerClass( iPlayer ) != TFClass_Spy; //todo: find non-hack solution for this
 		if( bCanLeap[iPlayer] )
 			Tracker_Create( iPlayer, LEAPKEYNAME, 100.0, flValue );
 		else
@@ -42,11 +44,11 @@ public Action Event_Inventory( Handle hEvent, const char[] sName, bool bDontBroa
 	
 	return Plugin_Continue;
 }
-public Action Event_PlayerDeath( Handle hEvent, const char[] sName, bool bDontBroadcast ) {
-	int iUser = GetEventInt( hEvent, "attacker" );
-	int iPlayer = GetClientOfUserId( iUser );
+public Action Event_PlayerDeath( Event hEvent, const char[] sName, bool bDontBroadcast ) {
+	int iPlayer = hEvent.GetInt( "attacker" );
+	iPlayer = GetClientOfUserId( iPlayer );
 
-	if( iPlayer < MAXPLAYERS && bCanLeap[ iPlayer ] )
+	if( IsValidPlayer( iPlayer ) && bCanLeap[ iPlayer ] )
 		Tracker_SetValue( iPlayer, LEAPKEYNAME, 100.0 );
 
 	return Plugin_Continue;
@@ -81,22 +83,17 @@ void PlayerLeap( int iPlayer, float flAngles[3] ) {
 	
 	flForwardVel[0] *= flForce;
 	flForwardVel[1] *= flForce;
-	flForwardVel[2] = FloatClamp( flForwardVel[2] * flForce, 300.0, 3000.0 );
+	flForwardVel[2] = FloatClamp( flForwardVel[2] * flForce, 260.0, 3000.0 );
 		
 	GetEntPropVector( iPlayer, Prop_Data, "m_vecVelocity", flPlayerVel );
 	AddVectors( flPlayerVel, flForwardVel, flFinalVel );
 	SetEntPropVector( iPlayer, Prop_Data, "m_vecAbsVelocity", flFinalVel );
 
-	int iRandom = GetRandomInt( 0, 2 );
+	int iRandom = GetRandomInt( 1, 3 );
 
-	switch( iRandom ) {
-		case 0:
-			EmitSoundToAll( "player/demo_charge_windup1.wav", iPlayer );
-		case 1:
-			EmitSoundToAll( "player/demo_charge_windup2.wav", iPlayer );
-		case 2:
-			EmitSoundToAll( "player/demo_charge_windup3.wav", iPlayer );
-	}
+	static char szString[64];
+	Format( szString, sizeof( szString ), "player/demo_charge_windup%i.wav", iRandom );
+	EmitSoundToAll( szString, iPlayer );
 
 	Tracker_SetValue( iPlayer, LEAPKEYNAME, 0.0 );
 }

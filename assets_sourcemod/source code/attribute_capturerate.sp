@@ -30,7 +30,7 @@ public void OnMapStart() {
 
 MRESReturn Hook_GetCaptureValue( Address aThis, DHookReturn hReturn, DHookParam hParam ) {
 	int iEntity = hParam.Get( 1 );
-	if( iEntity > MaxClients ) return MRES_Ignored;
+	if( !(iEntity <= MaxClients) ) return MRES_Ignored;
 	TFClassType class = TF2_GetPlayerClass( iEntity );
 
 	int iReturn = 1;
@@ -42,7 +42,7 @@ MRESReturn Hook_GetCaptureValue( Address aThis, DHookReturn hReturn, DHookParam 
 			iReturn = 2;
 		}
 	}
-	iReturn += view_as<int>( AttribHookFloat( 0.0, iEntity, "custom_capture_rate" ) );
+	iReturn += RoundToFloor( AttribHookFloat( 0.0, iEntity, "custom_capture_rate" ) );
 	hReturn.Value = iReturn;
 
 	return MRES_ChangedOverride;

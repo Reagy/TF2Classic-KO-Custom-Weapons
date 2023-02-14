@@ -3,26 +3,19 @@
 	"$basetexture"	"models\weapons\v_revolver\v_deagle"
 	"$basemapalphaphongmask" "1"
 
-	"$envmapmask"		"models\weapons\v_revolver\deegle_normal"
+	"$bumpmap"           "models\weapons\v_revolver\deegle_normal"
 
 	"$phong" "1"
-	"$phongexponent" "9"
-	"$phongboost" "4"	
+	"$phongexponent" "15"
+	"$phongboost" "15"	
 	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
-	"$phongfresnelranges"	"[.25 .5 1]"
+	"$phongfresnelranges"	"[.2 .1 4]"
 
 	"$tempvar" "0"
-
-	"$basephongexponent" "25"
-	"$basephongboost" "5"
-
-	"$commadd_phongexponent" "40"
-	"$commadd_phongboost" 	"22.5"
-	"$commweapon"		"0"
 	
 	"$rimlight" "1"						
-	"$rimlightexponent" "20"				
-	"$rimlightboost" ".125"								// Boost for ambient cube component of rim lighting
+	"$rimlightexponent" "4"				
+	"$rimlightboost" ".2"								// Boost for ambient cube component of rim lighting
 
 	"360?$color2" "[ 0.5 0.5 0.5 ]"
 

@@ -1,8 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" "backpack/workshop/weapons/c_models/c_rift_fire_axe/c_rift_fire_axe_large"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}
-

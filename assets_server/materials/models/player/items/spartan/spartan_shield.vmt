@@ -1,0 +1,49 @@
+"vertexlitgeneric"
+{
+
+	"$basetexture" "models\player\items\spartan\spartan_shield"
+	"$bumpmap" "models\player\items\spartan\spartan_shield_norm.vtf"
+
+	"$nocull" "1"
+
+	"$phong" "1"
+	"$phongexponent" "5"
+	"$phongboost" "5"	
+	
+	"$phongfresnelranges"	"[.25 .5 1]"
+
+
+	"$rimlight" "1"												
+	"$rimlightexponent" "15"											
+	"$rimlightboost" "1"			
+
+	
+	"360?$color2" "[ 0.9 0.8 0.8 ]"
+
+
+	"$glowcolor" "1"
+
+	// cloaking
+	"$cloakpassenabled" "1"
+	"proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"modelglowcolor"
+		{
+			"resultvar" "$glowcolor"
+		}
+		"equals"
+		{
+			"srcvar1"  "$glowcolor"
+			"resultvar" "$selfillumtint"
+		}
+		"equals"
+		{
+			"srcvar1"  "$glowcolor"
+			"resultvar" "$color2"
+		}
+	}
+
+}

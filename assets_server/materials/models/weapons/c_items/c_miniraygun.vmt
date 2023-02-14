@@ -1,0 +1,54 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_miniraygun"
+	"$yellow" "0"
+	
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "8"
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"	
+	"$phongfresnelranges"	"[.2  0 0]"
+	"$basemapalphaphongmask" "1"
+
+	"$cloakPassEnabled" "1"
+
+	"$rimlight" "1"			
+	"$rimlightexponent" "20"	
+	"$rimlightboost" ".25"
+	
+	"$glowcolor" "1"
+
+
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+
+		"Equals"
+		{
+			"srcVar1" "$yellow"
+			"resultVar" "$color2"
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+
+}

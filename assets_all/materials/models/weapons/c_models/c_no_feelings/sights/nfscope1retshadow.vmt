@@ -1,9 +1,0 @@
-"UnlitGeneric"
-{
-	$basetexture "models/weapons/c_models/c_no_feelings/sights/NFScope1RetShadow"
-	$translucent "1"
-	$ignorez "1"
-	$nocull "1"
-	$vertexcolor "1"
-	$vertexalpha "1"
-}

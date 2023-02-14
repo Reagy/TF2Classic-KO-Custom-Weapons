@@ -1,7 +1,0 @@
-"VertexLitGeneric"
-{
-    $baseTexture "models/weapons/c_models/c_minimum_distance/c_minimum_distance_sight"
-    $additive 1
-    $nocull 1
-    $model 1
-}

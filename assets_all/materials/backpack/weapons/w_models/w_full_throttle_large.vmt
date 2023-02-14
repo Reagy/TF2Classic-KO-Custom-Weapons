@@ -1,6 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" "backpack\weapons\w_models\w_full_throttle_large"
-	$translucent 1
-	$vertexcolor 1
-}

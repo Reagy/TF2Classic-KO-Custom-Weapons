@@ -1,9 +1,0 @@
-"VertexLitGeneric"
-{
-	"$baseTexture" "models\weapons\w_models\w_eq_molotov\w_eq_molotov_bottle"
-
-	"$phong" "1"
-	"$phongboost" "160"
-	"$phongexponent" "20"
-		
-}
