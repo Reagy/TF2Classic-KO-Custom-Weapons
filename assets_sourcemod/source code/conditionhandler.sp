@@ -689,6 +689,11 @@ bool AddToxinUber( int iPlayer ) {
 	return true;
 }
 Action TickToxinUber( Handle hTimer, int iPlayer ) {
+	if( !( IsClientInGame( iPlayer ) && IsPlayerAlive( iPlayer ) ) ) {
+		RemoveCond( iPlayer, TFCC_TOXINUBER );
+		return Plugin_Stop;	
+	}
+
 	float vecSource[3]; GetClientAbsOrigin( iPlayer, vecSource );
 
 	int iTarget = -1;
@@ -797,9 +802,11 @@ bool AddAngelShield( int iPlayer ) {
 	int iTeamNum = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	SetEntProp( iNewShield, Prop_Send, "m_nSkin", iTeamNum );
 
+	PrintToServer( "setting up transmit hook for shield %i", iNewShield );
 	SDKHook( iNewShield, SDKHook_SetTransmit, Hook_NewShield );
 
 	DispatchSpawn( iNewShield );
+	ActivateEntity( iNewShield );
 	g_iAngelShields[iPlayer][0] = EntIndexToEntRef( iNewShield );
 
 	int iNewManager = CreateEntityByName( "material_modify_control" );
@@ -820,7 +827,9 @@ bool AddAngelShield( int iPlayer ) {
 	static char szCommand[64];
 	Format( szCommand, sizeof(szCommand), "r_screenoverlay %s", szShieldOverlays[iTeamNum] );
 
-	ClientCommand( iPlayer, szCommand ); 
+	if( IsClientInGame( iPlayer ) ) {
+		ClientCommand( iPlayer, szCommand ); 
+	}
 
 	return true;
 }
@@ -839,8 +848,10 @@ void RemoveAngelShield( int iPlayer ) {
 		return;
 	}
 
-	ClientCommand( iPlayer, "r_screenoverlay 0");
-	EmitSoundToAll( "weapons/buffed_off.wav", iPlayer, SNDCHAN_AUTO, 100 );
+	if( IsClientInGame( iPlayer ) ) {
+		ClientCommand( iPlayer, "r_screenoverlay 0");
+		EmitSoundToAll( "weapons/buffed_off.wav", iPlayer, SNDCHAN_AUTO, 100 );
+	}
 
 	if( IsValidEntity( GetAngelShield( iPlayer, 0 ) ) ) {
 		RemoveEntity( GetAngelShield( iPlayer, 0 ) );
@@ -848,8 +859,6 @@ void RemoveAngelShield( int iPlayer ) {
 	if( IsValidEntity( GetAngelShield( iPlayer, 1 ) ) ) {
 		RemoveEntity( GetAngelShield( iPlayer, 1 ) );
 	}
-
-	SetEntProp( iPlayer, Prop_Data, "m_takedamage", 2 );
 
 	g_iAngelShields[iPlayer][0] = -1;
 	g_iAngelShields[iPlayer][1] = -1;
@@ -961,7 +970,8 @@ void ManageAngelShields() {
 }
 
 Action Hook_NewShield( int iEntity, int iClient ) {
-	if( GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity") == iClient ) {
+	PrintToServer( "performing transmit hook for shield %i", iEntity );
+	if( GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) == iClient ) {
 		return Plugin_Handled;
 	}
 
@@ -1045,6 +1055,12 @@ bool AddQuickUber( int iPlayer ) {
 }
 
 Action TickQuickUber( Handle hTimer, int iPlayer ) {
+	if( !( IsClientInGame( iPlayer ) && IsPlayerAlive( iPlayer ) ) )
+	{
+		RemoveCond( iPlayer, TFCC_QUICKUBER );
+		return Plugin_Stop;	
+	}
+
 	if( GetCondLevel( iPlayer, TFCC_QUICKUBER ) != 1 )
 		return Plugin_Continue;
 
