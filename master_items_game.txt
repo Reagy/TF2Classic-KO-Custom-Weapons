@@ -19829,7 +19829,7 @@ Weapon by: 'The One Of Wonders'"
                 "min_viewmodel_offset"
 				{
 					"attribute_class"	"custom_inflictcustom_onhit"
-					"value"				"1 5"
+					"value"				"0 5"
 				}				
 			}	
 			"visuals"
