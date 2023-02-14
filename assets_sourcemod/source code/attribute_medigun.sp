@@ -59,7 +59,7 @@ int g_iBeamTargetPoints[MAXPLAYERS+1] = { -1, ... };
 int g_iOldTargets[MAXPLAYERS+1] = { 69420, ... };
 bool g_bOldCharging[MAXPLAYERS+1] = { false, ... };
 
-float g_flMultTable[MAXPLAYERS+1] = { 0.5, ... }; //cached maximum overheal for mediguns
+//float g_flMultTable[MAXPLAYERS+1] = { 0.5, ... }; //cached maximum overheal for mediguns
 
 //oath breaker
 bool g_bRadiusHealer[MAXPLAYERS+1] = { false, ... };
@@ -214,7 +214,7 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	int iPlayer = hEvent.GetInt( "userid" );
 	iPlayer = GetClientOfUserId( iPlayer );
 
-	g_flMultTable[iPlayer] = AttribHookFloat( 0.5, iPlayer, "custom_maximum_overheal" );
+	//g_flMultTable[iPlayer] = AttribHookFloat( 0.5, iPlayer, "custom_maximum_overheal" );
 	if( RoundToFloor( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) == CMEDI_OATH ) {
 		StartRadialHeal( iPlayer );
 		return Plugin_Continue;
@@ -290,7 +290,7 @@ MRESReturn Detour_GetBuffedMaxHealth( Address aThis, DHookReturn hReturn ) {
 		if( !IsValidPlayer( iIndex ) )
 			continue;
 
-		float flNewMult = g_flMultTable[ iIndex ];
+		float flNewMult = AttribHookFloat( 0.5, iIndex, "custom_maximum_overheal" ); //g_flMultTable[ iIndex ];
 		flLargestMult = MaxFloat( flLargestMult, flNewMult );
 	}
 
