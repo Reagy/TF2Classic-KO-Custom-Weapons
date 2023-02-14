@@ -7,8 +7,6 @@
 #include <dhooks>
 #include <kocwtools>
 
-#define DEBUG
-
 public Plugin myinfo =
 {
 	name = "Condition Handler",
@@ -808,11 +806,11 @@ bool AddAngelShield( int iPlayer ) {
 	int iTeamNum = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	SetEntProp( iNewShield, Prop_Send, "m_nSkin", iTeamNum );
 
-	SDKHook( iNewShield, SDKHook_SetTransmit, Hook_NewShield );
-
 	DispatchSpawn( iNewShield );
 	ActivateEntity( iNewShield );
 	g_iAngelShields[iPlayer][0] = EntIndexToEntRef( iNewShield );
+
+	RequestFrame( Frame_ApplyHook, iNewShield );
 
 	int iNewManager = CreateEntityByName( "material_modify_control" );
 
@@ -838,6 +836,12 @@ bool AddAngelShield( int iPlayer ) {
 
 	return true;
 }
+
+void Frame_ApplyHook( int iShield ) {
+	if( IsValidEdict( iShield ) )
+		SDKHook( iShield, SDKHook_SetTransmit, Hook_NewShield );
+}
+
 Action ExpireAngelShield( Handle hTimer, int iPlayer ) {
 	RemoveCond( iPlayer, TFCC_ANGELSHIELD );
 
