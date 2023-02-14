@@ -802,7 +802,6 @@ bool AddAngelShield( int iPlayer ) {
 	int iTeamNum = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	SetEntProp( iNewShield, Prop_Send, "m_nSkin", iTeamNum );
 
-	PrintToServer( "setting up transmit hook for shield %i", iNewShield );
 	SDKHook( iNewShield, SDKHook_SetTransmit, Hook_NewShield );
 
 	DispatchSpawn( iNewShield );
@@ -970,7 +969,6 @@ void ManageAngelShields() {
 }
 
 Action Hook_NewShield( int iEntity, int iClient ) {
-	PrintToServer( "performing transmit hook for shield %i", iEntity );
 	if( GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) == iClient ) {
 		return Plugin_Handled;
 	}

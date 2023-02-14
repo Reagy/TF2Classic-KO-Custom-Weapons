@@ -758,6 +758,8 @@ void Lateload() {
 	static char sEffectName[ 96 ];
 	while ( ( iIndex = FindEntityByClassname( iIndex, "info_particle_system" ) ) != -1 ) {
 		int iParent = GetEntPropEnt( iIndex, Prop_Data, "m_hOwnerEntity" );
+		if( iParent == -1 )
+			continue;
 
 		GetEntityClassname( iParent, sClassname, sizeof( sClassname ) );
 		GetEntPropString( iIndex, Prop_Data, "m_iszEffectName", sEffectName, sizeof( sEffectName ) );
