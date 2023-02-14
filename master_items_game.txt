@@ -17197,35 +17197,34 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //-------------------------------
 		"9078"																				// This is a wearable vest for Soldier that gives him faster movement and more ammo - in exchange for an item slot. Hmm. Better think about it, yeah?
 		{
-			"name"						"Flak Vest"
+			"name"						"TF_WEARABLE_VFLAK"
+			"prefab"					"weapon_rocketlauncher"
 			"item_class"				"tf_wearable"											// Yes! This is a wearable item - like the Gunboats, or the Cozy Camper from live.
 			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"					"secondary"
 			
 			"item_quality"				"rarity3"
-			
-			"item_slot"					"primary"												// I may or may not have been inspired by the Armored Core from ctf2w
-
-			"equip_region"					"grenades"													// Probably vestigial, not sure.
-			"anim_slot"					"FORCE_NOT_USED"								// I actually need these here, for once. This item doesn't load from a prefab, so it needs info for the bounding boxes of the icons!
-			"image_inventory_size_w"	"128"													
-			"image_inventory_size_h"	"82"
-			"item_logname"				"flak_vest"
 
 			"propername"				"1"
-			"item_name"				"Flak Vest"
+			"item_name"					"Flak Vest"
 			"item_type_name"			"Vest"
 			"item_description"			"
 You maggots better run before I pump your asses full of lead!
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
+			"item_logname"				"flak_vest"
+			"item_iconname"				"what"
 			"image_inventory"			"backpack/workshop/player/items/soldier/spr17_flakcatcher/spr17_flakcatcher"
 			"model_player"				"models/workshop/player/items/soldier/spr17_flakcatcher/spr17_flakcatcher.mdl"
 			"used_by_classes"
 			{
 				"soldier"				"1"
 			}
-			"loadondemand"				"1"
-			"act_as_wearable"			"1"
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt02_v2"								
+			}
 			"attributes"
 			{
 				"maxammo secondary increased"														// Because you have no Rocket Launcher
