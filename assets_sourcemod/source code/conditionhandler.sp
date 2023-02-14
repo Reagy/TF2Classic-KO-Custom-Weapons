@@ -525,7 +525,7 @@ void CheckOnHitCustomCond( int iVictim, int iWeapon, TFDamageInfo tfInfo ) {
 	float flDuration = StringToFloat( szExplode[1] );
 
 	//don't apply more toxin from toxin dot
-	if( iCond == TFCC_TOXIN && tfInfo.iFlags & DMG_PHYSGUN )
+	if( iCond == TFCC_TOXIN && ( tfInfo.iFlags & DMG_PHYSGUN || tfInfo.iFlags & DMG_BURN ) )
 		return;
 
 	AddCond( iVictim, iCond );
