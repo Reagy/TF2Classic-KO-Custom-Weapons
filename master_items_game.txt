@@ -23100,7 +23100,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 		    "name"						"TF_WEAPON_WOODCUTTER_SHOTGUN"
 			"prefab"					"weapon_shotgun"
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 			"item_slot"					"primary"
 			"anim_slot"                 "secondary"
 			"item_class"				"tf_weapon_shotgun_primary"
@@ -23191,7 +23191,7 @@ Weapon by: 'The One Of Wonders'"
                 "add condition on hit"															
 				{
 					"attribute_class"	"add_onhit_addcond"
-					"value"				"15 10"
+					"value"				"24 10"
 				}				
 			}
 			"visuals"
@@ -23212,7 +23212,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 		    "name"						"TF_WEAPON_WOODCUTTER_AXE"
 			"prefab"					"weapon_fireaxe"
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
@@ -23267,7 +23267,7 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"or_crit_vs_playercond"
-					"value"				"65536"														
+					"value"				"524288"														
 				}
 				"voice pitch scale"
 				{
