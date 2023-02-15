@@ -543,7 +543,7 @@ void CheckOnKillCond( int iAttacker, int iWeapon ) {
 	int iCond = StringToInt( szExplode[0] );
 	float flDuration = StringToFloat( szExplode[1] );
 
-	TF2_AddCondition( iAttacker, view_as<TFCond>( iCond ), flDuration, iAttacker );
+	TF2_AddCondition( iAttacker, view_as<TFCond>( iCond ), flDuration );
 }
 
 
@@ -810,7 +810,7 @@ bool AddAngelShield( int iPlayer ) {
 	ActivateEntity( iNewShield );
 	g_iAngelShields[iPlayer][0] = EntIndexToEntRef( iNewShield );
 
-	RequestFrame( Frame_ApplyHook, iNewShield );
+	//RequestFrame( Frame_ApplyHook, iNewShield );
 
 	int iNewManager = CreateEntityByName( "material_modify_control" );
 
