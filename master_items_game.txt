@@ -11720,6 +11720,11 @@ Weapon by: 'Reagy'"
 				{
 					"ACT_MP_STAND_SECONDARY"				"ACT_MP_STAND_PRIMARY"
 					"ACT_MP_RUN_SECONDARY"					"ACT_MP_RUN_PRIMARY"
+                    "ACT_MP_DEPLOYED_IDLE"                  "ACT_MP_STAND_SECONDARY"
+                    "ACT_MP_DEPLOYED"                       "ACT_MP_RUN_SECONDARY"
+                    "ACT_MP_CROUCH_DEPLOYED_IDLE"           "ACT_MP_CROUCH_SECONDARY"
+					"ACT_MP_CROUCHWALK_DEPLOYED"			"ACT_MP_CROUCHWALK_SECONDARY"
+                    "ACT_MP_SWIM_DEPLOYED"                  "ACT_MP_SWIM_SECONDARY"
 				}
 				"sound_single_shot"		"Weapon_FAL.Single"
 				"sound_burst"			"Weapon_FAL.SingleCrit"
@@ -30103,7 +30108,7 @@ Questioned by: 'The One Of Wonders'"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"				"backpack/player/items/custom/scout/flashy_fox"
-			"model_player"					"models/player/items/custom/scout/flashy_fox/flashy_fox.mdl"
+			"model_player"					"models/player/items/custom/scout/flashy_fox/flashy_fox_new.mdl"
 			"used_by_classes"
 			{
 				"scout"                		"secondary"
@@ -30137,8 +30142,8 @@ Questioned by: 'The One Of Wonders'"
 					"value"					"1"
 				}
 			}
-			"mouse_pressed_sound"		"#weapons/sentry_finish.wav"
-			"drop_sound"				"#weapons/sentry_upgrading7.wav"
+			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
+			"drop_sound"				"#ui/item_pack_drop.wav"
 		}	
 //--------------------------------
 //--------------------------------
