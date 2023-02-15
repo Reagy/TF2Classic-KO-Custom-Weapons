@@ -22809,7 +22809,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_DEFENSE_ANGEL"
 			"prefab"					"weapon_medigun"
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 			"equip_region"				"medigun_backpack"										
 
 			"propername"				"1"
