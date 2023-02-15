@@ -11720,6 +11720,11 @@ Weapon by: 'Reagy'"
 				{
 					"ACT_MP_STAND_SECONDARY"				"ACT_MP_STAND_PRIMARY"
 					"ACT_MP_RUN_SECONDARY"					"ACT_MP_RUN_PRIMARY"
+                    "ACT_MP_DEPLOYED_IDLE"                  "ACT_MP_STAND_SECONDARY"
+                    "ACT_MP_DEPLOYED"                       "ACT_MP_RUN_SECONDARY"
+                    "ACT_MP_CROUCH_DEPLOYED_IDLE"           "ACT_MP_CROUCH_SECONDARY"
+					"ACT_MP_CROUCHWALK_DEPLOYED"			"ACT_MP_CROUCHWALK_SECONDARY"
+                    "ACT_MP_SWIM_DEPLOYED"                  "ACT_MP_SWIM_SECONDARY"
 				}
 				"sound_single_shot"		"Weapon_FAL.Single"
 				"sound_burst"			"Weapon_FAL.SingleCrit"
@@ -18544,17 +18549,17 @@ Weapon by: 'The One Of Wonders'"
 				"move speed penalty"
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.75"
+					"value"				"0.7"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.5"
+					"value"				"0.6666666666666667"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.333333"
+					"value"				"0.3"
 				}
 				"reduced_healing_from_medics"
 				{
@@ -18576,11 +18581,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
-                "no damage falloff over distance"
+               	"voice pitch scale"																
 				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
-				}				
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.5"
+				}			
 			}
 			"visuals"																		
 			{
@@ -19780,7 +19785,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"Chemical Catastrophe"
 			"item_type_name"			"Tear gas flamethrower hybrid..?"
 			"item_description"			"
-Deadly Mixture: This weapon applies 1 second of Toxin to target (stacks up to 10 seconds)
+Deadly Mixture: This weapon applies 2 seconds of Toxin to target (stacks up to 10 seconds)
 Medics affected by Toxin have reduced healing from their medi-guns.
 
 This weapon has improved compression blast properties
@@ -19829,7 +19834,7 @@ Weapon by: 'The One Of Wonders'"
                 "min_viewmodel_offset"
 				{
 					"attribute_class"	"custom_inflictcustom_onhit"
-					"value"				"0 5"
+					"value"				"0 2.0"
 				}				
 			}	
 			"visuals"
@@ -22804,7 +22809,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_DEFENSE_ANGEL"
 			"prefab"					"weapon_medigun"
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 			"equip_region"				"medigun_backpack"										
 
 			"propername"				"1"
@@ -28085,7 +28090,7 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.675"
+					"value"				"0.45"
 				}
 				"voice pitch scale"
 				{
@@ -28095,7 +28100,12 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"1.33"
+					"value"				"1.4"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.5"
 				}
 				"voice pitch scale"
 				{
@@ -29835,20 +29845,15 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-				"mod max primary clip override" 
+				"voice pitch scale"
 				{
-					"attribute_class"	"mod_max_primary_clip_override"
-					"value"				-1
-				}
-				"mod no reload DISPLAY ONLY"
-				{
-					"attribute_class"		"mod_no_reload_display_only"
-					"value"					"1"
+					"attribute_class"	"mult_clipsize"
+					"value"				"2" 
 				}
 			    "voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.8"
+					"value" 			"0.45"
 				}
 				"voice pitch scale"
 				{
@@ -29869,6 +29874,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_player_movespeed"
 					"value"				"0.85"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"0.5"
 				}
 				"crit mod disabled"															
 				{
@@ -30098,7 +30108,7 @@ Questioned by: 'The One Of Wonders'"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"				"backpack/player/items/custom/scout/flashy_fox"
-			"model_player"					"models/player/items/custom/scout/flashy_fox/flashy_fox.mdl"
+			"model_player"					"models/player/items/custom/scout/flashy_fox/flashy_fox_new.mdl"
 			"used_by_classes"
 			{
 				"scout"                		"secondary"
@@ -30132,8 +30142,8 @@ Questioned by: 'The One Of Wonders'"
 					"value"					"1"
 				}
 			}
-			"mouse_pressed_sound"		"#weapons/sentry_finish.wav"
-			"drop_sound"				"#weapons/sentry_upgrading7.wav"
+			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
+			"drop_sound"				"#ui/item_pack_drop.wav"
 		}	
 //--------------------------------
 //--------------------------------
