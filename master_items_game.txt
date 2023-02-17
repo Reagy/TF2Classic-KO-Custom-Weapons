@@ -22809,7 +22809,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_DEFENSE_ANGEL"
 			"prefab"					"weapon_medigun"
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 			"equip_region"				"medigun_backpack"										
 
 			"propername"				"1"
@@ -22857,11 +22857,6 @@ Weapon by: 'Noclue'"
 				{
 					"attribute_class"	"custom_medibeamtype"
 					"value"				"2"
-				}
-				"ubercharge overheal rate penalty"
-				{
-					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"0.25"
 				}
 				"lunchbox adds minicrits" //disables vanilla uber behavior
 				{
@@ -27917,7 +27912,7 @@ Wearable by: 'The One Of Wonders'"
         {
  			"name"						"TF_WEAPON_FORBIDDEN_BLADE"
 			"prefab"					"weapon_bottle"									
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 
 			"item_quality"				"rarity4"
 
