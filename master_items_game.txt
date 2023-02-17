@@ -11046,7 +11046,7 @@ Weapon by: 'Reagy'"
 			"name"						"TF_WEARABLE_BVEST_MEDIC"
 			"prefab"					"weapon_medigun"
 			"item_class"				"tf_wearable"				
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"secondary"
 			"anim_slot"					"secondary"
 
@@ -22857,11 +22857,6 @@ Weapon by: 'Noclue'"
 				{
 					"attribute_class"	"custom_medibeamtype"
 					"value"				"2"
-				}
-				"ubercharge overheal rate penalty"
-				{
-					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"0.25"
 				}
 				"lunchbox adds minicrits" //disables vanilla uber behavior
 				{
