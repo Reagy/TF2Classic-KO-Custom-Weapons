@@ -761,8 +761,8 @@ Action TickToxinPatient( Handle hTimer, int iPlayer ) {
 	ANGEL SHIELD
 */
 
-const int ANGSHIELD_HEALTH = 120;
-const float ANGSHIELD_DURATION = 3.0;
+const int ANGSHIELD_HEALTH = 100;
+const float ANGSHIELD_DURATION = 2.0;
 
 float g_flLastDamagedShield[MAXPLAYERS+1];
 

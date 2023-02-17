@@ -23019,7 +23019,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Guardian Angel"
 			"item_type_name"			"Medi Gun"
-			"item_description"			"Übercharge provides a resistance bubble that blocks up to 120 damage
+			"item_description"			"Übercharge provides a resistance bubble that blocks up to 100 damage
 
 We shall fight until the very end!
 
@@ -23048,7 +23048,7 @@ Weapon by: 'Noclue'"
 				"powerup duration"
 				{
 					"attribute_class"	"dummy"
-					"value"				"3"
+					"value"				"2"
 				}
 				
 				"kill eater score type"
@@ -23060,13 +23060,6 @@ Weapon by: 'Noclue'"
 				{
 					"attribute_class"	"custom_medibeamtype"
 					"value"				"2"
-				}
-				
-				
-				"ubercharge overheal rate penalty"
-				{
-					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"0.25"
 				}
 				
 				"lunchbox adds minicrits" //disables vanilla uber behavior
