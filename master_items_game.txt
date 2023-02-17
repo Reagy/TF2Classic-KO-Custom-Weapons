@@ -11046,7 +11046,7 @@ Weapon by: 'Reagy'"
 			"name"						"TF_WEARABLE_BVEST_MEDIC"
 			"prefab"					"weapon_medigun"
 			"item_class"				"tf_wearable"				
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"secondary"
 			"anim_slot"					"secondary"
 
@@ -22809,7 +22809,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_DEFENSE_ANGEL"
 			"prefab"					"weapon_medigun"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"equip_region"				"medigun_backpack"										
 
 			"propername"				"1"
@@ -27917,7 +27917,7 @@ Wearable by: 'The One Of Wonders'"
         {
  			"name"						"TF_WEAPON_FORBIDDEN_BLADE"
 			"prefab"					"weapon_bottle"									
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_quality"				"rarity4"
 
