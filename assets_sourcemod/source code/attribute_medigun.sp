@@ -392,6 +392,11 @@ MRESReturn Hook_MedigunHolster( int iThis ) {
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
 
 	if( IsValidPlayer( iOwner ) ) {
+		if( HasCustomCond( iOwner, TFCC_ANGELSHIELD ) && GetCustomCondSourcePlayer( iOwner, TFCC_ANGELSHIELD ) == iOwner ) {
+			SetCustomCondLevel( iOwner, TFCC_ANGELSHIELD, 0 );
+			RemoveCustomCond( iOwner, TFCC_ANGELSHIELD );
+		}
+
 		DeleteBeamEmitter( iOwner, true );
 		DeleteBeamEmitter( iOwner, false );
 
@@ -781,35 +786,24 @@ MRESReturn Detour_HealStartPre( Address aThis, DHookParam hParams ) {
 
 	return MRES_Supercede;
 }
-/*MRESReturn Detour_HealStopPre( Address aThis, DHookParam hParams ) {
-	int iTarget = GetPlayerFromShared( aThis );
-	int iHealer = hParams.Get( 1 );
-
-	int iOwnerTeam = GetClientTeam( iOwner );
-	int iTargetTeam = GetClientTeam( iTarget );
-	int iDisguiseTeam = GetEntProp( iTarget, Prop_Send, "m_nDisguiseTeam" );
-
-	if( iOwnerTeam == iTargetTeam || iOwnerTeam == iDisguiseTeam )
-		return MRES_Ignored;
-
-	return MRES_Supercede;
-}*/
 
 /*
 	GUARDIAN ANGEL
 */
 
+#define ANGEL_UBER_COST 0.25
+
 MRESReturn AngelGunUber( int iMedigun ) {
 	SetEntProp( iMedigun, Prop_Send, "m_bChargeRelease", false );
 
 	float flChargeLevel = GetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel" );
-	if( flChargeLevel < 0.25 )
+	if( flChargeLevel < ANGEL_UBER_COST )
 		return MRES_Ignored;
 
 	int iOwner = GetEntPropEnt( iMedigun, Prop_Send, "m_hOwnerEntity" );
 	int iTarget = GetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget" );
 
-	bool bAppliedCharge = false;
+	/*bool bAppliedCharge = false;
 	if( !HasCustomCond( iOwner, TFCC_ANGELSHIELD ) && !HasCustomCond( iOwner, TFCC_ANGELINVULN ) ) {
 		AddCustomCond( iOwner, TFCC_ANGELSHIELD );
 		SetCustomCondSourcePlayer( iOwner, TFCC_ANGELSHIELD, iOwner );
@@ -824,14 +818,21 @@ MRESReturn AngelGunUber( int iMedigun ) {
 			SetCustomCondSourceWeapon( iTarget, TFCC_ANGELSHIELD, iMedigun );
 			bAppliedCharge = true;
 		}
-	}
+	}*/
 
-	if( bAppliedCharge ) {
-		EmitSoundToAll( "weapons/angel_shield_on.wav", iOwner, SNDCHAN_WEAPON, SNDLEVEL_NORMAL );
-		SetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel", flChargeLevel - 0.25 );
+	int iApplyTo = IsValidPlayer( iTarget ) ? iTarget : iOwner;
+
+	if( !HasCustomCond( iApplyTo, TFCC_ANGELSHIELD ) && !HasCustomCond( iApplyTo, TFCC_ANGELINVULN ) ) {
+		AddCustomCond( iApplyTo, TFCC_ANGELSHIELD );
+		SetCustomCondSourcePlayer( iApplyTo, TFCC_ANGELSHIELD, iOwner );
+		SetCustomCondSourceWeapon( iApplyTo, TFCC_ANGELSHIELD, iMedigun );
+		
+		EmitSoundToAll( "weapons/angel_shield_on.wav", iApplyTo, SNDCHAN_WEAPON, 85 );
+		SetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel", flChargeLevel - ANGEL_UBER_COST );
+
 		return MRES_Handled;
 	}
-	
+
 	return MRES_Ignored;
 }
 
@@ -959,7 +960,7 @@ void StopRadialHeal( int iPlayer ) {
 //TODO: optimize this
 Action Timer_RadialHeal( Handle hTimer, int iPlayer ) {
 	if( !IsClientConnected( iPlayer ) || !IsClientInGame( iPlayer ) || !IsPlayerAlive( iPlayer ) || RoundToFloor( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) != CMEDI_OATH ) {
-		StopRadialHeal( iPlayer );
+		//StopRadialHeal( iPlayer );
 		return Plugin_Stop;
 	}	
 
