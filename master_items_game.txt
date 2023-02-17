@@ -7800,7 +7800,7 @@ Weapon by: 'Reagy'"
 			"static_attrs"																	
 			{
 				"fire rate penalty hidden"				"8.0"	
-				"damage bonus hidden"					"2.0"
+				"damage bonus hidden"					"1.2"
 				"rocket limited lifetime"				"1"
 				"rocket gravity"						"1"
 				"blast dmg to self increased"			"3"
@@ -7815,12 +7815,12 @@ Weapon by: 'Reagy'"
 				"voice pitch scale"															
 				{
 					"attribute_class"	"mult_minigun_spinup_time"
-					"value"				"2.0"
+					"value"				"1.5"
 				}
 				"voice pitch scale"															
 				{
 					"attribute_class"	"mult_minigun_spindown_time"
-					"value"				"2.0"
+					"value"				"1.5"
 				}
 				"voice pitch scale"															
 				{
@@ -21766,12 +21766,12 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value" 			"9.0"
+					"value" 			"3.0"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"1.67"
+					"value" 			"1.75"
 				}
 				"voice pitch scale"
 				{
@@ -21786,17 +21786,17 @@ Weapon by: 'The One Of Wonders'"
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"1.3"
+					"value"				"1.67"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.75"
+					"value" 			"0.55"
 				}
 				"voice pitch scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"6.0"
+					"value"				"3.0"
 				}
 				"crit mod disabled"
 				{
@@ -21811,7 +21811,7 @@ Weapon by: 'The One Of Wonders'"
                 "strange restriction type 1" 
 				{
 					"attribute_class"	"mod_ammo_per_shot"
-					"value"				"90"
+					"value"				"30"
 				}	
                 "scattergun no reload single"													
 				{
@@ -22816,7 +22816,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Guardian Angel"
 			"item_type_name"			"Medi Gun"
-			"item_description"			"Übercharge provides a resistance bubble that blocks up to 120 damage
+			"item_description"			"Übercharge provides a resistance bubble that blocks up to 100 damage
 
 We shall fight until the very end!
 
@@ -22845,7 +22845,7 @@ Weapon by: 'Noclue'"
 				"powerup duration"
 				{
 					"attribute_class"	"dummy"
-					"value"				"3"
+					"value"				"2"
 				}
 				
 				"kill eater score type"
@@ -22863,7 +22863,6 @@ Weapon by: 'Noclue'"
 					"attribute_class"	"mult_medigun_overheal_uberchargerate"
 					"value"				"0.25"
 				}
-				
 				"lunchbox adds minicrits" //disables vanilla uber behavior
 				{
 					"attribute_class"	"set_charge_type"
@@ -23152,6 +23151,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"bleeding_duration"
 					"value" 			"3"
+				}	
+                "deploy time decreased"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"0.8"
 				}				
 				"voice pitch scale"
 				{
@@ -23196,7 +23200,7 @@ Weapon by: 'The One Of Wonders'"
                 "add condition on hit"															
 				{
 					"attribute_class"	"add_onhit_addcond"
-					"value"				"24 10"
+					"value"				"19 10"
 				}				
 			}
 			"visuals"
@@ -23254,6 +23258,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"heal_on_kill"
 					"value"				"25"
 				}
+				"deploy time decreased"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"0.8"
+				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
@@ -23262,7 +23271,7 @@ Weapon by: 'The One Of Wonders'"
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.33"
+					"value"				"1.2"
 				}
 				"crit mod disabled"
 				{
@@ -23272,7 +23281,7 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"or_crit_vs_playercond"
-					"value"				"524288"														
+					"value"				"1048576"														
 				}
 				"voice pitch scale"
 				{
@@ -29896,6 +29905,22 @@ Weapon by: 'The One Of Wonders'"
 				"animation_replacement"
                 {
                     "ACT_VM_PRIMARYATTACK"    "ACT_VM_PRIMARYATTACK_SPECIAL"
+					"ACT_VM_RELOAD_START"     "ACT_VM_IDLE_EMPTY"
+					"ACT_VM_RELOAD"           "ACT_VM_IDLE_EMPTY"
+					"ACT_VM_RELOAD_FINISH"    "ACT_VM_IDLE_EMPTY"
+					
+					"ACT_MP_RELOAD_STAND_PRIMARY"              "ACT_MP_STAND_IDLE"
+	                "ACT_MP_RELOAD_STAND_PRIMARY_LOOP"         "ACT_MP_STAND_IDLE"
+	                "ACT_MP_RELOAD_STAND_PRIMARY_END"          "ACT_MP_STAND_IDLE"
+					"ACT_MP_RELOAD_CROUCH_PRIMARY"             "ACT_MP_CROUCH_IDLE"
+	                "ACT_MP_RELOAD_CROUCH_PRIMARY_LOOP"        "ACT_MP_CROUCH_IDLE"
+	                "ACT_MP_RELOAD_CROUCH_PRIMARY_END"         "ACT_MP_CROUCH_IDLE"
+					"ACT_MP_RELOAD_SWIM_PRIMARY"               "ACT_MP_SWIM"
+	                "ACT_MP_RELOAD_SWIM_PRIMARY_LOOP"          "ACT_MP_SWIM"
+	                "ACT_MP_RELOAD_SWIM_PRIMARY_END"           "ACT_MP_SWIM"
+	                "ACT_MP_RELOAD_AIRWALK_PRIMARY"            "ACT_MP_AIRWALK"
+	                "ACT_MP_RELOAD_AIRWALK_PRIMARY_LOOP"       "ACT_MP_AIRWALK"
+	                "ACT_MP_RELOAD_AIRWALK_PRIMARY_END"        "ACT_MP_AIRWALK"
                 }
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
