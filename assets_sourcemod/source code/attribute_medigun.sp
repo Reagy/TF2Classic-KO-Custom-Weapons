@@ -581,6 +581,7 @@ int CreateBeamEmitter( int iPlayer, bool bClient ) {
 void DeleteBeamEmitter( int iPlayer, bool bClient ) {
 	int iEmitter = g_iBeamEmitters[ iPlayer ][ view_as<int>(bClient) ];
 	if( IsValidEntity( iEmitter ) ) {
+		SDKUnhook( iEmitter, SDKHook_SetTransmit, Hook_EmitterTransmit );
 		AcceptEntityInput( iEmitter, "Stop" );
 		RemoveEntity( iEmitter );
 	}
@@ -934,8 +935,11 @@ void CreateRadialEmitter( int iPlayer ) {
 }
 void RemoveRadialEmitter( int iPlayer ) {
 	int iEmitter = EntRefToEntIndex( g_iRadialHealerEmitters[ iPlayer ] );
-	if( iEmitter != -1 )
+	if( iEmitter != -1 ) {
+		SDKUnhook( iEmitter, SDKHook_SetTransmit, Hook_RadialParticle );
 		RemoveEntity( iEmitter );
+	}
+		
 
 	g_iRadialHealerEmitters[ iPlayer ] = -1;
 }
