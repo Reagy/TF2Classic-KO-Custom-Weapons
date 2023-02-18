@@ -215,7 +215,7 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	iPlayer = GetClientOfUserId( iPlayer );
 
 	//g_flMultTable[iPlayer] = AttribHookFloat( 0.5, iPlayer, "custom_maximum_overheal" );
-	if( RoundToFloor( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) == CMEDI_OATH ) {
+	/*if( RoundToFloor( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) == CMEDI_OATH ) {
 		StartRadialHeal( iPlayer );
 		return Plugin_Continue;
 	}
@@ -223,7 +223,7 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	{
 		g_bRadiusHealer[ iPlayer ] = false;
 		Tracker_Remove( iPlayer, "Rage" );
-	}
+	}*/
 
 	//do oathbreaker projectile setup here
 
@@ -602,17 +602,16 @@ void SetBeamParticle( int iPlayer, bool bClient ) {
 }
 
 Action Hook_EmitterTransmit( int iEntity, int iClient ) {
-	SetFlags( iEntity );
 	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" );
-	//janky hack: store the behavior of the emitter in some dataprop that isn't used
-	bool bIsClientEmitter = GetEntProp( iEntity, Prop_Data, "m_iHealth" ) == 1;
+	SetFlags( iEntity );
 
-	
+	//janky hack: store the behavior of the emitter in some dataprop that isn't used
+	bool bIsFirstPersonEmitter = GetEntProp( iEntity, Prop_Data, "m_iHealth" ) == 1;
 	if( iClient == iOwner ) {
-		return bIsClientEmitter ? Plugin_Continue : Plugin_Handled;
+		return bIsFirstPersonEmitter ? Plugin_Continue : Plugin_Handled;
 		
 	}
-	return bIsClientEmitter ? Plugin_Handled : Plugin_Continue;
+	return bIsFirstPersonEmitter ? Plugin_Handled : Plugin_Continue;
 }
 
 void AttachBeam_FPS( int iPlayer, int iWeapon ) {
@@ -795,31 +794,14 @@ MRESReturn Detour_HealStartPre( Address aThis, DHookParam hParams ) {
 #define ANGEL_UBER_COST 0.25
 
 MRESReturn AngelGunUber( int iMedigun ) {
-	SetEntProp( iMedigun, Prop_Send, "m_bChargeRelease", false );
-
 	float flChargeLevel = GetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel" );
 	if( flChargeLevel < ANGEL_UBER_COST )
 		return MRES_Ignored;
 
+	SetEntProp( iMedigun, Prop_Send, "m_bChargeRelease", false );
+	
 	int iOwner = GetEntPropEnt( iMedigun, Prop_Send, "m_hOwnerEntity" );
 	int iTarget = GetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget" );
-
-	/*bool bAppliedCharge = false;
-	if( !HasCustomCond( iOwner, TFCC_ANGELSHIELD ) && !HasCustomCond( iOwner, TFCC_ANGELINVULN ) ) {
-		AddCustomCond( iOwner, TFCC_ANGELSHIELD );
-		SetCustomCondSourcePlayer( iOwner, TFCC_ANGELSHIELD, iOwner );
-		SetCustomCondSourceWeapon( iOwner, TFCC_ANGELSHIELD, iMedigun );
-		bAppliedCharge = true;
-	}
-	
-	if( IsValidPlayer( iTarget ) && IsPlayerAlive( iTarget ) ) {
-		if( !HasCustomCond( iTarget, TFCC_ANGELSHIELD ) && !HasCustomCond( iTarget, TFCC_ANGELINVULN ) ) {
-			AddCustomCond( iTarget, TFCC_ANGELSHIELD );
-			SetCustomCondSourcePlayer( iTarget, TFCC_ANGELSHIELD, iOwner );
-			SetCustomCondSourceWeapon( iTarget, TFCC_ANGELSHIELD, iMedigun );
-			bAppliedCharge = true;
-		}
-	}*/
 
 	int iApplyTo = IsValidPlayer( iTarget ) ? iTarget : iOwner;
 
