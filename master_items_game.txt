@@ -3518,7 +3518,7 @@ Weapon by: 'The One Of Wonders'"
 				}
                 "voice pitch scale"
 				{
-					"attribute_class"	"custom_dispenser_heal_rate"
+					"attribute_class"	"custom_dispenser_healrate"
 					"value"				"3.0"
 				}				
 			}
@@ -23534,7 +23534,7 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"voice pitch scale"
 				{
-					"attribute_class"	"custom_dispenser_heal_rate"
+					"attribute_class"	"custom_dispenser_healrate"
 					"value"				"1.5"
 				}
 			}
