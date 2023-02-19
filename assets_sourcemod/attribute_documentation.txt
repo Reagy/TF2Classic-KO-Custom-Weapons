@@ -67,7 +67,7 @@ custom_teleporter_type (globally checked):
 			2: jump pad (only sets model, vanilla attribute is needed to apply behavior)
 			3: nothing yet
 		
-custom_dispenser_heal_rate (globally checked):
+custom_dispenser_healrate (globally checked):
 	scales the healing rate of dispenser
 	
 	values (use value_is_percentage):
@@ -133,7 +133,7 @@ custom_inflictcustom_onhit (checked against weapon):
 	
 	attribute MUST be of "attribute_type" "string"
 	values (string):
-		1: Toxin
+		0: Toxin
 			Deals 2 damage every half second
 			Reduces all healing by 50%
 			Duration unaffected by mediguns
