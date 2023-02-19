@@ -286,6 +286,9 @@ MRESReturn Detour_GetBuffedMaxHealth( Address aThis, DHookReturn hReturn ) {
 		flLargestMult = 0.5;
 	else for( int i = 0; i < iHealers; i++ ) {
 		Address aHealer = SDKCall( hGetHealerIndex, aThis, i );
+		if( aHealer == Address_Null )
+			continue;
+
 		int iIndex = GetEntityFromAddress( aHealer );
 		if( !IsValidPlayer( iIndex ) )
 			continue;
