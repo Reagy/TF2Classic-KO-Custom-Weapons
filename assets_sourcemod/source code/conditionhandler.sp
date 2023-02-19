@@ -18,6 +18,8 @@ public Plugin myinfo =
 
 //TODO: Shield parenting could be better
 
+#define DEBUG
+
 enum {
 	TFCC_TOXIN = 0,
 	TFCC_TOXINUBER,
@@ -27,6 +29,8 @@ enum {
 	TFCC_ANGELINVULN,
 
 	TFCC_QUICKUBER,
+
+	TFCC_RADIUSHEAL,
 
 	TFCC_LAST
 }
@@ -111,13 +115,13 @@ public void OnPluginStart() {
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	hGetBuffedMaxHealth = EndPrepSDKCall();
 
-	if( !bLateLoad )
-		return;
-
 	for( int i = 0; i < MAXPLAYERS+1; i++ ) {
 		g_iAngelShields[i][0] = -1;
 		g_iAngelShields[i][1] = -1;
 	}
+
+	if( !bLateLoad )
+		return;
 
 	//lateload
 	for( int i = 1; i <= MaxClients; i++ ) {
@@ -543,6 +547,7 @@ void CheckOnKillCond( int iAttacker, int iWeapon ) {
 	int iCond = StringToInt( szExplode[0] );
 	float flDuration = StringToFloat( szExplode[1] );
 
+	PrintToServer("%i %f", iCond, flDuration );
 	TF2_AddCondition( iAttacker, view_as<TFCond>( iCond ), flDuration );
 }
 
@@ -799,9 +804,8 @@ bool AddAngelShield( int iPlayer ) {
 
 	int iNewShield = CreateEntityByName( "prop_dynamic" );
 	SetEntityModel( iNewShield, "models/effects/resist_shield/resist_shield.mdl" );
-	SetEntityCollisionGroup( iNewShield, 0 );
+	
 	DispatchKeyValue( iNewShield, "disableshadows", "1" );
-	SetEntPropEnt( iNewShield, Prop_Send, "m_hOwnerEntity", iPlayer );
 
 	int iTeamNum = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	SetEntProp( iNewShield, Prop_Send, "m_nSkin", iTeamNum );
@@ -810,7 +814,10 @@ bool AddAngelShield( int iPlayer ) {
 	ActivateEntity( iNewShield );
 	g_iAngelShields[iPlayer][0] = EntIndexToEntRef( iNewShield );
 
-	//RequestFrame( Frame_ApplyHook, iNewShield );
+	SetEntPropEnt( iNewShield, Prop_Send, "m_hOwnerEntity", iPlayer );
+	SetEntityCollisionGroup( iNewShield, 0 );
+
+	SDKHook( iNewShield, SDKHook_SetTransmit, Hook_NewShield );
 
 	int iNewManager = CreateEntityByName( "material_modify_control" );
 
@@ -835,11 +842,6 @@ bool AddAngelShield( int iPlayer ) {
 	}
 
 	return true;
-}
-
-void Frame_ApplyHook( int iShield ) {
-	if( IsValidEdict( iShield ) )
-		SDKHook( iShield, SDKHook_SetTransmit, Hook_NewShield );
 }
 
 Action ExpireAngelShield( Handle hTimer, int iPlayer ) {
