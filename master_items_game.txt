@@ -9343,7 +9343,7 @@ Wearable by: 'Reagy'"
 			"item_name"					"Slightly Immovable W.A.L.L"
 			"item_type_name"			"SWAT Shield"
 			"item_description"			"
-Bulwark: On deploy 50% general damage resistance, improved crit and airblast resistance.
+Bulwark: On deploy 50% general damage resistance, improved crit and airblast resistance, zero capture rate.
 
 Only Heavy can use such an outrageously heavy thing...
 
@@ -9452,6 +9452,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"		"custom_capture_rate"
+					"value" 				"-1"
 				}				
 			}
 			"visuals"
@@ -18493,6 +18498,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 Unstoppable Force: This item grants a special minigun primary weapon.
 You have 30% passive damage resistance with this item equipped.
+No capture rate.
 
 You must not know who I am, I will tell you who I am.
 
@@ -18585,7 +18591,17 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
 					"value"				"0.5"
-				}			
+				}	
+				"cannot pick up intelligence"
+				{
+					"attribute_class"		"cannot_pick_up_intelligence"
+					"value"					"1"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"		"custom_capture_rate"
+					"value" 				"-1"
+				}				
 			}
 			"visuals"																		
 			{
