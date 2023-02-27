@@ -235,8 +235,6 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	GetEntityClassname( iMedigun, szWeaponName, sizeof(szWeaponName) );
 	if( StrEqual( szWeaponName, "tf_weapon_medigun" ) ) {
 		CreateDummyGun( iPlayer, iMedigun );
-		SetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget", -1 );
-		g_iOldTargets[iPlayer] = 69420;
 	}
 	return Plugin_Continue;
 }
