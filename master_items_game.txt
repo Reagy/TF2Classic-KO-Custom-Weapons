@@ -488,6 +488,7 @@ Weapon from: New Old Weapons Pack"
 //-----------------------------------
 //-----------------------------------
 //--FRYING PAN STUFF - 3310 ~ 3319 --
+// V5.6r1 Scout Pan fire rate and damage penalty added, both pans 2x crit chance
 //-----------------------------------
 //-----------------------------------
 		"3310"
@@ -499,7 +500,8 @@ Weapon from: New Old Weapons Pack"
 			"item_quality"				"rarity3"
 			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
-			"item_description"			"Greasy: Slows down target on hit for 2s
+			"item_description"			"Making Bacon: Increased crit chance
+Extra Greasy: Slows down target on hit for 5s
 
 Oh, what's the matter, you can't hear me? Here, lemme fix that, pal.
 
@@ -517,6 +519,7 @@ Weapon from: New Old Weapons Pack"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"5 0 -10"
+				"crit mod disabled hidden"				"2.0" // :^)
 			}
 			"attributes"
 			{
@@ -524,6 +527,16 @@ Weapon from: New Old Weapons Pack"
 				{
 					"attribute_class"	"strange_restriction_type_1"							// This, in theory, means that it doesn't even frickin' do anything accidentally if they add in a Rage modifier (a-la Buff Banner)
 					"value"				"100"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.2"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.8"
 				}
 				"UNIQUE tranq on hit HIDDEN"														
 				{
@@ -886,7 +899,8 @@ Weapon from: New Old Weapons Pack"
 			"item_quality"				"rarity3"
 			"item_name"					"Frying Pan"
 			"item_type_name"			"#TF_Weapon_FryingPan"
-			"item_description"			"Extra Greasy: Slows down target on hit for 5s
+			"item_description"			"Making Bacon: Increased crit chance
+Extra Greasy: Slows down target on hit for 5s
 
 Functions identically to the Umbrella
 
@@ -908,6 +922,7 @@ Weapon from: New Old Weapons Pack"
 			{
 				"class select override vcd"				"taunt01"
 				"min_viewmodel_offset"					"5 0 -10"
+				"crit mod disabled hidden"				"2.0" // :^)
 			}
 			"attributes"
 			{
@@ -1956,6 +1971,7 @@ Weapon from: New Old Weapons Pack"
 //---------------------------------
 //---------------------------------
 //-ENGINEER METAL BACKPACK - 3364--
+// V5.6r1 Added add construction on hit, increased metal bonus to 100, increased movement penalty to 25%
 //---------------------------------
 //---------------------------------
 		"3364"																					// This is a wearable backpack for Engi that gives him more metal - in exchange for an item slot. Hmm. Better think about it, yeah?
@@ -1975,11 +1991,14 @@ Weapon from: New Old Weapons Pack"
 			"item_name"					"Storage Backpack"
 			"item_type_name"			"Backpack"
 			"item_description"			"
-Adds 50 metal to your metal reserve
+Adds 100 metal to your metal reserve
+Damage upgrades/repairs buildings
+
 Replaces your Shotgun
 You are unable to use a Primary Weapon while this item is equipped
 
-Weapon from: New Old Weapons Pack"
+Weapon from: New Old Weapons Pack
+Modified by: 'Reagy'"
 			"image_inventory"			"backpack/workshop/player/items/engineer/dec15_winter_backup/dec15_winter_backup"
 			"model_player"				"models/player/items/engineer_winter_backup_backpack.mdl"
 			"extra_wearable"			"models/player/items/engineer_winter_backup_backpack.mdl"
@@ -1991,15 +2010,20 @@ Weapon from: New Old Weapons Pack"
 			"act_as_wearable"			"1"
 			"attributes"
 			{
+			    "add construction on hit"										
+				{
+					"attribute_class"	"add_onhit_construction"
+					"value" 			"1"
+				}
 				"strange restriction type 1" //"maxammo metal increased"		// 250 metal seems fair. 300 metal seemed like way too much.
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				"50"
+					"value"				"100"
 				}
 				"move speed penalty"															// So you can't bugger off as fast
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.9"
+					"value"				"0.75"
 				}
 				"dmg taken increased"															// Not actually sure if this works? It'd be so even if you have more metal to make a Nest, you'd be even more vulnerable to the people who would ransack your nests to begin with - Soldier and Demoman.
 				{
@@ -6504,6 +6528,7 @@ Weapon by: 'Reagy'"
 // V5.3.1 New model added, easily identify who is using fists now
 // V5.3.3 Dropped building health from 150% to 120%
 // V5.3.4r1 Can now upgrade and repair buildings at a heavily decreased rate, can also now remove sappers
+// V5.6r1 Removed on active and add construction on hit
 //		"7000"
 		"9146"
 		{
@@ -6516,8 +6541,7 @@ Weapon by: 'Reagy'"
 //			"item_class"				"tf_weapon_fists"
 			"item_type_name"			"#TF_Weapon_Fists"
 			"item_name"					"Texas Strongmann"
-			"item_description"			"Punching enemies repairs and upgrades your buildings 
-
+			"item_description"			"
 Well ain't that a mighty fine shirt to go with me gloves
 
 Animations from: Open Fortress - openfortress.fun
@@ -6546,16 +6570,6 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
-			    "provide on active"
-				{
-					"attribute_class"	"provide_on_active"
-					"value"				"1"
-				}
-			    "add construction on hit"										
-				{
-					"attribute_class"	"add_onhit_construction"
-					"value" 			"1"
-				}
 			    "max health additive bonus"										
 				{
 					"attribute_class"	"add_maxhealth"
@@ -7652,6 +7666,7 @@ Weapon by: 'Reagy'"
 //-------------------------------------
 // BEEG BORIS
 // V5.3.4r1 Adjusted self blast damage to reflect its utility more
+// V5.6r1 Gave an extra rock
 //-------------------------------------
 //-------------------------------------	
 		"7026"
@@ -7721,7 +7736,7 @@ Weapon by: 'Reagy'"
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value" 			"0.30"
+					"value" 			"0.50"
 				}
 				"no damage falloff over distance"
 				{
@@ -9190,123 +9205,11 @@ Weapon by: 'Reagy'"
 // V5.3 Removed health regen, dropped resistance to 45%, speedboost to 10% and applied +15 max HP on equip, moved from PDA2 to Melee slot due to stacking bug
 // V5.3.1 Replaced resistance with flat HP buff, raised from +15 to +75hp
 // V5.4 Streamlined the thing down so it's not as tanky anymore, added extra bonuses too 
+// V5.6r1 Removed
 //--------------------------
 //--------------------------
 		"7050"		
 		{
-			"name"						"TF_WEARABLE_BVEST_SPY"						
-			"item_class"				"tf_weapon_club"
-			"show_in_armory"			"1"
-			"item_slot"					"melee"
-
-			"item_quality"				"rarity2"
-
-			"equip_region"				"shirt"											
-			"anim_slot"					"melee"
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-			
-			"item_logname"					"securityvest_spy"
-			"item_iconname"					"securityvest_spy"
-
-			"propername"				"1"
-			"item_name"					"Security Measure"
-			"item_type_name"			"Ballistic Vest"
-			"item_description"			"
-Replaces your Knife with a Combat Knife
-You are unable to backstab while this item is equipped
-
-Model by: 'NeoDement'
-Wearable by: 'Reagy'"
-			"image_inventory"			"backpack/workshop/player/items/spy/bulletproof/bulletproof"
-			"model_world"					"models/weapons/c_models/c_combatknife_gunspy/c_combatknife_gunspy.mdl"
-			"model_player"					"models/weapons/c_models/c_combatknife_gunspy/c_combatknife_gunspy.mdl"
-			"attach_to_hands"				"1"
-			"extra_wearable"			"models/player/items/custom/spy/bulletproof.mdl"
-			"used_by_classes"
-			{
-				"spy"					"1"
-			}
-			"static_attrs"
-			{
-				"class select override vcd"				"taunt05"							
-			}
-			"attributes"
-			{
-				"max health additive bonus"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"50"
-				}
-				"dmg taken from crit reduced"											
-				{
-					"attribute_class"	"mult_dmgtaken_from_crit"
-					"value"				"0.65"
-				}
-				"maxammo secondary increased"
-				{
-					"attribute_class"	"mult_maxammo_secondary"
-					"value" 			"1.5"
-				}
-				"maxammo primary increased"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value" 			"1.5"
-				}
-				"sapper health bonus"											
-				{
-					"attribute_class"	"mult_sapper_health"
-					"value"				"1.5"
-				}
-//				"damage bonus hidden"
-//				{
-//					"attribute_class"	"mult_dmgtaken"
-//					"value"				"0.55"
-//				}
-				"allowed in medieval mode"
-				{
-					"attribute_class"	"allowed_in_medieval_mode"
-					"value"				"1"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.76923076923"													
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.9"														
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value" 			"0"														
-				}
-			}
-			"visuals"
-            {
-			    "sound_melee_miss"		"Weapon_Knife.Miss"
-				"sound_melee_hit"		"Weapon_Knife.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_Knife.HitWorld"
-				"sound_burst"			"Weapon_Knife.MissCrit"
-                "animation_replacement"
-                {
-                    "ACT_VM_DRAW"    "ACT_ITEM2_VM_DRAW"
-                    "ACT_VM_IDLE"    "ACT_ITEM2_VM_IDLE"
-                    "ACT_VM_HITCENTER"    "ACT_ITEM2_VM_HITCENTER"
-                    "ACT_VM_SWINGHARD"    "ACT_ITEM2_VM_SWINGHARD"
-                    "ACT_BACKSTAB_VM_UP"    "ACT_ITEM2_BACKSTAB_VM_UP"
-                    "ACT_BACKSTAB_VM_DOWN"    "ACT_ITEM2_BACKSTAB_VM_DOWN"
-                    "ACT_BACKSTAB_VM_IDLE"    "ACT_ITEM2_BACKSTAB_VM_IDLE"
-                    "ACT_MELEE_VM_STUN"    "ACT_MELEE_VM_ITEM2_STUN"
-                    "ACT_MELEE_VM_INSPECT_START"    "ACT_ITEM2_VM_INSPECT_START"
-                    "ACT_MELEE_VM_INSPECT_IDLE"        "ACT_ITEM2_VM_INSPECT_IDLE"
-                    "ACT_MELEE_VM_INSPECT_END"        "ACT_ITEM2_VM_INSPECT_END"
-                }
-            }
-			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
-			"drop_sound"				"#ui/item_pack_drop.wav"
 		}
 		
 //--------------------------
@@ -14968,6 +14871,7 @@ Edited by: 'The One Of Wonders'"
 //--------------------------
 //--------------------------
 //--MEDIC MINI-CRIT - 9030--
+// V5.6r1 Increase magazine size slightly
 //--------------------------
 //--------------------------
 		"9030"
@@ -15033,7 +14937,7 @@ Weapon by: 'The One Of Wonders'"
 				"maxammo primary reduced"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.4"
+					"value"				"0.5"
 				}
 				"crit mod disabled"															
 				{
@@ -17977,6 +17881,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //-----------------------------------
 //--BRRRRT LAUNCHER - 9084--
 //--V5.4 Deals more damage in a larger radius, has better reload speed too
+// V5.6r1 Increased reload speed bonus to 30%, reduced explosion radius penalty to 50%, damage penalty reduced to 50%
 //-----------------------------------
 //-----------------------------------
 		"9084"
@@ -18034,17 +17939,17 @@ Weapon by: 'The One Of Wonders'"
 				"Reload time decreased"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"0.8"
+					"value"				"0.7"
 				}
 				"Blast radius decreased"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.3"
+					"value"				"0.5"
 				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.4"
+					"value"				"0.5"
 				}
 				"custom projectile model"
 				{
@@ -21161,6 +21066,7 @@ Weapon by: 'The One Of Wonders'"
 				"sound_single_shot"		"Weapon_LMG_Heavy.Shoot"
 				"sound_burst"			"Weapon_LMG_Heavy.ShootCrit"
 				"sound_reload"			"Weapon_LMG_Heavy.Overheat"
+				"tracer_effect"         "bullet_scattergun_tracer01"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -21732,121 +21638,11 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------------------
 //-------------------------------------
 // ELECTRIC WEAPONS - MAGNET GUN - 9122
+// V5.6r1 Removed
 //-------------------------------------
 //-------------------------------------		
 	    "9122"
         {
-		   "name"						"TF_WEAPON_ELECTROMAGNET_SHOTGUN"
-			"prefab"					"weapon_shotgun"
-			"show_in_armory"			"1"
-			"item_slot"					"primary"
-		    "anim_slot"                 "primary"
-			"item_class"				"tf_weapon_shotgun_primary"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-
-			"item_quality"				"rarity2"
-
-			"propername"				"1"
-			"item_name"					"EM Eliminator"
-			"item_type_name"			"Electro-magnetic Cannon"
-			"item_description"			"
-Electrifying Payload: This weapon fires a powerful spread of electric bolts with short range.
-
-Didn't your papa tell you not to play with magnets?
-
-Model by: 'Rozzy'
-Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"electromagnet_cannon"
-			"item_iconname"				"electromagnet_cannon"
-			"image_inventory"			"backpack/weapons/c_models/c_sparkshot/c_sparkshot"
-			"model_world"				"models/weapons/c_models/c_sparkshot/c_sparkshot.mdl"
-			"model_player"				"models/weapons/c_models/c_sparkshot/c_sparkshot.mdl"
-			"attach_to_hands"			"1"
-			"used_by_classes"
-			{
-				"engineer"					"1"
-			}
-			"static_attrs"
-			{
-				"class select override vcd"				"taunt02"						
-			}
-			"attributes"
-			{			
-                "move speed penalty"
-				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.9"
-				}			
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value" 			"3.0"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"1.75"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"15"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"14.0625"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_reload_time"
-					"value"				"1.67"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.55"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"3.0"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}
-                "voice pitch scale"
-				{
-					"attribute_class"	"mult_projectile_range"
-					"value"				"0.0444"
-				}
-                "strange restriction type 1" 
-				{
-					"attribute_class"	"mod_ammo_per_shot"
-					"value"				"30"
-				}	
-                "scattergun no reload single"													
-				{
-					"attribute_class"	"set_scattergun_no_reload_single"
-					"value"				"1"
-				}
-			}
-			"visuals"
-			{
-			    "animation_replacement"
-                {
-                    "ACT_VM_PRIMARYATTACK"    "ACT_VM_PRIMARYATTACK_SPECIAL"
-                }
-				"sound_single_shot"		"Weapon_MagnetCannon.Fire"	
-				"sound_burst"			"Weapon_MagnetCannon.FireCrit"	
-				"tracer_effect"         "bullet_scattershock_tracer01"	
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
         }	
 //-------------------------------------
 //-------------------------------------
@@ -22316,8 +22112,9 @@ Weapon by: 'Reagy'"
 		}
 //--------------------------
 //--------------------------
-// Major	 -	9127	  --
+// Majors Mark - 9127	  --
 // Basically a clone of the security measure
+// V5.6r1 Security Measure merged into Major's Mark, Sapper health doubled
 //--------------------------
 //--------------------------
 		"9128"		
@@ -22337,7 +22134,7 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_logname"				"majors_mark"
 			"item_iconname"				"majors_mark"
-			"item_name"					"Majors Mark"
+			"item_name"					"Major's Mark"
 			"item_type_name"			"Ballistic Vest"
 			"item_description"			"
 Replaces your Knife with a Combat Knife
@@ -22365,6 +22162,11 @@ Wearable by: 'Reagy'"
 					"attribute_class"	"add_maxhealth"
 					"value" 			"50"
 				}
+				"dmg taken from crit reduced"											
+				{
+					"attribute_class"	"mult_dmgtaken_from_crit"
+					"value"				"0.65"
+				}
 				"maxammo secondary increased"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
@@ -22378,13 +22180,8 @@ Wearable by: 'Reagy'"
 				"sapper health bonus"											
 				{
 					"attribute_class"	"mult_sapper_health"
-					"value"				"1.5"
+					"value"				"2.0"
 				}
-//				"damage bonus hidden"
-//				{
-//					"attribute_class"	"mult_dmgtaken"
-//					"value"				"0.55"
-//				}
 				"allowed in medieval mode"
 				{
 					"attribute_class"	"allowed_in_medieval_mode"
@@ -23456,6 +23253,7 @@ Weapon by: 'The One Of Wonders'"
 //------------------------
 //------------------------
 //--IN-HOUSE PDA - 9141----
+// V5.6r1 Removed no-working sentry range, added additional stats to description
 //------------------------
 //------------------------
 		"9141"																
@@ -23470,9 +23268,11 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"PDA: Hardware Specialist"
 			"item_type_name"			"#TF_Weapon_PDA_Engineer"
-			"item_description"			"Buildings are upgraded faster and cost less to build
+			"item_description"			"20% Dispenser restock bonus
+50% Dispenser healing bonus
+20% Building health penalty
 
-Buildings have 20% less health
+Buildings are upgraded faster and cost less to build
 
 Well, looks like I'm the real Engineer around here.
 
@@ -23502,11 +23302,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"sentry_build_rate_multiplier"
 					"value"				"1.35"
-				}
-				"engy sentry radius increased"
-				{
-					"attribute_class"	"mult_sentry_range"
-					"value"				"1.2"
 				}
 				"engy dispenser radius increased"
 				{
@@ -23824,117 +23619,12 @@ Weapon by: 'The One Of Wonders'"
 		}
 //-----------------------------------
 //-----------------------------------
-//--BIG HOKUM LASER - 9145 --
+//-- Building Upgrader - 9145 --
+// V5.6r1 Removed
 //-----------------------------------
 //-----------------------------------
 		"9145"
 		{
-			"name"						"TF_WEAPON_BUILDING_UPGRADER"
-			"show_in_armory"			"1"
-			"item_class"                "tf_weapon_grenade_mirv"
-			"item_slot"                 "secondary"
-			"anim_slot"                 "primary"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-			
-			"item_quality"				"rarity2"
-			"item_name"					"Building Upgrader"
-			"item_type_name"			"Fusion Blaster"
-			"item_description"			"Ammo pickups do not give ammo
-Holding to fire builds a high velocity ricochet laser
-Dealing damage to enemies with this weapon repairs and upgrades buildings
-
-Weapon requires a recharge after firing once
-
-Heh, I can maintain my buildings without having to hit them? I'm sold.
-
-Model by: 'Wowza'
-Weapon by: 'The One Of Wonders'"
-			"item_logname"				"building_gun"
-			"item_iconname"				"building_gun"
-			"image_inventory"			"backpack/weapons/c_models/c_electrogun/c_electrogun"
-			"model_world"				"models/weapons/c_models/c_electrogun/c_electrogun.mdl"
-			"model_player"				"models/weapons/c_models/c_electrogun/c_electrogun.mdl"
-			"attach_to_hands"			"1"
-			"used_by_classes"
-			{
-				"engineer"					"1"
-			}
-			"static_attrs"
-			{
-				"override projectile type"   "32"
-			}
-			"attributes"
-			{
-			    "provide on active"
-				{
-					"attribute_class"	"provide_on_active"
-					"value"				"1"
-				}
-			    "add construction on hit"										
-				{
-					"attribute_class"	"add_onhit_construction"
-					"value" 			"1"
-				}
-			    "voice pitch scale"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.9"
-				}
-			    "energy weapon no ammo" 															
-				{
-					"attribute_class"	"see_enemy_health"
-					"value" 			"1"
-				}
-			    "voice pitch scale"																
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.5555555555555556"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"2"
-				}
-				"voice pitch scale"																
-				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value" 			"0.4"
-				}
-				"crit mod disabled hidden"																
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value" 			"0"
-				}
-			}
-			"visuals"
-			{
-			    "sound_single_shot"		"Weapon_Railgun.Single"								
-				"sound_burst"			"Weapon_Railgun.SingleCrit"
-				"animation_replacement"         // Pomson animations!
-                {
-                    "ACT_VM_IDLE"    "ACT_SECONDARY2_VM_IDLE"
-                    "ACT_VM_DRAW"    "ACT_SECONDARY2_VM_DRAW"
-                    "ACT_VM_PRIMARYATTACK"    "ACT_SECONDARY2_VM_PRIMARYATTACK"
-                    "ACT_RELOAD_START"    "ACT_SECONDARY2_RELOAD_START"
-                    "ACT_RELOAD_FINISH"    "ACT_SECONDARY2_RELOAD_FINISH"
-                    "ACT_VM_RELOAD"    "ACT_SECONDARY2_VM_RELOAD"
-					
-                    "ACT_MP_RELOAD_STAND"    "ACT_MP_RELOAD_STAND_SECONDARY2"
-                    "ACT_MP_RELOAD_STAND_LOOP"    "ACT_MP_RELOAD_STAND_SECONDARY2_LOOP"
-                    "ACT_MP_RELOAD_STAND_END"    "ACT_MP_RELOAD_STAND_SECONDARY2_END"
-                    "ACT_MP_RELOAD_CROUCH"    "ACT_MP_RELOAD_CROUCH_SECONDARY2"
-                    "ACT_MP_RELOAD_CROUCH_LOOP"    "ACT_MP_RELOAD_CROUCH_SECONDARY2_LOOP"
-                    "ACT_MP_RELOAD_CROUCH_END"    "ACT_MP_RELOAD_CROUCH_SECONDARY2_END"
-                    "ACT_MP_RELOAD_SWIM"    "ACT_MP_RELOAD_SWIM_SECONDARY2"
-                    "ACT_MP_RELOAD_SWIM_LOOP"    "ACT_MP_RELOAD_SWIM_SECONDARY2_LOOP"
-                    "ACT_MP_RELOAD_SWIM_END"    "ACT_MP_RELOAD_SWIM_SECONDARY2_END"
-                    "ACT_MP_RELOAD_AIRWALK"    "ACT_MP_RELOAD_AIRWALK_SECONDARY2"
-                    "ACT_MP_RELOAD_AIRWALK_LOOP"    "ACT_MP_RELOAD_AIRWALK_SECONDARY2_LOOP"
-                    "ACT_MP_RELOAD_AIRWALK_END"    "ACT_MP_RELOAD_AIRWALK_SECONDARY2_END"
-                }
-			}
 		}
 //------------------
 //------------------
@@ -24314,7 +24004,8 @@ Weapon by 'The One Of Wonders'"
 			
 			"item_name"					"Magnetic Horseshoe"
 			"item_type_name"			"#TF_Weapon_Wrench"
-			"item_description"			"
+			"item_description"			"Damage upgrades/repairs buildings
+
 Magnets, I know how they work...
 
 Model by: 'pathnode'
@@ -24346,10 +24037,10 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"add_onhit_construction"
 					"value"				"1"
 				}
-				"fire rate penalty"
+                "damage penalty"
 				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.2"
+					"attribute_class"	"mult_dmg"
+					"value"				"0.5"
 				}
 				"crit mod disabled"
 				{
@@ -25273,6 +24964,7 @@ Weapon by: 'The One Of Wonders'"
 //-----------------------------------
 //-----------------------------------
 //--COP BLASTER - 9165--
+// V5.6r1 Decreased projectile speed penalty to 20%
 //-----------------------------------
 //-----------------------------------
 		"9165"
@@ -25323,7 +25015,7 @@ Weapon by: 'The One Of Wonders'"
 				"Projectile speed decreased"
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"0.6"
+					"value"				"0.8"
 				}		
 				"clip size penalty"
 				{
@@ -25842,123 +25534,16 @@ Wearable by: 'The One Of Wonders'"
 //-----------------------------
 //-----------------------------
 //--ENGINEER COIL RIFLE - 9173--
+// V5.6r1 Removed
 //-----------------------------
 //-----------------------------
 		"9173"
 		{
-			"name"						"TF_WEAPON_COILRIFLE_ENGINEER"
-			"prefab"					"weapon_shotgun"
-			"show_in_armory"			"1"
-			"item_slot"					"primary"
-			"anim_slot"                 "primary"
-			"item_class"				"tf_weapon_shotgun_primary"
-
-			"item_quality"				"rarity2"
-
-			"propername"				"1"
-			"item_name"					"Conagher Classic"
-			"item_type_name"			"Experimental Coil Rifle"
-			"item_description"			"
-Conagher Special: Dealing damage to enemies repairs and upgrades your buildings 
-
-A family pride, going back to the glory days of my grandfather.
-
-Model by: 'Rapoza Dynamica'
-Weapon by: 'The One Of Wonders'"											
-			"item_logname"				"conagher_coil"
-			"item_iconname"				"conagher_coil"
-			"image_inventory"			"backpack/weapons/c_models/c_coilshotgun/c_coilshotgun"
-			"model_world"				"models/weapons/c_models/c_coilshotgun/c_coilshotgun.mdl"
-			"model_player"				"models/weapons/c_models/c_coilshotgun/c_coilshotgun.mdl"
-			"attach_to_hands"			"1"
-			"used_by_classes"
-			{
-				"engineer"                "primary"
-			}
-			"static_attrs"
-			{
-				"class select override vcd"				"taunt02_v1"
-				"override projectile type"              "32"
-			}
-			"attributes"
-			{
-			    "provide on active"													
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
-				"add construction on hit"										
-				{
-					"attribute_class"	"add_onhit_construction"
-					"value" 			"1"
-				}
-				"Set DamageType Ignite"												
-				{
-					"attribute_class"	"set_dmgtype_ignite"
-					"value" 			"1"
-				}
-				"weapon burn dmg increased"
-				{
-					"attribute_class"	"mult_wpn_burndmg"
-					"value" 			"1.25"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"3.33333333333"
-				}			
-				"weapon burn time reduced"
-				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.25"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"0.1"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.5"
-				}
-				"voice pitch scale"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"0.75"
-				}
-				"ragdolls become ash"
-				{
-					"attribute_class"	"ragdolls_become_ash"
-					"value"				"1"
-				}
-                "voice pitch scale"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.018888888888888"
-				}
-                "crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}	
-                "voice pitch scale"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.5"
-				}				
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_CoilRifle.Shoot"
-				"sound_burst"			"Weapon_CoilRifle.ShootCrit"
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //------------------
 //------------------
 //--COMBAT WRENCH - 9174--
+// V5.6r1 Construction rate penalty removed and bonus added, afterburn time increased slightly
 //------------------
 //------------------
 		"9174"
@@ -25994,6 +25579,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"provide_on_active"
 					"value" 			"1"
 				}
+				"Construction rate increased"
+				{
+					"attribute_class"	"mult_construction_value"
+					"value"				"1.5"
+				}
 				"Set DamageType Ignite"												
 				{
 					"attribute_class"	"set_dmgtype_ignite"
@@ -26012,12 +25602,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon burn time reduced"
 				{
 					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.1"
-				}
-				"Construction rate decreased"
-				{
-					"attribute_class"	"mult_construction_value"
-					"value" 			"0.6"
+					"value"				"0.3"
 				}
 				"Repair rate decreased"
 				{
@@ -29185,6 +28770,103 @@ Weapon by: 'Majro'"
 //----------------------
 		"9216"
 		{
+			"name"						"TF_WEARABLE_JUMPPACK_SPY"
+			"item_class"				"tf_weapon_nailgun"
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"					"melee"
+
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"propername"				"1"
+			"item_quality"				"rarity3"
+			"item_name"					"Spy - Fly - Die"
+			"item_type_name"			"Rocket Jump Pack"
+			"item_description"			"
+Fires a short-duration blast that launches Spy in the direction they are aiming.
+
+Think fast, or die trying!
+
+Cosmetic by: 'Pie_Tony' 'Tabby'
+Weapon from: New Old Weapons Pack
+Repurposed by: 'Majro'"
+			"item_logname"				"medic_satchel_spy"
+			"item_iconname"				"what"
+			"image_inventory"			"backpack/workshop/player/items/pyro/furious_flyer_mk2/furious_flyer_mk2"
+			"model_player"				"models/weapons/v_models/v_rocketpack_pyro.mdl"
+			"attach_to_hands"			"2"
+			"extra_wearable"			"models/player/items/engineer/flyboy_new.mdl"
+			"used_by_classes"
+			{
+				"spy"					"1"
+			}
+			"static_attrs"
+			{
+				"override projectile type" 				"2"
+				"damage bonus hidden"					"0.001"
+				"min_viewmodel_offset"					"10 0 -10"
+				"fire rate penalty hidden"				"45"
+				"mod max primary clip override"			"-1"
+			}
+			"attributes"
+			{
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
+				"allowed in medieval mode"
+				{
+					"attribute_class"	"allowed_in_medieval_mode"
+					"value"				"1"
+				}
+				"centerfire projectile"
+				{
+					"attribute_class"	"centerfire_projectile"
+					"value"				"1"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mod_ammo_per_shot"
+					"value"				"-1"
+				}
+				"hand scale"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"0.01"
+				}
+				"rocket limited lifetime"
+				{
+					"attribute_class"	"rocket_lifetime"
+					"value"				"0.00001"
+				}
+				"voice pitch scale"
+				{
+					"attribute_class"	"blast_dmg_to_self"
+					"value" 			"0"
+				}
+				"damage force increase hidden"
+				{
+					"attribute_class"	"mult_dmgself_push_force"
+					"value" 			"-1.75"
+				}
+				"strange restriction type 3"
+				{
+					"attribute_class"	"apply_z_velocity_on_damage"
+					"value"				"210"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Scout.TripleJumpSFX"
+				"sound_burst"    		"Scout.TripleJumpSFX"
+				"sound_reload"			"Weapon_Null"
+				"sound_special1"		"Building_JumpPad.Launch"
+
+			}
+			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
+			"drop_sound"				"#ui/item_pack_drop.wav"
 		}
 //------------------------------
 //------------------------------
@@ -30019,9 +29701,10 @@ Weapon by: 'Reagy'"
 			}
 			"visuals"
 			{
-			    "sound_single_shot"		"Weapon_Scatter_Gun_Double.Single"
-				"sound_burst"			"Weapon_Scatter_Gun_Double.SingleCrit"
+			    "sound_single_shot"		"Weapon_BBstick.Shoot"
+				"sound_burst"			"Weapon_BBstick.ShootCrit"
 				"sound_reload"			"Weapon_SuperShotGun.WorldReload"
+				"tracer_effect"         "bullet_scattergun_tracer01"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -30818,77 +30501,11 @@ Weapon from: Fred's Fight Starters"
 //--------------------------------
 //--THE HIT INDUCTION - 9920--
 // Decided to keep this for now
+// V5.6r1 Removed
 //--------------------------------
 //--------------------------------
 		"9920"
 		{
-			"name"					"TF_WEAPON_COILWRENCH"
-			"prefab"					"weapon_wrench"
-			"item_class"				"tf_weapon_wrench"
-			"item_quality"				"rarity3"
-			"show_in_armory"			"1"
-			"item_slot"					"melee"
-			"anim_slot"					"melee"
-
-			"propername"				"1"
-			"item_name"					"Hit Induction"
-			"item_type_name"				"Homemade Wrench"
-//Break//
-"item_description"
-"'Ever been hit with 1000 degrees of pain?'
-  
-Model by: 'Rapoza'
-Weapon from: Fred's Fight Starters"
-//Break//
-			"item_logname"				"coilwrench"
-			"item_iconname"				"coilwrench"
-			"image_inventory"				"backpack/coilwrench/coilwrench.vtf"
-			"model_world"				"models/weapons/c_models/c_coilwrench/w_coilwrench.mdl"
-			"model_player"				"models/weapons/c_models/c_coilwrench/v_model/v_coilwrench.mdl"
-			"attach_to_hands"				"2"
-			"used_by_classes"
-			{
-				"engineer"				"2"
-			}
-			"static_attrs"
-			{
-			}
-			"attributes"
-			{
-				"Construction rate increased"
-				{
-					"attribute_class"	"mult_construction_value"
-					"value"				"1.5"
-				}
-				"Repair rate decreased"
-				{
-					"attribute_class"	"mult_repair_value"
-					"value"				"0.5"
-				}
-				"upgrade rate decrease"
-				{
-					"attribute_class"	"upgrade_rate_mod"
-					"value"				"0.8"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.554"
-				}
-				"override footstep sound set" // Because its supposed to be a hot coil i wanted a cool fire effect on hit that did nothing, just for looks, might remove if its too confusing.
-				{
-					"attribute_class"	"set_dmgtype_ignite"
-					"value"				"1"
-				}
-				"throwable fire speed"
-				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.02"
-				}
-			}
-			"visuals"
-			{
-			}
 		}
 //--------------------------------
 //--------------------------------
