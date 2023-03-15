@@ -26475,7 +26475,7 @@ Weapon By: 'Colrot'"
 					"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.25"
+					"value"				"1.15"
 				}
 				 "crit mod disabled"
 				{
@@ -29779,7 +29779,7 @@ Weapon by: 'Colrot'"
 				"add uber charge on hit"
 				{
 					"attribute_class"	"add_onhit_ubercharge"
-					"value"				"-0.15"
+					"value"				"-0.20"
 				}		
                 "reload time increased"	
 				{
