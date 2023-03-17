@@ -19412,7 +19412,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_FLAMETHROWER_DRAGON_PYRO"
 			"prefab"					"weapon_flamethrower"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"primary"
 			"anim_slot"                 "primary"
 
