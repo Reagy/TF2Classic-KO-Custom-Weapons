@@ -235,8 +235,6 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	GetEntityClassname( iMedigun, szWeaponName, sizeof(szWeaponName) );
 	if( StrEqual( szWeaponName, "tf_weapon_medigun" ) ) {
 		CreateDummyGun( iPlayer, iMedigun );
-		SetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget", -1 );
-		g_iOldTargets[iPlayer] = 69420;
 	}
 	return Plugin_Continue;
 }
@@ -286,6 +284,9 @@ MRESReturn Detour_GetBuffedMaxHealth( Address aThis, DHookReturn hReturn ) {
 		flLargestMult = 0.5;
 	else for( int i = 0; i < iHealers; i++ ) {
 		Address aHealer = SDKCall( hGetHealerIndex, aThis, i );
+		if( aHealer == Address_Null )
+			continue;
+
 		int iIndex = GetEntityFromAddress( aHealer );
 		if( !IsValidPlayer( iIndex ) )
 			continue;
