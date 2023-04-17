@@ -26446,13 +26446,9 @@ Weapon By: 'Colrot'"
 			{
 				"pyro"					"1"
 			}
-			"static_attrs"
-			{
-					 "dmg bonus vs buildings hidden"     "3.65"
-			}
 			"attributes"
 			{
-			     "provide on active"
+			        "provide on active"
 				{
 					"attribute_class"	"provide_on_active"
 					"value" 			"1"
@@ -26462,6 +26458,11 @@ Weapon By: 'Colrot'"
 					"attribute_class"	"dmg_from_sentry_reduced"
 					"value"				"0.75" 
 				}
+				"dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"2.75"
+				}
 					"damage applies to sappers"														
 				{
 					"attribute_class"	"set_dmg_apply_to_sapper"
@@ -26470,7 +26471,7 @@ Weapon By: 'Colrot'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.55"
+					"value"				".85"
 				}
 					"fire rate penalty"
 				{
@@ -26482,7 +26483,7 @@ Weapon By: 'Colrot'"
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
-                "crit vs wet players hidden"				          // 8 (Disguising) + 16 (Disguised) = Anti-Spy Disguise conditions...												
+                                "crit vs wet players hidden"				          // 8 (Disguising) + 16 (Disguised) = Anti-Spy Disguise conditions...												
 				{
 					"attribute_class"	"or_crit_vs_playercond"
 					"value" 			"24"
