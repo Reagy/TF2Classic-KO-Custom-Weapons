@@ -8,35 +8,35 @@
         
 			"CTFPlayer::OnTakeDamage"
 			{
-				"linux"		"63"
+				"linux"		"64"
 			}
 			"CTFPlayer::TakeHealth"
 			{
-				"linux"		"65"
+				"linux"		"470"
 			}
 			"CTFPlayer::OnTakeDamageAlive"
 			{
-				"linux"		"274"
+				"linux"		"275"
 			}
 			"CTFPlayer::GetMaxHealth"
 			{
-				"linux"		"469"
+				"linux"		"472"
 			}
             "CTFPlayer::GetAttributeManager"
 			{
-				"linux"		"471"
+				"linux"		"474"
 			}
 			"CTFPlayer::GetAttributeContainer"
 			{
-				"linux"		"472"
+				"linux"		"475"
 			}
 			
-			"CTFPlayer::m_Shared"
+			"CTFPlayer::m_Shared" // outdated
 			{
 				"linux"		"4264"
 			}
 			
-			"CTFPlayerShared::m_pOuter" //pointer to player contained in CTFPlayerShared
+			"CTFPlayerShared::m_pOuter" //pointer to player contained in CTFPlayerShared // outdated
 			{
 				"linux"		"1200"
 			}
@@ -50,37 +50,37 @@
             
             "CBaseObject::StartBuilding"
             {
-                "linux"     "328"
+                "linux"     "329"
             }
             "CBaseObject::OnGoActive"
             {
-                "linux"     "340"
+                "linux"     "342"
             }
             "CBaseObject::CanBeUpgraded"
             {
-                "linux"     "345"
+                "linux"     "347"
             }
             "CBaseObject::StartUpgrading"
             {
-                "linux"     "346"
+                "linux"     "348"
             }
             "CBaseObject::FinishUpgrading"
             {
-                "linux"     "347"
+                "linux"     "349"
             }
             "CBaseObject::MakeCarriedObject"
             {
-                "linux"     "350"
+                "linux"     "353"
             }
-            "CBaseObject::m_iGoalUpgradeLevel"
+            "CBaseObject::m_iGoalUpgradeLevel" // outdated
             {
                 "linux"     "2044"
             }
-            "CObjSentrygun::m_flNextAttack"
+            "CObjSentrygun::m_flNextAttack" // outdated
             {
                 "linux"     "2392"
             }
-            "CObjSentrygun::m_iBaseTurnRate"
+            "CObjSentrygun::m_iBaseTurnRate" // outdated
             {
                 "linux"     "2404"
             }
@@ -90,23 +90,23 @@
             
 			"CTFWeaponBase::Holster"
 			{
-				"linux"		"261"
+				"linux"		"262"
 			}
 			"CTFWeaponBase::ItemPostFrame"
 			{
-				"linux"		"271"
+				"linux"		"272"
 			}
 			"CTFWeaponBase::SecondaryAttack"
 			{
-				"linux"		"286"
+				"linux"		"288"
 			}
 			"CTFWeaponBase::GetFireRate"
 			{
-				"linux"		"295"
+				"linux"		"298"
 			}
 			"CWeaponMedigun::GetTargetRange"
 			{
-				"linux"		"448"
+				"linux"		"473"
 			}
 			
 			"CAttributeManager::ApplyAttributeFloat"
@@ -122,9 +122,9 @@
             
 			"CEconEntity::GetAttributeManager"
 			{
-				"linux"		"225"
+				"linux"		"226"
 			}
-			"CEconEntity::m_Item" //pointer to CEconItemView on CEconEntity
+			"CEconEntity::m_Item" //pointer to CEconItemView on CEconEntity // outdated
 			{
 				"linux"		"1168"
 			}
