@@ -10,9 +10,9 @@
 			{
 				"linux"		"64"
 			}
-			"CTFPlayer::TakeHealth"
+			"CTFPlayer::TakeHealth" // this is cbaseplayer !!!!!!!!!!!!!!!!!!
 			{
-				"linux"		"470"
+				"linux"		"66"
 			}
 			"CTFPlayer::OnTakeDamageAlive"
 			{
