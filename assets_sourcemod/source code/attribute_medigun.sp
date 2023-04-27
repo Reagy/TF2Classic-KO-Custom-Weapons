@@ -666,6 +666,9 @@ MRESReturn Detour_AllowedToHealPre( int iThis, DHookReturn hReturn, DHookParam h
 //just to bypass adding the medigun to the enemy's healer list
 MRESReturn Detour_HealStartPre( Address aThis, DHookParam hParams ) {
 	int iTarget = GetPlayerFromShared( aThis );
+	if( hParams.IsNull( 1 ) )
+		return MRES_Ignored;
+
 	int iHealer = hParams.Get( 1 );
 
 	if( ValidHealTarget( iHealer, iTarget ) )
