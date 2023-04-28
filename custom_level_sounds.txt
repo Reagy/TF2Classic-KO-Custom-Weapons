@@ -6329,46 +6329,6 @@
 //--------------------------------------------------//
 
 // ------------------------------------------------------------------------------------ //
-// AA Gun
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_AAGun.ClipEmpty"	
-{
-	"channel"		"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/aagun_empty.wav"
-}
-"Weapon_AAGun.Fire"	
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/aagun_shoot.wav"
-}
-"Weapon_AAGun.FireCrit"	
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/aagun_shoot_crit.wav"
-}
-"Weapon_AAGun.WindUp"	
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/aagun_wind_up.wav"
-}
-"Weapon_AAGun.WindDown"	
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/aagun_wind_down.wav"
-}
-
-// ------------------------------------------------------------------------------------ //
 // Righteous Bison
 // ------------------------------------------------------------------------------------ //
 
@@ -19137,46 +19097,6 @@
 //--------------------------------------------------//
 //-- New-Old Weapons Pack! - Weapon Sound Scripts --//
 //--------------------------------------------------//
-
-// ------------------------------------------------------------------------------------ //
-// AA Gun
-// ------------------------------------------------------------------------------------ //
-
-"Weapon_AAGun.ClipEmpty"	
-{
-	"channel"		"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/aagun_empty.wav"
-}
-"Weapon_AAGun.Fire"	
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/aagun_shoot.wav"
-}
-"Weapon_AAGun.FireCrit"	
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/aagun_shoot_crit.wav"
-}
-"Weapon_AAGun.WindUp"	
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/aagun_wind_up.wav"
-}
-"Weapon_AAGun.WindDown"	
-{
-	"channel"		"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/aagun_wind_down.wav"
-}
 
 // ------------------------------------------------------------------------------------ //
 // Righteous Bison
