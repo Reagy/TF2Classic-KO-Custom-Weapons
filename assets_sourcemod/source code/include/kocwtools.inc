@@ -143,7 +143,7 @@ enum {
 	DI_DAMAGEFLAGS = 60,
 	DI_DAMAGECUSTOM = 64,
 
-	DI_CRITTYPE = 100,
+	DI_CRITTYPE = 108, //updated
 }
 
 enum {
