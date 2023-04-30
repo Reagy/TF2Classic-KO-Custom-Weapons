@@ -1475,10 +1475,10 @@ Weapon from: New Old Weapons Pack"
 			"item_logname"				"gloves"
 			"item_iconname"				"gloves"
 			"image_inventory"			"backpack/weapons/c_models/c_boxing_gloves/c_boxing_gloves"
-//			"model_world"				"models/weapons/w_models/w_boxing_gloves.mdl"
+			"model_world"				"models/weapons/w_models/w_boxing_gloves.mdl"
 			"model_player"				"models/weapons/v_models/v_boxing_gloves_heavy.mdl"
 			"attach_to_hands"			"2"
-			"extra_wearable"			"models/weapons/w_models/w_boxing_gloves_alt.mdl"			// So the gloves appear on his hands even when holding other weapons. Dummied out - they're really, REALLY bulky.
+			//"extra_wearable"			"models/weapons/w_models/w_boxing_gloves_alt.mdl"			// So the gloves appear on his hands even when holding other weapons. Dummied out - they're really, REALLY bulky.
 			"used_by_classes"
 			{
 				"heavy"					"1"
@@ -1533,10 +1533,10 @@ Weapon from: New Old Weapons Pack"
 			"item_logname"				"gloves_running_urgently"
 			"item_iconname"				"gloves_running_urgently"
 			"image_inventory"			"backpack/weapons/c_models/c_boxing_gloves_urgency/c_boxing_gloves_urgency"
-//			"model_world"				"models/weapons/w_models/w_boxing_gloves_urgent.mdl"
+			"model_world"				"models/weapons/w_models/w_boxing_gloves_urgent.mdl"
 			"model_player"				"models/weapons/v_models/v_boxing_gloves_urgent_heavy.mdl"
 			"attach_to_hands"			"2"
-			"extra_wearable"			"models/weapons/w_models/w_boxing_gloves_urgent_alt.mdl"
+			//"extra_wearable"			"models/weapons/w_models/w_boxing_gloves_urgent_alt.mdl"
 			"used_by_classes"
 			{
 				"heavy"					"1"
@@ -4846,7 +4846,8 @@ Edited by: 'Reagy'"
 			"item_iconname"				"eviction_notice"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_eviction_notice/c_eviction_notice"
 			"model_player"				"models/weapons/v_models/v_eviction_notice_heavy.mdl"	// Never noticed until recently, doesn't it hurt to just slap your fist into the palm of your hand if you're wearing BRASS KNUCKLES??? but Heavy's a big boy he can tank the pain
-			"extra_wearable" 			"models/weapons/w_models/w_eviction_notice_alt.mdl"			// I tried this out, but it doesn't really work as well as I intended...
+			"model_world"				"models/weapons/w_models/w_eviction_notice.mdl"
+			//"extra_wearable" 			"models/weapons/w_models/w_eviction_notice_alt.mdl"			// I tried this out, but it doesn't really work as well as I intended...
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -6433,10 +6434,12 @@ Weapon by: 'Reagy'"
 			"item_iconname"				"engineer_fists"
 			"image_inventory"			"backpack/workshop/player/items/engineer/c_buffengineer/c_buffengineer"
 			"model_player"				"models/weapons/custom/v_models/v_berserk_fists_engineer.mdl"
+			"model_world"               "models/player/items/custom/engineer/c_chad.mdl"
 			"extra_wearable"			"models/player/items/custom/engineer/c_chad.mdl"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 			"attach_to_hands"			"2"
+			"drop_type"					"none"
 			"used_by_classes"
 			{
 				"engineer"					"1"
@@ -6817,7 +6820,7 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_TRIGUN"
 			"prefab"					"weapon_minigun"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"primary"
 
 			"item_quality"				"rarity2"
@@ -7306,7 +7309,7 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Bergur"
 			"item_type_name"			"#TF_Weapon_Lunchbox"
-			"item_description"			"Eat to gain up to 120 health
+			"item_description"			"Eat to gain up to 80 health
 
 As AMERICAN as you can get!
 
@@ -7321,22 +7324,34 @@ Item by: 'Reagy'"
 				"heavy"					"1"
 			}
 			"static_attrs"
-			{
-				"override projectile type" 				"2"
-				"item_meter_charge_type"				"1"
-				"item_meter_charge_rate"				"10"									
-				"meter_label"							"#TF_Sandwich"
+			{									
+				"meter_label"							"BORGAR"
 			}
-			"attributes"
+			"attributes" //This thing's running gag is that we literally refuse to spell burger correctly :skull:
 			{
-				"heal on hit for slowfire"
+			    "BURGIR Cond on Eat" 
 				{
-					"attribute_class"	"strange_restriction_type_1"						
-					"value"				"120"
+					"attribute_class"	"DISPLAY_BORGUH"						
+					"value"				"1"
 				}
-				"custom projectile model"
+				"BOOHGUR Smol Healthpack"
 				{
-					"attribute_class"	"custom_projectile_model"
+					"attribute_class"	"custom_lunchbox_throwable_type"						
+					"value"				"1"
+				}
+				"lunchbox add condition on eat"
+				{
+					"attribute_class"	"lunchbox_addcond"						
+					"value"				"111 10"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"lunchbox_healing_scale"						
+					"value"				"0.66666666666"
+				}
+				"custom lunchbox throwable model"
+				{
+					"attribute_class"	"custom_lunchbox_throwable_model"
 					"value"				"models/items/custom/bunger.mdl"
 				}
 			}
@@ -7356,7 +7371,7 @@ Item by: 'Reagy'"
 			"propername"				"1"											
 			"item_name"					"Bergur"
 			"item_type_name"			"#TF_Weapon_Lunchbox"
-			"item_description"			"Eat to gain up to 120 health
+			"item_description"			"Eat to gain up to 80 health
 
 As AMERICAN as you can get!
 
@@ -7373,22 +7388,34 @@ Item by: 'Reagy'"
 				"soldier"					"1"
 			}
 			"static_attrs"
-			{
-				"override projectile type" 				"2"
-				"item_meter_charge_type"				"1"
-				"item_meter_charge_rate"				"10"									
-				"meter_label"							"#TF_Sandwich"
+			{								
+				"meter_label"							"BUHGER"
 			}
-			"attributes"
+			"attributes" //This thing's running gag is that we literally refuse to spell burger correctly :skull:
 			{
-				"heal on hit for slowfire"
+			    "BURGIR Cond on Eat" 
 				{
-					"attribute_class"	"strange_restriction_type_1"						
-					"value"				"120"
+					"attribute_class"	"DISPLAY_BORGUH"						
+					"value"				"1"
 				}
-				"custom projectile model"
+				"BOOHGUR Smol Healthpack"
 				{
-					"attribute_class"	"custom_projectile_model"
+					"attribute_class"	"custom_lunchbox_throwable_type"						
+					"value"				"1"
+				}
+				"lunchbox add condition on eat"
+				{
+					"attribute_class"	"lunchbox_addcond"						
+					"value"				"111 10"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"lunchbox_healing_scale"						
+					"value"				"0.66666666666"
+				}
+				"custom lunchbox throwable model"
+				{
+					"attribute_class"	"custom_lunchbox_throwable_model"
 					"value"				"models/items/custom/bunger.mdl"
 				}
 			}
@@ -7697,6 +7724,7 @@ Weapon by: 'Reagy'"
 				"rocket limited lifetime"				"1"
 				"rocket gravity"						"1"
 				"blast dmg to self increased"			"3"
+				"override projectile type"              "2"
 			}
 			"attributes"
 			{
@@ -7738,6 +7766,9 @@ Weapon by: 'Reagy'"
 				"sound_double_shot"		"Weapon_TrashCannon.Fire"
 				"sound_burst"			"Weapon_TrashCannon.Fire"
 				"sound_special1"		"Weapon_RPG_BlackBox.Explode"
+				"sound_reload"          "Weapon_Null"
+				"sound_special2"        "Weapon_Tomislav.WindUp"
+				"sound_special3"        "Weapon_Null"
 				"animation_replacement"
 				{
 					"ACT_MP_ATTACK_STAND_PRIMARY"				"ACT_MP_ATTACK_STAND_SECONDARY"
@@ -20181,7 +20212,7 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory_size_h"	"82"
 
 			"propername"				"1"
-			"item_name"					"Broken Mann's Legacy"
+			"item_name"					"Unusual Broken Mann's Legacy"
 			"item_type_name"			"Accursed Shotgun"
 			"item_description"			"
 Curse of the Broken Mann:
@@ -21216,7 +21247,7 @@ Weapon by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_quality"				"rarity4"
-			"item_name"					"Unholy Reckoning"
+			"item_name"					"Unusual Unholy Reckoning"
 			"item_type_name"			"Accursed throwing knife"
 			"item_description"			"Ammo pickups do not give ammo
 Recharges over time
@@ -21477,7 +21508,7 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory_size_h"	"82"
 
 			"propername"				"1"
-			"item_name"					"Beatophone"
+			"item_name"					"Unusual Beatophone"
 			"item_type_name"			"Gramophone...?"
 			"item_description"			"
 Curse of the Noise-maker: This item plays music while holding the secondary fire button!
@@ -22254,6 +22285,9 @@ Weapon by: 'The One Of Wonders'"
 				"sound_burst"			"Weapon_Heater.SingleCrit"	
 				"sound_double_shot"		"Weapon_Heater.Single"
 				"sound_special1"		"Weapon_Airstrike.Explode"
+				"sound_reload"          "Weapon_Null"
+				"sound_special2"        "Weapon_Tomislav.WindUp"
+				"sound_special3"        "Weapon_Null"
 				"animation_replacement"
 				{
 					//The Attacking Animations
@@ -22322,7 +22356,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"1.2" 
+					"value"				"1.6" 
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -22343,6 +22377,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"unimplemented_mod_sniper_no_charge" // Hell no
 					"value"				"1"														
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"add_reload_refill_time" 
+					"value"				"0"														
 				}
 			}
 			"visuals"
@@ -27333,7 +27372,7 @@ Wearable by: 'The One Of Wonders'"
 			"item_quality"				"rarity4"
 
 			"propername"				"1"
-			"item_name"					"Tale of Tragedy"
+			"item_name"					"Unusual Tale of Tragedy"
 			"item_type_name"			"Accursed Sword"
 			"item_description"			"
 Curse of the Dark Tale: 
@@ -27407,10 +27446,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"add_onhit_addcond_self"  
 					"value" 			"41 42069"                   
  				}
-				"add condition on hit"	// invis on kill, can't attack tho													
+				"add condition on kill"																
 				{
-					"attribute_class"	"custom_addcond_onkill"  
-					"value" 			"4 5.0"                   
+					"attribute_class"	"add_onkill_addcond_self"  
+					"value" 			"4 5"                   
  				}
 				"crit mod disabled"
 				{
@@ -28712,7 +28751,7 @@ Weapon by: 'Colrot' and 'Mister Mann'"
 			"item_logname"				"tsar_platina"
 			"item_iconname"				"tsar_platina"
 			"image_inventory"			"backpack/weapons/c_models/c_tsar_platina"
-// 		    "model_world"				"models/workshop/weapons/c_models/c_tsar_platina/c_tsar_platina.mdl"
+		    "model_world"				"models/workshop/weapons/c_models/c_tsar_platina/c_tsar_platina.mdl"
 			"model_player"			    "models/weapons/v_models/v_tsar_platina/v_tsar_platina.mdl"
 			"extra_wearable" 			"models/player/items/custom/heavy/heavy_kujo_combined.mdl"
 			"attach_to_hands"			"2"
@@ -29452,8 +29491,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Baikal Boomstick"
 			"item_type_name"			"Double-Barrel Shotgun"
-			"item_description"			"Mighty Blast: This weapon inflicts knockback on hit
-
+			"item_description"			"
 Gun for bear hunt, is good.
 
 Model by: 'Haau' 'VitreousGlassy'
@@ -29475,6 +29513,21 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
+			    "scattergun has knockback"
+				{
+					"attribute_class"	"set_scattergun_has_knockback"
+					"value"				"1"
+				}
+				"apply self knockback hidden"
+				{
+					"attribute_class"	"apply_self_knockback"
+					"value"				"260"
+				}
+				"weapon enemy knockback mod mult hidden"
+				{
+					"attribute_class"	"weapon_enemy_knockback_mod"
+					"value"				"0.2"
+				}
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
@@ -29504,17 +29557,7 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}
-                "strange restriction type 1"
-				{
-					"attribute_class"	"apply_look_velocity_on_damage"
-					"value"				"400"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"apply_z_velocity_on_damage"
-					"value"				"300"
-				}				
+				}			
 			}
 			"visuals"
 			{
@@ -29720,6 +29763,8 @@ Weapon by 'The One Of Wonders'"
 			"model_player"				"models/weapons/custom/v_models/v_berserk_fists.mdl"
 			"extra_wearable"			"models/player/items/custom/soldier/gladiator/gladiator_combined.mdl"
 			"attach_to_hands"			"2"
+			"loadondemand"				"1"
+			"act_as_wearable"			"1"
 			"used_by_classes"
 			{
 				"soldier"					"1"
@@ -29955,6 +30000,8 @@ Weapon by 'The One Of Wonders'"
 			"model_player"				"models/weapons/custom/v_models/v_berserk_fists.mdl"
 			"extra_wearable"			"models/player/items/custom/soldier/centurion/centurion_combined.mdl"
 			"attach_to_hands"			"2"
+			"loadondemand"				"1"
+			"act_as_wearable"			"1"
 			"used_by_classes"
 			{
 				"soldier"					"1"
@@ -31310,7 +31357,23 @@ Weapon by: 'Noclue'"
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
-		
+// 2.1 WIP attributes 
+        "7516"
+		{
+			"name"					"BURGIR Cond on Eat"
+			"description_string"	"On Eat: Gain damage resistance and health regeneration for 10 seconds"
+			"attribute_type"		"string"													
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
+		}
+		"7517"
+		{
+			"name"					"BOOHGUR Smol Healthpack"
+			"description_string"	"Dropped Bergurs give reduced health"
+			"attribute_type"		"string"													
+			"description_format"	"value_is_additive"
+			"effect_type"			"negative"
+		}
 // Fred's Attributes
 		"9901"
 		{
