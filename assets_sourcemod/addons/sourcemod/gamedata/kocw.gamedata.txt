@@ -33,12 +33,12 @@
 			
 			"CTFPlayer::m_Shared"
 			{
-				"linux"		"4264"
+				"linux"		"4284" //updated
 			}
 			
 			"CTFPlayerShared::m_pOuter" //pointer to player contained in CTFPlayerShared
 			{
-				"linux"		"1200"
+				"linux"		"1344" //updated
 			}
             
             "CTFGameRules::GetCaptureValueForPlayer"
@@ -72,17 +72,13 @@
             {
                 "linux"     "350"
             }
-            "CBaseObject::m_iGoalUpgradeLevel"
+            "CBaseObject::m_iGoalUpgradeLevel" //updated
             {
                 "linux"     "2044"
             }
-            "CObjSentrygun::m_flNextAttack"
+            "CObjSentrygun::m_flNextAttack" //updated
             {
-                "linux"     "2392"
-            }
-            "CObjSentrygun::m_iBaseTurnRate"
-            {
-                "linux"     "2404"
+                "linux"     "2396"
             }
             
             
@@ -104,10 +100,6 @@
 			{
 				"linux"		"295"
 			}
-			"CWeaponMedigun::GetTargetRange"
-			{
-				"linux"		"448"
-			}
 			
 			"CAttributeManager::ApplyAttributeFloat"
 			{
@@ -125,6 +117,17 @@
 				"linux"		"225"
 			}
 			"CEconEntity::m_Item" //pointer to CEconItemView on CEconEntity
+			{
+				"linux"		"1168"
+			}
+			
+			
+			
+			"CTFBaseRocket::m_flDamage"
+			{
+				"linux"		"1204"
+			}
+			"CBaseProjectile::m_bCollideWithTeammates"
 			{
 				"linux"		"1168"
 			}
