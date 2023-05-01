@@ -16328,7 +16328,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_iconname"				"m14"
 			"image_inventory"			"backpack/weapons/w_models/w_m14"
 			"model_world"				"models/weapons/w_models/w_m14.mdl"
-			"model_player"				"models/weapons/v_models/v_m14_sniper_v2.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_m14_sniper_v2.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -22130,7 +22130,8 @@ Weapon by: 'The One Of Wonders'"
 		"9127"
 		{
 			"name"						"TF_WEAPON_FOXHOUNDS"
-			"prefab"					"weapon_revolver"
+			"prefab"					"weapon_revolver" 
+			"item_class"				"tf_weapon_shotgun"	
 			"propername"				"1"
 			"show_in_armory"			"1"
 
@@ -22187,25 +22188,30 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mult_clipsize"
 					"value"				"2.0"
 				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
-				}
 				"spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"2.20"
+					"value"				"1.50"
 				}
 				"reload time increased"	
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"1.75"
+					"value"				"1.15"
 				}	
                 "crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"damage bonus hidden"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"6.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.1"
 				}				
 			}
 			"visuals"
