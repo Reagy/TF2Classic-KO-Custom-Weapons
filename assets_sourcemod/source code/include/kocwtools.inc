@@ -28,6 +28,13 @@ native void		ApplyPushFromDamage( int iPlayer, Address tfInfo, float vecDir[3] )
 
 native int		FindEntityInSphere( int iStartEntity, float vecSearchPoint[3], float flRadius );
 
+enum {
+	HF_NOOVERHEAL = 1<<1, //prevent overheal
+	HF_NOCRITHEAL = 1<<2, //prevent crit healing
+}
+
+native void		HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
+
 /*
 	MATH FUNCTIONS
 */
@@ -52,6 +59,11 @@ stock float MinFloat( float v1, float v2 ) {
  * @return       Value of largest parameter
  */
 stock float MaxFloat( float v1, float v2 ) {
+	if( v1 > v2) return v1;
+	return v2;
+}
+
+stock int MaxInt( int v1, int v2 ) {
 	if( v1 > v2) return v1;
 	return v2;
 }
@@ -114,6 +126,7 @@ stock void StoreToEntity( int iEntity, int iOffset, any anValue, NumberType iSiz
 
 
 #define EVENT_POSTINVENTORY		"post_inventory_application"
+#define EVENT_PLAYERDEATH		"player_death"
 
 /*
 	CUSTOM ATTRIBUTE DEFINES
@@ -143,7 +156,7 @@ enum {
 	DI_DAMAGEFLAGS = 60,
 	DI_DAMAGECUSTOM = 64,
 
-	DI_CRITTYPE = 100,
+	DI_CRITTYPE = 108, //updated
 }
 
 enum {

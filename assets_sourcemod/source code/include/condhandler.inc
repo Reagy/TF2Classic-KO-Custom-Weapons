@@ -23,14 +23,14 @@ native bool RemoveCustomCond( int iPlayer, int iEffect );
 
 native bool HasCustomCond( int iPlayer, int iEffect );
 
-native void GetCustomCondLevel( int iPlayer, int iEffect );
+native int GetCustomCondLevel( int iPlayer, int iEffect );
 native void SetCustomCondLevel( int iPlayer, int iEffect, int iLevel );
 
-native void GetCustomCondDuration( int iPlayer, int iEffect );
+native int GetCustomCondDuration( int iPlayer, int iEffect );
 native void SetCustomCondDuration( int iPlayer, int iEffect, float flDuration, bool bAdd );
 
-native void GetCustomCondSourcePlayer( int iPlayer, int iEffect );
+native int GetCustomCondSourcePlayer( int iPlayer, int iEffect );
 native void SetCustomCondSourcePlayer( int iPlayer, int iEffect, int iSource );
 
-native void GetCustomCondSourceWeapon( int iPlayer, int iEffect );
+native int GetCustomCondSourceWeapon( int iPlayer, int iEffect );
 native void SetCustomCondSourceWeapon( int iPlayer, int iEffect, int iSource );
