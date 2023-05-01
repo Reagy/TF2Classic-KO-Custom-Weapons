@@ -3199,7 +3199,7 @@ Weapon from: New Old Weapons Pack"
 			"item_quality"				"rarity2"
 			"item_name"					"Texas Star"
 			"item_type_name"			"#TF_Weapon_Revolver"
-			"item_description"			"Texas Style: This weapon mini-crits High noon and other Texas Star users.
+			"item_description"			"
 Any coward who goes invisible to escape will receive critical damage from this weapon.
 
 For when time ain't on your side, pardner.
@@ -6524,14 +6524,152 @@ Weapon by: 'Reagy'"
 		}	
 //-------------------------------------
 //-------------------------------------
-// All class shotguns, literal meme weapon that started this
+// Spy/Engie Revolvers
 //-------------------------------------
 //-------------------------------------
 		"7002"
 		{
-		}	
-		"7003"
+			"name"						"TF_WEAPON_SPY_SAR" 												
+			"prefab"					"weapon_revolver" 
+			"item_class"				"tf_weapon_shotgun"				
+			"show_in_armory"			"1"													
+			"item_slot"					"primary"	
+			"anim_slot"					"primary"	
+
+			"item_quality"				"rarity2"			
+
+			"propername"				"0"													
+			"item_name"					"Pacificateur" 								
+			"item_type_name"			"#TF_Weapon_Shotgun" 												
+			"item_description"			"
+Howdy, pardner.
+
+Model by: 'svdl'
+Animations by: 'Raptor Dan'
+Weapon by: 'Raptop Dan'"														
+			"item_logname"				"spy_ssa"
+			"item_iconname"				"spy_ssa"			
+			"image_inventory"			"backpack/weapons/c_models/c_goldcolt/c_goldcolt" 						
+			"model_world"				"models/weapons/c_models/c_goldcolt/c_goldcolt_spy.mdl"					
+			"model_player"				"models/weapons/custom/v_models/v_peacemaker_spy.mdl"		
+			"extra_wearable"			"models/player/items/engineer/engineer_cowboy_hat.mdl"
+			"attach_to_hands"			"2"													
+			"used_by_classes"
+			{
+				"spy"					"1"		
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"5 -2 -10"
+			}
+			"attributes"
+			{
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.1"
+				}
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"8.0"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.35"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_GoldColt.Single"
+				"sound_burst"			"Weapon_GoldColt.SingleCrit"	
+				"animation_replacement"
+				{
+					"ACT_MP_ATTACK_STAND_PRIMARY"		"ACT_MP_ATTACK_STAND_SECONDARY"
+					"ACT_MP_ATTACK_CROUCH_PRIMARY"		"ACT_MP_ATTACK_CROUCH_SECONDARY"
+					"ACT_MP_ATTACK_SWIM_PRIMARY"		"ACT_MP_ATTACK_SWIM_SECONDARY"
+					
+					"ACT_MP_DEPLOYED_PRIMARY"			"ACT_MP_RUN_SECONDARY"
+					"ACT_MP_STAND_PRIMARY"				"ACT_MP_STAND_SECONDARY"
+					"ACT_MP_RUN_PRIMARY"				"ACT_MP_RUN_SECONDARY"
+					"ACT_MP_CROUCHWALK_PRIMARY"			"ACT_MP_CROUCHWALK_SECONDARY"
+					"ACT_MP_CROUCH_PRIMARY"				"ACT_MP_CROUCH_SECONDARY"
+					"ACT_MP_SWIM_Primary"				"ACT_MP_SWIM_SECONDARY"
+					
+					"ACT_MP_AIRWALK_PRIMARY"			"ACT_MP_AIRWALK_SECONDARY"
+					"ACT_MP_JUMP_START_PRIMARY"			"ACT_MP_JUMP_START_secondary"
+					"ACT_MP_JUMP_FLOAT_primary"			"ACT_MP_JUMP_FLOAT_secondary"
+					"ACT_MP_JUMP_LAND_PRIMARY"			"ACT_MP_JUMP_LAND_secondary"						
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}
+		"7003" // Needs world model adding, will do later
 		{
+			"name"						"TF_WEAPON_ENGINEER_SAR" 												
+			"prefab"					"weapon_revolver" 
+			"item_class"				"tf_weapon_shotgun_hwg"				
+			"show_in_armory"			"0"													
+			"item_slot"					"secondary"	
+			"anim_slot"					"secondary"	
+
+			"item_quality"				"rarity2"			
+
+			"propername"				"0"													
+			"item_name"					"Peacemaker" 								
+			"item_type_name"			"Single Action Revolver" 												
+			"item_description"			"
+Howdy, pardner.
+
+Model by: 'svdl'
+Animations by: 'Raptor Dan'
+Weapon by: 'Raptop Dan'"														
+			"item_logname"				"engineer_ssa"
+			"item_iconname"				"engineer_ssa"													
+			"image_inventory"			"backpack/weapons/c_models/c_goldcolt/c_goldcolt" 						
+			"model_world"				"models/weapons/c_models/c_goldcolt/c_goldcolt_spy.mdl"					
+			"model_player"				"models/weapons/custom/v_models/v_peacemaker_engineer.mdl"		
+			"extra_wearable"			"models/player/items/engineer/engineer_cowboy_hat.mdl"
+			"attach_to_hands"			"2"													
+			"used_by_classes"
+			{
+				"engineer"					"1"			
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"5 -2 -10"
+			}
+			"attributes"
+			{
+				"voice pitch scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.1"
+				}
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"8.0"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.35"
+				}
+			}
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}	
+				"sound_single_shot"		"Weapon_GoldColt.Single"
+				"sound_burst"			"Weapon_GoldColt.SingleCrit"	
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //-------------------------------------
 //-------------------------------------
@@ -7057,14 +7195,15 @@ Modified by: 'The One Of Wonders'"
 			"item_description"			"
 For when you need something with a bit more, oomf...
 
-Model by: 'The_Fanciest_Of_Pants'
-Animations by: 'GHOST CAGE'
+Original model by: 'The_Fanciest_Of_Pants'
+Model edit by: 'Raptop Dan'
+Animations by: 'Raptor Dan'
 Weapon by: 'Reagy'"
 			"item_logname"				"deagle_spy"
 			"item_iconname"				"deagle_spy"
 			"image_inventory"			"backpack/weapons/w_models/w_deagle_new"
 			"model_world"				"models/weapons/custom/w_models/w_deagle.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_deagle_new.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_deagle_spy.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -8038,7 +8177,7 @@ Weapon by: 'Reagy'"
 			"item_iconname"				"bigiron"
 			"image_inventory"			"backpack/weapons/w_models/w_bigiron"
 			"model_world"				"models/weapons/custom/w_models/w_bigiron_engineer.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_bigiron_engineer_raptor.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_bigiron_v2.mdl"
 			"extra_wearable"			"models/player/items/engineer/spurs.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -11399,6 +11538,12 @@ Weapon by: 'The One Of Wonders'"
 // V5.5.5 Reverted soldier FAL due to feedback
 //--------------------------
 //--------------------------
+
+//--------------------------
+//--------------------------
+// SOLDIER BAR w/ funny recoil   -  7101   ---
+//--------------------------
+//--------------------------
 		"7101"
 		{
 			"name"						"TF_WEAPON_FAL_SOLDIER"
@@ -11419,13 +11564,14 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 Go play your pinko chess game with the Devil, Commie!
 
-Model by: 'Nanodesu64' 'lolripk'
+Model edit by: 'Raptor Dan'
+Animations by: 'Raptor Dan'
 Cosmetics by: 'blueNES' 'CoBalt' 'NeoDement' 'Void' 'JPRAS' 'Texman'
 Weapon by: 'Reagy'"
 			"propername"				"1"
-			"image_inventory"			"backpack/weapons/w_models/w_fal"
-			"model_world"				"models/weapons/custom/w_models/w_fal.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_fal.mdl"
+			"image_inventory"			"backpack/weapons/w_models/w_bar"
+			"model_world"				"models/weapons/custom/w_models/w_bar_rifle.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_bar_rifle.mdl"
 			"extra_wearable"			"models/player/items/custom/soldier/vietnam_vet.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -11470,6 +11616,21 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_reload_time"
 					"value"				"1.15"
+				}
+				"apply self knockback hidden"
+				{
+					"attribute_class"	"apply_self_knockback"
+					"value"				"75"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"1"
+				}
+				"punch angle is constant"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value" 			"10"
 				}
                 "strange restriction type 1"
 				{
@@ -11722,14 +11883,15 @@ This weapon has no damage falloff
 
 Son, this the gun that won the west..
 
-Model by: 'Batandy'
+Original model by: 'Batandy'
+Model edit by: 'Raptop Dan'
 Animations by: 'Raptor Dan'
 Weapon by: 'Reagy'"
 			"item_logname"				"jollyrancher"
 			"item_iconname"				"jollyrancher"
 			"image_inventory"			"backpack/weapons/w_models/w_leverrifle_engineer_new"
 			"model_world"				"models/weapons/custom/w_models/w_leverrifle_engineer_new.mdl"					
-			"model_player"				"models/weapons/custom/v_models/v_leverrifle_engineer_raptor.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_jolly_rancher.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -11875,8 +12037,8 @@ Weapon by: 'Reagy'"
 		}
 //-------------------------
 //-------------------------
-//--NEST BREAKER GL - 7107--
-//--V5.4 Cut back on building damage for player damage 
+//--SBS GL/ Trench Breaker rework
+// Lets see how Raptor's spin on this goes
 //-------------------------
 //-------------------------
 		"7107"
@@ -11894,48 +12056,64 @@ Weapon by: 'Reagy'"
 Just you try and bloody set up your toy factory now!
 
 Model by: 'cobalt'
+Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"building_grenadelauncher"
 			"item_iconname"				"building_grenadelauncher"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_trenchlauncher/c_trenchlauncher"
 			"model_world"				"models/workshop/weapons/c_models/c_trenchlauncher/c_trenchlauncher.mdl"
-			"model_player"				"models/workshop/weapons/c_models/c_trenchlauncher/c_trenchlauncher.mdl"
-			"attach_to_hands"			"1"
+			"model_player"				"models/weapons/custom/v_models/v_sbs_gl.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"demoman"				"1"
 			}
 			"attributes"																	
 			{
-				"Projectile speed increased"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"2"
-				}
-				"dmg bonus vs buildings"
-				{
-					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"				"3"
-				}
-				"damage penalty"
+//				"Projectile speed increased"
+//				{
+//					"attribute_class"	"mult_projectile_speed"
+//					"value"				"1.25"
+//				}
+				"damage bonus"												
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.67"
+					"value"				"1.2"
 				}
-				"Blast radius decreased"
+				"fire rate bonus"
 				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.1"
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"0.80"
+				}
+				"scattergun no reload single"
+				{
+					"attribute_class"	"set_scattergun_no_reload_single"
+					"value"				"1"
+				}
+				"grenade no spin"
+				{
+					"attribute_class"	"grenade_no_spin"
+					"value"				"1"
 				}
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"0.5"
 				}
-				"crit mod disabled"															
+				"blast dmg to self increased"
 				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
+					"attribute_class"	"blast_dmg_to_self"
+					"value"				"1.25"
+				}
+				"sticky air burst mode"
+				{
+					"attribute_class"	"set_detonate_mode"
+					"value"				"2"
+				}
+				"reload time increased hidden"
+				{
+					"attribute_class"	"mult_reload_time_hidden"
+					"value"				"2.25"
 				}
 			}
 			"visuals"
@@ -15358,6 +15536,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 Be the whisper of death that makes the enemies fear sleeping at night.
 
 Model by: 'Chickenman' 'Wendy' 'Extra Ram'
+Animations by: 'Raptor Dan'
 Original weapon from: Tangerine Paint and Grunt's Weapon Addons
 Modified by: 'Reagy'"
 			"item_logname"				"spistol_spy"
@@ -15366,7 +15545,7 @@ Modified by: 'Reagy'"
 			"image_inventory_size_h"		"82"
 			"image_inventory"			"backpack/weapons/w_models/w_spistol"
 			"model_world"				"models/weapons/w_models/w_spistol_spy.mdl"
-			"model_player"				"models/weapons/v_models/v_spistol_spy_new.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_spistol_spy_v2.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -16143,12 +16322,13 @@ I heard the Americans in 'Nam couldn't handle these so they were given to us.
 Dunno what their problem is, I can handle their recoil just fine.
 
 Model originally by: 'Rain*'
+Animations by: 'Raptor Dan'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"item_logname"				"m14"
 			"item_iconname"				"m14"
 			"image_inventory"			"backpack/weapons/w_models/w_m14"
 			"model_world"				"models/weapons/w_models/w_m14.mdl"
-			"model_player"				"models/weapons/v_models/v_m14_sniper.mdl"
+			"model_player"				"models/weapons/v_models/v_m14_sniper_v2.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -20760,7 +20940,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_COLT_REVOLVER"
 			"prefab"					"weapon_revolver"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"propername"				"1"
 
 			"item_quality"				"rarity2"
@@ -20933,7 +21113,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname" 			"heavy_lmg"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_lmg_heavy/c_lmg_heavy"
 			"model_world"				"models/weapons/w_models/w_lmg_heavy.mdl"
-			"model_player"				"models/weapons/v_models/v_lmg_heavy_raptor.mdl"
+			"model_player"				"models/weapons/v_models/v_arisaka_assault.mdl"
 			"extra_wearable"			"models/player/items/custom/heavy/ammo_up.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -21966,14 +22146,14 @@ ignores any active resistances
 I love to reload during a battle!
  
 Model by: 'catmilk_'
-Animations by: 'deskpacito'
+Animations by: 'Raptor Dan'
 Cosmetics by: 'Big Bob' 'SediSocks'
 Sounds from: Jabroni Brawl: Episode 3
 Weapon by: 'Reagy'"
 			"item_slot"					"secondary"
 			"image_inventory"			"backpack/weapons/w_models/w_foxhounds"
 			"model_world"				"models/weapons/custom/w_models/w_foxhounds.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_foxhounds.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_foxhounds_v2.mdl"
 			"extra_wearable"			"models/player/items/custom/spy/foxhounds_misc.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -29589,7 +29769,7 @@ Weapon by: 'Reagy'"
 			"item_iconname" 			"hwg_doublebarrel"
 			"image_inventory"			"backpack/weapons/c_models/c_baikal_boomstick/c_baikal_boomstick"
 			"model_world"				"models/weapons/custom/w_models/w_baikal_boomstick.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_baikal_boomstick_raptor.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_baikal_boomstick_v2.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{

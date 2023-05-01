@@ -7347,12 +7347,38 @@
 	"volume"		"1.0"
 	"wave"			")weapons/lever_shoot.wav"
 }
+
 "Weapon_LeverRifle.SingleCrit"
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 	"wave"			")weapons/lever_shoot_crit.wav"
+}
+
+"Weapon_LeverRifle.Reload"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"pitch"		"125"
+	"wave"		")weapons/poapri_shells_inserts.wav"
+}
+
+"Weapon_LeverRifle.Cock_Back"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	"1.0"
+	"wave"		")weapons/poapri_open01.wav"
+}
+
+"Weapon_LeverRifle.Cock_Forward"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	"1.0"
+	"wave"		")weapons/poapri_close01.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -10261,6 +10287,122 @@
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
 	"wave"		")weapons/big_iron_shoot_crit.wav"
+}
+
+"Weapon_BigIron.Alt"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"0.75"
+	"rndwave"
+	{
+		"wave"		")player/pl_fleshbreak.wav"
+		"wave"		")physics/flesh/flesh_bloody_break.wav"
+		"wave"		")physics/body/body_medium_break2.wav"
+		"wave"		")physics/body/body_medium_break3.wav"
+		"wave"		")physics/body/body_medium_break4.wav"
+	}
+}
+
+// ------------------------------------------------------------------------------------ //
+// Single Action Revolver
+// ------------------------------------------------------------------------------------ //
+"Weapon_SA.HammerBack"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"0.4"
+	"pitch"		"150"
+	"wave"		"weapons/sniper_bolt_forward.wav"
+}
+
+"Weapon_SA.HammerForward"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"0.4"
+	"pitch"		"150"
+	"wave"		"weapons/sniper_bolt_back.wav"
+}
+
+"Weapon_SA.GateOpen"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"pitch"		"150"
+	"wave"		"weapons/revolver_reload_cylinder_open.wav"
+}
+
+"Weapon_SA.GateClose"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"pitch"		"150"
+	"wave"		"weapons/revolver_reload_cylinder_close.wav"
+}
+
+"Weapon_SA.Eject"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"pitch"		"150"
+	"wave"		"weapons/grenade_launcher_drum_open.wav"
+}
+
+"Weapon_SA.Reload"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"pitch"		"175"
+	"wave"		"weapons/grenade_launcher_drum_load.wav"
+}
+
+"Weapon_SA.Spin"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"pitch"		"150"
+	"wave"		"weapons/grenade_launcher_drum_stop.wav"
+}
+
+"Weapon_SA.ReloadWorld"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"weapons/default_reload.wav"
+}
+
+//SMALL GRENADE EXPLOSION
+"GrenadeSmallExplode.Sound"
+{
+	"channel"	"CHAN_WEAPON"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_95dB"
+	"pitch"		"PITCH_NORM"
+
+	"rndwave"
+	{
+			"wave"	")weapons/grenade_small_explode2.wav"
+			"wave"	")weapons/grenade_small_explode3.wav"
+			"wave"	")weapons/grenade_small_explode1.wav"
+	}
+}
+
+// ------------------------------------------------------------------------------------ //
+// DW
+// ------------------------------------------------------------------------------------ //
+"Weapon_DrunkardWrath.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/drunkard_wrath_fire.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
