@@ -6531,10 +6531,9 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_SPY_SAR" 												
 			"prefab"					"weapon_revolver" 
-			"item_class"				"tf_weapon_shotgun"				
+			"item_class"				"tf_weapon_shotgun"					
 			"show_in_armory"			"1"													
-			"item_slot"					"primary"	
-			"anim_slot"					"primary"	
+			"item_slot"					"secondary"
 
 			"item_quality"				"rarity2"			
 
