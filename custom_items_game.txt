@@ -1327,7 +1327,7 @@ Weapon from: New Old Weapons Pack"
         {
             "name"						"TF_WEAPON_REMOTEDEPLOY_PDA"
             "prefab"					"weapon_pda"
-            "show_in_armory"			"0" // TEMP DISABLED
+            "show_in_armory"			"1"
 
 			"item_quality"				"rarity3"
 			"item_name"					"PDA: Remote Signal"
@@ -2573,6 +2573,11 @@ Weapon from: New Old Weapons Pack"
 					"attribute_class"	"provide_on_active"
 					"value" 			"1"
 				}
+			    "minigun jump while revved"
+				{
+					"attribute_class"	"minigun_jump_while_revved"
+					"value"				"1"
+				}
 				"heal on hit for rapidfire"
 				{
 					"attribute_class"	"add_onhit_addhealth"
@@ -2704,7 +2709,8 @@ Weapon from: New Old Weapons Pack"
 			"item_quality"				"rarity3"
 			"item_name"					"Scottish Handshake"
 			"item_type_name"			"#TF_Weapon_Lunchbox"
-			"item_description"			"
+			"item_description"			"Drink to gain up to 60 health.
+
 How about another drink this time, eh?
 
 Weapon from: New Old Weapons Pack
@@ -2725,20 +2731,30 @@ Modified by: 'Reagy'"
 			}
 			"attributes"
 			{
-				"heal on hit for slowfire"
+			    "Bottle Cond on Eat" 
 				{
-					"attribute_class"	"strange_restriction_type_1"						
-					"value"				"120"
+					"attribute_class"	"display_bottle"						
+					"value"				"1"
 				}
-				"deploy time increased"
+				"Bottle Healthpack"
 				{
-					"attribute_class"	"mult_deploy_time"
-					"value"				"1.25"
+					"attribute_class"	"custom_lunchbox_throwable_type"						
+					"value"				"1"
 				}
-				"custom projectile model"
+				"lunchbox add condition on eat"
 				{
-					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/custom/c_models/c_caffeine.mdl"			
+					"attribute_class"	"lunchbox_addcond"						
+					"value"				"121 15"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"lunchbox_healing_scale"						
+					"value"				"0.5"
+				}
+				"custom lunchbox throwable model"
+				{
+					"attribute_class"	"custom_lunchbox_throwable_model"
+					"value"				"models/weapons/w_models/w_scotland_shard.mdl"			
 				}
 			}
 			"visuals"																			// This is for future reference!
@@ -6820,7 +6836,7 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_TRIGUN"
 			"prefab"					"weapon_minigun"
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 			"item_slot"					"primary"
 
 			"item_quality"				"rarity2"
@@ -6845,6 +6861,11 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
+			    "minigun jump while revved"
+				{
+					"attribute_class"	"minigun_jump_while_revved"
+					"value"				"1"
+				}
 			    "bullets per shot bonus"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
@@ -6889,6 +6910,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"no_primary_ammo_from_dispensers"
 					"value"				"1"
+				}
+				"apply self knockback hidden"
+				{
+					"attribute_class"	"apply_self_knockback"
+					"value"				"100"
 				}
 				"crit mod disabled"
 				{
@@ -7723,11 +7749,16 @@ Weapon by: 'Reagy'"
 				"damage bonus hidden"					"1.2"
 				"rocket limited lifetime"				"1"
 				"rocket gravity"						"1"
-				"blast dmg to self increased"			"3"
+//				"blast dmg to self increased"			"3"
 				"override projectile type"              "2"
 			}
 			"attributes"
 			{
+			    "minigun jump while revved"
+				{
+					"attribute_class"	"minigun_jump_while_revved"
+					"value"				"1"
+				}
 				"weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
@@ -7752,6 +7783,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"custom_projectile_model"
 					"value"				"models/weapons/w_models/dirty_bomb_projectile.mdl"
+				}
+				"blast dmg to self increased"
+				{
+					"attribute_class"	"blast_dmg_to_self"
+					"value"				"3.0" 
 				}
 				"crit mod disabled"
 				{
@@ -9282,6 +9318,7 @@ Weapon by: 'Reagy'"
 				"sound_reload"			"BaseCombatCharacter.StopWeaponSounds"
 				"sound_empty"			"BaseCombatCharacter.StopWeaponSounds"	
 				"sound_double_shot"		"BaseCombatCharacter.StopWeaponSounds"
+				"sound_single_shot"		"BaseCombatCharacter.StopWeaponSounds"
 				"sound_special1"		"Selection.HeavyEquipment1"
 				"sound_special2"		"Selection.HeavyEquipment2"
 				"sound_special3"		"BaseCombatCharacter.StopWeaponSounds"
@@ -14240,6 +14277,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"provide_on_active"
 					"value"				"1"
 				}
+			    "minigun jump while revved"
+				{
+					"attribute_class"	"minigun_jump_while_revved"
+					"value"				"1"
+				}
 			    "no damage falloff over distance"
 				{
 					"attribute_class"	"mod_no_dmg_falloff"
@@ -16799,46 +16841,11 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
-				
-				"hidden separator"
-				{
-					"attribute_class"	"hidden_seperator"
-					"value"				"0"
-				}
-				
 				// Attribute for custom buildings
 				"strange restriction type 1"
 				{
 					"attribute_class"	"custom_sentry_type"
 					"value" 			"1" // Mini
-				}
-				
-				"engy sentry fire rate increased"
-				{
-					"attribute_class"	"mult_sentry_firerate"
-					"value"				"0.8"
-				}
-				"engy sentry turn rate bonus"
-				{
-					"attribute_class"	"mult_sentry_turnrate"
-					"value"				"1.33"
-				}
-				"engy sentry knockback penalty"
-				{
-					"attribute_class"	"mult_sentry_knockback"
-					"value"				"0.5"
-				}
-				
-				"mod sentrygun cost"
-				{
-					"attribute_class"	"mod_sentrygun_cost"
-					"value"				"0.77"
-				}
-				
-				"engy sentry damage bonus"
-				{
-					"attribute_class"	"mult_engy_sentry_damage"
-					"value"				"0.5"
 				}
 			}
 			"visuals"
@@ -17279,7 +17286,7 @@ Weapon by: 'Noclue'"
 				"lunchbox adds minicrits"
 				{
 					"attribute_class"	"set_charge_type"
-					"value"				"3"
+					"value"				"2"
 				}
 			}
 			"visuals"
@@ -22146,6 +22153,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "minigun jump while revved"
+				{
+					"attribute_class"	"minigun_jump_while_revved"
+					"value"				"1"
+				}
 			    "heal on hit for rapidfire"
 				{
 					"attribute_class"	"add_onhit_addhealth"
@@ -22567,7 +22579,7 @@ Weapon by: 'Noclue'"
 				"lunchbox adds minicrits" //disables vanilla uber behavior
 				{
 					"attribute_class"	"set_charge_type"
-					"value"				"3"
+					"value"				"2"
 				}
 			}
 			"visuals"
@@ -31142,7 +31154,7 @@ Weapon by: 'Noclue'"
 				"lunchbox adds minicrits"
 				{
 					"attribute_class"	"set_charge_type"
-					"value"				"3"
+					"value"				"2"
 				}
 			}
 			"visuals"
@@ -31253,6 +31265,96 @@ Weapon by: 'Noclue'"
 				{
 					"attribute_class"	"special_taunt"
 					"value"				"1"
+				}
+			}
+		}
+		
+//--------------------------------
+//--------------------------------
+//-- THE FUNNY BAT - 9938--
+//--------------------------------
+//--------------------------------
+		"9938"
+		{
+			"name"						"TF_WEAPON_FUNNYBAT"
+			"prefab"					"weapon_bat"
+			"item_logname"				"deflect_bat"
+			"item_iconname"				"deflect_bat"
+			"show_in_armory"			"1"
+			
+			"item_name"					"Homerun"
+			"item_type_name"			"#TF_Weapon_Bat"
+			"item_description"			"
+Return to sender chucklenuts!
+
+Model edit by: 'Reagy'
+Animations by: 'Domivu'
+Weapon by: 'Reagy'"
+			
+			"item_slot"					"melee"
+			
+			"attach_to_hands"			"2"
+			"model_world"				"models/weapons/custom/w_models/w_homerun.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_homerun.mdl"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"image_inventory"			"backpack/weapons/w_models/w_homerun"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"scout"					"1"
+			}
+			"attributes"
+			{
+				"deflect on swing"
+				{
+					"attribute_class"	"deflect_on_swing"
+					"value"				"1"
+				}
+// Swing feels more challenging for some reason, keep this commented if wanna change in future
+//				"deflect on smack hidden"
+//				{
+//					"attribute_class"	"deflect_on_smack"
+//					"value"				"1"
+//				}				
+			    "damage bonus"																
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.75"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"2.5"
+				}
+				"airblast no players"
+				{
+					"attribute_class"	"disable_airblasting_players"
+					"value"				"1"
+				}
+				"dmg taken from blast increased"
+				{
+					"attribute_class"	"mult_dmgtaken_from_explosions"
+					"value"				"1.25"
+				}
+				"hidden separator"		"1"
+				"deflection size multiplier"
+				{
+					"attribute_class"	"deflection_size_multiplier"
+					"value"				"0.75"
+				}
+			}
+			"visuals"
+			{
+				"sound_melee_miss"		"BostonBasher.Swing"
+				"sound_melee_hit"		"BostonBasher.Impact"
+				"sound_melee_hit_world"	"BostonBasher.HitWorld"
+				"sound_burst"			"Weapon_Crowbar.MissCrit"
+				"animation_replacement"
+				{
+					"ACT_MP_ATTACK_STAND_MELEE"		"ACT_MP_ATTACK_STAND_MELEE_SECONDARY"
+					"ACT_MP_ATTACK_CROUCH_MELEE"	"ACT_MP_ATTACK_CROUCH_MELEE_SECONDARY"
+					"ACT_MP_ATTACK_SWIM_MELEE"		"ACT_MP_ATTACK_STAND_MELEE_SECONDARY"
 				}
 			}
 		}
@@ -31427,6 +31529,22 @@ Weapon by: 'Noclue'"
 		{
 			"name"					"Coffee Penalty"
 			"description_string"	"Dropped Coffee give reduced health"
+			"attribute_type"		"string"													
+			"description_format"	"value_is_additive"
+			"effect_type"			"negative"
+		}
+        "7520"
+		{
+			"name"					"Bottle Cond on Eat"
+			"description_string"	"On Eat: Gain Haste for 15 seconds"
+			"attribute_type"		"string"													
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
+		}
+		"7521"
+		{
+			"name"					"Bottle Healthpack"
+			"description_string"	"Dropped Bottles give reduced health"
 			"attribute_type"		"string"													
 			"description_format"	"value_is_additive"
 			"effect_type"			"negative"
