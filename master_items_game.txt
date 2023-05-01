@@ -13364,12 +13364,12 @@ Weapon by: 'Majro'"
 			"propername"				"1"
 			"item_name"					"Whine Opener"
 			"item_type_name"			"Wine Opener"
-			"item_description"			"Your health cannot exceed maximum overheal.
-
+			"item_description"			"
 'Would you like a little cheese with that whine?'
 
 Model by: 'Amouro'
-Weapon by: 'Majro'"
+Weapon by: 'Majro'
+Reworked by: 'Colrot'"
 			"item_logname"				"whine_opener"
 			"item_iconname"				"whine_opener"
 			"image_inventory"			"backpack/weapons/c_models/c_corkscrew/c_corkscrew"
@@ -13381,17 +13381,40 @@ Weapon by: 'Majro'"
 			}
 			"attributes"
 			{
-				"heal on kill"
+				"sanguisuge"   //Display only
 				{
-					"attribute_class"	"heal_on_kill"
-					"value"				"225"
+					"attribute_class"	"sanguisuge"
+					"value"				"1"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" 			"-55"
+				}		
+				"dmg taken from fire increased"
+				{
+					"attribute_class"	"mult_dmgtaken_from_fire"
+					"value" 			"1.2"
+				}
+				"melee taken becomes minicrit on wearer"
+				{
+					"attribute_class"	"melee_taken_becomes_minicrit_wearer"
+					"value" 			"1"
 				}
 				
-				"self mark for death"
+					// hidden
+				"hidden separator"		"1"
+				
+				"lifesteal crit"
 				{
-					"attribute_class"	"self_mark_for_death"
-					"value"				"2"
-				}				
+					"attribute_class"	"lifesteal_crit"
+					"value"				"1"
+				}
+				"mult_patient_overheal_penalty_active_bonus"
+				{
+					"attribute_class"	"mult_patient_overheal_penalty_active"
+					"value"				"5"
+				}			
 			}
 			"visuals"
 			{
