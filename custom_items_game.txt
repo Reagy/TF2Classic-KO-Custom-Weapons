@@ -16841,11 +16841,46 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
+				
+				"hidden separator"
+				{
+					"attribute_class"	"hidden_seperator"
+					"value"				"0"
+				}
+				
 				// Attribute for custom buildings
 				"strange restriction type 1"
 				{
 					"attribute_class"	"custom_sentry_type"
 					"value" 			"1" // Mini
+				}
+				
+				"engy sentry fire rate increased"
+				{
+					"attribute_class"	"mult_sentry_firerate"
+					"value"				"0.8"
+				}
+				"engy sentry turn rate bonus"
+				{
+					"attribute_class"	"mult_sentry_turnrate"
+					"value"				"1.33"
+				}
+				"engy sentry knockback penalty"
+				{
+					"attribute_class"	"mult_sentry_knockback"
+					"value"				"0.5"
+				}
+				
+				"mod sentrygun cost"
+				{
+					"attribute_class"	"mod_sentrygun_cost"
+					"value"				"0.77"
+				}
+				
+				"engy sentry damage bonus"
+				{
+					"attribute_class"	"mult_engy_sentry_damage"
+					"value"				"0.5"
 				}
 			}
 			"visuals"
@@ -17286,7 +17321,7 @@ Weapon by: 'Noclue'"
 				"lunchbox adds minicrits"
 				{
 					"attribute_class"	"set_charge_type"
-					"value"				"2"
+					"value"				"3"
 				}
 			}
 			"visuals"
@@ -22579,7 +22614,7 @@ Weapon by: 'Noclue'"
 				"lunchbox adds minicrits" //disables vanilla uber behavior
 				{
 					"attribute_class"	"set_charge_type"
-					"value"				"2"
+					"value"				"3"
 				}
 			}
 			"visuals"
@@ -31154,7 +31189,7 @@ Weapon by: 'Noclue'"
 				"lunchbox adds minicrits"
 				{
 					"attribute_class"	"set_charge_type"
-					"value"				"2"
+					"value"				"3"
 				}
 			}
 			"visuals"
