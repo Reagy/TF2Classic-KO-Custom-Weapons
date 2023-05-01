@@ -6532,22 +6532,22 @@ Weapon by: 'Reagy'"
 			"name"						"TF_WEAPON_SPY_SAR" 												
 			"prefab"					"weapon_revolver" 
 			"item_class"				"tf_weapon_shotgun"					
-			"show_in_armory"			"1"													
-			"item_slot"					"secondary"
+			"propername"				"1"
+			"show_in_armory"			"1"												
 
 			"item_quality"				"rarity2"			
-
-			"propername"				"0"													
+											
+			"item_logname"				"spy_ssa"
+			"item_iconname"				"spy_ssa"												
 			"item_name"					"Pacificateur" 								
-			"item_type_name"			"#TF_Weapon_Shotgun" 												
+			"item_type_name"			"#TF_Weapon_Revolver" 												
 			"item_description"			"
 Howdy, pardner.
 
 Model by: 'svdl'
 Animations by: 'Raptor Dan'
-Weapon by: 'Raptop Dan'"														
-			"item_logname"				"spy_ssa"
-			"item_iconname"				"spy_ssa"			
+Weapon by: 'Raptop Dan'"
+			"item_slot"					"secondary"															
 			"image_inventory"			"backpack/weapons/c_models/c_goldcolt/c_goldcolt" 						
 			"model_world"				"models/weapons/c_models/c_goldcolt/c_goldcolt_spy.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_peacemaker_spy.mdl"		
@@ -6555,7 +6555,7 @@ Weapon by: 'Raptop Dan'"
 			"attach_to_hands"			"2"													
 			"used_by_classes"
 			{
-				"spy"					"1"		
+				"spy"                	"primary"		
 			}
 			"static_attrs"
 			{
@@ -6582,25 +6582,7 @@ Weapon by: 'Raptop Dan'"
 			"visuals"
 			{
 				"sound_single_shot"		"Weapon_GoldColt.Single"
-				"sound_burst"			"Weapon_GoldColt.SingleCrit"	
-				"animation_replacement"
-				{
-					"ACT_MP_ATTACK_STAND_PRIMARY"		"ACT_MP_ATTACK_STAND_SECONDARY"
-					"ACT_MP_ATTACK_CROUCH_PRIMARY"		"ACT_MP_ATTACK_CROUCH_SECONDARY"
-					"ACT_MP_ATTACK_SWIM_PRIMARY"		"ACT_MP_ATTACK_SWIM_SECONDARY"
-					
-					"ACT_MP_DEPLOYED_PRIMARY"			"ACT_MP_RUN_SECONDARY"
-					"ACT_MP_STAND_PRIMARY"				"ACT_MP_STAND_SECONDARY"
-					"ACT_MP_RUN_PRIMARY"				"ACT_MP_RUN_SECONDARY"
-					"ACT_MP_CROUCHWALK_PRIMARY"			"ACT_MP_CROUCHWALK_SECONDARY"
-					"ACT_MP_CROUCH_PRIMARY"				"ACT_MP_CROUCH_SECONDARY"
-					"ACT_MP_SWIM_Primary"				"ACT_MP_SWIM_SECONDARY"
-					
-					"ACT_MP_AIRWALK_PRIMARY"			"ACT_MP_AIRWALK_SECONDARY"
-					"ACT_MP_JUMP_START_PRIMARY"			"ACT_MP_JUMP_START_secondary"
-					"ACT_MP_JUMP_FLOAT_primary"			"ACT_MP_JUMP_FLOAT_secondary"
-					"ACT_MP_JUMP_LAND_PRIMARY"			"ACT_MP_JUMP_LAND_secondary"						
-				}
+				"sound_burst"			"Weapon_GoldColt.SingleCrit"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
