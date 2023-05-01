@@ -2744,7 +2744,7 @@ Modified by: 'Reagy'"
 				"lunchbox add condition on eat"
 				{
 					"attribute_class"	"lunchbox_addcond"						
-					"value"				"121 15"
+					"value"				"121 8"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -31756,7 +31756,7 @@ Weapon by: 'Reagy'"
         "7520"
 		{
 			"name"					"Bottle Cond on Eat"
-			"description_string"	"On Eat: Gain Haste for 15 seconds"
+			"description_string"	"On Eat: Gain Haste for 8 seconds"
 			"attribute_type"		"string"													
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
