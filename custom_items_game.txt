@@ -16740,7 +16740,7 @@ Slows down the construction speed of all buildings by 50% and increases their me
 		{
 			"name"						"Masterkey"						
 			"prefab"					"weapon_wrench"								
-			"show_in_armory"			"0" // TEMP DISABLED
+			"show_in_armory"			"1"
 			
 			"item_quality"				"rarity3"
 			
@@ -16799,11 +16799,46 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
+				
+				"hidden separator"
+				{
+					"attribute_class"	"hidden_seperator"
+					"value"				"0"
+				}
+				
 				// Attribute for custom buildings
 				"strange restriction type 1"
 				{
 					"attribute_class"	"custom_sentry_type"
 					"value" 			"1" // Mini
+				}
+				
+				"engy sentry fire rate increased"
+				{
+					"attribute_class"	"mult_sentry_firerate"
+					"value"				"0.8"
+				}
+				"engy sentry turn rate bonus"
+				{
+					"attribute_class"	"mult_sentry_turnrate"
+					"value"				"1.33"
+				}
+				"engy sentry knockback penalty"
+				{
+					"attribute_class"	"mult_sentry_knockback"
+					"value"				"0.5"
+				}
+				
+				"mod sentrygun cost"
+				{
+					"attribute_class"	"mod_sentrygun_cost"
+					"value"				"0.77"
+				}
+				
+				"engy sentry damage bonus"
+				{
+					"attribute_class"	"mult_engy_sentry_damage"
+					"value"				"0.5"
 				}
 			}
 			"visuals"
@@ -17191,7 +17226,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 		{
 			"name"						"TF_WEAPON_TOTENWERFER"
 			"prefab"					"weapon_medigun"
-			"show_in_armory"			"0" // TEMP DISABLED
+			"show_in_armory"			"1"
 			"equip_region"				"medigun_backpack"
 
 			"propername"				"1"
@@ -17244,7 +17279,7 @@ Weapon by: 'Noclue'"
 				"lunchbox adds minicrits"
 				{
 					"attribute_class"	"set_charge_type"
-					"value"				"2"
+					"value"				"3"
 				}
 			}
 			"visuals"
@@ -22480,7 +22515,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_DEFENSE_ANGEL"
 			"prefab"					"weapon_medigun"
-			"show_in_armory"			"0" // TEMP DISABLED
+			"show_in_armory"			"1"
 			"equip_region"				"medigun_backpack"										
 
 			"propername"				"1"
@@ -22532,7 +22567,7 @@ Weapon by: 'Noclue'"
 				"lunchbox adds minicrits" //disables vanilla uber behavior
 				{
 					"attribute_class"	"set_charge_type"
-					"value"				"2"
+					"value"				"3"
 				}
 			}
 			"visuals"
@@ -23494,7 +23529,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_BUILDING_TANKER"
 			"prefab"					"weapon_wrench"
-			"show_in_armory"			"0" // TEMP DISABLED
+			"show_in_armory"			"1"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
@@ -24263,7 +24298,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_SUPERHEAL_MEDIGUN"
 			"prefab"					"weapon_medigun"
-			"show_in_armory"			"0" // TEMP DISABLED
+			"show_in_armory"			"1"
 			"equip_region"				"medigun_backpack"										
 
 			"propername"				"1"
@@ -25485,7 +25520,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_WRENCH_ROBOT"
 			"prefab"					"weapon_wrench"
-			"show_in_armory"			"0" // TEMP DISABLED
+			"show_in_armory"			"1"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
@@ -29584,7 +29619,7 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_CROSSBOW"
 			"prefab"					"weapon_syringegun"
-			"show_in_armory"			"0" // TEMP DISABLED
+			"show_in_armory"			"1"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
@@ -31062,7 +31097,7 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_BIOWASTEPUMP"
 			"prefab"					"weapon_medigun"
-			"show_in_armory"			"0" // TEMP DISABLED
+			"show_in_armory"			"1"
 			"item_name"					"Bio Waste Pump"
 			"item_type_name"			"War Crime"
 			"item_description"			"Target enemies to apply Toxin
@@ -31107,7 +31142,7 @@ Weapon by: 'Noclue'"
 				"lunchbox adds minicrits"
 				{
 					"attribute_class"	"set_charge_type"
-					"value"				"2"
+					"value"				"3"
 				}
 			}
 			"visuals"
@@ -31130,7 +31165,7 @@ Weapon by: 'Noclue'"
 			"name"						"TF_WEAPON_LEIDWERFER"
 			"prefab"					"weapon_syringegun"
 			"item_type_name"			"War Crime"
-			"show_in_armory"			"0" // TEMP DISABLED
+			"show_in_armory"			"1"
 			"item_name"					"Leidwerfer"
 			"item_logname"				"leidwerfer"
 			"item_iconname"				"leidwerfer"
@@ -31173,7 +31208,7 @@ Weapon by: 'Noclue'"
 			"prefab"					"weapon_bonesaw"
 			"item_logname"				"outbreaker"
 			"item_iconname"				"outbreaker"
-			"show_in_armory"			"0" // TEMP DISABLED
+			"show_in_armory"			"1"
 			"item_type_name"			"War Crime"
 			"item_name"					"Outbreaker"
 			"item_description"			"On hit: Apply 5 seconds of Toxin to target (stacks up to 10 seconds)
