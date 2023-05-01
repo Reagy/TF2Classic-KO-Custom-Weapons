@@ -10148,7 +10148,7 @@ Weapon by: 'Reagy'"
 											
 			"item_name"					"Express Coffee"
 			"item_type_name"			"#TF_Weapon_Lunchbox"
-			"item_description"			"Drink to gain up to 120 health.
+			"item_description"			"Drink to gain up to 36 health.
 
 Who ate all the donuts?
 
@@ -10164,27 +10164,33 @@ Item by: 'Reagy'"
 			}
 			"static_attrs"
 			{
-				"item_meter_charge_type"				"1"
-				"item_meter_charge_rate"				"20"								
-				"meter_label"							"#TF_EnergyDrink"
 				"min_viewmodel_offset"					"0 0 -5"
-				"allowed in medieval mode"				"1"
 			}
 			"attributes"
 			{
-				"heal on hit for slowfire"
+			    "Coffee Cond on Eat"
 				{
-					"attribute_class"	"strange_restriction_type_1"						
-					"value"				"120"
+					"attribute_class"	"DISPLAY_ONLY"						
+					"value"				"1"
 				}
-				"deploy time increased"
+				"Coffee Penalty"
 				{
-					"attribute_class"	"mult_deploy_time"
-					"value"				"1.25"
+					"attribute_class"	"custom_lunchbox_throwable_type"						
+					"value"				"1"
 				}
-				"custom projectile model"
+				"lunchbox add condition on eat"
 				{
-					"attribute_class"	"custom_projectile_model"
+					"attribute_class"	"lunchbox_addcond"						
+					"value"				"32 5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"lunchbox_healing_scale"						
+					"value"				"0.3"
+				}
+				"custom lunchbox throwable model"
+				{
+					"attribute_class"	"custom_lunchbox_throwable_model"
 					"value"				"models/weapons/custom/c_models/c_caffeine.mdl"			
 				}
 			}
@@ -31370,6 +31376,22 @@ Weapon by: 'Noclue'"
 		{
 			"name"					"BOOHGUR Smol Healthpack"
 			"description_string"	"Dropped Bergurs give reduced health"
+			"attribute_type"		"string"													
+			"description_format"	"value_is_additive"
+			"effect_type"			"negative"
+		}
+		"7518"
+		{
+			"name"					"Coffee Cond on Eat"
+			"description_string"	"On Drink: Move significantly faster for 5 seconds"
+			"attribute_type"		"string"													
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
+		}
+		"7519"
+		{
+			"name"					"Coffee Penalty"
+			"description_string"	"Dropped Coffee give reduced health"
 			"attribute_type"		"string"													
 			"description_format"	"value_is_additive"
 			"effect_type"			"negative"
