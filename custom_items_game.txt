@@ -114,127 +114,6 @@
 	
 	"items"
 	{
-	    // People REALLY want this nerfed, so here have my take on a nerf for this damned thing.
-        "51"
-		{
-			"name"						"Anti-Aircraft Cannon"
-			"prefab"					"weapon_aagun"
-			"show_in_armory"			"1"
-			"item_name"					"#TF_Weapon_AAGun"
-			"item_description"			"
-Which piece of you should Heavy send home to momma?
-
-Edited by: 'The One Of Wonders'"
-			"item_type_name"			"#TF_Weapon_AAGun"
-			"item_logname"				"aagun"
-			"item_iconname"				"aa_cannon"
-			"image_inventory"			"backpack/weapons/w_models/w_aagun"
-			"model_world"				"models/weapons/w_models/w_aagun.mdl"
-			"model_player"				"models/weapons/v_models/v_aagun_heavy.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"heavy"					"1"
-			}
-			"attributes"													
-			{
-				"explosive bullets"																
-				{
-					"attribute_class"	"explosive_bullets"
-					"value"				"1"
-				}
-				"mod mini-crit airborne on direct DISPLAY ONLY"
-				{
-					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"1"
-				}
-				"mod mini-crit airborne simple min height hidden"
-				{
-					"attribute_class"	"mini_crit_airborne_simple_min_height"
-					"value"				"256"
-				}
-				"mod mini-crit airborne hidden"
-				{
-					"attribute_class"	"mini_crit_airborne"
-					"value"				"1"
-				}
-				"weapon_stattrak_module_scale" //This doesn't even need to be shown fyi.
-				{
-					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"0.67"
-				}
-				"crits become minicrits"
-				{
-					"attribute_class"	"crits_become_minicrits"
-					"value"				"1"
-				}
-				"limited range DISPLAY ONLY"
-				{
-					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"1"
-				}
-				"blast dmg to self increased hidden"
-				{
-					"attribute_class"	"blast_dmg_to_self"
-					"value"				"2.0"
-				}
-				"self dmg push force hidden"				
-				{
-					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.1"
-				}
-				"dmg push force to stickies increased hidden"
-				{
-					"attribute_class"	"mult_dmg_push_force_to_stickies"
-					"value"				"3.0"
-				}
-				"bullet is a hull"
-				{
-					"attribute_class"	"bullet_is_a_hull"
-					"value"				"10.0"
-				}
-				"custom falloff"
-				{
-					"attribute_class"	"mod_custom_falloff"
-					"value"				"0.8"
-				}
-				"modifier mini crit airborne direct hit only hidden"
-				{
-					"attribute_class"	"mod_minicrit_airborne_direct_hit_only"
-					"value"				"1"
-				}
-				// Nerfs
-				"weapon_stattrak_module_scale"													
-				{
-					"attribute_class"	"mult_projectile_range"
-					"value"				"0.8"
-				}
-				"weapon_stattrak_module_scale"													
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
-				}
-			}
-			"visuals"
-			{
-				"sound_empty"			"Weapon_AAGun.ClipEmpty"
-				"sound_double_shot"		"Weapon_AAGun.Fire"
-				"sound_burst"			"Weapon_AAGun.FireCrit"
-				"sound_special1"		"BaseExplosionEffect.Sound"
-				"animation_replacement"
-				{
-					"ACT_MP_ATTACK_STAND_PRIMARY"				"ACT_MP_ATTACK_STAND_PRIMARY_ALT"
-					"ACT_MP_ATTACK_CROUCH_PRIMARY"				"ACT_MP_ATTACK_CROUCH_PRIMARY_ALT"
-					"ACT_MP_ATTACK_SWIM_PRIMARY"				"ACT_MP_ATTACK_SWIM_PRIMARY_ALT"
-				}
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset"					"10 5 -9"
-			}
-			"mouse_pressed_sound"		"#ui/item_heavier_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavier_gun_drop.wav"
-		}
 		//this needs to be here to add the custom medibeam attribute
 		"33"
 		{
@@ -8198,6 +8077,7 @@ Weapon by: 'Reagy'"
 				"override projectile type"				"30"
 				"no damage falloff over distance"		"1"
 				"allowed in medieval mode"				"1"
+				"override projectile type scoped"       "30"
 			}
 			"attributes"
 			{
@@ -29576,6 +29456,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "strange restriction type 1"													
+				{
+					"attribute_class"	"can_headshot"
+					"value"				"1"
+				}
 			    "no scope"
 				{
 					"attribute_class"	"mult_flame_life"
