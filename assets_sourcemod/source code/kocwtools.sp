@@ -258,8 +258,6 @@ public void OnPluginStart() {
 	g_OnTakeDamagePostTF = new GlobalForward( "OnTakeDamagePostTF", ET_Ignore, Param_Cell, Param_Cell );
 	g_OnTakeDamageAliveTF = new GlobalForward( "OnTakeDamageAliveTF", ET_Ignore, Param_Cell, Param_Cell );
 	g_OnTakeDamageAlivePostTF = new GlobalForward( "OnTakeDamageAlivePostTF", ET_Ignore, Param_Cell, Param_Cell );
-
-	RegConsoleCmd( "testheal", Command_Heal, "test");
 }
 
 
@@ -625,14 +623,4 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 	}
 
 	return 1;
-}
-
-Action Command_Heal( int iClient, int iArgs ) {
-	if(iArgs < 1) return Plugin_Handled;
-
-	int iFlags = GetCmdArgInt( 1 );
-	
-	HealPlayer( iClient, 25.0, iClient, 0 );
-	
-	return Plugin_Handled;
 }
