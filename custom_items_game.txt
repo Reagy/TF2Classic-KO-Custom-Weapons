@@ -17464,7 +17464,7 @@ Weapon by: 'Noclue'"
 				}
 				"overheal penalty"
 				{
-					"attribute_class"	"custom_maximum_overheal"
+					"attribute_class"	"mult_medigun_overheal_amount"
 					"value"				"0.5"
 				}
 
