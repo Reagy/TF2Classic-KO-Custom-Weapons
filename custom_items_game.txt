@@ -6979,11 +6979,11 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
-			    "minigun jump while revved"
-				{
-					"attribute_class"	"minigun_jump_while_revved"
-					"value"				"1"
-				}
+//			    "minigun jump while revved"
+//				{
+//					"attribute_class"	"minigun_jump_while_revved"
+//					"value"				"1"
+//				}
 			    "bullets per shot bonus"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
