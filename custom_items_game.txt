@@ -17464,7 +17464,7 @@ Weapon by: 'Noclue'"
 				}
 				"overheal penalty"
 				{
-					"attribute_class"	"custom_maximum_overheal"
+					"attribute_class"	"mult_medigun_overheal_amount"
 					"value"				"0.5"
 				}
 
@@ -31459,7 +31459,7 @@ Weapon by: 'Noclue'"
 					"attribute_class"	"custom_inflictcustom_onhit"
 					"value"				"0 5.0"
 				}
-				"weapon_stattrak_module_scale"
+				"class select override vcd"
 				{
 					"attribute_class"	"custom_resist_customcond"
 					"value"				"0 0.65"
