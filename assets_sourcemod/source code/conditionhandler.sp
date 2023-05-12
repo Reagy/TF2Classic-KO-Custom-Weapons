@@ -12,13 +12,13 @@ public Plugin myinfo =
 	name = "Condition Handler",
 	author = "Noclue",
 	description = "Core plugin for custom conditions.",
-	version = "1.0",
+	version = "1.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
 //TODO: Shield parenting could be better
 
-#define DEBUG
+//#define DEBUG
 
 enum {
 	TFCC_TOXIN = 0,
@@ -58,7 +58,6 @@ DynamicDetour hApplyOnHit;
 
 DynamicHook hOnKill;
 
-Handle hCallTakeHealth;
 Handle hGetBuffedMaxHealth;
 
 bool bLateLoad;
@@ -99,16 +98,10 @@ public void OnPluginStart() {
 	hApplyOnHit = DynamicDetour.FromConf( hGameConf, "CTFWeaponBase::ApplyOnHitAttributes" );
 	hApplyOnHit.Enable( Hook_Post, Detour_OnHit );
 
-	hOnKill = new DynamicHook( 68, HookType_Entity, ReturnType_Void, ThisPointer_CBaseEntity );
+	//FIX THIS
+	hOnKill = new DynamicHook( 69, HookType_Entity, ReturnType_Void, ThisPointer_CBaseEntity );
 	hOnKill.AddParam( HookParamType_CBaseEntity );
 	hOnKill.AddParam( HookParamType_ObjectPtr );
-
-	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::TakeHealth" );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hCallTakeHealth = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetBuffedMaxHealth" );
@@ -178,6 +171,7 @@ Action Command_Test( int iClient, int iArgs ) {
 		if( IsClientInGame( i ) ) {
 			AddCond( i, iCondIndex );
 			SetCondDuration( i, iCondIndex, 10.0, false );
+			SetCondSourcePlayer( i, iCondIndex, iClient );
 		}
 			
 	}
@@ -303,7 +297,7 @@ bool RemoveCond( int iPlayer, int iCond ) {
 	}
 	}
 
-	if( IsValidHandle( ePlayerConds[iPlayer][iCond].hTick ) ) {
+	if( ePlayerConds[iPlayer][iCond].hTick ) {
 		KillTimer(ePlayerConds[iPlayer][iCond].hTick);
 		ePlayerConds[iPlayer][iCond].hTick = null;
 	}
@@ -547,7 +541,6 @@ void CheckOnKillCond( int iAttacker, int iWeapon ) {
 	int iCond = StringToInt( szExplode[0] );
 	float flDuration = StringToFloat( szExplode[1] );
 
-	PrintToServer("%i %f", iCond, flDuration );
 	TF2_AddCondition( iAttacker, view_as<TFCond>( iCond ), flDuration );
 }
 
@@ -701,6 +694,11 @@ Action TickToxinUber( Handle hTimer, int iPlayer ) {
 	if( !( IsClientInGame( iPlayer ) && IsPlayerAlive( iPlayer ) ) ) {
 		RemoveCond( iPlayer, TFCC_TOXINUBER );
 		return Plugin_Stop;	
+	}
+
+	if( ePlayerConds[ iPlayer ][ TFCC_TOXINUBER ].flRemoveTime < GetGameTime() ) {
+		RemoveCond( iPlayer, TFCC_TOXINUBER );
+		return Plugin_Stop;
 	}
 
 	float vecSource[3]; GetClientAbsOrigin( iPlayer, vecSource );
@@ -1065,35 +1063,33 @@ bool AddQuickUber( int iPlayer ) {
 }
 
 Action TickQuickUber( Handle hTimer, int iPlayer ) {
-	if( !( IsClientInGame( iPlayer ) && IsPlayerAlive( iPlayer ) ) )
-	{
+	if( !( IsClientInGame( iPlayer ) && IsPlayerAlive( iPlayer ) ) ) {
 		RemoveCond( iPlayer, TFCC_QUICKUBER );
 		return Plugin_Stop;	
 	}
 
-	if( GetCondLevel( iPlayer, TFCC_QUICKUBER ) != 1 )
-		return Plugin_Continue;
+	if( ePlayerConds[ iPlayer ][ TFCC_QUICKUBER ].flRemoveTime < GetGameTime() ) {
+		RemoveCond( iPlayer, TFCC_QUICKUBER );
+		return Plugin_Stop;
+	}
 
 	//todo: unhardcode this
-	float flRate = 108.0 * QUICKUBER_SELFHEAL_INTERVAL;
+	float flRate;
+	if( iPlayer == GetCondSourcePlayer( iPlayer, TFCC_QUICKUBER ) ) flRate = 36.0 * 3 * QUICKUBER_SELFHEAL_INTERVAL;
+	else flRate = 36.0 * 2 * QUICKUBER_SELFHEAL_INTERVAL;
 
-	Address aShared = GetSharedFromPlayer( iPlayer );
-
-	int iMaxHealth = SDKCall( hGetBuffedMaxHealth, aShared );
-	int iHealth = GetClientHealth( iPlayer );
-
-	int iDiff = iMaxHealth - iHealth;
-	float flGive = MinFloat( float( iDiff ), flRate );
-
-	SDKCall( hCallTakeHealth, iPlayer, flGive, 1 << 1 );
+	HealPlayer( iPlayer, flRate, GetCondSourcePlayer( iPlayer, TFCC_QUICKUBER ) );
 
 	return Plugin_Continue;
 }
 
 void RemoveQuickUber( int iPlayer ) {
 	RemoveQuickFixEmitter( iPlayer );
-	TF2_RemoveCondition( iPlayer, TFCond_MegaHeal );
-	ClientCommand( iPlayer, "r_screenoverlay 0");
+
+	if( IsClientInGame( iPlayer ) ) {
+		//TF2_RemoveCondition( iPlayer, TFCond_MegaHeal );
+		ClientCommand( iPlayer, "r_screenoverlay 0");
+	}
 }
 
 /*

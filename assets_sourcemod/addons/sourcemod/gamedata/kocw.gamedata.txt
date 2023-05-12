@@ -2,43 +2,53 @@
 {
     "tf2classic"
     {
+		"Addresses"
+		{
+			"CTFGameStats"
+			{
+				"linux"
+				{
+					"signature"		"CTFGameStats"
+				}
+			}
+		}
         "Offsets"
         {
             //player
         
 			"CTFPlayer::OnTakeDamage"
 			{
-				"linux"		"63"
+				"linux"		"64"
 			}
 			"CTFPlayer::TakeHealth"
 			{
-				"linux"		"65"
+				"linux"		"470"
 			}
 			"CTFPlayer::OnTakeDamageAlive"
 			{
-				"linux"		"274"
+				"linux"		"275"
 			}
 			"CTFPlayer::GetMaxHealth"
 			{
-				"linux"		"469"
+				"linux"		"472"
 			}
             "CTFPlayer::GetAttributeManager"
 			{
-				"linux"		"471"
+				"linux"		"474"
 			}
 			"CTFPlayer::GetAttributeContainer"
 			{
-				"linux"		"472"
+				"linux"		"475"
 			}
 			
 			"CTFPlayer::m_Shared"
 			{
-				"linux"		"4264"
+				"linux"		"4284"
 			}
 			
 			"CTFPlayerShared::m_pOuter" //pointer to player contained in CTFPlayerShared
 			{
-				"linux"		"1200"
+				"linux"		"1344"
 			}
             
             "CTFGameRules::GetCaptureValueForPlayer"
@@ -50,39 +60,31 @@
             
             "CBaseObject::StartBuilding"
             {
-                "linux"     "328"
+                "linux"     "329"
             }
             "CBaseObject::OnGoActive"
             {
-                "linux"     "340"
+                "linux"     "342"
             }
             "CBaseObject::CanBeUpgraded"
             {
-                "linux"     "345"
+                "linux"     "347"
             }
             "CBaseObject::StartUpgrading"
             {
-                "linux"     "346"
+                "linux"     "348"
             }
             "CBaseObject::FinishUpgrading"
             {
-                "linux"     "347"
+                "linux"     "349"
             }
             "CBaseObject::MakeCarriedObject"
             {
-                "linux"     "350"
+                "linux"     "353"
             }
             "CBaseObject::m_iGoalUpgradeLevel"
             {
                 "linux"     "2044"
-            }
-            "CObjSentrygun::m_flNextAttack"
-            {
-                "linux"     "2392"
-            }
-            "CObjSentrygun::m_iBaseTurnRate"
-            {
-                "linux"     "2404"
             }
             
             
@@ -90,23 +92,19 @@
             
 			"CTFWeaponBase::Holster"
 			{
-				"linux"		"261"
+				"linux"		"262"
 			}
 			"CTFWeaponBase::ItemPostFrame"
 			{
-				"linux"		"271"
+				"linux"		"272"
 			}
 			"CTFWeaponBase::SecondaryAttack"
 			{
-				"linux"		"286"
+				"linux"		"288"
 			}
 			"CTFWeaponBase::GetFireRate"
 			{
-				"linux"		"295"
-			}
-			"CWeaponMedigun::GetTargetRange"
-			{
-				"linux"		"448"
+				"linux"		"298"
 			}
 			
 			"CAttributeManager::ApplyAttributeFloat"
@@ -122,7 +120,7 @@
             
 			"CEconEntity::GetAttributeManager"
 			{
-				"linux"		"225"
+				"linux"		"226"
 			}
 			"CEconEntity::m_Item" //pointer to CEconItemView on CEconEntity
 			{
@@ -180,6 +178,14 @@
 					"flags"
 					{
 						"type"	"int"
+					}
+					"source"
+					{
+						"type"	"cbaseentity"
+					}
+					"critheal"
+					{
+						"type"	"bool"
 					}
 				}
 				
@@ -682,7 +688,7 @@
 			"CTFPlayerShared::Heal"
 			{
 				"library"	"server"
-				"linux"		"@_ZN15CTFPlayerShared4HealEP9CTFPlayerfP11CBaseObjectb"
+				"linux"		"@_ZN15CTFPlayerShared4HealEP9CTFPlayerfP11CBaseObjectbb"
 			}
 			"CTFPlayerShared::StopHealing"
 			{
@@ -716,31 +722,16 @@
 			}
             
             //buildings
-            
-            "CBaseObject::GetConstructionMultiplier"
-			{
-				"library"	"server"
-				"linux"		"@_ZN11CBaseObject25GetConstructionMultiplierEv"
-			}
+
             "CBaseObject::DestroyScreens"
             {
                 "library"   "server"
                 "linux"     "@_ZN11CBaseObject14DestroyScreensEv"
             }
-			"CObjectSentrygun::Attack"
-			{
-				"library"	"server"
-				"linux"		"@_ZN16CObjectSentrygun6AttackEv"
-			}
 			"CObjectDispenser::GetHealRate"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CObjectDispenser11GetHealRateEv"
-			}
-			"CObjectTeleporter::TeleporterDoJump"
-			{
-				"library"	"server"
-				"linux"		"@_ZN17CObjectTeleporter16TeleporterDoJumpEP9CTFPlayer"
 			}
             
             //weapons
@@ -748,7 +739,7 @@
             "CTFWeaponBase::ApplyOnHitAttributes"
 			{
 				"library"	"server"
-				"linux"		"@_ZN13CTFWeaponBase20ApplyOnHitAttributesEP11CBaseEntityP9CTFPlayerRK15CTakeDamageInfo"
+				"linux"		"@_ZN13CTFWeaponBase20ApplyOnHitAttributesEP11CBaseEntityS1_RK15CTakeDamageInfo"
 			}
 			
 			"CWeaponMedigun::AllowedToHealTarget"
@@ -764,7 +755,7 @@
 			"CWeaponMedigun::GetHealRate"
 			{
 				"library"	"server"
-				"linux"		"@_ZN14CWeaponMedigun11GetHealRateEv"
+				"linux"		"@_ZN14CWeaponMedigun11GetHealRateEb"
 			}
             
 			"CTFCoilGun::GetProjectileSpeed"
@@ -843,6 +834,17 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN12CTFGameRules29ApplyOnDamageAliveModifyRulesERK15CTakeDamageInfoP11CBaseEntityRNS_20DamageModifyExtras_tE"
+			}
+			
+			"CTFGameStats"
+			  {
+				"library" "server"
+				"linux"   "@CTF_GameStats"
+			  }
+			"CTFGameStats::Event_PlayerHealedOther"
+			{
+				"library"	"server"
+				"linux"		"@_ZN12CTFGameStats23Event_PlayerHealedOtherEP9CTFPlayerf"
 			}
 		}
     }

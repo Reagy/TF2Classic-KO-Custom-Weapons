@@ -36,15 +36,22 @@ Handle hApplyPushFromDamage;
 
 Address offs_CTFPlayerShared_pOuter;
 Address offs_CTFPlayer_mShared;
+Address g_iCTFGameStats;
 
 StringMap g_AllocPooledStringCache;
+
+Handle hTakeHealth;
+Handle hGetMaxHealth;
+Handle hGetBuffedMaxHealth;
+
+Handle hPlayerHealedOther;
 
 public Plugin myinfo =
 {
 	name = "KOCW Tools",
 	author = "Noclue",
 	description = "Standard functions for custom weapons.",
-	version = "1.1",
+	version = "1.2",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -76,6 +83,8 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 	CreateNative( "ApplyPushFromDamage", Native_ApplyPushFromDamage );
 
 	CreateNative( "FindEntityInSphere", Native_EntityInRadius );
+
+	CreateNative( "HealPlayer", Native_HealPlayer );
 
 	RegPluginLibrary( "kocwtools" );
 
@@ -173,6 +182,14 @@ public void OnPluginStart() {
 		MEMORY FUNCTIONS
 	*/
 
+	g_iCTFGameStats = GameConfGetAddress( hGameConf, "CTFGameStats" );
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameStats::Event_PlayerHealedOther" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	hPlayerHealedOther = EndPrepSDKCall();
+
 	/*
 		DAMAGE FUNCTIONS
 	*/
@@ -210,6 +227,30 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
 	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
 	hFindInRadius = EndPrepSDKCall();
+
+	/*
+		PLAYER FUNCTIONS
+	*/
+
+	//float int player bool
+	StartPrepSDKCall( SDKCall_Player );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::TakeHealth" );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	hTakeHealth = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Player );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::GetMaxHealth" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	hGetMaxHealth = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetBuffedMaxHealth" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	hGetBuffedMaxHealth = EndPrepSDKCall();
 
 	delete hGameConf;
 
@@ -535,11 +576,51 @@ MRESReturn Detour_ApplyOnDamageModifyRulesPost( Address aThis, DHookReturn hRetu
 	//bool bCanDamage = hParams.Get( 3 );
 
 	if( tfInfo.iCritType == CT_MINI ) {
-		tfInfo.iFlags = tfInfo.iFlags & ~( 1 << 20);
-		StoreToEntity( iTarget, 6049, 1, NumberType_Int8 );
-		StoreToEntity( iTarget, 6502, 1, NumberType_Int32 );
+		tfInfo.iFlags = tfInfo.iFlags & ~( 1 << 20 );
+		StoreToEntity( iTarget, 6049, 1, NumberType_Int8 ); //6248?
+		StoreToEntity( iTarget, 6502, 1, NumberType_Int32 ); //6252?
 	}
 
 	return MRES_Handled;
 	
+}
+
+//native void HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
+public any Native_HealPlayer( Handle hPlugin, int iParams ) {
+	int iPlayer = GetNativeCell( 1 );
+	float flAmount = GetNativeCell( 2 );
+	int iSource = GetNativeCell( 3 );
+	int iFlags = GetNativeCell( 4 );
+
+	int iMaxHealth = SDKCall( hGetMaxHealth, iPlayer );
+	int iHealth = GetClientHealth( iPlayer );
+
+	float flMult = 0.5;
+
+	flMult = AttribHookFloat( flMult, iPlayer, "mult_patient_overheal_penalty" );
+	int iWeapon = GetEntPropEnt( iPlayer, Prop_Send, "m_hActiveWeapon" );
+	if( iWeapon != -1 ) {
+		flMult = AttribHookFloat( flMult, iWeapon, "mult_patient_overheal_penalty_active" );
+	}
+
+	if( iSource != -1 ) {
+		flMult = AttribHookFloat( flMult, iSource, "mult_medigun_overheal_amount" );
+	}
+	flMult += 1.0;
+
+	int iBuffedMax = RoundFloat( float(iMaxHealth) * flMult );
+
+	flAmount = MinFloat( float( iBuffedMax - iHealth ), flAmount );
+
+	int iNewFlags = 0;
+	if( !( iFlags & HF_NOOVERHEAL ) )
+		iNewFlags = 1 << 1;
+
+	int iReturn = SDKCall( hTakeHealth, iPlayer, flAmount, iNewFlags, iSource, false );
+
+	if( iSource != -1 ) {
+		SDKCall( hPlayerHealedOther, g_iCTFGameStats, iSource, float( iReturn ) );
+	}
+
+	return 1;
 }

@@ -1,25 +1,22 @@
 "VertexLitGeneric"
 {
 	"$baseTexture" "models/workshop/weapons/c_models/c_big_iron/c_big_iron"
-	"$phongexponenttexture" "models/workshop/weapons/c_models/c_big_iron/c_big_iron_exp"
-	"$bumpmap" "models/workshop/weapons/c_models/c_big_iron/c_big_iron_nrm"
+
 	"$phong" "1"
-	"$phongexponentfactor" "10"
-	"$phongboost" ".8"	
-	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
-	"$phongfresnelranges"	"[.3 .5 3]"
-	"$halflambert" "1"
-	"$glowcolor" "1"
-//	"$phongwarptexture"  "models/weapons/c_models/c_ambassador/c_ambassador_phongwarp"
-	"$envmap" "cubemaps/cubemap_sheen001"
-	"$envmaptint" ".3 .3 .3"
-	"$phongalbedotint" "1"
-//	"$basemapalphaphongmask" "1"
+	"$phongexponent" "15"
+	"$phongboost" "10"
+
+	"$lightwarptexture" "models\lightwarps\softened_weapon_lightwarp"
+
+	"$phongfresnelranges"	"[0 .5 1]"
 
 	"$rimlight" "1"
-	"$rimlightexponent" "4"	
+	"$rimlightexponent" "10"	
 	"$rimlightboost" "1"
 
+	"$envmap" "cubemaps/cubemap_sheen001"
+	"$envmaptint" ".1 .1 .1"
+	"$basemapalphaphongmask" "1"
 
 	"$glowcolor" "1"
 
