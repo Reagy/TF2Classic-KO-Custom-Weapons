@@ -33,7 +33,7 @@ enum {
 	HF_NOCRITHEAL = 1<<2, //prevent crit healing
 }
 
-native void		HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
+native int		HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
 
 /*
 	MATH FUNCTIONS
