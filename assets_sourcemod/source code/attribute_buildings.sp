@@ -421,11 +421,6 @@ Action SentrySoundHook( int iBuilding, char sSample[PLATFORM_MAX_PATH], int &iPi
 
 
 public void OnEntityCreated( int iEntity, const char[] sClassname ) {
-	if( IsValidPlayer( iEntity ) ) {
-		SDKHook( iEntity, SDKHook_OnTakeDamage, Hook_OnTakeDamage );
-		return;
-	}
-
 	if( StrContains( sClassname, "obj_", true ) != 0 ) 
 		return;
 	
@@ -435,30 +430,6 @@ public void OnEntityCreated( int iEntity, const char[] sClassname ) {
 	}
 		
 	SetupObjectHooks( iEntity );
-}
-
-Action Hook_OnTakeDamage( int iVictim, int& iAttacker, int& iInflictor, float& flDamage, int& iDamageType, int& iWeapon, float flDamageForce[3], float flDamagePosition[3], int iDamageCustom ) {
-	if(iWeapon >= 4096) iWeapon -= 4096;
-	if(iAttacker >= 4096) iAttacker -= 4096;
-	if(iInflictor >= 4096) iInflictor -= 4096;
-
-	if( !IsValidEntity( iWeapon ) ) 
-		return Plugin_Changed;
-
-	static char sClassname[64];
-	GetEntityClassname( iWeapon, sClassname, sizeof( sClassname ) );
-	if( !StrEqual( sClassname, "obj_sentrygun" ) )
-		return Plugin_Changed;
-
-	if( IsBuildingMini( iWeapon ) ) {
-		flDamage *= 0.5;
-		//tried scaling damage force here, doesn't seem to work
-	}
-
-	int iBuilder = GetEntPropEnt( iWeapon, Prop_Send, "m_hBuilder" );
-	flDamage = AttribHookFloat( flDamage, iBuilder, "custom_sentry_damage" );
-
-	return Plugin_Changed;
 }
 
 Action Event_PostInventory( Event hEvent, const char[] sName, bool bDontBroadcast ) {
@@ -605,7 +576,6 @@ void SetupObjectHooks( int iEntity ) {
 	hOnGoActive.HookEntity( Hook_Post, iEntity, Hook_OnGoActive );
 	hMakeCarry.HookEntity( Hook_Post, iEntity, Hook_MakeCarry );
 	hCanUpgrade.HookEntity( Hook_Pre, iEntity, Hook_CanBeUpgraded );
-	SDKHook( iEntity, SDKHook_OnTakeDamage, Hook_OnTakeDamage );
 }
 
 /*
@@ -685,8 +655,6 @@ void Lateload() {
 	for(int i = 1; i <= MaxClients; i++) {
 		if( !IsClientInGame( i ) )
 			continue;
-
-		SDKHook( i, SDKHook_OnTakeDamage, Hook_OnTakeDamage );
 
 		int iSentryType = 	RoundToNearest( AttribHookFloat( 0.0, i, "custom_sentry_type" ) );
 		int iDispenserType = 	RoundToNearest( AttribHookFloat( 0.0, i, "custom_dispenser_type" ) );

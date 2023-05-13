@@ -858,7 +858,7 @@ void RemoveAngelShield( int iPlayer ) {
 	}
 
 	if( IsClientInGame( iPlayer ) ) {
-		ClientCommand( iPlayer, "r_screenoverlay 0");
+		ClientCommand( iPlayer, "r_screenoverlay off");
 		EmitSoundToAll( "weapons/buffed_off.wav", iPlayer, SNDCHAN_AUTO, 100 );
 	}
 
@@ -882,7 +882,7 @@ static char szShieldKillParticle[][] = {
 
 Action RemoveAngelShield2( Handle hTimer, int iPlayer ) {
 	EmitSoundToAll( "weapons/teleporter_explode.wav", iPlayer );
-	ClientCommand( iPlayer, "r_screenoverlay 0"); 
+	ClientCommand( iPlayer, "r_screenoverlay off"); 
 
 	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	int iEmitter = CreateEntityByName( "info_particle_system" );
@@ -1088,7 +1088,7 @@ void RemoveQuickUber( int iPlayer ) {
 
 	if( IsClientInGame( iPlayer ) ) {
 		//TF2_RemoveCondition( iPlayer, TFCond_MegaHeal );
-		ClientCommand( iPlayer, "r_screenoverlay 0");
+		ClientCommand( iPlayer, "r_screenoverlay off");
 	}
 }
 
