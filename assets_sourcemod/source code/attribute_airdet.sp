@@ -90,6 +90,16 @@ public void OnEntityCreated( int iEntity, const char[] szClassname ) {
 	if( StrContains( szName, "tf_weapon" ) == -1 )
 		return;
 
+<<<<<<< Updated upstream
+=======
+	RequestFrame( Frame_WeaponHook, iEntity );
+}
+
+void Frame_WeaponHook( int iEntity ) {
+	if( AttribHookFloat( 0.0, iEntity, "custom_airdet" ) == 0.0 )
+		return;
+
+>>>>>>> Stashed changes
 	hPrimaryFire.HookEntity( Hook_Pre, iEntity, Hook_PrimaryPre );
 	hPrimaryFire.HookEntity( Hook_Post, iEntity, Hook_PrimaryPost );
 	hSecondaryFire.HookEntity( Hook_Pre, iEntity, Hook_Secondary );
@@ -123,9 +133,12 @@ public void OnGameFrame() {
 }
 
 MRESReturn Hook_PrimaryPre( int iEntity ) {
+<<<<<<< Updated upstream
 	if( AttribHookFloat( 0.0, iEntity, "custom_airdet" ) == 0.0 )
 		return MRES_Ignored;
 
+=======
+>>>>>>> Stashed changes
 	if( GetEntPropFloat( iEntity, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() ) {
 		return MRES_Ignored;
 	}
@@ -142,9 +155,12 @@ MRESReturn Hook_PrimaryPre( int iEntity ) {
 	return MRES_Handled;
 }
 MRESReturn Hook_PrimaryPost( int iEntity ) {
+<<<<<<< Updated upstream
 	if( AttribHookFloat( 0.0, iEntity, "custom_airdet" ) == 0.0 )
 		return MRES_Ignored;
 
+=======
+>>>>>>> Stashed changes
 	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwner" );
 	if( iOwner == -1 )
 		return MRES_Ignored;
@@ -157,28 +173,49 @@ MRESReturn Hook_PrimaryPost( int iEntity ) {
 }
 
 MRESReturn Hook_Secondary( int iEntity ) {
+<<<<<<< Updated upstream
 	if( AttribHookFloat( 0.0, iEntity, "custom_airdet" ) == 0.0 )
 		return MRES_Ignored;
 
+=======
+>>>>>>> Stashed changes
 	if( GetEntPropFloat( iEntity, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() || GetEntPropFloat( iEntity, Prop_Send, "m_flNextSecondaryAttack" ) > GetGameTime() ) {
 		return MRES_Ignored;
 	}
 
+<<<<<<< Updated upstream
 	if( GetEntProp( iEntity, Prop_Send, "m_iClip1" ) <= 0 )
 		return MRES_Ignored;
 
+=======
+>>>>>>> Stashed changes
 	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwner" );
 	if( iOwner == -1 )
 		return MRES_Ignored;
 
+<<<<<<< Updated upstream
+=======
+	int iAmmoType = 2;
+	int iAmmo = GetEntProp( iOwner, Prop_Send, "m_iAmmo", 4, iAmmoType );
+	if( iAmmo <= 0 )
+		return MRES_Ignored;
+
+>>>>>>> Stashed changes
 	SetEntPropFloat( iEntity, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + 0.3 );
 	SetEntPropFloat( iEntity, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() + 0.6 );
 
 	int iViewmodel = GetEntPropEnt( iOwner, Prop_Send, "m_hViewModel" );
+<<<<<<< Updated upstream
 	SetEntProp( iViewmodel, Prop_Send, "m_nSequence", 1 );
 	SetEntPropFloat( iEntity, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.8 );
 
 	SetEntProp( iEntity, Prop_Send, "m_iClip1", GetEntProp( iEntity, Prop_Send, "m_iClip1" ) - 1 );
+=======
+	SetEntProp( iViewmodel, Prop_Send, "m_nSequence", 2 );
+	SetEntPropFloat( iEntity, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.5 );
+
+	SetEntProp( iOwner, Prop_Send, "m_iAmmo", iAmmo - 1, 4, iAmmoType );
+>>>>>>> Stashed changes
 
 	EmitSoundToAll( "weapons/stickybomblauncher_shoot.wav", iOwner, SNDCHAN_WEAPON );
 

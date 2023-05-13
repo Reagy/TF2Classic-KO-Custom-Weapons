@@ -19,28 +19,19 @@ DynamicHook	hMedigunPostframe;
 DynamicHook	hMedigunHolster;
 
 DynamicDetour hStartHeal;
-//DynamicDetour hStopHeal;
-//DynamicDetour hGetBuffedHealth;
-//DynamicDetour hUpdateCharge;
 
-//DynamicDetour hCoilTouch;
-//DynamicDetour hCoilSpeed;
-//DynamicDetour hCollideTeamReset;
+DynamicDetour hCollideTeamReset;
+DynamicDetour hRocketTouch;
 
 Handle hGetHealerIndex;
 Handle hGetMaxHealth;
-//Handle hGetBuffedMaxHealth;
-//Handle hCallHealRate;
-//Handle hCallHeal;
-//Handle hCallStopHeal;
-//Handle hCallTakeHealth;
 
 enum {
 	CMEDI_ANGEL = 1,
 	CMEDI_BWP = 2,
 	CMEDI_QFIX = 3,
 	CMEDI_OATH = 4,
-	CMEDI_BEAM = 5,
+	CMEDI_BOW = 5,
 }
 
 public Plugin myinfo =
@@ -48,7 +39,7 @@ public Plugin myinfo =
 	name = "Attribute: Mediguns",
 	author = "Noclue",
 	description = "Atributes for Mediguns.",
-	version = "1.1",
+	version = "1.2",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -57,16 +48,13 @@ int g_iBeamEmitters[MAXPLAYERS+1][2];
 int g_iBeamTargetPoints[MAXPLAYERS+1] = { -1, ... };
 
 int g_iOldTargets[MAXPLAYERS+1] = { 69420, ... };
-//bool g_bOldCharging[MAXPLAYERS+1] = { false, ... };
-
-//float g_flMultTable[MAXPLAYERS+1] = { 0.5, ... }; //cached maximum overheal for mediguns
 
 //oath breaker
 bool g_bRadiusHealer[MAXPLAYERS+1] = { false, ... };
 float g_flLastHealed[MAXPLAYERS+1] = { 0.0, ... };
 
 //int g_iRocketDamageOffset = -1; //1204
-//int g_iCollideWithTeamOffset = -1; //1168
+int g_iCollideWithTeamOffset = -1; //1168
 
 bool bLateLoad;
 public APLRes AskPluginLoad2( Handle myself, bool bLate, char[] error, int err_max ) {
@@ -98,40 +86,16 @@ public void OnPluginStart() {
 	if( !hStartHeal.Enable( Hook_Pre, Detour_HealStartPre ) ) {
 		SetFailState( "Detour setup for CTFPlayerShared::Heal failed" );
 	}
-	/*hStopHeal = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::StopHealing" );
-	if( !hStopHeal.Enable( Hook_Pre, Detour_HealStopPre ) ) {
-		SetFailState( "Detour setup for CTFPlayerShared::StopHealing failed" );
-	}
-	hGetBuffedHealth = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::GetBuffedMaxHealth" );
-	if( !hGetBuffedHealth.Enable( Hook_Post, Detour_GetBuffedMaxHealth ) ) {
-		SetFailState( "Detour setup for CTFPlayerShared::GetBuffedMaxHealth failed" );
-	}*/
 
-	/*hCoilTouch = DynamicDetour.FromConf( hGameConf, "CTFProjectile_Coil::RocketTouch" );
-	if( !hCoilTouch.Enable( Hook_Pre, Detour_CoilTouch ) ) {
-		SetFailState( "Detour setup for CTFProjectile_Coil::RocketTouch failed" );
-	}
-	hCoilSpeed = DynamicDetour.FromConf( hGameConf, "CTFCoilGun::GetProjectileSpeed" );
-	if( !hCoilSpeed.Enable( Hook_Post, Detour_CoilProjectileSpeed ) ) {
-		SetFailState( "Detour setup for CTFCoilGun::GetProjectileSpeed failed" );
-	}
 	hCollideTeamReset = DynamicDetour.FromConf( hGameConf, "CBaseProjectile::ResetCollideWithTeammates" );
 	if( !hCollideTeamReset.Enable( Hook_Pre, Detour_CollideTeamReset ) ) {
 		SetFailState( "Detour setup for CBaseProjectile::ResetCollideWithTeammates failed" );
-	}*/
+	}
 
-	/*StartPrepSDKCall( SDKCall_Raw );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::Heal" );
-	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
-	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_ByValue, VDECODE_FLAG_ALLOWNULL );
-	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hCallHeal = EndPrepSDKCall();
-
-	StartPrepSDKCall( SDKCall_Raw );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::StopHealing" );
-	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
-	hCallStopHeal = EndPrepSDKCall();*/
+	hRocketTouch = DynamicDetour.FromConf( hGameConf, "CTFBaseRocket::RocketTouch" );
+	if( !hRocketTouch.Enable( Hook_Pre, Detour_RocketTouch ) ) {
+		SetFailState( "Detour setup for CTFBaseRocket::RocketTouch failed" );
+	}
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetHealerByIndex" );
@@ -144,22 +108,7 @@ public void OnPluginStart() {
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	hGetMaxHealth = EndPrepSDKCall();
 
-	/*StartPrepSDKCall( SDKCall_Raw );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetBuffedMaxHealth" );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	hGetBuffedMaxHealth = EndPrepSDKCall();*/
-
-	/*StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CWeaponMedigun::GetHealRate" );
-	PrepSDKCall_SetReturnInfo( SDKType_Float, SDKPass_Plain );
-	hCallHealRate = EndPrepSDKCall();*/
-
-	/*StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::TakeHealth" );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hCallTakeHealth = EndPrepSDKCall();*/
+	g_iCollideWithTeamOffset = GameConfGetOffset( hGameConf, "CBaseProjectile::m_bCollideWithTeammates" );
 
 	delete hGameConf;
 
@@ -917,10 +866,6 @@ Action Hook_RadialParticle( int iEntity, int iClient ) {
 	return Plugin_Continue;
 }
 
-MRESReturn Hook_ProjectileSpeed( int iThis, DHookReturn hReturn ) {
-	//vtable 442
-}
-
 void OathbreakerDamageMult( int iTarget, TFDamageInfo tfInfo ) {
 	int iAttacker = tfInfo.iAttacker;
 	if( !IsValidPlayer( iAttacker ) )
@@ -977,27 +922,45 @@ void OathbreakerDamageMult( int iTarget, TFDamageInfo tfInfo ) {
 	//EmitGameSoundToAll( "HealthKit.Touch", iOther );
 
 	return MRES_Handled;
-}
+}*/
 
 MRESReturn Detour_CollideTeamReset( int iThis ) {
 	int iLauncher = GetEntPropEnt( iThis, Prop_Send, "m_hOriginalLauncher" );
-	if( RoundToFloor( AttribHookFloat( 0.0, iLauncher, "custom_medigun_type" ) ) == CMEDI_BEAM ) {
+	if( RoundToFloor( AttribHookFloat( 0.0, iLauncher, "custom_medigun_type" ) ) == CMEDI_BOW ) {
 		StoreToEntity( iThis, g_iCollideWithTeamOffset, true, NumberType_Int8 );
-		
 		return MRES_Supercede;
 	}
 
 	return MRES_Ignored;
 }
 
-MRESReturn Detour_CoilProjectileSpeed( int iThis, DHookReturn hReturn ) {
-	if( RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_medigun_type" ) ) != CMEDI_BEAM )
+MRESReturn Detour_RocketTouch( int iThis, DHookParam hParams ) {
+	if( hParams.IsNull( 1 ) )
 		return MRES_Ignored;
 
-	float flCharge = 0.0;
-	if( GetEntPropFloat( iThis, Prop_Send, "m_flChargeBeginTime" ) != 0.0 )
-		flCharge = GetGameTime() - GetEntPropFloat( iThis, Prop_Send, "m_flChargeBeginTime" );
+	int iTouched = hParams.Get( 1 );
+	if( !IsValidPlayer( iTouched ) )
+		return MRES_Ignored;
 
-	hReturn.Value = RemapValClamped( flCharge, 0.0, 2.0, 2400.0, 3000.0 );
-	return MRES_ChangedOverride;
-}*/
+	int iWeapon = GetEntPropEnt( iThis, Prop_Send, "m_hOriginalLauncher" );
+	if( iWeapon == -1 )
+		return MRES_Ignored;
+
+	if( RoundToFloor( AttribHookFloat( 0.0, iWeapon, "custom_medigun_type" ) ) != CMEDI_BOW )
+		return MRES_Ignored;
+
+	int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwner" );
+
+	float flGive = 25.0;
+	flGive = AttribHookFloat( flGive, iOwner, "mult_medigun_healrate" );
+
+	int iGave = HealPlayer( iTouched, flGive, iOwner );
+
+	Event eHealEvent = CreateEvent( "player_healed" );
+	eHealEvent.SetInt( "patient", GetClientUserId( iTouched ) );
+	eHealEvent.SetInt( "healer", GetClientUserId( iOwner ) );
+	eHealEvent.SetInt( "amount", iGave );
+	eHealEvent.Fire();
+
+	return MRES_Handled;
+}
