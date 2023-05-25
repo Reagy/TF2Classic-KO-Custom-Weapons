@@ -32,6 +32,8 @@ enum {
 
 	TFCC_RADIUSHEAL,
 
+	TFCC_FLAMEHEAL,
+
 	TFCC_LAST
 }
 const int COND_BITFIELDS = (TFCC_LAST / 32) + 1;
@@ -58,6 +60,7 @@ DynamicDetour hApplyOnHit;
 
 DynamicHook hOnKill;
 
+Handle hGetMaxHealth;
 Handle hGetBuffedMaxHealth;
 
 bool bLateLoad;
@@ -102,6 +105,11 @@ public void OnPluginStart() {
 	hOnKill = new DynamicHook( 69, HookType_Entity, ReturnType_Void, ThisPointer_CBaseEntity );
 	hOnKill.AddParam( HookParamType_CBaseEntity );
 	hOnKill.AddParam( HookParamType_ObjectPtr );
+
+	StartPrepSDKCall( SDKCall_Player );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::GetMaxHealth" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	hGetMaxHealth = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetBuffedMaxHealth" );
@@ -235,6 +243,9 @@ bool AddCond( int iPlayer, int iCond ) {
 	}
 	case TFCC_TOXINUBER: {
 		bGaveCond = AddToxinUber( iPlayer );
+	}
+	case TFCC_FLAMEHEAL: {
+		bGaveCond = AddFlameHeal( iPlayer );
 	}
 	}
 
@@ -858,7 +869,7 @@ void RemoveAngelShield( int iPlayer ) {
 	}
 
 	if( IsClientInGame( iPlayer ) ) {
-		ClientCommand( iPlayer, "r_screenoverlay 0");
+		ClientCommand( iPlayer, "r_screenoverlay off");
 		EmitSoundToAll( "weapons/buffed_off.wav", iPlayer, SNDCHAN_AUTO, 100 );
 	}
 
@@ -882,7 +893,7 @@ static char szShieldKillParticle[][] = {
 
 Action RemoveAngelShield2( Handle hTimer, int iPlayer ) {
 	EmitSoundToAll( "weapons/teleporter_explode.wav", iPlayer );
-	ClientCommand( iPlayer, "r_screenoverlay 0"); 
+	ClientCommand( iPlayer, "r_screenoverlay off"); 
 
 	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	int iEmitter = CreateEntityByName( "info_particle_system" );
@@ -1088,10 +1099,79 @@ void RemoveQuickUber( int iPlayer ) {
 
 	if( IsClientInGame( iPlayer ) ) {
 		//TF2_RemoveCondition( iPlayer, TFCond_MegaHeal );
-		ClientCommand( iPlayer, "r_screenoverlay 0");
+		ClientCommand( iPlayer, "r_screenoverlay off");
 	}
 }
 
 /*
 	RADIAL HEAL
 */
+
+/*
+	FLAME HEAL
+*/
+
+const float g_flFlameHealTick = 0.1;
+const float g_flFlameHealRate = 24.0;
+
+int iNew;
+int iOld;
+
+
+bool AddFlameHeal( int iPlayer ) {
+	ePlayerConds[iPlayer][TFCC_FLAMEHEAL].hTick = CreateTimer( g_flFlameHealTick, TickFlameHeal, iPlayer, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
+
+	//iNew = 0;
+	//iOld = 0;
+	//CreateTimer( 1.0, TestTick, iPlayer, TIMER_REPEAT );
+
+	return true;
+}
+
+float g_flFlameHealDebt[ MAXPLAYERS+1 ];
+Action TickFlameHeal( Handle hTimer, int iPlayer ) {
+	
+	int iSource = GetCondSourcePlayer( iPlayer, TFCC_FLAMEHEAL );
+	float flRate = AttribHookFloat( g_flFlameHealRate * g_flFlameHealTick, iSource, "mult_medigun_healrate");
+	int iLevel = MinInt( GetCondLevel( iPlayer, TFCC_FLAMEHEAL ), 500 );
+
+	//turning off overheal decay is a pain so i'll just add more health to counteract it
+	float flRateLoss = 0.0;
+	int iMaxHealth = SDKCall( hGetMaxHealth, iPlayer );
+	if( GetEntProp( iPlayer, Prop_Send, "m_iHealth" ) > iMaxHealth ) {
+		Address aShared = GetSharedFromPlayer( iPlayer );
+		flRateLoss = float( SDKCall( hGetBuffedMaxHealth, aShared ) - iMaxHealth ) / 15.0;
+		flRateLoss *= g_flFlameHealTick;
+	}
+
+	float flAmount = MinFloat( flRate, float( iLevel ) * 0.1 ) + g_flFlameHealDebt[ iPlayer ] + flRateLoss;
+
+	int iHealed = HealPlayer( iPlayer, flAmount + flRateLoss, iSource, HF_NOCRITHEAL );
+	iNew += iHealed;
+	int iNewLevel = iLevel - ( RoundToNearest( flAmount ) * 10 );
+
+	g_flFlameHealDebt[ iPlayer ] = flAmount - float( iHealed );
+
+	SetCondLevel( iPlayer, TFCC_FLAMEHEAL, iNewLevel );
+
+	if( iNewLevel > 0 )
+		return Plugin_Continue;
+		
+	RemoveCond( iPlayer, TFCC_FLAMEHEAL );
+	g_flFlameHealDebt[ iPlayer ] = 0.0;
+
+	return Plugin_Stop;
+}
+
+
+
+Action TestTick( Handle hTimer, int iPlayer ) {
+	if( !HasCond( iPlayer, TFCC_FLAMEHEAL ) )
+		return Plugin_Stop;
+
+	PrintToServer( "%f", ( float( iNew ) - float( iOld ) ) * 1.0 );
+
+	iOld = iNew;
+
+	return Plugin_Continue;
+}

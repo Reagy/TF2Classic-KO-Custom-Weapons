@@ -63,6 +63,10 @@ stock float MaxFloat( float v1, float v2 ) {
 	return v2;
 }
 
+stock int MinInt( int v1, int v2 ) {
+	if( v1 < v2) return v1;
+	return v2;
+}
 stock int MaxInt( int v1, int v2 ) {
 	if( v1 > v2) return v1;
 	return v2;

@@ -15,6 +15,8 @@ enum {
 
 	TFCC_RADIALHEAL,
 
+	TFCC_FLAMEHEAL,
+
 	TFCC_LAST
 }
 
@@ -26,7 +28,7 @@ native bool HasCustomCond( int iPlayer, int iEffect );
 native int GetCustomCondLevel( int iPlayer, int iEffect );
 native void SetCustomCondLevel( int iPlayer, int iEffect, int iLevel );
 
-native int GetCustomCondDuration( int iPlayer, int iEffect );
+native float GetCustomCondDuration( int iPlayer, int iEffect );
 native void SetCustomCondDuration( int iPlayer, int iEffect, float flDuration, bool bAdd );
 
 native int GetCustomCondSourcePlayer( int iPlayer, int iEffect );

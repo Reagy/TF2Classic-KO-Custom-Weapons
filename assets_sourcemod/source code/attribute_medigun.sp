@@ -13,18 +13,25 @@
 
 DynamicDetour	hCanTargetMedigun;
 DynamicDetour	hMedigunThink;
-//DynamicDetour	hMedigunHealrate;
 DynamicHook	hMedigunSecondary;
-DynamicHook	hMedigunPostframe;
-DynamicHook	hMedigunHolster;
 
-DynamicDetour hStartHeal;
+DynamicDetour	hFireCollide;
+DynamicDetour	hFireCollideTeam;
 
-DynamicDetour hCollideTeamReset;
-DynamicDetour hRocketTouch;
+DynamicHook	hPrimaryFire;
+DynamicHook	hSecondaryFire;
+DynamicHook	hWeaponPostframe;
+DynamicHook	hWeaponHolster;
 
-Handle hGetHealerIndex;
-Handle hGetMaxHealth;
+DynamicDetour 	hStartHeal;
+
+DynamicDetour 	hCollideTeamReset;
+DynamicDetour 	hRocketTouch;
+
+Handle 		hGetHealerIndex;
+Handle 		hGetMaxHealth;
+
+Handle		hFuckMe;
 
 enum {
 	CMEDI_ANGEL = 1,
@@ -32,6 +39,7 @@ enum {
 	CMEDI_QFIX = 3,
 	CMEDI_OATH = 4,
 	CMEDI_BOW = 5,
+	CMEDI_FLAME = 6,
 }
 
 public Plugin myinfo =
@@ -39,7 +47,7 @@ public Plugin myinfo =
 	name = "Attribute: Mediguns",
 	author = "Noclue",
 	description = "Atributes for Mediguns.",
-	version = "1.2",
+	version = "1.3",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -52,6 +60,9 @@ int g_iOldTargets[MAXPLAYERS+1] = { 69420, ... };
 //oath breaker
 bool g_bRadiusHealer[MAXPLAYERS+1] = { false, ... };
 float g_flLastHealed[MAXPLAYERS+1] = { 0.0, ... };
+
+//flame healer
+int g_iFlameHealEmitters[MAXPLAYERS+1][2];
 
 //int g_iRocketDamageOffset = -1; //1204
 int g_iCollideWithTeamOffset = -1; //1168
@@ -70,6 +81,13 @@ public void OnPluginStart() {
 
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "fuckme" );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_ByRef );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	hFuckMe = EndPrepSDKCall();
+
 	hCanTargetMedigun = DynamicDetour.FromConf( hGameConf, "CWeaponMedigun::AllowedToHealTarget" );
 	if( !hCanTargetMedigun.Enable( Hook_Pre, Detour_AllowedToHealPre ) ) {
 		SetFailState( "Detour setup for CWeaponMedigun::AllowedToHealTarget failed" );
@@ -79,8 +97,7 @@ public void OnPluginStart() {
 		SetFailState( "Detour setup for CWeaponMedigun::HealTargetThink failed" );
 	}
 	hMedigunSecondary = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::SecondaryAttack" );
-	hMedigunPostframe = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::ItemPostFrame" );
-	hMedigunHolster = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::Holster" );
+	
 
 	hStartHeal = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::Heal" );
 	if( !hStartHeal.Enable( Hook_Pre, Detour_HealStartPre ) ) {
@@ -97,6 +114,15 @@ public void OnPluginStart() {
 		SetFailState( "Detour setup for CTFBaseRocket::RocketTouch failed" );
 	}
 
+	hFireCollide = DynamicDetour.FromConf( hGameConf, "CTFFlameEntity::OnCollide" );
+	if( !hFireCollide.Enable( Hook_Pre, Detour_FireTouch ) ) {
+		SetFailState( "Detour setup for CTFFlameEntity::OnCollide failed" );
+	}
+	hFireCollideTeam = DynamicDetour.FromConf( hGameConf, "CTFFlameEntity::OnCollideWithTeammate" );
+	if( !hFireCollideTeam.Enable( Hook_Pre, Detour_FireTouchTeam ) ) {
+		SetFailState( "Detour setup for CTFFlameEntity::OnCollideWithTeammate failed" );
+	}
+
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetHealerByIndex" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
@@ -110,6 +136,11 @@ public void OnPluginStart() {
 
 	g_iCollideWithTeamOffset = GameConfGetOffset( hGameConf, "CBaseProjectile::m_bCollideWithTeammates" );
 
+	hPrimaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::PrimaryAttack" );
+	hSecondaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::SecondaryAttack" );
+	hWeaponHolster = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::Holster" );
+	hWeaponPostframe = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::ItemPostFrame" );
+
 	delete hGameConf;
 
 	if( bLateLoad ) {
@@ -119,9 +150,14 @@ public void OnPluginStart() {
 		}
 	}
 
-	for( int i = 0; i < sizeof(g_iBeamEmitters); i++ ) {
+	for( int i = 0; i < sizeof( g_iBeamEmitters ); i++ ) {
 		g_iBeamEmitters[i][0] = -1;
 		g_iBeamEmitters[i][1] = -1;
+	}
+
+	for( int i = 0; i < sizeof( g_iFlameHealEmitters ); i++ ) {
+		g_iFlameHealEmitters[i][0] = -1;
+		g_iFlameHealEmitters[i][1] = -1;
 	}
 }
 
@@ -145,17 +181,26 @@ public void OnClientDisconnect( int iClient ) {
 }
 
 public void OnEntityCreated( int iThis, const char[] szClassname ) {
-	if( strcmp( szClassname, "tf_weapon_medigun", false ) != 0 )
-		return;
+	if( strcmp( szClassname, "tf_weapon_medigun", false ) == 0 )
+		HookMedigun( iThis );
 
-	HookMedigun( iThis );
+	if( strcmp( szClassname, "tf_weapon_flamethrower", false ) == 0 )
+		RequestFrame( Frame_SetupFlamethrower, iThis ); //attributes don't seem to be setup yet
+
+	if( strcmp( szClassname, "tf_weapon_pistol", false ) == 0 )
+		RequestFrame( Frame_SetupUberdosis, iThis ); //attributes don't seem to be setup yet
+}
+
+void Frame_SetupUberdosis( int iThis ) {
+	int iMode = RoundToNearest( AttribHookFloat( 0.0, iThis, "custom_medigun_type" ) );
+	if( iMode == CMEDI_BOW ) {
+		hSecondaryFire.HookEntity( Hook_Pre, iThis, Hook_Secondary );
+	}
 }
 
 Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadcast ) {
 	int iPlayer = hEvent.GetInt( "userid" );
 	iPlayer = GetClientOfUserId( iPlayer );
-
-	//do oathbreaker projectile setup here
 
 	int iMedigun = GetEntityInSlot( iPlayer, 1 );
 	if( !IsValidEntity( iMedigun ) )
@@ -235,8 +280,10 @@ MRESReturn Hook_MedigunSecondaryPost( int iThis ) {
 
 void HookMedigun( int iMedigun ) {
 	hMedigunSecondary.HookEntity( Hook_Post, iMedigun, Hook_MedigunSecondaryPost );
-	hMedigunPostframe.HookEntity( Hook_Post, iMedigun, Hook_ItemPostFrame );
-	hMedigunHolster.HookEntity( Hook_Post, iMedigun, Hook_MedigunHolster );
+	hWeaponPostframe
+.HookEntity( Hook_Post, iMedigun, Hook_ItemPostFrame );
+	hWeaponHolster
+.HookEntity( Hook_Post, iMedigun, Hook_MedigunHolster );
 }
 
 bool ValidHealTarget( int iHealer, int iPatient ) {
@@ -879,50 +926,8 @@ void OathbreakerDamageMult( int iTarget, TFDamageInfo tfInfo ) {
 }*/
 
 /*
-	BEAM THING
+	UBERDOSIS
 */
-
-/*MRESReturn Detour_CoilTouch( int iThis, DHookParam hParams ) {
-	int iOther = hParams.Get( 1 );
-
-	if( !IsValidPlayer( iOther ) )
-		return MRES_Ignored;
-
-	int iOriginalLauncher =  GetEntPropEnt( iThis, Prop_Send, "m_hOriginalLauncher" );
-	if( RoundToFloor( AttribHookFloat( 0.0, iOriginalLauncher, "custom_medigun_type" ) ) != CMEDI_BEAM )
-		return MRES_Ignored;
-
-	float flDamage = LoadFromEntity( iThis, g_iRocketDamageOffset );
-
-	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
-	if( !ValidHealTarget( iOwner, iOther ) ) {
-		StoreToEntity( iThis, g_iRocketDamageOffset, flDamage * 0.25, NumberType_Int32 );
-		return MRES_Ignored;
-	}
-
-	float flTimeSinceDamage = GetGameTime() - GetEntPropFloat( iOther, Prop_Send, "m_flLastDamageTime" );
-	float flScale = RemapValClamped( flTimeSinceDamage, 10.0, 15.0, 1.0, 3.0 );
-	flDamage *= flScale;
-
-	Address aShared = GetSharedFromPlayer( iOther );
-	int iMaxHealth = SDKCall( hGetBuffedMaxHealth, aShared );
-	int iHealth = GetClientHealth( iOther );
-
-	int iDiff = iMaxHealth - iHealth;
-
-	float flGive = MinFloat( float( iDiff ), flDamage );
-	int iGave = SDKCall( hCallTakeHealth, iOther, flGive, 1 << 1 );
-	
-	Event eHealEvent = CreateEvent( "player_healed", true );
-	eHealEvent.SetInt( "patient", GetClientUserId( iOther ) );
-	eHealEvent.SetInt( "healer", GetClientUserId( iOwner ) );
-	eHealEvent.SetInt( "amount", iGave );
-	eHealEvent.Fire();
-
-	//EmitGameSoundToAll( "HealthKit.Touch", iOther );
-
-	return MRES_Handled;
-}*/
 
 MRESReturn Detour_CollideTeamReset( int iThis ) {
 	int iLauncher = GetEntPropEnt( iThis, Prop_Send, "m_hOriginalLauncher" );
@@ -934,6 +939,7 @@ MRESReturn Detour_CollideTeamReset( int iThis ) {
 	return MRES_Ignored;
 }
 
+//hooking the specific projectile could be slightly faster?
 MRESReturn Detour_RocketTouch( int iThis, DHookParam hParams ) {
 	if( hParams.IsNull( 1 ) )
 		return MRES_Ignored;
@@ -963,4 +969,174 @@ MRESReturn Detour_RocketTouch( int iThis, DHookParam hParams ) {
 	eHealEvent.Fire();
 
 	return MRES_Handled;
+}
+
+MRESReturn Hook_Secondary( int iEntity ) {
+	if( GetEntPropFloat( iEntity, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() ) {
+		return MRES_Ignored;
+	}
+
+	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwner" );
+	if( iOwner == -1 )
+		return MRES_Ignored;
+
+	/*int iAmmoType = 2;
+	int iAmmo = GetEntProp( iOwner, Prop_Send, "m_iAmmo", 4, iAmmoType );
+	if( iAmmo <= 0 )
+		return MRES_Ignored;*/
+
+	SetEntPropFloat( iEntity, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + 0.6 );
+
+	int iViewmodel = GetEntPropEnt( iOwner, Prop_Send, "m_hViewModel" );
+	SetEntProp( iViewmodel, Prop_Send, "m_nSequence", 9 );
+	SetEntPropFloat( iEntity, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.25 );
+
+	//SetEntProp( iOwner, Prop_Send, "m_iAmmo", iAmmo - 1, 4, iAmmoType );
+
+	float vecSrc[3], vecEyeAng[3], vecVel[3], vecImpulse[3];
+	GetClientEyePosition( iOwner, vecSrc );
+
+	float vecForward[3], vecRight[3], vecUp[3];
+	GetClientEyeAngles( iOwner, vecEyeAng );
+	GetAngleVectors( vecEyeAng, vecForward, vecRight, vecUp );
+
+	ScaleVector( vecForward, 1200.0 );
+	ScaleVector( vecUp, 200.0 );
+	AddVectors( vecVel, vecForward, vecVel );
+	AddVectors( vecVel, vecUp, vecVel );
+	AddVectors( vecVel, vecRight, vecVel );
+
+	vecImpulse[0] = 600.0;
+
+	return MRES_Supercede;
+}
+
+/*
+	FLAMETHROWER MEDIGUN
+*/
+
+
+void Frame_SetupFlamethrower( int iThis ) {
+	int iMode = RoundToNearest( AttribHookFloat( 0.0, iThis, "custom_medigun_type" ) );
+	if( iMode == CMEDI_FLAME ) {
+		hWeaponPostframe.HookEntity( Hook_Pre, iThis, Hook_PostFrameFlame );
+		hWeaponHolster.HookEntity( Hook_Pre, iThis, Hook_HolsterFlame );
+	}
+}
+
+//standard dhook entity parameter doesn't seem to work with flames so they're passed by address instead
+MRESReturn Detour_FireTouch( Address aThis, DHookParam hParams ) {
+	int iCollide = hParams.Get( 1 );
+	return FireTouchHandle( aThis, iCollide );
+}
+
+MRESReturn Detour_FireTouchTeam( Address aThis, DHookParam hParams ) {
+	int iCollide = hParams.Get( 1 );
+	return FireTouchHandle( aThis, iCollide );
+}
+
+MRESReturn FireTouchHandle( Address aThis, int iCollide ) {
+	int iOwner = LoadEntityHandleFromAddress( aThis + view_as<Address>( 112 ) );
+	if( !IsValidPlayer( iOwner ) || !IsValidPlayer( iCollide ) )
+		return MRES_Ignored;
+
+	int iWeapon = GetEntityInSlot( iOwner, 1 );
+	if( RoundToNearest( AttribHookFloat( 0.0, iWeapon, "custom_medigun_type" ) ) != CMEDI_FLAME )
+		return MRES_Ignored;
+
+	if( !HasCustomCond( iCollide, TFCC_FLAMEHEAL ) ) {
+		AddCustomCond( iCollide, TFCC_FLAMEHEAL );
+		SetCustomCondSourcePlayer( iCollide, TFCC_FLAMEHEAL, iOwner );
+		SetCustomCondSourceWeapon( iCollide, TFCC_FLAMEHEAL, iWeapon );
+	}
+
+	int iLevel = GetCustomCondLevel( iCollide, TFCC_FLAMEHEAL );
+	SetCustomCondLevel( iCollide, TFCC_FLAMEHEAL, iLevel + 70 );
+
+	//this appends to the flame's internal list that keeps track of who it has hit
+	Address aVector = aThis + view_as<Address>( 120 );
+	Address aSize = aThis + view_as<Address>( 132 );
+	Address aEHandle = GetEntityAddress( iCollide ) + view_as< Address >( 836 );
+	SDKCall( hFuckMe, aVector, LoadFromAddress( aSize, NumberType_Int32 ), LoadFromAddress( aEHandle, NumberType_Int32 ) );
+
+	return MRES_Supercede;
+}
+
+int g_iOldWeaponState[MAXPLAYERS+1];
+MRESReturn Hook_PostFrameFlame( int iThis ) {
+	int iWeaponState = GetEntProp( iThis, Prop_Send, "m_iWeaponState" );
+	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwner" );
+
+	if( iWeaponState != g_iOldWeaponState[ iOwner ] ) {
+		if( iWeaponState == 0 )
+			RemoveFlameEmitter( iOwner );
+		else if( iWeaponState == 1 || ( iWeaponState == 2 && g_iOldWeaponState[ iOwner ] != 1 ) )
+			CreateFlameEmitter( iOwner, iThis );
+		else if( iWeaponState == 2 ) {
+			//nothing yet
+		}
+	}
+
+	g_iOldWeaponState[ iOwner ] = iWeaponState;
+
+	return MRES_Handled;
+}
+
+MRESReturn Hook_HolsterFlame( int iThis ) {
+	int iPlayer = GetEntPropEnt( iThis, Prop_Send, "m_hOwner" );
+	RemoveFlameEmitter( iPlayer );
+	return MRES_Handled;
+}
+
+static char g_szFlameParticleName[][] = {
+	"mediflame_red",
+	"mediflame_blue",
+	"mediflame_green",
+	"mediflame_yellow"
+};
+
+void CreateFlameEmitter( int iPlayer, int iWeapon ) {
+	PrintToServer("test");
+	RemoveFlameEmitter( iPlayer );
+
+	for( int i = 0; i < 2; i++ ) {
+		int iEmitter = CreateEntityByName( "info_particle_system" );
+		int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
+
+		DispatchKeyValue( iEmitter, "effect_name", g_szFlameParticleName[ iTeam ] );
+
+		DispatchSpawn( iEmitter );
+		ActivateEntity( iEmitter );
+
+		AcceptEntityInput( iEmitter, "Start" );
+
+		SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iPlayer );
+
+		if( i == 0 ) { //first person
+			bool bIsCModel = GetEntProp( iWeapon, Prop_Send, "m_iViewModelType" ) == 1;
+			int iViewmodel = GetEntPropEnt( iPlayer, Prop_Send, "m_hViewModel" );
+			ParentModel( iEmitter, iViewmodel, bIsCModel ? "weapon_bone_l" : "muzzle" );
+			SetFlags( iEmitter );
+		}
+		else { //third person NEED DUMMY SETUP FOR THIS
+			/*int iDummy = GetDummyGun( iPlayer );
+			ParentModel( iEmitter, iDummy, "muzzle" );
+			SetFlags( iEmitter );*/
+		}
+
+		g_iFlameHealEmitters[ iPlayer ][ i ] = EntIndexToEntRef( iEmitter );
+	}
+}
+
+void RemoveFlameEmitter( int iPlayer ) {
+	for( int i = 0; i < 2; i++ ) {
+		int iEmitter = EntRefToEntIndex( g_iFlameHealEmitters[ iPlayer ][ i ] );
+
+		if( iEmitter == -1 )
+			continue;
+
+		AcceptEntityInput( iEmitter, "Stop" );
+		RemoveEntity( iEmitter );
+		g_iFlameHealEmitters[ iPlayer ][ i ] = -1;
+	}
 }
