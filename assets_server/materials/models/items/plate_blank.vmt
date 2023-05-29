@@ -1,0 +1,21 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\items/plate_blank"
+
+
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.2 .2 .2]"
+	"$basealphaenvmapmask" 1 
+	"$basemapalphaphongmask" 1
+
+	"$phong" "1"
+	"$phongexponent" "25"
+	"$phongboost" "8"
+//	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"	
+	"$phongfresnelranges"	"[.25 1 4]"
+
+
+	"$rimlight" "1"
+	"$rimlightexponent" "4"
+	"$rimlightboost" "2"
+}
