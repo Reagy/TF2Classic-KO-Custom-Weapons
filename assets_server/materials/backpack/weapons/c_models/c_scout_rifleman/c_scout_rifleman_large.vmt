@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_scout_rifleman\c_scout_rifleman_large"
+	$translucent 1
+	$vertexcolor 1
+}

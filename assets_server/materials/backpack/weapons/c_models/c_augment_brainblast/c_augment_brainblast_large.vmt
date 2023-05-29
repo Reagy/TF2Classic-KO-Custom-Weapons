@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture"		"backpack/weapons/c_models/c_augment_brainblast/c_augment_brainblast_large"
+	"$translucent"		"1"
+}
