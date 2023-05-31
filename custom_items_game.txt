@@ -10082,7 +10082,7 @@ Wearable by: 'Reagy'"
 				"dmg taken from bullets reduced" // This is more of a utility item, so things changed a bit here.
 				{
 					"attribute_class"	"mult_dmgtaken_from_bullets"
-					"value"				"0.5"
+					"value"				"0.85"
 				}
 				"dmg taken from fire reduced"
 				{
@@ -12298,20 +12298,15 @@ Weapon by: 'Majro'"
 			}
             "attributes"
             {
-			    "provide on active"
+				"add condition on hit weapon"															// Marked for Death, like with Jarate above. Only 3.5 seconds this time, though!
 				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
-				"add condition on hit"															// Marked for Death, like with Jarate above. Only 3.5 seconds this time, though!
-				{
-					"attribute_class"	"add_onhit_addcond"
-					"value"				"30 5"
+					"attribute_class"	"add_onhit_addcond_weapon"
+					"value"				"30 2"
 				}
 				"Mark for Death on hit rewritten"																// Since I wanna signpost it this time, this is here. This ALSO does not work! Weird!!!
 				{
 					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"5"
+					"value"				"2"
 				}
 				"Projectile speed increased" 
 				{
@@ -24858,7 +24853,7 @@ Wearable by: 'The One Of Wonders'"
 				"wearable add cond on right click"
 				{
 					"attribute_class"	"add_wearable_cond_on_secondary_attack"
-					"value"				"111 10 30"
+					"value"				"111 6 30"
 				}
 				"wearable cond on effect percent"
 				{
