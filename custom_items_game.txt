@@ -2146,7 +2146,7 @@ Edited by: 'The One Of Wonders'"
 				}
 				"add condition on hit"															
 				{
-					"attribute_class"	"add_onhit_addcond"
+					"attribute_class"	"add_onhit_addcond_weapon"
 					"value"				"30 5"
 				}
 				"Targets Outlined on Hit"																
@@ -2678,7 +2678,7 @@ Edited by: 'The One Of Wonders'"
 				// Backend stuff
 				"add condition on hit"		// decided this would make it easier to spot these sneaky twats!
 				{
-					"attribute_class"	"add_onhit_addcond_self"
+					"attribute_class"	"add_onhit_addcond_self_weapon"
 					"value"				"112 1"
 				}
 				"crit mod disabled"															
@@ -4533,7 +4533,7 @@ Edited by: 'The One Of Wonders'"
 				}
 				"add condition on hit"															
 				{
-					"attribute_class"	"add_onhit_addcond_self"
+					"attribute_class"	"add_onhit_addcond_self_weapon"
 					"value"				"112 1"
 				}
 				"crit mod disabled"
@@ -6493,13 +6493,13 @@ Edited by: 'The One Of Wonders'"
 				}
 				"add condition on hit"												
 				{
-					"attribute_class"	"add_onhit_addcond"
+					"attribute_class"	"add_onhit_addcond_weapon"
 					"value"				"30 5"
 				}
-				"mark for death"																
+				"Mark for Death on hit rewritten"																
 				{
 					"attribute_class"	"mark_for_death"
-					"value"				"1"
+					"value"				"5"
 				}
 				"deploy time decreased"
 				{
@@ -9161,7 +9161,7 @@ Weapon by: 'Reagy'"
 				}
                 "add condition on hit"		
 				{
-					"attribute_class"	"add_onhit_addcond_self"
+					"attribute_class"	"add_onhit_addcond_self_weapon"
 					"value"				"17 2"
 				}
                 "mult shield bash damage"
@@ -11611,7 +11611,7 @@ Weapon by: 'The One Of Wonders'"
 				}	
 				"add condition on hit"					 // Mark for death										
 				{
-					"attribute_class"	"add_onhit_addcond"
+					"attribute_class"	"add_onhit_addcond_weapon"
 					"value"				"30 5"
 				}
 				"Mark for Death on hit rewritten"					// Display only											
@@ -18140,7 +18140,7 @@ Weapon by: 'The One Of Wonders'"
 				// Condition stuff, one is a self-buff and the other is a crit vs condition.
                 "add condition on hit"																
 				{
-					"attribute_class"	"add_onhit_addcond_self"  
+					"attribute_class"	"add_onhit_addcond_self_weapon"  
 					"value" 			"112 1"                   
  				}			
 			}
@@ -20013,7 +20013,7 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"add condition on hit"															
 				{
-					"attribute_class"	"add_onhit_addcond_self"
+					"attribute_class"	"add_onhit_addcond_self_weapon"
 					"value"				"112 1"
 				}
 				"crit mod disabled"
@@ -20295,7 +20295,7 @@ Weapon by: 'The One Of Wonders'"
 				}
                 "add condition on hit"															
 				{
-					"attribute_class"	"add_onhit_addcond"
+					"attribute_class"	"add_onhit_addcond_weapon"
 					"value"				"19 10"
 				}				
 			}
@@ -22676,7 +22676,7 @@ Weapon by: 'Reagy'"
 				}
 				"add condition on hit"															
 				{
-					"attribute_class"	"add_onhit_addcond"
+					"attribute_class"	"add_onhit_addcond_weapon"
 					"value"				"30 5"
 				}
 				"dmg penalty vs buildings"
@@ -24350,7 +24350,7 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"add condition on hit"																
 				{
-					"attribute_class"	"add_onhit_addcond_self"  
+					"attribute_class"	"add_onhit_addcond_self_weapon"  
 					"value" 			"112 1"                   
  				}
 				"strange restriction type 1"													
@@ -24932,7 +24932,7 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"add condition on hit"																
 				{
-					"attribute_class"	"add_onhit_addcond_self"  
+					"attribute_class"	"add_onhit_addcond_self_weapon"  
 					"value" 			"41 42069"                   
  				}
 				"add condition on kill"																
@@ -26138,7 +26138,7 @@ Weapon by: 'Colrot' and 'Mister Mann'"
 				}
 				"add condition on hit"	
 				{
-					"attribute_class"	"add_onhit_addcond"
+					"attribute_class"	"add_onhit_addcond_weapon"
 					"value"				"30 0.3"
 				}
 				"hand scale" 
@@ -27034,7 +27034,6 @@ Questioned by: 'The One Of Wonders'"
 			"item_name"					"Gorey Gladiator"
 			"item_type_name"			"Suit of Armour"
 			"item_description"			"
-Gladiator's Wrath: Passive: Dealing damage grants mini-crits for one second.
 Primary fire: Nearby enemies will bleed for 5 seconds and grant you mini-crits.
 Gladiator's Wrath Primary fire has a 10 second cooldown.
 
@@ -27093,7 +27092,7 @@ Weapon by 'The One Of Wonders'"
 				// Backend stuff for the actual uh.. mechanic lol
                 "add condition on hit"																
 				{
-					"attribute_class"	"add_onhit_addcond_self"  
+					"attribute_class"	"add_onhit_addcond_self_weapon"  
 					"value" 			"112 1"                   
  				}
 				"hand scale"
@@ -27270,8 +27269,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"Centurion Command"
 			"item_type_name"			"Suit of Armour"
 			"item_description"			"
-Centurion's Might: Passive: Dealing damage marks enemies and grants damage resistance for 5 seconds.
-Primary Fire: Apply passive effects in a radius and restore health on hit.
+Centurion's Might: Passive: Dealing damage grants damage resistance for 5 seconds.
+Primary Fire: Apply mark for death in a radius and restore health on hit.
 Centurion's Might Primary fire has a 10 second cooldown.
 
 Model by: 'Populus'
@@ -27318,8 +27317,8 @@ Weapon by 'The One Of Wonders'"
 				}
 				"increase player capture value"
 				{
-					"attribute_class"		"add_player_capturevalue"
-					"value" 				"2"
+					"attribute_class"	"add_player_capturevalue"
+					"value" 			"2"
 				}
 				"reduced_healing_from_medics"
 				{
@@ -27347,9 +27346,9 @@ Weapon by 'The One Of Wonders'"
 					"attribute_class"	"add_onhit_addcond_self"  
 					"value" 			"111 5"                   
  				}
-				 "add condition on hit"																
+				"add condition on hit"																
 				{
-					"attribute_class"	"add_onhit_addcond"  
+					"attribute_class"	"add_onhit_addcond_weapon"  
 					"value" 			"30 5"                   
  				}
 				"hand scale"
