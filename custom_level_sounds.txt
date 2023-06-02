@@ -13646,3 +13646,12 @@
 		"wave"		")weapons/tromboneairblast_alt.wav"
 		}
 }
+
+"Weapon_HydroPump.AirBurstAttack"
+{
+	"channel"	"CHAN_WEAPON"
+	"volume"	"1.0"
+	"pitch"		"95,105"
+	"soundlevel"	"SNDLVL_90db"
+	"wave"		")ambient/lair/crocs_jump_out.wav"
+}

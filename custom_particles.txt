@@ -2,4 +2,6 @@ particles_manifest
 {
 		"file"		"!particles/scattershock_fx.pcf"
 		"file"      "!particles/db_tracers.pcf"
+		"file"    	"!particles/kocw_beams.pcf"
+		"file"		"!particles/medicflames.pcf"
 }
