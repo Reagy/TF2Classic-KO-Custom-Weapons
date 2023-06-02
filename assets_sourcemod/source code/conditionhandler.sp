@@ -19,7 +19,7 @@ public Plugin myinfo =
 
 //TODO: Shield parenting could be better
 
-//#define DEBUG
+#define DEBUG
 
 enum {
 	TFCC_TOXIN = 0,
@@ -571,7 +571,7 @@ int g_iToxinEmitters[MAXPLAYERS+1] = { -1, ... };
 
 const float	TOXIN_FREQUENCY		= 0.5; //tick interval in seconds
 const float	TOXIN_DAMAGE		= 2.0; //damage per tick
-const float	TOXIN_HEALING_MULT	= 0.5; //multiplier for healing while under toxin
+const float	TOXIN_HEALING_MULT	= 0.25; //multiplier for healing while under toxin
 
 bool AddToxin( int iPlayer ) {
 	ePlayerConds[iPlayer][TFCC_TOXIN].hTick = CreateTimer( TOXIN_FREQUENCY, TickToxin, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
@@ -721,27 +721,37 @@ Action TickToxinUber( Handle hTimer, int iPlayer ) {
 	float vecSource[3]; GetClientAbsOrigin( iPlayer, vecSource );
 
 	int iTarget = -1;
-	while ( ( iTarget = FindEntityInSphere( iTarget, vecSource, 150.0 ) ) != -1 ) {
+	int iSource = GetCondSourcePlayer( iPlayer, TFCC_TOXINUBER );
+	while ( ( iTarget = FindEntityInSphere( iTarget, vecSource, 300.0 ) ) != -1 ) {
 		if( !IsValidPlayer( iTarget ) )
 			continue;
 
-		if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iPlayer ) )
-			continue;
+		if( GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) == GetEntProp( iTarget, Prop_Send, "m_iTeamNum" ) ) {
+			int iHealed = HealPlayer( iTarget, 10.0, iSource );
 
-		AddCond( iTarget, TFCC_TOXIN );
-		SetCondDuration( iTarget, TFCC_TOXIN, 2.0, true );
+			Event eHealEvent = CreateEvent( "player_healed" );
+			eHealEvent.SetInt( "patient", GetClientUserId( iTarget ) );
+			eHealEvent.SetInt( "healer", GetClientUserId( iSource ) );
+			eHealEvent.SetInt( "amount", iHealed );
+			eHealEvent.Fire();
+		}
+		else {
+			AddCond( iTarget, TFCC_TOXIN );
+			SetCondDuration( iTarget, TFCC_TOXIN, 2.0, true );
 
-		int iSourcePlayer = GetCondSourcePlayer( iPlayer, TFCC_TOXINUBER );
-		if( iSourcePlayer != -1 )
-			SetCondSourcePlayer( iTarget, TFCC_TOXIN, iSourcePlayer );
+			int iSourcePlayer = GetCondSourcePlayer( iPlayer, TFCC_TOXINUBER );
+			if( iSourcePlayer != -1 )
+				SetCondSourcePlayer( iTarget, TFCC_TOXIN, iSourcePlayer );
 
-		int iSourceWeapon = GetCondSourceWeapon( iPlayer, TFCC_TOXINUBER );
-		if( iSourceWeapon != -1 )
-			SetCondSourceWeapon( iTarget, TFCC_TOXIN, iSourceWeapon );
+			int iSourceWeapon = GetCondSourceWeapon( iPlayer, TFCC_TOXINUBER );
+			if( iSourceWeapon != -1 )
+				SetCondSourceWeapon( iTarget, TFCC_TOXIN, iSourceWeapon );
+		}
 	}
 
 	return Plugin_Continue;
 }
+
 void RemoveToxinUber( int iPlayer ) {
 	RemoveToxinUberEmitter( iPlayer );
 }
@@ -781,8 +791,8 @@ Action TickToxinPatient( Handle hTimer, int iPlayer ) {
 	ANGEL SHIELD
 */
 
-const int ANGSHIELD_HEALTH = 100;
-const float ANGSHIELD_DURATION = 2.0;
+const int ANGSHIELD_HEALTH = 80;
+const float ANGSHIELD_DURATION = 4.0;
 
 float g_flLastDamagedShield[MAXPLAYERS+1];
 
@@ -1007,7 +1017,7 @@ Action Hook_NewShield( int iEntity, int iClient ) {
 	ANGEL SHIELD INVULN
 */
 
-const float ANGINVULN_DURATION = 0.5;
+const float ANGINVULN_DURATION = 0.25;
 
 bool AddAngelInvuln( int iPlayer ) {
 	ePlayerConds[iPlayer][TFCC_ANGELINVULN].hTick = CreateTimer( ANGINVULN_DURATION, ExpireAngelInvuln, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
@@ -1147,7 +1157,7 @@ void TickFlameHeal( int iPlayer ) {
 
 	float flAmount = MinFloat( flRate, float( iLevel ) * 0.1 ) + g_flFlameHealDebt[ iPlayer ];
 
-	int iHealed = HealPlayer( iPlayer, flAmount + flRateLoss, iSource, HF_NOCRITHEAL );
+	int iHealed = HealPlayer( iPlayer, flAmount + flRateLoss, iSource );
 	iNew += iHealed;
 	int iNewLevel = iLevel - ( RoundToNearest( flAmount ) * 10 );
 
@@ -1164,6 +1174,7 @@ void TickFlameHeal( int iPlayer ) {
 		
 	RemoveCond( iPlayer, TFCC_FLAMEHEAL );
 	g_flFlameHealDebt[ iPlayer ] = 0.0;
+	g_iFlameHealBatch[ iPlayer ] = 0;
 
 	return;
 }

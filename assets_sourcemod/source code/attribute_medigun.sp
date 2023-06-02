@@ -327,13 +327,7 @@ void HookMedigun( int iMedigun ) {
 }
 
 bool ValidHealTarget( int iHealer, int iPatient ) {
-	int iOwnerTeam = GetClientTeam( iHealer );
-	int iTargetTeam = GetClientTeam( iPatient );
-	int iDisguiseTeam = GetEntProp( iPatient, Prop_Send, "m_nDisguiseTeam" );
-
-	bool bCloaked = TF2_IsPlayerInCondition( iPatient, TFCond_Cloaked );
-
-	return ( iOwnerTeam == iTargetTeam || iOwnerTeam == iDisguiseTeam ) && !bCloaked;
+	return TeamSeenBy( iHealer, iPatient ) == GetEntProp( iHealer, Prop_Send, "m_iTeamNum" );
 }
 
 /*
@@ -621,7 +615,7 @@ MRESReturn Hook_ItemPostFrame( int iMedigun ) {
 			PulseCustomUber( iMedigun, TFCC_QUICKUBER, iTarget, iOwner );
 		}
 		case CMEDI_BWP: {
-			PulseCustomUber( iMedigun, TFCC_TOXINUBER, iTarget, iOwner );
+			PulseCustomUber( iMedigun, TFCC_TOXINUBER, -1, iOwner );
 		}
 	}
 
@@ -650,7 +644,7 @@ void PulseCustomUber( int iMedigun, int iType, int iTarget, int iOwner ) {
 	BIO WASTE PUMP
 */
 
-#define BWP_TOXIN_MULTIPLIER 2.0 //multiplier for the amount of time that toxin should be added while healing enemies
+#define BWP_TOXIN_MULTIPLIER 3.0 //multiplier for the amount of time that toxin should be added while healing enemies
 
 MRESReturn Detour_MedigunThinkPost( int iThis ) {
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
@@ -663,22 +657,26 @@ MRESReturn Detour_MedigunThinkPost( int iThis ) {
 		return MRES_Ignored;
 
 	if( ValidHealTarget( iOwner, iTarget ) ) {
-		if( !HasCustomCond( iTarget, TFCC_TOXINPATIENT ) ) {
+		/*if( !HasCustomCond( iTarget, TFCC_TOXINPATIENT ) ) {
 			AddCustomCond( iTarget, TFCC_TOXINPATIENT );
 			SetCustomCondSourcePlayer( iTarget, TFCC_TOXINPATIENT, iOwner );
 			SetCustomCondSourceWeapon( iTarget, TFCC_TOXINPATIENT, iThis );
 		}
 
-		SetCustomCondDuration( iTarget, TFCC_TOXINPATIENT, 0.5, false );
+		SetCustomCondDuration( iTarget, TFCC_TOXINPATIENT, 0.5, false );*/
 		return MRES_Handled;
 	}
-	else if( !HasCustomCond( iTarget, TFCC_TOXIN ) ) {
-		AddCustomCond( iTarget, TFCC_TOXIN );
-		SetCustomCondSourcePlayer( iTarget, TFCC_TOXIN, iOwner );
-		SetCustomCondSourceWeapon( iTarget, TFCC_TOXIN, iThis );
-		SetCustomCondDuration( iTarget, TFCC_TOXIN, 0.6, true );
-	} else	
-		SetCustomCondDuration( iTarget, TFCC_TOXIN, MEDIGUN_THINK_INTERVAL * BWP_TOXIN_MULTIPLIER, true );
+	else {
+		if( !HasCustomCond( iTarget, TFCC_TOXIN ) ) {
+			AddCustomCond( iTarget, TFCC_TOXIN );
+			SetCustomCondSourcePlayer( iTarget, TFCC_TOXIN, iOwner );
+			SetCustomCondSourceWeapon( iTarget, TFCC_TOXIN, iThis );
+			SetCustomCondDuration( iTarget, TFCC_TOXIN, 0.6, true );
+		} else	SetCustomCondDuration( iTarget, TFCC_TOXIN, MEDIGUN_THINK_INTERVAL * BWP_TOXIN_MULTIPLIER, true );
+
+		SDKHooks_TakeDamage( iTarget, iOwner, iOwner, 4.0, DMG_GENERIC | DMG_PHYSGUN, iThis, NULL_VECTOR, NULL_VECTOR, false );
+		HealPlayer( iOwner, 2.0, iOwner, HF_NOOVERHEAL | HF_NOCRITHEAL );
+	}
 
 	return MRES_Handled;
 }
@@ -693,6 +691,9 @@ MRESReturn Detour_AllowedToHealPre( int iThis, DHookReturn hReturn, DHookParam h
 	int iTarget = hParams.Get( 1 );
 
 	if( ValidHealTarget( iHealer, iTarget ) )
+		return MRES_Ignored;
+
+	if( TF2_IsPlayerInCondition( iTarget, TFCond_Cloaked ) )
 		return MRES_Ignored;
 
 	hReturn.Value = true;
@@ -717,7 +718,7 @@ MRESReturn Detour_HealStartPre( Address aThis, DHookParam hParams ) {
 	GUARDIAN ANGEL
 */
 
-#define ANGEL_UBER_COST 0.25
+#define ANGEL_UBER_COST 0.5
 
 MRESReturn AngelGunUber( int iMedigun ) {
 	float flChargeLevel = GetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel" );
@@ -729,16 +730,32 @@ MRESReturn AngelGunUber( int iMedigun ) {
 	int iOwner = GetEntPropEnt( iMedigun, Prop_Send, "m_hOwnerEntity" );
 	int iTarget = GetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget" );
 
-	int iApplyTo = IsValidPlayer( iTarget ) ? iTarget : iOwner;
+	int iApplyTo[2];
+	iApplyTo[0] = iOwner;
+	iApplyTo[1] = iTarget;
 
-	if( !HasCustomCond( iApplyTo, TFCC_ANGELSHIELD ) && !HasCustomCond( iApplyTo, TFCC_ANGELINVULN ) ) {
-		AddCustomCond( iApplyTo, TFCC_ANGELSHIELD );
-		SetCustomCondSourcePlayer( iApplyTo, TFCC_ANGELSHIELD, iOwner );
-		SetCustomCondSourceWeapon( iApplyTo, TFCC_ANGELSHIELD, iMedigun );
+	bool bApplied = false;
+
+	for( int i = 0; i < 2; i++ ) {
+		int iGive = iApplyTo[i];
+		if( iGive == -1 )
+			continue;
+
+		if( HasCustomCond( iGive, TFCC_ANGELSHIELD ) || HasCustomCond( iGive, TFCC_ANGELINVULN ) )
+			continue;
+
+		AddCustomCond( iGive, TFCC_ANGELSHIELD );
+		SetCustomCondSourcePlayer( iGive, TFCC_ANGELSHIELD, iOwner );
+		SetCustomCondSourceWeapon( iGive, TFCC_ANGELSHIELD, iMedigun );
 		
-		EmitSoundToAll( "weapons/angel_shield_on.wav", iApplyTo, SNDCHAN_WEAPON, 85 );
-		SetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel", flChargeLevel - ANGEL_UBER_COST );
+		
 
+		bApplied = true;
+	}
+
+	if( bApplied ) {
+		EmitSoundToAll( "weapons/angel_shield_on.wav", iOwner, SNDCHAN_WEAPON, 85 );
+		SetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel", flChargeLevel - ANGEL_UBER_COST );
 		return MRES_Handled;
 	}
 
@@ -1224,8 +1241,6 @@ void CreateFlameEmitter( int iPlayer, int iWeapon, bool bIsAirblast = false ) {
 	}
 }
 
-
-//make generic
 Action Timer_RemoveAirblast( Handle hTimer, int iEmitter ) {
 	iEmitter = EntRefToEntIndex( iEmitter );
 

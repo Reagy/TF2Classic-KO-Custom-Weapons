@@ -10,8 +10,8 @@
 
 #define JUMPKEYNAME "Jumps"
 #define MAX_JUMPS 10.0
-#define DAMAGE_TO_JUMP 75.0
-#define JUMPS_PER_KILL 1.0
+#define DAMAGE_TO_JUMP 40.0
+#define JUMPS_PER_KILL 2.0
 
 DynamicDetour hCheckJumpButton;
 
@@ -21,7 +21,7 @@ bool g_bPlayerJumpaction[ MAXPLAYERS + 1 ] = { false, ... };
 public Plugin myinfo = {
 	name = "Attribute: Jump Action",
 	author = "Noclue",
-	description = "Attributes for demoman airburst gun",
+	description = "Attributes for Jump Action Shotgun",
 	version = "1.0",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
@@ -70,7 +70,7 @@ MRESReturn Detour_CheckJumpButton( Address aThis, DHookReturn hReturn ) {
 	if( iPlayer == -1 )
 		return MRES_Ignored;
 
-	if( g_bPlayerJumpaction[ iPlayer ] )
+	if( !g_bPlayerJumpaction[ iPlayer ] )
 		return MRES_Ignored;
 
 	if( GetEntPropEnt( iPlayer, Prop_Send, "m_hGroundEntity" ) != -1 )
@@ -93,7 +93,7 @@ public void OnTakeDamageTF( int iTarget, Address aDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
 
 	int iAttacker = tfInfo.iAttacker;
-	if( AttribHookFloat( 0.0, iAttacker, "custom_jumpaction" ) == 0.0 )
+	if( !g_bPlayerJumpaction[ iAttacker ] )
 		return;
 
 	g_flDamageBuffer[ iAttacker ] += tfInfo.flDamage;

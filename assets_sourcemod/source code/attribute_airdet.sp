@@ -19,6 +19,7 @@ public Plugin myinfo = {
 Handle hStickyCreate;
 Handle hSetCollisionGroup;
 Handle hDetonate;
+Handle hAttackIsCritical;
 
 DynamicHook hPrimaryFire;
 DynamicHook hSecondaryFire;
@@ -67,6 +68,10 @@ public void OnPluginStart() {
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetVirtual( 232 ); //detonate
 	hDetonate = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFWeaponBase::CalcAttackIsCritical" );
+	hAttackIsCritical = EndPrepSDKCall();
 
 	hShouldExplode = DynamicHook.FromConf( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
 	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CTFPlayer::OnTakeDamage" );
@@ -197,9 +202,13 @@ MRESReturn Hook_Secondary( int iEntity ) {
 
 	vecImpulse[0] = 600.0;
 
+	SDKCall( hAttackIsCritical, iEntity );
+
 	int iGrenade = SDKCall( hStickyCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iEntity, 0 );
 	hShouldExplode.HookEntity( Hook_Pre, iGrenade, Hook_ShouldExplode );
 	SetEntityModel( iGrenade, "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl" );
+
+	SetEntProp( iGrenade, Prop_Send, "m_bCritical", LoadFromEntity( iEntity, 1566, NumberType_Int8 ) );
 
 	SetEntPropFloat( iGrenade, Prop_Send, "m_flModelScale", 1.5 );
 
