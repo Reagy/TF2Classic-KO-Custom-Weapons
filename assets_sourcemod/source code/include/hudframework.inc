@@ -11,7 +11,7 @@ enum {
 	RTF_PERCENTAGE = 1 << 1,	//display value as a percentage
 	RTF_DING = 1 << 2,		//play sound when fully charged
 	RTF_RECHARGES = 1 << 3,
-	//RTF_ = 1 << 1,
+	RTF_NOOVERWRITE = 1 << 4,	//do not overwrite existing tracker
 	//RTF_ = 1 << 1,
 }
 

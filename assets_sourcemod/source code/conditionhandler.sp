@@ -6,6 +6,7 @@
 #include <sdktools>
 #include <dhooks>
 #include <kocwtools>
+#include <hudframework>
 
 public Plugin myinfo =
 {
@@ -18,7 +19,7 @@ public Plugin myinfo =
 
 //TODO: Shield parenting could be better
 
-//#define DEBUG
+#define DEBUG
 
 enum {
 	TFCC_TOXIN = 0,
@@ -31,6 +32,8 @@ enum {
 	TFCC_QUICKUBER,
 
 	TFCC_RADIUSHEAL,
+
+	TFCC_FLAMEHEAL,
 
 	TFCC_LAST
 }
@@ -58,6 +61,7 @@ DynamicDetour hApplyOnHit;
 
 DynamicHook hOnKill;
 
+Handle hGetMaxHealth;
 Handle hGetBuffedMaxHealth;
 
 bool bLateLoad;
@@ -86,6 +90,11 @@ public APLRes AskPluginLoad2( Handle myself, bool bLate, char[] error, int err_m
 
 public void OnGameFrame() {
 	ManageAngelShields();
+
+	for( int i = 1; i <= MaxClients; i++ ) {
+		if( HasCond( i, TFCC_FLAMEHEAL ) )
+			TickFlameHeal( i );
+	}
 }
 
 public void OnPluginStart() {
@@ -102,6 +111,11 @@ public void OnPluginStart() {
 	hOnKill = new DynamicHook( 69, HookType_Entity, ReturnType_Void, ThisPointer_CBaseEntity );
 	hOnKill.AddParam( HookParamType_CBaseEntity );
 	hOnKill.AddParam( HookParamType_ObjectPtr );
+
+	StartPrepSDKCall( SDKCall_Player );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::GetMaxHealth" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	hGetMaxHealth = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetBuffedMaxHealth" );
@@ -235,6 +249,9 @@ bool AddCond( int iPlayer, int iCond ) {
 	}
 	case TFCC_TOXINUBER: {
 		bGaveCond = AddToxinUber( iPlayer );
+	}
+	case TFCC_FLAMEHEAL: {
+		bGaveCond = AddFlameHeal( iPlayer );
 	}
 	}
 
@@ -554,7 +571,7 @@ int g_iToxinEmitters[MAXPLAYERS+1] = { -1, ... };
 
 const float	TOXIN_FREQUENCY		= 0.5; //tick interval in seconds
 const float	TOXIN_DAMAGE		= 2.0; //damage per tick
-const float	TOXIN_HEALING_MULT	= 0.5; //multiplier for healing while under toxin
+const float	TOXIN_HEALING_MULT	= 0.25; //multiplier for healing while under toxin
 
 bool AddToxin( int iPlayer ) {
 	ePlayerConds[iPlayer][TFCC_TOXIN].hTick = CreateTimer( TOXIN_FREQUENCY, TickToxin, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
@@ -704,27 +721,37 @@ Action TickToxinUber( Handle hTimer, int iPlayer ) {
 	float vecSource[3]; GetClientAbsOrigin( iPlayer, vecSource );
 
 	int iTarget = -1;
-	while ( ( iTarget = FindEntityInSphere( iTarget, vecSource, 150.0 ) ) != -1 ) {
+	int iSource = GetCondSourcePlayer( iPlayer, TFCC_TOXINUBER );
+	while ( ( iTarget = FindEntityInSphere( iTarget, vecSource, 300.0 ) ) != -1 ) {
 		if( !IsValidPlayer( iTarget ) )
 			continue;
 
-		if( TF2_GetClientTeam( iTarget ) == TF2_GetClientTeam( iPlayer ) )
-			continue;
+		if( GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) == GetEntProp( iTarget, Prop_Send, "m_iTeamNum" ) ) {
+			int iHealed = HealPlayer( iTarget, 10.0, iSource );
 
-		AddCond( iTarget, TFCC_TOXIN );
-		SetCondDuration( iTarget, TFCC_TOXIN, 2.0, true );
+			Event eHealEvent = CreateEvent( "player_healed" );
+			eHealEvent.SetInt( "patient", GetClientUserId( iTarget ) );
+			eHealEvent.SetInt( "healer", GetClientUserId( iSource ) );
+			eHealEvent.SetInt( "amount", iHealed );
+			eHealEvent.Fire();
+		}
+		else {
+			AddCond( iTarget, TFCC_TOXIN );
+			SetCondDuration( iTarget, TFCC_TOXIN, 2.0, true );
 
-		int iSourcePlayer = GetCondSourcePlayer( iPlayer, TFCC_TOXINUBER );
-		if( iSourcePlayer != -1 )
-			SetCondSourcePlayer( iTarget, TFCC_TOXIN, iSourcePlayer );
+			int iSourcePlayer = GetCondSourcePlayer( iPlayer, TFCC_TOXINUBER );
+			if( iSourcePlayer != -1 )
+				SetCondSourcePlayer( iTarget, TFCC_TOXIN, iSourcePlayer );
 
-		int iSourceWeapon = GetCondSourceWeapon( iPlayer, TFCC_TOXINUBER );
-		if( iSourceWeapon != -1 )
-			SetCondSourceWeapon( iTarget, TFCC_TOXIN, iSourceWeapon );
+			int iSourceWeapon = GetCondSourceWeapon( iPlayer, TFCC_TOXINUBER );
+			if( iSourceWeapon != -1 )
+				SetCondSourceWeapon( iTarget, TFCC_TOXIN, iSourceWeapon );
+		}
 	}
 
 	return Plugin_Continue;
 }
+
 void RemoveToxinUber( int iPlayer ) {
 	RemoveToxinUberEmitter( iPlayer );
 }
@@ -764,8 +791,8 @@ Action TickToxinPatient( Handle hTimer, int iPlayer ) {
 	ANGEL SHIELD
 */
 
-const int ANGSHIELD_HEALTH = 100;
-const float ANGSHIELD_DURATION = 2.0;
+const int ANGSHIELD_HEALTH = 80;
+const float ANGSHIELD_DURATION = 4.0;
 
 float g_flLastDamagedShield[MAXPLAYERS+1];
 
@@ -990,7 +1017,7 @@ Action Hook_NewShield( int iEntity, int iClient ) {
 	ANGEL SHIELD INVULN
 */
 
-const float ANGINVULN_DURATION = 0.5;
+const float ANGINVULN_DURATION = 0.25;
 
 bool AddAngelInvuln( int iPlayer ) {
 	ePlayerConds[iPlayer][TFCC_ANGELINVULN].hTick = CreateTimer( ANGINVULN_DURATION, ExpireAngelInvuln, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
@@ -1095,3 +1122,76 @@ void RemoveQuickUber( int iPlayer ) {
 /*
 	RADIAL HEAL
 */
+
+/*
+	FLAME HEAL
+*/
+
+const float g_flFlameHealRate = 30.0;
+
+int iNew;
+int iOld;
+
+bool AddFlameHeal( int iPlayer ) {
+	ePlayerConds[iPlayer][TFCC_FLAMEHEAL].hTick = CreateTimer( 0.1, TickBatchHeal, iPlayer, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
+	return true;
+}
+
+float g_flFlameHealDebt[ MAXPLAYERS+1 ];
+int g_iFlameHealBatch[ MAXPLAYERS+1 ];
+void TickFlameHeal( int iPlayer ) {
+	float g_flFlameHealTick = GetGameFrameTime();
+
+	int iSource = GetCondSourcePlayer( iPlayer, TFCC_FLAMEHEAL );
+	float flRate = AttribHookFloat( g_flFlameHealRate * g_flFlameHealTick, iSource, "mult_medigun_healrate");
+	int iLevel = MinInt( GetCondLevel( iPlayer, TFCC_FLAMEHEAL ), 200 );
+
+	//turning off overheal decay is a pain so i'll just add more health to counteract it
+	float flRateLoss = 0.0;
+	int iMaxHealth = SDKCall( hGetMaxHealth, iPlayer );
+	if( GetEntProp( iPlayer, Prop_Send, "m_iHealth" ) > iMaxHealth ) {
+		Address aShared = GetSharedFromPlayer( iPlayer );
+		flRateLoss = float( SDKCall( hGetBuffedMaxHealth, aShared ) - iMaxHealth ) / 15.0;
+		flRateLoss *= g_flFlameHealTick;
+	}
+
+	float flAmount = MinFloat( flRate, float( iLevel ) * 0.1 ) + g_flFlameHealDebt[ iPlayer ];
+
+	int iHealed = HealPlayer( iPlayer, flAmount + flRateLoss, iSource );
+	iNew += iHealed;
+	int iNewLevel = iLevel - ( RoundToNearest( flAmount ) * 10 );
+
+	g_iFlameHealBatch[ iPlayer ] += iHealed;
+
+	Tracker_SetValue( iSource, "Pressure", MinFloat( Tracker_GetValue( iSource, "Pressure" ) + ( float( iHealed ) * 0.2 ), 100.0 ) );
+
+	g_flFlameHealDebt[ iPlayer ] = flAmount - RoundToFloor( flAmount );
+
+	SetCondLevel( iPlayer, TFCC_FLAMEHEAL, iNewLevel );
+
+	if( iNewLevel > 0 )
+		return;
+		
+	RemoveCond( iPlayer, TFCC_FLAMEHEAL );
+	g_flFlameHealDebt[ iPlayer ] = 0.0;
+	g_iFlameHealBatch[ iPlayer ] = 0;
+
+	return;
+}
+
+Action TickBatchHeal( Handle hTimer, int iPlayer ) {
+	if( !HasCond( iPlayer, TFCC_FLAMEHEAL ) )
+		return Plugin_Stop;
+
+	int iSource = GetCondSourcePlayer( iPlayer, TFCC_FLAMEHEAL );
+
+	Event eHealEvent = CreateEvent( "player_healed" );
+	eHealEvent.SetInt( "patient", GetClientUserId( iPlayer ) );
+	eHealEvent.SetInt( "healer", GetClientUserId( iSource ) );
+	eHealEvent.SetInt( "amount", g_iFlameHealBatch[ iPlayer ] );
+	eHealEvent.Fire();
+
+	g_iFlameHealBatch[ iPlayer ] = 0;
+
+	return Plugin_Continue;
+}

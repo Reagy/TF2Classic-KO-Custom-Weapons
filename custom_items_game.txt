@@ -15198,6 +15198,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 
 Try to kill zhim now, I dare you!
 
+Model by: 'NeoDement, void~'
 Weapon by: 'Noclue'"
 			"image_inventory"			"backpack/weapons/w_models/w_totenwerfer"
 			"model_player"				"models/weapons/c_models/c_totenwerfer/c_totenwerfer.mdl"
@@ -20043,7 +20044,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Guardian Angel"
 			"item_type_name"			"Medi Gun"
-			"item_description"			"Übercharge provides a resistance bubble that blocks up to 100 damage
+			"item_description"			"Übercharge provides a resistance bubble that blocks up to 80 damage
 
 We shall fight until the very end!
 
@@ -20062,22 +20063,22 @@ Weapon by: 'Noclue'"
 				"ubercharge rate bonus"
 				{
 					"attribute_class"	"mult_medigun_uberchargerate"
-					"value"				"1.55"
+					"value"				"1.66"
 				}
 				"powerup max charges"
 				{
 					"attribute_class"	"dummy"
-					"value"				"4"
+					"value"				"2"
 				}
 				"powerup duration"
 				{
 					"attribute_class"	"dummy"
-					"value"				"2"
+					"value"				"4"
 				}
 				"overheal penalty"																
 				{
 					"attribute_class"	"mult_medigun_overheal_amount"
-					"value" 			"0.75"
+					"value" 			"0.5"
 				}
 				"kill eater score type"
 				{
@@ -28354,11 +28355,10 @@ Weapon by: 'Reagy'"
 			"show_in_armory"			"1"
 			"item_name"					"Bio Waste Pump"
 			"item_type_name"			"War Crime"
-			"item_description"			"Target enemies to apply Toxin
-Enemies affected by Toxin receive less healing from all sources
+			"item_description"			"
+ÜberCharge creates a cloud of healing gas for 8 seconds
 
-Patients deal Mini-Crits to Toxified enemies
-ÜberCharge creates a cloud of Toxic gas around yourself and friendly heal target
+Toxin reduces healing received by 75%
 
 Model by: 'svdl'
 Weapon by: 'Noclue'"
@@ -28374,16 +28374,45 @@ Weapon by: 'Noclue'"
 			"max_ilevel"				"8" 
 			"attributes"
 			{
+				
+				"medigun heal enemy"
+				{
+					"attribute_class"	"dummy"
+					"value"				"0"
+				}
+				"medigun apply poison"
+				{
+					"attribute_class"	"dummy"
+					"value"				"0"
+				}
+				"medigun leech health"
+				{
+					"attribute_class"	"dummy"
+					"value"				"0"
+				}
+				"resist toxin enemies"
+				{
+					"attribute_class"	"dummy"
+					"value"				"0.75"
+				}
 				"ubercharge rate bonus"
 				{
 					"attribute_class"	"mult_medigun_uberchargerate"
-					"value"				"1.33"
+					"value"				"1.66"
 				}
+				
 				"heal rate penalty" 					 									
 				{
 					"attribute_class"	"mult_medigun_healrate"
-					"value"				"0.8"														
+					"value"				"0.75"														
 				}
+				
+				"class select override vcd"
+				{
+					"attribute_class"	"dummy"
+					"value"				"0 0.75"
+				}
+				
 				"mod soldier buff type"
 				{
 					"attribute_class"	"custom_medigun_type"
@@ -30628,6 +30657,244 @@ Weapon by: 'The One Of Wonders'"
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
+//-------------------------------------
+//-------------------------------------
+// HYRDRO PUMP -- 9962
+//-------------------------------------
+//-------------------------------------	
+		"9962"
+		{
+			"name"						"TF_WEAPON_HYDROPUMP"
+			"prefab"					"weapon_flamethrower"
+			"show_in_armory"			"1"
+			"item_name"					"Hydro Pump"
+			"item_type_name"			"Pressurized Healing Dispenser"
+			"item_description"			"Allan please add flavour text
+
+Model by: 'GoLDeN'
+Weapon by: 'Noclue'"
+			"propername"				"1"
+			"equip_region"				"medigun_backpack"
+			"image_inventory"			"backpack/weapons/c_models/c_brandspuit/c_brandspuit"
+			"model_player"				"models/workshop/weapons/c_models/c_brandspuit/c_brandspuit.mdl"
+			//"extra_wearable"			"models/weapons/c_models/c_biomed_backpack/c_brandspuit.mdl"
+			"attach_to_hands"			"1"
+			"min_ilevel"				"8"
+			"max_ilevel"				"8"
+			
+			"anim_slot"					"secondary"
+			"item_slot"					"secondary"
+			
+			"bucket"			"1"
+			"bucket_position"		"0"
+			
+			"used_by_classes"
+			{
+				"medic"				"1"
+			}
+			
+			"attributes"
+			{
+				"mod use custom ammo type"
+				{
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value"				"2"
+				}
+				
+				"hidden separator"
+				{
+					"attribute_class"	"hidden_seperator"
+					"value"				"1"
+				}
+				
+				"flame ammopersec decreased"
+				{
+					"attribute_class"	"mult_flame_ammopersec"
+					"value"				"0.0"
+				}
+				
+				"hide ammo hud"
+				{
+					"attribute_class"	"hide_ammo_hud"
+					"value"				"1"
+				}
+				
+				"strange restriction type 1"
+				{
+					"attribute_class"	"custom_medigun_type"
+					"value"				"6"
+				}
+				
+				"airblast_destroy_projectile"
+				{
+					"attribute_class"	"airblast_destroy_projectile"
+					"value"				"1"
+				}
+			
+			}
+			"visuals"
+			{
+				"sound_double_shot" "Weapon_HydroPump.AirBurstAttack"
+			
+				"player_bodygroups"
+				{
+					"medic_backpack"			"1"
+				}
+			}
+		}
+//-------------------------------------
+//-------------------------------------
+// JUMP ACTION SHOTGUN -- 9963
+//-------------------------------------
+//-------------------------------------	
+		"9963"
+		{
+			"name"		"TF_WEAPON_JUMPACTION"
+			"prefab"	"weapon_scattergun"
+			
+			"item_quality"				"rarity2"
+			
+			"show_in_armory"			"1"
+			
+			"item_type_name"			"Scattergun"
+			"item_name"					"Jump-Action Shotgun"
+			"item_description"			"
+Allan please add flavour text
+
+Model by: 'Hau'
+Weapon from: 'Advanced Weaponiser 2'
+Weapon ported by: 'Noclue'"
+			"image_inventory"			"backpack/weapons/c_models/c_saigun/c_saigun"
+			
+			"model_player"				"models/weapons/c_models/c_saigun/c_saigun.mdl"
+			"model_world"				"models/weapons/c_models/c_saigun/c_saigun.mdl"
+			"attach_to_hands"			"1"
+			
+			"item_slot"					"primary"
+			
+			"used_by_classes"
+			{
+				"scout"				"1"
+			}
+			"attributes"
+			{
+				"jump action"
+				{
+					"attribute_class"	"custom_jumpaction"
+					"value"				"1"
+				}
+				"no double jump"
+				{
+					"attribute_class"	"dummy"
+					"value"				"1"
+				}
+			}
+		}
+//-------------------------------------
+//-------------------------------------
+// AIRBURST RIFLE -- 9964
+//-------------------------------------
+//-------------------------------------	
+		"9964"
+		{
+			"name"						"TF_WEAPON_AIRBURST"
+			"prefab"					"weapon_stickybomb_launcher"
+			"item_class"				"tf_weapon_shotgun"
+			"item_logname"				"airdetgun"
+			"item_iconname"				"airdetgun"
+			"show_in_armory"			"1"
+			"item_type_name"			"Hybrid Launcher"
+			"item_name"					"Airburst Rifle"
+			"item_description"			"
+Alt-Fire: Launch a grenade
+Shoot grenade to detonate
+
+Model by: 'donhonk, blaholtzen, rain'
+Weapon by: 'Noclue'"
+			"image_inventory"			"backpack/weapons/c_models/c_stickyrifle/c_stickyrifle"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"model_player"				"models/weapons/v_models/v_stickyrifle/v_airdet_rifle.mdl"
+			"model_world"				"models/weapons/w_models/w_stickyrifle/w_stickyrifle_r.mdl"
+			"attach_to_hands"			"2"
+			
+			"bucket"			"1"
+			"bucket_position"		"0"
+			
+			"anim_slot"					"primary"
+			"item_slot"					"secondary"
+			
+			"attributes"
+			{
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+			
+				"hidden separator"
+				{
+					"attribute_class"	"hidden_seperator"
+					"value"				"1"
+				}
+				
+				"sticky detonate mode"
+				{
+					"attribute_class"	"set_detonate_mode"
+					"value"				"2"
+				}
+				"sticky detonate mode"
+				{
+					"attribute_class"	"mod_no_autoreload"
+					"value"				"1"
+				}
+				"mod use custom ammo type"
+				{
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value"				"2"
+				}
+				"always draw tracer" 
+				{
+					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"custom_airdet"
+					"value"				"1"														
+				}
+				"clip size bonus"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" 			"1.33"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"1.2"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.0"
+				}
+				"hand scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.14"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"2.0"
+				}
+				"always draw tracer"
+				{
+					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
+				}
+			}
+		}
 //--------------------------------
 //--------------------------------
 //-- Secret Joke Weapons :)	 --
@@ -31008,6 +31275,47 @@ Sword pierces resistances."
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
 		}
+		
+//clooey zone
+
+		"12000"
+		{
+			"name"					"medigun heal enemy"
+			"description_string"	"Beam can be applied to enemies"
+			"effect_type"			"positive"
+		}
+		"12001"
+		{
+			"name"					"medigun apply poison"
+			"description_string"	"Deals damage, applies Toxin to enemies"
+			"effect_type"			"positive"
+		}
+		"12002"
+		{
+			"name"					"medigun leech health"
+			"description_string"	"Steals health from enemies"
+			"effect_type"			"positive"
+		}
+		
+		"12003"
+		{
+			"name"					"jump action"
+			"description_string"	"Dealing damage and killing stores extra jumps, up to a maximum of 10"
+			"attribute_class"		"custom_jumpaction"
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
+		}
+		
+		"12500"
+		{
+			"name"					"resist toxin enemies"
+			"description_string"	"%s1% damage from Toxified enemies"
+			"description_format"	"value_is_percentage"
+			"effect_type"			"positive"
+		}
+		
+		
+		
 // NOWP Attributes 
         "15083"
 		{

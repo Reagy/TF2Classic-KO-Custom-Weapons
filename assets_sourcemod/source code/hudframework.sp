@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name = "HUD Framework",
 	author = "Noclue",
 	description = "HUD Framework for Custom Weapons.",
-	version = "1.0",
+	version = "1.1",
 	url = "no"
 }
 
@@ -22,7 +22,7 @@ enum {
 	RTF_PERCENTAGE = 1 << 1,	//display value as a percentage
 	RTF_DING = 1 << 2,		//play sound when fully charged
 	RTF_RECHARGES = 1 << 3,
-	//RTF_ = 1 << 1,
+	RTF_NOOVERWRITE = 1 << 4,	//do not overwrite existing tracker
 	//RTF_ = 1 << 1,
 }
 
@@ -118,7 +118,7 @@ void Tracker_Create( int iPlayer, const char sName[32], float flStartAt, float f
 	int iIndex = Tracker_Find( iPlayer, sName );
 	if( iIndex == -1 )
 		hResources[iPlayer].PushArray( hTracker );
-	else
+	else if( !( iFlags & RTF_NOOVERWRITE ) )
 		hResources[iPlayer].SetArray( iIndex, hTracker );
 	
 }

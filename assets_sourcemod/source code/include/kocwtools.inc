@@ -33,7 +33,7 @@ enum {
 	HF_NOCRITHEAL = 1<<2, //prevent crit healing
 }
 
-native void		HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
+native int		HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
 
 /*
 	MATH FUNCTIONS
@@ -63,6 +63,10 @@ stock float MaxFloat( float v1, float v2 ) {
 	return v2;
 }
 
+stock int MinInt( int v1, int v2 ) {
+	if( v1 < v2) return v1;
+	return v2;
+}
 stock int MaxInt( int v1, int v2 ) {
 	if( v1 > v2) return v1;
 	return v2;
@@ -226,6 +230,24 @@ methodmap TFDamageInfo {
 /*
 	MISC FUNCTIONS
 */
+
+//returns the team that iViewer sees iViewed as
+stock int TeamSeenBy( int iViewer, int iViewed ) {
+	int iViewerTeam = GetEntProp( iViewer, Prop_Send, "m_iTeamNum" );
+	int iViewedRealTeam = GetEntProp( iViewed, Prop_Send, "m_iTeamNum" );
+	int iViewedDisguiseTeam = GetEntProp( iViewer, Prop_Send, "m_nDisguiseTeam" );
+
+	//if viewed is undisguised or really is the viewer's team, show the real team
+	if( iViewedDisguiseTeam == 0 || iViewerTeam == iViewedRealTeam )
+		return iViewedRealTeam;
+
+	//grey disguises show the viewer's team
+	if( iViewedDisguiseTeam == 7 )
+		return iViewerTeam;
+
+	//return the disguise
+	return iViewedDisguiseTeam;	
+}
 
 stock bool IsValidPlayer( int iPlayer ) {
 	return iPlayer > 0 && iPlayer <= MaxClients;

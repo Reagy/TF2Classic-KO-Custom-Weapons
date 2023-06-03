@@ -597,6 +597,7 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 
 	float flMult = 0.5;
 
+	//TODO: pass weapon as parameter instead of getting activeweapon
 	flMult = AttribHookFloat( flMult, iPlayer, "mult_patient_overheal_penalty" );
 	int iWeapon = GetEntPropEnt( iPlayer, Prop_Send, "m_hActiveWeapon" );
 	if( iWeapon != -1 ) {
@@ -610,6 +611,11 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 
 	int iBuffedMax = RoundFloat( float(iMaxHealth) * flMult );
 
+	if( !( iFlags & HF_NOCRITHEAL ) ) {
+		float flTimeSinceDamage = GetGameTime() - GetEntPropFloat( iPlayer, Prop_Send, "m_flLastDamageTime" );
+		flAmount *= RemapValClamped( flTimeSinceDamage, 10.0, 15.0, 1.0, 3.0 );
+	}
+	
 	flAmount = MinFloat( float( iBuffedMax - iHealth ), flAmount );
 
 	int iNewFlags = 0;
@@ -618,9 +624,10 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 
 	int iReturn = SDKCall( hTakeHealth, iPlayer, flAmount, iNewFlags, iSource, false );
 
+	//TODO: account for spy leech event
 	if( iSource != -1 ) {
 		SDKCall( hPlayerHealedOther, g_iCTFGameStats, iSource, float( iReturn ) );
 	}
 
-	return 1;
+	return iReturn;
 }
