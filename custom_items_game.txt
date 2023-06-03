@@ -3054,7 +3054,7 @@ Modified by: 'Reagy'"
 				"custom lunchbox throwable model"
 				{
 					"attribute_class"	"custom_lunchbox_throwable_model"
-					"value"				"models/weapons/w_models/w_scotland_shard.mdl"			
+					"value"				"models/items/plate_scotland_shard.mdl"			
 				}
 				"custom lunchbox throwable type"
 				{
@@ -7323,10 +7323,10 @@ Modified by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
-			"item_name"					"Deagle Brand Deagle"
+			"item_name"					"Aimed Agent"
 			"item_type_name"			"#TF_Weapon_Pistol"
 			"item_description"			"
-For when you need something with a bit more, oomf...
+Only human...
 
 Original model by: 'The_Fanciest_Of_Pants'
 Model edit by: 'Raptop Dan'
@@ -9919,7 +9919,7 @@ Item by: 'Reagy'"
 				"custom lunchbox throwable model"
 				{
 					"attribute_class"	"custom_lunchbox_throwable_model"
-					"value"				"models/weapons/custom/c_models/c_caffeine.mdl"			
+					"value"				"models/items/plate_caffeine.mdl"	
 				}
 				"custom lunchbox throwable type"
 				{
