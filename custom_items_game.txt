@@ -1944,6 +1944,7 @@ Weapon from: New Old Weapons Pack"
 			"image_inventory"			"backpack/weapons/w_models/w_sixshooter"
 			"model_world"				"models/weapons/w_models/w_sixshooter.mdl"
 			"model_player"				"models/weapons/v_models/v_sixshooter_engineer.mdl"
+			"extra_wearable"			"models/workshop/player/items/engineer/quickdraw_shawl.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -3542,6 +3543,7 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/weapons/c_models/c_sentry_revolver/c_sentry_revolver"
 			"model_world"				"models/weapons/c_models/c_sentry_revolver.mdl"
 			"model_player"				"models/weapons/v_models/v_sentry_revolver.mdl"
+			"extra_wearable"			"models/workshop/player/items/engineer/quickdraw_shawl.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -7329,12 +7331,14 @@ For when you need something with a bit more, oomf...
 Original model by: 'The_Fanciest_Of_Pants'
 Model edit by: 'Raptop Dan'
 Animations by: 'Raptor Dan'
+Cosmetics by: 'Greg' 'Colteh'
 Weapon by: 'Reagy'"
 			"item_logname"				"deagle_spy"
 			"item_iconname"				"deagle_spy"
 			"image_inventory"			"backpack/weapons/w_models/w_deagle_new"
 			"model_world"				"models/weapons/custom/w_models/w_deagle.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_deagle_spy.mdl"
+			"extra_wearable"			"models/workshop/player/items/spy/secret_agent_glasses_spy.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -7539,12 +7543,14 @@ Better start praying boy
 
 Model edit by: 'DereBobblet'
 Animations from: Open Fortress - openfortress.fun
+Cosmetics by: 'CyanPlastic' 'Colteh' 'BE NICE 2 ME'
 Weapon by: 'Reagy'"
 			"item_logname"				"texas_doublebarrel"
 			"item_iconname"				"texas_doublebarrel"
 			"image_inventory"			"backpack/weapons/w_models/w_supershot"
 			"model_world"				"models/weapons/custom/w_models/w_supershot_engineer.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_supershot_engineer_new.mdl"
+			"extra_wearable"			"models/workshop/player/items/engineer/texmex_combined.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -8344,13 +8350,14 @@ Bigger iron on his hip
 
 Model by: 'Aftroid'
 Animations by: 'Raptor Dan'
+Cosmetics by: 'Big Bob' 'Tabby'
 Weapon by: 'Reagy'"
 			"item_logname"				"bigiron"
 			"item_iconname"				"bigiron"
 			"image_inventory"			"backpack/weapons/w_models/w_bigiron"
 			"model_world"				"models/weapons/custom/w_models/w_bigiron_engineer.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_bigiron_v2.mdl"
-			"extra_wearable"			"models/player/items/engineer/spurs.mdl"
+			"extra_wearable"			"models/workshop/player/items/engineer/quickdraw_shawl.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -9563,12 +9570,14 @@ Found this in the Office Complex
 Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
+Cosmetics by: 'NeoDement' 'xbox 720' 'BE NICE 2 ME'
 Weapon by: 'Reagy'"														
 			"item_logname"				"spas_engineer"
 			"item_iconname"				"spas"											
 			"image_inventory"			"backpack/weapons/w_models/w_spas" 						
 			"model_world"				"models/weapons/custom/w_models/w_spas_soldier.mdl"					
-			"model_player"				"models/weapons/custom/v_models/v_spas_engineer.mdl"			
+			"model_player"				"models/weapons/custom/v_models/v_spas_engineer.mdl"	
+			"extra_wearable"			"models/workshop/player/items/engineer/safe_scientist_combined.mdl"			
 			"attach_to_hands"			"2"													
 			"used_by_classes"
 			{		
@@ -9584,6 +9593,10 @@ Weapon by: 'Reagy'"
 			}
 			"visuals"
 			{
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}
 				"sound_single_shot"		"Weapon_Spas.Single"
 				"sound_burst"			"Weapon_Spas.SingleCrit"
 				"reload"				"Weapon_Spas.WorldReload"
@@ -11120,12 +11133,14 @@ Son, this is the gun that won the west..
 Original model by: 'Batandy'
 Model edit by: 'Raptop Dan'
 Animations by: 'Raptor Dan'
+Cosmetics by: 'Big Bob' 'Tabby' 'Mr.Gibbly' 'Ertz'
 Weapon by: 'Reagy'"
 			"item_logname"				"jollyrancher"
 			"item_iconname"				"jollyrancher"
 			"image_inventory"			"backpack/weapons/w_models/w_leverrifle_engineer_new"
 			"model_world"				"models/weapons/custom/w_models/w_leverrifle_engineer_new.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_jolly_rancher.mdl"
+		    "extra_wearable"			"models/workshop/player/items/engineer/rancher.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -11176,6 +11191,10 @@ Weapon by: 'Reagy'"
 			}
 			"visuals"
 			{
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}
 				"sound_single_shot"		 "Weapon_LeverRifle.Single"
 				"sound_burst"			 "Weapon_LeverRifle.SingleCrit"
 			}
@@ -12145,6 +12164,7 @@ Item by: 'Majro'"
 			"image_inventory"			"backpack/weapons/w_models/w_fumblers_fanfare_civ"
 			"model_world"				"models/weapons/w_models/w_fumblers_fanfare_civ.mdl"
 			"model_player"				"models/weapons/v_models/v_fumblers_fanfare_civ.mdl"	
+			"extra_wearable"			"models/hats/civilian_magician/civilian_magician_complete.mdl"
 			"attach_to_hands"			"2"
 			
 			"used_by_classes"
