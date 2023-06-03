@@ -2936,6 +2936,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"
 			{
+			    "sound_empty"			"Weapon_HeavyFlameMG.Spin"	
 				"sound_double_shot"		"Weapon_HeavyFlameMG.Fire"
 				"sound_burst"			"Weapon_HeavyFlameMG.FireCrit"
 				"sound_single_shot"		"Weapon_HeavyFlameMG.WindUp"
@@ -7493,7 +7494,7 @@ Weapon by: 'Reagy'"
 			}
 			"visuals"
 			{
-				"sound_empty"			"Weapon_MachineGun.ClipEmpty"
+				"sound_empty"			"Weapon_Null"
 				"sound_double_shot"		"Weapon_MachineGun762.Fire"
 				"sound_burst"			"Weapon_MachineGun762.FireCrit"	
 				"sound_single_shot"		"Weapon_Tomislav.WindUp"
@@ -10701,7 +10702,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"																		
 			{
-				"sound_empty"			"Weapon_MachineGun.ClipEmpty"
+				"sound_empty"			"Weapon_Null"
 				"sound_double_shot"		"Weapon_M2HB.Fire"	
 				"sound_burst"			"Weapon_M2HB.FireCrit"	
 				"sound_single_shot"		"null"
@@ -16245,7 +16246,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"																		
 			{
-				"sound_empty"			"Weapon_MachineGun.ClipEmpty"
+				"sound_empty"			"Weapon_Null"
 				"sound_double_shot"		"Weapon_TankMini.Fire"
 				"sound_burst"			"Weapon_TankMini.FireCrit"
 				"sound_single_shot"		"Weapon_Tomislav.WindUp"
@@ -19120,6 +19121,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"
 			{
+			    "sound_empty"			"Weapon_Null"	
 				"sound_double_shot"		"Weapon_Beatophone.Fire"
 				"sound_burst"			"Weapon_Beatophone.FireCrit"	
 				"sound_single_shot"		"Weapon_Beatophone.WindUp"	
@@ -19696,7 +19698,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"																		
 			{
-				"sound_empty"			"Weapon_MachineGun.ClipEmpty"
+				"sound_empty"			"Weapon_TankMini.Spin"	
 				"sound_double_shot"		"Weapon_AssaultDoctrine.Fire"	
 				"sound_burst"			"Weapon_AssaultDoctrine.FireCrit"	
 				"sound_single_shot"		"Weapon_TankMini.WindUp"
@@ -29189,7 +29191,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"																		
 			{
-				"sound_empty"			"Weapon_MachineGun.ClipEmpty"
+				"sound_empty"			"Weapon_MobsterHunter.Spin"
 				"sound_double_shot"		"Weapon_MobsterHunter.Fire"	
 				"sound_burst"			"Weapon_MobsterHunter.FireCrit"	
 				"sound_single_shot"		"Weapon_MobsterHunter.WindUp"	
