@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture"	 "backpack/workshop/weapons/c_models/c_kingmaker_sticky/c_kingmaker_sticky_large"
-	"$translucent"	"1"
-	"$vertexcolor"	"1"
-	"$ignorez"	"1"
-}

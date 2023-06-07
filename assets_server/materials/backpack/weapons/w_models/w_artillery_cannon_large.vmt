@@ -1,6 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" "backpack\weapons\w_models\w_artillery_cannon_large"
-	$translucent 1
-	$vertexcolor 1
-}
