@@ -2160,9 +2160,9 @@ Edited by: 'The One Of Wonders'"
 					"attribute_class"	"mark_for_death"
 					"value"				"5"
 				}
-				"fire rate bonus"
+				"damage penalty"								
 				{
-					"attribute_class"	"mult_postfiredelay"
+					"attribute_class"	"dummy"
 					"value"				"0.7"
 				}
 				"damage bonus hidden"															// Side effect of the no scope thing. Because otherwise, you do like what, 6 damage?
@@ -20080,11 +20080,6 @@ Weapon by: 'Noclue'"
 			}
 			"attributes"
 			{
-				"ubercharge rate bonus"
-				{
-					"attribute_class"	"mult_medigun_uberchargerate"
-					"value"				"1.66"
-				}
 				"powerup max charges"
 				{
 					"attribute_class"	"dummy"
@@ -30681,15 +30676,15 @@ Weapon by: 'The One Of Wonders'"
 			"show_in_armory"			"1"
 			"item_name"					"Hydro Pump"
 			"item_type_name"			"Pressurized Healing Dispenser"
-			"item_description"			"Allan please add flavour text
+			"item_description"			"Spray allies with a stream of healing liquid 
+Alt-Fire: Destroys incoming projectiles
 
 Model by: 'GoLDeN'
 Weapon by: 'Noclue'"
 			"propername"				"1"
-			"equip_region"				"medigun_backpack"
 			"image_inventory"			"backpack/weapons/c_models/c_brandspuit/c_brandspuit"
 			"model_player"				"models/workshop/weapons/c_models/c_brandspuit/c_brandspuit.mdl"
-			//"extra_wearable"			"models/weapons/c_models/c_biomed_backpack/c_brandspuit.mdl"
+			"extra_wearable"			"models/weapons/c_models/c_biomed_backpack/c_biomed_backpack.mdl"
 			"attach_to_hands"			"1"
 			"min_ilevel"				"8"
 			"max_ilevel"				"8"
@@ -31121,7 +31116,7 @@ Weapon by: 'Noclue'"
 		"7523"
 		{
 			"name"					"Cerberus Flight Mode"
-			"description_string"	"Firing at the ground while jumping will launch you"
+			"description_string"	"Firing at the ground while mid-air will launch you"
 			"attribute_type"		"string"													
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
