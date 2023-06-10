@@ -13085,8 +13085,8 @@
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"		"1.0"
-	"pitch"		"80, 100"
-	"wave"			")weapons/displacer_fire.wav"
+	"pitch"		"115, 125"
+	"wave"			")weapons/spyhunter_fire.wav"
 }
 // ------------------------------------------------------------------------------------ //
 // RIFLEMAN
