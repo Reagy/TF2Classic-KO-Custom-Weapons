@@ -29036,7 +29036,7 @@ Weapon by 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"													
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.6"
+					"value"				"0.45"
 				}
 				"weapon_stattrak_module_scale"													
 				{
