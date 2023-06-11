@@ -44,7 +44,7 @@ public Action Event_Inventory( Event hEvent, const char[] sName, bool bDontBroad
 
 	if( IsValidPlayer( iPlayer ) ) {
 		if( AttribHookFloat( 0.0, iPlayer, "custom_jumpaction" ) != 0.0 ) {
-			Tracker_Create( iPlayer, JUMPKEYNAME, 0.0, 0.0, RTF_NOOVERWRITE );
+			Tracker_Create( iPlayer, JUMPKEYNAME, 0.0, 0.0, RTF_NOOVERWRITE | RTF_CLEARONSPAWN );
 			g_bPlayerJumpaction[ iPlayer ] = true;
 		}
 		else {
@@ -93,6 +93,10 @@ public void OnTakeDamageTF( int iTarget, Address aDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
 
 	int iAttacker = tfInfo.iAttacker;
+
+	if( !IsValidPlayer( iAttacker ) )
+		return;
+
 	if( !g_bPlayerJumpaction[ iAttacker ] )
 		return;
 

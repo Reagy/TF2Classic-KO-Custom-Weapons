@@ -12,7 +12,7 @@ enum {
 	RTF_DING = 1 << 2,		//play sound when fully charged
 	RTF_RECHARGES = 1 << 3,
 	RTF_NOOVERWRITE = 1 << 4,	//do not overwrite existing tracker
-	//RTF_ = 1 << 1,
+	RTF_CLEARONSPAWN = 1 << 5,	//reset on respawning
 }
 
 native void		Tracker_Create( int iPlayer, const char sName[32], float flStartAt = 100.0, float flRechargeRate = 0.0, int iFlags = 0 );
