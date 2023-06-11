@@ -13410,6 +13410,11 @@ Reworked by: 'Colrot'"
 					"attribute_class"	"lifesteal_crit"
 					"value"				"1"
 				}
+				"heal on kill on crit"
+				{
+					"attribute_class"	"heal_on_kill_crit"
+					"value"				"30"
+				}
 				"mult_patient_overheal_penalty_active_bonus"
 				{
 					"attribute_class"	"mult_patient_overheal_penalty_active"
