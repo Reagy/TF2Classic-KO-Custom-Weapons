@@ -1133,7 +1133,7 @@ int iNew;
 int iOld;
 
 bool AddFlameHeal( int iPlayer ) {
-	ePlayerConds[iPlayer][TFCC_FLAMEHEAL].hTick = CreateTimer( 0.1, TickBatchHeal, iPlayer, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
+	ePlayerConds[iPlayer][TFCC_FLAMEHEAL].hTick = CreateTimer( 0.2, TickBatchHeal, iPlayer, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
 	return true;
 }
 
@@ -1143,8 +1143,8 @@ void TickFlameHeal( int iPlayer ) {
 	float g_flFlameHealTick = GetGameFrameTime();
 
 	int iSource = GetCondSourcePlayer( iPlayer, TFCC_FLAMEHEAL );
-	float flRate = AttribHookFloat( g_flFlameHealRate * g_flFlameHealTick, iSource, "mult_medigun_healrate");
-	int iLevel = MinInt( GetCondLevel( iPlayer, TFCC_FLAMEHEAL ), 200 );
+	float flRate = AttribHookFloat( g_flFlameHealRate * g_flFlameHealTick, iSource, "mult_medigun_healrate" );
+	int iLevel = MinInt( GetCondLevel( iPlayer, TFCC_FLAMEHEAL ), 275 );
 
 	//turning off overheal decay is a pain so i'll just add more health to counteract it
 	float flRateLoss = 0.0;

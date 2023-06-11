@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name = "HUD Framework",
 	author = "Noclue",
 	description = "HUD Framework for Custom Weapons.",
-	version = "1.1",
+	version = "1.2",
 	url = "no"
 }
 
@@ -23,7 +23,7 @@ enum {
 	RTF_DING = 1 << 2,		//play sound when fully charged
 	RTF_RECHARGES = 1 << 3,
 	RTF_NOOVERWRITE = 1 << 4,	//do not overwrite existing tracker
-	//RTF_ = 1 << 1,
+	RTF_CLEARONSPAWN = 1 << 5,	//reset on respawning
 }
 
 enum struct ResourceTracker {
@@ -43,6 +43,8 @@ enum struct ResourceTracker {
 public void OnPluginStart() {
 	hHudSync = CreateHudSynchronizer();
 
+	HookEvent( "player_spawn", Event_Spawned );
+
 	for(int i = 0; i < sizeof(hResources); i++) {
 		if( hResources[i] )
 			hResources[i].Clear();
@@ -53,6 +55,21 @@ public void OnPluginStart() {
 #if defined DEBUG
 	RegConsoleCmd("sm_hf_test", Command_Test, "test");
 #endif
+}
+
+void Event_Spawned( Event hEvent, const char[] szName, bool bDontBroadcast ) {
+	int iPlayer = hEvent.GetInt( "userid" );
+	iPlayer = GetClientOfUserId( iPlayer );
+
+	ResourceTracker hTracker;
+	for( int i = 0; i < hResources[ iPlayer ].Length; i++ ) {
+		hResources[ iPlayer ].GetArray( i, hTracker );
+		if( hTracker.iFlags & RTF_CLEARONSPAWN ) {
+			hTracker.flValue = 0.0;
+			hResources[ iPlayer ].SetArray( i, hTracker );
+		}
+			
+	}
 }
 
 public void OnMapStart() {

@@ -12,7 +12,7 @@ public Plugin myinfo = {
 	name = "Attribute: Airburst",
 	author = "Noclue",
 	description = "Attributes for demoman airburst gun",
-	version = "1.0",
+	version = "1.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -264,6 +264,11 @@ MRESReturn Hook_DamageCollider( int iEntity, DHookReturn hReturn, DHookParam hPa
 
 	StoreToEntity( iParent, 1212, 240.0 ); //damage
 	StoreToEntity( iParent, 1216, 150.0 ); //radius
+
+	float vecColliderCoords[3];
+	GetEntPropVector( iEntity, Prop_Send, "m_vecOrigin", vecColliderCoords );
+
+	TeleportEntity( iParent, vecColliderCoords );
 
 	SDKCall( hDetonate, iParent );
 	

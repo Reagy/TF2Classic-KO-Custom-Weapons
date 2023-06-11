@@ -51,7 +51,7 @@ public Plugin myinfo =
 	name = "Attribute: Mediguns",
 	author = "Noclue",
 	description = "Atributes for Mediguns.",
-	version = "1.3",
+	version = "1.3.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -231,7 +231,7 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 
 	if( IsValidPlayer( iPlayer ) ) {
 		if( RoundToNearest( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) == CMEDI_FLAME ) {
-			Tracker_Create( iPlayer, FLAMEKEYNAME, 0.0, 0.0, RTF_NOOVERWRITE );
+			Tracker_Create( iPlayer, FLAMEKEYNAME, 0.0, 0.0, RTF_NOOVERWRITE | RTF_CLEARONSPAWN  );
 			g_bPlayerHydroPump[ iPlayer ] = true;
 		}
 		else {
@@ -1117,7 +1117,7 @@ MRESReturn Detour_FireTouchTeam( Address aThis, DHookParam hParams ) {
 
 MRESReturn FireTouchHandle( Address aThis, int iCollide ) {
 	int iOwner = LoadEntityHandleFromAddress( aThis + view_as<Address>( 112 ) );
-	if( !IsValidPlayer( iOwner ) || !IsValidPlayer( iCollide ) )
+	if( !IsValidPlayer( iOwner ) )
 		return MRES_Ignored;
 
 	int iWeapon = GetEntityInSlot( iOwner, 1 );
@@ -1131,6 +1131,9 @@ MRESReturn FireTouchHandle( Address aThis, int iCollide ) {
 }
 
 void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
+	if( !IsValidPlayer( iCollide ) )
+		return;
+
 	if( !HasCustomCond( iCollide, TFCC_FLAMEHEAL ) ) {
 		AddCustomCond( iCollide, TFCC_FLAMEHEAL );
 		SetCustomCondSourcePlayer( iCollide, TFCC_FLAMEHEAL, iOwner );
