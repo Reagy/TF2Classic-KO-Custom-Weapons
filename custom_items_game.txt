@@ -30106,6 +30106,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"bomblets_count_mod"
 					"value"				"1.5"
 				}
+				"crits become minicrits"															
+				{
+					"attribute_class"	"crits_become_minicrits"
+					"value"				"1"
+				}
 				"crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
