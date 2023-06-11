@@ -1,0 +1,54 @@
+VertexLitGeneric
+{
+	$basetexture "models/weapons/c_models/c_smg/hekler"
+
+	$phong 1
+	$phongfresnelranges "[0.11 0.56 3]"
+	$phongtint "[0.27 0.27 0.27]"
+	$phongexponent 30
+	$phongboost 3
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	$basemapalphaphongmask 1
+
+	$rimlight 1
+	$rimlightexponent 30
+	$rimlightboost 2
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}
