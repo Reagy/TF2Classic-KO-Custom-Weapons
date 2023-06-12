@@ -13647,6 +13647,48 @@
 		}
 }
 
+// ------------------------------------------------------------------------------------ //
+// AIRBURST RIFLE
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_AirBurstRifle.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+    "pitch"		"96, 102"
+	"wave"		")weapons\AirburstRifle_ShootGun.wav"
+
+}
+"Weapon_AirBurstRifle.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+    "pitch"		"96, 102"
+	"wave"			")weapons/AirburstRifle_ShootGun_Crit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// HYDRO PUMP
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_HydroPump.Start"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/HydroPump_Start.wav"
+}
+
+"Weapon_HydroPump.Loop"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons\HydroPump_Loop.wav"
+}
+
 "Weapon_HydroPump.AirBurstAttack"
 {
 	"channel"	"CHAN_WEAPON"
