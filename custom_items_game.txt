@@ -1267,22 +1267,7 @@ Weapon by: 'The One Of Wonders'"
 				"move speed penalty"											
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.7"
-				}
-				"deflect on swing hidden"
-				{
-					"attribute_class"	"deflect_on_swing"
-					"value"				"1"
-				}
-				"deflect on smack hidden"
-				{
-					"attribute_class"	"deflect_on_smack"
-					"value"				"1"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"disable_airblasting_players"
-					"value"				"1"
+					"value"				"0.6"
 				}
 				"Reduced Capture Point Value"
 				{
@@ -1635,7 +1620,7 @@ Weapon from: New Old Weapons Pack"
 			"item_name"					"Original"
 			"item_type_name"			"#TF_Weapon_RocketLauncher"
 			"item_description"			"Rockets are fired from the center of the screen
-Direct hits have no damage fall-off
+Direct hits have no damage ramp-up or fall-off
 
 You had better start quaking in your boots.
 
@@ -1661,12 +1646,17 @@ Edited by: 'The One Of Wonders'"
 			    "damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.07142857143"
+					"value"				"1.11111111111"
 				}
 				"rocket jump damage reduction"
 				{
 					"attribute_class"		"rocket_jump_dmg_reduction"
 					"value"					"0.8"
+				}
+				"blast splash damage decreased"															
+				{
+					"attribute_class"	"mult_explosion_splash_damage"
+					"value"				"0.5"
 				}
 				"blast radius decreased"
 				{
@@ -1676,7 +1666,7 @@ Edited by: 'The One Of Wonders'"
 				"projectile speed decreased"
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"0.95"
+					"value"				"0.8"
 				}
 				"centerfire projectile"															// The centerfire attribute shines here, over the AA Gun.
 				{
@@ -1691,6 +1681,11 @@ Edited by: 'The One Of Wonders'"
 				"no damage falloff over distance"
 				{
 					"attribute_class"	"mod_no_dmg_falloff"
+					"value"				"1"
+				}
+				"custom rampup"
+				{
+					"attribute_class"	"mod_custom_rampup"
 					"value"				"1"
 				}
 				"crit mod disabled"
@@ -2869,10 +2864,10 @@ Edited by: 'The One Of Wonders'"
 					"attribute_class"	"mult_spread_scale"
 					"value"				"4.0"
 				}
-				"weapon_stattrak_module_scale"													// This is the main mechanic of the Chainsaw - this attribute somehow works on hitscan, so his effective range is shortened by a large amount!
+				"weapon_stattrak_module_scale"	  
 				{
-					"attribute_class"	"mult_projectile_range"
-					"value"				"0.01"
+					"attribute_class"	"mult_projectile_range" // 96 HUs
+					"value"				"0.01171875"
 				}
 				// Backend stuff
 				"damage bonus hidden"
@@ -2890,6 +2885,16 @@ Edited by: 'The One Of Wonders'"
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}	
+				"bullet is a hull"
+				{
+					"attribute_class"	"bullet_is_a_hull"
+					"value"				"2.0"
+				}	
+				"never draw tracer"
+				{
+					"attribute_class"	"mod_never_draw_tracer_effect"
+					"value"				"1"
+				}
 			}
 			"visuals"
 			{
@@ -2991,7 +2996,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.77777777777"
+					"value" 			"0.9"
 				}
 				"weapon burn time reduced"
 				{
@@ -3560,7 +3565,7 @@ Edited by: 'The One Of Wonders'"
 				"move speed bonus"
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"				"1.25"
+					"value"				"1.05"
 				}
 				"maxammo secondary increased"
 				{
@@ -3571,11 +3576,6 @@ Edited by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_maxammo_grenades1"
 					"value" 			"2"
-				}
-				"max health additive penalty"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value"				"-100"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -9176,7 +9176,7 @@ Item by: 'Reagy'"
 			"item_name"					"Slightly Immovable W.A.L.L"
 			"item_type_name"			"SWAT Shield"
 			"item_description"			"
-Bulwark: On deploy 60% passive damage resistance, improved crit and airblast resistance, zero capture rate.
+Bulwark: On active: 60% passive damage resistance, improved crit and airblast resistance, zero capture rate.
 Tag an enemy to charge at them for huge impact damage!
 
 Only Heavy can use such an outrageously heavy thing...
@@ -9261,7 +9261,7 @@ Weapon by: 'Reagy'"
 				}				
 				"strange restriction type 1"
 				{
-					"attribute_class"		"custom_capture_rate"
+					"attribute_class"		"add_player_capturevalue"
 					"value" 				"-1"
 				}
                 "add condition on hit"		
@@ -9282,12 +9282,17 @@ Weapon by: 'Reagy'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.01"
+					"value"				"0.1"
 				}	
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_minigun_spindown_time"
 					"value"				"3"
+				}	
+                "bullet is a hull"
+				{
+					"attribute_class"	"bullet_is_a_hull"
+					"value"				"96"
 				}				
 			}
 			"visuals"
@@ -10367,7 +10372,7 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_CRUCIBLE_SOLDIER"
 			"prefab"					"weapon_shovel"		
-            "item_class"                "tf_weapon_tranq"	
+            "item_class"                "tf_weapon_throwable"	
 			"item_slot"                 "melee"
 			"anim_slot"                 "melee"
             "bucket"					"2"														
@@ -10400,7 +10405,7 @@ Weapon by: 'Reagy'"
 			"static_attrs"																	
 			{
 				"override projectile type" 				"1"		//hitscan								
-				"damage bonus hidden"					"4.25"																	
+				"damage bonus hidden"					"1.7"																	
 				"mod use custom ammo type"				"3"										
                 "mod max primary clip override"			"-1"
 			}
@@ -10431,25 +10436,20 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
-				"mod explosive bullet delay time" //to try and simulate the.. melee hit registration thing.. yea
-				{
-					"attribute_class"	"mod_explosive_bullet_delay_time"
-					"value"				"0.225"
-				}
 				"weapon_stattrak_module_scale"  
 				{
-					"attribute_class"	"mult_projectile_range" //167 HUs
-					"value"				"0.02038574218"
+					"attribute_class"	"mult_projectile_range" //100 HUs
+					"value"				"0.01220703125"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"2.67"
+					"value"				"1.75"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				"0.3333333333333333"
+					"value"				"0.08"
 				}
                 "weapon_stattrak_module_scale"												
 				{
@@ -10485,7 +10485,7 @@ Weapon by: 'Reagy'"
 				"sound_burst"			"Weapon_Sword.SwingCrit"
 				"sound_single_shot"		"Weapon_Sword.Swing"
 				"sound_single_shot_npc"	"Weapon_Sword.HitWorld"
-				"sound_double_shot"		"Weapon_Sword.HitFlesh"
+				"sound_double_shot"		"Weapon_Sword.Swing"
 				"sound_double_shot_npc"	"Weapon_Sword.HitWorld"
 				"explosion_effect"		"explosion_shrapnel_PARENT"
 			}
@@ -12033,13 +12033,15 @@ Weapon by: 'Majro'"
 			"name"						"TF_WEAPON_BEER_BOTTLE"
 			"item_class"				"tf_weapon_lunchbox"							
 			"show_in_armory"			"1"
-			"item_slot"					"secondary"
+			"item_slot"					"primary"
 			"anim_slot"					"pda"
 			"item_name"					"Mann Beer"
 			"item_type_name"			"Beer Bottle"
 			"item_quality"				"rarity2"
+			"bucket"					"0"														
+			"bucket_position"			"0"
 			
-			"item_description"			"Drink up to gain Haste, speeding up you and your attacks for 6 seconds, and heal up to 64 health.
+			"item_description"			"Drink up to gain Haste, speeding up you and your attacks for 10 seconds, and heal up to 64 health.
 Alt-Fire: Share a cold one with a Friend (Medium Health Kit)
 
 
@@ -12077,7 +12079,7 @@ Item by: 'Majro'"
 				"lunchbox add condition on eat" 
 				{
 					"attribute_class"	"lunchbox_addcond"
-					"value"				"121 6"
+					"value"				"121 10"
 				}
 				
 				"effect bar recharge rate increased" //Should this be in the description? Dalokohs doesn't show it, so...
@@ -15908,7 +15910,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 				"heal rate bonus"																// This works.
 				{
 					"attribute_class"	"mult_medigun_healrate"
-					"value" 			"1.3"
+					"value" 			"1.25"
 				}
 				"allowed in medieval mode"
 				{
@@ -16261,7 +16263,7 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.025"
+					"value"				"0.04"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -16281,7 +16283,7 @@ Weapon by: 'The One Of Wonders'"
 				"bullet is a hull"
 				{
 					"attribute_class"	"bullet_is_a_hull"
-					"value"				"2.0"
+					"value"				"-9.5"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -16301,12 +16303,12 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mod_custom_rampup"
-					"value"				"3"
+					"value"				"2.5"
 				}
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mod_custom_falloff"
-					"value"				"0.8"
+					"value"				"0.375"
 				}
 				"crit mod disabled"															
 				{
@@ -21381,7 +21383,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.33"
+					"value"				"0.88888888888"
 				}
 				"strange restriction type 1"
 				{
@@ -25709,7 +25711,7 @@ Weapon by: 'The One Of Wonders'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.4"
+					"value"				"0.55"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -27502,7 +27504,7 @@ Weapon by 'The One Of Wonders'"
 			    "max health additive bonus"
 				{
 					"attribute_class"	"add_maxhealth"
-					"value"				"200"
+					"value"				"100"
 				}
 				"health regen"
 				{
@@ -27517,7 +27519,7 @@ Weapon by 'The One Of Wonders'"
 				"move speed bonus"
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"				"1.1"
+					"value"				"1.15"
 				}
 				"increase player capture value"
 				{
@@ -29406,7 +29408,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.125"
+					"value" 			"0.33"
 				}
                 "weapon_stattrak_module_scale"
 				{
@@ -29431,7 +29433,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"0.5"
+					"value"				"0.2"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -29744,11 +29746,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"DISPLAY_ONLY"
 					"value"				"1"
-				}
-			    "blast radius decreased"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.45"
 				}
 			    "fire rate penalty"
 				{
@@ -30964,6 +30961,7 @@ Alt-Fire: Launch a grenade
 Shoot grenade to detonate
 
 Model by: 'donhonk, blaholtzen, rain'
+Animations by: 'Raptor Dan'
 Weapon by: 'Noclue'"
 			"image_inventory"			"backpack/weapons/c_models/c_stickyrifle/c_stickyrifle"
 			"image_inventory_size_w"	"128"
