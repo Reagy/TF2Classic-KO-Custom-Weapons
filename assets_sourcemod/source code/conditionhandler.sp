@@ -1140,6 +1140,11 @@ bool AddFlameHeal( int iPlayer ) {
 float g_flFlameHealDebt[ MAXPLAYERS+1 ];
 int g_iFlameHealBatch[ MAXPLAYERS+1 ];
 void TickFlameHeal( int iPlayer ) {
+	if( !( IsClientInGame( iPlayer ) && IsPlayerAlive( iPlayer ) ) ) {
+		RemoveCond( iPlayer, TFCC_FLAMEHEAL );
+		return;	
+	}
+
 	float g_flFlameHealTick = GetGameFrameTime();
 
 	int iSource = GetCondSourcePlayer( iPlayer, TFCC_FLAMEHEAL );
