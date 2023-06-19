@@ -13697,3 +13697,25 @@
 	"soundlevel"	"SNDLVL_90db"
 	"wave"		")ambient/lair/crocs_jump_out.wav"
 }
+
+// ------------------------------------------------------------------------------------ //
+// Jump Action
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_JumpActionShot.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"95"
+	"wave"		")weapons/shortgun_shoot.wav"
+}
+
+"Weapon_JumpActionShot.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"95"
+	"wave"		")weapons/shortgun_shoot_crit.wav"
+}
