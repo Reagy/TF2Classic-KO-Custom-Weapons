@@ -9258,12 +9258,12 @@ Weapon by: 'Reagy'"
                 "add condition on hit"		
 				{
 					"attribute_class"	"add_onhit_addcond_self_weapon"
-					"value"				"17 2"
+					"value"				"17 0.5"
 				}
                 "mult shield bash damage"
 				{
 					"attribute_class"	"mult_shield_bash_damage"
-					"value"				"2.4"				
+					"value"				"1.6"				
 				}	
                 "weapon_stattrak_module_scale"
 				{
