@@ -8636,11 +8636,6 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"deflect_on_smack"
 					"value"				"1"
 				}
-				"bullet deflect duration on swing"
-				{
-					"attribute_class"	"bullet_deflect_duration_on_swing"
-					"value"				"0.1"
-				}
 				"strange restriction type 1"
 				{
 					"attribute_class"	"disable_airblasting_players"
@@ -10348,11 +10343,6 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"deflect_on_smack"
 					"value"				"1"
-				}
-				"bullet deflect duration on swing"
-				{
-					"attribute_class"	"bullet_deflect_duration_on_swing"
-					"value"				"0.1"
 				}
 				"strange restriction type 1"
 				{
@@ -17253,11 +17243,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"deflect_on_smack"
 					"value"				"1"
 				}
-				"bullet deflect duration on swing"
-				{
-					"attribute_class"	"bullet_deflect_duration_on_swing"
-					"value"				"0.25"
-				}
 				"strange restriction type 1"
 				{
 					"attribute_class"	"disable_airblasting_players"
@@ -21344,7 +21329,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.35"
+					"value"				"0.3"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -21379,7 +21364,7 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.06"
+					"value"				"0.09"
 				}
 				"strange restriction type 1"
 				{
@@ -21505,11 +21490,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"deflect_on_smack"
 					"value"				"1"
 				}
-				"bullet deflect duration on swing"
-				{
-					"attribute_class"	"bullet_deflect_duration_on_swing"
-					"value"				"0.1"
-				}
 				"strange restriction type 1"
 				{
 					"attribute_class"	"disable_airblasting_players"
@@ -21579,6 +21559,11 @@ Weapon by 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "max health additive bonus" 						
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" 			"25"
+				}
 			    "move speed bonus"													
 				{
 					"attribute_class"		"mult_player_movespeed"
@@ -22450,11 +22435,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"deflect_on_smack"
 					"value"				"1"
 				}
-				"bullet deflect duration on swing"
-				{
-					"attribute_class"	"bullet_deflect_duration_on_swing"
-					"value"				"0.1"
-				}
 				"strange restriction type 1"
 				{
 					"attribute_class"	"disable_airblasting_players"
@@ -22566,11 +22546,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"deflect_on_smack"
 					"value"				"1"
-				}
-				"bullet deflect duration on swing"
-				{
-					"attribute_class"	"bullet_deflect_duration_on_swing"
-					"value"				"0.1"
 				}
 				"strange restriction type 1"
 				{
@@ -22721,11 +22696,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-				"max health additive bonus" 						
-				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"15"
-				}
 				"maxammo secondary increased" 						
 				{
 					"attribute_class"	"mult_maxammo_secondary"
@@ -23453,11 +23423,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"deflect_on_smack"
 					"value"				"1"
-				}
-				"bullet deflect duration on swing"
-				{
-					"attribute_class"	"bullet_deflect_duration_on_swing"
-					"value"				"0.33"
 				}
 				"strange restriction type 1"
 				{
@@ -31134,7 +31099,7 @@ Weapon by: 'Noclue'"
         "7505"
 		{
 			"name"					"Demoknight Melee Positive"
-			"description_string"	"Initial melee swings deflect bullets and timed hits deflect projectiles"
+			"description_string"	"timed melee hits deflect projectiles"
 			"attribute_type"		"string"													
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
