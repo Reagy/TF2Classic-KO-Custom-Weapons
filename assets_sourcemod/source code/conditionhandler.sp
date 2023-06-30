@@ -1140,9 +1140,18 @@ bool AddFlameHeal( int iPlayer ) {
 float g_flFlameHealDebt[ MAXPLAYERS+1 ];
 int g_iFlameHealBatch[ MAXPLAYERS+1 ];
 void TickFlameHeal( int iPlayer ) {
+	if( !( IsClientInGame( iPlayer ) && IsPlayerAlive( iPlayer ) ) ) {
+		RemoveCond( iPlayer, TFCC_FLAMEHEAL );
+		return;	
+	}
+
 	float g_flFlameHealTick = GetGameFrameTime();
 
 	int iSource = GetCondSourcePlayer( iPlayer, TFCC_FLAMEHEAL );
+
+	if( !IsValidPlayer( iSource ) )
+		return;
+
 	float flRate = AttribHookFloat( g_flFlameHealRate * g_flFlameHealTick, iSource, "mult_medigun_healrate" );
 	int iLevel = MinInt( GetCondLevel( iPlayer, TFCC_FLAMEHEAL ), 275 );
 
