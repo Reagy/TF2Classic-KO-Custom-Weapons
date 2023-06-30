@@ -606,6 +606,31 @@
 			}
 			"attributes"
 			{
+				"maxammo primary increased"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"1.5"
+				}
+				"single wep deploy time hidden"
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"				"0.625"
+				}
+				"override mult deploy weapon time animation"
+				{
+					"attribute_class"	"override_mult_deploy_time_anim"
+					"value"				"1.0"
+				}
+				"mirv impact"
+				{
+					"attribute_class"  "mirv_impact"
+					"value"            "1"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value"				"1"
+				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
