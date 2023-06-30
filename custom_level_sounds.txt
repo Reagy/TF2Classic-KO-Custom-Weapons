@@ -13719,3 +13719,20 @@
 	"pitch"		"95"
 	"wave"		")weapons/shortgun_shoot_crit.wav"
 }
+
+// ------------------------------------------------------------------------------------ //
+// CIVILIAN CHARGE
+// ------------------------------------------------------------------------------------ //
+
+"CivCharge.Charging"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"rndwave"
+	{
+		"wave"		"weapons/civ_charge_crude.wav"
+		"wave"		"weapons/civ_charge_crude1.wav"
+
+	}
+}
