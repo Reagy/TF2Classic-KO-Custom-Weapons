@@ -36,6 +36,11 @@ public void OnPluginStart() {
 	delete hGameConf;
 }
 
+public void OnMapStart() {
+	PrecacheSound( "weapons/teleporter_send.wav" );
+	PrecacheSound( "weapons/teleporter_receive.wav" );
+}
+
 int oldButtons[MAXPLAYERS+1] = { 0, ... };
 public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3], int& weapon, int& subtype, int& cmdnum, int& tickcount, int& seed, int mouse[2]) {
 	if( !IsPlayerAlive( client ) )
@@ -180,8 +185,9 @@ void PullAmmo( int iDispenser, int iPlayer ) {
 	if( iDispenserTeam != iPlayerTeam )
 		return;
 
-	if( SDKCall( hDispenseAmmo, g_iHit, iPlayer ) )
+	if( SDKCall( hDispenseAmmo, g_iHit, iPlayer ) ) {
 		CreateParticles( iPlayer, iDispenser, true );
+	}
 }
 
 static char g_szBeamParticles[][] = {
@@ -225,23 +231,15 @@ void CreateParticles( int iOrigin, int iTarget, bool bDispenser = false ) {
 	DispatchSpawn( iParticles[1] );
 	ActivateEntity( iParticles[1] );
 	AcceptEntityInput( iParticles[1], "Start" );
+
+	CreateTimer( 0.1, DeletThis, iParticles[0], TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( 0.1, DeletThis, iParticles[1], TIMER_FLAG_NO_MAPCHANGE );
+
+	EmitSoundToAll( "weapons/teleporter_send.wav", iTarget );
+	EmitSoundToAll( "weapons/teleporter_receive.wav", iOrigin );
 }
 
-void CheckAmmoExists( int iValue ) {
-	int iClient = iValue & 0xFFFF;
-	int iAmmo = iValue >> 16;
-	
-	int iTeam = GetEntProp( iClient, Prop_Send, "m_iTeamNum" ) - 2;
-
-	int iParticle;
-	iParticle = CreateEntityByName( "info_particle_system" );
-	DispatchKeyValue( iParticle, "effect_name", g_szTeleportParticles[ iTeam ] );
-
-	float vecTarget[3];
-	GetEntPropVector( iAmmo, Prop_Data, "m_vecAbsOrigin", vecTarget );
-
-	TeleportEntity( iParticle, vecTarget );
-	DispatchSpawn( iParticle );
-	ActivateEntity( iParticle );
-	AcceptEntityInput( iParticle, "Start" );
+Action DeletThis( Handle hTimer, int iDelete ) {
+	RemoveEntity( iDelete );
+	return Plugin_Stop;
 }
