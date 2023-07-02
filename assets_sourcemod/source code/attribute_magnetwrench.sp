@@ -19,6 +19,8 @@ public Plugin myinfo =
 Handle hAmmoTouch;
 Handle hDispenseAmmo;
 
+float g_flGrabCooler[ MAXPLAYERS+1 ] = { 0.0, ... };
+
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
@@ -84,12 +86,10 @@ void TryGrabAmmo( int iClient ) {
 	if( g_iType == 1 ) { //ammo pack
 		GetEntPropVector( g_iHit, Prop_Data, "m_vecAbsOrigin", vecTarget );
 		if( CheckLOS( flOrigin, vecTarget, g_iHit ) ) {
-			//int iAmmo1, iAmmo2, iMetal, iGrenade1, iGrenade2;
 			int iOldAmmo[ 6 ];
 
 			for( int i = 0; i < sizeof( iOldAmmo ); i++ ) {
 				iOldAmmo[ i ] = GetEntProp( iClient, Prop_Send, "m_iAmmo", 4, i );
-				PrintToServer("%i", iOldAmmo[i] );
 			}
 
 			SDKCall( hAmmoTouch, g_iHit, iClient );
@@ -104,28 +104,22 @@ void TryGrabAmmo( int iClient ) {
 
 			if( bGave ) {
 				CreateParticles( iClient, g_iHit );
-				PrintToServer("test3");
+				return;
 			}
 		}
-			
-
-		return;
 	} else if( g_iType == 2 ) { //dispenser
 		//check the base of the dispenser
 		GetEntPropVector( g_iHit, Prop_Data, "m_vecAbsOrigin", vecTarget );
-		if( CheckLOS( flOrigin, vecTarget, g_iHit ) ) {
-			PullAmmo( g_iHit, iClient );
+		if( CheckLOS( flOrigin, vecTarget, g_iHit ) && PullAmmo( g_iHit, iClient ) )
 			return;
-		}
 		
 		//check top of dispenser
 		vecTarget[2] += 70.0;
-		if( CheckLOS( flOrigin, vecTarget, g_iHit ) ) {
-			PullAmmo( g_iHit, iClient );
+		if( CheckLOS( flOrigin, vecTarget, g_iHit ) && PullAmmo( g_iHit, iClient ) )
 			return;
-		}
 	}
 
+	EmitGameSoundToClient( iClient, "Player.DenyWeaponSelection" );
 	//play fail sound
 }
 
@@ -151,7 +145,7 @@ bool EnumerateAmmo( int iEntity, any data )
 }
 
 bool CheckLOS( const float vecStart[3], const float vecEnd[3], int iEntity ) {
-	Handle hTrace = TR_TraceRayFilterEx( vecStart, vecEnd, 0x1 | 0x4000 | 0x40, RayType_EndPoint, LOSFilter, 0 );
+	Handle hTrace = TR_TraceRayFilterEx( vecStart, vecEnd, CONTENTS_SOLID | CONTENTS_MOVEABLE | CONTENTS_MIST, RayType_EndPoint, LOSFilter, 0 );
 
 	if( TR_GetFraction( hTrace ) >= 1.0 ) return false;
 
@@ -174,20 +168,23 @@ bool LOSFilter( int iEntity, int iMask, any data ) {
 	return true;
 }
 
-void PullAmmo( int iDispenser, int iPlayer ) {
+bool PullAmmo( int iDispenser, int iPlayer ) {
 
 	if( GetEntProp( iDispenser, Prop_Send, "m_bDisabled" ) || GetEntProp( iDispenser, Prop_Send, "m_bBuilding" ) || GetEntProp( iDispenser, Prop_Send, "m_bPlacing" ) )
-		return;
+		return false;
 
 	int iDispenserTeam = GetEntProp( iDispenser, Prop_Send, "m_iTeamNum" );
 	int iPlayerTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" );
 
 	if( iDispenserTeam != iPlayerTeam )
-		return;
+		return false;
 
-	if( SDKCall( hDispenseAmmo, g_iHit, iPlayer ) ) {
+	if( g_flGrabCooler[ iPlayer ] <= GetGameTime() && SDKCall( hDispenseAmmo, g_iHit, iPlayer ) ) {
 		CreateParticles( iPlayer, iDispenser, true );
+		g_flGrabCooler[ iPlayer ] = GetGameTime() + 1.0;
+		return true;
 	}
+	return false;
 }
 
 static char g_szBeamParticles[][] = {
