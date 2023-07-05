@@ -20,8 +20,13 @@ Handle hAmmoTouch;
 Handle hDispenseAmmo;
 
 float g_flGrabCooler[ MAXPLAYERS+1 ] = { 0.0, ... };
+bool g_bHasMagnetWrench[ MAXPLAYERS+1 ] = { false, ... };
+
+ArrayList g_iAmmoSearchTable;
 
 public void OnPluginStart() {
+	HookEvent( EVENT_POSTINVENTORY,	Event_PostInventory );
+
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
 	StartPrepSDKCall( SDKCall_Entity );
@@ -35,12 +40,65 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
 	hDispenseAmmo = EndPrepSDKCall();
 
+	g_iAmmoSearchTable = new ArrayList( 2 );
+
 	delete hGameConf;
 }
 
 public void OnMapStart() {
 	PrecacheSound( "weapons/teleporter_send.wav" );
 	PrecacheSound( "weapons/teleporter_receive.wav" );
+}
+
+Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadcast ) {
+	int iPlayer = hEvent.GetInt( "userid" );
+	iPlayer = GetClientOfUserId( iPlayer );
+
+	if( !IsValidPlayer( iPlayer ) )
+		return Plugin_Continue;
+
+	float flMagnet = AttribHookFloat( 0.0, iPlayer, "custom_magnet_grab_ammo" );
+	g_bHasMagnetWrench[ iPlayer ] = flMagnet != 0.0;
+
+	return Plugin_Continue;
+}
+
+public void OnEntityCreated( int iEntity ) {
+	static char szEntityName[ 32 ];
+	GetEntityClassname( iEntity, szEntityName, sizeof( szEntityName ) );
+	if( StrEqual( szEntityName, "tf_ammo_pack", false ) )
+		RequestFrame( SetAmmoOutline, iEntity );
+}
+
+void SetAmmoOutline( int iEntity ) {
+	int iGlow = CreateEntityByName( "tf_glow" );
+
+	static char szOldName[ 64 ];
+	GetEntPropString( iEntity, Prop_Data, "m_iName", szOldName, sizeof(szOldName) );
+
+	char szNewName[ 128 ], szClassname[ 64 ];
+	GetEntityClassname( iEntity, szClassname, sizeof( szClassname ) );
+	Format( szNewName, sizeof( szNewName ), "%s%i", szClassname, iEntity );
+	DispatchKeyValue( iEntity, "targetname", szNewName );
+
+	DispatchKeyValue( iGlow, "target", szNewName);
+	DispatchSpawn( iGlow );
+	
+	SetEntPropString( iEntity, Prop_Data, "m_iName", szOldName );
+	
+	ParentModel( iGlow, iEntity );
+
+	SetEdictFlags( iGlow, 0 );
+	SDKHook( iGlow, SDKHook_SetTransmit, GlowTransmit );
+
+	int iColor[4] = { 255,255,255,255 };
+	SetVariantColor( iColor );
+	AcceptEntityInput( iGlow, "SetGlowColor" );
+}
+
+Action GlowTransmit( int iEntity, int iClient ) {
+	SetEdictFlags( iEntity, 0 );
+	return g_bHasMagnetWrench[ iClient ] ? Plugin_Continue : Plugin_Handled;
 }
 
 int oldButtons[MAXPLAYERS+1] = { 0, ... };
@@ -61,10 +119,7 @@ public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3
 	return Plugin_Continue;
 }
 
-#define RADIUS 6.0
-
-int g_iHit = -1;
-int g_iType = 0;
+#define RADIUS 4.0
 
 void TryGrabAmmo( int iClient ) {
 	float flAngles[3];
@@ -78,68 +133,101 @@ void TryGrabAmmo( int iClient ) {
 	ScaleVector( flEndPos, 2000.0 );
 	AddVectors( flOrigin, flEndPos, flEndPos );
 
-	g_iHit = -1;
-	g_iType = 0;
 	TR_EnumerateEntitiesHull( flOrigin, flEndPos, { -RADIUS, -RADIUS, -RADIUS }, { RADIUS, RADIUS, RADIUS }, MASK_SHOT, EnumerateAmmo, iClient );
 
-	float vecTarget[3];
-	if( g_iType == 1 ) { //ammo pack
-		GetEntPropVector( g_iHit, Prop_Data, "m_vecAbsOrigin", vecTarget );
-		if( CheckLOS( flOrigin, vecTarget, g_iHit ) ) {
-			int iOldAmmo[ 6 ];
+	int iClosest = -1;
+	int iClosestType = 0;
+	float flDist = 99999999.0;
 
-			for( int i = 0; i < sizeof( iOldAmmo ); i++ ) {
-				iOldAmmo[ i ] = GetEntProp( iClient, Prop_Send, "m_iAmmo", 4, i );
-			}
+	float vecTargetPos[3];
+	float vecAngleToTarget[3];
+	for( int i = 0; i < g_iAmmoSearchTable.Length; i++ ) {
+		int iData[2];
+		g_iAmmoSearchTable.GetArray( i, iData );
 
-			SDKCall( hAmmoTouch, g_iHit, iClient );
+		GetEntPropVector( iData[0], Prop_Data, "m_vecAbsOrigin", vecTargetPos );
+		MakeVectorFromPoints( flOrigin, vecTargetPos, vecAngleToTarget );
+		GetVectorAngles( vecAngleToTarget, vecAngleToTarget );
 
-			bool bGave = false;
-			for( int i = 0; i < sizeof( iOldAmmo ); i++ ) {
-				if( GetEntProp( iClient, Prop_Send, "m_iAmmo", 4, i ) > iOldAmmo[ i ] ) {
-					bGave = true;
-					break;
-				}
-			}
+		float flNewDist = FloatAbs( GetVectorDistance( flAngles, vecAngleToTarget ) );
+		PrintToServer("%i %i %f", iData[0], iData[1], flNewDist );
 
-			if( bGave ) {
-				CreateParticles( iClient, g_iHit );
-				return;
-			}
+		if( flNewDist < flDist ) {
+			iClosest = iData[0];
+			iClosestType = iData[1];
+			flDist = flNewDist;
 		}
-	} else if( g_iType == 2 ) { //dispenser
-		//check the base of the dispenser
-		GetEntPropVector( g_iHit, Prop_Data, "m_vecAbsOrigin", vecTarget );
-		if( CheckLOS( flOrigin, vecTarget, g_iHit ) && PullAmmo( g_iHit, iClient ) )
-			return;
-		
-		//check top of dispenser
-		vecTarget[2] += 70.0;
-		if( CheckLOS( flOrigin, vecTarget, g_iHit ) && PullAmmo( g_iHit, iClient ) )
-			return;
+	}
+
+	g_iAmmoSearchTable.Clear();
+
+	if( iClosestType == 1 ) { //ammo pack
+		PickupAmmoBox( iClient, iClosest );
+		return;
+	} else if( iClosestType == 2 ) { //dispenser
+		PickupAmmoDispenser( iClosest, iClient );
+		return;
 	}
 
 	EmitGameSoundToClient( iClient, "Player.DenyWeaponSelection" );
-	//play fail sound
 }
 
-bool EnumerateAmmo( int iEntity, any data )
-{
+void PickupAmmoBox( int iClient, int iAmmo ) {
+	int iOldAmmo[ 6 ];
+
+	for( int i = 0; i < sizeof( iOldAmmo ); i++ ) {
+		iOldAmmo[ i ] = GetEntProp( iClient, Prop_Send, "m_iAmmo", 4, i );
+	}
+
+	SDKCall( hAmmoTouch, iAmmo, iClient );
+
+	for( int i = 0; i < sizeof( iOldAmmo ); i++ ) {
+		if( GetEntProp( iClient, Prop_Send, "m_iAmmo", 4, i ) > iOldAmmo[ i ] ) {
+			CreateParticles( iClient, iAmmo );
+			return;
+		}
+	}
+}
+
+bool EnumerateAmmo( int iEntity, any data ) {
 	if ( iEntity <= MaxClients ) return true;
 
 	static char szClassname[ 64 ];
 	GetEdictClassname( iEntity, szClassname, sizeof( szClassname ) );
-	
+
 	if( StrEqual( "tf_ammo_pack", szClassname ) ) {
-		g_iHit = iEntity;
-		g_iType = 1;
-		return false;
+		float vecOrigin[3];
+		GetClientEyePosition( data, vecOrigin );
+		return PushAmmo( vecOrigin, iEntity, 1 );
 	}
 	else if( StrEqual( "obj_dispenser", szClassname ) ) {
-		g_iHit = iEntity;
-		g_iType = 2;
-		return false;
+		float vecOrigin[3];
+		GetClientEyePosition( data, vecOrigin );
+		return PushAmmo( vecOrigin, iEntity, 2 );
 	}
+
+	return true;
+}
+
+bool PushAmmo( const float vecOrigin[3], int iEntity, int iType ) {
+	float vecTarget[3];
+	GetEntPropVector( iEntity, Prop_Data, "m_vecAbsOrigin", vecTarget );
+
+	if( !CheckLOS( vecOrigin, vecTarget, iEntity ) ) {
+		if( iType == 2 ) {
+			vecTarget[2] += 70.0;
+			if( !CheckLOS( vecOrigin, vecTarget, iEntity ) )
+				return true;
+		}
+
+		return true;
+	}
+
+	int iPush[2];
+	iPush[0] = iEntity;
+	iPush[1] = iType;
+	
+	g_iAmmoSearchTable.PushArray( iPush );
 
 	return true;
 }
@@ -150,11 +238,6 @@ bool CheckLOS( const float vecStart[3], const float vecEnd[3], int iEntity ) {
 	if( TR_GetFraction( hTrace ) >= 1.0 ) return false;
 
 	int iHit = TR_GetEntityIndex( hTrace );
-
-	if( IsValidEntity( iHit ) ) {
-		static char fuck[32];
-		GetEntityClassname( iHit, fuck, 32 );
-	}
 
 	if( iHit != iEntity ) return false;
 
@@ -168,7 +251,7 @@ bool LOSFilter( int iEntity, int iMask, any data ) {
 	return true;
 }
 
-bool PullAmmo( int iDispenser, int iPlayer ) {
+bool PickupAmmoDispenser( int iDispenser, int iPlayer ) {
 
 	if( GetEntProp( iDispenser, Prop_Send, "m_bDisabled" ) || GetEntProp( iDispenser, Prop_Send, "m_bBuilding" ) || GetEntProp( iDispenser, Prop_Send, "m_bPlacing" ) )
 		return false;
@@ -179,7 +262,7 @@ bool PullAmmo( int iDispenser, int iPlayer ) {
 	if( iDispenserTeam != iPlayerTeam )
 		return false;
 
-	if( g_flGrabCooler[ iPlayer ] <= GetGameTime() && SDKCall( hDispenseAmmo, g_iHit, iPlayer ) ) {
+	if( g_flGrabCooler[ iPlayer ] <= GetGameTime() && SDKCall( hDispenseAmmo, iDispenser, iPlayer ) ) {
 		CreateParticles( iPlayer, iDispenser, true );
 		g_flGrabCooler[ iPlayer ] = GetGameTime() + 1.0;
 		return true;
