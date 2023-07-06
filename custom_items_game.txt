@@ -925,8 +925,8 @@ Edited by: 'The One Of Wonders'"
 Good for bashing a chucklehead's skull in.
 
 Weapon from: New Old Weapons Pack"			// A funny description! Try to keep this short. It can be anything you want, but I'd try to stick with small quotes. Use TF2C's own descriptions as a style-guide.
-			"item_logname"				"crowbar"												// What you see pop up in the console! Probably just copy the internal name you set.
-			"item_iconname"				"crowbar"												// A kill-icon!! It's not exactly easy to add new kill-icons, so you can leave this empty or omit it entirely if you like. It just defaults to the weapon type you're using as a base, anyway.
+			"item_logname"				"Crowbar"												// What you see pop up in the console! Probably just copy the internal name you set.
+			"item_iconname"				"Crowbar"												// A kill-icon!! It's not exactly easy to add new kill-icons, so you can leave this empty or omit it entirely if you like. It just defaults to the weapon type you're using as a base, anyway.
 			"image_inventory"			"backpack/weapons/w_models/w_crowbar" 					// Backpack image. Just one needed! ALSO, how this is set up, it searches for a file named "w_crowbar_large.vmt", located in "materials/backpack/weapons/w_models"! Be wary!
 			"model_world"				"models/weapons/w_models/w_crowbar_scout.mdl"
 			"model_player"				"models/weapons/v_models/v_crowbar_scout.mdl"
@@ -997,8 +997,8 @@ Weapon from: New Old Weapons Pack"			// A funny description! Try to keep this sh
 A good ol' number for building construction!
 
 Weapon from: New Old Weapons Pack" 													// Take note of the Unique part at the end. If a weapon has an important function as a stock, it's good to clarify a weapon is a reskin of that.
-			"item_logname"				"crowbar"												// ALSO, no, that weird space is NOT a mistake. This is a hacky way to get the game to make a New-Line (Thanks to NotSuspect for finding this). In lieu of the inability to just add /n and have it work, anyway...
-			"item_iconname"				"crowbar"												// Please keep this in mind as you see these weird spaces all throughout this file! They'll mostly be used for readability and / or to separate flavor text from stats.
+			"item_logname"				"Crowbar"												// ALSO, no, that weird space is NOT a mistake. This is a hacky way to get the game to make a New-Line (Thanks to NotSuspect for finding this). In lieu of the inability to just add /n and have it work, anyway...
+			"item_iconname"				"Crowbar"												// Please keep this in mind as you see these weird spaces all throughout this file! They'll mostly be used for readability and / or to separate flavor text from stats.
 			"image_inventory"			"backpack/weapons/w_models/w_crowbar"
 			"model_world"				"models/weapons/w_models/w_crowbar_engineer.mdl"
 			"model_player"				"models/weapons/v_models/v_crowbar_engineer.mdl"
@@ -1054,8 +1054,8 @@ Weapon from: New Old Weapons Pack" 													// Take note of the Unique part 
 			"item_description"			"Truly, a good Doctor's weapon of choice!
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"crowbar"
-			"item_iconname"				"crowbar"
+			"item_logname"				"Crowbar"
+			"item_iconname"				"Crowbar"
 			"image_inventory"			"backpack/weapons/w_models/w_crowbar"
 			"model_world"				"models/weapons/w_models/w_crowbar_medic.mdl"
 			"model_player"				"models/weapons/v_models/v_crowbar_medic.mdl"
@@ -1091,8 +1091,8 @@ Weapon from: New Old Weapons Pack"
 			"item_description"			"An ol' Crowbar is always handy in the field.
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"crowbar"
-			"item_iconname"				"crowbar"
+			"item_logname"				"Crowbar"
+			"item_iconname"				"Crowbar"
 			"image_inventory"			"backpack/weapons/w_models/w_crowbar"
 			"model_world"				"models/weapons/w_models/w_crowbar_sniper.mdl"
 			"model_player"				"models/weapons/v_models/v_crowbar_sniper.mdl"
@@ -1131,8 +1131,8 @@ You are unable to backstab while this item is equipped
 A tool for infiltration - and self-defense.
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"crowbar"
-			"item_iconname"				"crowbar"
+			"item_logname"				"Crowbar"
+			"item_iconname"				"Crowbar"
 			"image_inventory"			"backpack/weapons/w_models/w_crowbar"
 			"model_world"				"models/weapons/w_models/w_crowbar_spy.mdl"
 			"model_player"				"models/weapons/v_models/v_crowbar_spy.mdl"				// This supports Spy's new bloody knife feature, too.
@@ -1189,8 +1189,8 @@ Weapon from: New Old Weapons Pack"
 This used to belong to an old bodyguard of mine, but I need this more than he does!
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"crowbar"
-			"item_iconname"				"crowbar"
+			"item_logname"				"Crowbar"
+			"item_iconname"				"Crowbar"
 			"image_inventory"			"backpack/weapons/w_models/w_crowbar"
 			"model_world"				"models/weapons/w_models/w_crowbar_civilian.mdl"
 			"model_player"				"models/weapons/v_models/v_crowbar_civilian.mdl"
@@ -1241,8 +1241,8 @@ You Peppino'd your last Spaghetti: Swing your melee to charge forward to deal im
 Now which one of your simpletons put pineapples on my pizza!?!
 
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"fryingpan"
-			"item_iconname"				"fryingpan"
+			"item_logname"				"Chef Jenkins"
+			"item_iconname"				"Chef Jenkins"
 			"image_inventory"			"backpack/weapons/c_models/c_peppino/c_peppino"
 			"model_world"				"models/weapons/w_models/w_frying_pan_civilian.mdl"
 			"model_player"				"models/weapons/v_models/v_frying_pan_civilian.mdl"
@@ -1427,8 +1427,8 @@ Good times...
 Weapon from: New Old Weapons Pack
 Cosmetics by: 'Sky' 'Pie_Tony' 'Strno8' 'DJB2401'
 Edited by: 'The One Of Wonders'"
-			"item_logname" 				"machinegun"
-			"item_iconname" 			"machinegun"
+			"item_logname" 				"Heavy Machine Gun"
+			"item_iconname" 			"Heavy Machine Gun"
 			"image_inventory"			"backpack/weapons/w_models/w_machinegun"
 			"model_world"				"models/weapons/w_models/w_machinegun.mdl"
 			"model_player"				"models/weapons/v_models/v_machinegun_heavy.mdl"
@@ -1651,8 +1651,8 @@ You had better start quaking in your boots.
 
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"quake_rl"
-			"item_iconname"				"quake_rl"
+			"item_logname"				"Original"
+			"item_iconname"				"Original"
 			"image_inventory"			"backpack/workshop_partner/weapons/c_models/c_bet_rocketlauncher/c_bet_rocketlauncher"
 			"model_world"				"models/weapons/w_models/w_bet_rocketlauncher.mdl"			
 			"model_player"				"models/weapons/v_models/v_bet_rocketlauncher_soldier.mdl"
@@ -1842,8 +1842,8 @@ Edited by: 'Reagy'"
 and kill you, and kill you!'
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"gloves"
-			"item_iconname"				"gloves"
+			"item_logname"				"Killing Gloves of Boxing"
+			"item_iconname"				"Killing Gloves of Boxing"
 			"image_inventory"			"backpack/weapons/c_models/c_boxing_gloves/c_boxing_gloves"
 			"model_world"				"models/weapons/w_models/w_boxing_gloves.mdl"
 			"model_player"				"models/weapons/v_models/v_boxing_gloves_heavy.mdl"
@@ -1900,8 +1900,8 @@ Tiny cowards think they can run from me?
 Hah! They are wrong.
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"gloves_running_urgently"
-			"item_iconname"				"gloves_running_urgently"
+			"item_logname"				"Gloves of Running Urgently"
+			"item_iconname"				"Gloves of Running Urgently"
 			"image_inventory"			"backpack/weapons/c_models/c_boxing_gloves_urgency/c_boxing_gloves_urgency"
 			"model_world"				"models/weapons/w_models/w_boxing_gloves_urgent.mdl"
 			"model_player"				"models/weapons/v_models/v_boxing_gloves_urgent_heavy.mdl"
@@ -2058,8 +2058,8 @@ Weapon from: New Old Weapons Pack"
 			"item_description"			"Just need one ol' gun and six shots.
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"sixshooter"
-			"item_iconname"				"sixshooter"
+			"item_logname"				"Six-Shooter"
+			"item_iconname"				"Six-Shooter"
 			"image_inventory"			"backpack/weapons/w_models/w_sixshooter"
 			"model_world"				"models/weapons/w_models/w_sixshooter.mdl"
 			"model_player"				"models/weapons/v_models/v_sixshooter_engineer.mdl"
@@ -2135,8 +2135,8 @@ A wee lad in a mask was in a mighty hurry and left this pretty bloody thing behi
 T'is me lucky day!
 
 Weapon from: New Old Weapons Pack"																				// IS THAT A FUCKIN' 「OPEN FORTRESS」 REFERENCE!?!?!?!?!!?!?!?!?!?!?!?!?!?!?
-			"item_logname"				"grenadelauncher_dm"
-			"item_iconname"				"grenadelauncher_dm"
+			"item_logname"				"Ol' Brimstone"
+			"item_iconname"				"Ol' Brimstone"
 			"image_inventory"			"backpack/weapons/w_models/w_grenadelauncher_dm"
 			"model_world"				"models/weapons/w_models/w_grenadelauncher_dm.mdl"
 			"model_player"				"models/weapons/v_models/v_grenadelauncher_dm_demoman.mdl"
@@ -2238,8 +2238,8 @@ do the dirty work for you.
 Animations by: 'SedimentarySocks'
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"wa2k_marker"
-			"item_iconname"				"wa2k_marker"
+			"item_logname"				"Marksman's Marker"
+			"item_iconname"				"Marksman's Marker"
 			"image_inventory"			"backpack/workshop/weapons/c_items/c_ess_eliminator/essendon_eliminator"
 			"model_world"				"models/weapons/w_models/w_wa2k_marker.mdl"
 			"model_player"				"models/weapons/v_models/v_wa2k_marker_sniper.mdl"
@@ -2600,8 +2600,8 @@ Modified by: 'Reagy'"
 			"item_description"			"
 
 Weapon from: New Old Weapons Pack"
-			"item_logname" 				"mantreads"
-			"item_iconname" 			"mantreads"												// I almost forgot you can kill with these!
+			"item_logname" 				"Mantreads"
+			"item_iconname" 			"Mantreads"												// I almost forgot you can kill with these!
 			"image_inventory"			"backpack/workshop/player/items/soldier/mantreads/mantreads"
 			"model_player"				"models/player/items/tankerboots.mdl"
 			"model_player_per_class"															// This is new! I'll have to do testing with this. It's copied from the Gunboats, of course.
@@ -2748,8 +2748,8 @@ A discrete gun for undercover operations.
 
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"derringer"
-			"item_iconname"				"derringer"
+			"item_logname"				"Derringer"
+			"item_iconname"				"Derringer"
 			"image_inventory"			"backpack/weapons/w_models/w_derringer"
 			"model_world"				"models/weapons/w_models/w_derringer.mdl"
 			"model_player"				"models/weapons/v_models/v_derringer_spy.mdl"
@@ -2847,8 +2847,8 @@ You cannot run from chainsaw forever!
 
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"chainsaw"
-			"item_iconname"				"chainsaw"
+			"item_logname"				"Warsaw Fact"
+			"item_iconname"				"Warsaw Fact"
 			"image_inventory"			"backpack/weapons/w_models/w_chainsaw"
 			"model_world"				"models/weapons/w_models/w_chainsaw.mdl"
 			"model_player"				"models/weapons/v_models/v_chainsaw_heavy_new.mdl"
@@ -2981,8 +2981,8 @@ For when a regular incendiary shotgun won't cut it.
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"titanium_flamecaster"
-			"item_iconname"				"titanium_flamecaster"
+			"item_logname" 				"Titanium Torcher"
+			"item_iconname"				"Titanium Torcher"
 			"image_inventory"			"backpack/weapons/c_models/c_flameshotgun/c_flameshotgun"
 			"model_world"				"models/weapons/c_models/c_flameshotgun/c_flameshotgun.mdl"
 			"model_player"				"models/weapons/v_models/v_heavyflamecaster.mdl"
@@ -3148,8 +3148,8 @@ How about another drink this time, eh?
 
 Weapon from: New Old Weapons Pack
 Modified by: 'Reagy'"
-			"item_logname"				"scotland_shard"
-			"item_iconname"				"scotland_shard"
+			"item_logname"				"Scottish Handshake"
+			"item_iconname"				"Scottish Handshake"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_scotland_shard/c_scotland_shard"
 			"model_world"				"models/weapons/w_models/w_scotland_shard.mdl"
 			"model_player"				"models/weapons/v_models/v_scotland_shard_demoman.mdl"
@@ -3235,8 +3235,8 @@ Modified by: 'Reagy'"
 Model by: 'G o a t K i n g'
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"glock"
-			"item_iconname"				"glock"
+			"item_logname"				"Standard Issue"
+			"item_iconname"				"Standard Issue"
 			"image_inventory"			"backpack/weapons/w_models/w_glock"
 			"model_world"				"models/weapons/w_models/w_glock.mdl"
 			"model_player"				"models/weapons/v_models/v_glock_scout.mdl"
@@ -3316,8 +3316,8 @@ Edited by: 'The One Of Wonders'"
 Model by: 'Momo the Momoderator'
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"ump45"
-			"item_iconname"				"ump45"
+			"item_logname"				"Deep Dive"
+			"item_iconname"				"Deep Dive"
 			"image_inventory"			"backpack/weapons/w_models/w_ump45"
 			"model_world"				"models/weapons/w_models/w_ump45.mdl"
 			"model_player"				"models/weapons/v_models/v_ump45_sniper.mdl"
@@ -3384,8 +3384,8 @@ Weapon from: New Old Weapons Pack
 Cosmetic by: 'Suomimies55'
 Animations by: 'Indigo'
 Edited by: 'Reagy'"
-			"item_logname"				"snubnose_civ"
-			"item_iconname"				"snubnose_civ"
+			"item_logname"				"Backup Plan"
+			"item_iconname"				"Backup Plan"
 			"image_inventory"			"backpack/weapons/w_models/w_snubnose_melee"
 			"model_world"				"models/weapons/custom/w_models/w_backup_plan_new.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_backup_plan_new.mdl"
@@ -3484,6 +3484,7 @@ Edited by: 'Reagy'"
 //------------------------------
 //------------------------------
 //--CLOAK & DAGGER TEST - 3424--
+// -- :NOTE: Doubled decay rate to -200%, halved cloak loss on damage
 //------------------------------
 //------------------------------
 		"3424"
@@ -3518,12 +3519,12 @@ Edited by: 'The One Of Wonders'"
 				"cloak consume rate decreased"
 				{
 					"attribute_class"	"mult_cloak_meter_consume_rate"
-					"value"				"0"
+					"value"				"-1"
 				}
 				"lose cloak on damage"
 				{
 					"attribute_class"	"lose_cloak_on_damage"
-					"value"				"100"
+					"value"				"50"
 				}			
             }
 			"mouse_pressed_sound"		"#ui/item_watch_pickup.wav"
@@ -3570,8 +3571,8 @@ Edited by: 'The One Of Wonders'"
 
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-            "item_logname"				"heavy_shotgun"
-			"item_iconname"				"heavy_shotgun"
+            "item_logname"				"Arms-Deal Armament"
+			"item_iconname"				"Arms-Deal Armament"
 			"image_inventory"			"backpack/workshop/player/items/heavy/jul13_bagdolier/jul13_bagdolier"
 			"model_world"				"models/weapons/c_models/c_heavyshotgun/c_heavyshotgun.mdl"
 			"model_player"				"models/weapons/c_models/c_heavyshotgun/c_heavyshotgun.mdl"
@@ -3663,8 +3664,8 @@ Six shots sometimes ain't enough, so you solve the problem with a new solution.
 
 Model by: 'Wowza'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"problem_solver_revolver"
-			"item_iconname" 			"problem_solver_revolver"
+			"item_logname" 				"Problem Solver"
+			"item_iconname" 			"Problem Solver"
 			"image_inventory"			"backpack/weapons/c_models/c_sentry_revolver/c_sentry_revolver"
 			"model_world"				"models/weapons/c_models/c_sentry_revolver.mdl"
 			"model_player"				"models/weapons/v_models/v_sentry_revolver.mdl"
@@ -3775,8 +3776,8 @@ T'is like music to the ears.
 Model by: 'YumYumShisha' 'Kiyoshi' 'Kevinsk' 'Pie_Tony'
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"quake_gl"
-			"item_iconname"				"quake_gl"
+			"item_logname"				"Trailblazer"
+			"item_iconname"				"Trailblazer"
 			"image_inventory"			"backpack/weapons/w_models/w_bet_grenadelauncher"
 			"model_world"				"models/weapons/w_models/w_bet_grenadelauncher.mdl"		// The model for this GL was scuffed as hell! I had to spend a while manually fixing the smoothing...	
 			"model_player"				"models/weapons/v_models/v_bet_grenadelauncher_demo.mdl" //('Smoothing' is basically what seperates your curved surfaces from hard edges. Imagine a table with no edges at all - that's what this Grenade Launcher was like!)
@@ -3875,8 +3876,8 @@ So long as they do not bleed on my suit - this should go quite smoothly.
 
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"dartgun_wood"
-			"item_iconname"				"dartgun_wood"
+			"item_logname"				"Saboteur"
+			"item_iconname"				"Saboteur"
 			"image_inventory"			"backpack/weapons/w_models/w_dartgun_wood"
 			"model_world"				"models/weapons/w_models/w_dartgun_wood.mdl"
 			"model_player"				"models/weapons/v_models/v_dartgun_wood_spy.mdl"		// The viewmodel was a bit iffy - I think it was animated for its own animations separate from the retail Tranq anims
@@ -3952,8 +3953,8 @@ Heavy no longer requires reloading, means more killing tiny cowards!
 
 Model by: 'Maxxo'
 Weapon by: 'The One Of Wonders'"											
-			"item_logname"				"drumshot_shotgun"
-			"item_iconname"				"drumshot_shotgun"
+			"item_logname"				"Dmitrov Demolisher"
+			"item_iconname"				"Dmitrov Demolisher"
 			"image_inventory"			"backpack/weapons/c_models/c_drumshot_heavy/c_drumshot_heavy"
 			"model_world"				"models/weapons/c_models/c_drumshot_heavy/c_drumshot_heavy.mdl"
 			"model_player"				"models/weapons/c_models/c_drumshot_heavy/c_drumshot_heavy.mdl"
@@ -4019,8 +4020,8 @@ Medic is good, but this gun good too!
 
 Model by: 'Ertz'
 Weapon by: 'The One Of Wonders'"											
-			"item_logname"				"survivalist_shotgun"
-			"item_iconname"				"survivalist_shotgun"
+			"item_logname"				"Saratov Survivalist"
+			"item_iconname"				"Saratov Survivalist"
 			"image_inventory"			"backpack/weapons/c_models/c_tankshotty/c_tankshotty"
 			"model_world"				"models/weapons/c_models/c_tankshotty/c_tankshotty.mdl"
 			"model_player"				"models/weapons/c_models/c_tankshotty/c_tankshotty.mdl"
@@ -4113,8 +4114,8 @@ Baby would do well to shut up,
 before gun makes you shut up, Да?
 
 Weapon from: New Old Weapons Pack"
-			"item_logname" 				"mob_shotgun"
-			"item_iconname" 			"mob_shotgun"
+			"item_logname" 				"Soviet Silencer"
+			"item_iconname" 			"Soviet Silencer"
 			"image_inventory"			"backpack/weapons/w_models/w_mob_shotgun"
 			"model_world"				"models/weapons/w_models/w_mob_shotgun.mdl"
 			"model_player"				"models/weapons/v_models/v_mob_shotgun_heavy.mdl"		// The port and bolt already are rigged to move back by the OG creator - and they look great!
@@ -4187,8 +4188,8 @@ The duty to serve is no regular duty, son! You must fight until you can fight no
 
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"rpg_tracker"
-			"item_iconname"				"rpg_tracker"
+			"item_logname"				"Combatant Directive"
+			"item_iconname"				"Combatant Directive"
 			"image_inventory"			"backpack/weapons/w_models/w_rpg_tracker"
 			"model_world"				"models/weapons/w_models/w_rpg_tracker.mdl"			
 			"model_player"				"models/weapons/v_models/v_rpg_tracker_soldier.mdl"		// Uses the RPG animations, just since I wanted to.
@@ -4301,8 +4302,8 @@ For optimal effect, place barrels within ass-kicking distance of your enemy.
 
 Weapon from: New Old Weapons Pack / Open Fortress - openfortress.fun
 Weapon edited by: 'Reagy'"
-			"item_logname"				"dm_ssg"
-			"item_iconname"				"dm_ssg"
+			"item_logname"				"Double-Barrel Shotgun"
+			"item_iconname"				"Double-Barrel Shotgun"
 			"image_inventory"			"backpack/weapons/w_models/w_supershotgun"
 			"model_world"				"models/weapons/w_models/w_supershotgun.mdl"
 			"model_player"				"models/weapons/v_models/v_supershotgun_soldier.mdl"
@@ -4429,8 +4430,8 @@ You must think fast, and kill faster,
 if you've any chance of surviving.
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"eosd_knife"
-			"item_iconname"				"eosd_knife"
+			"item_logname"				"Scarlet Rose"
+			"item_iconname"				"Scarlet Rose"
 			"image_inventory"			"backpack/weapons/w_models/w_eosd_knife"
 			"model_world"				"models/weapons/w_models/w_eosd_knife.mdl"				// I hate when models don't have smoothing
 			"model_player"				"models/weapons/v_models/v_eosd_knife_spy.mdl"			// Like with the Eternal Reward, this has bloodied skins!
@@ -4556,8 +4557,8 @@ Boots on the ground won't cut it, soldier.
 Blast off, and give 'em hell!
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"market_gardener"
-			"item_iconname"				"market_gardener"
+			"item_logname"				"Market Gardener"
+			"item_iconname"				"Market Gardener"
 			"image_inventory" 			"backpack/workshop/weapons/c_models/c_market_gardener/c_market_gardener"
 			"model_world"				"models/weapons/w_models/w_market_gardener.mdl"
 			"model_player"				"models/weapons/v_models/v_market_gardener_soldier.mdl"
@@ -4617,8 +4618,8 @@ your soon-to-be past-enemies!
 
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"chemthrower"
-			"item_iconname"				"chemthrower"
+			"item_logname"				"Makeshift Mutilator"
+			"item_iconname"				"Makeshift Mutilator"
 			"image_inventory"			"backpack/weapons/w_models/w_chemthrower"				// Internal name: "Chemthrower"
 			"model_world"				"models/weapons/w_models/w_chemthrower.mdl"
 			"model_player"				"models/weapons/v_models/v_chemthrower_pyro.mdl"
@@ -4752,8 +4753,8 @@ Blast off, and give 'em hell!
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"headstabber"
-			"item_iconname"				"headstabber"
+			"item_logname"				"Glasgow Grinner"
+			"item_iconname"				"Glasgow Grinner"
 			"image_inventory" 			"backpack/weapons/c_models/c_headstabber_demo/c_headstabber_demo"
 			"model_world"				"models/weapons/c_models/c_headstabber_demo/c_headstabber_demo.mdl"
 			"model_player"				"models/weapons/c_models/c_headstabber_demo/c_headstabber_demo.mdl"
@@ -4887,8 +4888,8 @@ Launch an explosive Mini-Dispenser
 that can be detonated at will!
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"dispenserizer"
-			"item_iconname"				"dispenserizer"
+			"item_logname"				"Dispenserizer"
+			"item_iconname"				"Dispenserizer"
 			"image_inventory"			"backpack/weapons/w_models/w_dispenserizer"
 			"model_world"				"models/weapons/w_models/w_dispenserizer.mdl"			
 			"model_player"				"models/weapons/v_models/v_dispenserizer_engineer.mdl"
@@ -5101,8 +5102,8 @@ or else Heavy will make you regret choice...
 
 Weapon from: New Old Weapons Pack
 Edited by: 'Reagy'"
-			"item_logname"				"eviction_notice"
-			"item_iconname"				"eviction_notice"
+			"item_logname"				"Eviction Notice"
+			"item_iconname"				"Eviction Notice"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_eviction_notice/c_eviction_notice"
 			"model_player"				"models/weapons/v_models/v_eviction_notice_heavy.mdl"	// Never noticed until recently, doesn't it hurt to just slap your fist into the palm of your hand if you're wearing BRASS KNUCKLES??? but Heavy's a big boy he can tank the pain
 			"model_world"				"models/weapons/w_models/w_eviction_notice.mdl"
@@ -5205,8 +5206,8 @@ Alright, you and me, let's dance!
 Model by: 'Rozzy, Sparkwire'
 Weapon by: 'The One Of Wonders'"
 
-			"item_logname"				"sten_scout"
-			"item_iconname"				"sten_nailgun"
+			"item_logname"				"Scouting Striker"
+			"item_iconname"				"Scouting Striker"
 			"image_inventory"			"backpack/weapons/w_models/w_stengun"
 			"model_world"				"models/weapons/w_models/w_stengun.mdl"
 			"model_player"				"models/weapons/v_models/v_stengun_sniper.mdl"
@@ -5313,8 +5314,8 @@ Gain mini-crits near the end of a Charge
 You had best start running, laddie.
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"tide_turner"
-			"item_iconname"				"tide_turner"
+			"item_logname"				"The Tide-Turner"
+			"item_iconname"				"The Tide-Turner"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_wheel_shield/c_wheel_shield"
 			"model_player"				"models/player/items/tide_turner.mdl"					// Unlike the Targe, this has no viewmodel or anything like that! No reason to...
 			"used_by_classes"
@@ -5403,8 +5404,8 @@ Weapon from: New Old Weapons Pack"
 
 Weapon from: New Old Weapons Pack
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"cyclops"
-			"item_iconname"				"cyclops"
+			"item_logname"				"Cyclops"
+			"item_iconname"				"Cyclops"
 			
 			"item_quality"				"rarity3"
 			
@@ -5488,8 +5489,8 @@ Edited by: 'The One Of Wonders'"
 
 Soar up and crash down, with all
 the glory of a misfired firework."																// MIRV used here as a "Secondary Weapon w/ Recharging Ammo" for these boosts!
-			"item_logname"				"rocketpack"
-			"item_iconname"				"rocketpack"
+			"item_logname"				"Thermal Thruster"
+			"item_iconname"				"Thermal Thruster"
 			"image_inventory"			"backpack/weapons/c_models/c_rocketpack/c_rocketpack"
 			"model_world"				"models/weapons/w_models/w_rocketpack_deployed.mdl"		// NOWP v2.5.0 - Now it deploys its handles if active!
 			"model_player"				"models/weapons/v_models/v_rocketpack_pyro.mdl"			// Fun Fact: If I had to guess, Live TF2 has a special exception to animate the Rocketpack away, since trying to load the weapon onto the animations leads to the RP covering the screen!
@@ -5638,8 +5639,8 @@ For when I want to take to the skies
 and don't have enough feet to do it!
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"rocketjumper"
-			"item_iconname"				"rocketjumper"											// You shouldn't physically be able to kill with this. If you do, SOMEHOW, get a funny icon.
+			"item_logname"				"Rocket Jumper"
+			"item_iconname"				"Rocket Jumper"											// You shouldn't physically be able to kill with this. If you do, SOMEHOW, get a funny icon.
 			"image_inventory"			"backpack/weapons/c_models/c_rocketjumper/c_rocketjumper"
 			"model_world"				"models/weapons/w_models/w_rocketjumper.mdl"			
 			"model_player"				"models/weapons/v_models/v_rocketjumper_soldier.mdl"
@@ -5705,8 +5706,8 @@ For when I don't want tae lose more
 body parts than I'm already missing!
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"stickyjumper"
-			"item_iconname"				"stickyjumper"
+			"item_logname"				"Sticky Jumper"
+			"item_iconname"				"Sticky Jumper"
 			"image_inventory"			"backpack/weapons/c_models/c_sticky_jumper/c_sticky_jumper"
 			"model_world"				"models/weapons/w_models/w_sticky_jumper.mdl"			
 			"model_player"				"models/weapons/v_models/v_sticky_jumper_demo.mdl"
@@ -5808,8 +5809,8 @@ Anything can be a weapon if you throw hard enough and scream loud enough!
 
 Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"brick"
-			"item_iconname"				"brick"
+			"item_logname"				"Brickhouse Beatdown"
+			"item_iconname"				"Brickhouse Beatdown"
 			"image_inventory"			"backpack/weapons/w_models/w_brick_old"
 			"model_world"				"models/weapons/w_models/w_brick_soldier.mdl"
 			"model_player"				"models/weapons/v_models/v_brick_demo.mdl"
@@ -5891,8 +5892,8 @@ That's gotta hurt in the morning.
 
 Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"brick"
-			"item_iconname"				"brick"
+			"item_logname"				"Brickhouse Beatdown"
+			"item_iconname"				"Brickhouse Beatdown"
 			"image_inventory"			"backpack/weapons/w_models/w_brick_old"
 			"model_world"				"models/weapons/w_models/w_brick_pyro.mdl"
 			"model_player"				"models/weapons/v_models/v_brick_demo.mdl"
@@ -5976,8 +5977,8 @@ Ach, ol' Bessie... split wide open many a skull a' those daft enough to be in me
 
 Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"brick"
-			"item_iconname"				"brick"
+			"item_logname"				"Brickhouse Beatdown"
+			"item_iconname"				"Brickhouse Beatdown"
 			"image_inventory"			"backpack/weapons/w_models/w_brick_old"
 			"model_world"				"models/weapons/w_models/w_brick_demo.mdl"
 			"model_player"				"models/weapons/v_models/v_brick_demo.mdl"
@@ -6062,8 +6063,8 @@ That's gotta hurt in the morning.
 
 Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"brick"
-			"item_iconname"				"brick"
+			"item_logname"				"Brickhouse Beatdown"
+			"item_iconname"				"Brickhouse Beatdown"
 			"image_inventory"			"backpack/weapons/w_models/w_brick_old"
 			"model_world"				"models/weapons/w_models/w_brick_heavy.mdl"
 			"model_player"				"models/weapons/v_models/v_brick_demo.mdl"
@@ -6154,8 +6155,8 @@ That's gotta hurt in the morning.
 
 Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"brick"
-			"item_iconname"				"brick"
+			"item_logname"				"Brickhouse Beatdown"
+			"item_iconname"				"Brickhouse Beatdown"
 			"image_inventory"			"backpack/weapons/w_models/w_brick_old"
 			"model_world"				"models/weapons/w_models/w_brick_engineer.mdl"
 			"model_player"				"models/weapons/v_models/v_brick_demo.mdl"
@@ -6251,8 +6252,8 @@ Heh. Well, now ya do.
 
 Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"brick"
-			"item_iconname"				"brick"
+			"item_logname"				"Brickhouse Beatdown"
+			"item_iconname"				"Brickhouse Beatdown"
 			"image_inventory"			"backpack/weapons/w_models/w_brick_old"
 			"model_world"				"models/weapons/w_models/w_brick_sniper.mdl"
 			"model_player"				"models/weapons/v_models/v_brick_sniper.mdl"
@@ -6341,8 +6342,8 @@ I shall name him... 'Burt'.
 
 Model by: 'Sims_Doc'
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"brick"
-			"item_iconname"				"brick"									
+			"item_logname"				"Brickhouse Beatdown"
+			"item_iconname"				"Brickhouse Beatdown"									
 			"image_inventory"			"backpack/weapons/w_models/w_brick_old"
 			"model_world"				"models/weapons/w_models/w_brick_civilian.mdl"
 			"model_player"				"models/weapons/v_models/v_brick_demo.mdl"
@@ -6429,8 +6430,8 @@ Weapon from: New Old Weapons Pack"
 			"item_description"			"'Put 'em up, pal!'
 
 Weapon from: New Old Weapons Pack"
-			"item_logname"				"dm_fists"
-			"item_iconname"				"dm_fists"
+			"item_logname"				"Knuckle Sandvich"
+			"item_iconname"				"Knuckle Sandvich"
 			"image_inventory"			"backpack/weapons/v_models/v_berserk"
 			"model_player"				"models/weapons/v_models/v_berserk.mdl"					// For Scout: Might need a new model? I can't find any GOOD ones though. Maybe Parkour Fortress fists? If the files even exist anymore.
 			"attach_to_hands"			"2"
@@ -6484,8 +6485,8 @@ so hard - you'll have a twitch!'
 
 Weapon from: New Old Weapons Pack
 Modified by: 'Reagy'"
-			"item_logname"				"dm_fists"
-			"item_iconname"				"dm_fists"
+			"item_logname"				"Drunkard Brawling"
+			"item_iconname"				"Drunkard Brawling"
 			"image_inventory"			"backpack/weapons/v_models/v_berserk"
 			"model_player"				"models/weapons/v_models/v_berserk.mdl"
 			"attach_to_hands"			"2"
@@ -6580,8 +6581,8 @@ Edited by: 'The One Of Wonders'"
 			"min_ilevel"				"1"
 			"max_ilevel"				"1"
 			"show_in_armory"			"1"
-			"item_logname"				"spy_chop"
-			"item_iconname"				"spy_chop"
+			"item_logname"				"Contract Killer"
+			"item_iconname"				"Contract Killer"
 			"image_inventory"			"backpack/workshop/player/items/spy/spy_maskless_bald/spy_maskless_bald"
 			"model_world"				"models/empty.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_spy_chop_new.mdl"
@@ -6674,6 +6675,7 @@ Edited by: 'The One Of Wonders'"
 			"item_class"				"tf_weapon_fists"
 			"item_type_name"			"#TF_Weapon_Fists"
 			"item_name"					"Fists"
+			"item_iconname"				"Fists"
 			"item_description"			"
 Come 'ere maggot, I want to beat you to death!
 
@@ -6734,8 +6736,8 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 			"min_ilevel"				"1"
 			"max_ilevel"				"1"
-			"item_logname"				"sniper_karate"
-			"item_iconname"				"sniper_karate"
+			"item_logname"				"Karate!"
+			"item_iconname"				"Karate!"
 			"show_in_armory"			"1"
 			"image_inventory"			"backpack/weapons/v_models/v_fist_heavy"
 			"model_player"				"models/weapons/custom/v_models/v_karate_sniper.mdl"
@@ -6799,8 +6801,8 @@ Weapon by: 'Reagy'"
 			"min_ilevel"				"1"
 			"max_ilevel"				"1"
 			"show_in_armory"			"1"
-			"item_logname"				"engineer_fists"
-			"item_iconname"				"engineer_fists"
+			"item_logname"				"Texas Strongmann"
+			"item_iconname"				"Texas Strongmann"
 			"image_inventory"			"backpack/workshop/player/items/engineer/c_buffengineer/c_buffengineer"
 			"model_player"				"models/weapons/custom/v_models/v_berserk_fists_engineer.mdl"
 			"model_world"               "models/player/items/custom/engineer/c_chad.mdl"
@@ -6889,8 +6891,8 @@ Weapon by: 'Reagy'"
 			"show_in_armory"			"1"												
 
 			"item_quality"				"rarity2"			
-			"item_logname"				"spy_ssa"
-			"item_iconname"				"spy_ssa"												
+			"item_logname"				"Pacificateur"
+			"item_iconname"				"Pacificateur"												
 			"item_name"					"Pacificateur" 								
 			"item_type_name"			"#TF_Weapon_Revolver" 												
 			"item_description"			"Weapon reloads rounds individually
@@ -6986,8 +6988,8 @@ Howdy, pardner.
 Model by: 'svdl'
 Animations by: 'Raptor Dan'
 Weapon by: 'Raptop Dan'"														
-			"item_logname"				"engineer_ssa"
-			"item_iconname"				"engineer_ssa"													
+			"item_logname"				"Peacemaker"
+			"item_iconname"				"Peacemaker"													
 			"image_inventory"			"backpack/weapons/c_models/c_colt_engineer/c_colt_engineer" 						
 			"model_world"				"models/weapons/c_models/c_colt_engineer/c_colt_engineer.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_peacemaker_engineer.mdl"		
@@ -7078,8 +7080,8 @@ For when you just need another minigun, but different
 
 Model by: 'Svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"gatling_shotgun"
-			"item_iconname"				"gatling_shotgun"
+			"item_logname"				"Tactigatling"
+			"item_iconname"				"Tactigatling"
 			"image_inventory"			"backpack/weapons/w_models/w_russian_riot"
 			"model_world"				"models/weapons/custom/c_models/c_russian_riot.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_tacgat_minigun.mdl"
@@ -7256,8 +7258,8 @@ More gun for your gun?
   
 Model by: 'FiveEyes'
 Weapon by: 'Reagy'"
-			"item_logname"				"trigun"
-			"item_iconname"				"trigun"
+			"item_logname"				"Cerberus"
+			"item_iconname"				"Cerberus"
 			"image_inventory"			"backpack/weapons/w_models/w_trigun"
 			"model_world"				"models/weapons/custom/c_models/c_trigun/c_trigun_new.mdl"
 			"model_player"				"models/weapons/custom/c_models/c_trigun/c_trigun_new.mdl"
@@ -7344,8 +7346,8 @@ Now this is a real bushman's modification.
 Model by: 'Nicolas'
 Weapon by: 'Reagy'
 Modified by: 'The One Of Wonders'"
-			"item_logname"				"bow_backwood"
-			"item_iconname"				"bow_backwood"
+			"item_logname"				"Backwood Modified Bow"
+			"item_iconname"				"Backwood Modified Bow"
 			"image_inventory"			"backpack/weapons/c_models/c_exploderbow/c_exploderbow"
 			"model_world"				"models/weapons/c_models/c_exploder_bow/c_exploder_bow.mdl"
 			"model_player"				"models/weapons/c_models/c_exploder_bow/c_exploder_bow.mdl"
@@ -7453,8 +7455,8 @@ Model edit by: 'Raptop Dan'
 Animations by: 'Raptor Dan'
 Cosmetics by: 'Greg' 'Colteh'
 Weapon by: 'Reagy'"
-			"item_logname"				"deagle_spy"
-			"item_iconname"				"deagle_spy"
+			"item_logname"				"Aimed Agent"
+			"item_iconname"				"Aimed Agent"
 			"image_inventory"			"backpack/weapons/w_models/w_deagle_new"
 			"model_world"				"models/weapons/custom/w_models/w_deagle.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_deagle_spy.mdl"
@@ -7549,8 +7551,8 @@ For when you don't need custom tooled cartridges to kill baby man
 
 Model by: 'Gadget'
 Weapon by: 'Reagy'"
-			"item_logname" 				"762_machinegun"
-			"item_iconname"				"762_machinegun"
+			"item_logname" 				"7.62mm Machine Gun"
+			"item_iconname"				"7.62mm Machine Gun"
 			"image_inventory"			"backpack/weapons/w_models/w_machinegun762"
 			"model_world"				"models/weapons/custom/c_models/c_machinegun.mdl"
 			"model_player"				"models/weapons/custom/c_models/c_machinegun.mdl"
@@ -7665,8 +7667,8 @@ Model edit by: 'DereBobblet'
 Animations from: Open Fortress - openfortress.fun
 Cosmetics by: 'CyanPlastic' 'Colteh' 'BE NICE 2 ME'
 Weapon by: 'Reagy'"
-			"item_logname"				"texas_doublebarrel"
-			"item_iconname"				"texas_doublebarrel"
+			"item_logname"				"Texas Two Step"
+			"item_iconname"				"Texas Two Step"
 			"image_inventory"			"backpack/weapons/w_models/w_supershot"
 			"model_world"				"models/weapons/custom/w_models/w_supershot_engineer.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_supershot_engineer_new.mdl"
@@ -7939,8 +7941,8 @@ Propain and Propane accessories
 
 Model by: 'Glitch'
 Weapon by: 'Reagy'"
-			"item_logname"				"propain"
-			"item_iconname"				"propain"
+			"item_logname"				"Propain"
+			"item_iconname"				"Propain"
 			"image_inventory"			"backpack/weapons/c_models/c_propain"
 			"model_world"				"models/weapons/custom/c_models/c_propain.mdl"
 			"model_player"				"models/weapons/custom/c_models/c_propain.mdl"
@@ -8047,8 +8049,8 @@ Thats a huge B!
 
 Model by: 'Reagy'
 Weapon by: 'Reagy'"
-			"item_logname" 				"big_boris"
-			"item_iconname"				"big_boris"
+			"item_logname" 				"Beeg Boris"
+			"item_iconname"				"Beeg Boris"
 			"image_inventory"			"backpack/weapons/c_models/c_boris"
 			"model_world"				"models/weapons/custom/c_models/c_boris.mdl"
 			"model_player"				"models/weapons/custom/c_models/c_boris.mdl"
@@ -8162,8 +8164,8 @@ Weapon by: 'Reagy'"
 
 Model hack by: 'Reagy'
 Weapon by: 'Reagy'"
-			"item_logname"				"trashcannon"
-			"item_iconname"				"trashcannon"
+			"item_logname"				"Dirty Bomb"
+			"item_iconname"				"Dirty Bomb"
 			"image_inventory"			"backpack/weapons/c_models/c_trashcannon"
 			"model_world"				"models/weapons/custom/c_models/c_trashcannon.mdl"
 			"model_player"				"models/weapons/custom/c_models/c_trashcannon.mdl"
@@ -8271,8 +8273,8 @@ Mean little buggers these are
   
 Model by: 'Reagy'
 Weapon by: 'Reagy'"																	
-			"item_logname"				"jarate_ants"
-			"item_iconname"				"jarate_ants"													
+			"item_logname"				"Ant-a-Jar"
+			"item_iconname"				"Ant-a-Jar"													
 			"image_inventory"			"backpack/weapons/c_models/antjar"
 			"model_world"				"models/weapons/custom/c_models/c_antjar.mdl"
 			"model_player"				"models/weapons/custom/c_models/c_antjar.mdl"
@@ -8364,17 +8366,20 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Arbalest's Bolter"
 			"item_type_name"			"Crossbow"
-			"item_description"			"
+			"item_description"			"Unscoped shots fire penetrating arrows
+Scopes shots fire highspeed bolts
+
 How does this work?
   
 Model by: 'Reagy'
+Animations by: 'Colrot'
 Weapon by: 'Reagy'"
-			"item_logname"				"rflxbow"
-			"item_iconname"				"rflxbow"
+			"item_logname"				"Arbalest's Bolter"
+			"item_iconname"				"Arbalest's Bolter"
 			"image_inventory"			"backpack/weapons/c_models/c_rflxbowl"
 			"model_world"				"models/weapons/custom/c_models/c_rflxbow.mdl"
-			"model_player"				"models/weapons/custom/c_models/c_rflxbow.mdl"
-			"attach_to_hands"			"1"
+			"model_player"				"models/weapons/custom/v_models/v_rflxbow.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"sniper"				"1"
@@ -8383,10 +8388,11 @@ Weapon by: 'Reagy'"
 			{
 				"class select override vcd"				"class_select_revrifle"	
 				"centerfire projectile"					"1"
-				"override projectile type"				"30"
+				"override projectile type"				"8"
 				"no damage falloff over distance"		"1"
 				"allowed in medieval mode"				"1"
 				"override projectile type scoped"       "30"
+				"mod sniper zoom fov override"			"45"
 			}
 			"attributes"
 			{
@@ -8405,15 +8411,35 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mod_sniper_soft_zoom"
 					"value"				"1"
 				}
-				"strange restriction type 1"
+				"aiming movespeed increased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"				"3.75"
+				}
+				"mod sniper zoom while jumping"
+				{
+					"attribute_class"	"mod_sniper_zoom_while_jumping"
+					"value"				"1"
+				}
+				"projectile penetration" 
+				{
+					"attribute_class"	"projectile_penetration"
+					"value"				"1"
+				}
+				"Projectile speed increased" 
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.5"
+					"value"				"2"
 				}
 				"damage bonus hidden"												
 				{
 					"attribute_class"	"mult_dmg"
 					"value"				"25.0"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.75"
 				}
 				"custom projectile model"
 				{
@@ -8456,7 +8482,7 @@ Weapon by: 'Reagy'"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 		
-			"item_slot"                 "primary"
+			"item_slot"                 "secondary"
 			"anim_slot"                 "secondary"
             "show_in_armory"			"1"
 
@@ -8472,8 +8498,8 @@ Model by: 'Aftroid'
 Animations by: 'Raptor Dan'
 Cosmetics by: 'Big Bob' 'Tabby'
 Weapon by: 'Reagy'"
-			"item_logname"				"bigiron"
-			"item_iconname"				"bigiron"
+			"item_logname"				"Big Iron"
+			"item_iconname"				"Big Iron"
 			"image_inventory"			"backpack/weapons/w_models/w_bigiron"
 			"model_world"				"models/weapons/custom/w_models/w_bigiron_engineer.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_bigiron_v2.mdl"
@@ -8578,8 +8604,8 @@ This ain't your woodcutters axe boyo
   
 Model by: 'IteGood'
 Weapon by: 'Reagy'"
-			"item_logname"				"battleaxe_ko"
-			"item_iconname"				"battleaxe_ko"
+			"item_logname"				"Battle Axe"
+			"item_iconname"				"Battle Axe"
 			"image_inventory"			"backpack/weapons/c_models/c_axe"
 			"model_world"				"models/weapons/custom/c_models/c_axe.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_axe.mdl"
@@ -8734,8 +8760,8 @@ Weapon by: 'Reagy'"
 			"item_description"			"
 Model by: 'heinousbanana'
 Weapon by: 'Reagy'"					
-			"item_logname"				"diythrower"
-			"item_iconname"				"diythrower"
+			"item_logname"				"Household Blazer"
+			"item_iconname"				"Household Blazer"
 			"image_inventory"			"backpack/weapons/c_models/c_improvised_imblazer"
 			"model_world"				"models/weapons/custom/c_models/c_improvised_imblazer.mdl"
 			"model_player"				"models/weapons/custom/c_models/c_improvised_imblazer.mdl"		
@@ -8851,8 +8877,8 @@ Weapon by: 'Reagy'"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 
-			"item_logname"				"m4_soldier"
-			"item_iconname"				"m4_soldier"
+			"item_logname"				"Fortunate Son"
+			"item_iconname"				"Fortunate Son"
 			"item_type_name"			"Assault Rifle"
 			"item_name"					"Fortunate Son"
 			"item_description"			"
@@ -8991,6 +9017,8 @@ Weapon by: 'Reagy'"
 			"propername"				"1"
 			"item_type_name"			"Rocket Jump Pack"
 			"item_name"					"Fly Boy"
+			"item_logname"				"Fly Boy"
+			"item_iconname"				"Fly Boy"
 			"item_description"			"Fires a short-duration blast that launches the Engineer in the direction they are aiming.
 Remember to jump before firing.
 
@@ -9193,7 +9221,9 @@ Item by: 'Reagy'"
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
-			"item_name"					"Slightly Immovable W.A.L.L"
+			"item_name"					"W.A.L.L"
+			"item_logname"				"W.A.L.L"
+			"item_iconname"				"W.A.L.L"
 			"item_type_name"			"SWAT Shield"
 			"item_description"			"
 Bulwark: On active: 60% passive damage resistance, improved crit and airblast resistance, zero capture rate.
@@ -9398,8 +9428,8 @@ Weapon by: 'Reagy'"
 
 			"item_quality"				"rarity2"
 
-			"item_logname"				"flare_launcher"
-			"item_iconname"				"flare_launcher"
+			"item_logname"				"Flare Launcher"
+			"item_iconname"				"Flare Launcher"
 			"item_type_name"			"Flare Gun"
 			"item_class"				"tf_weapon_rocketlauncher"
 			"item_description"			"This weapon can set other Pyros on fire
@@ -9555,8 +9585,8 @@ Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
 Weapon by: 'Reagy'"														
-			"item_logname"				"spas_soldier"
-			"item_iconname"				"spas"											
+			"item_logname"				"SPAS-12 (Soldier)"
+			"item_iconname"				"SPAS-12 (Soldier)"											
 			"image_inventory"			"backpack/weapons/w_models/w_spas" 						
 			"model_world"				"models/weapons/custom/w_models/w_spas_soldier.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_spas_soldier.mdl"			
@@ -9601,8 +9631,8 @@ Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
 Weapon by: 'Reagy'"													
-			"item_logname"				"spas_pyro"
-			"item_iconname"				"spas"											
+			"item_logname"				"SPAS-12 (Pyro)"
+			"item_iconname"				"SPAS-12 (Pyro)"											
 			"image_inventory"			"backpack/weapons/w_models/w_spas" 						
 			"model_world"				"models/weapons/custom/w_models/w_spas_soldier.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_spas_pyro.mdl"			
@@ -9647,8 +9677,8 @@ Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
 Weapon by: 'Reagy'"													
-			"item_logname"				"spas_heavy"
-			"item_iconname"				"spas"											
+			"item_logname"				"SPAS-12 (Heavy)"
+			"item_iconname"				"SPAS-12 (Heavy)"											
 			"image_inventory"			"backpack/weapons/w_models/w_spas" 						
 			"model_world"				"models/weapons/custom/w_models/w_spas_soldier.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_spas_heavy.mdl"			
@@ -9694,8 +9724,8 @@ Not sure how it ended up there...
 Model by: 'Sparkwire' 'Svdl'
 Cosmetics by: 'NeoDement' 'xbox 720' 'BE NICE 2 ME'
 Weapon by: 'Reagy'"														
-			"item_logname"				"spas_engineer"
-			"item_iconname"				"spas"											
+			"item_logname"				"SPAS-12 (Engineer)"
+			"item_iconname"				"SPAS-12 (Engineer)"											
 			"image_inventory"			"backpack/weapons/w_models/w_spas" 						
 			"model_world"				"models/weapons/custom/w_models/w_spas_soldier.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_spas_engineer.mdl"	
@@ -9748,8 +9778,8 @@ Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
 Weapon by: 'Reagy'"													
-			"item_logname"				"spas_scout"
-			"item_iconname"				"spas"											
+			"item_logname"				"SPAS-12 (Scout)"
+			"item_iconname"				"SPAS-12 (Scout)"											
 			"image_inventory"			"backpack/weapons/w_models/w_spas" 						
 			"model_world"				"models/weapons/custom/w_models/w_spas_scout.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_spas_pyro.mdl"			
@@ -9841,8 +9871,8 @@ Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
 Weapon by: 'Reagy'"														
-			"item_logname"				"spas_medic"
-			"item_iconname"				"spas"											
+			"item_logname"				"SPAS-12 (Medic)"
+			"item_iconname"				"SPAS-12 (Medic)"											
 			"image_inventory"			"backpack/weapons/w_models/w_spas" 						
 			"model_world"				"models/weapons/custom/w_models/w_spas_medic.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_spas_pyro.mdl"
@@ -9889,8 +9919,8 @@ Not sure how it ended up there...
 
 Model by: 'Sparkwire' 'Svdl'
 Weapon by: 'Reagy'"														
-			"item_logname"				"spas_sniper"
-			"item_iconname"				"spas"											
+			"item_logname"				"SPAS-12 (Sniper)"
+			"item_iconname"				"SPAS-12 (Sniper)"											
 			"image_inventory"			"backpack/weapons/w_models/w_spas" 						
 			"model_world"				"models/weapons/custom/w_models/w_spas_sniper.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_spas_pyro.mdl"			
@@ -9941,8 +9971,8 @@ Not sure how it ended up there...
 Model by: 'Sparkwire' 'Svdl'
 Cosmetic by: 'Suomimies55'
 Weapon by: 'Reagy'"														
-			"item_logname"				"spas_civ"
-			"item_iconname"				"spas"											
+			"item_logname"				"SPAS-12 (Civilian)"
+			"item_iconname"				"SPAS-12 (Civilian)"											
 			"image_inventory"			"backpack/weapons/w_models/w_spas" 						
 			"model_world"				"models/weapons/custom/w_models/w_spas_civ.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_spas_pyro.mdl"
@@ -10087,19 +10117,19 @@ Item by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			
 			"show_in_armory"			"1"
-			"item_logname"				"taucannon_soldier"
-			"item_iconname"				"taucannon"
+			"item_logname"				"Gauss Gun"
+			"item_iconname"				"Gauss Gun"
 			"item_description"			"Caution: Do not overcharge!
 
 Put that down, it's a prototype!
   
 Model by: 'Choev'
-Animations by: 'Kylul'
+Animations by: 'Raptor Dan'
 Weapon by: 'Reagy'"
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/w_models/w_taucannon"
 			"model_world"				"models/weapons/custom/w_models/w_taucannon.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_taucannon.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_taucannon_new.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -10202,6 +10232,8 @@ Weapon by: 'Reagy'"
 
 			"propername"				"1"
 			"item_name"					"Hell Barrier"
+			"item_logname"				"Hell Barrier"
+			"item_iconname"				"Hell Barrier"
 			"item_type_name"			"Energy Shield"
 			"item_description"			"Mouse 2: Perform a short charge to deal high impact damage! (15 sec cooldown)
   
@@ -10291,8 +10323,8 @@ Let me help you to see, Slayer.
   
 Model by: 'Choev'
 Weapon by: 'Reagy'"
-			"item_logname"				"crucible_axe"
-			"item_iconname"				"crucible_axe"
+			"item_logname"				"Marauder's Axe"
+			"item_iconname"				"Marauder's Axe"
 			"image_inventory"			"backpack/weapons/w_models/w_crucible_axe"
 			"model_world"				"models/weapons/custom/c_models/c_crucible_axe.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_crucible_axe.mdl"
@@ -10418,8 +10450,8 @@ Rip and tear, until it is done!
 Model by: 'Choev'
 Cosmetic by: 'emrfish6' 'frying dutchman'
 Weapon by: 'Reagy'"
-			"item_logname"				"crucible_sword"
-			"item_iconname"				"crucible_sword"
+			"item_logname"				"Crucible Long Sword"
+			"item_iconname"				"Crucible Long Sword"
 			"image_inventory"			"backpack/weapons/w_models/w_crucible_longsword"
 			"model_world"				"models/weapons/custom/c_models/c_crucible_longsword.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_crucible_longsword_v6.mdl"
@@ -10568,8 +10600,8 @@ I'M IN NEED OF MEDICAL ATTENTION!
 Model from: Open Fortress - openfortress.fun
 Cosmetic by: 'FiveEyes' 'Stev the Recalcitrant Epizeuxis' 'Sims_doc'
 Weapon by: 'Reagy'"
-			"item_logname"				"medkit"
-			"item_iconname"				"medkit"
+			"item_logname"				"Medical Kit"
+			"item_iconname"				"Medical Kit?"
 			"image_inventory"			"backpack/weapons/w_models/w_classic_medkit"
 			
 			"image_inventory_size_w"	"128"
@@ -10654,8 +10686,8 @@ Model from: Open Fortress - openfortress.fun
 Model edit by: 'Majro'
 Cosmetic by: 'FiveEyes' 'Stev the Recalcitrant Epizeuxis' 'Sims_doc'
 Weapon by: 'Reagy'"
-			"item_logname"				"medkit"
-			"item_iconname"				"medkit"
+			"item_logname"				"Medical Kit"
+			"item_iconname"				"Medical Kit?"
 			"image_inventory"			"backpack/weapons/w_models/w_classic_medkit"
 			
 			"image_inventory_size_w"	"128"
@@ -10822,8 +10854,8 @@ Ha! now this is a weapon made for Heavy!
   
 Model by: 'Snood'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"m2hb_heavy"
-			"item_iconname"				"m2hb_heavy"
+			"item_logname"				"Oppressive Force"
+			"item_iconname"				"Oppressive Force"
 			"image_inventory"			"backpack/weapons/c_models/c_m2heavy/c_m2heavy"
 			"model_world"				"models/weapons/c_models/c_m2heavy/c_m2heavy.mdl"
 			"model_player"				"models/weapons/c_models/c_m2heavy/c_m2heavy.mdl"
@@ -10948,8 +10980,8 @@ Sometimes you question your motivations, but the rewards are worth it.
 
 Model by: 'spike nitros'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"sacrifice_blade"
-			"item_iconname"				"sacrifice_blade"
+			"item_logname"				"Cutting Devotion"
+			"item_iconname"				"Cutting Devotion"
 			"image_inventory"			"backpack/weapons/c_models/c_rapier"
 			"model_world"				"models/workshop/weapons/c_models/c_rapier/c_rapier.mdl"		
 			"model_player"				"models/workshop/weapons/c_models/c_rapier/c_rapier.mdl"
@@ -11042,8 +11074,8 @@ Fighting is tough business, sometimes you just feel extra stabby.
   
 Model by: '[N-Cognito]'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"wonderland_knife"
-			"item_iconname"				"wonderland_knife"
+			"item_logname"				"Proof of Authority"
+			"item_iconname"				"Proof of Authority"
 			"image_inventory"			"backpack/weapons/c_models/c_xms_cold_shoulder/c_commando"
 			"model_world"				"models/workshop/weapons/c_models/c_xms_cold_shoulder/c_commando.mdl"		
 			"model_player"				"models/workshop/weapons/c_models/c_xms_cold_shoulder/c_commando.mdl"
@@ -11150,8 +11182,8 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 
-			"item_logname"				"bar_soldier"
-			"item_iconname"				"bar"
+			"item_logname"				"BAR Fighter"
+			"item_iconname"				"BAR Fighter"
 			"item_type_name"			"Automatic Rifle"
 			"item_name"					"BAR Fighter"
 			"item_description"			"
@@ -11306,8 +11338,8 @@ Model edit by: 'Raptop Dan'
 Animations by: 'Raptor Dan'
 Cosmetics by: 'Big Bob' 'Tabby' 'Mr.Gibbly' 'Ertz'
 Weapon by: 'Reagy'"
-			"item_logname"				"jollyrancher"
-			"item_iconname"				"jollyrancher"
+			"item_logname"				"Jolly Rancher"
+			"item_iconname"				"Jolly Rancher"
 			"image_inventory"			"backpack/weapons/w_models/w_leverrifle_engineer_new"
 			"model_world"				"models/weapons/custom/w_models/w_leverrifle_engineer_new.mdl"					
 			"model_player"				"models/weapons/custom/v_models/v_jolly_rancher.mdl"
@@ -11405,8 +11437,8 @@ Oi oi oi what's all this then?
 
 Model by: 'Elbagast'
 Weapon by: 'Reagy'"
-			"item_logname"				"democop_melee"
-			"item_iconname"				"democop_melee"
+			"item_logname"				"Bobby's Baton"
+			"item_iconname"				"Bobby's Baton"
 			"image_inventory"			"backpack/weapons/w_models/w_democop_stick"
 			"model_world"				"models/weapons/custom/c_models/c_democop_stick.mdl"
 			"model_player"				"models/weapons/custom/c_models/c_democop_stick.mdl"
@@ -11477,8 +11509,8 @@ Just you try and bloody set up your toy factory now!
 
 Model by: 'cobalt'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"building_grenadelauncher"
-			"item_iconname"				"building_grenadelauncher"
+			"item_logname"				"Trench Breaker"
+			"item_iconname"				"Trench Breaker"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_trenchlauncher/c_trenchlauncher"
 			"model_world"				"models/workshop/weapons/c_models/c_trenchlauncher/c_trenchlauncher.mdl"
 			"model_player"				"models/workshop/weapons/c_models/c_trenchlauncher/c_trenchlauncher.mdl"
@@ -11556,8 +11588,8 @@ Keep yer distance so I can shoot you properly!
 
 Model by: 'cobalt'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"fightmaker_demoman"
-			"item_iconname"				"fightmaker_demoman"
+			"item_logname"				"Combat Control"
+			"item_iconname"				"Combat Control"
 			"image_inventory"			"backpack/weapons/w_models/w_flechettegun"
 			"model_world"				"models/weapons/w_models/w_tommysticky.mdl"
 			"model_player"				"models/weapons/v_models/v_tommysticky_demo.mdl"
@@ -11657,8 +11689,8 @@ No amount of scrap metal will save you from this!
 
 Model by: 'grampa' soldier'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"bigger_stick"
-			"item_iconname"				"bigger_stick"
+			"item_logname"				"Bigger Stick"
+			"item_iconname"				"Bigger Stick"
 			"image_inventory"			"backpack/weapons/c_models/c_biggerstick"
 			"model_world"				"models/weapons/c_models/c_bigger_stick/c_bigger_stick.mdl"
 			"model_player"				"models/weapons/v_models/v_bigger_stick.mdl"
@@ -11779,8 +11811,8 @@ Now this is my greatest weapon experiment yet! Now who goes first?
 
 Model by: 'Hau'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"heavy_syringegun"
-			"item_iconname"				"heavy_syringegun"
+			"item_logname"				"Practitioner's Pride"
+			"item_iconname"				"Practitioner's Pride"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_syringe_shotgun/c_syringe_shotgun"
 			"model_world"				"models/workshop/weapons/c_models/c_syringe_shotgun/c_syringe_shotgun.mdl"
 			"model_player"				"models/workshop/weapons/c_models/c_syringe_shotgun/c_syringe_shotgun.mdl"
@@ -11895,8 +11927,8 @@ Weapon by: 'The One Of Wonders'"
 
 Model by: 'Blase005'
 Weapon by: 'Majro'"
-			"item_logname"					"dynamites_frag"
-			"item_iconname"					"mirv_bomb"
+			"item_logname"					"Caber Toss"
+			"item_iconname"					"Caber Toss"
 			"image_inventory"				"backpack/weapons/w_models/w_dynamitesfrag"
 			
 			"image_inventory_size_w" "128"
@@ -11997,8 +12029,8 @@ The hell's this Baseball knock-off?
 
 Model by: 'Haau'
 Weapon by: 'Majro'"
-			"item_logname"				"sandmate"
-			"item_iconname"				"sandmate"
+			"item_logname"				"Sandmate"
+			"item_iconname"				"Sandmate"
 			"image_inventory"			"backpack/weapons/c_models/c_sandmate/c_sandmate"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
@@ -12158,8 +12190,8 @@ Item by: 'Majro'"
 Don't touch me, underpaid scum!
 
 Weapon by: 'Majro'"													
-			"item_logname"				"shove"												
-			"item_iconname"				"shove"												
+			"item_logname"				"Backhand"												
+			"item_iconname"				"Backhand"												
 			"image_inventory"			"backpack/weapons/v_models/v_shove/v_shove" 						
 			"model_world"				"models/weapons/v_models/v_shove_v2.mdl"					
 			"model_player"				"models/weapons/v_models/v_shove_v2.mdl"				
@@ -12251,8 +12283,8 @@ Weapon by: 'Majro'"
 			"item_description"			"
 Model by: 'Ona', 'Flubbman' and 'Sedimentaryocks'
 Weapon by: 'Majro'"
-			"item_logname"				"polar_iceaxe"
-			"item_iconname"				"polar_iceaxe"
+			"item_logname"				"Glacial Gouger"
+			"item_iconname"				"Glacial Gouger"
 			"image_inventory"			"backpack/weapons/c_models/c_polar_iceaxe/c_polar_iceaxe"
 			"model_player"				"models/weapons/c_models/c_polar_iceaxe/c_polar_iceaxe.mdl"
 			"attach_to_hands"			"1"
@@ -12321,8 +12353,8 @@ Weapon by: 'Majro'"
 			//"propername"				"1"			//Better with "The" or not? You decide.
 			"item_quality"			"rarity2"	
 			
-			"item_logname"				"fumblers_fanfare_civ"
-			"item_iconname"				"fumblers_fanfare_civ"
+			"item_logname"				"Blowhard"
+			"item_iconname"				"Blowhard"
 			
 			"item_description"			"Alt-Fire: Release a blast of air that pushes enemies and projectiles, and extinguishes teammates that are on fire.
 
@@ -12500,8 +12532,8 @@ Yer marked for demolition now, lad.
 
 Model by: 'Elbagast'
 Weapon by: 'Majro'"																				
-			"item_logname"				"ultimatum"
-			"item_iconname"				"ultimatum"
+			"item_logname"				"Ultimatum"
+			"item_iconname"				"Ultimatum"
 			"image_inventory"			"backpack/weapons/w_models/w_ultimatum"
 
 			"model_player"				"models/weapons/c_models/c_ultimatum/c_ultimatum.mdl"
@@ -12617,8 +12649,8 @@ Weapon by: 'Majro'"
 Model by: 'Amouro'
 Weapon by: 'Majro'
 Reworked by: 'Colrot'"
-			"item_logname"				"whine_opener"
-			"item_iconname"				"whine_opener"
+			"item_logname"				"Whine Opener"
+			"item_iconname"				"Whine Opener"
 			"image_inventory"			"backpack/weapons/c_models/c_corkscrew/c_corkscrew"
 			"model_player"				"models/weapons/c_models/c_corkscrew/c_corkscrew.mdl"
 			"attach_to_hands"			"1"
@@ -12698,8 +12730,8 @@ Old warfare methods stand the test of time, this is no exception.
 Model by: 'goober of the goof'
 Weapon by: 'Majro'
 Name by: 'The One of Wonders'"
-			"item_logname"				"crossbow_pyro"
-			"item_iconname"				"crossbow_pyro"
+			"item_logname"				"Searing Skewer"
+			"item_iconname"				"Searing Skewer"
 			"image_inventory"			"backpack/weapons/c_models/c_crossbow_pyro/c_crossbow_pyro"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
@@ -12767,8 +12799,8 @@ Edited by: 'Reagy'"
 			"anim_slot"                 "secondary"
 			"item_quality"				"unique"
 
-			"item_logname"				"civ_shot"
-			"item_iconname"				"civ_shot"	
+			"item_logname"				"Shot"
+			"item_iconname"				"Shot"	
 
 			"image_inventory"			"backpack/weapons/w_models/w_shot"
 			"image_inventory_size_w"	"128"
@@ -12857,8 +12889,8 @@ Edited by: 'Reagy'"
 			"anim_slot"                 "secondary"
 			"item_quality"				"unique"	
 
-			"item_logname"				"civ_gun"
-			"item_iconname"				"civ_gun"	
+			"item_logname"				"Gun"
+			"item_iconname"				"Gun"	
 
 			"image_inventory"			"backpack/weapons/c_models/c_desertrose"
 			"image_inventory_size_w"	"128"
@@ -12971,8 +13003,8 @@ Edited by: 'Reagy'"
 			"item_slot"					"melee"
 			"item_quality"				"unique"
 
-			"item_logname"				"civ_fists"
-			"item_iconname"             "fists"			
+			"item_logname"				"Armstrongs"
+			"item_iconname"             "Armstrongs"			
 
 			"image_inventory"			"backpack/weapons/v_models/v_fist_heavy"
 			"image_inventory_size_w"	"128"
@@ -13030,8 +13062,8 @@ Edited by: 'Reagy'"
 			"item_slot"					"melee"
 			"item_quality"				"unique"
 
-			"item_logname"				"civ_wrench"
-			"item_iconname"				"civ_wrench"	
+			"item_logname"				"Spanner"
+			"item_iconname"				"Spanner"	
 
 			"image_inventory"			"backpack/weapons/w_models/w_civwrench"
 			"image_inventory_size_w"	"128"
@@ -13078,8 +13110,8 @@ Edited by: 'Reagy'"
 			"item_slot"					"melee"
 			"item_quality"				"unique"
 
-			"item_logname"				"civ_whip"
-			"item_iconname"				"civ_whip"	
+			"item_logname"				"Positive Reinforcement"
+			"item_iconname"				"Positive Reinforcement"	
 
 			"image_inventory"			"backpack/weapons/w_models/w_whip"
 			"image_inventory_size_w"	"128"
@@ -13142,8 +13174,8 @@ Won't you look at this marvelous beauty of a gun! I'm almost afraid to damage it
 
 Model by: 'Colteh, Rev'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"civ_inquisitor"
-			"item_iconname"				"civ_inquisitor"
+			"item_logname"				"Inquisitor"
+			"item_iconname"				"Inquisitor"
 			"image_inventory"			"backpack/weapons/c_models/c_inquisitor/c_inquisitor"
 			"model_world"				"models/weapons/w_models/w_inquisitor_civilian.mdl"				
 			"model_player"				"models/weapons/v_models/v_inquisitor_civilian.mdl"		
@@ -13225,8 +13257,8 @@ Weapon by: 'Reagy'"
 			"item_slot"					"melee"
 			"item_quality"				"rarity3"
 
-			"item_logname"				"dosh"
-			"item_iconname"             "dosh"			
+			"item_logname"				"Lord of the House"
+			"item_iconname"             "Lord of the House"			
 
 			"image_inventory"			"backpack/weapons/c_models/c_cashgrab"
 			"image_inventory_size_w"	"128"
@@ -13335,8 +13367,8 @@ Kicks like a mule, kills my enemies harder!
 
 Model by: 'DeRosaJ'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"supermag_scout"
-			"item_iconname"				"supermag_scout"
+			"item_logname"				"Elimination Imperative"
+			"item_iconname"				"Elimination Imperative"
 			"image_inventory"			"backpack/weapons/c_models/c_supermagnum_scout/c_supermagnum_scout"
 			"model_world"				"models/weapons/c_models/c_supermagnum_scout/c_supermagnum_scout.mdl"
 			"model_player"				"models/weapons/v_models/v_supermagnum_scout/v_supermagnum_scout.mdl"
@@ -13451,13 +13483,13 @@ Weapon by: 'The One Of Wonders'"
 			
 			"item_quality"				"rarity3"
 			
-			"item_slot"				"secondary"
+			"item_slot"					"secondary"
 			"item_class"				"tf_weapon_shotgun_soldier"
-			"item_logname"				"revolver_shotgun"
-			"item_iconname"				"revolver_shotgun"
+			"item_logname"				"Buck's Banter"
+			"item_iconname"				"Buck's Banter"
 			"item_type_name"			"#TF_Weapon_shotgun"
-			"item_name"				"Buck's Banter"
-			"anim_slot"				"primary"
+			"item_name"					"Buck's Banter"
+			"anim_slot"					"primary"
 			"item_description"			"
 Oooh ya wouldn't want to know what goes on down in that cylinder mate - It's far worse than you'd expect from a gun like this.
 
@@ -13551,15 +13583,15 @@ Edited by: 'The One Of Wonders'"
 			
 			"item_class"				"tf_weapon_wrench"
 			"propername"				"1"
-			"item_name"				"Gaelic Gat"
+			"item_name"					"Gaelic Gat"
 			"item_type_name"			"...Pistol?"
 			"item_description"			"
 Just because it doesn't work doesn't mean it isn't a weapon, son.
 
 Model by: 'G o a t K i n g'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
-			"item_logname"				"glock_melee_soldier"
-			"item_iconname"				"glock_melee"
+			"item_logname"				"Gaelic Gat (Soldier)"
+			"item_iconname"				"Gaelic Gat (Soldier)"
 			"image_inventory"			"backpack/weapons/w_models/w_tfc_glock"
 			"model_world"				"models/weapons/w_models/w_glock_melee.mdl"
 			"model_player"				"models/weapons/v_models/v_glock_melee_soldier.mdl"
@@ -13649,8 +13681,8 @@ This weapon feels strange, like it came from one of my predecessors.
 
 Model by: 'Svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"tfc_minigun"
-			"item_iconname" 			"tfc_minigun"
+			"item_logname" 				"Assault Cannon"
+			"item_iconname" 			"Assault Cannon"
 			"image_inventory"			"backpack/weapons/c_models/c_tfc_minigun/c_tfc_minigun"
 			"model_world"				"models/weapons/w_models/w_tfc_minigun.mdl"
 			"model_player"				"models/weapons/v_models/v_tfc_minigun_heavy.mdl"
@@ -13744,7 +13776,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_logname"				"ambassador"
 			"item_iconname"				"ambassador"
 			"item_type_name"			"#TF_Weapon_Revolver"
-			"item_name"				"Ambassador"
+			"item_name"					"Ambassador"
 			"item_description"			"This weapon has no damage falloff
 
 Engravings give no tactical advantage whatsoever, but they look cool and that's all that matters.
@@ -13846,21 +13878,20 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 //--------------------------
 		"9023"
 		{
-			"name"						"Striker's Shank"
-			"prefab"					"weapon_club"
+			"name"							"Striker's Shank"
+			"prefab"						"weapon_club"
 			
 			
-			"item_quality"				"rarity3"
+			"item_quality"					"rarity3"
 			
-			"show_in_armory"			"1"
+			"show_in_armory"				"1"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
-//			"item_class"				"tf_weapon_fists"
-			"item_logname"				"combat_knife"
-			"item_iconname"				"combat_knife"
-			"item_type_name"			"#TF_Weapon_Knife"
-			"item_name"				"Striker's Shank"
-			"item_description"			"This weapon cannot Backstab
+			"item_logname"					"Striker's Shank"
+			"item_iconname"					"Striker's Shank"
+			"item_type_name"				"#TF_Weapon_Knife"
+			"item_name"						"Striker's Shank"
+			"item_description"				"This weapon cannot Backstab
 
 A standard military combat knife, 
 not ideal for fightin', but it works.
@@ -13870,21 +13901,21 @@ not ideal for fightin', but it works.
 Model from: Final Combat
 Animations by: 'DudeTheNinja'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
-			"propername"				"1"
-			"image_inventory"			"backpack/weapons/w_models/w_combat_knife"
-			"model_world"				"models/weapons/w_models/w_combat_knife.mdl"
-			"model_player"				"models/weapons/v_models/v_combat_knife_sniper.mdl"
-			"attach_to_hands"			"2"
+			"propername"					"1"
+			"image_inventory"				"backpack/weapons/w_models/w_combat_knife"
+			"model_world"					"models/weapons/w_models/w_combat_knife.mdl"
+			"model_player"					"models/weapons/v_models/v_combat_knife_sniper.mdl"
+			"attach_to_hands"				"2"
 			"used_by_classes"
 			{
-				"sniper"                "1"
+				"sniper"               		"1"
 			}
 			"attributes"
 			{
 				"provide on active"
 				{
 					"attribute_class"	"provide_on_active"
-					"value" 		"1"
+					"value" 			"1"
 				}
 				"move speed bonus"
 				{
@@ -13909,11 +13940,11 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			}
 			"visuals"
 			{
-//				"sound_deploy"			"Weapon_Sknife.Draw"
-				"sound_melee_miss"		"Weapon_Sknife.Miss"
-				"sound_melee_hit"		"Weapon_Sknife.HitFlesh"
+//				"sound_deploy"				"Weapon_Sknife.Draw"
+				"sound_melee_miss"			"Weapon_Sknife.Miss"
+				"sound_melee_hit"			"Weapon_Sknife.HitFlesh"
 				"sound_melee_hit_world"		"Weapon_Sknife.HitWorld"
-				"sound_burst"			"Weapon_Sknife.MissCrit"
+				"sound_burst"				"Weapon_Sknife.MissCrit"
 			}
 		}
 //---------------------------------
@@ -13969,8 +14000,8 @@ The best medicine is laughter they say, well I sure am laughing with this in my 
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"tfc_syringegun"
-			"item_iconname"				"tfc_syringegun"
+			"item_logname"				"Super Nail Gun"
+			"item_iconname"				"Super Nail Gun"
 			"image_inventory"			"backpack/weapons/w_models/w_tfc_syringegun"
 			"model_world"				"models/weapons/w_models/w_tfc_syringegun.mdl"
 			"model_player"				"models/weapons/v_models/v_tfc_syringegun_medic.mdl"
@@ -14075,15 +14106,15 @@ Weapon by: 'The One Of Wonders'"
 			"anim_slot"                 "secondary"
 			
 			"propername"				"1"
-			"item_name"					"T.R.A.N.Q." 									// Still can't think of its acronym
+			"item_name"					"T.R.A.N.Q" 									// Still can't think of its acronym
 			"item_type_name"			"#TF_Weapon_Tranq"
 			"item_description"			"Fires tranquilizer darts
 
 For stopping a Heavy in their tracks.
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
-			"item_logname"				"military_pistol_tranq"
-			"item_iconname"				"military_pistol_tranq"
+			"item_logname"				"T.R.A.N.Q"
+			"item_iconname"				"T.R.A.N.Q"
 			"image_inventory"			"backpack/weapons/w_models/w_military_pistol"
 			"model_world"				"models/weapons/w_models/w_military_pistol_civ_new.mdl"
 			"model_player"				"models/weapons/v_models/v_military_pistol_engineer.mdl"
@@ -14194,8 +14225,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 Protect and hit.
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
-			"item_logname"				"baton"
-			"item_iconname"				"baton"
+			"item_logname"				"Healer's Shield"
+			"item_iconname"				"Healer's Shield"
 			"extra_wearable"			"models/player/items/medic/batonshield_shield.mdl"
 			"image_inventory"			"backpack/weapons/w_models/w_batonshield"
 			"model_world"				"models/weapons/w_models/w_batonshield.mdl"
@@ -14245,7 +14276,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			}	
 			"visuals"
 			{
-				"sound_melee_hit"		"Weapon_BaseballBat.HitFlesh"
+				"sound_melee_hit"			"Weapon_BaseballBat.HitFlesh"
 				"sound_melee_hit_world"		"Weapon_BaseballBat.HitWorld"
 			}
 			"mouse_pressed_sound"		"#ui/item_wood_pole_pickup.wav"
@@ -14302,10 +14333,10 @@ Model by: 'Chickenman' 'Wendy' 'Extra Ram'
 Animations by: 'Raptor Dan'
 Original weapon from: Tangerine Paint and Grunt's Weapon Addons
 Modified by: 'Reagy'"
-			"item_logname"				"spistol_spy"
-			"item_iconname"				"spistol_spy"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
+			"item_logname"				"Peebee and Jay"
+			"item_iconname"				"Peebee and Jay"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
 			"image_inventory"			"backpack/weapons/w_models/w_spistol"
 			"model_world"				"models/weapons/w_models/w_spistol_spy.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_spistol_spy_v2.mdl"
@@ -14576,8 +14607,8 @@ Sometimes I'm able to spin the lever on the bugger... but I just can't get it ri
 Model by: 'Svdl'
 Animations by: 'Sparkwire'
 Weapon from: Tangerine Paint and Grunt's Weapon Addons" 
-			"item_logname"				"lever_carbine"
-			"item_iconname"				"wa2k_marker"
+			"item_logname"				"Canberra Carbine"
+			"item_iconname"				"Canberra Carbine"
 			"image_inventory"			"backpack/weapons/w_models/w_canberra_carbine"
 			"model_world"				"models/weapons/w_models/w_canberra_carbine.mdl"
 			"model_player"				"models/weapons/v_models/v_canberra_carbine_sniper.mdl"
@@ -14685,8 +14716,8 @@ What separates Snipers from regular wankers is we use whatever gun we get.
 Model originally by: 'Rain*'
 Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"m14"
-			"item_iconname"				"m14"
+			"item_logname"				"County Killer"
+			"item_iconname"				"County Killer"
 			"image_inventory"			"backpack/weapons/w_models/w_m14"
 			"model_world"				"models/weapons/w_models/w_m14.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_m14_sniper_v2.mdl"
@@ -14815,14 +14846,14 @@ Weapon by: 'The One Of Wonders'"
 //--------------------------------
 		"9062"
 		{
-			"name"						"Massachusetts Marauder"
+			"name"						"Boston Brutalizer"
 			"prefab"					"weapon_bat"
 			"show_in_armory"			"1"
 			
 			"item_quality"				"rarity3"
 			
-			"item_logname"				"scout_machete"
-			"item_iconname"				"scout_machete"	
+			"item_logname"				"Boston Brutalizer"
+			"item_iconname"				"Boston Brutalizer"	
 			"propername"				"1"
 			"item_name"					"Boston Brutalizer"
 			"item_type_name"			"Machete"
@@ -15027,8 +15058,8 @@ This wrench replaces your regular Sentry Gun with a Combat Mini-Sentry Gun
 'I'm done playin' games with you, boy.'
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
-			"item_logname"				"masterkey"
-			"item_iconname"				"masterkey"
+			"item_logname"				"Masterkey"
+			"item_iconname"				"Masterkey"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"104"
 			"image_inventory"			"backpack/weapons/w_models/w_masterkey_new"
@@ -15160,8 +15191,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 Look ma, I'm playin' with fire!
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
-			"item_logname"				"scout_torch"
-			"item_iconname"				"scout_torch"
+			"item_logname"				"Firestarter"
+			"item_iconname"				"Firestarter"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack/weapons/w_models/w_torch"
@@ -15272,8 +15303,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 You maggots better run before I pump your asses full of lead!
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons"
-			"item_logname"				"flak_vest"
-			"item_iconname"				"what"
+			"item_logname"				"Flak Vest"
+			"item_iconname"				"Flak Vest"
 			"image_inventory"			"backpack/workshop/player/items/soldier/spr17_flakcatcher/spr17_flakcatcher"
 			"model_player"				"models/workshop/player/items/soldier/spr17_flakcatcher/spr17_flakcatcher.mdl"
 			"used_by_classes"
@@ -15420,7 +15451,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 
 			"propername"				"1"
 			"item_quality"				"rarity3"
-			"item_logname"				"totenwerfer"
+			"item_logname"				"Totenwerfer"
+			"item_iconname"				"Totenwerfer"
 			"item_name"					"Totenwerfer"
 			"item_type_name"			"#TF_Weapon_Medigun"
 			"item_description"			"ÜberCharge increases healing to 300% and grants immunity to movement-impairing effects
@@ -15502,8 +15534,8 @@ Weapon by: 'Noclue'"
 		{
 		   "name"						"TF_WEAPON_FUNNYBAT"
 			"prefab"					"weapon_bat"
-			"item_logname"				"deflect_bat"
-			"item_iconname"				"deflect_bat"
+			"item_logname"				"Homerun"
+			"item_iconname"				"Homerun"
 			"show_in_armory"			"1"
 			
 			"item_name"					"Homerun"
@@ -15535,12 +15567,11 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"deflect_on_swing"
 					"value"				"1"
 				}
-// Swing feels more challenging for some reason, keep this commented if wanna change in future
-//				"deflect on smack hidden"
-//				{
-//					"attribute_class"	"deflect_on_smack"
-//					"value"				"1"
-//				}				
+				"deflect on smack hidden"
+				{
+					"attribute_class"	"deflect_on_smack"
+					"value"				"1"
+				}				
 			    "damage bonus"																
 				{
 					"attribute_class"	"mult_dmg"
@@ -15609,7 +15640,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
-			"item_logname"				"ghost_wtf"
+			"item_logname"				"Geared Up Ghost (Scout)"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack/player/items/all_class/pet_robro"
@@ -15668,7 +15699,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
-			"item_logname"				"ghost_wtf"
+			"item_logname"				"Geared Up Ghost (Soldier)"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack/player/items/all_class/pet_robro"
@@ -15719,7 +15750,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
-			"item_logname"				"ghost_wtf"
+			"item_logname"				"Geared Up Ghost (Pyro)"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack/player/items/all_class/pet_robro"
@@ -15768,7 +15799,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
-			"item_logname"				"ghost_wtf"
+			"item_logname"				"Geared Up Ghost (Demoman)"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack/player/items/all_class/pet_robro"
@@ -15822,7 +15853,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
-			"item_logname"				"ghost_wtf"
+			"item_logname"				"Geared Up Ghost (Heavy)"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack/player/items/all_class/pet_robro"
@@ -15873,7 +15904,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
-			"item_logname"				"ghost_wtf"
+			"item_logname"				"Geared Up Ghost (Engineer)"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack/player/items/all_class/pet_robro"
@@ -15922,7 +15953,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"primary"
 			"anim_slot"				"FORCE_NOT_USED"
-			"item_logname"				"ghost_wtf"
+			"item_logname"				"Geared Up Ghost (Medic)"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack/player/items/all_class/pet_robro"
@@ -15966,7 +15997,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_slot"				"secondary"
 			"anim_slot"				"FORCE_NOT_USED"
-			"item_logname"				"ghost_wtf"
+			"item_logname"				"Geared Up Ghost (Sniper)"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"			"backpack/player/items/all_class/pet_robro"
@@ -16063,8 +16094,8 @@ I bought this with no safety warranty! that means bad things for all of you!
 
 Model by: 'spike nitros'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"barrage_pod"
-			"item_iconname"				"barrage_pod"
+			"item_logname"				"Maniac's Burster"
+			"item_iconname"				"Maniac's Burster"
 			"image_inventory"			"backpack/weapons/c_models/c_hornetsnest"
 			"model_world"				"models/weapons/c_models/c_hornetsnest.mdl"
 			"model_player"				"models/weapons/c_models/c_hornetsnest.mdl"
@@ -16171,8 +16202,8 @@ Try kicking my ass now, when I have a ten gauge up yours!
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"											
-			"item_logname"				"hunting_shotgun"
-			"item_iconname"				"hunting_shotgun"
+			"item_logname"				"Ten-Gauge Terror"
+			"item_iconname"				"Ten-Gauge Terror"
 			"image_inventory"			"backpack/weapons/c_models/c_huntingshotgun"
 			"model_world"				"models/weapons/c_models/c_huntingshotgun/c_huntingshotgun.mdl"
 			"model_player"				"models/weapons/c_models/c_huntingshotgun/c_huntingshotgun.mdl"
@@ -16275,8 +16306,8 @@ Sometimes, big bullet is better than many small bullets.
 
 Model by: 'PieSavvy'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"ak_cannon"
-			"item_iconname"				"ak_cannon"
+			"item_logname" 				"Soviet Strength"
+			"item_iconname"				"Soviet Strength"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_akcannon/c_akcannon"
 			"model_world"				"models/workshop/weapons/c_models/c_akcannon/c_akcannon.mdl"
 			"model_player"				"models/workshop/weapons/c_models/c_akcannon/c_akcannon.mdl"
@@ -16395,8 +16426,8 @@ You must not know who I am, I will tell you who I am.
 
 Model by: 'uncle grumpskin'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"juggernaut_minigun"
-			"item_iconname" 			"juggernaut_minigun"
+			"item_logname" 				"Tank Duty"
+			"item_iconname" 			"Tank Duty"
 			"image_inventory"			"backpack/weapons/c_models/c_tankduty/c_tankduty"
 			"model_world"				"models/weapons/c_models/c_tankduty/c_tankduty_minigun.mdl"
 			"model_player"				"models/weapons/c_models/c_tankduty/c_tankduty_minigun.mdl"	
@@ -16510,8 +16541,8 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 			
-			"item_logname"				"throwing_knives"
-			"item_iconname"				"throwing_knives"
+			"item_logname"				"Throwing Knives"
+			"item_iconname"				"Throwing Knives"
 			"item_type_name"			"Throwable"
 			"item_name"					"Throwing Knives"
 			"item_description"			"Set of 3 throwing knives
@@ -16617,8 +16648,8 @@ Sacred Spirit: This item can 'blast jump', no damage is taken
 Throwing rocks at people, its not a stone!
 
 Weapon by: 'Reagy'"
-			"item_logname"				"moyai"
-			"item_iconname"				"moyai"
+			"item_logname"				"Moyai"
+			"item_iconname"				"Moyai"
 			"image_inventory"			"backpack/weapons/w_models/w_moyai_mirv_demo"
 			"model_world"				"models/weapons/custom/w_models/w_moyai_mirv_demo.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_moyai_mirv_demo.mdl"
@@ -16708,8 +16739,8 @@ Animations and viewmodel from: Pre-Fortress 2 - prefortress.com
 Weapon by: 'Reagy'"
 			"item_slot"					"secondary"
 			"anim_slot"					"melee"
-			"item_logname"				"fraggrenade"
-			"item_iconname"				"fraggrenade"
+			"item_logname"				"Frag Grenade"
+			"item_iconname"				"Frag Grenade"
 			"image_inventory"			"backpack/weapons/w_models/w_grenade_frag"
 			
 			"model_world"				"models/weapons/w_models/w_grenade_frag.mdl"
@@ -16786,8 +16817,8 @@ Heavy has now learned how to make giant shotgun shells!
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"flak_cannon"
-			"item_iconname"				"flak_cannon"
+			"item_logname" 				"Flight-breaker Flakker"
+			"item_iconname"				"Flight-breaker Flakker"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_sewingmachine/c_sewingmachine"
 			"model_world"				"models/weapons/c_models/c_sewingmachine/c_sewingmachine_v6.mdl"
 			"model_player"				"models/weapons/c_models/c_sewingmachine/c_sewingmachine_v6.mdl"
@@ -16905,7 +16936,7 @@ Ohh she's a beaut'
 Weapon from: Renaissance Revival"
 			"item_slot"					"secondary"
 			"anim_slot"					"ITEM2"
-			"item_logname"				"bouncing_betty"
+			"item_logname"				"Big Ol' Bouncin' Betty"
 			"item_iconname"				"pumpkindeath"
 			"image_inventory"			"backpack/weapons/w_grenade_olde_demoman/w_grenade_olde_demoman"
 
@@ -16994,7 +17025,7 @@ Recharges over time
 Weapon from: Renaissance Revival"
 			"item_slot"					"secondary"
 			"anim_slot"					"ITEM2"
-			"item_logname"				"whiff_of_brimstone"
+			"item_logname"				"Whiff of Olde Brimstone"
 			"item_iconname"				"pumpkindeath"
 			"image_inventory"			"backpack/weapons/w_grenade_bombs_demoman/bombs"
 			
@@ -17073,8 +17104,8 @@ Pyro reassures you that it's just a bad sunburn.
 
 Model by:  'Corvalho'
 Weapon by: 'The One Of Wonders'"						
-			"item_logname"				"solar_flamer"
-			"item_iconname"				"solar_flamer"
+			"item_logname"				"Solar Flare"
+			"item_iconname"				"Solar Flare"
 			"image_inventory"			"backpack/weapons/c_models/c_solar_carbonizer/c_solar_carbonizer"
 			"model_world"				"models/weapons/c_models/c_solar_carbonizer/c_solar_carbonizer.mdl"
 			"model_player"				"models/weapons/c_models/c_solar_carbonizer/c_solar_carbonizer.mdl"			
@@ -17216,8 +17247,8 @@ Sometimes the best way to do hard work is to just kill.
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"buzzsaw_pyro"
-			"item_iconname"				"buzzsaw_pyro"
+			"item_logname"				"Buzz-killing Machine"
+			"item_iconname"				"Buzz-killing Machine"
 			"image_inventory"			"backpack/weapons/c_models/c_circlesaw/c_circlesaw"
 			"model_world"				"models/weapons/c_models/c_circlesaw/c_circlesaw.mdl"
 			"model_player"				"models/weapons/c_models/c_circlesaw/c_circlesaw.mdl"
@@ -17324,8 +17355,8 @@ Don't ask where Pyro found it, be more concerned about it being pointed at you.
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"											
-			"item_logname"				"incrifle_pyro"
-			"item_iconname"				"incrifle_pyro"
+			"item_logname"				"Ignition Charge"
+			"item_iconname"				"Ignition Charge"
 			"image_inventory"			"backpack/weapons/c_models/c_recoilless/c_recoilless"
 			"model_world"				"models/workshop/weapons/c_models/c_tb/c_tb.mdl"
 			"model_player"				"models/workshop/weapons/c_models/c_tb/c_tb.mdl"
@@ -17454,8 +17485,8 @@ Great, as if this doesn't sting enough it also singes your already sore skin.
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"						
-			"item_logname"				"teargasser"
-			"item_iconname"				"teargasser"
+			"item_logname"				"Chemical Catastrophe"
+			"item_iconname"				"Chemical Catastrophe"
 			"image_inventory"			"backpack/weapons/c_models/c_teargassprayer/c_teargassprayer"
 			"model_world"				"models/weapons/c_models/c_teargassprayer/c_teargassprayer.mdl"
 			"model_player"				"models/weapons/c_models/c_teargassprayer/c_teargassprayer.mdl"			
@@ -17524,7 +17555,7 @@ Weapon by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
-			"item_name"					"Arsonist's highlighter"
+			"item_name"					"Arsonist's Highlighter"
 			"item_type_name"			"Grenade Launcher"
 			"item_description"			"Toxic Grenades: This weapon applies 4 seconds of Toxin to target (stacks up to 10 seconds)
 Enemies affected by Toxin receive less healing from all sources
@@ -17533,8 +17564,8 @@ Keep your feet off the floor.
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"toebreaker_nadegun"
-			"item_iconname"				"toebreaker_nadegun"
+			"item_logname"				"Arsonist's Highlighter"
+			"item_iconname"				"Arsonist's Highlighter"
 			"image_inventory"			"backpack/weapons/c_models/c_chem_flarelauncher/c_chem_flarelauncher"
 			"model_world"				"models/weapons/c_models/c_chem_flarelauncher/c_chem_flarelauncher.mdl"
 			"model_player"				"models/weapons/c_models/c_chem_flarelauncher/c_chem_flarelauncher.mdl"
@@ -17639,8 +17670,8 @@ Explosives and glass are a surprisingly good mix.
 
 Model by: 'heinousbanana'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"glasser_pyro"
-			"item_iconname"				"glasser_pyro"
+			"item_logname"				"Homebrew Shot-Glasser"
+			"item_iconname"				"Homebrew Shot-Glasser"
 			"image_inventory"			"backpack/weapons/c_models/c_glasser_flare/c_glasser_flare"
 			"model_world"				"models/weapons/c_models/c_improvisedsnaplock/c_improvisedsnaplock.mdl"
 			"model_player"				"models/weapons/c_models/c_improvisedsnaplock/c_improvisedsnaplock.mdl"
@@ -17732,8 +17763,8 @@ You just gotta hold the trigger and let it go, you know?
 
 Model by: 'g o a t k i n g'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"slam_shotgun"
-			"item_iconname"				"slam_shotgun"
+			"item_logname" 				"Slam-Fire"
+			"item_iconname"				"Slam-Fire"
 			"image_inventory"			"backpack/weapons/c_models/c_slamfire/c_slamfire"
 			"model_world"				"models/weapons/c_models/c_slamfire/c_slamfire.mdl"
 			"model_player"				"models/weapons/c_models/c_slamfire/c_slamfire.mdl"
@@ -17806,8 +17837,8 @@ Reap what you sow.
 
 Model by: 'SexyRobot'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"scythe_pyro"
-			"item_iconname"				"scythe_pyro"
+			"item_logname"				"Grimm Omen"
+			"item_iconname"				"Grimm Omen"
 			"image_inventory"			"backpack/weapons/c_models/c_scythe/c_scythe"
 			"model_world"				"models/weapons/c_models/c_scythe/c_scythe.mdl"
 			"model_player"				"models/weapons/c_models/c_scythe/c_scythe.mdl"
@@ -17923,8 +17954,8 @@ Once found in an english river, powerful feelings of atonement manifest from the
 
 Model by:  'ColonelBD'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"hhh_shotgun"
-			"item_iconname"				"hhh_shotgun"
+			"item_logname"				"Unusual Broken Mann's Legacy"
+			"item_iconname"				"Unusual Broken Mann's Legacy"
 			"image_inventory"			"backpack/weapons/c_models/c_accursedshotgun"
 			"model_world"				"models/weapons/c_models/c_accursedshotgun/c_accursedshotgun.mdl"
 			"model_player"				"models/weapons/c_models/c_accursedshotgun/c_accursedshotgun.mdl"
@@ -18043,8 +18074,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"Poacher's Pride"
 			"item_type_name"			"Double-Barrel Hunting Rifle"
 			"item_description"			"Professionals have standards."
-			"item_logname"				"doublebarrel_rifle"
-			"item_iconname"				"doublebarrel_rifle"
+			"item_logname"				"Poacher's Pride"
+			"item_iconname"				"Poacher's Pride"
 			"image_inventory"			"backpack/weapons/w_poacherspride/w_poacherspride"
 			"model_world"				"models/weapons/w_models/w_poacherspride.mdl"
 			"model_player"				"models/weapons/v_models/v_poacherspride_sniper.mdl"
@@ -18155,8 +18186,8 @@ Weapon by: 'The One Of Wonders'"
 
 			"item_quality"				"rarity2"
 
-			"item_logname"				"elites"
-			"item_iconname"				"elites"
+			"item_logname"				".40 Dual Elites"
+			"item_iconname"				".40 Dual Elites"
 			"item_name"					".40 Dual Elites"
 			"item_type_name"			"Dual Pistols"
 			"item_description"			"
@@ -18242,7 +18273,7 @@ Weapon by: 'Reagy'"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
-			"item_name"					"Time-warp"
+			"item_name"					"Time-Warp"
 			"item_type_name"			"Special prototype time-warp device"
 			"item_description"			"Cloak instantly and move at maximum speed while cloaked for a brief moment!
 
@@ -18250,8 +18281,8 @@ Catch me if you can, I'll be foreseeing your death!
 
 Model by: 'henaro'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"sandwatch"
-			"item_iconname"				"sandwatch"
+			"item_logname"				"Time-Warp"
+			"item_iconname"				"Time-Warp"
 			"image_inventory"			"backpack/sandwatch/sandwatch.vtf"
 			"model_player"				"models/weapons/c_models/c_sandwatch/v_sandwatch.mdl"
 			"attach_to_hands"			"2"
@@ -18279,12 +18310,12 @@ Weapon by: 'The One Of Wonders'"
 				"cloak regen rate increased"
 				{
 					"attribute_class"	"mult_cloak_meter_regen_rate"
-					"value"				"2"
+					"value"				"1.75"
 				}
 				"cloak consume rate increased"
 				{
 					"attribute_class"	"mult_cloak_meter_consume_rate"
-					"value"				"10"
+					"value"				"7"
 				}
 				"lose cloak on damage"																
 				{
@@ -18331,8 +18362,8 @@ Close combat is ugly business, especially when it involves a big gun.
 
 Model by: 'donhonk'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"heavymag_spy"
-			"item_iconname"				"heavymag_spy"
+			"item_logname"				"Your Darkest Nightmare"
+			"item_iconname"				"Your Darkest Nightmare"
 			"image_inventory"			"backpack/weapons/c_models/c_rhinorevolver/c_rhinorevolver"
 			"model_world"				"models/workshop/weapons/c_models/c_rhinorevolver/c_rhinorevolver.mdl"
 			"model_player"				"models/workshop/weapons/c_models/c_rhinorevolver/c_rhinorevolver.mdl"
@@ -18410,8 +18441,8 @@ Seal the deal.
 
 Model by: 'bulka96'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"stamp_blade"
-			"item_iconname"				"stamp_blade"
+			"item_logname"				"Soul Stamper"
+			"item_iconname"				"Soul Stamper"
 			"image_inventory"			"backpack/weapons/c_models/c_stampknife/c_stampknife"
 			"model_world"				"models/weapons/c_models/c_stampknife/c_stampknife.mdl"		
 			"model_player"				"models/weapons/c_models/c_stampknife/c_stampknife.mdl"
@@ -18503,8 +18534,8 @@ Model by: 'Hau'
 Animations by: 'Raptor Dan'
 Cosmetics by: 'Sky' 'Pie_Tony' 'Strno8' 'DJB2401'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"heavy_lmg"
-			"item_iconname" 			"heavy_lmg"
+			"item_logname" 				"Arisaka Assault"
+			"item_iconname" 			"Arisaka Assault"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_lmg_heavy/c_lmg_heavy"
 			"model_world"				"models/weapons/w_models/w_lmg_heavy.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_arisaka_assault.mdl"
@@ -18597,8 +18628,8 @@ A new way of dealing with strong defenses, or someone in particular.
 
 Model by: 'Hau'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"c4charge"
-			"item_iconname"				"c4charge"												
+			"item_logname"				"Demolition Charge"
+			"item_iconname"				"Demolition Charge"												
 			"image_inventory"			"backpack/weapons/c_models/c_explosivecharge/c_explosivecharge"
 			"model_world"				"models/weapons/c_models/c_explosivecharge/c_explosivecharge.mdl"
 			"model_player"				"models/weapons/v_models/v_explosivecharge/v_explosivecharge.mdl"			
@@ -18694,8 +18725,8 @@ They told me not to dabble into such mad science, but where's the fun in that!
 
 Model by 'boomsta'
 Weapon by 'The One Of Wonders'"
-			"item_logname"				"giantspiker_medic"
-			"item_iconname"				"giantspiker_medic"
+			"item_logname"				"Blood Donor"
+			"item_iconname"				"Blood Donor"
 			"image_inventory"			"backpack/weapons/c_models/c_giantspiker/c_giantspiker"
 			"model_world"				"models/weapons/c_models/c_giantspiker/c_giantspiker.mdl"				
 			"model_player"				"models/weapons/c_models/c_giantspiker/v_giantspiker.mdl"
@@ -18785,8 +18816,8 @@ The key to our constitution, gentlemen! treat her like she's your wife!
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"											
-			"item_logname"				"musket_shotgun"
-			"item_iconname"				"musket_shotgun"
+			"item_logname"				"Vintage Second Amendment"
+			"item_iconname"				"Vintage Second Amendment"
 			"image_inventory"			"backpack/weapons/c_models/c_muricamusket/c_muricamusket"
 			"model_world"				"models/weapons/c_models/c_murica_musket/c_murica_musket.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_musket.mdl"
@@ -18905,8 +18936,8 @@ The empress of despair had one of these, before she was brought to ruin.
 
 Model by: 'Statyk'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"shattered_knife"
-			"item_iconname"				"shattered_knife"
+			"item_logname"				"Unusual Unholy Reckoning"
+			"item_iconname"				"Unusual Unholy Reckoning"
 			"image_inventory"			"backpack/weapons/c_models/c_accursedknife/c_accursedknife"
 			"model_world"				"models/weapons/c_models/c_knife_affair/knife_affair.mdl"			
 			"model_player"				"models/weapons/c_models/c_knife_affair/knife_affair.mdl"
@@ -19050,8 +19081,8 @@ Modified by: 'Reagy'"
 
 			"flip_viewmodel"			"0"
 
-			"item_logname"				"bow_compound"
-			"item_iconname"				"bow_compound"
+			"item_logname"				"Modern Compound"
+			"item_iconname"				"Modern Compound"
 			"image_inventory"			"backpack/weapons/w_models/w_classic_bow"
 			"model_world"				"models/weapons/custom/w_models/w_classic_bow.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_classic_bow.mdl"
@@ -19136,8 +19167,8 @@ Fancy new hardware I got here, wonder if I can cook chicken with it!
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"lightning_pistol_scout"
-			"item_iconname"				"lightning_pistol_scout"
+			"item_logname"				"Protonium Ray-Caster"
+			"item_iconname"				"Protonium Ray-Caster"
 			"image_inventory"			"backpack/weapons/c_models/c_lightning_pistol/c_lightning_pistol"
 			"model_world"				"models/weapons/c_models/c_lightning_pistol/c_lightning_pistol.mdl"
 			"model_player"				"models/weapons/c_models/c_lightning_pistol/c_lightning_pistol.mdl"
@@ -19251,8 +19282,8 @@ Embrace the ultimate power that is electrically-charged music.
 
 Model by: 'Segab, tree'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"accursed_gramophone"
-			"item_iconname"				"accursed_gramophone"
+			"item_logname"				"Unusual Beatophone"
+			"item_iconname"				"Unusual Beatophone"
 			"image_inventory"			"backpack/weapons/c_models/c_beatophone/c_beatophone"
 			"model_world"				"models/weapons/c_models/c_beatophone/c_beatophone.mdl"					
 			"model_player"				"models/weapons/c_models/c_beatophone/c_beatophone.mdl"
@@ -19385,8 +19416,8 @@ This weapon is rumoured to have been behind one of the largest Russian genocides
 
 Model by: 'Hau, Kibblenight, The One Of Wonders'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"accursed_minigun"
-			"item_iconname" 			"accursed_minigun"
+			"item_logname" 				"Unusual Veles"
+			"item_iconname" 			"Unusual Veles"
 			"image_inventory"			"backpack/weapons/c_models/c_veles/c_veles"
 			"model_world"				"models/weapons/c_models/c_veles/c_veles.mdl"
 			"model_player"				"models/weapons/c_models/c_veles/c_veles.mdl"
@@ -19503,8 +19534,8 @@ This is a bit out of my field but there's nothing wrong with a little precision.
 
 Model by: 'boomsta'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"burstrifle_engi"
-			"item_iconname"				"burstrifle_engi"
+			"item_logname"				"Tinkerer's Tetra-Shot"
+			"item_iconname"				"Tinkerer's Tetra-Shot"
 			"image_inventory"			"backpack/weapons/c_models/c_burstgun_engi/c_burstgun_engi"
 			"model_world"				"models/workshop/weapons/c_models/c_burstgun/c_burstgun_engi.mdl"
 			"model_player"				"models/workshop/weapons/c_models/c_burstgun/c_burstgun_engi.mdl"
@@ -19649,8 +19680,8 @@ Weapon by: 'The One Of Wonders'"
 
 			"item_quality"				"rarity2"
 
-			"item_logname"				"foxhounds"
-			"item_iconname"				"foxhounds"
+			"item_logname"				"Operational Foxhounds"
+			"item_iconname"				"Operational Foxhounds"
 			"item_name"					"Operational Foxhounds"
 			"item_type_name"			"Dual Revolvers"
 			"item_description"			"Weapon reloads rounds individually
@@ -19751,8 +19782,8 @@ Weapon by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 
 			"propername"				"1"
-			"item_logname"				"majors_mark"
-			"item_iconname"				"majors_mark"
+			"item_logname"				"Major's Mark""
+			"item_iconname"				"Major's Mark""
 			"item_name"					"Major's Mark"
 			"item_type_name"			"Ballistic Vest"
 			"item_description"			"
@@ -19863,8 +19894,8 @@ Gun feels familiar, Heavy can't put finger on it..
   
 Model by: 'Sparkwire'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"gunnercannon_heavy"
-			"item_iconname"				"gunnercannon_heavy"
+			"item_logname"				"Assault Doctrine"
+			"item_iconname"				"Assault Doctrine"
 			"image_inventory"			"backpack/weapons/c_models/c_gunnercannon/c_gunnercannon"
 			"model_world"				"models/weapons/c_models/c_gunnercannon/c_gunnercannon.mdl"
 			"model_player"				"models/weapons/c_models/c_gunnercannon/c_gunnercannon.mdl"
@@ -19961,8 +19992,8 @@ Killing never has looked any more fantastic.
 
 Model by: 'KaydemonLP'
 Weapon by: 'The One Of Wonders'" 													
-			"item_logname"				"heater_heavy"
-			"item_iconname"				"heater_heavy"
+			"item_logname"				"Heater's Spark Eater"
+			"item_iconname"				"Heater's Spark Eater"
 			"image_inventory"			"backpack/weapons/c_models/c_betaheater/c_betaheater"
 			"model_world"				"models/weapons/c_models/c_betaheater/c_betaheater.mdl"
 			"model_player"				"models/weapons/c_models/c_betaheater/c_betaheater.mdl"				
@@ -20104,8 +20135,8 @@ You ain't looking so pretty now, are ya!
 Model by: 'boomsta'
 Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
-			"item_logname"				"scattershot_revolver"
-			"item_iconname"				"scattershot_revolver"
+			"item_logname"				"Speedster's Six-Shooter"
+			"item_iconname"				"Speedster's Six-Shooter"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_bigiron/c_bigiron"
 			"model_world"				"models/weapons/c_models/c_bigiron/c_bigiron.mdl"
 			"model_player"				"models/weapons/v_models/v_big_iron.mdl"
@@ -20196,8 +20227,8 @@ It may not be useful as a saw.. but oh boy does it kill wonderfully!
 
 Model by: 'Con, Rev, FanCyy'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"buster_saw"
-			"item_iconname"				"buster_saw"
+			"item_logname"				"Cut Above"
+			"item_iconname"				"Cut Above"
 			"image_inventory"			"backpack/weapons/c_models/c_bustersaw/c_bustersaw"
 			"model_world"				"models/weapons/c_models/c_bustersaw/c_bustersaw.mdl"			
 			"model_player"				"models/weapons/c_models/c_bustersaw/c_bustersaw.mdl"
@@ -20257,6 +20288,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_quality"				"rarity2"
 			"item_name"					"Guardian Angel"
+			"item_logname"				"Guardian Angel"
+			"item_iconname"				"Guardian Angel"
 			"item_type_name"			"Medi Gun"
 			"item_description"			"Übercharge provides a resistance bubble that blocks up to 80 damage
 
@@ -20341,8 +20374,8 @@ I will continue to thrive even in war, my oath is not over!
 
 Model by: 'svdl'
 Weapon from: 'The One Of Wonders'"
-			"item_logname"				"syringegun_defense"
-			"item_iconname"				"syringegun_defense"
+			"item_logname"				"Medical Administration"
+			"item_iconname"				"Medical Administration"
 			"image_inventory"			"backpack/weapons/c_models/c_defensesyringe/c_defensesyringe"
 			"model_world"				"models/weapons/c_models/c_defendersyringe/c_defendersyringe.mdl"
 			"model_player"				"models/weapons/c_models/c_defendersyringe/c_defendersyringe.mdl"
@@ -20434,8 +20467,8 @@ The chill down your spine is merely an omen for what comes to pay your debt.
 
 Model by: 'ZombiePlasticClock'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"woodcutter_shotgun"
-			"item_iconname"				"woodcutter_shotgun"
+			"item_logname" 				"Malicious Multi-Tool (Primary)"
+			"item_iconname"				"Malicious Multi-Tool (Primary)"
 			"image_inventory"			"backpack/weapons/c_models/c_axegun/c_axegun"
 			"model_world"				"models/weapons/c_models/c_axegun/c_axegun.mdl"
 			"model_player"				"models/weapons/c_models/c_axegun/c_axegun.mdl"
@@ -20547,8 +20580,8 @@ Fear not for what you can't see, fear what you can't hear or feel.
 
 Model by: 'ZombiePlasticClock'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"woodcutter_axe"
-			"item_iconname"				"woodcutter_axe"
+			"item_logname" 				"Malicious Multi-Tool (Melee)"
+			"item_iconname"				"Malicious Multi-Tool (Melee)"
 			"image_inventory"			"backpack/weapons/c_models/c_axegun/c_axegun"
 			"model_world"				"models/weapons/c_models/c_axegun/c_axegun_melee.mdl"
 			"model_player"				"models/weapons/c_models/c_axegun/c_axegun_melee.mdl"
@@ -20739,8 +20772,8 @@ Speed is a way of life, just like me cutting you into shreds!
 
 Model by: 'EmAR'
 Weapon by: 'The One Of Wonders'"
-            "item_logname"				"scout_machete"
-			"item_iconname"				"scout_machete"	
+            "item_logname"				"Thirst for Blood"
+			"item_iconname"				"Thirst for Blood"	
             "image_inventory"			"backpack/weapons/c_models/c_ninjato/c_ninjato"
 			"model_world"				"models/weapons/c_models/c_ninjato/c_ninjato.mdl"
 			"model_player"				"models/weapons/c_models/c_ninjato/c_ninjato.mdl"
@@ -20827,8 +20860,8 @@ If you hear this big beauty thunder, let it be known, I wasn't pointing it at yo
   
 Model by: 'rook'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"big50_rifle"
-			"item_iconname"				"big50_rifle"
+			"item_logname"				"Mann-Cannon"
+			"item_iconname"				"Mann-Cannon"
 			"image_inventory"			"backpack/weapons/c_models/c_manncannon/c_manncannon"
 			"model_world"				"models/weapons/c_models/c_cannon_rifle/c_cannon_rifle.mdl"
 			"model_player"				"models/weapons/c_models/c_cannon_rifle/c_cannon_rifle.mdl"
@@ -20940,8 +20973,8 @@ You best smile when I show you my Lil' Mate while you can.
 
 Model by: 'elbagast'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"sniper_tommy"
-			"item_iconname"				"sniper_tommy"
+			"item_logname"				"Lil' Mate"
+			"item_iconname"				"Lil' Mate"
 			"image_inventory"			"backpack/weapons/c_models/c_snipertommy/c_snipertommy"
 			"model_world"				"models/weapons/c_models/c_snipertommy/c_snipertommy.mdl"
 			"model_player"				"models/weapons/c_models/c_snipertommy/c_snipertommy.mdl"
@@ -21036,8 +21069,8 @@ Now ain't that a fine piece of hardware?
 
 Model by: 'Wowza'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"fusion_blaster"
-			"item_iconname"				"fusion_blaster"
+			"item_logname"				"Haymaker-5000"
+			"item_iconname"				"Haymaker-5000"
 			"image_inventory"			"backpack/weapons/c_models/c_electrogun/c_electrogun"
 			"model_world"				"models/weapons/c_models/c_electrogun/c_electrogun.mdl"
 			"model_player"				"models/weapons/c_models/c_electrogun/c_electrogun.mdl"
@@ -21163,8 +21196,8 @@ They're gonna love the quality of these buildings, son.
 Model by: 'Wowza'
 Weapon by: 'The One Of Wonders'
 Sentry replacement by: 'rotzloeffel' 'Gadget'"	
-			"item_logname"				"wrench_tanker"
-			"item_iconname"				"wrench_tanker"
+			"item_logname"				"Ironclad Construction"
+			"item_iconname"				"Ironclad Construction"
 			"image_inventory"			"backpack/weapons/c_models/c_nailbiter/c_nailbiter_new"
 			"model_world"				"models/weapons/c_models/c_nailbiter/c_nailbiter.mdl"
 			"model_player"				"models/weapons/c_models/c_nailbiter/c_nailbiter.mdl"
@@ -21252,8 +21285,8 @@ Ain't much, but it's honest work.
 
 Model by: 'Folkye'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"wrench_fastbuilder"
-			"item_iconname"				"wrench_fastbuilder"
+			"item_logname"				"Construction Expert"
+			"item_iconname"				"Construction Expert"
 			"image_inventory"			"backpack/weapons/c_models/c_fastbuilder/c_fastbuilder"
 			"model_world"				"models/weapons/c_models/c_scrap_sentinel/c_scrap_sentinel.mdl"
 			"model_player"				"models/weapons/c_models/c_scrap_sentinel/c_scrap_sentinel.mdl"
@@ -21329,8 +21362,8 @@ Oi! What's this bloody weapon! It looks like something I'd rip off a tank!
 
 Model by: '#trigger_hurt'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"demo_flakcannon"
-			"item_iconname"				"demo_flakcannon"
+			"item_logname"				"FLAK Cannon"
+			"item_iconname"				"FLAK Cannon"
 			"image_inventory"			"backpack/weapons/c_models/c_flakcannon_demo/c_flakcannon_demo"
 			"model_world"				"models/weapons/c_models/c_flakcannon_demo/c_flakcannon_demo.mdl"
 			"model_player"				"models/weapons/v_models/v_flakcannon_demo/v_flakcannon_demo.mdl"
@@ -21452,8 +21485,8 @@ Now this is how you properly break bones, lads!
   
 Model by: '[unassigned]'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"warhammer"
-			"item_iconname"				"warhammer"
+			"item_logname"				"Crown Crusher"
+			"item_iconname"				"Crown Crusher"
 			"image_inventory"			"backpack/weapons/c_models/c_warhammer/c_warhammer"
 			"model_world"				"models/weapons/c_models/c_warhammer/c_warhammer.mdl"
 			"model_player"				"models/weapons/v_models/v_warhammer/v_warhammer.mdl"
@@ -21562,6 +21595,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 
 			"item_name"					"Scottish Steel"
+			"item_logname"				"Scottish Steel"
+			"item_iconname"				"Scottish Steel"
 			"item_type_name"			"Suit of Armour"
 			"item_description"			"
 Guts and Glory, lads!
@@ -21660,8 +21695,8 @@ Magnets, I know how they work...
 
 Model by: 'pathnode'
 Weapon by: 'Reagy'"
-			"item_logname"				"magwrench"
-			"item_iconname"				"magwrench"
+			"item_logname"				"Magnetic Horseshoe"
+			"item_iconname"				"Magnetic Horseshoe"
 			"image_inventory"			"backpack/weapons/c_models/c_magnetic_horseshoe/c_magnetic_horseshoe"
 			"model_world"				"models/weapons/c_models/c_magnetic_horseshoe/c_magnetic_horseshoe.mdl"
 			"model_player"				"models/weapons/c_models/c_magnetic_horseshoe/c_magnetic_horseshoe.mdl"
@@ -21723,7 +21758,7 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
-			"item_name"					"Doctor's Self-care"										
+			"item_name"					"Doctor's Self-Care"										
 			"item_type_name"			"Syringe Gun"
 			"item_description"			"
 If my team won't watch my back for me, I'll do it myself!
@@ -21731,8 +21766,8 @@ If my team won't watch my back for me, I'll do it myself!
 Model by: 'Zoeybot'
 Animations by: 'Paysus'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"syringegun_heal"
-			"item_iconname"				"syringegun_heal"
+			"item_logname"				"Doctor's Self-Care"
+			"item_iconname"				"Doctor's Self-Care"
 			"image_inventory"			"backpack/weapons/c_models/c_syringegun_heal/c_syringegun_heal"
 			"model_world"				"models/weapons/c_models/c_syringegun_heal/c_syringegun_heal.mdl"
 			"model_player"				"models/weapons/v_models/v_syringegun_heal/v_syringegun_heal.mdl"
@@ -21791,7 +21826,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
-			"item_name"					"Double-shot"										
+			"item_name"					"Double-Shot"										
 			"item_type_name"			"Syringe Gun"
 			"item_description"			"Fires 2-round bursts of high-impact syringes
 
@@ -21799,8 +21834,8 @@ Ein, Zwei, Ein, Zwei... it's almost therapeutic!
 
 Model by: 'Teddy'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"syringegun_burst"
-			"item_iconname"				"syringegun_burst"
+			"item_logname"				"Double-Shot"
+			"item_iconname"				"Double-Shot"
 			"image_inventory"			"backpack/weapons/c_models/c_burst_syringe/c_burst_syringe"
 			"model_world"				"models/weapons/c_models/c_burst_syringe/c_burst_syringe.mdl"
 			"model_player"				"models/weapons/c_models/c_burst_syringe/c_burst_syringe.mdl"
@@ -21892,8 +21927,8 @@ Just because it can save your life doesn't mean it can't KILL YOU.
 
 Model by: 'BANG!'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"defibrillator"
-			"item_iconname"				"defibrillator"
+			"item_logname"				"Heart Stopper"
+			"item_iconname"				"Heart Stopper"
 			"image_inventory"			"backpack/weapons/c_models/c_defibrillator/c_defibrillator"
 			"model_world"				"models/weapons/c_models/c_defibrillator/c_defibrillator.mdl"			
 			"model_player"				"models/weapons/c_models/c_defibrillator/c_defibrillator.mdl"
@@ -21978,6 +22013,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_quality"				"rarity2"
 			"item_name"					"Booster Shot"
+			"item_logname"				"Booster Shot"
+			"item_iconname"				"Booster Shot"
 			"item_type_name"			"Medi Gun"
 			"item_description"			"ÜberCharge provides 30 seconds of enhanced healing rate and grants patients mini-crits
 
@@ -22075,8 +22112,8 @@ Death by electrocution! I don't need to put holes in you if I can make your hear
 
 Model by: 'Pie_Savvy'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"medic_beamrifle"
-			"item_iconname"				"medic_beamrifle"
+			"item_logname"				"Strahlkanone"
+			"item_iconname"				"Strahlkanone"
 			"image_inventory"			"backpack/weapons/c_models/c_medishotgun/c_medishotgun"
 			"model_world"				"models/weapons/c_models/c_medishotgun/c_medishotgun.mdl"
 			"model_player"				"models/weapons/c_models/c_medishotgun/c_medishotgun.mdl"
@@ -22182,8 +22219,8 @@ Truly a scientific marvel.. I'm so ready to see how it works!
 Model by: 'crazy-g'
 Animations by: 'Paysus'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"gooplauncher_medic"
-			"item_iconname"				"gooplauncher_medic"
+			"item_logname"				"G.Ü.P. Gun"
+			"item_iconname"				"G.Ü.P. Gun"
 			"image_inventory"			"backpack/weapons/c_models/c_goopgun/c_goopgun"
 			"model_world"				"models/weapons/c_models/c_goopgun/c_goopgun.mdl"
 			"model_player"				"models/weapons/v_models/v_goopgun/v_goopgun.mdl"
@@ -22313,8 +22350,8 @@ I best like my enemies full of so many holes, I can't tell them apart from swiss
 
 Model by: 'Overpovered'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"blunderbuss_scout"
-			"item_iconname"				"blunderbuss_scout"
+			"item_logname"				"Hunter's Blunder"
+			"item_iconname"				"Hunter's Blunder"
 			"image_inventory"			"backpack/weapons/c_models/c_blunderbuss/c_blunderbuss"
 			"model_world"				"models/weapons/c_models/c_blunderbuss/c_blunderbuss.mdl"
 			"model_player"				"models/weapons/c_models/c_blunderbuss/c_blunderbuss.mdl"
@@ -22378,7 +22415,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
-			"item_name"					"Landsknecht's Long-knife"
+			"item_name"					"Landsknecht's Long-Knife"
 			"item_type_name"			"Large Messer"
 			"item_description"			"
 Now this is a real knife, boyo! Let me show you it's features up close!
@@ -22387,8 +22424,8 @@ Model by: 'Barno'
 Animations by: 'Kylul' & 'Kiyoshi'
 Cosmetic by: '[unassigned]' 'emrfish6' 'frying dutchman'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"messer_demo"
-			"item_iconname"				"messer_demo"
+			"item_logname"				"Landsknecht's Long-Knife"
+			"item_iconname"				"Landsknecht's Long-Knife"
 			"image_inventory"			"backpack/weapons/c_models/c_messer/c_messer"
 			"model_world"				"models/weapons/c_models/c_messer/c_messer.mdl"
 			"model_player"				"models/weapons/v_models/v_messer/v_messer.mdl"
@@ -22509,8 +22546,8 @@ Model by: 'MrFunreal'
 Animations by: 'Kylul' & 'Kiyoshi'
 Cosmetic by: 'NeoDement' 'Square' 'Harry' 'emrfish6' 'frying dutchman'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"kingslayer"
-			"item_iconname"				"kingslayer"
+			"item_logname"				"Kingslayer"
+			"item_iconname"				"Kingslayer"
 			"image_inventory"			"backpack/weapons/c_models/c_kingsword/c_kingsword"
 			"model_world"				"models/weapons/c_models/c_kingsword/c_kingsword.mdl"
 			"model_player"				"models/weapons/v_models/v_kingsword/v_kingsword.mdl"
@@ -22610,6 +22647,8 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------------------
 //-------------------------------------
 //-- 1911 - 9166
+// -- :NOTE: Consider removing this, very unused and Dual Elites already take the same role
+// -- Or move to another class, spy maybe?
 //-------------------------------------
 //-------------------------------------		
 		"9166"
@@ -22629,8 +22668,8 @@ Weapon by: 'The One Of Wonders'"
 
 Model by: 'Ertz'
 Weapon by: 'The One Of Wonders"
-			"item_logname"				"pistol_1911"
-			"item_iconname"				"pistol_1911"
+			"item_logname"				"Fight Finisher"
+			"item_iconname"				"Fight Finisher"
 			"image_inventory"			"backpack/weapons/c_models/c_pocket_m1911/c_pocket_m1911"
 			"model_world"				"models/weapons/c_models/c_pocket_m1911/c_pocket_m1911.mdl"
 			"model_player"				"models/weapons/c_models/c_pocket_m1911/c_pocket_m1911.mdl"
@@ -22704,8 +22743,8 @@ Alright knuckleheads, it's time to get huntin'!
 Weapon Model by: 'Corvalho'  
 Wearable Model by: 'GetGrenade'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"rifleman_scout"
-			"item_iconname"				"rifleman_scout"
+			"item_logname"				"Rifleman's Runt"
+			"item_iconname"				"Rifleman's Runt"
 			"image_inventory"			"backpack/weapons/c_models/c_scout_rifleman/c_scout_rifleman"
 			"model_world"				"models/weapons/w_models/w_soviet_souvenir.mdl"
 			"model_player"				"models/weapons/v_models/v_soviet_souvenir_scout.mdl"
@@ -22842,8 +22881,8 @@ Weapon by: 'Reagy'"
 
 			"flip_viewmodel"			"1"
 
-			"item_logname"				"royal_flush"
-			"item_iconname"				"royal_flush"
+			"item_logname"				"Royal Flush (Spy)"
+			"item_iconname"				"Royal Flush (Spy)"
 			"image_inventory"			"backpack/weapons/w_models/w_cards"
 			"model_world"				"models/weapons/w_models/w_cards/w_cards.mdl"			
 			"model_player"				"models/weapons/v_models/v_cards/v_cards.mdl"
@@ -22957,7 +22996,7 @@ Weapon by: 'Reagy'"
 			"item_name"					"Augmentation: External HUD"
 			"item_type_name"			"Goggle Augmentation"
 			"item_description"			"
-Model by: 'Coolchou Zhao'
+Cosmetic by: 'Coolchou Zhao'
 Wearable by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/player/items/engineer/augmentation_hud"
 			"model_player"				"models/player/items/engineer/more_hud/more_hud.mdl"
@@ -23007,7 +23046,7 @@ Wearable by: 'The One Of Wonders'"
 		"9170"
 		{
 			"name"						"TF_WEARABLE_AUGMENTATION_TARGETING"									
-			"item_class"				"tf_weapon_pistol_scout"
+			"item_class"				"tf_weapon_pistol"
 			"show_in_armory"			"1"
 			"item_slot"					"secondary"
 
@@ -23016,8 +23055,8 @@ Wearable by: 'The One Of Wonders'"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 			
-			"item_logname"				"sentry_spotter_gun"
-			"item_iconname"				"sentry_spotter_gun"
+			"item_logname"				"Spotter"
+			"item_iconname"				"Spotter"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
@@ -23027,20 +23066,51 @@ Wearable by: 'The One Of Wonders'"
 Primary Perk: Your Pistol is replaced with a Targeting Device
 Hit an enemy to make your Sentry Gun focus fire on them!
 
-Model by: 'svdl'
-Wearable Model by: 'Coolchou Zhao'
-Wearable by: 'The One Of Wonders'"
+Model Hack by: 'Mariodox'
+Animations by: 'Paysus'
+Cosmetic by: 'Coolchou Zhao'
+Wearable by: 'The One Of Wonders'
+Weapon by: 'The One Of Wonders' 'Reagy'"
 			"image_inventory"			"backpack/player/items/engineer/augmentation_spyhunter"
-			"model_world"				"models/weapons/c_models/c_augment_spyblaster/c_augment_spyblaster.mdl"
-			"model_player"				"models/weapons/c_models/c_augment_spyblaster/c_augment_spyblaster.mdl"
-			"attach_to_hands"			"1"
+			"model_world"				"models/weapons/w_models/spotter/w_spotter.mdl"
+			"model_player"				"models/weapons/v_models/spotter/v_spotter.mdl"
+			"attach_to_hands"			"2"
 			"extra_wearable"			"models/player/items/engineer/eyehud/eyehud.mdl"
 			"used_by_classes"
 			{
 				"engineer"					"1"
 			}
+			"static_attrs"
+			{																		
+				"override projectile type"				 "32"
+				"mod max primary clip override"			"-1"
+			}
 			"attributes"
 			{
+                "maxammo primary increased"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"1.25"
+				}
+				"energy weapon no ammo"
+				{
+					"attribute_class"    "mod_ammo_per_shot"
+					"value"				"-1"
+				}
+				
+				// hidden
+				"hidden separator"		"1"	
+				
+				"hide ammo hud"
+				{
+					"attribute_class"	"hide_ammo_hud"
+					"value"				"1"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"10"
+				}
 			    "strange restriction type 1"
 				{
 					"attribute_class"	"sentry_target_override_on_hit"
@@ -23071,11 +23141,6 @@ Wearable by: 'The One Of Wonders'"
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.05"
 				}
-                "maxammo primary increased"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"1.25"
-				}
                 "crit mod disabled hidden"																
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -23084,6 +23149,8 @@ Wearable by: 'The One Of Wonders'"
 			}
 			"visuals"
 			{
+				"muzzle_flash"			"ExplosionCore_sapperdestroyed"	
+				"trail_effect"			"critgun_weaponmodel_ylw"
 				"sound_single_shot"		"Weapon_SpyHunter.Shoot"							
 				"sound_burst"			"Weapon_SpyHunter.ShootCrit"
 			}
@@ -23107,8 +23174,8 @@ Wearable by: 'The One Of Wonders'"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
 			
-			"item_logname"				"augmentation_trenchgun"
-			"item_iconname"				"augmentation_trenchgun"
+			"item_logname"				"Mann-Power"
+			"item_iconname"				"Mann-Power"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
@@ -23118,7 +23185,7 @@ Wearable by: 'The One Of Wonders'"
 Primary Perk: Replace your pistol with a Trench Shotgun
 
 Model by: 'BenH'
-Wearable Model by: 'Coolchou Zhao'
+Cosmetic by: 'Coolchou Zhao'
 Wearable by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/player/items/engineer/augmentation_trench"
 			"model_world"				"models/weapons/c_models/c_augment_trench/c_augment_trench_new.mdl"
@@ -23197,7 +23264,7 @@ Wearable by: 'The One Of Wonders'"
 			"item_name"					"Augmentation: Visual Aid"
 			"item_type_name"			"Goggle Augmentation"
 			"item_description"			"
-Model by: 'Coolchou Zhao'
+Cosmetic by: 'Coolchou Zhao'
 Wearable by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/player/items/engineer/augmentation_speed"
 			"model_player"				"models/player/items/engineer/display_goggle/display_goggle.mdl"
@@ -23273,8 +23340,8 @@ Well, it's a bit wild but it works just fine.
 Model by: 'CoBalt'
 Weapon by: 'The One Of Wonders'
 Sentry replacement by: 'Pyanodon'"	
-			"item_logname"				"wrench_robot"
-			"item_iconname"				"wrench_robot"
+			"item_logname"				"Heavy Support"
+			"item_iconname"				"Heavy Support"
 			"image_inventory"			"backpack/weapons/c_models/c_toothwrench/c_toothwrench"
 			"model_world"				"models/weapons/c_models/c_toothwrench/c_toothwrench.mdl"
 			"model_player"				"models/weapons/c_models/c_toothwrench/c_toothwrench.mdl"
@@ -23382,8 +23449,8 @@ I punch harder than strongest man in the world!
 
 Model by: 'CoBalt'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"hydraulic_fists"
-			"item_iconname"				"hydraulic_fists"
+			"item_logname"				"Hydraulic Hammers"
+			"item_iconname"				"Hydraulic Hammers"
 			"image_inventory"			"backpack/weapons/c_models/c_hammerfists/c_hammerfists"
     		"model_world"				"models/weapons/c_models/c_hammerfists/c_hammerfists.mdl"
 			"model_player"				"models/weapons/v_models/v_hammerfists.mdl"
@@ -23499,8 +23566,8 @@ All this fancy technology is a bloody headache..
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"techtrap_launcher"
-			"item_iconname"				"techtrap_launcher"
+			"item_logname"				"Primed Directive"
+			"item_iconname"				"Primed Directive"
 			"image_inventory"			"backpack/weapons/c_models/c_techlauncher/c_techlauncher"
 			"model_world"				"models/weapons/c_models/c_techlauncher/c_techlauncher.mdl"
 			"model_player"				"models/weapons/c_models/c_techlauncher/c_techlauncher.mdl"
@@ -23603,8 +23670,8 @@ BBQ Buckshot is all you need to start a good fire.
 
 Model by: 'IteGood'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"stainless_shotgun"
-			"item_iconname"				"stainless_shotgun"
+			"item_logname" 				"Stainless Scorcher"
+			"item_iconname"				"Stainless Scorcher"
 			"image_inventory"			"backpack/weapons/c_models/c_stainless_shotgun/c_stainless_shotgun"
 			"model_world"				"models/weapons/c_models/c_stainless_shotgun/c_stainless_shotgun.mdl"
 			"model_player"				"models/weapons/c_models/c_stainless_shotgun/c_stainless_shotgun.mdl"
@@ -23731,8 +23798,8 @@ I'm gonna make a pin cushion out of you, chucklehead!
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"burstnailgun_scout"
-			"item_iconname"				"burstnailgun_scout"
+			"item_logname"				"Staple Burster"
+			"item_iconname"				"Staple Burster"
 			"image_inventory"			"backpack/weapons/c_models/c_nailgun_burst/c_nailgun_burst"
 			"model_world"				"models/weapons/c_models/c_nailgun_burst/c_nailgun_burst.mdl"
 			"model_player"				"models/weapons/c_models/c_nailgun_burst/c_nailgun_burst.mdl"
@@ -23849,8 +23916,8 @@ Broken bottles may be sharp, but this is sharper!
 
 Model by: 'CoBalt'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"trench_knife"
-			"item_iconname"				"trench_knife"
+			"item_logname"				"Trench Shank"
+			"item_iconname"				"Trench Shank"
 			"image_inventory"			"backpack/weapons/c_models/c_trenchknife/c_trenchknife"
 			"model_world"				"models/weapons/c_models/c_trenchknife/c_trenchknife.mdl"
 			"model_player"				"models/weapons/c_models/c_trenchknife/c_trenchknife.mdl"
@@ -23931,8 +23998,8 @@ No animal, man or magical monstrosity is strong enough to survive this knife, so
 
 Model by: 'Petachepas'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"ww2_bowie"
-			"item_iconname"				"ww2_bowie"
+			"item_logname"				"Maggot Mutilator"
+			"item_iconname"				"Maggot Mutilator"
 			"image_inventory" 			"backpack/weapons/c_models/c_ww2_bowie/c_ww2_bowie"
 			"model_world"				"models/weapons/c_models/c_ww2_bowie/c_ww2_bowie.mdl"
 			"model_player"				"models/weapons/c_models/c_ww2_bowie/c_ww2_bowie.mdl"
@@ -24020,8 +24087,8 @@ for some actual money!
 Model by: 'ColonelBD'
 Animations by: 'deskpacito'
 Weapon by: 'Reagy'"
-			"item_logname"				"singleshot_civ"
-			"item_iconname"				"singleshot_civ"
+			"item_logname"				"Lamplighter"
+			"item_iconname"				"Lamplighter"
 			"image_inventory"			"backpack/weapons/w_models/w_lamplighter"
 			"model_world"				"models/weapons/custom/w_models/w_lamplighter_new.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_lamplighter.mdl"
@@ -24036,9 +24103,9 @@ Weapon by: 'Reagy'"
 				"class select override vcd"				"taunt01"								// So he isn't posing strangely
 				"clip size penalty hidden"				"0.1"									// 1 shot
 				"hidden secondary max ammo penalty"		"0.2"									// 40 ammo in secondary!
-				"crit mod disabled hidden"				"10.0"
+				"crit mod disabled hidden"				"15.0"
 				"fire rate penalty hidden"				"0.8"									
-				"damage bonus hidden"					"2"
+				"damage bonus hidden"					"2.22"
 				"reload time increased hidden"			"1.05"									
 				"min_viewmodel_offset"					"10 0 -11"
 			}
@@ -24082,8 +24149,8 @@ Fitting for some loose screws...
 Model By: 'spike nitros'
 Cosmetic by: 'Rabscootle' 'Awan'
 Weapon By: 'Colrot'"
-			"item_logname"				"sledgehammer"
-			"item_iconname"				"sledgehammer"
+			"item_logname"				"Traumahawk"
+			"item_iconname"				"Traumahawk"
 			"image_inventory"			"backpack/weapons/c_axwrench/c_axwrench"
 			"model_world"				"models/weapons/c_models/c_axwrench/c_axwrench.mdl"
 			"model_player"		    	"models/weapons/v_models/v_axwrench/v_axwrench.mdl"
@@ -24192,8 +24259,8 @@ Yeet Me: Press R to throw
 Model by: 'wowza'
 Cosmetic by: 'blueNES' 'YeetGod'
 Weapon by: 'Reagy'"
-			"item_logname"				"intermission"
-			"item_iconname"				"intermission"
+			"item_logname"				"Intermission"
+			"item_iconname"				"Intermission"
 			"model_world"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
 			"model_player"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
 			"extra_wearable" 			"models/workshop/player/items/spy/stylish_satchel/stylish_satchel.mdl"
@@ -24233,8 +24300,8 @@ Let them have it!
 
 Model by: 'goldenjohnson'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"industrialist_scout"
-			"item_iconname"				"industrialist_scout"
+			"item_logname"				"Timeless Terrorizer"
+			"item_iconname"				"Timeless Terrorizer"
 			"image_inventory"			"backpack/weapons/c_models/c_industrialist/c_industrialist"
 			"model_world"				"models/weapons/c_models/c_industrialist/c_industrialist.mdl"
 			"model_player"				"models/weapons/c_models/c_industrialist/c_industrialist.mdl"
@@ -24333,8 +24400,8 @@ Don't you even think about it, you moron..!
 
 Model by: 'Sparkwire'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"rosemary"
-			"item_iconname"				"rosemary"
+			"item_logname"				"Rosemary"
+			"item_iconname"				"Rosemary"
 			"image_inventory"			"backpack/weapons/c_models/c_rosemary/c_rosemary"
 			"model_world"				"models/weapons/c_models/c_rosemary/c_rosemary.mdl"
 			"model_player"				"models/weapons/c_models/c_rosemary/c_rosemary.mdl"
@@ -24407,6 +24474,7 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------------
 //-------------------------------
 //--MEAT EATER - 9190-
+// -- :NOTE: Is this even needed now we've got that glorified shotgun flaregun? This is rarely used...
 //-------------------------------
 //-------------------------------
 		"9190"
@@ -24430,8 +24498,8 @@ Cooking on gas over here!
 
 Model by: 'goldenjohnson'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"grilled_shotgun"
-			"item_iconname"				"grilled_shotgun"
+			"item_logname"				"Meatshot Eater"
+			"item_iconname"				"Meatshot Eater"
 			"image_inventory"			"backpack/weapons/c_models/c_shortergun/c_shortergun"
 			"model_world"				"models/weapons/c_models/c_shortergun/c_shortergun.mdl"
 			"model_player"				"models/weapons/c_models/c_shortergun/c_shortergun.mdl"
@@ -24508,8 +24576,8 @@ If I've got my eyes on you, let it be known you ain't walking home tonight.
 
 Model by: 'Sky'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"chainbat"
-			"item_iconname"				"chainbat"
+			"item_logname"				"Un-Chained Fury"
+			"item_iconname"				"Un-Chained Fury"
 			"image_inventory"			"backpack/weapons/c_models/c_chain_bat/c_chain_bat"
 			"model_world"				"models/weapons/c_models/c_chain_bat/c_chain_bat.mdl"
 			"model_player"				"models/weapons/c_models/c_chain_bat/c_chain_bat.mdl"
@@ -24598,8 +24666,8 @@ Your sentence is a fatal shot in the face.
 
 Model by: 'OverPovered'
 Weapon by: 'The One Of Wonders'"
-            "item_logname"				"gilded_shotrevolver"
-			"item_iconname"				"gilded_shotrevolver"
+            "item_logname"				"Judge Death"
+			"item_iconname"				"Judge Death"
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/c_models/c_shotrevolver/c_shotrevolver"
 			"model_world"				"models/weapons/c_models/c_shotrevolver/c_shotrevolver.mdl"
@@ -24687,8 +24755,8 @@ Sometimes I don't have time to go get health kits, so I simply bring one of my o
 
 Model by: 'Gadget'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"medic_flask"
-			"item_iconname"				"medic_flask"
+			"item_logname"				"Reconstruction Syrup (Melee)"
+			"item_iconname"				"Reconstruction Syrup (Melee)"
 			"image_inventory"			"backpack/weapons/c_models/c_medic_healflask/c_medic_healflask"
 			"model_world"				"models/weapons/w_models/w_medic_healflask.mdl"			
 			"model_player"				"models/weapons/v_models/v_medic_healflask.mdl"
@@ -24770,8 +24838,8 @@ An extra spicy mix of the hottest stuff in the black market.
 
 Model by: 'CoBalt'
 Weapon by: 'The One Of Wonders'"											
-			"item_logname"				"trenchfireblaster_pyro"
-			"item_iconname"				"trenchfireblaster_pyro"
+			"item_logname"				"Napalm Blaster"
+			"item_iconname"				"Napalm Blaster"
 			"image_inventory"			"backpack/weapons/c_models/c_explothrower/c_explothrower"
 			"model_world"				"models/weapons/c_models/c_explothrower/c_explothrower.mdl"
 			"model_player"				"models/weapons/c_models/c_explothrower/c_explothrower.mdl"
@@ -24908,8 +24976,8 @@ Pyro learnt how to make explosives? god save us all...
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"sawedoff_blast_pyro"
-			"item_iconname"				"sawedoff_blast_pyro"
+			"item_logname" 				"Prosecutor"
+			"item_iconname"				"Prosecutor"
 			"image_inventory"			"backpack/weapons/c_models/c_overunder_pyro/c_overunder_pyro"
 			"model_world"				"models/weapons/c_models/c_overunder_pyro/c_overunder_pyro.mdl"
 			"model_player"				"models/weapons/c_models/c_overunder_pyro/c_overunder_pyro.mdl"
@@ -25011,6 +25079,8 @@ Weapon by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_name"					"Knightly Honour"
+			"item_logname" 				"Knightly Honour"
+			"item_iconname"				"Knightly Honour"
 			"item_type_name"			"Medieval Shield"
 			"item_description"			"Mouse 2: Charge in the direction of your aim! (8 sec cooldown)
 			
@@ -25088,8 +25158,8 @@ Macbeth was certainly... a tale of tragedy.
 Model by: 'Mnemosynaut, svdl'
 Cosmetic by: 'GetGrenade' 'emrfish6' 'frying dutchman'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"dullahan_blade"
-			"item_iconname"				"dullahan_blade"
+			"item_logname"				"Unusual Tale of Tragedy"
+			"item_iconname"				"Unusual Tale of Tragedy"
 			"image_inventory"			"backpack/weapons/c_models/c_dullahan/c_dullahan"
 			"model_world"				"models/weapons/c_models/c_dullahan/c_dullahan.mdl"
 			"model_player"				"models/weapons/c_models/c_dullahan/c_dullahan.mdl"
@@ -25165,34 +25235,39 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------
 //-------------------------
 //--BOMB SUIT- 9199--
+// -- :NOTE: The primary this gives is frankly, dogshit compared to before, I'm swapping it to Colrot's Loose Cannon clone
+// -- :NOTE: Remove the bombsuit later and stats, see how it works for now though
 //-------------------------
 //-------------------------
 		"9199"
 		{
-			"name"						"TF_WEAPON_DEMO_CROWDCONTROL_BOMBSUIT"							
-			"prefab"					"weapon_grenade_launcher"
+			"name"						"TF_WEAPON_DEMO_DONK"							
+			"prefab"					"weapon_stickybomb_launcher"
+			"item_class"				"tf_weapon_grenade_mirv2"
+			"item_slot"					"primary"
 			"show_in_armory"			"1"
 
 			"item_quality"				"rarity2"
+			
+			"anim_slot"					"secondary"
+			"bucket"					"0"
+			"bucket_position"			"0"
 
 			"propername"				"1"
 			"item_name"					"Frag Master"
-			"item_type_name"			"Bomb Suit"
-			"item_description"			"This item gives you a special crowd control explosive launcher
-You gain 33% passive damage resistance with this item
+			"item_type_name"			"Rotary Cannon"
+			"item_description"			"Double Donk! Bomb explosions after an impact will deal mini-crits to impact victims
 
 Buckle up lads, it's time to get explosive!
 
-Wearable Model by: 'Corvalho'
 Weapon Model by: 'SgtR007'
-Wearable by: 'Suomimies55'
-Weapon by: 'The One Of Wonders'"
-			"item_logname"				"fragmaster_bomblauncher"
-			"item_iconname"				"fragmaster_bomblauncher"
+Weapon by: 'Colrot'"
+			"item_logname"				"Frag Master"
+			"item_iconname"				"Frag Master"
 			"image_inventory"			"backpack/weapons/c_models/c_fragmaster/c_fragmaster"
 			"model_world"				"models/weapons/c_models/c_fragmaster_bomblauncher/c_fragmaster_bomblauncher.mdl"
 			"model_player"				"models/weapons/c_models/c_fragmaster_bomblauncher/c_fragmaster_bomblauncher.mdl"
-			"extra_wearable"			"models/player/items/demo/blaster_gear/blaster_gear.mdl"
+//			"extra_wearable"			"models/player/items/demo/blaster_gear/blaster_gear.mdl" -- REMOVE THIS
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -25200,71 +25275,88 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-				"armor footsteps"						"1"
+				"custom projectile model"				"models/weapons/c_models/c_fragmaster_bomblauncher/c_fragmaster_bomblauncher_projectile.mdl"
+				"damage penalty hidden"                 "0.45"	
 			}
 			"attributes"																	
 			{
-			    // Bomb Suit stuff
-				"weapon_stattrak_module_scale"
+			    "grenade launcher mortar mode"
 				{
-					"attribute_class"	"mult_dmgtaken"
-					"value"				"0.67"
+					"attribute_class"  "grenade_launcher_mortar_mode"
+					"value"            "1"
 				}
-				"dmg taken from crit reduced"											
+				"grenade cook"
 				{
-					"attribute_class"	"mult_dmgtaken_from_crit"
-					"value"				"0.8"
+     				"attribute_class"  "grenade_cook"
+					"value"            "1"
 				}
-				"move speed penalty"
+				"Projectile speed increased"
 				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.8"
+					"attribute_class" "mult_projectile_speed"
+					"value"			  "1.2"
 				}
-				// Weapon specific stuff
-				"weapon_stattrak_module_scale"
+				"cannonball push back"
 				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"1.5"
+					"attribute_class"  "cannonball_push_back"
+					"value"            "1"
 				}
-				"weapon_stattrak_module_scale"
+				"grenade not explode on impact"
 				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.375"
+					"attribute_class"	"grenade_not_explode_on_impact"
+					"value"				"1"
 				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_reload_time"
-					"value"				"1.38"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.425"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"0.7"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"set_detonate_mode"
-					"value"				"2"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"1.4"
-				}
-				"custom projectile model"
-				{
-					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/c_models/c_fragmaster_bomblauncher/c_fragmaster_bomblauncher_projectile.mdl" 
-				}
-				"crit mod disabled"															
+				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				// hidden
+				"hidden separator"		"1"		
+		
+                "mult_item_meter_charge_rate"												
+				{
+					"attribute_class"	"effectbar_recharge_rate"
+					"value"				".15"													
+				}
+                "weapon enemy knockback mod mult increased"															
+				{
+					"attribute_class"	"weapon_enemy_knockback_mod"
+					"value"				"1.25"													
+				}
+				"mirv impact"
+				{
+					"attribute_class"  "mirv_impact"
+					"value"            "1"
+				}
+				"mult mirv impact damage"
+				{
+					"attribute_class"  "mult_mirv_impact_damage"
+					"value"            "1.66"
+				}
+				"apply z velocity on damage"
+				{
+					"attribute_class"  "apply_z_velocity_on_damage"
+					"value"            "200"
+				}
+				"add condition on hit weapon"												
+				{
+					"attribute_class"	"add_onhit_addcond_weapon"
+					"value"				"30 .35"
+				}
+				 "maxammo grenades2 increased"											
+				{
+					"attribute_class"	"mult_maxammo_grenades2"
+					"value"				"4"													
+				}
+				"bomblets count mod mult hidden"
+				{
+					"attribute_class"	"bomblets_count_mod"
+					"value"				"0"
+				}
+				"stickybomb charge rate"
+				{
+					"attribute_class"	"stickybomb_charge_rate"
+					"value" 			"0.4"
 				}
 			}
 			"visuals"
@@ -25278,6 +25370,7 @@ Weapon by: 'The One Of Wonders'"
 //----------------------
 //----------------------
 //--DEMO HAMMER- 9200---
+// -- :NOTE: Remove this
 //----------------------
 //----------------------
 		"9200"
@@ -25298,8 +25391,8 @@ Well, I guess we owe that little building man a little something now and then...
 
 Model by: 'Spike Nitros'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"bombsuit_hammer"
-			"item_iconname"				"bombsuit_hammer"
+			"item_logname"				"Helper's Hammer"
+			"item_iconname"				"Helper's Hammer"
 			"image_inventory"			"backpack/weapons/c_models/c_specialhammer/c_specialhammer"
 			"model_world"				"models/weapons/c_models/c_specialhammer/c_specialhammer.mdl"
 			"model_player"				"models/weapons/c_models/c_specialhammer/c_specialhammer.mdl"
@@ -25387,8 +25480,8 @@ Heh, now aren't you a clever wanker?
 Model by: 'Svdl, Sparkwire'
 Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"spas_shotgun_primary"
-			"item_iconname"				"spas_shotgun_primary"
+			"item_logname" 				"Hunter Killer"
+			"item_iconname"				"Hunter Killer"
 			"image_inventory"			"backpack/weapons/c_models/c_hunter_killer/c_hunter_killer"
 			"model_world"				"models/weapons/custom/w_models/w_hunter_killer.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_hunter_killer.mdl"
@@ -25506,8 +25599,8 @@ Now then, who wants some?
 
 Model by: 'N-Cognito'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"tfc_automaticrifle"
-			"item_iconname"				"tfc_automaticrifle"
+			"item_logname"				"Automatic Rifle"
+			"item_iconname"				"Automatic Rifle"
 			"image_inventory"			"backpack/weapons/c_models/c_tfc_automaticrifle/c_tfc_automaticrifle"
 			"model_world"				"models/weapons/c_models/c_tfc_automaticrifle/c_tfc_automaticrifle.mdl"
 			"model_player"				"models/weapons/c_models/c_tfc_automaticrifle/c_tfc_automaticrifle.mdl"
@@ -25591,8 +25684,8 @@ Cuts just about anything I feed it, including you.
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"jungle_machete"
-			"item_iconname"				"jungle_machete"
+			"item_logname"				"Hack N' Slasher"
+			"item_iconname"				"Hack N' Slasher"
 			"image_inventory"			"backpack/weapons/c_models/c_junglemachete/c_junglemachete"
 			"model_world"				"models/weapons/c_models/c_junglemachete/c_junglemachete.mdl"
 			"model_player"				"models/weapons/c_models/c_junglemachete/c_junglemachete.mdl"
@@ -25646,6 +25739,7 @@ Weapon by: 'The One Of Wonders'"
 //-----------------------------------
 //-----------------------------------
 //--ANTI-CROWD LAUNCHER- 9206--
+// -- :NOTE: Get raptor to send the new viewmodel and push azzy's changes!!!
 //-----------------------------------
 //-----------------------------------
 		"9206"
@@ -25667,8 +25761,8 @@ I'll tell ye how to get these yobbers off a flipping cart or control point, NAIL
 
 Model by: 'Hau, Kibbleknight'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"firebomb_naillauncher"
-			"item_iconname"				"firebomb_naillauncher"
+			"item_logname"				"Hard-hitting Hardware"
+			"item_iconname"				"Hard-hitting Hardware"
 			"image_inventory"			"backpack/weapons/c_models/c_nailsticky/c_nailsticky"
 			"model_world"				"models/weapons/c_models/c_nailsticky/c_nailsticky.mdl"
 			"model_player"				"models/weapons/v_models/v_construction_launcher.mdl"
@@ -25754,8 +25848,8 @@ Do you feel lucky? well, do you???
 
 Model by: 'Ertz'
 Weapon by: 'The One Of Wonders'"
-            "item_logname"				"dirty44_magnum"
-			"item_iconname"				"dirty44_magnum"
+            "item_logname"				"Number 29"
+			"item_iconname"				"Number 29"
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/c_models/c_duke/c_duke"
 			"model_world"				"models/weapons/c_models/c_duke/c_duke.mdl"
@@ -25840,8 +25934,8 @@ Running out of ammo is no excuse to stop fighting! you will fight until you die 
 Model by: 'grampa' soldier'
 Cosmetic by: 'emrfish6' 'frying dutchman'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"bayonet_blade"
-			"item_iconname"				"bayonet_blade"
+			"item_logname"				"Grim Charger"
+			"item_iconname"				"Grim Charger"
 			"image_inventory" 			"backpack/weapons/c_models/c_bayonet_blade/c_bayonet_blade"
 			"model_world"				"models/weapons/c_models/c_bayonet_blade/c_bayonet_blade.mdl"
 			"model_player"				"models/weapons/c_models/c_bayonet_blade/c_bayonet_blade.mdl"
@@ -25925,8 +26019,8 @@ I'm going to make myself into the art of war, get ready maggots!
 
 Model by: 'Ertz'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"spitfire_rocketlauncher"
-			"item_iconname"				"spitfire_rocketlauncher"
+			"item_logname"				"Spitfire"
+			"item_iconname"				"Spitfire"
 			"image_inventory"			"backpack/weapons/c_models/c_spitfire_rocketlauncher/c_spitfire_rocketlauncher"
 			"model_world"				"models/weapons/c_models/c_spitfire_rocketlauncher/c_spitfire_rocketlauncher.mdl"
 			"model_player"				"models/weapons/c_models/c_spitfire_rocketlauncher/c_spitfire_rocketlauncher.mdl"
@@ -26036,8 +26130,8 @@ Model by: 'ZombiePlasticClock'
 Sounds by: 'Astonov' 'Sevan'
 Original Weapon by: 'Reagy'
 Repurposed by: 'Majro'"
-			"item_logname"				"bfg_9000"
-			"item_iconname"				"bfg_9000"
+			"item_logname"				"BFG 9000"
+			"item_iconname"				"BFG 9000"
 			"image_inventory"			"backpack/weapons/c_models/c_bfg/c_bfg"
 			"model_world"				"models/weapons/c_models/c_bfg/c_bfg_hb.mdl"
 			"model_player"				"models/weapons/v_models/v_bfg/v_bfg_hb.mdl" //"models/weapons/v_models/v_bfg/v_bfg_new.mdl"
@@ -26192,8 +26286,8 @@ Repurposed by: 'Majro'"
 
 Model by: 'Haau'
 Weapon by: 'Majro'"
-			"item_logname"				"clean_sweep"
-			"item_iconname"				"clean_sweep"
+			"item_logname"				"Clean Sweep"
+			"item_iconname"				"Clean Sweep"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_broomstick_bat/c_broomstick_bat"
 			"model_player"				"models/workshop/weapons/c_models/c_broomstick_bat/c_broomstick_bat.mdl"
 			"attach_to_hands"			"1"
@@ -26284,8 +26378,8 @@ I can't beat the shit out of you without getting closer.
 
 Model by: 'N-Cognito'
 Weapon by: 'Colrot' and 'Mister Mann'"
-			"item_logname"				"tsar_platina"
-			"item_iconname"				"tsar_platina"
+			"item_logname"				"Stand Proud"
+			"item_iconname"				"Stand Proud"
 			"image_inventory"			"backpack/weapons/c_models/c_tsar_platina"
  		    "model_world"				"models/player/items/custom/heavy/heavy_kujo_combined.mdl"
 			"model_player"			    "models/weapons/v_models/v_tsar_platina/v_tsar_platina.mdl"
@@ -26381,6 +26475,7 @@ Weapon by: 'Colrot' and 'Mister Mann'"
 //--------------------------
 //--------------------------
 // ELECTRIC WEAPONS - LIGHTNING STRIKE - 9218
+// -- :NOTE: This really should be changed to apply outlines, the scope texture is even setup work with it, we don't need the W2K either if they're merged
 //--------------------------
 //--------------------------
 		"9218"																			
@@ -26405,8 +26500,8 @@ If you hear the thunder, then you weren't the one who got the shock of their lif
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"lightning_strike_sniper"
-			"item_iconname"				"lightning_strike_sniper"
+			"item_logname"				"Viewfinder"
+			"item_iconname"				"Viewfinder"
 			"image_inventory"			"backpack/weapons/c_models/c_lightningstrike_sniper/c_lightningstrike_sniper"
 			"model_world"				"models/weapons/c_models/c_lightningstrike_sniper/c_lightningstrike_sniper.mdl"
 			"model_player"				"models/weapons/c_models/c_lightningstrike_sniper/c_lightningstrike_sniper.mdl"
@@ -26477,11 +26572,11 @@ Weapon by: 'The One Of Wonders'"
 
 			"item_quality"				"rarity2"
 			
-			"item_name"					"Royal Flush"
+			"item_name"					"Dead Manns Hand"
 			"item_type_name"			"Deck of Cards"
 			"item_description"			"Civilian cannot throw cards effectively
 
-Lucky Roll: Increased crit chance
+Lucky Roll: Increased critical chance
 
 Lets play a game... pick a card
 
@@ -26492,8 +26587,8 @@ Weapon by: 'Reagy'"
 
 			"flip_viewmodel"			"1"
 
-			"item_logname"				"royal_flush_civ"
-			"item_iconname"				"royal_flush"
+			"item_logname"				"Dead Manns Hand"
+			"item_iconname"				"Dead Manns Hand"
 			"image_inventory"			"backpack/weapons/w_models/w_cards"
 			"model_world"				"models/weapons/w_models/w_cards/w_cards.mdl"			
 			"model_player"				"models/weapons/v_models/v_cards/v_cards.mdl"
@@ -26508,7 +26603,7 @@ Weapon by: 'Reagy'"
 				"override projectile type" 				"30"	
 				"clip size penalty hidden"				"0.2"
 				"hidden primary max ammo bonus"			"3.2"
-				"crit mod disabled hidden"				"10.0"
+				"crit mod disabled hidden"				"15.0"
 			}
 			"attributes"
 			{
@@ -26565,7 +26660,7 @@ Weapon by: 'Reagy'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.33"
+					"value"				"0.75"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -26585,6 +26680,7 @@ Weapon by: 'Reagy'"
 //-------------------
 //-------------------
 //--ENGI LMG PROTOTYPE -- 9220
+// -- :NOTE: Remove this...
 //-------------------
 //-------------------
 		"9220"
@@ -26612,8 +26708,8 @@ Constructed from a long-dead mining facility...
 Model by: 'Hau'
 Weapon by: 'The One Of Wonders'"
 
-			"item_logname" 				"relic_minigun"
-			"item_iconname" 			"relic_minigun"
+			"item_logname" 				"Rust Valley Relic"
+			"item_iconname" 			"Rust Valley Relic"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_more_gun/c_more_gun"
 			"model_world"				"models/workshop/weapons/c_models/c_more_gun/c_more_gun_new.mdl"
 			"model_player"				"models/workshop/weapons/v_models/v_more_gun/v_more_gun_new.mdl"
@@ -26690,6 +26786,7 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------
 //-------------------------
 //--FREE-WALKER WATCH - 9221--
+// -- :NOTE: Halved cloak loss on damage
 //-------------------------
 //-------------------------
 		"9221"
@@ -26713,8 +26810,8 @@ Off to visit your mother!
 
 Model by: 'IteGood'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"watchwalker"
-			"item_iconname"				"watchwalker"
+			"item_logname"				"Stalker's Walk"
+			"item_iconname"				"Stalker's Walk"
 			"image_inventory"			"backpack/weapons/c_models/c_walkerwatch/c_walkerwatch"
 			"model_world"				"models/empty.mdl"
 			"model_player"				"models/weapons/c_models/c_walkergadget/v_walkergadget_spy_new.mdl"
@@ -26742,7 +26839,7 @@ Weapon by: 'The One Of Wonders'"
 				"lose cloak on damage"																
 				{
 					"attribute_class"	"lose_cloak_on_damage"
-					"value" 			"100"
+					"value" 			"50"
 				}
 				"weapon_stattrak_module_scale"																
 				{
@@ -26791,8 +26888,8 @@ It gets a bit boring, being so far away...
 
 Model by: 'Harry.tf'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"frontliner"
-			"item_iconname"				"frontliner"
+			"item_logname"				"Frontliner"
+			"item_iconname"				"Frontliner"
 			"image_inventory"			"backpack/weapons/c_models/c_frontliner/c_frontliner"
 			"model_world"				"models/weapons/c_models/c_frontliner/c_frontliner.mdl"
 			"model_player"				"models/weapons/c_models/c_frontliner/c_frontliner.mdl"
@@ -26841,7 +26938,7 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"headshot_damage_modify"
 					"value"				"0.75"
-				}
+				}	
 			}
 			"visuals"
 			{
@@ -26921,8 +27018,8 @@ We use these to put together the greatest buildings in Texas, as well as nail mo
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
 
-			"item_logname" 				"nail_minigun"
-			"item_iconname" 			"nail_minigun"
+			"item_logname" 				"Nail Storm"
+			"item_iconname" 			"Nail Storm"
 			"image_inventory"			"backpack/weapons/c_models/c_heavynailgun/c_heavynailgun"
 			"model_world"				"models/weapons/c_models/c_heavynailgun/c_heavynailgun.mdl"
 			"model_player"				"models/weapons/c_models/c_heavynailgun/c_heavynailgun.mdl"
@@ -27053,8 +27150,8 @@ Gun for bear hunt, is good.
 Model by: 'Haau' 'VitreousGlassy'
 Animations by: 'Raptor Dan'
 Weapon by: 'Reagy'"
-			"item_logname" 				"hwg_doublebarrel"
-			"item_iconname" 			"hwg_doublebarrel"
+			"item_logname" 				"Baikal Boomstick"
+			"item_iconname" 			"Baikal Boomstick"
 			"image_inventory"			"backpack/weapons/c_models/c_baikal_boomstick/c_baikal_boomstick"
 			"model_world"				"models/weapons/custom/w_models/w_baikal_boomstick.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_baikal_boomstick_v2.mdl"
@@ -27160,7 +27257,7 @@ Questioned by: 'The One Of Wonders'"
 			"propername"					"1"
 			"item_slot"						"secondary"
 			"anim_slot"						"FORCE_NOT_USED"
-			"item_logname"					"what"
+			"item_logname"					"Flashy Fox"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"104"
 			"image_inventory"				"backpack/player/items/custom/scout/flashy_fox"
@@ -27232,8 +27329,8 @@ Gladiator's Wrath Primary fire has a 10 second cooldown.
 Model by: 'GetGrenade'
 Wearable by: 'Reagy'
 Weapon by 'The One Of Wonders'"
-            "item_logname"				"gladiator_rage"
-			"item_iconname"				"pumpkindeath"
+            "item_logname"				"Gorey Gladiator"
+			"item_iconname"				"Gorey Gladiator"
 			"image_inventory"			"backpack/weapons/c_models/c_gladiator/c_gladiator"
 			"model_player"				"models/weapons/custom/v_models/v_berserk_fists.mdl"
 			"model_world"			    "models/player/items/custom/soldier/gladiator/gladiator_combined.mdl"
@@ -27357,8 +27454,8 @@ Weapon by 'The One Of Wonders'"
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"soldier_mace_spike"
-			"item_iconname"				"soldier_mace_spike"
+			"item_logname"				"Brute Basher"
+			"item_iconname"				"Brute Basher"
 			"image_inventory"			"backpack/weapons/c_models/c_soldier_spikemace/c_soldier_spikemace"
 			"model_world"				"models/weapons/custom/w_models/w_problemsolver.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_problemsolver.mdl"
@@ -27468,8 +27565,8 @@ Centurion's Might Primary fire has a 10 second cooldown.
 Model by: 'Populus'
 Wearable by: 'Reagy'
 Weapon by 'The One Of Wonders'"
-            "item_logname"				"centurion_rage"
-			"item_iconname"				"pumpkindeath"
+            "item_logname"				"Centurion Command"
+			"item_iconname"				"Centurion Command"
 			"image_inventory"			"backpack/weapons/c_models/c_centurion/c_centurion"
 			"model_player"				"models/weapons/custom/v_models/v_berserk_fists.mdl"
 			"model_world"			    "models/player/items/custom/soldier/centurion/centurion_combined.mdl"
@@ -27611,8 +27708,8 @@ Listen here maggot! you're walking home alive whether you want to or not! Now ge
 
 Model by: 'Gadget'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"soldier_shortsword"
-			"item_iconname"				"soldier_shortsword"
+			"item_logname"				"Iron Will"
+			"item_iconname"				"Iron Will"
 			"image_inventory"			"backpack/weapons/c_models/c_shortsword/c_shortsword"
 			"model_world"				"models/weapons/c_models/c_shortsword/c_shortsword.mdl"
 			"model_player"				"models/weapons/c_models/c_shortsword/c_shortsword.mdl"
@@ -27716,8 +27813,8 @@ Weapon by: 'The One Of Wonders'"
 Model by: 'Sparkwire & Natko'
 Weapon from: Fred's Fight Starters"
 //Break//
-			"item_logname"				"insanerator"
-			"item_iconname"				"insanerator"	
+			"item_logname"				"Insanerator"
+			"item_iconname"				"Insanerator"	
 			// No Prefab as the flaregun prefab adds a the '100% crits burning targets' line to the weapon no matter what.
 			"image_inventory"			"backpack/insanerator/insanerator.vtf"
 			"image_inventory_size_w"	"128" // We add this because there is no prefab for the weapon.
@@ -27879,8 +27976,8 @@ Ring-a-ding-ding baby check out my bells!
 
 Model by: 'Reagy' 'Agent Melon'
 Weapon by: 'Reagy'"
-			"item_logname"				"twiggy_scunt"
-			"item_iconname"				"twiggy"
+			"item_logname"				"Festive Twig (Scout)"
+			"item_iconname"				"Festive Twig (Scout)"
 			"image_inventory"			"backpack/weapons/c_models/c_twigbells/c_twigbells"
  		    "model_world"				"models/weapons/c_models/twigbells/twigbells.mdl"
 			"model_player"			    "models/weapons/c_models/twigbells/twigbells_twig.mdl"
@@ -27944,8 +28041,8 @@ It fell off...
 
 Model by: 'Reagy' 'Agent Melon'
 Weapon by: 'Reagy'"
-			"item_logname"				"twiggy_soldier"
-			"item_iconname"				"twiggy"
+			"item_logname"				"Festive Twig (Soldier)"
+			"item_iconname"				"Festive Twig (Soldier)"
 			"image_inventory"			"backpack/weapons/c_models/c_twigbells/c_twigbells"
  		    "model_world"				"models/weapons/c_models/twigbells/twigbells.mdl"
 			"model_player"			    "models/weapons/c_models/twigbells/twigbells_twig.mdl"
@@ -28008,8 +28105,8 @@ Festive Cheer: This weapon deals critical damage to other Festive Twig users, gi
 
 Model by: 'Reagy' 'Agent Melon'
 Weapon by: 'Reagy'"
-			"item_logname"				"twiggy_pyro"
-			"item_iconname"				"twiggy"
+			"item_logname"				"Festive Twig (Pyro)"
+			"item_iconname"				"Festive Twig (Pyro)"
 			"image_inventory"			"backpack/weapons/c_models/c_twigbells/c_twigbells"
  		    "model_world"				"models/weapons/c_models/twigbells/twigbells.mdl"
 			"model_player"			    "models/weapons/c_models/twigbells/twigbells.mdl"
@@ -28072,8 +28169,8 @@ WHERES ME EGGNOG!?
 
 Model by: 'Reagy' 'Agent Melon'
 Weapon by: 'Reagy'"
-			"item_logname"				"twiggy_demo"
-			"item_iconname"				"twiggy"
+			"item_logname"				"Festive Twig (Demoman)"
+			"item_iconname"				"Festive Twig (Demoman)"
 			"image_inventory"			"backpack/weapons/c_models/c_twigbells/c_twigbells"
  		    "model_world"				"models/weapons/c_models/twigbells/twigbells.mdl"
 			"model_player"			    "models/weapons/c_models/twigbells/twigbells_twig.mdl"
@@ -28137,8 +28234,8 @@ Or else...
 
 Model by: 'Reagy' 'Agent Melon'
 Weapon by: 'Reagy'"
-			"item_logname"				"twiggy_hwg"
-			"item_iconname"				"twiggy"
+			"item_logname"				"Festive Twig (Heavy)"
+			"item_iconname"				"Festive Twig (Heavy)"
 			"image_inventory"			"backpack/weapons/c_models/c_twigbells/c_twigbells"
  		    "model_world"				"models/weapons/c_models/twigbells/twigbells_hwg.mdl"
 			"model_player"			    "models/weapons/c_models/twigbells/twigbells_twig.mdl"
@@ -28201,8 +28298,8 @@ Sometimes you just need a little more cheer...
 
 Model by: 'Reagy' 'Agent Melon'
 Weapon by: 'Reagy'"
-			"item_logname"				"twiggy_engi"
-			"item_iconname"				"twiggy"
+			"item_logname"				"Festive Twig (Engineer)"
+			"item_iconname"				"Festive Twig (Engineer)"
 			"image_inventory"			"backpack/weapons/c_models/c_twigbells/c_twigbells"
  		    "model_world"				"models/weapons/c_models/twigbells/twigbells.mdl"
 			"model_player"			    "models/weapons/c_models/twigbells/twigbells.mdl"
@@ -28270,8 +28367,8 @@ Oh ho ho!
 
 Model by: 'Reagy' 'Agent Melon'
 Weapon by: 'Reagy'"
-			"item_logname"				"twiggy_medic"
-			"item_iconname"				"twiggy"
+			"item_logname"				"Festive Twig (Medic)"
+			"item_iconname"				"Festive Twig (Medic)"
 			"image_inventory"			"backpack/weapons/c_models/c_twigbells/c_twigbells"
  		    "model_world"				"models/weapons/c_models/twigbells/twigbells_med.mdl"
 			"model_player"			    "models/weapons/c_models/twigbells/twigbells_twig.mdl"
@@ -28334,8 +28431,8 @@ Least its not a golf trophy
 
 Model by: 'Reagy' 'Agent Melon'
 Weapon by: 'Reagy'"
-			"item_logname"				"twiggy_sniper"
-			"item_iconname"				"twiggy"
+			"item_logname"				"Festive Twig (Sniper)"
+			"item_iconname"				"Festive Twig (Sniper)"
 			"image_inventory"			"backpack/weapons/c_models/c_twigbells/c_twigbells"
  		    "model_world"				"models/weapons/c_models/twigbells/twigbells_snp.mdl"
 			"model_player"			    "models/weapons/c_models/twigbells/twigbells_snp.mdl"
@@ -28398,8 +28495,8 @@ Its not the size that matters, its how you use it.
 
 Model by: 'Reagy' 'Agent Melon'
 Weapon by: 'Reagy'"
-			"item_logname"				"twiggy_spy"
-			"item_iconname"				"twiggy"
+			"item_logname"				"Festive Twig (Spy)"
+			"item_iconname"				"Festive Twig (Spy)"
 			"image_inventory"			"backpack/weapons/c_models/c_twigbells/c_twigbells"
  		    "model_world"				"models/weapons/c_models/twigbells/twigbells_twig.mdl"
 			"model_player"			    "models/weapons/c_models/twigbells/twigbells_twig.mdl"
@@ -28486,8 +28583,8 @@ Oh goodie! Did you get me my presents?
 
 Model by: 'Reagy' 'Agent Melon'
 Weapon by: 'Reagy'"
-			"item_logname"				"twiggy_civ"
-			"item_iconname"				"twiggy"
+			"item_logname"				"Festive Twig (Civilian)"
+			"item_iconname"				"Festive Twig (Civilian)"
 			"image_inventory"			"backpack/weapons/c_models/c_twigbells/c_twigbells"
  		    "model_world"				"models/weapons/c_models/twigbells/twigbells.mdl"
 			"model_player"			    "models/weapons/c_models/twigbells/twigbells_civ.mdl"
@@ -28501,6 +28598,7 @@ Weapon by: 'Reagy'"
 				"class select override vcd"				"taunt01"
 				"particle on melee hit"					"mini_fireworks"
 				"class select override vcd"				"taunt01"
+// 				"drop health pack on kill"				"1" -- :NOTE: Clue pls fix
 			}
 			"attributes"
 			{
@@ -28543,6 +28641,8 @@ Weapon by: 'Reagy'"
 			"prefab"					"weapon_medigun"
 			"show_in_armory"			"1"
 			"item_name"					"Bio Waste Pump"
+			"item_logname"				"Bio Waste Pump"
+			"item_iconname"				"Bio Waste Pump"
 			"item_type_name"			"War Crime"
 			"item_description"			"
 ÜberCharge creates a cloud of healing gas for 8 seconds
@@ -28677,8 +28777,8 @@ C'est Magnifique! Now look who has the upper hand!
 
 Model and Animations by: 'Spike Nitros'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"Handcannon_Spy"
-			"item_iconname"				"Handcannon_Spy"
+			"item_logname"				"Executioner"
+			"item_iconname"				"Executioner"
 			"image_inventory"			"backpack/weapons/c_models/c_biggun/c_biggun"
 			"model_world"				"models/weapons/c_models/c_biggun/c_biggun.mdl"
 			"model_player"				"models/weapons/v_models/v_biggun/v_biggun.mdl" 
@@ -28788,8 +28888,8 @@ Lotta good that gun did ya, because I made you eat the dirt!
 
 Model by: 'Spike Nitros'
 Weapon by: 'The One Of Wonders'" 
-			"item_logname"				"revolver_scout"
-			"item_iconname"				"revolver_scout"
+			"item_logname"				"Speedster's Side-kick"
+			"item_iconname"				"Speedster's Side-kick"
 			"image_inventory"			"backpack/weapons/c_models/c_scoutrevolver/c_scoutrevolver"
 			"model_world"				"models/weapons/w_models/w_scoutrevolver/w_scoutrevolver.mdl"
 			"model_player"				"models/weapons/v_models/v_scoutrevolver/v_scoutrevolver.mdl"
@@ -28852,8 +28952,8 @@ Not so funny now are ya? I always get the last laugh!
 
 Model by: 'Donhonk'
 Weapon by: 'The One Of Wonders'" 		
-			"item_logname"				"last_laugh"
-			"item_iconname"				"last_laugh"
+			"item_logname"				"Last Laugh"
+			"item_iconname"				"Last Laugh"
 			"image_inventory"			"backpack/weapons/c_models/c_handcannon/c_handcannon"
 			"model_world"				"models/weapons/w_models/w_handcannon/w_handcannon.mdl"
 			"model_player"				"models/weapons/v_models/v_handcannon/v_handcannon.mdl"
@@ -28954,8 +29054,8 @@ Rockets are what makes the difference of you walking home alive or not, maggot!
 
 Model by: 'SediSocks'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"soldier_bazooka"
-			"item_iconname"				"soldier_bazooka"
+			"item_logname"				"Bilbo-Baggin's Bazooka"
+			"item_iconname"				"Bilbo-Baggin's Bazooka"
 			"image_inventory"			"backpack/weapons/c_models/c_tacticallauncher/c_tacticallauncher"
 			"model_world"				"models/weapons/w_models/w_tacticallauncher/w_tacticallauncher.mdl"
 			"model_player"				"models/weapons/v_models/v_tacticallauncher/v_tacticallauncher.mdl"
@@ -29066,8 +29166,8 @@ Nifty lil' shooter, it'll keep my back safe for sure.
 
 Model by: 'Donhonk'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"mauser_machinepistol"
-			"item_iconname"				"mauser_machinepistol"
+			"item_logname"				"Madman's Mauser"
+			"item_iconname"				"Madman's Mauser"
 			"image_inventory"			"backpack/weapons/c_models/c_broomhandle/c_broomhandle"
 			"model_player"				"models/weapons/c_models/c_broomhandle/c_broomhandle.mdl"
 			"attach_to_hands"			"1"
@@ -29143,10 +29243,10 @@ Primary Perk: Access the power of cybernetically enhanced brain waves!
 
 each charge takes 15 seconds to recharge.
 
-Model by: 'void~, rain'
+Cosmetic by: 'void~, rain'
 Weapon by 'The One Of Wonders'"
-            "item_logname"				"augment_brain_power"
-			"item_iconname"				"pumpkindeath"
+            "item_logname"				"Brain Hack"
+			"item_iconname"				"Brain Hack"
 			"image_inventory"			"backpack/weapons/c_models/c_augment_brainblast/c_augment_brainblast"
 			"model_player"				"models/weapons/custom/v_models/v_berserk_fists.mdl"
 			"model_world"			    "models/player/items/engineer/brain_hack/brain_hack.mdl"
@@ -29261,8 +29361,8 @@ Model by: 'OverPovered'
 Cosmetics by: 'Diva Dan, Corvalho'
 Wearable by: 'The One Of Wonders'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"mobster_minigun"
-			"item_iconname" 			"mobster_minigun"
+			"item_logname" 				"Honcho Hunter"
+			"item_iconname" 			"Honcho Hunter"
 			"image_inventory"			"backpack/weapons/c_models/c_honchohunter/c_honchohunter"
 			"model_world"				"models/weapons/c_models/c_serenade/c_serenade_minigun.mdl"
 			"model_player"				"models/weapons/c_models/c_serenade/c_serenade_minigun.mdl"
@@ -29374,8 +29474,8 @@ The looks are deceiving, this thing is basically a madman's not-so-wet dream!
 
 Model by: 'SexyRobot'
 Weapon by: 'The One Of Wonders'"											
-			"item_logname"				"flamethrower_burster"
-			"item_iconname"				"flamethrower_burster"
+			"item_logname"				"Spark Shower"
+			"item_iconname"				"Spark Shower"
 			"image_inventory"			"backpack/weapons/c_models/c_assaultbreath/c_assaultbreath"
 			"model_world"				"models/weapons/c_models/c_assaultbreath/c_assaultbreath.mdl"
 			"model_player"				"models/weapons/c_models/c_assaultbreath/c_assaultbreath.mdl"
@@ -29515,8 +29615,8 @@ Heavy got tired of reloading baby shotgun, so I made myself a BIGGER shotgun!
 
 Model by: 'OpethRockr55'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"czech_cannon"
-			"item_iconname" 			"czech_cannon"
+			"item_logname" 				"Czech Cannon"
+			"item_iconname" 			"Czech Cannon"
 			"image_inventory"			"backpack/weapons/c_models/c_ccannon/c_ccannon"
 			"model_world"				"models/weapons/c_models/c_ccannon/c_ccannon.mdl"
 			"model_player"				"models/weapons/c_models/c_ccannon/c_ccannon.mdl"
@@ -29615,8 +29715,8 @@ A quality piece, this one is, let's see how much blood she'll make ya lose.
 
 Model by: 'Weaponized Noob'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"burstsmg_sniper"
-			"item_iconname"				"burstsmg_sniper"
+			"item_logname"				"Freehand's Misbrand"
+			"item_iconname"				"Freehand's Misbrand"
 			"image_inventory"			"backpack/weapons/c_models/c_fm_smg/c_fm_smg"
 			"model_player"				"models/weapons/c_models/c_fm_smg/c_fm_smg.mdl"
 			"attach_to_hands"			"1"
@@ -29678,6 +29778,7 @@ Weapon by: 'The One Of Wonders'"
 //---------------------------------
 //---------------------------------
 //--PLACEHOLDER 13 - 9949--
+// -- :NOTE: Remove, its pretty shit and no one uses it since it was added
 //---------------------------------
 //---------------------------------
 		"9949"
@@ -29697,8 +29798,8 @@ Bombs ahoy!
 
 Model by: 'goldenjohnson'
 Weapon by: 'The One Of Wonders'"																				
-			"item_logname"				"iron_boarder"
-			"item_iconname"				"iron_boarder"
+			"item_logname"				"Iron Boarder"
+			"item_iconname"				"Iron Boarder"
 			"image_inventory"			"backpack/weapons/c_models/c_iron_boarder/c_iron_boarder"
 			"model_world"				"models/weapons/c_models/c_iron_boarder/c_iron_boarder.mdl"
 			"model_player"				"models/weapons/c_models/c_iron_boarder/c_iron_boarder.mdl"
@@ -29766,6 +29867,7 @@ Weapon by: 'The One Of Wonders'"
 //-----------------------------------
 //-----------------------------------
 //--PLACEHOLDER 14 - 9950--
+// -- :NOTE: Colrot would like the moonboots to be added to demo to act as an interesting counter to this, believe the issue is still under the closed oned, will look into later
 //-----------------------------------
 //-----------------------------------
 		"9950"
@@ -29787,8 +29889,8 @@ Who needs a space program when you can BECOME THE SPACE PROGRAM!
 
 Model by: 'Wrench N Rockets'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"space_rocketlauncher"
-			"item_iconname"				"space_rocketlauncher"
+			"item_logname"				"Moon Shot"
+			"item_iconname"				"Moon Shot"
 			"image_inventory"			"backpack/weapons/c_models/c_railgun_soldier/c_railgun_soldier"
 			"model_world"				"models/weapons/c_models/c_railgun_soldier/c_railgun_soldier.mdl"
 			"model_player"				"models/weapons/c_models/c_railgun_soldier/c_railgun_soldier.mdl"
@@ -29871,8 +29973,8 @@ The future is now, with this handy-dandy zappy handgun!
 
 Model by: 'Circle Pipe'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"laserpistol_spy"
-			"item_iconname"				"laserpistol_spy"
+			"item_logname"				"Electic Electrocutor""
+			"item_iconname"				"Electic Electrocutor""
 			"image_inventory"			"backpack/weapons/c_models/c_raygun/c_raygun"
 			"model_world"				"models/weapons/c_models/c_raygun/c_raygun.mdl"
 			"model_player"				"models/weapons/c_models/c_raygun/c_raygun.mdl"
@@ -29960,8 +30062,8 @@ Irrational men do irrational things, this ain't one of them!
 
 Model by: 'Ertz'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"razorsaw_bat"
-			"item_iconname"				"razorsaw_bat"
+			"item_logname"				"Risky Razors"
+			"item_iconname"				"Risky Razors"
 			"image_inventory"			"backpack/weapons/c_models/c_ripper/c_ripper"
 			"model_world"				"models/weapons/c_models/c_ripper/c_ripper.mdl"
 			"model_player"				"models/weapons/c_models/c_ripper/c_ripper.mdl"
@@ -30038,8 +30140,8 @@ Sometimes a more destructive approach is required.
 
 Model by: 'nano393'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"shredder"
-			"item_iconname"				"shredder"
+			"item_logname"				"Second-Hand Shredder"
+			"item_iconname"				"Second-Hand Shredder"
 			"image_inventory"			"backpack/weapons/c_models/c_shredder/c_shredder"
 			"model_world"				"models/weapons/c_models/c_shredder/c_shredder.mdl"
 			"model_player"				"models/weapons/c_models/c_shredder/c_shredder.mdl"
@@ -30065,6 +30167,7 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------------------
 //-------------------------------------
 // PLACEHOLDER 18 -- 9954
+// -- :NOTE: Why do we have two of these?
 //-------------------------------------
 //-------------------------------------	
 		"9954"
@@ -30090,8 +30193,8 @@ Hits hard, smells great, feels like a dream.
 
 Model by: 'The Ronin'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"fireshotty_dmg_pyro"
-			"item_iconname"				"fireshotty_dmg_pyro"
+			"item_logname" 				"Fourth Degree Devastator"
+			"item_iconname"				"Fourth Degree Devastator"
 			"image_inventory"			"backpack/weapons/c_models/c_spitfire/c_spitfire"
 			"model_world"				"models/weapons/c_models/c_spitfire/c_spitfire.mdl"
 			"model_player"				"models/weapons/c_models/c_spitfire/c_spitfire.mdl"
@@ -30215,8 +30318,8 @@ You should've invested into making your equipment blast-proof!
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"spy_dynamitepack"
-			"item_iconname"				"spy_dynamitepack"
+			"item_logname"				"Timely Demise"
+			"item_iconname"				"Timely Demise"
 			"image_inventory"			"backpack/weapons/c_models/c_timely_demise/c_timely_demise"
 			"model_world"				"models/weapons/c_models/c_timely_demise/c_timely_demise.mdl"			
 			"model_player"				"models/weapons/v_models/v_timebomb/v_timebomb.mdl"
@@ -30302,8 +30405,8 @@ She's not a pretty as my other weapons but she does her job as good as any other
 
 Model by: 'OpethRockr55'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"heavy_rivetgun"
-			"item_iconname"				"heavy_rivetgun"
+			"item_logname" 				"Viktoriya"
+			"item_iconname"				"Viktoriya"
 			"image_inventory"			"backpack/weapons/c_models/c_vikels/c_vikels"
 			"model_world"				"models/weapons/c_models/c_vikels/c_vikels.mdl"
 			"model_player"				"models/weapons/c_models/c_vikels/c_vikels.mdl"
@@ -30472,8 +30575,8 @@ I've had me good eye on you the whole time!
 Model by: 'unknown'
 Animations by: 'Raptor Dan'
 Weapon by: 'Raptor Dan'"
-			"item_logname"				"building_grenadelauncher"
-			"item_iconname"				"building_grenadelauncher"
+			"item_logname"				"Double-Tap"
+			"item_iconname"				"Double-Tap"
 			"image_inventory"			"backpack/weapons/c_models/c_sbs_gl/c_sbs_gl"
 			"model_world"				"models/weapons/custom/w_models/w_sbs_gl.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_sbs_gl.mdl"
@@ -30568,8 +30671,8 @@ No code or software is safe from deadly amounts of electromagnetic radiation
 
 Model by: 'Sator'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"decryption_sapper"
-			"item_iconname"				"decryption_sapper"
+			"item_logname"				"Bi-Decoder"
+			"item_iconname"				"Bi-Decoder"
 			"image_inventory"			"backpack/weapons/c_models/c_decryption_sapper/c_decryption_sapper"
 			"model_world"				"models/weapons/c_models/c_decryption_sapper/c_decryption_sapper.mdl"
 			"model_player"				"models/weapons/c_models/c_decryption_sapper/c_decryption_sapper.mdl"
@@ -30624,8 +30727,8 @@ No gun too strong for Heavy!
 
 Model by: 'IteGood'
 Weapon by: 'The One Of Wonders'" 													
-			"item_logname"				"burstcannon_heavy"
-			"item_iconname"				"burstcannon_heavy"
+			"item_logname"				"Patashka Pounder"
+			"item_iconname"				"Patashka Pounder"
 			"image_inventory"			"backpack/weapons/c_models/c_burstshotcannon/c_burstshotcannon"
 			"model_world"				"models/weapons/c_models/c_burstshotcannon/c_burstshotcannon.mdl"
 			"model_player"				"models/weapons/v_models/v_burstshotcannon/v_burstshotcannon.mdl"				
@@ -30733,8 +30836,8 @@ Just you try camping when I come running ready to pump your ass full of lead!
 
 Model by: 'svdl'
 Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"trenchsweeper_shotgun"
-			"item_iconname"				"trenchsweeper_shotgun"
+			"item_logname" 				"Trench Sweeper"
+			"item_iconname"				"Trench Sweeper"
 			"image_inventory"			"backpack/weapons/c_models/c_trenchsweeper/c_trenchsweeper"
 			"model_world"				"models/weapons/c_models/c_trenchsweeper/c_trenchsweeper.mdl"
 			"model_player"				"models/weapons/c_models/c_trenchsweeper/c_trenchsweeper.mdl"
@@ -30801,6 +30904,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_class"				"tf_weapon_flamethrower"
 			"show_in_armory"			"1"
 			"item_name"					"Hydro Pump"
+			"item_logname" 				"Hydro Pump"
+			"item_iconname"				"Hydro Pump"
 			"item_type_name"			"Pressurized Healing Dispenser"
 			"item_description"			"Spray allies with a stream of healing liquid that builds up pressure
 Pressure Gauge: Alt-Fire to consume 20% pressure to destroy nearby enemy projectiles
@@ -30904,8 +31009,8 @@ Weapon ported by: 'Noclue'"
 			"image_inventory"			"backpack/weapons/c_models/c_saigun/c_saigun"
 			"model_player"				"models/weapons/c_models/c_saigun/c_saigun.mdl"
 			"model_world"				"models/weapons/c_models/c_saigun/c_saigun.mdl"
-			"item_logname" 				"jumping_shotgun"
-			"item_iconname"				"jumping_shotgun"
+			"item_logname" 				"Jump-Action Shotgun"
+			"item_iconname"				"Jump-Action Shotgun"
 			"attach_to_hands"			"1"
 			
 			"item_slot"					"primary"
@@ -30948,8 +31053,8 @@ Weapon ported by: 'Noclue'"
 			"name"						"TF_WEAPON_AIRBURST"
 			"prefab"					"weapon_stickybomb_launcher"
 			"item_class"				"tf_weapon_shotgun"
-			"item_logname"				"airdetgun"
-			"item_iconname"				"airdetgun"
+			"item_logname"				"Airburst Rifle"
+			"item_iconname"				"Airburst Rifle"
 			"show_in_armory"			"1"
 			"item_type_name"			"Hybrid Launcher"
 			"item_name"					"Airburst Rifle"
