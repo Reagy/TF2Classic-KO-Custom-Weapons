@@ -71,6 +71,15 @@ public void OnEntityCreated( int iEntity ) {
 }
 
 void SetAmmoOutline( int iEntity ) {
+	int iModelIndex = GetEntProp( iEntity, Prop_Send, "m_nModelIndex" );
+
+	static char szModelName[256];
+	FindModelString( iModelIndex, szModelName, sizeof( szModelName ) );
+
+	//less than spectacular solution to exclude building gibs since they have issues with the ray trace i can't be bothered to fix
+	if( StrContains( szModelName, "_gib" ) != -1 )
+		return; 
+
 	int iGlow = CreateEntityByName( "tf_glow" );
 
 	static char szOldName[ 64 ];
@@ -122,18 +131,18 @@ public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3
 #define RADIUS 4.0
 
 void TryGrabAmmo( int iClient ) {
-	float flAngles[3];
-	float flOrigin[3];
-	float flEndPos[3];
+	float vecAngles[3];
+	float vecOrigin[3];
+	float vecEndPos[3];
 
-	GetClientEyePosition( iClient, flOrigin );
-	GetClientEyeAngles( iClient, flAngles );
+	GetClientEyePosition( iClient, vecOrigin );
+	GetClientEyeAngles( iClient, vecAngles );
 
-	GetAngleVectors( flAngles, flEndPos, NULL_VECTOR, NULL_VECTOR );
-	ScaleVector( flEndPos, 2000.0 );
-	AddVectors( flOrigin, flEndPos, flEndPos );
+	GetAngleVectors( vecAngles, vecEndPos, NULL_VECTOR, NULL_VECTOR );
+	ScaleVector( vecEndPos, 2000.0 );
+	AddVectors( vecOrigin, vecEndPos, vecEndPos );
 
-	TR_EnumerateEntitiesHull( flOrigin, flEndPos, { -RADIUS, -RADIUS, -RADIUS }, { RADIUS, RADIUS, RADIUS }, MASK_SHOT, EnumerateAmmo, iClient );
+	TR_EnumerateEntitiesHull( vecOrigin, vecEndPos, { -RADIUS, -RADIUS, -RADIUS }, { RADIUS, RADIUS, RADIUS }, MASK_SHOT, EnumerateAmmo, iClient );
 
 	int iClosest = -1;
 	int iClosestType = 0;
@@ -146,11 +155,10 @@ void TryGrabAmmo( int iClient ) {
 		g_iAmmoSearchTable.GetArray( i, iData );
 
 		GetEntPropVector( iData[0], Prop_Data, "m_vecAbsOrigin", vecTargetPos );
-		MakeVectorFromPoints( flOrigin, vecTargetPos, vecAngleToTarget );
+		MakeVectorFromPoints( vecOrigin, vecTargetPos, vecAngleToTarget );
 		GetVectorAngles( vecAngleToTarget, vecAngleToTarget );
 
-		float flNewDist = FloatAbs( GetVectorDistance( flAngles, vecAngleToTarget ) );
-		PrintToServer("%i %i %f", iData[0], iData[1], flNewDist );
+		float flNewDist = FloatAbs( GetVectorDistance( vecAngles, vecAngleToTarget ) );
 
 		if( flNewDist < flDist ) {
 			iClosest = iData[0];
@@ -210,10 +218,22 @@ bool EnumerateAmmo( int iEntity, any data ) {
 }
 
 bool PushAmmo( const float vecOrigin[3], int iEntity, int iType ) {
+	if( iType == 1 ) {
+		int iModelIndex = GetEntProp( iEntity, Prop_Send, "m_nModelIndex" );
+
+		static char szModelName[256];
+		FindModelString( iModelIndex, szModelName, sizeof( szModelName ) );
+
+		//less than spectacular solution to exclude building gibs since they have issues with the ray trace i can't be bothered to fix
+		if( StrContains( szModelName, "_gib" ) != -1 )
+			return true; 
+	}
+
 	float vecTarget[3];
 	GetEntPropVector( iEntity, Prop_Data, "m_vecAbsOrigin", vecTarget );
 
 	if( !CheckLOS( vecOrigin, vecTarget, iEntity ) ) {
+		//check the top of the dispenser
 		if( iType == 2 ) {
 			vecTarget[2] += 70.0;
 			if( !CheckLOS( vecOrigin, vecTarget, iEntity ) )
