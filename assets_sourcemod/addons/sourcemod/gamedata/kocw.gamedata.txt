@@ -21,6 +21,11 @@
 				"linux"		"473"
 			}
 		
+			"CObjectTeleporter::DeterminePlaybackRate"
+			{
+				"linux"		"369"
+			}
+		
 			"CTFPlayer::OnTakeDamage"
 			{
 				"linux"		"64"
@@ -153,6 +158,57 @@
 		
 		"Functions"
 		{
+			"CObjectTeleporter::TeleporterThink"
+			{
+				"signature"		"CObjectTeleporter::TeleporterThink"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
+			"CObjectTeleporter::TeleporterTouch"
+			{
+				"signature"		"CObjectTeleporter::TeleporterTouch"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			"CObjectTeleporter::SetState"
+			{
+				"signature"		"CObjectTeleporter::SetState"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"new"
+					{
+						"type"	"int"
+					}
+				}
+			}
+			"CObjectTeleporter::DeterminePlaybackRate"
+			{
+				"offset"		"CObjectTeleporter::DeterminePlaybackRate"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
+			"CObjectTeleporter::IsReady"
+			{
+				"signature"		"CObjectTeleporter::IsReady"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+			}
+		
 			//player
 			
 			"CBaseCombatCharacter::GiveAmmo"
@@ -815,6 +871,28 @@
 				"linux"		"@_ZN10CUtlVectorI7CHandleI11CBaseEntityE10CUtlMemoryIS2_iEE12InsertBeforeEiRKS2_"
 			}
 		
+			"CObjectTeleporter::TeleporterTouch"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CObjectTeleporter15TeleporterTouchEP11CBaseEntity"
+			}
+			"CObjectTeleporter::TeleporterThink"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CObjectTeleporter15TeleporterThinkEv"
+			}
+			"CObjectTeleporter::SetState"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CObjectTeleporter8SetStateEi"
+			}
+			"CObjectTeleporter::IsReady"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CObjectTeleporter7IsReadyEv"
+			}
+			
+		
             //player
 			"CBaseCombatCharacter::SetAmmoCount"
 			{
@@ -1034,6 +1112,17 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN17CGlobalEntityList18FindEntityInSphereEP11CBaseEntityRK6Vectorf"
+			}
+			
+			"CTFAmmoPack::PackTouch"
+			{
+				"library"	"server"
+				"linux"		"@_ZN11CTFAmmoPack9PackTouchEP11CBaseEntity"
+			}
+			"CObjectDispenser::DispenseAmmo"
+			{
+				"library"	"server"
+				"linux"		"@_ZN16CObjectDispenser12DispenseAmmoEP9CTFPlayer"
 			}
 			
 			"CTFGameRules::ApplyOnDamageModifyRules"

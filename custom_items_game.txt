@@ -17937,7 +17937,7 @@ Weapon by: 'The One Of Wonders'"
 		"9108"
 		{
 			"name"						"TF_WEAPON_HHH_Shotgun"
-			"item_class"				"tf_weapon_scattergun"								
+			"item_class"				"tf_weapon_shotgun"								
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
 			
@@ -17953,7 +17953,7 @@ Weapon by: 'The One Of Wonders'"
 Once found in an english river, powerful feelings of atonement manifest from the weapon.
 
 Model by:  'ColonelBD'
-Weapon by: 'The One Of Wonders'"
+Weapon by: 'Noclue'"
 			"item_logname"				"Unusual Broken Mann's Legacy"
 			"item_iconname"				"Unusual Broken Mann's Legacy"
 			"image_inventory"			"backpack/weapons/c_models/c_accursedshotgun"
@@ -17966,83 +17966,46 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    //Displayed stats 
-				"turn to gold"
+			   	//Displayed stats 
+				"lifesteal damage"
 				{
-				    "attribute_class"	"ragdolls_become_ash"
-					"value" 			"1"
+					"attribute_class"	"custom_lifesteal"
+					"value"				"0.75"
 				}
-	            "mod no reload DISPLAY ONLY"										
+				"mod no reload DISPLAY ONLY"										
 				{
 					"attribute_class"	"mod_max_primary_clip_override"
 					"value" 			"-1"
 				}
 				"energy weapon no ammo"
 				{
-					"attribute_class"    "mod_ammo_per_shot"
+					"attribute_class"   "mod_ammo_per_shot"
 					"value"				"-1"
 				}
-				"heal on kill"
+				"turn to gold"
 				{
-					"attribute_class"	"heal_on_kill"
-					"value"				"50" 
+				    "attribute_class"	"ragdolls_become_ash"
+					"value" 			"1"
 				}
-				"fire rate penalty"
+	            
+				"hurt on shot"
+				{
+					"attribute_class"	"custom_hurt_on_fire"
+					"value"				"30.0"
+				}
+				
+				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.33" 
+					"value" 			"1.15"
 				}
-		        //Curses 
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"0.5" 
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"667" 
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.66666666666" 
-				}
-				"maxammo metal reduced"
-				{
-					"attribute_class"	"mult_maxammo_metal"
-					"value"				"0.5" 
-				}
-				"Curse of the Broken Mann"                        // Yes seriously, increased frequency for random crits.
-				{
-					"attribute_class"	"DISPLAY_UNUSUAL_ONLY"
-					"value"				"7.66" 
-				}
-				"Curse of the Broken Mann Extra"                       
-				{
-					"attribute_class"	"DISPLAY_UNUSUAL_ONLY"
-					"value"				"1" 
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"set_burstfire"
-					"value"				"5"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_burstfiredelay"
-					"value"				"0.333"
-				}
+
 				"strange restriction type 1"
 				{
 					"attribute_class"	"hide_ammo_hud"
 					"value"				"1"
 				}
-				"strange restriction type 1"													
-				{
-					"attribute_class"	"add_onhit_addhealth" 
-					"value"				"-5"
-				}
+				
 			}
 			"visuals"
 			{
@@ -21689,12 +21652,11 @@ Weapon by 'The One Of Wonders'"
 			
 			"item_name"					"Magnetic Horseshoe"
 			"item_type_name"			"#TF_Weapon_Wrench"
-			"item_description"			"Damage upgrades/repairs buildings
-
+			"item_description"			"
 Magnets, I know how they work...
 
 Model by: 'pathnode'
-Weapon by: 'Reagy'"
+Weapon by: 'Reagy, Noclue'"
 			"item_logname"				"Magnetic Horseshoe"
 			"item_iconname"				"Magnetic Horseshoe"
 			"image_inventory"			"backpack/weapons/c_models/c_magnetic_horseshoe/c_magnetic_horseshoe"
@@ -21707,25 +21669,25 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
-				"provide on active"
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
 				"engineer building teleporting pickup"
 				{
 					"attribute_class"	"building_teleporting_pickup"
 					"value"				"50"
 				}
-				"Damage Assists Buildings"
+				"engineer ammo teleporting pickup"
 				{
-					"attribute_class"	"add_onhit_construction"
+					"attribute_class"	"custom_magnet_grab_ammo"
 					"value"				"1"
 				}
-                "damage penalty"
+				"Construction rate decreased"										
 				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.5"
+					"attribute_class"	"mult_construction_value"
+					"value" 			"0.6"
+				}
+				"Repair rate decreased"
+				{
+					"attribute_class"	"mult_repair_value"
+					"value" 			"0.75"
 				}
 				"crit mod disabled"
 				{
@@ -31588,11 +31550,33 @@ Sword pierces resistances."
 			"effect_type"			"positive"
 		}
 		
+		"12004"
+		{
+			"name"					"lifesteal damage"
+			"description_string"	"%s1% of damage done is returned as health"
+			"description_format"	"value_is_additive_percentage"
+			"effect_type"			"positive"
+		}
+		"12005"
+		{
+			"name"					"hurt on shot"
+			"description_string"	"Per Shot: -%s1 health"
+			"description_format"	"value_is_additive"
+			"effect_type"			"negative"
+		}
+		
 		"12500"
 		{
 			"name"					"resist toxin enemies"
 			"description_string"	"%s1% damage from Toxified enemies"
 			"description_format"	"value_is_percentage"
+			"effect_type"			"positive"
+		}
+		
+		"12600"
+		{
+			"name"					"engineer ammo teleporting pickup"
+			"description_string"	"Reload: Pick up targeted ammo from the ground or friendly dispensers"
 			"effect_type"			"positive"
 		}
 		

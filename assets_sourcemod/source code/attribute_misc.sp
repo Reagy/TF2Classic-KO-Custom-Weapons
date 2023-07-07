@@ -60,16 +60,14 @@ void CheckLifesteal( int iTarget, TFDamageInfo tfInfo ) {
 
 	float flHurtAmount = AttribHookFloat( 0.0, iWeapon, "custom_hurt_on_fire" );
 	if( flHurtAmount > 0.0  ) {
-		if( g_flHurtMe[ iAttacker ] == 0.0 )
-			g_flHurtMe[ iAttacker ] = flHurtAmount;
+		//if( g_flHurtMe[ iAttacker ] == 0.0 )
+			//g_flHurtMe[ iAttacker ] = flHurtAmount;
 
 		g_flHurtMe[ iAttacker ] -= flAmount;
 	}
 	
 	if( flHurtAmount > 0.0 || g_flHurtMe[ iAttacker ] < 0 ) {
-		int iGave = HealPlayer( iAttacker, -g_flHurtMe[ iAttacker ], iAttacker, HF_NOCRITHEAL | HF_NOOVERHEAL );
-
-		PrintToServer("did %f damage, scaled to %f, gave %i, gonna do %f", tfInfo.flDamage, flAmount, iGave, g_flHurtMe[ iAttacker ] );
+		int iGave = HealPlayer( iAttacker, flAmount, iAttacker, HF_NOCRITHEAL | HF_NOOVERHEAL );
 
 		Event eHealEvent = CreateEvent( "player_healonhit" );
 		eHealEvent.SetInt( "entindex", iAttacker );
@@ -105,8 +103,7 @@ void HurtPlayerDelay( int iPlayer ) {
 
 	float flAmount = MaxFloat( 0.0, g_flHurtMe[ iPlayer ] );
 	SDKHooks_TakeDamage( iPlayer, iPlayer, iPlayer, flAmount );
-	PrintToServer("dealt: %f", flAmount);
-
+	
 	Event eHealEvent = CreateEvent( "player_healonhit" );
 	eHealEvent.SetInt( "entindex", iPlayer );
 	eHealEvent.SetInt( "amount", -RoundToFloor( flAmount ) );
