@@ -23644,132 +23644,12 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------------------
 //-------------------------------------
 // FIRE SHOTGUN PRIMARY -- 9178
+// -- :NOTE: Remove, universally hated
+// -- Done - Reagy v6r1
 //-------------------------------------
 //-------------------------------------	
 		"9178"
 		{
-			"name"						"TF_WEAPON_SHOTGUN_FIRESPRAY"
-			"prefab"					"weapon_shotgun"
-			"show_in_armory"			"1"
-			"item_slot"					"primary"
-			"anim_slot"                 "secondary"
-			"item_class"				"tf_weapon_shotgun_primary"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-
-			"item_quality"				"rarity2"
-
-			"propername"				"1"
-			"item_name"					"Stainless Scorcher"
-			"item_type_name"			"Incendiary Shotgun"
-			"item_description"			"
-Weapon has limited range.
-
-BBQ Buckshot is all you need to start a good fire.
-
-Model by: 'IteGood'
-Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"Stainless Scorcher"
-			"item_iconname"				"Stainless Scorcher"
-			"image_inventory"			"backpack/weapons/c_models/c_stainless_shotgun/c_stainless_shotgun"
-			"model_world"				"models/weapons/c_models/c_stainless_shotgun/c_stainless_shotgun.mdl"
-			"model_player"				"models/weapons/c_models/c_stainless_shotgun/c_stainless_shotgun.mdl"
-			"attach_to_hands"			"1"
-			"used_by_classes"
-			{
-				"pyro"					"1"
-			}
-			"static_attrs"
-			{
-				"class select override vcd"				"taunt02"						
-			}
-			"attributes"
-			{
-			    "provide on active"													
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
-				"Set DamageType Ignite"												
-				{
-					"attribute_class"	"set_dmgtype_ignite"
-					"value" 			"1"
-				}
-				"heal on afterburn"
-				{
-					"attribute_class"	"add_burn_heals"
-					"value" 			"2"
-				}
-                "weapon burn dmg increased"
-				{
-					"attribute_class"	"mult_wpn_burndmg"
-					"value" 			"1.25"
-				}					
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value" 			"1.6"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.85"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"1.66666666667"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_reload_time"
-					"value"				"0.75"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.625"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"1.6"
-				}
-				"weapon burn time reduced"
-				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.5"
-				}
-				"Dmg V Burning Stainless Penalty"
-				{
-					"attribute_class"	"mult_dmg_vs_burning"
-					"value"				"0.5"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}
-                "weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_projectile_range"
-					"value"				"0.05126953125"
-				}	
-                "bullet is a hull"
-				{
-					"attribute_class"	"bullet_is_a_hull"
-					"value"				"5.0"
-				}					
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_SparkShot.Shoot"
-				"sound_burst"			"Weapon_SparkShot.ShootCrit"
-				"tracer_effect"         "db_tracer01"
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //----------------------------
 //----------------------------
@@ -25237,6 +25117,7 @@ Weapon by: 'The One Of Wonders'"
 //--BOMB SUIT- 9199--
 // -- :NOTE: The primary this gives is frankly, dogshit compared to before, I'm swapping it to Colrot's Loose Cannon clone
 // -- :NOTE: Remove the bombsuit later and stats, see how it works for now though
+// -- Done - Reagy v6r1
 //-------------------------
 //-------------------------
 		"9199"
@@ -25264,10 +25145,9 @@ Weapon Model by: 'SgtR007'
 Weapon by: 'Colrot'"
 			"item_logname"				"Frag Master"
 			"item_iconname"				"Frag Master"
-			"image_inventory"			"backpack/weapons/c_models/c_fragmaster/c_fragmaster"
+			"image_inventory"			"backpack/weapons/c_models/c_fragmaster/c_fragmaster_new"
 			"model_world"				"models/weapons/c_models/c_fragmaster_bomblauncher/c_fragmaster_bomblauncher.mdl"
 			"model_player"				"models/weapons/c_models/c_fragmaster_bomblauncher/c_fragmaster_bomblauncher.mdl"
-//			"extra_wearable"			"models/player/items/demo/blaster_gear/blaster_gear.mdl" -- REMOVE THIS
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -25371,78 +25251,11 @@ Weapon by: 'Colrot'"
 //----------------------
 //--DEMO HAMMER- 9200---
 // -- :NOTE: Remove this
+// -- Done - Reagy v6r1
 //----------------------
 //----------------------
 		"9200"
 		{
-			"name"						"TF_WEAPON_DEMO_BOMBSUITHAMMER"
-			"prefab"					"weapon_bottle"	
-            "item_class"                "tf_weapon_wrench"			
-			"show_in_armory"			"1"
-
-			"propername"				"1"
-			"item_quality"				"rarity2"
-			"item_name"					"Helper's Hammer"
-			"item_type_name"			"Sledgehammer"
-			"item_description"			"
-Technical Assistant: this weapon can boost construction speed and repair friendly buildings
-
-Well, I guess we owe that little building man a little something now and then...
-
-Model by: 'Spike Nitros'
-Weapon by: 'The One Of Wonders'"
-			"item_logname"				"Helper's Hammer"
-			"item_iconname"				"Helper's Hammer"
-			"image_inventory"			"backpack/weapons/c_models/c_specialhammer/c_specialhammer"
-			"model_world"				"models/weapons/c_models/c_specialhammer/c_specialhammer.mdl"
-			"model_player"				"models/weapons/c_models/c_specialhammer/c_specialhammer.mdl"
-			"extra_wearable"			"models/player/items/demo/blaster_gear/blaster_helmet.mdl"
-			"attach_to_hands"			"1"
-			"used_by_classes"
-			{
-				"demoman"				"1"
-			}
-			"attributes"
-			{
-				"damage bonus"															
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"1.15"
-				}
-				"damage applies to sappers"															
-				{
-					"attribute_class"	"mult_flame_life"
-					"value"				"1"
-				}
-				"fire rate penalty"															
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.1"
-				}
-				// Backend stuff, this can actually upgrade, repair and boost buildings but b a r e l y
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_construction_value"
-					"value" 			"0.5"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_repair_value"
-					"value" 			"0.25"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"upgrade_rate_mod"
-					"value" 			"0"
-				}
-			    "crit mod disabled"															
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}
-			}
-			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
-			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
 //--------------------------
 //--------------------------
@@ -26681,107 +26494,11 @@ Weapon by: 'Reagy'"
 //-------------------
 //--ENGI LMG PROTOTYPE -- 9220
 // -- :NOTE: Remove this...
+// -- Done - Reagy v6r1
 //-------------------
 //-------------------
 		"9220"
 		{
-		    "tags"
-			{
-				"bots_cant_use"			"1"														
-			}
-			"name"						"TF_WEAPON_RELIC"
-			"show_in_armory"			"1"
-			"item_slot"					"primary"
-			"anim_slot"					"primary"
-			"item_class"				"tf_weapon_hunterrifle"
-
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-
-			"propername"				"1"
-			"item_quality"				"rarity2"
-			"item_name"					"Rust Valley Relic"
-			"item_type_name"			"Machine Gun..?"
-			"item_description"			"
-Constructed from a long-dead mining facility...
-
-Model by: 'Hau'
-Weapon by: 'The One Of Wonders'"
-
-			"item_logname" 				"Rust Valley Relic"
-			"item_iconname" 			"Rust Valley Relic"
-			"image_inventory"			"backpack/workshop/weapons/c_models/c_more_gun/c_more_gun"
-			"model_world"				"models/workshop/weapons/c_models/c_more_gun/c_more_gun_new.mdl"
-			"model_player"				"models/workshop/weapons/v_models/v_more_gun/v_more_gun_new.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"engineer"				"1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset"					"0 0 -8"
-				"class select override vcd"				"taunt07"
-			}
-			"attributes"
-			{
-				"heal on hit for rapidfire"
-				{
-					"attribute_class"	"add_onhit_addhealth"
-					"value"				"1"
-				}
-			    "weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.177"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.045"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_reload_time"
-					"value" 			"0.5"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value" 			"8.33333333333"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value" 			"8.33333333333"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.066666666666667"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"unimplemented_mod_sniper_no_charge" // No aiming with a machine gun, maggot!
-					"value"				"1"														
-				}
-				"move speed penalty"
-				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.9"
-				}
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_RelicMG.Single"	
-				"sound_burst"			"Weapon_RelicMG.SingleCrit"	
-				"sound_reload"			"Weapon_LMG.WorldReload"
-				//"tracer_effect"			"bullet_scattergun_tracer01"
-				"sound_empty"			"Null"
-				"sound_reload"			"Null"
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //-------------------------
 //-------------------------
@@ -29779,90 +29496,90 @@ Weapon by: 'The One Of Wonders'"
 //---------------------------------
 //--PLACEHOLDER 13 - 9949--
 // -- :NOTE: Remove, its pretty shit and no one uses it since it was added
+// -- Done - Reagy v6r1
+// -- Replaced with Medic Battery Pack
 //---------------------------------
 //---------------------------------
 		"9949"
 		{
-            "name"						"TF_WEAPON_IRON_BLASTER"
-            "prefab"					"weapon_grenade_launcher"
-            "show_in_armory"			"1"
+			"name"						"TF_WEAPON_BATTERY_PACK"
+			"item_class"			    "tf_weapon_bonesaw"
+			"item_logname"				"Sensory Overloader"
+			"item_iconname"				"Sensory Overloader"
+			"show_in_armory"			"1"
+			"item_slot"					"melee"
+			"item_type_name"			"Automative Defibrillator"
+			"item_name"					"Sensory Overloader"
+			"item_quality"				"normal"
+			"item_description"			"Malfunction: at 99% HP or less, has a chance to not apply Ubercharge on swing.
 			
-			"item_quality"				"rarity2"
+			'My beats per minute never been the same...'
 			
-
-			"propername"				"1"
-            "item_name"					"Iron Boarder"
-			"item_type_name"			"Grenade Launcher"
-			"item_description"			"
-Bombs ahoy!
-
-Model by: 'goldenjohnson'
-Weapon by: 'The One Of Wonders'"																				
-			"item_logname"				"Iron Boarder"
-			"item_iconname"				"Iron Boarder"
-			"image_inventory"			"backpack/weapons/c_models/c_iron_boarder/c_iron_boarder"
-			"model_world"				"models/weapons/c_models/c_iron_boarder/c_iron_boarder.mdl"
-			"model_player"				"models/weapons/c_models/c_iron_boarder/c_iron_boarder.mdl"
+			Model by: Napy De Wise
+			Weapon by: Colrot"
+			"image_inventory"			"backpack\weapons\c_models\c_battery_pack\c_battery_pack"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"model_world"				"models\weapons\c_models\c_battery_pack\c_battery_pack.mdl"
+			"model_player"				"models\weapons\c_models\c_battery_pack\c_battery_pack.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
-				"demoman"				"1"
+				"medic"					"1"
 			}
-			"static_attrs"																	
+			"static_attrs"
 			{
-				"override projectile type"              "31"
+				"min_viewmodel_offset"		"10 0 -7"
+				"ragdolls become ash"		"1"	
 			}
-            "attributes"
-            {
-			    "bomblets count mod mult hidden"
+			"attributes"
+			{
+			    "provide on active"
 				{
-					"attribute_class"	"bomblets_count_mod"
-					"value"				"0"
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}	
+				  "custom swing invicibility DISPLAY ONLY"
+				{
+				"attribute_class"	"set_weapon_mode"
+				"value" 			"1"
 				}
-				"blast splash damage increased"
+			    "single wep deploy time decreased"
 				{
-					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"2.0"
+				"attribute_class"	"mult_single_wep_deploy_time"
+				"value" 			".8"
 				}
-				"fuse bonus"
+			
+			    "speed_boost_on_hit"
 				{
-					"attribute_class"	"fuse_mult"
-					"value"				"0.65217391304"
+				"attribute_class"	"speed_boost_on_hit"
+				"value" 			"1"
 				}
-				"grenade no explode on impact"
+				
+					"damage penalty"
 				{
-					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"1"
+					"attribute_class"	"mult_dmg"
+					"value" 			"0.75"
 				}
 			    "fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.6"
+					"value" 			"2.25"
 				}
-			    "damage penalty"
+				//Backend Stuff
+				"add condition on hit"
 				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.6"
+				 "attribute_class"	"add_onhit_addcond_self"
+				 "value" 			"32 1.5"
 				}
-				// Backend stuff
-				"custom projectile model"
+			    "add condition on swing"
 				{
-					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/w_grenade_cannonball_demoman/w_grenade_cannonball_thrown.mdl"
+				"attribute_class"	"add_onswing_addcond"
+				"value" 			"5 .5"
 				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}
-            }
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_FragBombLauncher.Shoot"
-				"sound_burst"			"Weapon_FragBombLauncher.ShootCrit"
 			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+			"mouse_pressed_sound"		"#ui/item_fists_pickup.wav"
+			"drop_sound"				"#ui/item_fists_drop.wav"
         }
 //-----------------------------------
 //-----------------------------------
@@ -31493,6 +31210,22 @@ Weapon by: 'Noclue'"
 			"description_format"	"value_is_additive"
 			"effect_type"			"negative"
 		}
+		
+// Medic Battery Pack
+	
+		"7540"
+		{
+			"name"					"custom swing invicibility DISPLAY ONLY"
+			"attribute_class"		"set_weapon_mode"
+			"description_string"	"Attacking gives the user a split second Ubercharge"
+			"description_format"	"value_is_additive"
+			"hidden"				"0"
+			"effect_type"			"positive"
+			"stored_as_integer"		"0"
+		}
+
+// Why the sudden skip???
+		
 		"7550"
 		{
 			"name"					"Curse of the Broken Mann"
