@@ -173,6 +173,7 @@ forward void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo );
 forward void OnTakeDamagePostTF( int iTarget, Address aTakeDamageInfo );
 forward void OnTakeDamageAliveTF( int iTarget, Address aTakeDamageInfo );
 forward void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo );
+forward void OnTakeDamageBuilding( int iBuilding, Address aTakeDamageInfo );
 
 methodmap TFDamageInfo {
 	public TFDamageInfo( Address aInfo ) {

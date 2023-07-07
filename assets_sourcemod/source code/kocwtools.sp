@@ -32,6 +32,8 @@ GlobalForward g_OnTakeDamagePostTF;
 GlobalForward g_OnTakeDamageAliveTF;
 GlobalForward g_OnTakeDamageAlivePostTF;
 
+GlobalForward g_OnTakeDamageBuilding;
+
 Handle hApplyPushFromDamage;
 
 Address offs_CTFPlayerShared_pOuter;
@@ -51,7 +53,7 @@ public Plugin myinfo =
 	name = "KOCW Tools",
 	author = "Noclue",
 	description = "Standard functions for custom weapons.",
-	version = "1.2.1",
+	version = "1.3",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -258,6 +260,8 @@ public void OnPluginStart() {
 	g_OnTakeDamagePostTF = new GlobalForward( "OnTakeDamagePostTF", ET_Ignore, Param_Cell, Param_Cell );
 	g_OnTakeDamageAliveTF = new GlobalForward( "OnTakeDamageAliveTF", ET_Ignore, Param_Cell, Param_Cell );
 	g_OnTakeDamageAlivePostTF = new GlobalForward( "OnTakeDamageAlivePostTF", ET_Ignore, Param_Cell, Param_Cell );
+
+	g_OnTakeDamageBuilding = new GlobalForward( "OnTakeDamageBuilding", ET_Ignore, Param_Cell, Param_Cell );
 }
 
 
@@ -286,6 +290,13 @@ void DoPlayerHooks( int iPlayer ) {
 	hOnTakeDamage.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamagePost );
 	hOnTakeDamageAlive.HookEntity( Hook_Pre, iPlayer, Hook_OnTakeDamageAlivePre );
 	hOnTakeDamageAlive.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamageAlivePost );
+}
+
+public void OnEntityCreated( int iEntity ) {
+	static char szEntityName[ 32 ];
+	GetEntityClassname( iEntity, szEntityName, sizeof( szEntityName ) );
+	if( StrContains( szEntityName, "obj_", false ) == 0 )
+		hOnTakeDamage.HookEntity( Hook_Pre, iEntity, Hook_OnTakeDamageBuilding );
 }
 
 public any Native_EntityInRadius( Handle hPlugin, int iParams ) {
@@ -563,6 +574,17 @@ MRESReturn Hook_OnTakeDamageAlivePost( int iThis, DHookReturn hReturn, DHookPara
 	return MRES_Handled;
 }
 
+//forward void OnTakeDamageBuilding( int iBuilding, Address aTakeDamageInfo );
+MRESReturn Hook_OnTakeDamageBuilding( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	Call_StartForward( g_OnTakeDamageBuilding );
+
+	Call_PushCell( iThis );
+	Call_PushCell( hParams.GetAddress( 1 ) );
+
+	Call_Finish();
+
+	return MRES_Handled;
+}
 
 MRESReturn Detour_ApplyOnDamageModifyRulesPre( Address aThis, DHookReturn hReturn, DHookParam hParams ) {
 	//TFDamageInfo tfInfo = TFDamageInfo( hParams.GetAddress( 1 ) );
