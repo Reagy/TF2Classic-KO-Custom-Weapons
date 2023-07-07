@@ -23646,7 +23646,7 @@ Weapon by: 'The One Of Wonders'"
 // FIRE SHOTGUN PRIMARY -- 9178
 // -- :NOTE: Remove, universally hated
 // -- Done - Reagy v6r1
-// Replaced with Lunaarian Landers
+// Replaced with Lunarian Landers
 //-------------------------------------
 //-------------------------------------	
 		"9178"
