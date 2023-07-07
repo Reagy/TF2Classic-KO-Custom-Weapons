@@ -19162,7 +19162,7 @@ Modified by: 'Reagy'"
 			"item_name"					"Protonium Ray-Caster"
 			"item_type_name"			"Experimental Condensed Plasma Launcher"
 			"item_description"			"This weapon fires powerful plasma shots
-			
+
 Fancy new hardware I got here, wonder if I can cook chicken with it!
 
 Model by: 'svdl'
@@ -23666,8 +23666,8 @@ Wearable by: 'Colrot'"
 			"anim_slot"					"FORCE_NOT_USED"
 			"item_quality"				"normal"
 			"propername"				"1"
-			"image_inventory"			"backpack\workshop\player\items\soldier\lunar_landers\lunar_landers"
-			"model_player"				"models\player\items\custom\soldier\lunar_landers\lunar_landers.mdl"
+			"image_inventory"			"backpack/workshop/player/items/soldier/lunar_landers/lunar_landers"
+			"model_player"				"models/player/items/custom/soldier/lunar_landers/lunar_landers.mdl"
 			"used_by_classes"
 			{
 				"demoman"				"1"
@@ -23689,7 +23689,7 @@ Wearable by: 'Colrot'"
 				"decreased jump height"
 				{
 					"attribute_class"	"mod_jump_height"
-					"value"				".68"
+					"value"				"0.75"
 				}
 				"take minicrits from projectile during blast jump"
 				{
@@ -29571,16 +29571,16 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"Sensory Overloader"
 			"item_quality"				"normal"
 			"item_description"			"Malfunction: at 99% HP or less, has a chance to not apply Ubercharge on swing.
-			
-			'My beats per minute never been the same...'
-			
-			Model by: Napy De Wise
-			Weapon by: Colrot"
-			"image_inventory"			"backpack\weapons\c_models\c_battery_pack\c_battery_pack"
+
+'My beats per minute never been the same...'
+
+Model by: 'Napy De Wise'
+Weapon by: 'Colrot'"
+			"image_inventory"			"backpack/weapons/c_models/c_battery_pack/c_battery_pack"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
-			"model_world"				"models\weapons\c_models\c_battery_pack\c_battery_pack.mdl"
-			"model_player"				"models\weapons\c_models\c_battery_pack\c_battery_pack.mdl"
+			"model_world"				"models/weapons/c_models/c_battery_pack/c_battery_pack.mdl"
+			"model_player"				"models/weapons/c_models/c_battery_pack/c_battery_pack.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -29670,6 +29670,7 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/weapons/c_models/c_railgun_soldier/c_railgun_soldier"
 			"model_world"				"models/weapons/c_models/c_railgun_soldier/c_railgun_soldier.mdl"
 			"model_player"				"models/weapons/c_models/c_railgun_soldier/c_railgun_soldier.mdl"
+			"extra_wearable"			"models/player/items/custom/soldier/lunar_landers/lunar_landers.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
