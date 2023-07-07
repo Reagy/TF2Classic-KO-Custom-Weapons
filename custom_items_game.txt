@@ -23646,10 +23646,69 @@ Weapon by: 'The One Of Wonders'"
 // FIRE SHOTGUN PRIMARY -- 9178
 // -- :NOTE: Remove, universally hated
 // -- Done - Reagy v6r1
+// Replaced with Lunaarian Landers
 //-------------------------------------
 //-------------------------------------	
 		"9178"
 		{
+			"name"						"Lunarian Landers"
+			"show_in_armory"			"1"
+			"item_class"				"tf_wearable"
+			"item_name"					"Lunarian Landers"
+			"item_description"			"
+'We tell tall tales and sing our whaling tunes.'
+
+Cosmetic by: 'Populus' 'Square' 'blaholtzen' 'Tabby'
+Wearable by: 'Colrot'"
+			"item_type_name"			"#TF_Wearable_Boots"
+			"item_slot"					"primary"
+			"equip_region"				"feet"
+			"anim_slot"					"FORCE_NOT_USED"
+			"item_quality"				"normal"
+			"propername"				"1"
+			"image_inventory"			"backpack\workshop\player\items\soldier\lunar_landers\lunar_landers"
+			"model_player"				"models\player\items\custom\soldier\lunar_landers\lunar_landers.mdl"
+			"used_by_classes"
+			{
+				"demoman"				"1"
+			}
+			"loadondemand"				"1"
+			"act_as_wearable"			"1"
+			"attributes"
+			{
+				"anti gravity boots"
+				{
+					"attribute_class"	"anti_gravity_boots"
+					"value"				"1"
+				}
+				"gravity mod wearer reduced"
+				{
+					"attribute_class"	"gravity_mod_wearer"
+					"value"				".5"
+				}
+				"decreased jump height"
+				{
+					"attribute_class"	"mod_jump_height"
+					"value"				".68"
+				}
+				"take minicrits from projectile during blast jump"
+				{
+					"attribute_class"	"take_crits_projectile_blast_jump"
+					"value"				"1"
+				}
+				"allowed in medieval mode"
+				{
+					"attribute_class"	"allowed_in_medieval_mode"
+					"value"				"1"
+				}
+				"armor footsteps"
+				{
+					"attribute_class"	"mod_armor_footsteps"
+					"value"				"1"
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 //----------------------------
 //----------------------------
@@ -31211,7 +31270,7 @@ Weapon by: 'Noclue'"
 			"effect_type"			"negative"
 		}
 		
-// Medic Battery Pack
+// Medic Battery Pack & Luna Boots
 	
 		"7540"
 		{
@@ -31222,6 +31281,17 @@ Weapon by: 'Noclue'"
 			"hidden"				"0"
 			"effect_type"			"positive"
 			"stored_as_integer"		"0"
+		}
+		
+		"7541"
+		{
+			"name"	"decreased jump height"
+			"attribute_class"	"mod_jump_height"
+			"description_string"	"%s1% lesser jump height when active"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
 		}
 
 // Why the sudden skip???
