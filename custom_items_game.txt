@@ -1224,6 +1224,7 @@ Weapon from: New Old Weapons Pack"
 //-----------------------------------
 //--FRYING PAN STUFF - 3310 ~ 3319 --
 // V5.6r1 Scout Pan fire rate and damage penalty added, both pans 2x crit chance
+// V6r1 Does the funny screaming now, damage bonus dropped and health penalty reduced, rate of fire reduced to match audio
 //-----------------------------------
 //-----------------------------------
 		"3319"
@@ -2828,6 +2829,7 @@ Edited by: 'The One Of Wonders'"
 //------------------------
 //------------------------
 //--CHAINSAW TEST - 3387--
+// V6r1 Speed buff added.
 //------------------------
 //------------------------
 		"3387"
@@ -8158,7 +8160,7 @@ Weapon by: 'Reagy'"
 //-------------------------------------
 //-------------------------------------
 // Trash Cannon
-// V6R1 Changed :)
+// V6R1 Changed :) ROF and damage buff, was really getting outclassed by the other heavy items
 //-------------------------------------
 //-------------------------------------	
 		"7028"
@@ -8358,6 +8360,7 @@ Weapon by: 'Reagy'"
 // Sniper Crossbow
 // V5.3.4 Increased projectile speed by 50%
 // V5.4.1 Note: Take kiri's animations from the Bushman's Ballista and redo this kk
+// V6r1 Completely reworked
 //--------------------------
 //--------------------------
 		"7030"																			
@@ -8475,6 +8478,7 @@ Weapon by: 'Reagy'"
 //--------------------------
 // The Big Iron
 // V5.3.2 Reworked, slowed down fire rate, increased accuracy, increased damage, removed deploy speed bonus
+// V6r1 Moved to secondary, reworked
 //--------------------------
 //--------------------------
 		"7031"																			
@@ -27004,6 +27008,7 @@ Weapon by: 'Reagy'"
 //--------------------------------
 //-- Flashy Fox - 9227--
 // V5.6r1 Dropped movement speed from 520hu/s to 480hu/s, dropped damage vulnerability to 25% from 35%
+// V6r1 Moved to primary
 //--------------------------------
 //--------------------------------
 		"9227"
