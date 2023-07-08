@@ -2854,7 +2854,7 @@ Edited by: 'The One Of Wonders'"
 			"item_iconname"				"Warsaw Fact"
 			"image_inventory"			"backpack/weapons/w_models/w_chainsaw"
 			"model_world"				"models/weapons/w_models/w_chainsaw.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_chainsaw_heavy_new1.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_chainsaw_v2.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
