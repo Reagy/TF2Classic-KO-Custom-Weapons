@@ -1262,7 +1262,7 @@ Weapon by: 'The One Of Wonders'"
 			    "heal on kill"													
 				{
 					"attribute_class"	"heal_on_kill"
-					"value"				"100"
+					"value"				"50"
 				}
 				"mod rage on hit bonus"															// Display-only joke! Same deal as Scout and Engi.
 				{
@@ -1287,7 +1287,7 @@ Weapon by: 'The One Of Wonders'"
 				"max health additive penalty"											
 				{
 					"attribute_class"	"add_maxhealth"
-					"value"				"-100"
+					"value"				"-25"
 				}
 				"move speed penalty"											
 				{
@@ -2864,6 +2864,11 @@ Edited by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"minigun_jump_while_revved"
 					"value"				"1"
+				}
+				"aiming movespeed increased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"				"2.554"
 				}
 				"heal on hit for rapidfire"
 				{
@@ -5832,6 +5837,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
+				"meter_label"                           "Brick"
 			}
 			"attributes"
 			{
@@ -5915,6 +5921,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
+				"meter_label"                           "Brick"
 			}
 			"attributes"
 			{
@@ -6001,6 +6008,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
+				"meter_label"                           "Brick"
 			}
 			"attributes"
 			{
@@ -6086,6 +6094,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
+				"meter_label"                           "Brick"
 			}
 			"attributes"
 			{
@@ -6178,6 +6187,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
+				"meter_label"                           "Brick"
 			}
 			"attributes"
 			{
@@ -6275,6 +6285,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
+				"meter_label"                           "Brick"
 			}
 			"attributes"
 			{
@@ -6367,6 +6378,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
+				"meter_label"                           "Brick"
 			}
 			"attributes"
 			{
@@ -8146,6 +8158,7 @@ Weapon by: 'Reagy'"
 //-------------------------------------
 //-------------------------------------
 // Trash Cannon
+// V6R1 Changed :)
 //-------------------------------------
 //-------------------------------------	
 		"7028"
@@ -8200,16 +8213,6 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
 					"value"				"2.0"
-				}
-				"weapon_stattrak_module_scale"															
-				{
-					"attribute_class"	"mult_minigun_spinup_time"
-					"value"				"1.5"
-				}
-				"weapon_stattrak_module_scale"															
-				{
-					"attribute_class"	"mult_minigun_spindown_time"
-					"value"				"1.5"
 				}
 				"weapon_stattrak_module_scale"															
 				{
@@ -8289,6 +8292,7 @@ Weapon by: 'Reagy'"
 				"override projectile type" 				"2"									
 				"damage bonus hidden"					"0.002"																					
 				"allowed in medieval mode"				"1"
+				"meter_label"                           "Jar"
 			}
 			"attributes"
 			{
@@ -8476,7 +8480,8 @@ Weapon by: 'Reagy'"
 		"7031"																			
         {
             "name"						"TF_WEAPON_BIG_IRON_ENGI"
-			"item_class"			    "tf_weapon_smg"
+			"item_class"			    "tf_weapon_pistol"
+//			"item_class"			    "tf_weapon_smg"
 //			"bucket"					"0"														
 //			"bucket_position"			"0"
 			
@@ -8512,11 +8517,10 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
-			
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"7.0"
+					"value"				"3.75"
 				}
 				"weapon spread bonus"
 				{
@@ -8526,12 +8530,12 @@ Weapon by: 'Reagy'"
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"0.2"
+					"value"				"0.4"
 				}
 			    "maxammo secondary reduced"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
-					"value"				"0.07"
+					"value"				"0.025"
 				}
 				"reload time increased"	
 				{
@@ -12019,14 +12023,16 @@ Weapon by: 'Majro'"
 			"name"						"TF_WEAPON_SANDMATE"
 			"item_class"				"tf_weapon_throwable"
 			"show_in_armory"			"1"
-			"item_slot"					"secondary"
+			"item_slot"					"melee"
 			"anim_slot"					"melee"
+			"bucket"					"2"														
+			"bucket_position"			"0"
 
 			"propername"				"1"
 			"item_name"					"Sandmate"
 			"item_type_name"			"Cricket Ball"
 			"item_description"	"Launches a ball that slows opponents.
-This weapon can NOT be used as a melee weapon.
+Cannot be used with Brick.
 
 The hell's this Baseball knock-off?
 
@@ -12073,6 +12079,11 @@ Weapon by: 'Majro'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"mod use custom ammo type"
+				{
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value" 			"5"
 				}
 			}
 			"visuals"
@@ -15631,7 +15642,7 @@ Weapon by: 'Reagy'"
 			
 			"item_quality"				"rarity3"			
 						
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_class"				"tf_wearable"
 			"item_type_name"			"Robot"
 			"item_name"				"Geared Up Ghost"
@@ -16548,7 +16559,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"Throwing Knives"
 			"item_type_name"			"Throwable"
 			"item_name"					"Throwing Knives"
-			"item_description"			"Set of 3 throwing knives
+			"item_description"			"Set of 6 throwing knives
 Ammo pickups do not give ammo
 Recharges over time
 
@@ -16570,7 +16581,7 @@ Weapon by: 'Reagy'"
 				"override projectile type" 				"30"									
 				"damage bonus hidden"					"0.334"								
 				"allowed in medieval mode"				"1"
-				"UNIQUE maxammo grenades1 HIDDEN"		"3"
+				"UNIQUE maxammo grenades1 HIDDEN"		"6"
 				"min_viewmodel_offset"					"10 0 -10"
 				"no damage falloff over distance"		"1"
 			}
@@ -16584,7 +16595,7 @@ Weapon by: 'Reagy'"
 				"effect bar recharge rate increased"												
 				{
 					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.5"											
+					"value"				"0.15"											
 				}
 				"hand scale"															
 				{
@@ -16672,6 +16683,7 @@ Weapon by: 'Reagy'"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/custom/w_models/w_moyai_mirv_demo_projectile.mdl"
 				"centerfire projectile"					"1"
+				"meter_label"                           "MOYAI"
 			}
 			"attributes"
 			{
@@ -26998,6 +27010,9 @@ Weapon by: 'Reagy'"
 		{
 			"name"							"TF_SCOUT_SPEEDBOOSTER"
 			"prefab"						"weapon_armor"
+
+			"bucket"					"0"														
+			"bucket_position"			"0"
 			
 			"item_quality"					"rarity2"			
 						
@@ -27013,7 +27028,7 @@ Cosmetic by: 'Reagy'
 Item by: 'Reagy'
 Questioned by: 'The One Of Wonders'"
 			"propername"					"1"
-			"item_slot"						"secondary"
+			"item_slot"						"primary"
 			"anim_slot"						"FORCE_NOT_USED"
 			"item_logname"					"Flashy Fox"
 			"image_inventory_size_w"		"128"
@@ -27022,7 +27037,7 @@ Questioned by: 'The One Of Wonders'"
 			"model_player"					"models/player/items/custom/scout/flashy_fox/flashy_fox_new.mdl"
 			"used_by_classes"
 			{
-				"scout"                		"secondary"
+				"scout"                		"1"
 			}
 			"act_as_wearable"				"1"
 			"attributes"
