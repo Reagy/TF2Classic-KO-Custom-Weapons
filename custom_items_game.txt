@@ -5839,7 +5839,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
-				"meter_label"                           "Brick"
+				"meter_label"                           "BRICK"
 			}
 			"attributes"
 			{
@@ -5877,6 +5877,7 @@ Weapon from: New Old Weapons Pack"
 				"sound_special1"		"Weapon_Brick.Hit"
 				"sound_special2"		"Weapon_Brick.Hit"
 				"sound_special3"		"Weapon_Grenade_Normal.Single"
+				"explosion_effect"		"impact_dirt_nosmoke"
 			}
 			"mouse_pressed_sound"		"#ui/item_default_pickup.wav"
 			"drop_sound"				"#ui/item_default_drop.wav"
@@ -5923,7 +5924,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
-				"meter_label"                           "Brick"
+				"meter_label"                           "BRICK"
 			}
 			"attributes"
 			{
@@ -5961,6 +5962,7 @@ Weapon from: New Old Weapons Pack"
 				"sound_special1"		"Weapon_Brick.Hit"
 				"sound_special2"		"Weapon_Brick.Hit"
 				"sound_special3"		"Weapon_Grenade_Normal.Single"
+				"explosion_effect"		"impact_dirt_nosmoke"
 			}
 			"mouse_pressed_sound"		"#ui/item_default_pickup.wav"
 			"drop_sound"				"#ui/item_default_drop.wav"
@@ -6010,7 +6012,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
-				"meter_label"                           "Brick"
+				"meter_label"                           "BRICK"
 			}
 			"attributes"
 			{
@@ -6048,6 +6050,7 @@ Weapon from: New Old Weapons Pack"
 				"sound_special1"		"Weapon_Brick.Hit"
 				"sound_special2"		"Weapon_Brick.Hit"
 				"sound_special3"		"Weapon_Grenade_Normal.Single"
+				"explosion_effect"		"impact_dirt_nosmoke"
 			}
 			"mouse_pressed_sound"		"#ui/item_default_pickup.wav"
 			"drop_sound"				"#ui/item_default_drop.wav"
@@ -6096,7 +6099,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
-				"meter_label"                           "Brick"
+				"meter_label"                           "BRICK"
 			}
 			"attributes"
 			{
@@ -6134,6 +6137,7 @@ Weapon from: New Old Weapons Pack"
 				"sound_special1"		"Weapon_Brick.Hit"
 				"sound_special2"		"Weapon_Brick.Hit"
 				"sound_special3"		"Weapon_Grenade_Normal.Single"
+				"explosion_effect"		"impact_dirt_nosmoke"
 				"animation_replacement"
 				{
 					//The Attacking Animations
@@ -6189,7 +6193,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
-				"meter_label"                           "Brick"
+				"meter_label"                           "BRICK"
 			}
 			"attributes"
 			{
@@ -6227,6 +6231,7 @@ Weapon from: New Old Weapons Pack"
 				"sound_special1"		"Weapon_Brick.Hit"
 				"sound_special2"		"Weapon_Brick.Hit"
 				"sound_special3"		"Weapon_Grenade_Normal.Single"
+				"explosion_effect"		"impact_dirt_nosmoke"
 				"animation_replacement"
 				{
 					//The Attacking Animations
@@ -6287,7 +6292,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
-				"meter_label"                           "Brick"
+				"meter_label"                           "BRICK"
 			}
 			"attributes"
 			{
@@ -6325,6 +6330,7 @@ Weapon from: New Old Weapons Pack"
 				"sound_special1"		"Weapon_Brick.Hit"
 				"sound_special2"		"Weapon_Brick.Hit"
 				"sound_special3"		"Weapon_Grenade_Normal.Single"
+				"explosion_effect"		"impact_dirt_nosmoke"
 			}
 			"mouse_pressed_sound"		"#ui/item_default_pickup.wav"
 			"drop_sound"				"#ui/item_default_drop.wav"
@@ -6380,7 +6386,7 @@ Weapon from: New Old Weapons Pack"
 				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
-				"meter_label"                           "Brick"
+				"meter_label"                           "BRICK"
 			}
 			"attributes"
 			{
@@ -6418,6 +6424,7 @@ Weapon from: New Old Weapons Pack"
 				"sound_special1"		"Weapon_Brick.Hit"
 				"sound_special2"		"Weapon_Brick.Hit"
 				"sound_special3"		"Weapon_Grenade_Normal.Single"
+				"explosion_effect"		"impact_dirt_nosmoke"
 			}
 			"mouse_pressed_sound"		"#ui/item_default_pickup.wav"
 			"drop_sound"				"#ui/item_default_drop.wav"
@@ -8294,7 +8301,7 @@ Weapon by: 'Reagy'"
 				"override projectile type" 				"2"									
 				"damage bonus hidden"					"0.002"																					
 				"allowed in medieval mode"				"1"
-				"meter_label"                           "Jar"
+				"meter_label"                           "JAR"
 			}
 			"attributes"
 			{
@@ -8331,7 +8338,7 @@ Weapon by: 'Reagy'"
 				"strange restriction type 1"												
 				{
 					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.15"
+					"value"				"1.05"
 				}
 				"weapon_stattrak_module_scale"															
 				{
@@ -8351,6 +8358,7 @@ Weapon by: 'Reagy'"
 				"sound_special1"		"Jar.Explode"
 				"sound_special2"		"Jar.Explode"
 				"sound_special3"		"Weapon_Jarate.Single"
+				"explosion_effect"		"impact_glass"
 			}	
 			"mouse_pressed_sound"		"#ui/item_bottle_pickup.wav"
 			"drop_sound"				"#ui/item_bottle_drop.wav"
@@ -12140,7 +12148,7 @@ Item by: 'Majro'"
 			"static_attrs"
 			{
 				"item_meter_charge_type"				"1"		//What's this do? No idea.					
-				"meter_label"							"Beer"
+				"meter_label"							"BEER"
 				"min_viewmodel_offset"					"10 -2 -9"
 				"allowed in medieval mode"				"1"		//Hee hee.	
 			}
@@ -16724,7 +16732,8 @@ Weapon by: 'Reagy'"
 				"sound_special1"		"Weapon_Moyai.Hit"
 				"sound_special2"		"Weapon_Moyai.Hit"
 				"sound_special3"		"Weapon_Grenade_Normal.Single"
-			}
+				"explosion_effect"		"impact_dirt"
+			}	
 			"mouse_pressed_sound"		"#ui/item_default_pickup.wav"
 			"drop_sound"				"#ui/item_default_drop.wav"
 		}
@@ -25197,6 +25206,7 @@ Weapon by: 'Colrot'"
 			{
 				"custom projectile model"				"models/weapons/c_models/c_fragmaster_bomblauncher/c_fragmaster_bomblauncher_projectile.mdl"
 				"damage penalty hidden"                 "0.45"	
+                "meter_label"							"AMMO"				
 			}
 			"attributes"																	
 			{
