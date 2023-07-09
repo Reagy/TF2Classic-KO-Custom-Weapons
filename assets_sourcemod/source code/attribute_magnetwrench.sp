@@ -199,9 +199,10 @@ void PickupAmmoBox( int iClient, int iAmmo ) {
 
 bool EnumerateAmmo( int iEntity, any data ) {
 	if ( iEntity <= MaxClients ) return true;
+	if( !IsValidEntity( iEntity ) ) return true;
 
 	static char szClassname[ 64 ];
-	GetEdictClassname( iEntity, szClassname, sizeof( szClassname ) );
+	GetEntityClassname( iEntity, szClassname, sizeof( szClassname ) );
 
 	if( StrEqual( "tf_ammo_pack", szClassname ) ) {
 		float vecOrigin[3];
