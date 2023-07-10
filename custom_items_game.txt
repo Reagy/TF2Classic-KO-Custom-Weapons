@@ -25176,10 +25176,12 @@ Weapon by: 'The One Of Wonders'"
 			"item_class"				"tf_weapon_grenade_mirv2"
 			"item_slot"					"primary"
 			"show_in_armory"			"1"
+			"bucket"					"0"														
+			"bucket_position"			"0"
 
 			"item_quality"				"rarity2"
 			
-			"anim_slot"					"primary"
+			"anim_slot"					"secondary"
 
 			"propername"				"1"
 			"item_name"					"Frag Master"
@@ -25234,6 +25236,11 @@ Weapon by: 'Colrot'"
 					"attribute_class"	"grenade_not_explode_on_impact"
 					"value"				"1"
 				}
+				"maxammo primary reduced"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.75"
+				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -25241,11 +25248,6 @@ Weapon by: 'Colrot'"
 				}
 				// hidden
 				"hidden separator"		"1"		
-				"maxammo primary increased"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"1.29"
-				}
 				"mirv impact"
 				{
 					"attribute_class"  "mirv_impact"
