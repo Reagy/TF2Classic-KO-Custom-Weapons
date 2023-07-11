@@ -46,6 +46,11 @@ Handle hTakeHealth;
 Handle hGetMaxHealth;
 Handle hGetBuffedMaxHealth;
 
+Handle hSetSolid;
+Handle hSetSolidFlags;
+Handle hSetGroup;
+Handle hSetSize;
+
 Handle hPlayerHealedOther;
 
 public Plugin myinfo =
@@ -53,7 +58,7 @@ public Plugin myinfo =
 	name = "KOCW Tools",
 	author = "Noclue",
 	description = "Standard functions for custom weapons.",
-	version = "1.3",
+	version = "1.4",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -86,6 +91,11 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 
 	CreateNative( "FindEntityInSphere", Native_EntityInRadius );
 
+	CreateNative( "SetSolid", Native_SetSolid );
+	CreateNative( "SetSolidFlags", Native_SetSolidFlags );
+	CreateNative( "SetCollisionGroup", Native_SetCollisionGroup );
+	CreateNative( "SetSize", Native_SetSize );
+
 	CreateNative( "HealPlayer", Native_HealPlayer );
 
 	RegPluginLibrary( "kocwtools" );
@@ -99,6 +109,31 @@ public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
 	HookEvent( EVENT_POSTINVENTORY, Event_PostInventory, EventHookMode_Post );
+
+	/*
+		OBJECT FUNCTIONS
+	*/
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseEntity::SetCollisionGroup" );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hSetGroup = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseEntity::SetSize" );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	hSetSize = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CCollisionProperty::SetSolid" );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hSetSolid = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CCollisionProperty::SetSolidFlags" );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hSetSolidFlags = EndPrepSDKCall();
 
 	/*
 		INVENTORY FUNCTIONS
@@ -308,6 +343,58 @@ public any Native_EntityInRadius( Handle hPlugin, int iParams ) {
 }
 
 /*
+	OBJECT FUNCTIONS
+*/
+
+
+
+
+//native void	SetSolid( int iEntity, iSolid );
+public any Native_SetSolid( Handle hPlugin, int iParams ) {
+	int iEntity, iSolid;
+	iEntity = GetNativeCell( 1 );
+	iSolid = GetNativeCell( 2 );
+
+	Address aCollision = GetEntityAddress( iEntity ) + view_as<Address>( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
+	SDKCall( hSetSolid, aCollision, iSolid );
+
+	return 0;
+}
+//native void	SetSolidFlags( int iEntity, int iFlags );
+public any Native_SetSolidFlags( Handle hPlugin, int iParams ) {
+	int iEntity, iFlags;
+	iEntity = GetNativeCell( 1 );
+	iFlags = GetNativeCell( 2 );
+
+	Address aCollision = GetEntityAddress( iEntity ) + view_as<Address>( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
+	SDKCall( hSetSolidFlags, aCollision, iFlags );
+
+	return 0;
+}
+//native void	SetCollisionGroup( int iEntity, int iGroup );
+public any Native_SetCollisionGroup( Handle hPlugin, int iParams ) {
+	int iEntity, iGroup;
+	iEntity = GetNativeCell( 1 );
+	iGroup = GetNativeCell( 2 );
+
+	SDKCall( hSetGroup, iEntity, iGroup );
+
+	return 0;
+}
+//native void	SetSize( int iEntity, const float vecSizeMin[3], const float vecSizeMax[3] );
+public any Native_SetSize( Handle hPlugin, int iParams ) {
+	int iEntity;
+	float vecSizeMin[3], vecSizeMax[3];
+	iEntity = GetNativeCell( 1 );
+	GetNativeArray( 2, vecSizeMin, 3 );
+	GetNativeArray( 3, vecSizeMax, 3 );
+
+	SDKCall( hSetSize, iEntity, vecSizeMin, vecSizeMax );
+
+	return 0;
+}
+
+/*
 	STRING FUNCTIONS
 */
 
@@ -483,10 +570,6 @@ static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 
 /*
 	DAMAGE FUNCTIONS
-*/
-
-/*
-	trying to do custom damage handling, not ready yet
 */
 
 //0/4/8: damage force vector
