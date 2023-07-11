@@ -7495,6 +7495,21 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
+			    "strange restriction type 1"													
+				{
+					"attribute_class"	"can_headshot"
+					"value"				"1"
+				}
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"headshot_is_minicrit"
+					"value"				"1"
+				}
+				"Headshot Basic"													
+				{
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1"
+				}
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
@@ -25206,7 +25221,6 @@ Weapon by: 'Colrot'"
 			{
 				"custom projectile model"				"models/weapons/c_models/c_fragmaster_bomblauncher/c_fragmaster_bomblauncher_projectile.mdl"
 				"damage penalty hidden"                 "0.45"	
-				"mod use custom ammo type"              "1"
                 "meter_label"							"AMMO"				
 			}
 			"attributes"																	
@@ -25239,7 +25253,7 @@ Weapon by: 'Colrot'"
 				"maxammo primary reduced"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.75"
+					"value"				"0.3"
 				}
 				"crit mod disabled"
 				{
@@ -25282,6 +25296,11 @@ Weapon by: 'Colrot'"
 				{
 					"attribute_class"	"stickybomb_charge_rate"
 					"value" 			"0.4"
+				}
+				"effect bar recharge rate increased"
+				{
+					"attribute_class"	"effectbar_recharge_rate"
+					"value"				".15"
 				}
 			}
 			"visuals"
@@ -28592,8 +28611,8 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"move speed penalty"
 				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.85"
+					"attribute_class"		"mult_player_movespeed"
+					"value"					"0.85"
 				}
 				"hidden primary max ammo bonus"
 				{
@@ -28643,7 +28662,7 @@ Weapon by: 'The One Of Wonders'"
 				"custom falloff"
 				{
 					"attribute_class"	"mod_custom_falloff"
-					"value"				"0.8"
+					"value"				"1.75"
 				}
 				"custom rampup"
 				{
