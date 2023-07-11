@@ -42,9 +42,8 @@ public void OnPluginStart() {
 	hDroppedTouch = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAmmoPack::MyTouch" );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CItem::ItemTouch" );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
 	hAmmoPackTouch = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
@@ -90,13 +89,8 @@ void FixAmmoPacks( int iEntity ) {
 	iEntity = EntRefToEntIndex( iEntity );
 	if( iEntity == -1 )
 		return;
-
-	Address aCollision = GetEntityAddress( iEntity ) + view_as<Address>( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
-
-	//SDKCall( hSetSolid, aCollision, 2 );
-	SDKCall( hSetSolidFlags, aCollision, 0 );
-	//SDKCall( hSetGroup, iEntity, 1 );
-	//SDKCall( hSetSize, iEntity, { -10.0, -10.0, -10.0 }, { 10.0, 10.0, 10.0 } );
+		
+	SetSolidFlags( iEntity, FSOLID_TRIGGER );
 }
 
 void SetAmmoOutline( int iEntity ) {
@@ -223,6 +217,7 @@ bool EnumerateAmmo( int iEntity, any data ) {
 	if ( iEntity <= MaxClients ) return true;
 	if( !IsValidEntity( iEntity ) ) return true;
 
+
 	static char szClassname[ 64 ];
 	GetEntityClassname( iEntity, szClassname, sizeof( szClassname ) );
 
@@ -262,6 +257,11 @@ bool PushAmmo( const float vecOrigin[3], int iEntity, int iType ) {
 			if( !CheckLOS( vecOrigin, vecTarget, iEntity ) )
 				return true;
 		}
+		else if( iType == AMMO_WORLD ) {
+			vecTarget[2] += 2.0;
+			if( !CheckLOS( vecOrigin, vecTarget, iEntity ) )
+				return true;
+		}
 
 		return true;
 	}
@@ -292,9 +292,19 @@ bool LOSFilter( int iEntity, int iMask, any data ) {
 }
 
 void PickupAmmoBox( int iAmmo, int iClient ) {
-	if( SDKCall( hAmmoPackTouch, iAmmo, iClient ) ) {
-		CreateParticles( iClient, iAmmo );
-		return;
+	int iOldAmmo[ 6 ];
+
+	for( int i = 0; i < sizeof( iOldAmmo ); i++ ) {
+		iOldAmmo[ i ] = GetEntProp( iClient, Prop_Send, "m_iAmmo", 4, i );
+	}
+
+	SDKCall( hAmmoPackTouch, iAmmo, iClient );
+
+	for( int i = 0; i < sizeof( iOldAmmo ); i++ ) {
+		if( GetEntProp( iClient, Prop_Send, "m_iAmmo", 4, i ) > iOldAmmo[ i ] ) {
+			CreateParticles( iClient, iAmmo );
+			return;
+		}
 	}
 }
 
@@ -326,7 +336,7 @@ bool PickupAmmoDispenser( int iDispenser, int iPlayer ) {
 		return false;
 
 	if( g_flGrabCooler[ iPlayer ] <= GetGameTime() && SDKCall( hDispenseAmmo, iDispenser, iPlayer ) ) {
-		CreateParticles( iPlayer, iDispenser, true );
+		CreateParticles( iPlayer, iDispenser, AMMO_DISPENSER );
 		g_flGrabCooler[ iPlayer ] = GetGameTime() + 1.0;
 		return true;
 	}
@@ -347,7 +357,7 @@ static char g_szTeleportParticles[][] = {
 	"teleported_yellow"
 };
 
-void CreateParticles( int iOrigin, int iTarget, bool bDispenser = false ) {
+void CreateParticles( int iOrigin, int iTarget, int iType = 0 ) {
 	int iTeam = GetEntProp( iOrigin, Prop_Send, "m_iTeamNum" ) - 2;
 
 	int iParticles[2];
@@ -360,8 +370,12 @@ void CreateParticles( int iOrigin, int iTarget, bool bDispenser = false ) {
 	float vecTarget[3];
 	GetEntPropVector( iTarget, Prop_Data, "m_vecAbsOrigin", vecTarget );
 
-	if( bDispenser )
+	if( iType == AMMO_DISPENSER )
 		ParentModel( iParticles[0], iTarget, "build_point_0" );
+	else if( iType == AMMO_WORLD ) {
+		vecTarget[2] += 25.0;
+		TeleportEntity( iParticles[0], vecTarget );
+	}
 	else
 		TeleportEntity( iParticles[0], vecTarget );
 
