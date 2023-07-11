@@ -97,7 +97,11 @@
                 "linux"     "2044"
             }
             
-            
+            "CItem::ItemTouch"
+			{
+				"linux"		"219"
+			}
+			
             //weapons
             
 			"CTFWeaponBase::Holster"
@@ -801,15 +805,15 @@
 				"return"		"bool"
 				"arguments"
 				{
-					"fuck"
+					"this"
 					{
 						"type"	"int"
 					}
 					"toucher"
 					{
-						"type"	"cbaseentity"
+						"type"	"int"
 					}
-					"fuck2"
+					"contentsMask"
 					{
 						"type"	"int"
 					}
@@ -1124,6 +1128,29 @@
 				"library"	"server"
 				"linux"		"@_ZN16CObjectDispenser12DispenseAmmoEP9CTFPlayer"
 			}
+			"CAmmoPack::MyTouch"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CAmmoPack7MyTouchEP11CBasePlayer"
+			}
+			"CCollisionProperty::SetSolid"
+			{
+				"library"	"server"
+				"linux"		"@_ZN18CCollisionProperty8SetSolidE11SolidType_t"
+			}
+			"CCollisionProperty::SetSolidFlags"
+			{
+				"library"	"server"
+				"linux"		"@_ZN18CCollisionProperty13SetSolidFlagsEi"
+			}
+			"CBaseEntity::SetSize"
+			{
+				"library"	"server"
+				"linux"		"@_ZN11CBaseEntity7SetSizeERK6VectorS2_"
+			}
+			
+
+			
 			
 			"CTFGameRules::ApplyOnDamageModifyRules"
 			{
