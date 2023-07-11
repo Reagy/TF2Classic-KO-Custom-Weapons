@@ -12,17 +12,24 @@ public Plugin myinfo =
 	name = "Attribute: Magnet Wrench",
 	author = "Noclue",
 	description = "Attributes for the Magnet Wrench.",
-	version = "1.0",
+	version = "1.2",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
-Handle hAmmoTouch;
+Handle hDroppedTouch;
+Handle hAmmoPackTouch;
 Handle hDispenseAmmo;
 
 float g_flGrabCooler[ MAXPLAYERS+1 ] = { 0.0, ... };
 bool g_bHasMagnetWrench[ MAXPLAYERS+1 ] = { false, ... };
 
 ArrayList g_iAmmoSearchTable;
+
+enum {
+	AMMO_WORLD = 0,
+	AMMO_DROPPED,
+	AMMO_DISPENSER
+}
 
 public void OnPluginStart() {
 	HookEvent( EVENT_POSTINVENTORY,	Event_PostInventory );
@@ -32,7 +39,13 @@ public void OnPluginStart() {
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFAmmoPack::PackTouch" );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
-	hAmmoTouch = EndPrepSDKCall();
+	hDroppedTouch = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAmmoPack::MyTouch" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	hAmmoPackTouch = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CObjectDispenser::DispenseAmmo" );
@@ -57,8 +70,7 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	if( !IsValidPlayer( iPlayer ) )
 		return Plugin_Continue;
 
-	float flMagnet = AttribHookFloat( 0.0, iPlayer, "custom_magnet_grab_ammo" );
-	g_bHasMagnetWrench[ iPlayer ] = flMagnet != 0.0;
+	g_bHasMagnetWrench[ iPlayer ] = AttribHookFloat( 0.0, iPlayer, "custom_magnet_grab_ammo" ) != 0.0;
 
 	return Plugin_Continue;
 }
@@ -66,11 +78,32 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 public void OnEntityCreated( int iEntity ) {
 	static char szEntityName[ 32 ];
 	GetEntityClassname( iEntity, szEntityName, sizeof( szEntityName ) );
-	if( StrEqual( szEntityName, "tf_ammo_pack", false ) )
-		RequestFrame( SetAmmoOutline, iEntity );
+	if( StrEqual( szEntityName, "tf_ammo_pack", false ) ) {
+		RequestFrame( SetAmmoOutline, EntIndexToEntRef( iEntity ) );
+	} else if( StrContains( szEntityName, "item_ammopack_", false ) != -1 ) {
+		RequestFrame( FixAmmoPacks, EntIndexToEntRef( iEntity ) );
+	}
+}
+
+//remove the FSOLID_NOT_SOLID flag to allow traces to pick up ammo boxes
+void FixAmmoPacks( int iEntity ) {
+	iEntity = EntRefToEntIndex( iEntity );
+	if( iEntity == -1 )
+		return;
+
+	Address aCollision = GetEntityAddress( iEntity ) + view_as<Address>( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
+
+	//SDKCall( hSetSolid, aCollision, 2 );
+	SDKCall( hSetSolidFlags, aCollision, 0 );
+	//SDKCall( hSetGroup, iEntity, 1 );
+	//SDKCall( hSetSize, iEntity, { -10.0, -10.0, -10.0 }, { 10.0, 10.0, 10.0 } );
 }
 
 void SetAmmoOutline( int iEntity ) {
+	iEntity = EntRefToEntIndex( iEntity );
+	if( iEntity == -1 )
+		return;
+
 	int iModelIndex = GetEntProp( iEntity, Prop_Send, "m_nModelIndex" );
 
 	static char szModelName[256];
@@ -133,19 +166,18 @@ public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3
 void TryGrabAmmo( int iClient ) {
 	float vecAngles[3];
 	float vecOrigin[3];
-	float vecEndPos[3];
-
 	GetClientEyePosition( iClient, vecOrigin );
 	GetClientEyeAngles( iClient, vecAngles );
 
+	float vecEndPos[3];
 	GetAngleVectors( vecAngles, vecEndPos, NULL_VECTOR, NULL_VECTOR );
 	ScaleVector( vecEndPos, 2000.0 );
 	AddVectors( vecOrigin, vecEndPos, vecEndPos );
 
-	TR_EnumerateEntitiesHull( vecOrigin, vecEndPos, { -RADIUS, -RADIUS, -RADIUS }, { RADIUS, RADIUS, RADIUS }, MASK_SHOT, EnumerateAmmo, iClient );
+	TR_EnumerateEntitiesHull( vecOrigin, vecEndPos, { -RADIUS, -RADIUS, -RADIUS }, { RADIUS, RADIUS, RADIUS }, 0, EnumerateAmmo, iClient );
 
 	int iClosest = -1;
-	int iClosestType = 0;
+	int iClosestType = -1;
 	float flDist = 99999999.0;
 
 	float vecTargetPos[3];
@@ -169,32 +201,22 @@ void TryGrabAmmo( int iClient ) {
 
 	g_iAmmoSearchTable.Clear();
 
-	if( iClosestType == 1 ) { //ammo pack
-		PickupAmmoBox( iClient, iClosest );
+	switch( iClosestType ) {
+	case AMMO_DROPPED: {
+		PickupDroppedWeapon( iClient, iClosest );
 		return;
-	} else if( iClosestType == 2 ) { //dispenser
+	}
+	case AMMO_DISPENSER: {
 		PickupAmmoDispenser( iClosest, iClient );
 		return;
 	}
+	case AMMO_WORLD: {
+		PickupAmmoBox( iClosest, iClient );
+		return;
+	}
+	}
 
 	EmitGameSoundToClient( iClient, "Player.DenyWeaponSelection" );
-}
-
-void PickupAmmoBox( int iClient, int iAmmo ) {
-	int iOldAmmo[ 6 ];
-
-	for( int i = 0; i < sizeof( iOldAmmo ); i++ ) {
-		iOldAmmo[ i ] = GetEntProp( iClient, Prop_Send, "m_iAmmo", 4, i );
-	}
-
-	SDKCall( hAmmoTouch, iAmmo, iClient );
-
-	for( int i = 0; i < sizeof( iOldAmmo ); i++ ) {
-		if( GetEntProp( iClient, Prop_Send, "m_iAmmo", 4, i ) > iOldAmmo[ i ] ) {
-			CreateParticles( iClient, iAmmo );
-			return;
-		}
-	}
 }
 
 bool EnumerateAmmo( int iEntity, any data ) {
@@ -204,26 +226,26 @@ bool EnumerateAmmo( int iEntity, any data ) {
 	static char szClassname[ 64 ];
 	GetEntityClassname( iEntity, szClassname, sizeof( szClassname ) );
 
+	float vecOrigin[3];
+	GetClientEyePosition( data, vecOrigin );
+
 	if( StrEqual( "tf_ammo_pack", szClassname ) ) {
-		float vecOrigin[3];
-		GetClientEyePosition( data, vecOrigin );
-		return PushAmmo( vecOrigin, iEntity, 1 );
+		return PushAmmo( vecOrigin, iEntity, AMMO_DROPPED );
 	}
 	else if( StrEqual( "obj_dispenser", szClassname ) ) {
-		float vecOrigin[3];
-		GetClientEyePosition( data, vecOrigin );
-		return PushAmmo( vecOrigin, iEntity, 2 );
+		return PushAmmo( vecOrigin, iEntity, AMMO_DISPENSER );
+	}
+	else if( StrContains( szClassname, "item_ammopack_", false ) != -1 ) {
+		return PushAmmo( vecOrigin, iEntity, AMMO_WORLD );
 	}
 
 	return true;
 }
 
 bool PushAmmo( const float vecOrigin[3], int iEntity, int iType ) {
-	if( iType == 1 ) {
-		int iModelIndex = GetEntProp( iEntity, Prop_Send, "m_nModelIndex" );
-
+	if( iType == AMMO_DROPPED ) {
 		static char szModelName[256];
-		FindModelString( iModelIndex, szModelName, sizeof( szModelName ) );
+		FindModelString( GetEntProp( iEntity, Prop_Send, "m_nModelIndex" ), szModelName, sizeof( szModelName ) );
 
 		//less than spectacular solution to exclude building gibs since they have issues with the ray trace i can't be bothered to fix
 		if( StrContains( szModelName, "_gib" ) != -1 )
@@ -235,7 +257,7 @@ bool PushAmmo( const float vecOrigin[3], int iEntity, int iType ) {
 
 	if( !CheckLOS( vecOrigin, vecTarget, iEntity ) ) {
 		//check the top of the dispenser
-		if( iType == 2 ) {
+		if( iType == AMMO_DISPENSER ) {
 			vecTarget[2] += 70.0;
 			if( !CheckLOS( vecOrigin, vecTarget, iEntity ) )
 				return true;
@@ -257,23 +279,43 @@ bool CheckLOS( const float vecStart[3], const float vecEnd[3], int iEntity ) {
 	Handle hTrace = TR_TraceRayFilterEx( vecStart, vecEnd, CONTENTS_SOLID | CONTENTS_MOVEABLE | CONTENTS_MIST, RayType_EndPoint, LOSFilter, 0 );
 
 	if( TR_GetFraction( hTrace ) >= 1.0 ) return false;
-
-	int iHit = TR_GetEntityIndex( hTrace );
-
-	if( iHit != iEntity ) return false;
-
+	if( TR_GetEntityIndex( hTrace ) != iEntity ) return false;
 	return true;
 }
 
 bool LOSFilter( int iEntity, int iMask, any data ) {
-	if( iEntity <= MaxClients )
-		return false;
+	return !(iEntity <= MaxClients);
+	//if( iEntity <= MaxClients )
+		//return false;
 
-	return true;
+	//return true;
+}
+
+void PickupAmmoBox( int iAmmo, int iClient ) {
+	if( SDKCall( hAmmoPackTouch, iAmmo, iClient ) ) {
+		CreateParticles( iClient, iAmmo );
+		return;
+	}
+}
+
+void PickupDroppedWeapon( int iClient, int iAmmo ) {
+	int iOldAmmo[ 6 ];
+
+	for( int i = 0; i < sizeof( iOldAmmo ); i++ ) {
+		iOldAmmo[ i ] = GetEntProp( iClient, Prop_Send, "m_iAmmo", 4, i );
+	}
+
+	SDKCall( hDroppedTouch, iAmmo, iClient );
+
+	for( int i = 0; i < sizeof( iOldAmmo ); i++ ) {
+		if( GetEntProp( iClient, Prop_Send, "m_iAmmo", 4, i ) > iOldAmmo[ i ] ) {
+			CreateParticles( iClient, iAmmo );
+			return;
+		}
+	}
 }
 
 bool PickupAmmoDispenser( int iDispenser, int iPlayer ) {
-
 	if( GetEntProp( iDispenser, Prop_Send, "m_bDisabled" ) || GetEntProp( iDispenser, Prop_Send, "m_bBuilding" ) || GetEntProp( iDispenser, Prop_Send, "m_bPlacing" ) )
 		return false;
 

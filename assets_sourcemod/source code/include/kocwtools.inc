@@ -15,6 +15,11 @@ native int	GetEntityInSlot( int iPlayer, int iSlot );
 native void 	SetNextThink( int iEntity, float flNextThink, const char[] sThinkContext );
 native float 	GetNextThink( int iEntity, const char[] sThinkContext );
 
+native void	SetSolid( int iEntity, iSolid );
+native void	SetSolidFlags( int iEntity, int iFlags );
+native void	SetCollisionGroup( int iEntity, int iGroup );
+native void	SetSize( int iEntity, const float vecSizeMin[3], const float vecSizeMax[3] );
+
 /**
  * Returns index of the player belonging to a CTFPlayerShared object
  * 
