@@ -25250,11 +25250,6 @@ Weapon by: 'Colrot'"
 					"attribute_class"	"grenade_not_explode_on_impact"
 					"value"				"1"
 				}
-				"maxammo primary reduced"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.3"
-				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -25262,6 +25257,11 @@ Weapon by: 'Colrot'"
 				}
 				// hidden
 				"hidden separator"		"1"		
+				"maxammo grenades2 increased"
+				{
+					"attribute_class"	"mult_maxammo_grenades2"
+					"value"				"4"
+				}
 				"mirv impact"
 				{
 					"attribute_class"  "mirv_impact"
