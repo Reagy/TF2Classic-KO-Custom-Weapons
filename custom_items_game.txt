@@ -1295,7 +1295,7 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_player_movespeed"
 					"value"				"0.6"
 				}
-				"Reduced Capture Point Value"
+				"decrease player capture value"
 				{
 					"attribute_class"		"add_player_capturevalue"
 					"value" 				"-3"
@@ -3414,6 +3414,7 @@ Edited by: 'Reagy'"
 				"fire rate penalty"						"1.2"
 				"Reload time increased"					"1.25"
 				"min_viewmodel_offset"					"10 0 -11"
+				"decrease player capture value"			"-2"
 				"crit mod disabled"                     "0"
 			}
 			"visuals"
@@ -10024,6 +10025,7 @@ Weapon by: 'Reagy'"
 				"damage bonus hidden"					"0.75"
 				"fire rate penalty"						"1.2"
 				"Reload time increased"					"1.1"
+				"decrease player capture value"			"-2"
 				"crit mod disabled"                     "0"
 			}
 			"visuals"
@@ -12865,6 +12867,7 @@ Edited by: 'Reagy'"
 //				"damage penalty"						"0.18"
 //				"maxammo secondary increased"			"1.5"
 				"fire rate penalty"						"1.25"
+				"decrease player capture value"			"-2"
 				"crit mod disabled"                     "0"
 			}
 			"attributes"
@@ -12950,6 +12953,7 @@ Edited by: 'Reagy'"
 				"min_viewmodel_offset"					"10 0 -11"
 				"fire rate penalty"						"1.2"
 				"Reload time increased"					"1.1"
+				"decrease player capture value"			"-2"
 				"crit mod disabled"                     "0"
 			}
 			"visuals"																
@@ -13256,6 +13260,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"punch_angle_is_constant"
 					"value" 			"1"
+				}
+				"decrease player capture value"
+				{
+					"attribute_class"		"add_player_capturevalue"
+					"value" 				"-2"
 				}
 				"crit mod disabled"
 				{
@@ -14168,7 +14177,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"static_attrs"
 			{
 				"class select override vcd"				"taunt01"
-				"override projectile type"				"30"					// Tranq Dart									
+				"override projectile type"				"30"					// Tranq Dart				
 			}
 			"attributes"
 			{
@@ -14201,6 +14210,11 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"5"
+				}
+				"decrease player capture value"
+				{
+					"attribute_class"		"add_player_capturevalue"
+					"value" 				"-2"
 				}
 				"crit mod disabled"
 				{
@@ -15708,7 +15722,7 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 					"attribute_class"		"cannot_pick_up_intelligence"
 					"value"					"1"
 				}
-				"strange restriction type 1"
+				"decrease player capture value"
 				{
 					"attribute_class"		"add_player_capturevalue"
 					"value" 				"-1"
@@ -18252,6 +18266,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"mod use custom ammo type"
+				{
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value" 			"2"
 				}				
 			}
 			"visuals"
@@ -24052,6 +24071,7 @@ Weapon by: 'Reagy'"
 				"damage bonus hidden"					"2.22"
 				"reload time increased hidden"			"1.05"									
 				"min_viewmodel_offset"					"10 0 -11"
+				"decrease player capture value"			"-2"
 			}
 			"visuals"
 			{
@@ -27062,8 +27082,7 @@ Weapon by: 'Reagy'"
 			"item_class"					"tf_wearable"
 			"item_type_name"				"Tail uwu~"
 			"item_name"						"Flashy Fox"
-			"item_description"				"Reduced point capture speed
-
+			"item_description"				"
 Its the finest tail for miles around.
 
 Cosmetic by: 'Reagy'
@@ -27088,18 +27107,23 @@ Questioned by: 'The One Of Wonders'"
 				{
 					"attribute_class"		"mult_player_movespeed"
 					"value"					"1.2"
-				}	
-				"dmg taken increased"	
+				}
+			    "increased jump height"													
 				{
-					"attribute_class"		"mult_dmgtaken"
-					"value"					"1.25"
+					"attribute_class"		"mod_jump_height"
+					"value"					"1.3"
+				}
+				"maxammo secondary increased"
+				{
+					"attribute_class"		"mult_maxammo_secondary"
+					"value" 				"2"
 				}
 				"cannot pick up intelligence"
 				{
 					"attribute_class"		"cannot_pick_up_intelligence"
 					"value"					"1"
 				}
-				"strange restriction type 1"
+				"decrease player capture value"
 				{
 					"attribute_class"		"add_player_capturevalue"
 					"value" 				"-1"
@@ -31289,19 +31313,12 @@ Weapon by: 'Noclue'"
 		}
 		"7537"
 		{
-			"name"					"Reduced Capture Point Value"
-			"description_string"	"%s1 capture rate on wearer"												
-			"description_format"	"value_is_additive"
-			"effect_type"			"negative"
-		}
-		"7538"
-		{
 			"name"					"Crucible Explodes on Hit"
 			"description_string"	"Crucible Sword hits cause explosions"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
 		}
-		"7539"
+		"7538"
 		{
 			"name"					"Crucible Requires Ammo"
 			"description_string"	"Crucible Sword requires ammo"	
@@ -31331,6 +31348,32 @@ Weapon by: 'Noclue'"
 			"description_format"	"value_is_percentage"
 			"hidden"	"0"
 			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+
+// Capture rate attributes!
+		
+		"7542"
+		{
+			"name"	"player capture value hidden"
+			"attribute_class"	"add_player_capturevalue"
+			"description_string"	"#Attrib_CaptureValue_Increased"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"armory_Desc"	"on_wearer"
+			"stored_as_integer"	"0"
+		}
+		
+		"7543"
+		{
+			"name"	"decrease player capture value"
+			"attribute_class"	"add_player_capturevalue"
+			"description_string"	"%s1 capture rate on player"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"armory_Desc"	"on_wearer"
 			"stored_as_integer"	"0"
 		}
 
