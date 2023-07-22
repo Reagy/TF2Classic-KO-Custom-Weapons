@@ -232,6 +232,9 @@ void Tracker_Recharge( int iPlayer, int iIndex ) {
 	ResourceTracker hTracker;
 
 	hResources[iPlayer].GetArray(iIndex, hTracker );
+	if( !( hTracker.iFlags & RTF_RECHARGES ) )
+		return;
+
 	if(hTracker.flValue != 100.0 && hTracker.flValue + hTracker.flRechargeRate >= 100.0 && hTracker.HasFlags( RTF_DING ) ) EmitGameSoundToClient( iPlayer, "TFPlayer.Recharged" );
 	hTracker.flValue = FloatClamp( hTracker.flValue + hTracker.flRechargeRate, 0.0, 100.0 );
 	

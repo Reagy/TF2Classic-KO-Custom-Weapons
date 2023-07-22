@@ -74,7 +74,7 @@ public void OnPluginStart() {
 	hAttackIsCritical = EndPrepSDKCall();
 
 	hShouldExplode = DynamicHook.FromConf( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
-	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CTFPlayer::OnTakeDamage" );
+	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
 
 	hLagCompensation = new ArrayList( sizeof( BombLagComp ) );
 

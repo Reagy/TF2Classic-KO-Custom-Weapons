@@ -1,3 +1,8 @@
+#if defined _hudtracker_included
+	#endinput
+#endif
+#define _hudtracker_included
+
 /**
  * Create a new Resource Tracker
  * 

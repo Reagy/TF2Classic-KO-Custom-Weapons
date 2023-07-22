@@ -20,14 +20,66 @@ native void	SetSolidFlags( int iEntity, int iFlags );
 native void	SetCollisionGroup( int iEntity, int iGroup );
 native void	SetSize( int iEntity, const float vecSizeMin[3], const float vecSizeMax[3] );
 
+//http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
+stock int CountBits( int iBits ) {
+	iBits = iBits - ( ( iBits >> 1 ) & 0x55555555 );			// reuse input as temporary
+	iBits = ( iBits & 0x33333333 ) + ( ( iBits >> 2 ) & 0x33333333 );	// temp
+	return ( ( iBits + ( iBits >> 4 ) & 0xF0F0F0F ) * 0x1010101 ) >> 24;	// count
+}
+
+enum struct PlayerFlags {
+	int iFlags[ 2 ];
+
+	void Set( int iPlayer, bool bValue ) {
+		if( iPlayer < 1 || iPlayer > MaxClients )
+			return;
+
+		int iIndex = ( ( iPlayer + 31 ) / 32 ) - 1;
+		int iOffset = ( iPlayer - 1 ) % 32;
+		this.iFlags[ iIndex ] = bValue ? this.iFlags[ iIndex ] | ( 1 << iOffset ) : this.iFlags[ iIndex ] & ~( 1 << iOffset ) ;
+	}
+	void SetDirect( int iOffset, int iNewVal ) {
+		this.iFlags[ iOffset ] = iNewVal;
+	}
+
+	bool Get( int iPlayer ) {
+		if( iPlayer < 1 || iPlayer > MaxClients )
+			return false;
+
+		int iIndex = ( ( iPlayer + 31 ) / 32 ) - 1;
+		int iOffset = ( iPlayer - 1 ) % 32;
+		return view_as<bool>( this.iFlags[ iIndex ] & ( 1 << iOffset ) );
+	}
+	int GetDirect( int iOffset ) {
+		return this.iFlags[ iOffset ];
+	}
+
+	int GetTotalBits() {
+		return CountBits( this.iFlags[ 0 ] ) + CountBits( this.iFlags[ 1 ] );
+	}
+}
+
+//solid types
+enum
+{
+	SOLID_NONE	= 0,	// no solid model
+	SOLID_BSP	= 1,	// a BSP tree
+	SOLID_BBOX	= 2,	// an AABB
+	SOLID_OBB	= 3,	// an OBB (not implemented yet)
+	SOLID_OBB_YAW	= 4,	// an OBB, constrained so that it can only yaw
+	SOLID_CUSTOM	= 5,	// Always call into the entity for tests
+	SOLID_VPHYSICS	= 6,	// solid vphysics object, get vcollide from the model and collide with that
+	SOLID_LAST,
+};
+
 //solid flags
 enum
 {
 	FSOLID_CUSTOMRAYTEST		= 0x0001,	// Ignore solid type + always call into the entity for ray tests
 	FSOLID_CUSTOMBOXTEST		= 0x0002,	// Ignore solid type + always call into the entity for swept box tests
-	FSOLID_NOT_SOLID			= 0x0004,	// Are we currently not solid?
-	FSOLID_TRIGGER				= 0x0008,	// This is something may be collideable but fires touch functions
-											// even when it's not collideable (when the FSOLID_NOT_SOLID flag is set)
+	FSOLID_NOT_SOLID		= 0x0004,	// Are we currently not solid?
+	FSOLID_TRIGGER			= 0x0008,	// This is something may be collideable but fires touch functions
+							// even when it's not collideable (when the FSOLID_NOT_SOLID flag is set)
 	FSOLID_NOT_STANDABLE		= 0x0010,	// You can't stand on this
 	FSOLID_VOLUME_CONTENTS		= 0x0020,	// Contains volumetric contents (like water)
 	FSOLID_FORCE_WORLD_ALIGNED	= 0x0040,	// Forces the collision rep to be world-aligned even if it's SOLID_BSP or SOLID_VPHYSICS
@@ -38,73 +90,186 @@ enum
 	FSOLID_MAX_BITS	= 10
 };
 
+//collision groups
+enum
+{
+	COLLISION_GROUP_NONE					= 0,
+	COLLISION_GROUP_DEBRIS					= 1,	// Collides with nothing but world and static stuff
+	COLLISION_GROUP_DEBRIS_TRIGGER				= 2,	// Same as debris, but hits triggers
+	COLLISION_GROUP_INTERACTIVE_DEBRIS			= 3,	// Collides with everything except other interactive debris or debris
+	COLLISION_GROUP_INTERACTIVE				= 4,	// Collides with everything except interactive debris or debris
+	COLLISION_GROUP_PLAYER					= 5,
+	COLLISION_GROUP_BREAKABLE_GLASS				= 6,
+	COLLISION_GROUP_VEHICLE					= 7,
+	COLLISION_GROUP_PLAYER_MOVEMENT				= 8,	// For HL2, same as Collision_Group_Player, for
+									// TF2, this filters out other players and CBaseObjects
+	COLLISION_GROUP_NPC					= 9,	// Generic NPC group
+	COLLISION_GROUP_IN_VEHICLE				= 10,	// for any entity inside a vehicle
+	COLLISION_GROUP_WEAPON					= 11,	// for any weapons that need collision detection
+	COLLISION_GROUP_VEHICLE_CLIP				= 12,	// vehicle clip brush to restrict vehicle movement
+	COLLISION_GROUP_PROJECTILE				= 13,	// Projectiles!
+	COLLISION_GROUP_DOOR_BLOCKER				= 14,	// Blocks entities not permitted to get near moving doors
+	COLLISION_GROUP_PASSABLE_DOOR				= 15,	// Doors that the player shouldn't collide with
+	COLLISION_GROUP_DISSOLVING				= 16,	// Things that are dissolving are in this group
+	COLLISION_GROUP_PUSHAWAY				= 17,	// Nonsolid on client and server, pushaway in player code
+
+	COLLISION_GROUP_NPC_ACTOR				= 18,	// Used so NPCs in scripts ignore the player.
+	COLLISION_GROUP_NPC_SCRIPTED				= 19,	// USed for NPCs in scripts that should not collide with each other
+
+	TF_COLLISIONGROUP_GRENADES				= 20,
+	TFCOLLISION_GROUP_OBJECT				= 21,
+	TFCOLLISION_GROUP_OBJECT_SOLIDTOPLAYERMOVEMENT		= 22,
+	TFCOLLISION_GROUP_COMBATOBJECT				= 23,
+	TFCOLLISION_GROUP_ROCKETS				= 24,	// Solid to players, but not player movement. ensures touch calls are originating from rocket
+	TFCOLLISION_GROUP_RESPAWNROOMS				= 25,
+	TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS	= 27,
+};
+
+//entity flags
+enum
+{
+	EFL_KILLME	=			(1<<0),	// This entity is marked for death -- This allows the game to actually delete ents at a safe time
+	EFL_DORMANT	=			(1<<1),	// Entity is dormant, no updates to client
+	EFL_NOCLIP_ACTIVE =			(1<<2),	// Lets us know when the noclip command is active.
+	EFL_SETTING_UP_BONES =			(1<<3),	// Set while a model is setting up its bones.
+	EFL_KEEP_ON_RECREATE_ENTITIES = 	(1<<4), // This is a special entity that should not be deleted when we restart entities only
+
+	EFL_HAS_PLAYER_CHILD=			(1<<4),	// One of the child entities is a player.
+
+	EFL_DIRTY_SHADOWUPDATE =		(1<<5),	// Client only- need shadow manager to update the shadow...
+	EFL_NOTIFY =				(1<<6),	// Another entity is watching events on this entity (used by teleport)
+
+	// The default behavior in ShouldTransmit is to not send an entity if it doesn't
+	// have a model. Certain entities want to be sent anyway because all the drawing logic
+	// is in the client DLL. They can set this flag and the engine will transmit them even
+	// if they don't have a model.
+	EFL_FORCE_CHECK_TRANSMIT =		(1<<7),
+
+	EFL_BOT_FROZEN =			(1<<8),	// This is set on bots that are frozen.
+	EFL_SERVER_ONLY =			(1<<9),	// Non-networked entity.
+	EFL_NO_AUTO_EDICT_ATTACH =		(1<<10), // Don't attach the edict; we're doing it explicitly
+	
+	// Some dirty bits with respect to abs computations
+	EFL_DIRTY_ABSTRANSFORM =		(1<<11),
+	EFL_DIRTY_ABSVELOCITY =			(1<<12),
+	EFL_DIRTY_ABSANGVELOCITY =		(1<<13),
+	EFL_DIRTY_SURROUNDING_COLLISION_BOUNDS= (1<<14),
+	EFL_DIRTY_SPATIAL_PARTITION =		(1<<15),
+//	UNUSED				=	(1<<16),
+
+	EFL_IN_SKYBOX =				(1<<17),	// This is set if the entity detects that it's in the skybox.
+											// This forces it to pass the "in PVS" for transmission.
+	EFL_USE_PARTITION_WHEN_NOT_SOLID =	(1<<18),	// Entities with this flag set show up in the partition even when not solid
+	EFL_TOUCHING_FLUID =			(1<<19),	// Used to determine if an entity is floating
+
+	// FIXME: Not really sure where I should add this...
+	EFL_IS_BEING_LIFTED_BY_BARNACLE = 	(1<<20),
+	EFL_NO_ROTORWASH_PUSH =			(1<<21),		// I shouldn't be pushed by the rotorwash
+	EFL_NO_THINK_FUNCTION =			(1<<22),
+	EFL_NO_GAME_PHYSICS_SIMULATION = 	(1<<23),
+
+	EFL_CHECK_UNTOUCH =			(1<<24),
+	EFL_DONTBLOCKLOS =			(1<<25),		// I shouldn't block NPC line-of-sight
+	EFL_DONTWALKON =			(1<<26),		// NPC;s should not walk on this entity
+	EFL_NO_DISSOLVE =			(1<<27),		// These guys shouldn't dissolve
+	EFL_NO_MEGAPHYSCANNON_RAGDOLL = 	(1<<28),	// Mega physcannon can't ragdoll these guys.
+	EFL_NO_WATER_VELOCITY_CHANGE  =		(1<<29),	// Don't adjust this entity's velocity when transitioning into water
+	EFL_NO_PHYSCANNON_INTERACTION =		(1<<30),	// Physcannon can't pick these up or punt them
+	EFL_NO_DAMAGE_FORCES =			(1<<31),	// Doesn't accept forces from physics damage
+};
+
+//entity flags
+enum {
+	EF_BONEMERGE			= 0x001,	// Performs bone merge on client side
+	EF_BRIGHTLIGHT 			= 0x002,	// DLIGHT centered at entity origin
+	EF_DIMLIGHT 			= 0x004,	// player flashlight
+	EF_NOINTERP			= 0x008,	// don't interpolate the next frame
+	EF_NOSHADOW			= 0x010,	// Don't cast no shadow
+	EF_NODRAW			= 0x020,	// don't draw entity
+	EF_NORECEIVESHADOW		= 0x040,	// Don't receive no shadow
+	EF_BONEMERGE_FASTCULL		= 0x080,	// For use with EF_BONEMERGE. If this is set, then it places this ent's origin at its
+							// parent and uses the parent's bbox + the max extents of the aiment.
+							// Otherwise, it sets up the parent's bones every frame to figure out where to place
+							// the aiment, which is inefficient because it'll setup the parent's bones even if
+							// the parent is not in the PVS.
+	EF_ITEM_BLINK			= 0x100,	// blink an item so that the user notices it.
+	EF_PARENT_ANIMATES		= 0x200,	// always assume that the parent entity is animating
+	EF_MAX_BITS = 10
+};
+
+//m_takedamage
+enum {
+	DAMAGE_NO = 0,
+	DAMAGE_EVENTS_ONLY,
+	DAMAGE_YES,
+	DAMAGE_AIM,
+};
+
 /**
  * Returns index of the player belonging to a CTFPlayerShared object
  * 
- * @param aShared     Location in memory of a CTFPlayerShared object
- * @return            Index of player
+ * @param aShared	Location in memory of a CTFPlayerShared object
+ * @return		Index of player
  */
-native int		GetPlayerFromShared( Address aShared );
-native Address		GetSharedFromPlayer( int iPlayer );
+native int GetPlayerFromShared( Address aShared );
+/**
+ * Returns the address of a CTFPlayerShared object from a player
+ * @param iPlayer	Index of player to retrieve from
+ * @return		Address of a CTFPlayerShared instance	
+ */
+native Address GetSharedFromPlayer( int iPlayer );
 
-native void		ApplyPushFromDamage( int iPlayer, Address tfInfo, float vecDir[3] );
+native void ApplyPushFromDamage( int iPlayer, Address tfInfo, float vecDir[3] );
 
-native int		FindEntityInSphere( int iStartEntity, float vecSearchPoint[3], float flRadius );
+native int FindEntityInSphere( int iStartEntity, float vecSearchPoint[3], float flRadius );
+
+stock bool PlayerInRadius( float vecStart[3], float flRadius, int iPlayer ) {
+	if( !IsClientInGame( iPlayer ) || IsPlayerAlive( iPlayer ) )
+		return false;
+
+	float vecTargetPos[3];
+	GetEntPropVector( iPlayer, Prop_Data, "m_vecAbsOrigin", vecTargetPos );
+	return GetVectorDistance( vecStart, vecTargetPos, true ) < flRadius;
+}
+stock void PlayersInRadius( float vecStart[3], float flRadius, bool bOutput[ MAXPLAYERS+1 ] ) {
+	for( int i = 0; i < MaxClients; i++ ) {
+		bOutput[i] = PlayerInRadius( vecStart, flRadius, i );
+	}
+}
 
 enum {
 	HF_NOOVERHEAL = 1<<1, //prevent overheal
 	HF_NOCRITHEAL = 1<<2, //prevent crit healing
 }
 
-native int		HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
+native int HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
 
 /*
 	MATH FUNCTIONS
 */
 
-/**
- * I can't belive that SourcePawn doesn't have this
- * 
- * @param v1     Parameter 1
- * @param v2     Parameter 2
- * @return       Value of lowest parameter
- */
 stock float MinFloat( float v1, float v2 ) {
-	if( v1 < v2 ) return v1;
-	return v2;
+	return ( v1 < v2 ) ? v1 : v2;
 }
-
-/**
- * I can't belive that SourcePawn doesn't have this
- * 
- * @param v1     Parameter 1
- * @param v2     Parameter 2
- * @return       Value of largest parameter
- */
 stock float MaxFloat( float v1, float v2 ) {
-	if( v1 > v2) return v1;
-	return v2;
+	return ( v1 > v2 ) ? v1 : v2;
+}
+stock float FloatClamp( float flValue, float flMin, float flMax ) {
+	return MinFloat( MaxFloat( flValue, flMin ), flMax );
 }
 
 stock int MinInt( int v1, int v2 ) {
-	if( v1 < v2) return v1;
-	return v2;
+	return ( v1 < v2 ) ? v1 : v2;
 }
 stock int MaxInt( int v1, int v2 ) {
-	if( v1 > v2) return v1;
-	return v2;
+	return ( v1 > v2 ) ? v1 : v2;
 }
-
-stock float FloatClamp( float flValue, float flMin, float flMax ) {
-	if( flValue >= flMax ) return flMax;
-	if( flValue <= flMin) return flMin;
-	return flValue;
-}
-
 stock int IntClamp( int iValue, int iMin, int iMax ) {
-	if( iValue >= iMax ) return iMax;
-	if( iValue <= iMin) return iMin;
-	return iValue;
+	return MinInt( MaxInt( iValue, iMin ), iMax );
+}
+//mask out the most significant bit
+stock int IntAbs( int iValue ) {
+	return iValue & 0x7FFFFFFF;
 }
 
 // Remap a value in the range [A,B] to [C,D].

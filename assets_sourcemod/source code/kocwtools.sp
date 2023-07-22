@@ -231,7 +231,7 @@ public void OnPluginStart() {
 		DAMAGE FUNCTIONS
 	*/
 
-	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CTFPlayer::OnTakeDamage" );
+	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
 	hOnTakeDamageAlive = DynamicHook.FromConf( hGameConf, "CTFPlayer::OnTakeDamageAlive" );
 	hModifyRules = DynamicDetour.FromConf( hGameConf, "CTFGameRules::ApplyOnDamageModifyRules" );
 
