@@ -7572,7 +7572,7 @@ Weapon by: 'Reagy'"
 				"punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
-					"value"				"12.7"
+					"value"				"10.0"
 				}
 				"punch angle mod add hidden"
 				{
@@ -8576,12 +8576,12 @@ Weapon by: 'Reagy'"
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"12"
+					"value"				"8"
 				}
 				"punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
-					"value"				"15.0"
+					"value"				"10.0"
 				}
 				"punch angle mod add hidden"
 				{
@@ -11375,11 +11375,6 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{	
-				"no damage falloff over distance"
-				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
-				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
@@ -11393,19 +11388,19 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.35"
+					"value"				"0.3"
 				}
-				"weapon_stattrak_module_scale"
+				"clip size bonus"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"1.35"
 				}
-				"weapon_stattrak_module_scale"
+				"Reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
 					"value" 			"1.25"
 				}
-				"weapon_stattrak_module_scale"
+				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value" 			"1.15"
@@ -11414,6 +11409,16 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"punch angle is constant"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value"				"1"
+				}
+				"punch angle mod mult hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value"				"1.5"
 				}
 			}
 			"visuals"
@@ -19723,7 +19728,7 @@ Weapon by: 'Reagy'"
 				"spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.50"
+					"value"				"1.15"
 				}	
 				"damage penalty"
 				{
