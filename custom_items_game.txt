@@ -10192,6 +10192,11 @@ Weapon by: 'Reagy'"
 					"attribute_class"		"mod_use_custom_ammo_type"
 					"value" 				"1"
 				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"		"mult_projectile_speed"
+					"value"					"1.25"
+				}
 	            "hidden primary max ammo bonus"
 				{
 					"attribute_class"		"mult_maxammo_primary"
