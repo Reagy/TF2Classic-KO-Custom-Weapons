@@ -1741,6 +1741,7 @@ Edited by: 'The One Of Wonders'"
 //----------------------------
 //----------------------------
 //--REMOTE DEPLOY PDA - 3351--
+// DISABLED (for removal)
 //----------------------------
 //----------------------------
 		"3351"																					// Another unused weapon! This one lets you deploy buildings remotely, either by hitting it with a Wrench, or activating "Build" again.
@@ -7283,6 +7284,7 @@ Weapon by: 'The One Of Wonders'"
 // V5.3.5 Increased spin-up time and added no random crits :^)
 // V5.3.8 Flipped the weapon on it's head, now it's somewhat similar but less bullshit?
 // V5.3.9 Added no ammo from dispensers and reduced max ammo 
+// DISABLED (for removal)
 //-------------------------------------
 //-------------------------------------		
 		"7008"
@@ -10182,7 +10184,7 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
-				"energy weapon no ammo"
+				"mod ammo per shot"
 				{
 					"attribute_class"    	"mod_ammo_per_shot"
 					"value"					"10"
@@ -11512,6 +11514,7 @@ Weapon by: 'Reagy'"
 //-------------------------
 //--NEST BREAKER GL - 7107--
 //--V5.4 Cut back on building damage for player damage 
+// DISABLED (for removal)
 //-------------------------
 //-------------------------
 		"7107"
@@ -16117,13 +16120,14 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 //--BRRRRT LAUNCHER - 9084--
 //--V5.4 Deals more damage in a larger radius, has better reload speed too
 // V5.6r1 Increased reload speed bonus to 30%, reduced explosion radius penalty to 50%, damage penalty reduced to 50%
+// DISABLED (for removal)
 //-----------------------------------
 //-----------------------------------
 		"9084"
 		{
 			"name"						"TF_WEAPON_BARRAGEPOD"							
 			"prefab"					"weapon_rocketlauncher"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
@@ -16248,6 +16252,7 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/weapons/c_models/c_huntingshotgun"
 			"model_world"				"models/weapons/c_models/c_huntingshotgun/c_huntingshotgun.mdl"
 			"model_player"				"models/weapons/c_models/c_huntingshotgun/c_huntingshotgun.mdl"
+//			"extra_wearable"			"models/player/items/set_generalformals.mdl" Note: Remove this later
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -16297,10 +16302,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"
 			{
-				"player_bodygroups"
-				{
-					"hat"				"1"													
-				}
 			    "sound_single_shot"		"Weapon_HuntingShotgun.Fire"
 				"sound_burst"			"Weapon_HuntingShotgun.FireCrit"
 			}
@@ -18258,6 +18259,7 @@ Weapon by: 'Reagy'"
 //-------------------------
 //-------------------------
 //--WARP WATCH - 9111--
+// DISABLED (for removal)
 //-------------------------
 //-------------------------
 		"9111"
@@ -20730,6 +20732,7 @@ Weapon by: 'The One Of Wonders'"
 //--------------------------------
 //--------------------------------
 //--THIRST FOR BLOOD - 9142--
+// DISABLED (for removal)
 //--------------------------------
 //--------------------------------
 		"9142"
@@ -23288,6 +23291,7 @@ Wearable by: 'The One Of Wonders'"
 //------------------
 //------------------
 //--ROBOT WRENCH - 9175--
+// DISABLED (for removal)
 //------------------
 //------------------
 		"9175"
@@ -25890,6 +25894,7 @@ Weapon by: 'The One Of Wonders'"
 //----------------------
 //--BFG LOL- 9211---
 // V5.6r1 Reduced aiming move speed penalty, increased projectile speed
+// DISABLED (for removal)
 //----------------------
 //----------------------
 		"9211"
@@ -28908,6 +28913,7 @@ Weapon by: 'The One Of Wonders'"
 //------------------------
 //------------------------
 //--PLACEHOLDER 8 - 9944--
+// DISABLED (for removal)
 //------------------------
 //------------------------
 		"9944"
@@ -29286,6 +29292,7 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------
 //-------------------------
 //-- PLACEHOLDER 11 - 9947--
+// DISABLED (for removal)
 //-------------------------
 //-------------------------
 		"9947"
@@ -29470,6 +29477,7 @@ Weapon by: 'The One Of Wonders'"
 // -- :NOTE: Remove, its pretty shit and no one uses it since it was added
 // -- Done - Reagy v6r1
 // -- Replaced with Medic Battery Pack
+// DISABLED (for removal)
 //---------------------------------
 //---------------------------------
 		"9949"
