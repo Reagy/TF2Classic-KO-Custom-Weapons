@@ -1116,7 +1116,7 @@ MRESReturn Detour_FireTouchTeam( Address aThis, DHookParam hParams ) {
 }
 
 MRESReturn FireTouchHandle( Address aThis, int iCollide ) {
-	int iOwner = LoadEntityHandleFromAddress( aThis + view_as<Address>( 112 ) );
+	int iOwner = LoadEntityHandleFromAddress( aThis + address( 112 ) );
 	if( !IsValidPlayer( iOwner ) )
 		return MRES_Ignored;
 
@@ -1144,9 +1144,9 @@ void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
 	SetCustomCondLevel( iCollide, TFCC_FLAMEHEAL, iLevel + 75 );
 
 	//this appends to the flame's internal list that keeps track of who it has hit
-	Address aVector = aThis + view_as<Address>( 120 );
-	Address aSize = aThis + view_as<Address>( 132 );
-	Address aEHandle = GetEntityAddress( iCollide ) + view_as< Address >( 836 );
+	Address aVector = aThis + address( 120 );
+	Address aSize = aThis + address( 132 );
+	Address aEHandle = GetEntityAddress( iCollide ) + address( 836 );
 	SDKCall( hAddFlameTouchList, aVector, LoadFromAddress( aSize, NumberType_Int32 ), LoadFromAddress( aEHandle, NumberType_Int32 ) );
 }
 

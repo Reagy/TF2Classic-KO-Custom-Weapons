@@ -355,7 +355,7 @@ public any Native_SetSolid( Handle hPlugin, int iParams ) {
 	iEntity = GetNativeCell( 1 );
 	iSolid = GetNativeCell( 2 );
 
-	Address aCollision = GetEntityAddress( iEntity ) + view_as<Address>( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
+	Address aCollision = GetEntityAddress( iEntity ) + address( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
 	SDKCall( hSetSolid, aCollision, iSolid );
 
 	return 0;
@@ -366,7 +366,7 @@ public any Native_SetSolidFlags( Handle hPlugin, int iParams ) {
 	iEntity = GetNativeCell( 1 );
 	iFlags = GetNativeCell( 2 );
 
-	Address aCollision = GetEntityAddress( iEntity ) + view_as<Address>( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
+	Address aCollision = GetEntityAddress( iEntity ) + address( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
 	SDKCall( hSetSolidFlags, aCollision, iFlags );
 
 	return 0;
@@ -422,9 +422,9 @@ stock Address AllocPooledString( const char[] sValue ) {
 	if ( iOffset <= 0 ) {
 		return Address_Null;
 	}
-	Address pOrig = view_as<Address>( GetEntData( iEntity, iOffset ) );
+	Address pOrig = address( GetEntData( iEntity, iOffset ) );
 	DispatchKeyValue( iEntity, "targetname", sValue );
-	aValue = view_as<Address>( GetEntData( iEntity, iOffset ) );
+	aValue = address( GetEntData( iEntity, iOffset ) );
 	SetEntData( iEntity, iOffset, pOrig );
 	
 	g_AllocPooledStringCache.SetValue( sValue, aValue );
@@ -489,7 +489,7 @@ public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 	}
 		
 	Address aStringAlloc = AllocPooledString( szAttributeClass );
-	Address aAttribute = SDKCall( hIterateAttributes, aWeapon + view_as<Address>( iItemOffset ), aStringAlloc );
+	Address aAttribute = SDKCall( hIterateAttributes, aWeapon + address( iItemOffset ), aStringAlloc );
 
 	if( aAttribute == Address_Null ) {
 		SetNativeString( 1, "", GetNativeCell( 2 ) );
@@ -497,7 +497,7 @@ public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 	}
 
 	static char szValue[64];
-	LoadStringFromAddress( aAttribute + view_as<Address>( 12 ), szValue, 64 );
+	LoadStringFromAddress( aAttribute + address( 12 ), szValue, 64 );
 
 	SetNativeString( 1, szValue, GetNativeCell( 2 ) );
 	return 1;
@@ -548,7 +548,7 @@ int GetPlayerFromSharedAddress( Address pShared ) {
 
 public any Native_GetSharedFromPlayer( Handle hPlugin, int iParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	return GetEntityAddress( iPlayer ) + view_as<Address>( offs_CTFPlayer_mShared );
+	return GetEntityAddress( iPlayer ) + address( offs_CTFPlayer_mShared );
 }
 
 public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
@@ -561,8 +561,8 @@ public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
 } 
 
 static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
-	Address aOffs = view_as<Address>( GameConfGetOffset( hGamedata, sKey ) );
-	if ( aOffs == view_as<Address>( -1 ) ) {
+	Address aOffs = address( GameConfGetOffset( hGamedata, sKey ) );
+	if ( aOffs == address( -1 ) ) {
 		SetFailState( "Failed to get member offset %s", sKey );
 	}
 	return aOffs;
@@ -572,9 +572,9 @@ static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 	DAMAGE FUNCTIONS
 */
 
-//0/4/8: damage force vector
-//12/16/20: damage source vector
-//24/28/32/: damage reported vector
+//0/4/8: m_vecDamageForce
+//12/16/20: m_vecDamagePosition
+//24/28/32/: m_vecReportedPosition
 
 //48: damage
 //52: some kind of "base damage"
