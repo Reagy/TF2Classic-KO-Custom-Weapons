@@ -1740,7 +1740,8 @@ Edited by: 'The One Of Wonders'"
 		}
 //----------------------------
 //----------------------------
-//--REMOTE DEPLOY PDA - 3351-- // DISABLED (for removal)
+//--REMOTE DEPLOY PDA - 3351--
+// DISABLED (for removal)
 //----------------------------
 //----------------------------
 		"3351"																					// Another unused weapon! This one lets you deploy buildings remotely, either by hitting it with a Wrench, or activating "Build" again.
@@ -2219,7 +2220,8 @@ Weapon from: New Old Weapons Pack"																				// IS THAT A FUCKIN' 「OP
 		}
 //--------------------------
 //--------------------------
-//--MINICRIT SNIPER - 3363-- // DISABLED (for removal)
+//--MINICRIT SNIPER - 3363--
+// DISABLED (for removal)
 //--------------------------
 //--------------------------
 		"3363"																					// The idea with this weapon was to make a "support" Sniper Rifle - where instead of picking off key targets, Sniper "marks" key targets for nearby teammates to go after. The most experimental of the bunch, so this might change in the future.
@@ -2389,7 +2391,8 @@ Modified by: 'Reagy'"
 		}
 //-------------------
 //-------------------
-//--QUICK FIX- 3365-- // DISABLED (for removal)
+//--QUICK FIX- 3365--
+// DISABLED (for removal)
 // 5.4.1 Stats kept, may reuse later
 //-------------------
 //-------------------
@@ -4633,7 +4636,8 @@ Weapon from: New Old Weapons Pack"
 		}
 //--------------------
 //--------------------
-//--MAKESHIFT - 3447-- // DISABLED (for removal)
+//--MAKESHIFT - 3447--
+// DISABLED (for removal)
 //--------------------
 //--------------------
 		"3447"
@@ -5005,7 +5009,8 @@ Weapon from: New Old Weapons Pack"
 		}
 //-----------------------------
 //-----------------------------
-//--SNIPER DM CROSSBOW - 3458-- // DISABLED (for removal)
+//--SNIPER DM CROSSBOW - 3458--
+// DISABLED (for removal)
 // V5.4.1 Disabled, might reuse the model asset for the other crossbow, backpack image deleted however
 //-----------------------------
 //-----------------------------
@@ -7293,7 +7298,8 @@ Weapon by: 'The One Of Wonders'"
 		}
 //-------------------------------------
 //-------------------------------------
-// Cerberus // DISABLED (for removal)
+// Cerberus
+// DISABLED (for removal)
 // V5.3.4 New sounds
 // V5.3.5 Increased spin-up time and added no random crits :^)
 // V5.3.8 Flipped the weapon on it's head, now it's somewhat similar but less bullshit?
@@ -10765,7 +10771,8 @@ Weapon by: 'Reagy'"
 		}
 //-------------------------------------
 //-------------------------------------
-// HL Magnum // DISABLED (for removal)
+// HL Magnum
+// DISABLED (for removal)
 // V5.3.5 New weapon
 // V5.4.1 Disabled, will replace with new assets at some point
 //-------------------------------------
@@ -10850,7 +10857,8 @@ Weapon by: 'Reagy'"
 		}
 //------------------------
 //------------------------
-//--BIG GOON - 7093--- // DISABLED (for removal)
+//--BIG GOON - 7093---
+// DISABLED (for removal)
 //------------------------
 //------------------------			
 		"7093"
@@ -11500,7 +11508,8 @@ Weapon by: 'Reagy'"
 		}
 //-------------------------
 //-------------------------
-//--NEST BREAKER GL - 7107-- // DISABLED (for removal)
+//--NEST BREAKER GL - 7107--
+// DISABLED (for removal)
 //--V5.4 Cut back on building damage for player damage 
 //-------------------------
 //-------------------------
@@ -13785,7 +13794,8 @@ Weapon by: 'The One Of Wonders'"
 		}
 //-------------------------
 //-------------------------
-//--THE AMBASSADOR - 9017-- // DISABLED (for removal)
+//--THE AMBASSADOR - 9017--
+// DISABLED (for removal)
 // V5.2 Removed damage penalty, increased accuracy to near pin-point, snipers will hate this gun even in TF2C, fuck you snipers
 // V5.4.1 Disabled, will reuse the stats on another weapon model, sounds kept too as used on other weapons
 //-------------------------
@@ -15007,7 +15017,8 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 		}
 //------------------------
 //------------------------
-//--SUPPORT PDA - 9071--- // DISABLED (for removal)
+//--SUPPORT PDA - 9071---
+// DISABLED (for removal)
 // V5.3.1 HP boost reduced from 75 to 50
 //------------------------
 //------------------------
@@ -16104,7 +16115,8 @@ Wearable from: Tangerine Paint and Grunt's Weapon Addons"
 
 //-----------------------------------
 //-----------------------------------
-//--BRRRRT LAUNCHER - 9084-- // DISABLED (for removal)
+//--BRRRRT LAUNCHER - 9084--
+// DISABLED (for removal)
 //--V5.4 Deals more damage in a larger radius, has better reload speed too
 // V5.6r1 Increased reload speed bonus to 30%, reduced explosion radius penalty to 50%, damage penalty reduced to 50%
 //-----------------------------------
@@ -16213,6 +16225,7 @@ Weapon by: 'The One Of Wonders'"
 //--------------------------------
 //--------------------------------
 //--HUNTING SHOTGUN PRIMARY - 9085--
+// REMOVE THE COSMETIC LATER, ITS NO LONGER NEEDED
 //--------------------------------
 //--------------------------------
 		"9085"
@@ -16238,6 +16251,7 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/weapons/c_models/c_huntingshotgun"
 			"model_world"				"models/weapons/c_models/c_huntingshotgun/c_huntingshotgun.mdl"
 			"model_player"				"models/weapons/c_models/c_huntingshotgun/c_huntingshotgun.mdl"
+//			"extra_wearable"			"models/player/items/set_generalformals.mdl" Note: Remove this later
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -16287,10 +16301,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"
 			{
-				"player_bodygroups"
-				{
-					"hat"				"1"													
-				}
 			    "sound_single_shot"		"Weapon_HuntingShotgun.Fire"
 				"sound_burst"			"Weapon_HuntingShotgun.FireCrit"
 			}
@@ -18267,7 +18277,8 @@ Weapon by: 'Reagy'"
 		}
 //-------------------------
 //-------------------------
-//--WARP WATCH - 9111-- // DISABLED (for removal)
+//--WARP WATCH - 9111-- 
+// DISABLED (for removal)
 //-------------------------  
 //-------------------------
 		"9111"
@@ -20678,7 +20689,8 @@ Weapon by: 'The One Of Wonders'"
 		}
 //--------------------------------
 //--------------------------------
-//--THIRST FOR BLOOD - 9142-- // DISABLED (for removal)
+//--THIRST FOR BLOOD - 9142-- 
+// DISABLED (for removal)
 //--------------------------------
 //--------------------------------
 		"9142"
@@ -23190,7 +23202,8 @@ Wearable by: 'The One Of Wonders'"
 		}
 //------------------
 //------------------
-//--ROBOT WRENCH - 9175-- // DISABLED (for removal)
+//--ROBOT WRENCH - 9175--
+// DISABLED (for removal)
 //------------------
 //------------------
 		"9175"
@@ -28228,7 +28241,8 @@ Weapon by: 'Reagy'"
 		
 //--------------------------------
 //--------------------------------
-//-- BIO WASTE PUMP - 9935-- // DISABLED (for removal)
+//-- BIO WASTE PUMP - 9935--
+// DISABLED (for removal)
 //--------------------------------
 //--------------------------------
 
@@ -28815,7 +28829,8 @@ Weapon by: 'The One Of Wonders'"
 		}
 //------------------------
 //------------------------
-//--PLACEHOLDER 8 - 9944-- // DISABLED (for removal)
+//--PLACEHOLDER 8 - 9944--
+// DISABLED (for removal)
 //------------------------
 //------------------------
 		"9944"
@@ -29193,7 +29208,8 @@ Weapon by: 'The One Of Wonders'"
 		}
 //-------------------------
 //-------------------------
-//-- PLACEHOLDER 11 - 9947-- // DISABLED (for removal)
+//-- PLACEHOLDER 11 - 9947--
+// DISABLED (for removal)
 //-------------------------
 //-------------------------
 		"9947"
@@ -29374,7 +29390,8 @@ Weapon by: 'The One Of Wonders'"
 		}
 //---------------------------------
 //---------------------------------
-//--PLACEHOLDER 13 - 9949-- // DISABLED (for removal)
+//--PLACEHOLDER 13 - 9949--
+// DISABLED (for removal)
 // -- :NOTE: Remove, its pretty shit and no one uses it since it was added
 // -- Done - Reagy v6r1
 // -- Replaced with Medic Battery Pack
