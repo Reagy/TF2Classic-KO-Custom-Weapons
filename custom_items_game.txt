@@ -4097,7 +4097,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.65"
+					"value"				"0.1"
 				}
 				"clip size penalty"
 				{
@@ -11933,10 +11933,12 @@ Weapon by: 'The One Of Wonders'"
 		"7113"
 		{
 			"name"							"TF_WEAPON_DYNAMITES_FRAG"
-			"item_class"					"tf_weapon_grenadelauncher"
+			"item_class"					"tf_weapon_grenade_mirv2"
 			"show_in_armory"				"1"
 			"item_slot"						"primary"
 			"anim_slot"						"melee"
+			"bucket"					"0"														
+			"bucket_position"			"0"
 
 			"item_quality"				"rarity3"
 			
@@ -11947,7 +11949,8 @@ Weapon by: 'The One Of Wonders'"
 'Hey, as long as it works!'
 
 Model by: 'Blase005'
-Weapon by: 'Majro'"
+Original Weapon by: 'Majro'
+Reworked by: 'The One Of Wonders'"
 			"item_logname"					"Caber Toss"
 			"item_iconname"					"Caber Toss"
 			"image_inventory"				"backpack/weapons/w_models/w_dynamitesfrag"
@@ -11965,35 +11968,39 @@ Weapon by: 'Majro'"
 			"static_attrs"
 			{
 				"class select override vcd"				"stand_melee"	
+				"no damage falloff over distance"		"1"
+				"centerfire projectile"					"1"
+				"meter_label"                           "DYNAMITE"
+				"override projectile type"				"3"
 			}
 			"attributes"
 			{
 				//THE POSITIVES
-				"mod max primary clip override" 		//No clip, only reserve ammo.
+                "grenade cook"
 				{
-					"attribute_class"	"mod_max_primary_clip_override"
-					"value"				"-1"
+					"attribute_class"	"grenade_cook"
+					"value"				"1"
 				}
-				"damage bonus"
+				"Caber Toss Positive"
 				{
-					"attribute_class" 	"mult_dmg"
-					"value"				"1.15"
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1"
 				}
-				"mod no reload DISPLAY ONLY"			//The "No reload necessary" text. Hopefully.
+				"instant reload all weapons on direct hit"
 				{
-					"attribute_class"		"mod_no_reload_display_only"
-					"value"					"1"
+					"attribute_class"	"instant_reload_all_weapons_on_direct_hit"
+					"value"				"1"
+				}
+				"add ammo on direct hit kill"
+				{
+					"attribute_class"	"add_ammo_on_direct_hit_kill"
+					"value"				"1"
 				}
 				//THE NEGATIVES
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"1.75"
-				}
-				"Projectile speed decreased"
-				{
-					"attribute_class" "mult_projectile_speed"
-					"value"				"0.9"
 				}
 				"crit mod disabled"
 				{
@@ -12005,6 +12012,16 @@ Weapon by: 'Majro'"
 				{
 					"attribute_class" "custom_projectile_model"
 					"value"			"models/weapons/w_models/wp_dynamitesfrag_new.mdl"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.63888888888"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"effectbar_recharge_rate"
+					"value"				"0.5"
 				}
 			}
 			"visuals"
@@ -13385,9 +13402,11 @@ Weapon by: 'Reagy'"
 			}
 			"name"						"TF_WEAPON_DEAGLE_SCOUT"							
 			"show_in_armory"			"1"
-			"item_slot"					"primary"
+			"item_slot"					"secondary"
 			"anim_slot"                 "secondary"
-			"item_class"				"tf_weapon_hunterrifle"
+			"item_class"				"tf_weapon_pistol_scout"
+			"bucket"					"1"														
+			"bucket_position"			"1"	
 			
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
@@ -13421,37 +13440,27 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.2"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.04"
+					"value"				"2.57"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"1.1"
+					"value"				"0.58333333333"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.4"
+					"value"				"4.357"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value" 			"1.16666666667"
+					"attribute_class"	"mult_maxammo_secondary"
+					"value" 			"0.77777777777"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
 					"value" 			"1.2"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"unimplemented_mod_sniper_no_charge"
-					"value"				"1"
 				}
 				"crit mod disabled"
 				{
@@ -16882,20 +16891,20 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"		"apply_z_velocity_on_damage"
 					"value"					"-100"
 				}
-			    "damage bonus"
-				{
-					"attribute_class"	"mult_dmg_falloff"
-					"value"				"1.5"
-				}
-			    "spread penalty"
-				{
-					"attribute_class"	"mult_dmg_falloff"
-					"value"				"1.5"
-				}
 				"aiming movespeed decreased"
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
 					"value"				"0.5"
+				}
+				"medigun healing received on active penalty"
+				{
+					"attribute_class"	"mult_medigun_healing_received_active"
+					"value"				"0.6"
+				}
+				"patient overheal penalty"
+				{
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.001"
 				}
 			    //Backend stuff aka stuff that actually does things.
 				"weapon_stattrak_module_scale"
@@ -18978,7 +18987,7 @@ Weapon by: 'The One Of Wonders'"
 			    "mult disguise speed bonus"
 				{
 					"attribute_class"	"mult_disguise_speed"
-					"value"				"0.05"
+					"value"				"0.6"
 				}
 				"add condition on kill" 
 				{
@@ -18988,7 +18997,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmgtaken"
-					"value"				"3.0"
+					"value"				"1.33"
 				}
 				"damage penalty"
 				{
@@ -21354,7 +21363,7 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.18"
+					"value"				"0.12"
 				}
 				"strange restriction type 1"
 				{
@@ -21375,11 +21384,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_always_draw_tracer_effect"
 					"value"				"1"
-				}
-				"mod explosive bullet delay time"
-				{
-					"attribute_class"	"mod_explosive_bullet_delay_time"
-					"value"				"0.125"
 				}
 				"strange restriction type 1"													// If it's a rocket, it travels in an arc. If not, no visible change!
 				{
@@ -23584,13 +23588,13 @@ Wearable by: 'Colrot'"
 		}
 //----------------------------
 //----------------------------
-//--NAILGUN BURSTER - 9179--
+//--NAILGUN BURSTER - 9179-- -- DISABLED (For removal)
 //----------------------------
 //----------------------------
 		"9179"
 		{
 			"name"						"TF_WEAPON_BURSTER_NAILGUN"							
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"primary"
 			"anim_slot"                 "primary"
 			"item_class"				"tf_weapon_nailgun"
@@ -25598,11 +25602,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_dmg"
 					"value"				"1.44"
-				}
-				"weapon spread bonus"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.56"
 				}
 				"fire rate penalty"
 				{
@@ -31023,10 +31022,10 @@ Weapon by: 'Noclue'"
 		}
 		"7529"
 		{
-			"name"					"Stickybomb does not stick to walls"
-			"description_string"	"Stickybombs cannot stick to surfaces"																									
+			"name"					"Caber Toss Positive"
+			"description_string"	"Hold the fire button to reduce the fuse time before throwing"																									
 			"description_format"	"value_is_additive"
-			"effect_type"			"negative"
+			"effect_type"			"positive"
 		}
 		"7530"
 		{
@@ -31188,7 +31187,7 @@ This weapon has a %s1% higher random critical hit chance."
 		"7600"
 		{
 			"name"					"Curse of the Shattered Empress"
-			"description_string"	"Curse of the Shattered Empress: You take triple damage from all sources."
+			"description_string"	"Curse of the Shattered Empress: You take 33% more damage from all sources."
             "custom_color"			"175 24 227 255"													
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
