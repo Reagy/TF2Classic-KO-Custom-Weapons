@@ -14,11 +14,10 @@
 		}
         "Offsets"
         {
-            //player
-        
+			//player
 			"CBaseCombatCharacter::GiveAmmo"
 			{
-				"linux"		"473"
+				"linux"		"255"
 			}
 		
 			"CObjectTeleporter::DeterminePlaybackRate"
@@ -42,7 +41,7 @@
 			{
 				"linux"		"472"
 			}
-            "CTFPlayer::GetAttributeManager"
+			"CTFPlayer::GetAttributeManager"
 			{
 				"linux"		"474"
 			}
@@ -50,90 +49,85 @@
 			{
 				"linux"		"475"
 			}
-			
+			// Unable to check this one on VTable Dumper
 			"CTFPlayer::m_Shared"
 			{
 				"linux"		"4284"
 			}
-			
+			// Unable to check this one on VTable Dumper
 			"CTFPlayerShared::m_pOuter" //pointer to player contained in CTFPlayerShared
 			{
 				"linux"		"1344"
 			}
-            
-            "CTFGameRules::GetCaptureValueForPlayer"
+			"CTFGameRules::GetCaptureValueForPlayer"
 			{
 				"linux"		"154"
 			}
-            
-            //buildings
-            
-            "CBaseObject::StartBuilding"
-            {
-                "linux"     "329"
-            }
-            "CBaseObject::OnGoActive"
-            {
-                "linux"     "342"
-            }
-            "CBaseObject::CanBeUpgraded"
-            {
-                "linux"     "347"
-            }
-            "CBaseObject::StartUpgrading"
-            {
-                "linux"     "348"
-            }
-            "CBaseObject::FinishUpgrading"
-            {
-                "linux"     "349"
-            }
-            "CBaseObject::MakeCarriedObject"
-            {
-                "linux"     "353"
-            }
-            "CBaseObject::m_iGoalUpgradeLevel"
-            {
-                "linux"     "2044"
-            }
-            
-            "CItem::ItemTouch"
+
+			//buildings
+			"CBaseObject::StartBuilding"
+			{
+				"linux"     "329"
+			}
+			"CBaseObject::OnGoActive"
+			{
+				"linux"     "342"
+			}
+			"CBaseObject::CanBeUpgraded"
+			{
+				"linux"     "347"
+			}
+			"CBaseObject::StartUpgrading"
+			{
+				"linux"     "348"
+			}
+			"CBaseObject::FinishUpgrading"
+			{
+				"linux"     "349"
+			}
+			"CBaseObject::MakeCarriedObject"
+			{
+				"linux"     "353"
+			}
+			// Unable to check this one on VTable Dumper
+			"CBaseObject::m_iGoalUpgradeLevel"
+			{
+				"linux"     "2044"
+			}
+			"CItem::ItemTouch"
 			{
 				"linux"		"219"
 			}
 			
-            //weapons
-            
+			//weapons
 			"CTFWeaponBase::Holster"
 			{
-				"linux"		"262"
+				"linux"		"263"
 			}
 			"CTFWeaponBase::ItemPostFrame"
 			{
-				"linux"		"272"
+				"linux"		"273"
 			}
 			"CTFWeaponBase::ItemBusyFrame"
 			{
-				"linux"		"273"
+				"linux"		"274"
 			}
 			"CTFWeaponBase::PrimaryAttack"
 			{
-				"linux"		"287"
+				"linux"		"288"
 			}
 			"CTFWeaponBase::SecondaryAttack"
 			{
-				"linux"		"288"
+				"linux"		"289"
 			}
 			"CTFWeaponBase::GetFireRate"
 			{
-				"linux"		"298"
+				"linux"		"299"
 			}
-			
 			"CTFGrenadePipebombProjectile::ShouldExplodeOnEntity"
 			{
 				"linux"		"242"
 			}
-			
 			"CAttributeManager::ApplyAttributeFloat"
 			{
 				"linux"		"3"
@@ -142,18 +136,18 @@
 			{
 				"linux"		"4"
 			}
-			
+			// Unable to check this one on VTable Dumper
 			"CBaseProjectile::m_bCollideWithTeammates"
 			{
 				"linux"		"1168"
 			}
 			
-            //econ
-            
+			//econ
 			"CEconEntity::GetAttributeManager"
 			{
 				"linux"		"226"
 			}
+			// Unable to check this one on VTable Dumper
 			"CEconEntity::m_Item" //pointer to CEconItemView on CEconEntity
 			{
 				"linux"		"1168"
