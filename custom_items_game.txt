@@ -840,7 +840,7 @@ Edited by: 'The One Of Wonders'"
 					"attribute_class"	"mini_crit_airborne"
 					"value"				"1"
 				}
-				"weapon_stattrak_module_scale" //This doesn't even need to be shown fyi.
+				"blast splash damage decreased"
 				{
 					"attribute_class"	"mult_explosion_splash_damage"
 					"value"				"0.67"
@@ -865,10 +865,15 @@ Edited by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg_push_force_to_stickies"
 					"value"				"3.0"
 				}
+				"custom bullet impact collision mode"
+				{
+					"attribute_class"	"mod_bullet_impact_collision_mode"
+					"value"				"3"
+				}
 				"bullet is a hull"
 				{
 					"attribute_class"	"bullet_is_a_hull"
-					"value"				"10.0"
+					"value"				"6.5"
 				}
 				"custom falloff"
 				{
