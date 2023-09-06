@@ -140,9 +140,9 @@ public void OnPluginStart() {
 	*/
 
 	//CEconEntity::GetAttributeManager(void)
-	StartPrepSDKCall(SDKCall_Entity);
-	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CEconEntity::GetAttributeManager");
-	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CEconEntity::GetAttributeManager" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	hEconGetAttributeManager = EndPrepSDKCall();
 	if(!hEconGetAttributeManager)
 		SetFailState("SDKCall setup for CEconEntity::GetAttributeManager failed");

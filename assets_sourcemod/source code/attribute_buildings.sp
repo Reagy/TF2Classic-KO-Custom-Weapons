@@ -118,6 +118,12 @@ DynamicHook hMakeCarry;
 DynamicHook hCanUpgrade;
 DynamicDetour hDispHeal;
 
+DynamicDetour hTeleporterTouch;
+DynamicDetour hTeleporterThink;
+DynamicHook   hDeterminePlaybackRate;
+DynamicDetour hSetTeleporterState;
+DynamicDetour hIsReady;
+
 bool bLateLoad = false;
 public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] error, int err_max ) {
 	bLateLoad = bLate;
@@ -161,6 +167,23 @@ public void OnPluginStart() {
 	hDispHeal = DynamicDetour.FromConf( hGameConf, "CObjectDispenser::GetHealRate" );
 	hDispHeal.Enable( Hook_Post, Detour_GetHealRate );
 
+	/*hSetTeleporterState = DynamicDetour.FromConf( hGameConf, "CObjectTeleporter::SetState");
+	hSetTeleporterState.Enable( Hook_Pre, Detour_TeleporterState );
+
+	hTeleporterTouch = DynamicDetour.FromConf( hGameConf, "CObjectTeleporter::TeleporterTouch");
+	hTeleporterTouch.Enable( Hook_Pre, Detour_TeleporterTouchPre );
+	hTeleporterTouch.Enable( Hook_Post, Detour_TeleporterTouchPost );
+
+	hTeleporterThink = DynamicDetour.FromConf( hGameConf, "CObjectTeleporter::TeleporterThink");
+	hTeleporterThink.Enable( Hook_Pre, Detour_TeleporterThinkPre );
+	hTeleporterThink.Enable( Hook_Post, Detour_TeleporterThinkPost );
+
+	hIsReady = DynamicDetour.FromConf( hGameConf, "CObjectTeleporter::IsReady");
+	hIsReady.Enable( Hook_Pre, Detour_IsMatchingPre );
+	hIsReady.Enable( Hook_Post, Detour_IsMatchingPost );
+
+	hDeterminePlaybackRate = DynamicHook.FromConf( hGameConf, "CObjectTeleporter::DeterminePlaybackRate");*/
+
 	g_iGoalBuildOffset = GameConfGetOffset( hGameConf, "CBaseObject::m_iGoalUpgradeLevel" );
 
 	g_hSirenList = new ArrayList( 2 );
@@ -198,7 +221,9 @@ public void OnMapStart() {
 
 	g_iBuildingBlueprints[ OBJ_DISPENSER ][ 0 ] =				PrecacheModel( "models/buildables/dispenser_blueprint.mdl" );
 
-	//teleporter	
+	//teleporter
+	g_iBuildingModels[ OBJ_TELEPORTER ][ TELEPORT_MINI ][ 0 ][ 0 ] =	PrecacheModel( "models/buildables/mini_teleporter_light.mdl" );
+	g_iBuildingModels[ OBJ_TELEPORTER ][ TELEPORT_MINI ][ 0 ][ 1 ] =	PrecacheModel( "models/buildables/mini_teleporter.mdl" );
 
 	g_iBuildingBlueprints[ OBJ_TELEPORTER ][ 0 ] =				PrecacheModel( "models/buildables/teleporter_blueprint_enter.mdl" );
 	g_iBuildingBlueprints[ OBJ_TELEPORTER ][ 1 ] =				PrecacheModel( "models/buildables/teleporter_blueprint_exit.mdl" );
@@ -254,11 +279,16 @@ MRESReturn Hook_StartBuilding( int iThis ) {
 		}
 	}
 	case OBJ_TELEPORTER: {
+		if( iOverride == TELEPORT_MINI ) {
+			SetEntProp( iThis, Prop_Send, "m_iHighestUpgradeLevel", 0 );
+			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );
+			//SetEntPropFloat( iThis, Prop_Send, "m_flModelScale", 1.35 );
+		}
 	}
 	case OBJ_SENTRYGUN: {
 		if( iOverride == SENTRY_MINI ) {
 			SetEntProp( iThis, Prop_Send, "m_iHighestUpgradeLevel", 0 );
-			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );	
+			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );
 		}
 	}
 	}
@@ -280,6 +310,7 @@ MRESReturn Hook_OnGoActive( int iThis ) {
 	SetBuildingModel( iThis, false );
 	return MRES_Handled;
 }
+
 //called when an upgrade animation starts
 MRESReturn Hook_StartUpgrade( int iThis ) {
 	SetBuildingModel( iThis, true );
@@ -576,6 +607,11 @@ void SetupObjectHooks( int iEntity ) {
 	hOnGoActive.HookEntity( Hook_Post, iEntity, Hook_OnGoActive );
 	hMakeCarry.HookEntity( Hook_Post, iEntity, Hook_MakeCarry );
 	hCanUpgrade.HookEntity( Hook_Pre, iEntity, Hook_CanBeUpgraded );
+
+	if( GetEntProp( iEntity, Prop_Send, "m_iObjectType" ) == OBJ_TELEPORTER && GetEntProp( iEntity, Prop_Send, "m_bMiniBuilding" ) ) {
+		hDeterminePlaybackRate.HookEntity( Hook_Pre, iEntity, Detour_PlaybackSpeedPre );
+		hDeterminePlaybackRate.HookEntity( Hook_Post, iEntity, Detour_PlaybackSpeedPost );
+	}
 }
 
 /*
@@ -684,4 +720,56 @@ void Lateload() {
 			g_hSirenList.PushArray( iLookup );
 		}
 	}
+}
+
+int iRealStates[2049]; //todo: no
+
+#define NEWSTATE 1
+
+MRESReturn Detour_TeleporterState( int iThis, DHookParam hParams ) {
+	iRealStates[iThis] = hParams.Get( 1 );
+	SetEntProp( iThis, Prop_Send, "m_iState", NEWSTATE );
+	StoreToEntity( iThis, 2416, GetGameTime() );
+	return MRES_Supercede;
+}
+
+MRESReturn Detour_TeleporterTouchPre( int iThis, DHookParam hParams ) {
+	SetEntProp( iThis, Prop_Send, "m_iState", iRealStates[iThis] );
+	return MRES_Ignored;
+}
+MRESReturn Detour_TeleporterTouchPost( int iThis, DHookParam hParams ) {
+	SetEntProp( iThis, Prop_Send, "m_iState", NEWSTATE );
+	return MRES_Ignored;
+}
+
+MRESReturn Detour_PlaybackSpeedPre( int iThis ) {
+	SetEntProp( iThis, Prop_Send, "m_iState", iRealStates[iThis] );
+	return MRES_Ignored;
+}
+MRESReturn Detour_PlaybackSpeedPost( int iThis ) {
+	SetEntProp( iThis, Prop_Send, "m_iState", NEWSTATE );
+	return MRES_Ignored;
+}
+
+MRESReturn Detour_TeleporterThinkPre( int iThis ) {
+	SetEntProp( iThis, Prop_Send, "m_iState", iRealStates[iThis] );
+	return MRES_Ignored;
+}
+MRESReturn Detour_TeleporterThinkPost( int iThis ) {
+	SetEntProp( iThis, Prop_Send, "m_iState", NEWSTATE );
+	return MRES_Ignored;
+}
+
+MRESReturn Detour_IsMatchingPre( int iThis, DHookReturn hReturn ) {
+	PrintToServer("test1");
+	SetEntProp( iThis, Prop_Send, "m_iState", iRealStates[iThis] );
+	PrintToServer("test2");
+	//hReturn.Value = false;
+	return MRES_Ignored;
+}
+MRESReturn Detour_IsMatchingPost( int iThis, DHookReturn hReturn  ) {
+	PrintToServer("test3");
+	SetEntProp( iThis, Prop_Send, "m_iState", NEWSTATE );
+	PrintToServer("test4");
+	return MRES_Ignored;
 }

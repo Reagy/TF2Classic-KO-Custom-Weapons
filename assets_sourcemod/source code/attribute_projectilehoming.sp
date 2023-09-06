@@ -100,6 +100,9 @@ bool DoProjectileTracking( int iEntity ) {
 			NormalizeVector( TargetVec, RocketVec );
 		}
 		else {
+			NormalizeVector( TargetVec, TargetVec );
+			NormalizeVector( RocketVec, RocketVec );
+			SubtractVectors( RocketVec, TargetVec );
 			ScaleVector( TargetVec, flAccuracy );
 			AddVectors( RocketVec, TargetVec, RocketVec );
 			NormalizeVector( RocketVec, RocketVec );

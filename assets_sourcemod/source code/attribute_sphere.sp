@@ -30,6 +30,7 @@ PlayerFlags g_HasSphere;
 int g_iSphereShields[ MAXPLAYERS+1 ] = { -1, ... };
 int g_iMaterialManager[ MAXPLAYERS+1 ] = { -1, ... };
 float g_flShieldCooler[ MAXPLAYERS+1 ];
+float g_flLastDamagedShield[ MAXPLAYERS+1 ];
 
 #define SHIELD_MODEL "models/props_mvm/mvm_player_shield.mdl"
 #define SHIELDKEYNAME "Shield"
@@ -186,25 +187,23 @@ void SpawnShield( int iOwner ) {
 	if( !IsValidEntity( iShield ) ) 
 		return;
 
-	int iOwnerTeam = GetEntProp( iOwner, Prop_Send, "m_iTeamNum" );
-	
 	SetEntityModel( iShield, SHIELD_MODEL );
-	SetEntProp( iShield, Prop_Send, "m_iTeamNum", iOwnerTeam );
 	SetEntPropEnt( iShield, Prop_Send, "m_hOwnerEntity", iOwner );
 
+	int iOwnerTeam = GetEntProp( iOwner, Prop_Send, "m_iTeamNum" );
+	SetEntProp( iShield, Prop_Send, "m_iTeamNum", iOwnerTeam );
+	SetEntProp( iShield, Prop_Send, "m_nSkin", iOwnerTeam - 2 );
+	
 	SetEntProp( iShield, Prop_Data, "m_iEFlags", EFL_DONTBLOCKLOS );
+	SetEntProp( iShield, Prop_Data, "m_fEffects", EF_NOSHADOW );
 	
 	DispatchSpawn( iShield );
 
 	SetSolid( iShield, SOLID_VPHYSICS );
-	//SetSolidFlags( iShield, FSOLID_TRIGGER );
 	SetCollisionGroup( iShield, TFCOLLISION_GROUP_COMBATOBJECT );
 
-	SetEntProp( iShield, Prop_Send, "m_nSkin", iOwnerTeam - 2 );
-
 	//SetEntProp( iShield, Prop_Data, "m_takedamage", DAMAGE_EVENTS_ONLY );
-	SetEntProp( iShield, Prop_Data, "m_fEffects", EF_NOSHADOW );
-
+	
 	hShouldCollide.HookEntity( Hook_Post, iShield, Hook_ShieldShouldCollide );
 	hTouch.HookEntity( Hook_Post, iShield, Hook_ShieldTouch );
 	hTakeDamage.HookEntity( Hook_Pre, iShield, Hook_ShieldTakeDamage );
@@ -259,20 +258,17 @@ void UpdateShield( int iClient ) {
 	ScaleVector( vecEndPos, 150.0 );
 	AddVectors( vecOrigin, vecEndPos, vecEndPos );
 
-	TeleportEntity( iShield, vecEndPos, vecEyeAngles );
-	//SetEntPropVector( iShield, Prop_Send, "m_vecOrigin", vecEndPos );
-	//SetEntPropVector( iShield, Prop_Send, "m_angRotation", vecEyeAngles );
+	vecEyeAngles[0] = 0.0;
+	TeleportEntity( iShield, vecEndPos, vecEyeAngles, { 0.0, 0.0, 0.0 } );
 
 	int iManager = EntRefToEntIndex( g_iMaterialManager[ iClient ] );
 	if( iManager == -1 )
 		return;
 
-	//float flLastDamaged = GetGameTime() - g_flLastDamagedShield[ i ];
-
-	float flShieldFalloff = RemapValClamped( Tracker_GetValue( iClient, SHIELDKEYNAME ), 1200.0, 450.0, 2.0, 0.0 );
+	float flShieldFalloff = RemapValClamped( GetGameTime() - g_flLastDamagedShield[ iClient ], 0.0, 2.0, 0.0, 2.0 );
 
 	static char szFalloff[8];
-	FloatToString(flShieldFalloff, szFalloff, 8);
+	FloatToString( flShieldFalloff, szFalloff, 8 );
 
 	SetVariantString( szFalloff );
 	AcceptEntityInput( iManager, "SetMaterialVar" );
@@ -301,12 +297,9 @@ MRESReturn Hook_ShieldTouch( int iThis, DHookParam hParams ) {
 	int iTouchTeam = GetEntProp( iOther, Prop_Send, "m_iTeamNum" );
 
 	if( iShieldTeam != iTouchTeam ) {
-		//SDKCall( hTouchCall, iOther, GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" ) );
-		//float vecOrigin[3];
-		//GetEntPropVector( iShield, Prop_Send, "m_vecOrigin", vecOrigin);
-		
+		SDKCall( hTouchCall, iOther, GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" ) );
 		EmitSoundToAll( szSoundNames[ GetRandomInt(0, 3) ], iThis, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEPITCH, 1.0, GetRandomInt( 90, 110 ) );
-		RemoveEntity( iOther );
+		//RemoveEntity( iOther );
 		return MRES_Handled;
 	}
 	
@@ -327,20 +320,22 @@ MRESReturn Hook_ShieldTakeDamage( int iThis, DHookReturn hReturn, DHookParam hPa
 	if( iOwnerTeam == iAttackerTeam )
 		return MRES_Ignored;
 
-	/*int iWeapon = tfInfo.iWeapon;
+	int iWeapon = tfInfo.iWeapon;
 	if( iWeapon != -1 ) {
 		static char szClassname[64];
 		GetEntityClassname( iWeapon, szClassname, sizeof( szClassname ) );
 		if( StrEqual( szClassname, "tf_weapon_minigun" ) )
 			tfInfo.flDamage *= 0.25;
-	}*/
+	}
 	
 	EmitSoundToAll( szSoundNames[ GetRandomInt(0, 3) ], iThis, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEPITCH, 1.0, GetRandomInt( 90, 110 ) );
 
-	//float flTrackerValue = Tracker_GetValue( iOwner, SHIELDKEYNAME );
-	//flTrackerValue = MaxFloat( 0.0, flTrackerValue - ( tfInfo.flDamage * SHIELD_DAMAGE_DRAIN_SCALE ) );
-	//Tracker_SetValue( iOwner, SHIELDKEYNAME, flTrackerValue );
+	float flTrackerValue = Tracker_GetValue( iOwner, SHIELDKEYNAME );
+	flTrackerValue = MaxFloat( 0.0, flTrackerValue - ( tfInfo.flDamage * SHIELD_DAMAGE_DRAIN_SCALE ) );
+	Tracker_SetValue( iOwner, SHIELDKEYNAME, flTrackerValue );
 	
+	g_flLastDamagedShield[ iOwner ] = GetGameTime();
+
 	return MRES_Handled;
 }
 
@@ -377,7 +372,7 @@ MRESReturn Detour_ShouldHitEntitySimple( Address aTrace, DHookReturn hReturn, DH
 	if( hReturn.Value == false )
 		return MRES_Ignored;
 	
-	Address aLoad = LoadFromAddressOffset( aTrace, 4, NumberType_Int32 );
+	Address aLoad = LoadFromAddressOffset( aTrace, 4, NumberType_Int32 ); //offset of m_pPassEnt
 	if( aLoad == Address_Null )
 		return MRES_Ignored;
 
@@ -387,14 +382,10 @@ MRESReturn Detour_ShouldHitEntitySimple( Address aTrace, DHookReturn hReturn, DH
 
 	int iTouched = GetEntityFromAddress( hParams.Get( 1 ) );
 	int iOwner = GetEntPropEnt( iTouched, Prop_Send, "m_hOwnerEntity" );
-
 	if( !IsValidPlayer( iOwner ) )
 		return MRES_Ignored;
 
-	int iOwnerTeam = GetEntProp( iOwner, Prop_Send, "m_iTeamNum" );
-	int iPassTeam = GetEntProp( iPassEntity, Prop_Send, "m_iTeamNum" );
-
-	if( iTouched == EntRefToEntIndex( g_iSphereShields[ iOwner ] ) && iOwnerTeam == iPassTeam ) {
+	if( iTouched == EntRefToEntIndex( g_iSphereShields[ iOwner ] ) && GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) == GetEntProp( iPassEntity, Prop_Send, "m_iTeamNum" ) ) {
 		hReturn.Value = false;
 		return MRES_ChangedOverride;
 	}
@@ -408,7 +399,7 @@ MRESReturn Detour_ShouldHitEntitySentry( Address aTrace, DHookReturn hReturn, DH
 	if( hReturn.Value == false )
 		return MRES_Ignored;
 
-	Address aLoad = LoadFromAddressOffset( aTrace, 20, NumberType_Int32 );
+	Address aLoad = LoadFromAddressOffset( aTrace, 20, NumberType_Int32 ); //offset of m_pExceptionEntity
 	if( aLoad == Address_Null )
 		return MRES_Ignored;
 
@@ -418,16 +409,10 @@ MRESReturn Detour_ShouldHitEntitySentry( Address aTrace, DHookReturn hReturn, DH
 
 	int iTouched = GetEntityFromAddress( hParams.Get( 1 ) );
 	int iOwner = GetEntPropEnt( iTouched, Prop_Send, "m_hOwnerEntity" );
-
 	if( !IsValidPlayer( iOwner ) )
 		return MRES_Ignored;
 
-	int iShield = EntRefToEntIndex( g_iSphereShields[ iOwner ] );
-
-	int iTouchTeam = GetEntProp( iTouched, Prop_Send, "m_iTeamNum" );
-	int iShieldTeam = GetEntProp( iExcept, Prop_Send, "m_iTeamNum" );
-
-	if( iTouched == iShield && iTouchTeam == iShieldTeam ) {
+	if( iTouched == EntRefToEntIndex( g_iSphereShields[ iOwner ] ) && GetEntProp( iTouched, Prop_Send, "m_iTeamNum" ) == GetEntProp( iExcept, Prop_Send, "m_iTeamNum" ) ) {
 		hReturn.Value = false;
 		return MRES_ChangedOverride;
 	}

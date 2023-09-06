@@ -19,19 +19,33 @@ public Plugin myinfo =
 
 //TODO: Shield parenting could be better
 
+/*
+	PROPERTIES
+*/
+
+const float	TOXIN_FREQUENCY		= 0.5;	//tick interval in seconds
+const float	TOXIN_DAMAGE		= 2.0;	//damage per tick
+const float	TOXIN_HEALING_MULT	= 0.25;	//multiplier for healing while under toxin
+
+const int	ANGSHIELD_HEALTH	= 80;	//angel shield health
+const float	ANGSHIELD_DURATION	= 2.0;	//angel shield duration
+const float	ANGINVULN_DURATION	= 0.25;	//invulnerability period after a shield breaks
+
+const float	FLAME_HEALRATE		= 30.0;	//health per second restored by the hydro pump
+
 #define DEBUG
 
 enum {
 	TFCC_TOXIN = 0,
-	TFCC_TOXINUBER,
-	TFCC_TOXINPATIENT,
+	TFCC_TOXINUBER, //unused
+	TFCC_UNUSED1, //unused
 
 	TFCC_ANGELSHIELD,
 	TFCC_ANGELINVULN,
 
 	TFCC_QUICKUBER,
 
-	TFCC_RADIUSHEAL,
+	TFCC_UNUSED2, //unused
 
 	TFCC_FLAMEHEAL,
 
@@ -42,8 +56,8 @@ const int COND_BITFIELDS = (TFCC_LAST / 32) + 1;
 enum struct EffectProps {
 	int	iLevel;		//condition strength
 
-	Handle 	hTick;		//handle of the timer that ticks the effect
-	float	flRemoveTime;	//time until effect expires
+	float	flExpireTime;	//time when effect expires
+	float	flNextTick;	//time when effect should tick next
 
 	int	iEffectSource; 	//player that caused effect
 	int	iEffectWeapon; 	//weapon that caused effect
@@ -53,7 +67,7 @@ EffectProps	ePlayerConds[MAXPLAYERS+1][TFCC_LAST];
 int		iPlayerCondFlags[MAXPLAYERS+1][COND_BITFIELDS];
 
 //0 contains the index of the shield, 1 contains the material manager used for the damage effect
-int g_iAngelShields[MAXPLAYERS+1][2];
+int 		g_iAngelShields[MAXPLAYERS+1][2];
 
 DynamicHook hTakeHealth;
 DynamicDetour hHealConds;
@@ -88,10 +102,22 @@ public APLRes AskPluginLoad2( Handle myself, bool bLate, char[] error, int err_m
 	return APLRes_Success;
 }
 
+//can't use onplayerruncmd for this
 public void OnGameFrame() {
-	ManageAngelShields();
+	
 
 	for( int i = 1; i <= MaxClients; i++ ) {
+		if( !IsClientInGame( i ) || !IsPlayerAlive( i ) )
+			continue;
+
+		ManageAngelShield( i );
+
+		if( HasCond( i, TFCC_TOXIN ) )
+			TickToxin( i );
+
+		if( HasCond( i, TFCC_QUICKUBER ) )
+			TickQuickUber( i );
+
 		if( HasCond( i, TFCC_FLAMEHEAL ) )
 			TickFlameHeal( i );
 	}
@@ -127,6 +153,8 @@ public void OnPluginStart() {
 		g_iAngelShields[i][1] = -1;
 	}
 
+	HookEvent( "player_death", Event_PlayerDeath, EventHookMode_Post );
+
 	if( !bLateLoad )
 		return;
 
@@ -146,8 +174,21 @@ public void OnPluginStart() {
 }
 
 public void OnClientConnected( int iClient ) {
+	ClearConds( iClient );
+
 	if( IsValidEdict( iClient ) )
 		RequestFrame( DoPlayerHooks, iClient );
+}
+public void OnClientDisconnect( int iClient ) {
+	ClearConds( iClient );
+}
+public Action Event_PlayerDeath( Event hEvent, const char[] sName, bool bDontBroadcast ) {
+	int iPlayer = hEvent.GetInt( "userid" );
+	iPlayer = GetClientOfUserId( iPlayer );
+
+	ClearConds( iPlayer );
+
+	return Plugin_Continue;
 }
 
 MRESReturn Hook_OnPlayerKill( int iThis, DHookParam hParams ) {
@@ -232,10 +273,6 @@ bool AddCond( int iPlayer, int iCond ) {
 		AddToxin( iPlayer );
 		bGaveCond = true;
 	}
-	case TFCC_TOXINPATIENT: {
-		AddToxinPatient( iPlayer );
-		bGaveCond = true;
-	}
 	case TFCC_ANGELSHIELD: {
 		AddAngelShield( iPlayer );
 		bGaveCond = true;
@@ -260,7 +297,7 @@ bool AddCond( int iPlayer, int iCond ) {
 		int iOffset = GetFlagArrayOffset( iCond );
 		iPlayerCondFlags[ iPlayer ][ iOffset ] |= iBit;
 
-		ePlayerConds[iPlayer][iCond].flRemoveTime = GetGameTime();
+		ePlayerConds[iPlayer][iCond].flExpireTime = GetGameTime();
 	}
 
 	return bGaveCond;
@@ -298,14 +335,9 @@ bool RemoveCond( int iPlayer, int iCond ) {
 	case TFCC_TOXIN: {
 		RemoveToxin( iPlayer );
 	}
-	/*case TFCC_TOXINPATIENT: {
-	}*/
 	case TFCC_ANGELSHIELD: {
 		RemoveAngelShield( iPlayer );
 	}
-	/*case TFCC_ANGELINVULN: {
-		RemoveAngelInvuln( iPlayer );
-	}*/
 	case TFCC_QUICKUBER: {
 		RemoveQuickUber( iPlayer );
 	}
@@ -314,12 +346,9 @@ bool RemoveCond( int iPlayer, int iCond ) {
 	}
 	}
 
-	if( ePlayerConds[iPlayer][iCond].hTick ) {
-		KillTimer(ePlayerConds[iPlayer][iCond].hTick);
-		ePlayerConds[iPlayer][iCond].hTick = null;
-	}
 	ePlayerConds[iPlayer][iCond].iLevel =		0;
-	ePlayerConds[iPlayer][iCond].flRemoveTime =	0.0;
+	ePlayerConds[iPlayer][iCond].flExpireTime =	0.0;
+	ePlayerConds[iPlayer][iCond].flNextTick	=	0.0;
 	ePlayerConds[iPlayer][iCond].iEffectSource =	INVALID_ENT_REFERENCE;
 	ePlayerConds[iPlayer][iCond].iEffectWeapon =	INVALID_ENT_REFERENCE;
 
@@ -329,6 +358,12 @@ bool RemoveCond( int iPlayer, int iCond ) {
 	iPlayerCondFlags[ iPlayer ][ iOffset ] &= ~iBit;
 
 	return true;
+}
+
+void ClearConds( int iPlayer ) {
+	for( int i = 0; i < TFCC_LAST; i++ ) {
+		RemoveCond( iPlayer, i );
+	}
 }
 
 //cond level
@@ -361,7 +396,7 @@ public any Native_GetCondDuration( Handle hPlugin, int iNumParams ) {
 	return GetCondDuration( iPlayer, iEffect );
 }
 float GetCondDuration( int iPlayer, int iCond ) {
-	return ePlayerConds[iPlayer][iCond].flRemoveTime - GetGameTime();
+	return ePlayerConds[iPlayer][iCond].flExpireTime - GetGameTime();
 }
 public any Native_SetCondDuration( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell(1);
@@ -374,12 +409,12 @@ public any Native_SetCondDuration( Handle hPlugin, int iNumParams ) {
 }
 void SetCondDuration( int iPlayer, int iCond, float flDuration, bool bAdd = false ) {
 	if( iCond == TFCC_TOXIN && bAdd ) {
-		flDuration = MinFloat( ePlayerConds[iPlayer][iCond].flRemoveTime + flDuration, GetGameTime() + 10.0 );
-		ePlayerConds[iPlayer][iCond].flRemoveTime = flDuration;
+		flDuration = MinFloat( ePlayerConds[iPlayer][iCond].flExpireTime + flDuration, GetGameTime() + 10.0 );
+		ePlayerConds[iPlayer][iCond].flExpireTime = flDuration;
 		return;
 	}
 
-	ePlayerConds[iPlayer][iCond].flRemoveTime = bAdd ? ePlayerConds[iPlayer][iCond].flRemoveTime + flDuration : GetGameTime() + flDuration;
+	ePlayerConds[iPlayer][iCond].flExpireTime = bAdd ? ePlayerConds[iPlayer][iCond].flExpireTime + flDuration : GetGameTime() + flDuration;
 }
 
 //cond player source
@@ -463,9 +498,6 @@ public void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo ) {
 
 	//CheckMultDamageAttrib( iTarget, tfInfo );
 	CheckMultDamageAttribCustom( iTarget, tfInfo );
-
-	if( HasCond( iTarget, TFCC_TOXIN ) )
-		ToxinTakeDamage( tfInfo );
 
 	if( HasCond( iTarget, TFCC_ANGELSHIELD ) )
 		AngelShieldTakeDamage( iTarget, tfInfo );
@@ -569,12 +601,7 @@ void CheckOnKillCond( int iAttacker, int iWeapon ) {
 static char szToxinParticle[] = "toxin_particles";
 int g_iToxinEmitters[MAXPLAYERS+1] = { -1, ... };
 
-const float	TOXIN_FREQUENCY		= 0.5; //tick interval in seconds
-const float	TOXIN_DAMAGE		= 2.0; //damage per tick
-const float	TOXIN_HEALING_MULT	= 0.25; //multiplier for healing while under toxin
-
 bool AddToxin( int iPlayer ) {
-	ePlayerConds[iPlayer][TFCC_TOXIN].hTick = CreateTimer( TOXIN_FREQUENCY, TickToxin, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
 	EmitSoundToAll( "items/powerup_pickup_plague_infected_loop.wav",  iPlayer, SNDCHAN_STATIC );
 
 	SetCondDuration( iPlayer, TFCC_TOXIN, 0.0, false );
@@ -606,16 +633,14 @@ void RemoveToxinEmitter( int iPlayer ) {
 	g_iToxinEmitters[iPlayer] = -1;
 }
 
-Action TickToxin( Handle hTimer, int iPlayer ) {
-	if( !IsClientInGame( iPlayer ) || !IsPlayerAlive( iPlayer ) ) {
+void TickToxin( int iPlayer ) {
+	if( ePlayerConds[iPlayer][TFCC_TOXIN].flExpireTime <= GetGameTime() ) {
 		RemoveCond( iPlayer, TFCC_TOXIN );
-		return Plugin_Stop;
+		return;
 	}
 
-	if( ePlayerConds[iPlayer][TFCC_TOXIN].flRemoveTime <= GetGameTime() ) {
-		RemoveCond( iPlayer, TFCC_TOXIN );
-		return Plugin_Stop;
-	}
+	if( GetGameTime() < ePlayerConds[iPlayer][TFCC_TOXIN].flNextTick )
+		return;
 
 	int iDamagePlayer = GetCondSourcePlayer( iPlayer, TFCC_TOXIN );
 	int iDamageWeapon = GetCondSourceWeapon( iPlayer, TFCC_TOXIN );
@@ -627,10 +652,7 @@ Action TickToxin( Handle hTimer, int iPlayer ) {
 	
 	//todo: prevent this from applying more toxin
 	SDKHooks_TakeDamage( iPlayer, iDamagePlayer, iDamagePlayer, TOXIN_DAMAGE, DMG_GENERIC | DMG_PHYSGUN, iDamageWeapon, NULL_VECTOR, NULL_VECTOR, false );
-	
-	ePlayerConds[iPlayer][TFCC_TOXIN].hTick = CreateTimer( MinFloat( GetCondDuration( iPlayer, TFCC_TOXIN ), TOXIN_FREQUENCY ), TickToxin, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
-	
-	return Plugin_Continue;
+	ePlayerConds[iPlayer][TFCC_TOXIN].flNextTick = GetGameTime() + TOXIN_FREQUENCY;
 }
 
 void RemoveToxin( int iPlayer ) {
@@ -662,16 +684,6 @@ MRESReturn Hook_TakeHealth( int iThis, DHookReturn hReturn, DHookParam hParams )
 	return MRES_ChangedHandled;
 }
 
-void ToxinTakeDamage( TFDamageInfo tfInfo ) {
-	int iAttacker = tfInfo.iAttacker;
-	if( !IsValidPlayer( iAttacker ) )
-		return;
-	
-	if( HasCond( iAttacker, TFCC_TOXINPATIENT ) ) {
-		tfInfo.iCritType = CT_MINI;
-	}
-}
-
 /*
 	TOXIN UBER
 */
@@ -688,7 +700,7 @@ int g_iToxinUberEmitters[MAXPLAYERS+1] = { -1, ... };
 
 bool AddToxinUber( int iPlayer ) {
 	RemoveToxinUberEmitter( iPlayer );
-	ePlayerConds[iPlayer][TFCC_TOXINUBER].hTick = CreateTimer( TOXINUBER_PULSERATE, TickToxinUber, iPlayer, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
+	CreateTimer( TOXINUBER_PULSERATE, TickToxinUber, iPlayer, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
 
 	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	int iEmitter = CreateEntityByName( "info_particle_system" );
@@ -713,7 +725,7 @@ Action TickToxinUber( Handle hTimer, int iPlayer ) {
 		return Plugin_Stop;	
 	}
 
-	if( ePlayerConds[ iPlayer ][ TFCC_TOXINUBER ].flRemoveTime < GetGameTime() ) {
+	if( ePlayerConds[ iPlayer ][ TFCC_TOXINUBER ].flExpireTime < GetGameTime() ) {
 		RemoveCond( iPlayer, TFCC_TOXINUBER );
 		return Plugin_Stop;
 	}
@@ -765,34 +777,10 @@ void RemoveToxinUberEmitter( int iPlayer ) {
 }
 
 /*
-	TOXIN PATIENT
-*/
-
-bool AddToxinPatient( int iPlayer ) {
-	ePlayerConds[iPlayer][TFCC_TOXINPATIENT].hTick = CreateTimer( TOXIN_FREQUENCY, TickToxinPatient, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
-	return true;
-}
-Action TickToxinPatient( Handle hTimer, int iPlayer ) {
-	if( !IsClientInGame( iPlayer ) || !IsPlayerAlive( iPlayer ) ) {
-		RemoveCond( iPlayer, TFCC_TOXINPATIENT );
-		return Plugin_Stop;
-	}
-
-	if( ePlayerConds[iPlayer][TFCC_TOXINPATIENT].flRemoveTime <= GetGameTime() ) {
-		RemoveCond( iPlayer, TFCC_TOXINPATIENT );
-		return Plugin_Stop;
-	}
-	ePlayerConds[iPlayer][TFCC_TOXINPATIENT].hTick = CreateTimer( MinFloat( GetCondDuration( iPlayer, TFCC_TOXINPATIENT ), TOXIN_FREQUENCY ), TickToxinPatient, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
-	
-	return Plugin_Continue;
-}
-
-/*
 	ANGEL SHIELD
 */
 
-const int ANGSHIELD_HEALTH = 80;
-const float ANGSHIELD_DURATION = 4.0;
+
 
 float g_flLastDamagedShield[MAXPLAYERS+1];
 
@@ -815,7 +803,7 @@ int GetAngelShield( int iPlayer, int iType ) {
 }
 
 bool AddAngelShield( int iPlayer ) {
-	ePlayerConds[iPlayer][TFCC_ANGELSHIELD].hTick = CreateTimer( ANGSHIELD_DURATION, ExpireAngelShield, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( ANGSHIELD_DURATION, ExpireAngelShield, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
 	ePlayerConds[iPlayer][TFCC_ANGELSHIELD].iLevel = ANGSHIELD_HEALTH;
 
 	g_flLastDamagedShield[iPlayer] = GetGameTime();
@@ -842,7 +830,7 @@ bool AddAngelShield( int iPlayer ) {
 	SetEntPropEnt( iNewShield, Prop_Send, "m_hOwnerEntity", iPlayer );
 	SetEntityCollisionGroup( iNewShield, 0 );
 
-	SDKHook( iNewShield, SDKHook_SetTransmit, Hook_NewShield );
+	SDKHook( iNewShield, SDKHook_SetTransmit, Hook_ShieldTransmit );
 
 	int iNewManager = CreateEntityByName( "material_modify_control" );
 
@@ -979,33 +967,32 @@ void AngelShieldTakeDamagePost( int iTarget ) {
 	TF2_RemoveCondition( iTarget, TFCond_UberchargedOnTakeDamage );
 }
 
-void ManageAngelShields() {
-	for( int i = 1; i <= MaxClients; i++ ) {
-		int iAngelShield = GetAngelShield( i, 0 );
-		if( !IsClientInGame( i ) || iAngelShield == -1 )
-			continue;
+//todo: parent to playermodel better
+void ManageAngelShield( int iPlayer ) {
+	int iAngelShield = GetAngelShield( iPlayer, 0 );
+	if(  iAngelShield == -1 )
+		return;
 
-		float flVecPos[3];
-		GetEntPropVector( i, Prop_Send, "m_vecOrigin", flVecPos );
-		TeleportEntity( GetAngelShield( i, 0 ), flVecPos );
+	float flVecPos[3];
+	GetEntPropVector( iPlayer, Prop_Send, "m_vecOrigin", flVecPos );
+	TeleportEntity( GetAngelShield( iPlayer, 0 ), flVecPos );
 
-		int iAngelManager = GetAngelShield( i, 1 );
-		if( iAngelManager == -1 )
-			continue;
+	int iAngelManager = GetAngelShield( iPlayer, 1 );
+	if( iAngelManager == -1 )
+		return;
 
-		float flLastDamaged = GetGameTime() - g_flLastDamagedShield[ i ];
+	float flLastDamaged = GetGameTime() - g_flLastDamagedShield[ iPlayer ];
 
-		float flShieldFalloff = RemapValClamped( flLastDamaged, 0.0, 0.5, 5.0, -5.0 );
+	float flShieldFalloff = RemapValClamped( flLastDamaged, 0.0, 0.5, 5.0, -5.0 );
 
-		static char szFalloff[8];
-		FloatToString(flShieldFalloff, szFalloff, 8);
+	static char szFalloff[8];
+	FloatToString(flShieldFalloff, szFalloff, 8);
 
-		SetVariantString( szFalloff );
-		AcceptEntityInput( iAngelManager, "SetMaterialVar" );
-	}
+	SetVariantString( szFalloff );
+	AcceptEntityInput( iAngelManager, "SetMaterialVar" );
 }
 
-Action Hook_NewShield( int iEntity, int iClient ) {
+Action Hook_ShieldTransmit( int iEntity, int iClient ) {
 	if( GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) == iClient ) {
 		return Plugin_Handled;
 	}
@@ -1017,10 +1004,8 @@ Action Hook_NewShield( int iEntity, int iClient ) {
 	ANGEL SHIELD INVULN
 */
 
-const float ANGINVULN_DURATION = 0.25;
-
 bool AddAngelInvuln( int iPlayer ) {
-	ePlayerConds[iPlayer][TFCC_ANGELINVULN].hTick = CreateTimer( ANGINVULN_DURATION, ExpireAngelInvuln, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( ANGINVULN_DURATION, ExpireAngelInvuln, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
 	return true;
 }
 Action ExpireAngelInvuln( Handle hTimer, int iPlayer ) {
@@ -1059,10 +1044,7 @@ static char g_szQFixParticle[][] = {
 	"quickfix_pulse_yellow"
 };
 
-#define QUICKUBER_SELFHEAL_INTERVAL 0.1
-
 bool AddQuickUber( int iPlayer ) {
-	ePlayerConds[iPlayer][TFCC_QUICKUBER].hTick = CreateTimer( QUICKUBER_SELFHEAL_INTERVAL, TickQuickUber, iPlayer, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
 	RemoveQuickFixEmitter( iPlayer );
 
 	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
@@ -1089,25 +1071,19 @@ bool AddQuickUber( int iPlayer ) {
 	return true;
 }
 
-Action TickQuickUber( Handle hTimer, int iPlayer ) {
-	if( !( IsClientInGame( iPlayer ) && IsPlayerAlive( iPlayer ) ) ) {
+void TickQuickUber( int iPlayer ) {
+	if( ePlayerConds[ iPlayer ][ TFCC_QUICKUBER ].flExpireTime < GetGameTime() ) {
 		RemoveCond( iPlayer, TFCC_QUICKUBER );
-		return Plugin_Stop;	
-	}
-
-	if( ePlayerConds[ iPlayer ][ TFCC_QUICKUBER ].flRemoveTime < GetGameTime() ) {
-		RemoveCond( iPlayer, TFCC_QUICKUBER );
-		return Plugin_Stop;
+		return;
 	}
 
 	//todo: unhardcode this
+	//heal medic for 3x medigun heal rate, patient for 2x since they are already receiving the health from the medigun
 	float flRate;
-	if( iPlayer == GetCondSourcePlayer( iPlayer, TFCC_QUICKUBER ) ) flRate = 36.0 * 3 * QUICKUBER_SELFHEAL_INTERVAL;
-	else flRate = 36.0 * 2 * QUICKUBER_SELFHEAL_INTERVAL;
+	if( iPlayer == GetCondSourcePlayer( iPlayer, TFCC_QUICKUBER ) ) flRate = 36.0 * 3.0 * GetGameFrameTime();
+	else flRate = 36.0 * 2.0 * GetGameFrameTime();
 
 	HealPlayer( iPlayer, flRate, GetCondSourcePlayer( iPlayer, TFCC_QUICKUBER ) );
-
-	return Plugin_Continue;
 }
 
 void RemoveQuickUber( int iPlayer ) {
@@ -1120,31 +1096,20 @@ void RemoveQuickUber( int iPlayer ) {
 }
 
 /*
-	RADIAL HEAL
-*/
-
-/*
 	FLAME HEAL
 */
-
-const float g_flFlameHealRate = 30.0;
 
 int iNew;
 int iOld;
 
 bool AddFlameHeal( int iPlayer ) {
-	ePlayerConds[iPlayer][TFCC_FLAMEHEAL].hTick = CreateTimer( 0.2, TickBatchHeal, iPlayer, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
+	CreateTimer( 0.2, TickBatchHeal, iPlayer, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
 	return true;
 }
 
 float g_flFlameHealDebt[ MAXPLAYERS+1 ];
 int g_iFlameHealBatch[ MAXPLAYERS+1 ];
 void TickFlameHeal( int iPlayer ) {
-	if( !( IsClientInGame( iPlayer ) && IsPlayerAlive( iPlayer ) ) ) {
-		RemoveCond( iPlayer, TFCC_FLAMEHEAL );
-		return;	
-	}
-
 	float g_flFlameHealTick = GetGameFrameTime();
 
 	int iSource = GetCondSourcePlayer( iPlayer, TFCC_FLAMEHEAL );
@@ -1152,7 +1117,7 @@ void TickFlameHeal( int iPlayer ) {
 	if( !IsValidPlayer( iSource ) )
 		return;
 
-	float flRate = AttribHookFloat( g_flFlameHealRate * g_flFlameHealTick, iSource, "mult_medigun_healrate" );
+	float flRate = AttribHookFloat( FLAME_HEALRATE * g_flFlameHealTick, iSource, "mult_medigun_healrate" );
 	int iLevel = MinInt( GetCondLevel( iPlayer, TFCC_FLAMEHEAL ), 275 );
 
 	//turning off overheal decay is a pain so i'll just add more health to counteract it
