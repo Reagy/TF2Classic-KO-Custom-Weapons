@@ -790,6 +790,28 @@
 					}
 				}
 			}
+			
+			"MapEntity_ParseEntity"
+			{
+				"signature"		"MapEntity_ParseEntity"
+				"callconv"		"cdecl"
+				"return"		"charptr"
+				"arguments"
+				{
+					"out"
+					{
+						"type"	"cbaseentity"
+					}
+					"entdata"
+					{
+						"type"	"charptr"
+					}
+					"filter"
+					{
+						"type"	"objectptr"
+					}
+				}
+			}
 		}
 		
 		"Signatures"
@@ -1010,10 +1032,10 @@
 				"linux"		"@_ZN11CBaseEntity17SetCollisionGroupEi"
 			}
 			
-			"CGlobalEntityList::FindEntityInSphere" //good
+			"CGlobalEntityList::FindEntityByName" //good
 			{
 				"library"	"server"
-				"linux"		"@_ZN17CGlobalEntityList18FindEntityInSphereEP11CBaseEntityRK6Vectorf"
+				"linux"		"@_ZN17CGlobalEntityList16FindEntityByNameEP11CBaseEntityPKcS1_S1_S1_P17IEntityFindFilter"
 			}
 			
 			"CTFGameRules::ApplyOnDamageModifyRules" //good
@@ -1078,6 +1100,17 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN12CTFGameStats23Event_PlayerHealedOtherEP9CTFPlayerf"
+			}
+			
+			"MapEntity_ExtractValue"
+			{
+				"library"	"server"
+				"linux"		"@_Z22MapEntity_ExtractValuePKcS0_Pc"
+			}
+			"MapEntity_ParseEntity"
+			{
+				"library"	"server"
+				"linux"		"@_Z21MapEntity_ParseEntityRP11CBaseEntityPKcP16IMapEntityFilter"
 			}
 		}
     }
