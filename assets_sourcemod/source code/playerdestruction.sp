@@ -162,9 +162,6 @@ static char szOutputCapNames[][] = {
 //array of all the outputs that the logic ent can fire
 ArrayList hOutputs[OUT_LAST];
 
-//store a list of outputs parsed from entdata but needs to be delayed because we can't search by name yet
-ArrayList hOutputQueue;
-
 #define OUTPUT_CELLSIZE sizeof( PDOutput )
 
 //bool MapEntity_ExtractValue( const char *pEntData, const char *keyName, char Value[MAPKEY_MAXLENGTH] )
@@ -210,19 +207,15 @@ MRESReturn Detour_ParseEntity( DHookReturn hReturn, DHookParam hParams ) {
 	
 	if( !SDKCall( hExtractValue, szEntData, "classname", szKeyBuffer ) )
 		return MRES_Handled;
+	//TODO: read in capture areas
 	if( !StrEqual( szKeyBuffer, "tf_logic_player_destruction" ) )
 		return MRES_Handled;
 
 	for( int i = 0; i < OUT_LAST; i++) {
 		hOutputs[i] = new ArrayList( OUTPUT_CELLSIZE );
 	}
-	
-	hOutputQueue = new ArrayList( 256 );
 
-	RequestFrame( ParseOutputQueue );
-
-	//SDKCall( hExtractValue, szEntData, "targetname", szLogicTargetname );
-	//PrintToServer( "targetname: %s", szLogicTargetname );
+	RequestFrame( SpawnLogicDummy );
 
 	int iIndex = GetNextKey( szEntData, sizeof( szEntData ), szKeyBuffer, sizeof( szKeyBuffer ) );
 	while( iIndex != -1 ) {
@@ -248,7 +241,7 @@ MRESReturn Detour_ParseEntity( DHookReturn hReturn, DHookParam hParams ) {
 		if( StrEqual( szKeyBuffer, "heal_distance" ) )		TryPushNextInt( szEntData, sizeof( szEntData ), iHealDistance );
 
 		for( int i = 0; i < OUT_LAST; i++) {
-			if( StrEqual( szOutputNames[i], szKeyBuffer ) )	TryPushNextOutput( szEntData, sizeof( szEntData ) );
+			if( StrEqual( szOutputNames[i], szKeyBuffer ) )	TryPushNextOutput( szEntData, sizeof( szEntData ), i );
 		}
 
 		iIndex = GetNextKey( szEntData, sizeof( szEntData ), szKeyBuffer, sizeof( szKeyBuffer ) );
@@ -286,66 +279,43 @@ void TryPushNextFloat( char[] szString, int iSize, float &flValue ) {
 	PrintToServer("KEYPUSHFLOAT: %s", szBuffer);
 }
 
-void TryPushNextOutput( char[] szString, int iSize ) {
+void TryPushNextOutput( char[] szString, int iSize, int iArray ) {
 	static char szBuffer[256];
 	int iIndex = GetNextKey( szString, iSize, szBuffer, sizeof( szBuffer ) );
 
 	if( iIndex == -1 || StrEqual( szBuffer, "}" ) )
 		return;
 
-	//Format( szBuffer, sizeof( szBuffer ), "%i%s", iArray, szBuffer );
-	hOutputQueue.PushString( szBuffer );
+	PDOutput pOutput;
+	static char szBuffer2[5][256]; //targetname, input, parameter, delay, refires 
+
+	ExplodeString( szBuffer, ",", szBuffer2, 5, 256 );
+
+	/*PrintToServer( "0: %s", szBuffer2[0] );
+	PrintToServer( "1: %s", szBuffer2[1] );
+	PrintToServer( "2: %s", szBuffer2[2] );
+	PrintToServer( "3: %s", szBuffer2[3] );
+	PrintToServer( "4: %s", szBuffer2[4] );*/
+
+	strcopy( pOutput.szTargetname, sizeof( pOutput.szTargetname ), szBuffer2[0] );
+	strcopy( pOutput.szTargetInput, sizeof( pOutput.szTargetInput ), szBuffer2[1] );
+	strcopy( pOutput.szParameter, sizeof( pOutput.szParameter ), szBuffer2[2] );
+
+	pOutput.flDelay = StringToFloat( szBuffer2[3] );
+	pOutput.iRefires = StringToInt( szBuffer2[4] );
+
+	hOutputs[ iArray ].PushArray( pOutput );
 }
 
-void ParseOutputQueue() {
-	g_iLogicDummy = CreateEntityByName("info_target");
+void SpawnLogicDummy() {
+	if( EntRefToEntIndex( g_iLogicDummy ) != -1 ) {
+		RemoveEntity( g_iLogicDummy );
+	}
+
+	g_iLogicDummy = EntIndexToEntRef( CreateEntityByName("info_target") );
 	SetEntPropString( g_iLogicDummy, Prop_Data, "m_iName", szLogicTargetname );
 	DispatchSpawn( g_iLogicDummy );
 	hAcceptInput.HookEntity( Hook_Pre, g_iLogicDummy, Hook_AcceptInput );
-	PrintToServer("%i", g_iLogicDummy);
-
-	PDOutput pOutput;
-	
-	static char szBuffer[256];
-	static char szBuffer2[5][256]; //targetname, input, parameter, delay, refires 
-
-	for( int i = 0; i < hOutputQueue.Length; i++ ) {
-		hOutputQueue.GetString( i, szBuffer, sizeof( szBuffer ) );
-		ExplodeString( szBuffer, ",", szBuffer2, 5, 256 );
-
-		/*PrintToServer( "0: %s", szBuffer2[0] );
-		PrintToServer( "1: %s", szBuffer2[1] );
-		PrintToServer( "2: %s", szBuffer2[2] );
-		PrintToServer( "3: %s", szBuffer2[3] );
-		PrintToServer( "4: %s", szBuffer2[4] );*/
-
-		int iEntity = SDKCall( hFindByName, -1, szBuffer2[0], -1, -1, -1, Address_Null );
-		while( iEntity != -1 ) {
-			//PrintToServer("%i", iEntity);
-			iEntity = SDKCall( hFindByName, iEntity, szBuffer2[0], -1, -1, -1, Address_Null );
-
-			//sourcemod returns non-networked entities as ref by default
-			pOutput.iTargetRef = iEntity > 0 && iEntity < 2049 ? EntIndexToEntRef( iEntity ) : iEntity;
-
-			strcopy( pOutput.szTargetInput, sizeof( pOutput.szTargetInput ), szBuffer2[1] );
-			strcopy( pOutput.szParameter, sizeof( pOutput.szParameter ), szBuffer2[2] );
-
-			pOutput.flDelay = StringToFloat( szBuffer2[3] );
-			pOutput.iRefires = StringToInt( szBuffer2[4] );
-
-			int iOutput = 0;
-			for( int j = 0; j < OUT_LAST; j++) {
-				if( StrEqual( szOutputNames[j], szBuffer2[0] ) ) {
-					iOutput = j;
-					break;
-				}
-			}
-
-			hOutputs[ iOutput ].PushArray( pOutput );
-		}
-	}
-
-	hOutputQueue.Clear();
 }
 
 //not fast but we only need this at map load so fuck it
@@ -472,9 +442,30 @@ void CalculateTeamLeader( int iTeam ) {
 }
 
 void FireFakeEventVoid( int iEvent ) {
-
+	PDOutput pOutput;
+	for( int j = 0; j < hOutputs[ iEvent ].Length; j++ ) {
+		hOutputs[ iEvent ].GetArray( j, pOutput );
+		CallEvent( pOutput );
+	}
 }
 
-void FireFakeEventFloat( int iEvent, float flValue) {
+//TODO: respect parameter delay and refire
+void CallEvent( PDOutput pOutput, float flInput = -1.0 ) {
+	int iEntity = SDKCall( hFindByName, -1, pOutput.szTargetname, -1, -1, -1, Address_Null );
+	while( iEntity != -1 ) {
+		if( flInput != -1.0 )
+			SetVariantFloat( flInput );
 
+		AcceptEntityInput( iEntity, pOutput.szTargetInput, -1, -1, -1 );
+
+		iEntity = SDKCall( hFindByName, iEntity, pOutput.szTargetname, -1, -1, -1, Address_Null );
+	}
+}
+
+void FireFakeEventFloat( int iEvent, float flValue ) {
+	PDOutput pOutput;
+	for( int j = 0; j < hOutputs[ iEvent ].Length; j++ ) {
+		hOutputs[ iEvent ].GetArray( j, pOutput );
+		CallEvent( pOutput, flValue );
+	}
 }
