@@ -14,6 +14,11 @@
 		}
         "Offsets"
         {
+			"CBaseEntity::AcceptInput"
+			{
+				"linux"		"38"
+			}
+		
             //player
         
 			"CBaseCombatCharacter::GiveAmmo" //good
@@ -159,6 +164,38 @@
 		
 		"Functions"
 		{
+			"CBaseEntity::AcceptInput"
+			{
+				"offset"		"CBaseEntity::AcceptInput"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+				"arguments"
+				{
+					"input"
+					{
+						"type"	"charptr"
+					}
+					"activator"
+					{
+						"type"	"cbaseentity"
+					}
+					"caller"
+					{
+						"type"	"cbaseentity"
+					}
+					"value"
+					{
+						"type"	"objectptr"
+					}
+					"outputid"
+					{
+						"type"	"int"
+					}
+				}
+			}
+		
 			//player
 			
 			"CBaseCombatCharacter::GiveAmmo"

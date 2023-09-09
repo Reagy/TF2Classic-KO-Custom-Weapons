@@ -10,22 +10,39 @@
 public Plugin myinfo = {
 	name = "Player Destruction Classic",
 	author = "Noclue",
-	description = "Allows loading of PD maps in TF2C",
+	description = "Wrapper to allow running PD maps in TF2C",
 	version = "1.0",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
 DynamicDetour hParseEntity;
+DynamicHook hAcceptInput;
 Handle hExtractValue;
 Handle hFindByName;
 
+//func_capturezone
+//these already exist but need additional functionality
+
+//stores PDCapZones using the object's entity reference for lookup
+StringMap smCaptureZones;
+
+enum struct PDCapZone {
+	float flCaptureDelay;
+	float flCaptureDelayOffset; //this needs to be clamped
+	bool bCanBlock;
+
+	ArrayList hCapOutputs[2]; //array of PDOutputs
+}
+
 //tf_logic_player_destuction properties
 //there should only ever be one of these so nothing complicated has to be done
+//need to do a bunch of heavy lifting here since the engine discards the entity completely
+
+char szLogicTargetname[128];
+
 char szPropModelName[128];
 char szPropDropSound[128];
 char szPropPickupSound[128];
-
-char szTargetName[128];
 
 float flBlueRespawnTime;
 float flRedRespawnTime;
@@ -38,56 +55,126 @@ float flFinaleLength;
 int iFlagResetDelay;
 int iHealDistance;
 
+//current gamemode info
+
+int g_iLogicDummy; //dummy object to catch inputs
+
+float flCountdownTimer;
+
+int iPointsToWin;
+
+int iRedScore;
+int iBlueScore;
+
+int iPlayerCarrying[MAXPLAYERS+1];
+int iRedTeamLeader = -1;
+int iBlueTeamLeader = -1;
+
+int iPointsOnPlayerDeath = 1;
+
+bool bAllowMaxScoreUpdating = true;
+
+//TODO: convert to use targetname instead of ref
 enum struct PDOutput {
-	int iTargetRef;
-	char szTargetInput[64];
-	char szParameter[64];
+	char szTargetname[96];
+	char szTargetInput[96];
+	char szParameter[96];
 	float flDelay;
 	int iRefires;
 }
 
-//outputs
-ArrayList hOnBlueHitMaxPoints;
-ArrayList hOnRedHitMaxPoints;
+enum {
+	OUT_ONBLUEHITMAXPOINTS = 0,
+	OUT_ONREDHITMAXPOINTS,
 
-ArrayList hOnBlueLeaveMaxPoints;
-ArrayList hOnRedLeaveMaxPoints;
+	OUT_ONBLUELEAVEMAXPOINTS,
+	OUT_ONREDLEAVEMAXPOINTS,
 
-ArrayList hOnBlueHitZeroPoints;
-ArrayList hOnRedHitZeroPoints;
+	OUT_ONBLUEHITZEROPOINTS,
+	OUT_ONREDHITZEROPOINTS,
 
-ArrayList hOnBlueHasPoints;
-ArrayList hOnRedHasPoints;
+	OUT_ONBLUEHASPOINTS,
+	OUT_ONREDHASPOINTS,
 
-ArrayList hOnBlueFinalePeriodEnd;
-ArrayList hOnRedFinalePeriodEnd;
+	OUT_ONBLUEFINALEPERIODEND,
+	OUT_ONREDFINALEPERIODEND,
 
-ArrayList hOnBlueFirstFlagStolen;
-ArrayList hOnRedFirstFlagStolen;
+	OUT_ONBLUEFIRSTFLAGSTOLEN,
+	OUT_ONREDFIRSTFLAGSTOLEN,
 
-ArrayList hOnBlueFlagStolen;
-ArrayList hOnRedFlagStolen;
+	OUT_ONBLUEFLAGSTOLEN,
+	OUT_ONREDFLAGSTOLEN,
 
-ArrayList hOnBlueLastFlagReturned;
-ArrayList hOnRedLastFlagReturned;
+	OUT_ONBLUELASTFLAGRETURNED,
+	OUT_ONREDLASTFLAGRETURNED,
 
-ArrayList hOnBlueScoreChanged;
-ArrayList hOnRedScoreChanged;
+	OUT_ONBLUESCORECHANGED,
+	OUT_ONREDSCORECHANGED,
 
-ArrayList hOnCountdownTimerExpired;
+	OUT_ONCOUNTDOWNTIMEREXPIRED,
+
+	OUT_LAST,
+}
+
+static char szOutputNames[][] = {
+	"OnBlueHitMaxPoints",
+	"OnRedHitMaxPoints",
+
+	"OnBlueLeaveMaxPoints",
+	"OnRedLeaveMaxPoints",
+
+	"OnBlueHitZeroPoints",
+	"OnRedHitZeroPoints",
+
+	"OnBlueHasPoints",
+	"OnRedHasPoints",
+
+	"OnBlueFinalePeriodEnd",
+	"OnRedFinalePeriodEnd",
+
+	"OnBlueFirstFlagStolen",
+	"OnRedFirstFlagStolen",
+
+	"OnBlueFlagStolen",
+	"OnRedFlagStolen",
+
+	"OnBlueLastFlagReturned",
+	"OnRedLastFlagReturned",
+
+	"OnBlueScoreChanged",
+	"OnRedScoreChanged",
+
+	"OnCountdownTimerExpired"
+};
+
+enum {
+	OUTCAP_REDCAP = 0,
+	OUTCAP_BLUECAP,
+
+	OUTCAP_LAST,
+}
+
+static char szOutputCapNames[][] = {
+	"OnCapTeam1_PD",
+	"OnCapTeam2_PD"
+};
+
+//array of all the outputs that the logic ent can fire
+ArrayList hOutputs[OUT_LAST];
+
+//store a list of outputs parsed from entdata but needs to be delayed because we can't search by name yet
+ArrayList hOutputQueue;
 
 #define OUTPUT_CELLSIZE sizeof( PDOutput )
 
 //bool MapEntity_ExtractValue( const char *pEntData, const char *keyName, char Value[MAPKEY_MAXLENGTH] )
 public void OnPluginStart() {
-	static char szTest[32] = "test";
-	StrReduce( szTest, sizeof( szTest ), 2 );
-	//PrintToServer( szTest );
-
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
 	hParseEntity = DynamicDetour.FromConf( hGameConf, "MapEntity_ParseEntity" );
 	hParseEntity.Enable( Hook_Pre, Detour_ParseEntity );
+
+	hAcceptInput = DynamicHook.FromConf( hGameConf, "CBaseEntity::AcceptInput" );
 
 	StartPrepSDKCall( SDKCall_Static );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "MapEntity_ExtractValue" );
@@ -109,56 +196,41 @@ public void OnPluginStart() {
 	hFindByName = EndPrepSDKCall();
 
 	delete hGameConf;
-
-	hOnBlueHitMaxPoints = new ArrayList( OUTPUT_CELLSIZE, 0 );
-	hOnRedHitMaxPoints  = new ArrayList( OUTPUT_CELLSIZE, 0 );
-
-	hOnBlueLeaveMaxPoints = new ArrayList( OUTPUT_CELLSIZE, 0 );
-	hOnRedLeaveMaxPoints = new ArrayList( OUTPUT_CELLSIZE, 0 );
-
-	hOnBlueHitZeroPoints = new ArrayList( OUTPUT_CELLSIZE, 0 );
-	hOnRedHitZeroPoints = new ArrayList( OUTPUT_CELLSIZE, 0 );
-
-	hOnBlueHasPoints = new ArrayList( OUTPUT_CELLSIZE, 0 );
-	hOnRedHasPoints = new ArrayList( OUTPUT_CELLSIZE, 0 );
-
-	hOnBlueFinalePeriodEnd = new ArrayList( OUTPUT_CELLSIZE, 0 );
-	hOnRedFinalePeriodEnd = new ArrayList( OUTPUT_CELLSIZE, 0 );
-
-	hOnBlueFirstFlagStolen = new ArrayList( OUTPUT_CELLSIZE, 0 );
-	hOnRedFirstFlagStolen = new ArrayList( OUTPUT_CELLSIZE, 0 );
-
-	hOnBlueFlagStolen = new ArrayList( OUTPUT_CELLSIZE, 0 );
-	hOnRedFlagStolen = new ArrayList( OUTPUT_CELLSIZE, 0 );
-
-	hOnBlueLastFlagReturned = new ArrayList( OUTPUT_CELLSIZE, 0 );
-	hOnRedLastFlagReturned = new ArrayList( OUTPUT_CELLSIZE, 0 );
-
-	hOnBlueScoreChanged = new ArrayList( OUTPUT_CELLSIZE, 0 );
-	hOnRedScoreChanged = new ArrayList( OUTPUT_CELLSIZE, 0 );
-
-	hOnCountdownTimerExpired = new ArrayList( OUTPUT_CELLSIZE, 0 );
 }
 
+/*
+	MAP DATA PARSING
+*/
+
 MRESReturn Detour_ParseEntity( DHookReturn hReturn, DHookParam hParams ) {
-	RequestFrame(TestFunc);
 	static char szEntData[2048];
 	static char szKeyBuffer[2048];
 
 	hParams.GetString( 2, szEntData, sizeof( szEntData ) );
-	//StripQuotes( szEntData );
-
+	
 	if( !SDKCall( hExtractValue, szEntData, "classname", szKeyBuffer ) )
 		return MRES_Handled;
 	if( !StrEqual( szKeyBuffer, "tf_logic_player_destruction" ) )
 		return MRES_Handled;
 
-	PrintToServer("test1");
+	for( int i = 0; i < OUT_LAST; i++) {
+		hOutputs[i] = new ArrayList( OUTPUT_CELLSIZE );
+	}
+	
+	hOutputQueue = new ArrayList( 256 );
 
-	int iIndex = 0;
-	int iStrLen = strlen( szEntData );
-	do {
-		iIndex = GetNextKey( szEntData, sizeof( szEntData ), szKeyBuffer, sizeof( szKeyBuffer ) );
+	RequestFrame( ParseOutputQueue );
+
+	//SDKCall( hExtractValue, szEntData, "targetname", szLogicTargetname );
+	//PrintToServer( "targetname: %s", szLogicTargetname );
+
+	int iIndex = GetNextKey( szEntData, sizeof( szEntData ), szKeyBuffer, sizeof( szKeyBuffer ) );
+	while( iIndex != -1 ) {
+		if( StrEqual( szKeyBuffer, "}" ) )
+			break;
+
+		//lord please forgive me
+		if( StrEqual( szKeyBuffer, "targetname" ) )		GetNextKey( szEntData, sizeof( szEntData ), szLogicTargetname, sizeof( szLogicTargetname ) );
 
 		if( StrEqual( szKeyBuffer, "prop_model_name" ) )	GetNextKey( szEntData, sizeof( szEntData ), szPropModelName, sizeof( szPropModelName ) );
 		if( StrEqual( szKeyBuffer, "prop_drop_sound" ) )	GetNextKey( szEntData, sizeof( szEntData ), szPropDropSound, sizeof( szPropDropSound ) );
@@ -175,40 +247,13 @@ MRESReturn Detour_ParseEntity( DHookReturn hReturn, DHookParam hParams ) {
 		if( StrEqual( szKeyBuffer, "flag_reset_delay" ) )	TryPushNextInt( szEntData, sizeof( szEntData ), iFlagResetDelay );
 		if( StrEqual( szKeyBuffer, "heal_distance" ) )		TryPushNextInt( szEntData, sizeof( szEntData ), iHealDistance );
 
-		//lord please forgive me
-		if( StrEqual( szKeyBuffer, "OnBlueHitMaxPoints" ) )
-			TryPushNextOutput( szEntData, sizeof( szEntData ), hOnBlueHitMaxPoints );
-		/*if( StrEqual( szKeyBuffer, "OnBlueFinalePeriodEnd" ) )
-			TryPushNextOutput( szEntData, sizeof( szEntData ), hOnBlueFinalePeriodEnd );*/
-		/*if( StrEqual( szKeyBuffer, "OnBlueHitMaxPoints" ) )
-			TryPushNextOutput( szEntData, sizeof( szEntData ), hOnBlueHitMaxPoints );
-		if( StrEqual( szKeyBuffer, "OnBlueHitMaxPoints" ) )
-			TryPushNextOutput( szEntData, sizeof( szEntData ), hOnBlueHitMaxPoints );
-		if( StrEqual( szKeyBuffer, "OnBlueHitMaxPoints" ) )
-			TryPushNextOutput( szEntData, sizeof( szEntData ), hOnBlueHitMaxPoints );
-		if( StrEqual( szKeyBuffer, "OnBlueHitMaxPoints" ) )
-			TryPushNextOutput( szEntData, sizeof( szEntData ), hOnBlueHitMaxPoints );*/
+		for( int i = 0; i < OUT_LAST; i++) {
+			if( StrEqual( szOutputNames[i], szKeyBuffer ) )	TryPushNextOutput( szEntData, sizeof( szEntData ) );
+		}
 
-		PrintToServer("KEY: %s", szKeyBuffer);
-
-		if( iIndex == -1 || StrEqual( szKeyBuffer, "}" ) )
-			break;
+		iIndex = GetNextKey( szEntData, sizeof( szEntData ), szKeyBuffer, sizeof( szKeyBuffer ) );
 	}
-	while( iIndex < iStrLen );
-
 	return MRES_Handled;
-}
-
-void TestFunc() {
-	int iEntity = SDKCall( hFindByName, -1, "ufo_drunk_compare_*", -1, -1, -1, Address_Null );
-	while( iEntity != -1 ) {
-		static char szTest[64];
-		GetEntPropString( iEntity, Prop_Data, "m_iName", szTest, 64 );
-		PrintToServer("%i %s", EntRefToEntIndex(iEntity), szTest);
-		iEntity = SDKCall( hFindByName, iEntity, "ufo_drunk_compare_*", -1, -1, -1, Address_Null );
-		//pOutput.iTargetRef = EntIndexToEntRef( iEntity );
-		
-	}
 }
 
 int GetNextKey( char[] szString, int iLength, char[] szBuffer, int iBufferLen ) {
@@ -238,40 +283,69 @@ void TryPushNextFloat( char[] szString, int iSize, float &flValue ) {
 
 	flValue = StringToFloat( szBuffer );
 
-	PrintToServer("KEYPUSHINT: %s", szBuffer);
+	PrintToServer("KEYPUSHFLOAT: %s", szBuffer);
 }
 
-void TryPushNextOutput( char[] szString, int iSize, ArrayList hList ) {
+void TryPushNextOutput( char[] szString, int iSize ) {
 	static char szBuffer[256];
 	int iIndex = GetNextKey( szString, iSize, szBuffer, sizeof( szBuffer ) );
 
 	if( iIndex == -1 || StrEqual( szBuffer, "}" ) )
 		return;
 
+	//Format( szBuffer, sizeof( szBuffer ), "%i%s", iArray, szBuffer );
+	hOutputQueue.PushString( szBuffer );
+}
+
+void ParseOutputQueue() {
+	g_iLogicDummy = CreateEntityByName("info_target");
+	SetEntPropString( g_iLogicDummy, Prop_Data, "m_iName", szLogicTargetname );
+	DispatchSpawn( g_iLogicDummy );
+	hAcceptInput.HookEntity( Hook_Pre, g_iLogicDummy, Hook_AcceptInput );
+	PrintToServer("%i", g_iLogicDummy);
+
 	PDOutput pOutput;
 	
+	static char szBuffer[256];
 	static char szBuffer2[5][256]; //targetname, input, parameter, delay, refires 
-	ExplodeString( szBuffer, ",", szBuffer2, 5, 256 );
 
-	PrintToServer( "0: %s", szBuffer2[0] );
-	PrintToServer( "1: %s", szBuffer2[1] );
-	PrintToServer( "2: %s", szBuffer2[2] );
-	PrintToServer( "3: %s", szBuffer2[3] );
-	PrintToServer( "4: %s", szBuffer2[4] );
+	for( int i = 0; i < hOutputQueue.Length; i++ ) {
+		hOutputQueue.GetString( i, szBuffer, sizeof( szBuffer ) );
+		ExplodeString( szBuffer, ",", szBuffer2, 5, 256 );
 
-	int iEntity = SDKCall( hFindByName, -1, szBuffer2[0], -1, -1, -1, Address_Null );
-	while( iEntity != -1 ) {
-		PrintToServer("%i", iEntity);
-		iEntity = SDKCall( hFindByName, iEntity, szBuffer2[0], -1, -1, -1, Address_Null );
-		//pOutput.iTargetRef = EntIndexToEntRef( iEntity );
-		
+		/*PrintToServer( "0: %s", szBuffer2[0] );
+		PrintToServer( "1: %s", szBuffer2[1] );
+		PrintToServer( "2: %s", szBuffer2[2] );
+		PrintToServer( "3: %s", szBuffer2[3] );
+		PrintToServer( "4: %s", szBuffer2[4] );*/
+
+		int iEntity = SDKCall( hFindByName, -1, szBuffer2[0], -1, -1, -1, Address_Null );
+		while( iEntity != -1 ) {
+			//PrintToServer("%i", iEntity);
+			iEntity = SDKCall( hFindByName, iEntity, szBuffer2[0], -1, -1, -1, Address_Null );
+
+			//sourcemod returns non-networked entities as ref by default
+			pOutput.iTargetRef = iEntity > 0 && iEntity < 2049 ? EntIndexToEntRef( iEntity ) : iEntity;
+
+			strcopy( pOutput.szTargetInput, sizeof( pOutput.szTargetInput ), szBuffer2[1] );
+			strcopy( pOutput.szParameter, sizeof( pOutput.szParameter ), szBuffer2[2] );
+
+			pOutput.flDelay = StringToFloat( szBuffer2[3] );
+			pOutput.iRefires = StringToInt( szBuffer2[4] );
+
+			int iOutput = 0;
+			for( int j = 0; j < OUT_LAST; j++) {
+				if( StrEqual( szOutputNames[j], szBuffer2[0] ) ) {
+					iOutput = j;
+					break;
+				}
+			}
+
+			hOutputs[ iOutput ].PushArray( pOutput );
+		}
 	}
 
-	strcopy( pOutput.szTargetInput, sizeof( pOutput.szTargetInput ), szBuffer2[1] );
-	strcopy( pOutput.szParameter, sizeof( pOutput.szParameter ), szBuffer2[2] );
-
-	pOutput.flDelay = StringToFloat( szBuffer2[3] );
-	pOutput.iRefires = StringToInt( szBuffer2[4] );
+	hOutputQueue.Clear();
 }
 
 //not fast but we only need this at map load so fuck it
@@ -285,4 +359,122 @@ void StrReduce( char[] szString, int iLength, int iStrip ) {
 		if( szString[i] == 0 )
 			break;
 	}
+}
+
+/*
+	GAMEMODE LOGIC
+*/
+
+MRESReturn Hook_AcceptInput( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	static char szInputName[256];
+	hParams.GetString( 1, szInputName, sizeof( szInputName ) );
+	PrintToServer("received event: %s", szInputName);
+
+	static char szString[128];
+
+	if( StrEqual( szInputName, "ScoreRedPoints" ) )
+		SetPoints( 2, iRedScore+1 );
+	if( StrEqual( szInputName, "ScoreBluePoints" ) )
+		SetPoints( 3, iBlueScore+1 );
+
+	if( StrEqual( szInputName, "EnableMaxScoreUpdating" ) )
+		bAllowMaxScoreUpdating = true;
+	if( StrEqual( szInputName, "DisableMaxScoreUpdating" ) )
+		bAllowMaxScoreUpdating = false;
+	if( StrEqual( szInputName, "SetCountdownTimer" ) ) {
+		Address aStringTPointer = LoadFromAddress( hParams.GetAddress( 4 ), NumberType_Int32 );
+		LoadStringFromAddress( aStringTPointer, szString, sizeof( szString ) );
+		PrintToServer( "newtimer: %s", szString);
+		flCountdownTimer = StringToFloat( szString );
+	}
+	//if( StrEqual( szInputName, "SetFlagResetDelay" ) )
+	if( StrEqual( szInputName, "SetPointsOnPlayerDeath" ) ) {
+		Address aStringTPointer = LoadFromAddress( hParams.GetAddress( 4 ), NumberType_Int32 );
+		LoadStringFromAddress( aStringTPointer, szString, sizeof( szString ) );
+		PrintToServer( "newpointsperdeath: %s", szString);
+		iPointsOnPlayerDeath = StringToInt( szString );
+	}
+
+
+	return MRES_Handled;
+}
+
+void SetPoints( int iTeam, int iAmount = 1 ) {
+	int iOldAmount;
+
+	if( iTeam == 2 ) {
+		iOldAmount = iRedScore;
+		iRedScore = iAmount;
+
+		if( iOldAmount == 0 && iRedScore > 0 )
+			FireFakeEventVoid( OUT_ONREDHASPOINTS );
+
+		if( iOldAmount == iPointsToWin && iRedScore < iPointsToWin )
+			FireFakeEventVoid( OUT_ONREDLEAVEMAXPOINTS );
+
+		if( iOldAmount != 0 && iRedScore == 0 )
+			FireFakeEventVoid( OUT_ONREDHITZEROPOINTS );
+
+		if( iRedScore != iOldAmount )
+			FireFakeEventFloat( OUT_ONREDSCORECHANGED, float( iRedScore ) / float( iPointsToWin ) );
+
+		if( iRedScore == iPointsToWin )
+			FireFakeEventVoid( OUT_ONREDHITMAXPOINTS );
+	}
+	else {
+		iOldAmount = iBlueScore;
+		iBlueScore = iAmount;
+
+		if( iOldAmount == 0 && iBlueScore > 0 )
+			FireFakeEventVoid( OUT_ONBLUEHASPOINTS );
+
+		if( iOldAmount == iPointsToWin && iBlueScore < iPointsToWin )
+			FireFakeEventVoid( OUT_ONBLUELEAVEMAXPOINTS );
+
+		if( iOldAmount != 0 && iBlueScore == 0 )
+			FireFakeEventVoid( OUT_ONBLUEHITZEROPOINTS );
+
+		if( iBlueScore != iOldAmount )
+			FireFakeEventFloat( OUT_ONBLUESCORECHANGED, float( iBlueScore ) / float( iPointsToWin ) );
+
+		if( iBlueScore == iPointsToWin )
+			FireFakeEventVoid( OUT_ONBLUEHITMAXPOINTS );
+	}
+}
+
+void CalculateMaxPoints() {
+	iPointsToWin = MaxInt( iMinPoints, GetClientCount( true ) * iPointsPerPlayer );
+}
+
+void CalculateTeamLeader( int iTeam ) {
+	int iHighest = -1;
+	int iHighestAmount = 0;
+	for( int i = 1; i < MAXPLAYERS; i++ ) {
+		if( !IsClientInGame( i ) )
+			return;
+
+		if( GetEntProp( i, Prop_Send, "m_iTeamNum" ) != iTeam )
+			return;
+
+		if( iPlayerCarrying[i] > iHighestAmount ) {
+			iHighest = i;
+			iHighestAmount = iPlayerCarrying[i];
+		}
+	}
+
+	if( iHighest == -1 )
+		return;
+
+	if( iTeam == 2 )
+		iRedTeamLeader = iHighest;
+	else
+		iBlueTeamLeader = iHighest;
+}
+
+void FireFakeEventVoid( int iEvent ) {
+
+}
+
+void FireFakeEventFloat( int iEvent, float flValue) {
+
 }
