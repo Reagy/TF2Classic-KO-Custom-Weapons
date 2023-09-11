@@ -18,6 +18,10 @@
 			{
 				"linux"		"38"
 			}
+			"CBaseEntity::Touch"
+			{
+				"linux"		"101"
+			}
 		
             //player
         
@@ -837,7 +841,7 @@
 				{
 					"out"
 					{
-						"type"	"cbaseentity"
+						"type"	"objectptr"
 					}
 					"entdata"
 					{
