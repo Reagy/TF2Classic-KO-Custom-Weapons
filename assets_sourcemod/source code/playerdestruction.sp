@@ -22,7 +22,6 @@ public Plugin myinfo = {
 StringMap smCaptureZones;
 
 #define PDZONE_SIZE 5
-
 enum struct PDCapZone {
 	float flCaptureDelay;
 	float flCaptureDelayOffset; //this needs to be clamped
@@ -87,7 +86,6 @@ int iPointsOnPlayerDeath = 1;
 
 bool bAllowMaxScoreUpdating = true;
 
-//TODO: convert to use targetname instead of ref
 enum struct PDOutput {
 	char szTargetname[96];
 	char szTargetInput[96];
@@ -145,6 +143,7 @@ static char szOutputNames[][] = {
 	"OnBlueFinalePeriodEnd",
 	"OnRedFinalePeriodEnd",
 
+	//can pd even use these?
 	"OnBlueFirstFlagStolen",
 	"OnRedFirstFlagStolen",
 
@@ -163,6 +162,19 @@ static char szOutputNames[][] = {
 //array of all the outputs that the logic ent can fire
 ArrayList hOutputs[OUT_LAST];
 
+/*
+	PICKUPS
+*/
+
+StringMap smPickups;
+
+#define PDPICKUP_SIZE 2
+enum struct PDPickup {
+	int iAmount;
+	float flExpireTime;
+}
+
+
 #define OUTPUT_CELLSIZE sizeof( PDOutput )
 #define HUD_UPDATEINTERVAL 0.1
 
@@ -176,7 +188,6 @@ Handle hHudSyncRed;
 Handle hHudSyncBlue;
 Handle hHudSyncMiddle;
 
-//bool MapEntity_ExtractValue( const char *pEntData, const char *keyName, char Value[MAPKEY_MAXLENGTH] )
 public void OnPluginStart() {
 	hHudSyncRed = CreateHudSynchronizer();
 	hHudSyncBlue = CreateHudSynchronizer();
@@ -210,8 +221,9 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain, VDECODE_FLAG_ALLOWNULL );
 	hFindByName = EndPrepSDKCall();
 
-	HookEvent( "player_spawn", Hook_PlayerSpawned );
-	HookEvent( "player_disconnect", Hook_PlayerDisconnected );
+	HookEvent( "player_spawn", Event_PlayerSpawn );
+	HookEvent( "player_disconnect", Event_PlayerDisconnect );
+	HookEvent( "player_death", Event_PlayerDeath );
 
 	delete hGameConf;
 }
@@ -236,6 +248,7 @@ public void OnMapStart() {
 	}
 
 	smCaptureZones = new StringMap();
+	smPickups = new StringMap();
 
 	PrecacheSound("ui/chime_rd_2base_pos.wav");
 	PrecacheSound("ui/chime_rd_2base_neg.wav");
@@ -256,11 +269,8 @@ MRESReturn Detour_ParseEntity( DHookReturn hReturn, DHookParam hParams ) {
 	
 	if( !SDKCall( hExtractValue, szEntData, "classname", szKeyBuffer ) )
 		return MRES_Handled;
-	//TODO: read in capture areas
 	if( StrEqual( szKeyBuffer, "tf_logic_player_destruction" ) )
 		ParseLogicEntity( szEntData );
-	/*else if( StrEqual( szKeyBuffer, "func_capturezone" ) )
-		ParseCaptureZone( szEntData );*/
 
 	return MRES_Handled;
 }
@@ -272,19 +282,17 @@ MRESReturn Detour_ParseEntityPost( DHookReturn hReturn, DHookParam hParams ) {
 	static char szEntData[2048];
 	static char szKeyBuffer[2048];
 
+	//trying to pass in as a cbaseentity causes the engine to have a stroke so just get by address
 	Address aEntity = hParams.GetAddress( 1 );
 	aEntity = LoadFromAddress( aEntity, NumberType_Int32 );
-	//PrintToServer("testing parser: %i", aEntity);
 	if( aEntity == Address_Null )
 		return MRES_Handled;
 	
 	int iEntity = GetEntityFromAddress( aEntity );
-
 	if( iEntity == -1 )
 		return MRES_Handled;
 
 	GetEntityClassname( iEntity, szKeyBuffer, 2048 );
-	//PrintToServer("entname: %s", szKeyBuffer);
 	
 	if( StrEqual( szKeyBuffer, "func_capturezone" ) ) {
 		hParams.GetString( 2, szEntData, sizeof( szEntData ) );
@@ -476,11 +484,11 @@ void StrReduce( char[] szString, int iLength, int iStrip ) {
 	GAMEMODE LOGIC
 */
 
-Action Hook_PlayerSpawned( Event hEvent, const char[] szName, bool bDontBroadcast ) {
+Action Event_PlayerSpawn( Event hEvent, const char[] szName, bool bDontBroadcast ) {
 	CalculateMaxPoints();
 	return Plugin_Continue;
 }
-Action Hook_PlayerDisconnected( Event hEvent, const char[] szName, bool bDontBroadcast ) {
+Action Event_PlayerDisconnect( Event hEvent, const char[] szName, bool bDontBroadcast ) {
 	CalculateMaxPoints();
 	return Plugin_Continue;
 }
@@ -669,7 +677,7 @@ void CalculateMaxPoints() {
 void CalculateTeamLeader( int iTeam ) {
 	int iHighest = -1;
 	int iHighestAmount = 0;
-	for( int i = 1; i < MAXPLAYERS; i++ ) {
+	for( int i = 1; i < MaxClients; i++ ) {
 		if( !IsClientInGame( i ) )
 			continue;
 
@@ -824,4 +832,103 @@ void Hud_Display( int iPlayer ) {
 	}
 	SetHudTextParamsEx( 0.475, 0.91, 20.0, { 255, 255, 255, 1}, {255,255,255,0}, 0, 6.0, 0.0, 0.0 );
 	ShowSyncHudText( iPlayer, hHudSyncMiddle, szFinal );	
+}
+
+/*
+	PICKUPS
+*/
+
+Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast ) {
+	int iVictim = hEvent.GetInt( "victim_entindex" );
+
+	int iAttacker = hEvent.GetInt( "attacker" );
+	iAttacker = GetClientOfUserId( iAttacker );
+
+	//don't drop extra points on suicide
+	bool bSuicide = iVictim == iAttacker;
+
+	int iPointsToDrop = iPlayerCarrying[ iVictim ];
+	if( !bSuicide )
+		iPointsToDrop+=iPointsOnPlayerDeath;
+
+	if( iPointsToDrop < 0 )
+		return Plugin_Continue;
+
+	float vecPlayerPos[3];
+	GetEntPropVector( iVictim, Prop_Send, "m_vecOrigin", vecPlayerPos );
+
+	int iEntity = CreatePickup( iPointsToDrop );
+	TeleportEntity( iEntity, vecPlayerPos );
+
+	return Plugin_Continue;
+}
+
+int CreatePickup( int iAmount ) {
+	PDPickup pdPickup;
+	pdPickup.iAmount = iAmount;
+	pdPickup.flExpireTime = GetGameTime() + float( iFlagResetDelay );
+
+	int iEntity = CreateEntityByName( "prop_dynamic" );
+
+	SetEntityModel( iEntity, szPropModelName );
+	hTouch.HookEntity( Hook_Pre, iEntity, Hook_PickupTouch );
+
+	DispatchSpawn( iEntity );
+
+	static char szRefBuffer[48];
+	int iRef = EntIndexToEntRef( iEntity );
+	IntToString( iRef, szRefBuffer, sizeof( szRefBuffer ) );
+	smPickups.SetArray( szRefBuffer, pdPickup, PDPICKUP_SIZE );
+
+	EmitSoundToAll( szPropDropSound, iEntity );
+
+	CreateTimer( float( iFlagResetDelay ), Timer_PickupThink, iRef, TIMER_FLAG_NO_MAPCHANGE );
+
+	return iEntity;
+}
+
+bool FindPickup( int iRef, PDPickup pdPickup ) {
+	static char szRefString[128];
+	IntToString( iRef, szRefString, sizeof( szRefString ) );
+	return smPickups.GetArray( szRefString, pdPickup, PDPICKUP_SIZE );
+}
+
+void RemovePickup( int iPickupReference ) {
+	static char szRefString[128];
+	IntToString( iPickupReference, szRefString, sizeof( szRefString ) );
+
+	smPickups.Remove( szRefString );
+
+	int iIndex = EntRefToEntIndex( iPickupReference );
+	if( iIndex > 0 )
+		RemoveEntity( iIndex );
+}
+
+Action Timer_PickupThink( Handle hTimer, int iRef ) {
+	RemovePickup( iRef );
+	return Plugin_Stop;
+}
+
+MRESReturn Hook_PickupTouch( int iThis, DHookParam hParams ) {
+	int iEntity = hParams.Get( 1 );
+
+	if( !IsValidPlayer( iEntity ) )
+		return MRES_Ignored;
+
+	int iTeam = GetEntProp( iEntity, Prop_Send, "m_iTeam" );
+	PDPickup pdPickup;
+
+	int iRef = EntIndexToEntRef( iThis );
+	if( !FindPickup( iRef, pdPickup ) ) {
+		PrintToServer("could not find data for pickup, this should not happen");
+		return MRES_Ignored;
+	}
+
+	EmitSoundToAll( szPropPickupSound, iEntity );
+	iPlayerCarrying[ iEntity ] += pdPickup.iAmount;
+	CalculateTeamLeader( iTeam );
+
+	RemovePickup( iRef );
+
+	return MRES_Handled;
 }
