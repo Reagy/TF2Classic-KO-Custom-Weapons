@@ -7,6 +7,16 @@
 #include <kocwtools>
 #include <dhooks>
 
+//TODO: implement refire limit
+//TODO: add outline to team leader
+
+/* MAP CHECKLIST
+	pd_watergate: working
+	pd_selbyen: working
+	pd_monster_bash: working
+	pd_suijin_event: working
+*/
+
 public Plugin myinfo = {
 	name = "Player Destruction Classic",
 	author = "Noclue",
@@ -21,11 +31,15 @@ public Plugin myinfo = {
 //stores PDCapZones using the object's entity reference for lookup
 StringMap smCaptureZones;
 
-#define PDZONE_SIZE 5
+#define PDZONE_SIZE sizeof( PDCapZone )
 enum struct PDCapZone {
 	float flCaptureDelay;
 	float flCaptureDelayOffset; //this needs to be clamped
 	bool bCanBlock;
+
+	//the default m_hTouchingEntities property doesn't populate on monster mash for some reason
+	//so it needs to be reimplemented manually
+	ArrayList hPlayersTouching;
 
 	ArrayList hCapOutputs[2]; //array of PDOutputs
 }
@@ -74,10 +88,12 @@ int iPointsToWin;
 int iRedScore;
 int iBlueScore;
 
-int iPlayerCarrying[MAXPLAYERS+1] = { 100, ... };
+int iPlayerCarrying[MAXPLAYERS+1];
 float flNextCaptureTime[MAXPLAYERS+1];
 int iRedTeamLeader = -1;
+int iRedLeaderDispenser = -1;
 int iBlueTeamLeader = -1;
+int iBlueLeaderDispenser = -1;
 
 int iRedTeamHolding = 0;
 int iBlueTeamHolding = 0;
@@ -174,19 +190,27 @@ enum struct PDPickup {
 	float flExpireTime;
 }
 
+float flPickupCooler[MAXPLAYERS+1];
 
 #define OUTPUT_CELLSIZE sizeof( PDOutput )
-#define HUD_UPDATEINTERVAL 0.1
+#define HUD_UPDATEINTERVAL 0.5
 
 DynamicDetour hParseEntity;
+DynamicDetour hRespawnTouch;
+DynamicDetour hDispenserRadius;
 DynamicHook hAcceptInput;
 DynamicHook hTouch;
 Handle hExtractValue;
 Handle hFindByName;
+Handle hInRespawnRoom;
+Handle hSetWinningTeam;
+Handle hLookupSequence;
 
 Handle hHudSyncRed;
 Handle hHudSyncBlue;
 Handle hHudSyncMiddle;
+
+#define DEBUG
 
 public void OnPluginStart() {
 	hHudSyncRed = CreateHudSynchronizer();
@@ -199,8 +223,21 @@ public void OnPluginStart() {
 	hParseEntity.Enable( Hook_Pre, Detour_ParseEntity );
 	hParseEntity.Enable( Hook_Post, Detour_ParseEntityPost );
 
+	hRespawnTouch = DynamicDetour.FromConf( hGameConf, "CFuncRespawnRoom::RespawnRoomTouch" );
+	hRespawnTouch.Enable( Hook_Pre, Detour_RespawnTouch );
+
 	hAcceptInput = DynamicHook.FromConf( hGameConf, "CBaseEntity::AcceptInput" );
 	hTouch = DynamicHook.FromConf( hGameConf, "CBaseEntity::Touch" );
+
+	hDispenserRadius = DynamicDetour.FromConf( hGameConf, "CObjectDispenser::GetDispenserRadius" );
+	hDispenserRadius.Enable( Hook_Pre, Detour_GetDispenserRadius );
+
+	StartPrepSDKCall( SDKCall_Static );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "PointInRespawnRoom" );
+	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	hInRespawnRoom = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Static );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "MapEntity_ExtractValue" );
@@ -209,6 +246,23 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
 	hExtractValue = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_GameRules );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameRules::SetWinningTeam" );
+	//virtual void SetWinningTeam( int team, int iWinReason, bool bForceMapReset = true, bool bSwitchTeams = false, bool bDontAddScore = false, bool bFinal = false ) { return; }
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hSetWinningTeam = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseAnimating::LookupSequence" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
+	hLookupSequence = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_EntityList );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CGlobalEntityList::FindEntityByName" );
@@ -225,15 +279,23 @@ public void OnPluginStart() {
 	HookEvent( "player_disconnect", Event_PlayerDisconnect );
 	HookEvent( "player_death", Event_PlayerDeath );
 
+#if defined DEBUG
+	RegConsoleCmd( "sm_pd_test", Command_Test, "test" );
+	PrintToServer( "DEBUG MODE IS ON IF YOU ARE READING THIS BUG CLUE" );
+#endif
 	delete hGameConf;
 }
 
 bool bMapIsPD;
 public void OnMapInit( const char[] szMapName ) {
-	if( StrContains( szMapName, "pd_", true ) == 0 )
-		bMapIsPD = true;
-	else
-		bMapIsPD = false;
+	bMapIsPD = StrContains( szMapName, "pd_", true ) == 0;
+
+	for( int i = 0; i < OUT_LAST; i++) {
+		hOutputs[i] = new ArrayList( OUTPUT_CELLSIZE );
+	}
+
+	smCaptureZones = new StringMap();
+	smPickups = new StringMap();
 }
 
 public void OnMapStart() {
@@ -242,13 +304,6 @@ public void OnMapStart() {
 
 	CreateTimer( HUD_UPDATEINTERVAL, Timer_HudThink, 0, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
 	RequestFrame( SpawnLogicDummy );
-
-	for( int i = 0; i < OUT_LAST; i++) {
-		hOutputs[i] = new ArrayList( OUTPUT_CELLSIZE );
-	}
-
-	smCaptureZones = new StringMap();
-	smPickups = new StringMap();
 
 	PrecacheSound("ui/chime_rd_2base_pos.wav");
 	PrecacheSound("ui/chime_rd_2base_neg.wav");
@@ -305,6 +360,9 @@ MRESReturn Detour_ParseEntityPost( DHookReturn hReturn, DHookParam hParams ) {
 void ParseLogicEntity( char szEntData[2048] ) {
 	static char szKeyBuffer[2048];
 
+	iHealDistance = 450;
+	iFlagResetDelay = 60;
+
 	int iIndex = GetNextKey( szEntData, sizeof( szEntData ), szKeyBuffer, sizeof( szKeyBuffer ) );
 	while( iIndex != -1 ) {
 		if( StrEqual( szKeyBuffer, "}" ) )
@@ -337,11 +395,11 @@ void ParseLogicEntity( char szEntData[2048] ) {
 
 	iRedScore = 0;
 	iRedTeamHolding = 0;
-	iBlueTeamHolding = 0;
 	iBlueScore = 0;
+	iBlueTeamHolding = 0;
 
-	iRedTeamLeader = -1;
-	iBlueTeamLeader = -1;
+	SetTeamLeader( -1, 2 );
+	SetTeamLeader( -1, 3 );
 
 	iPointsOnPlayerDeath = 1;
 	bAllowMaxScoreUpdating = true;
@@ -349,7 +407,7 @@ void ParseLogicEntity( char szEntData[2048] ) {
 	flCountdownTimer = 0.0;
 
 	for( int i = 0; i < MAXPLAYERS+1; i++ ) {
-		//iPlayerCarrying[i] = 0;
+		iPlayerCarrying[i] = 0;
 		flNextCaptureTime[i] = 0.0;
 	}
 
@@ -360,7 +418,7 @@ void ParseLogicEntity( char szEntData[2048] ) {
 	if( !StrEqual( szPropDropSound, "" ) )
 		PrecacheSound( szPropDropSound );
 	if( !StrEqual( szPropPickupSound, "" ) )
-		PrecacheModel( szPropPickupSound );
+		PrecacheSound( szPropPickupSound );
 }
 
 void ParseCaptureZone( int iEntity, char szEntData[2048] ) {
@@ -368,6 +426,7 @@ void ParseCaptureZone( int iEntity, char szEntData[2048] ) {
 
 	PDCapZone pdZone;
 
+	pdZone.hPlayersTouching = new ArrayList();
 	pdZone.hCapOutputs[0] = new ArrayList( sizeof( PDOutput ) );
 	pdZone.hCapOutputs[1] = new ArrayList( sizeof( PDOutput ) );
 
@@ -383,16 +442,20 @@ void ParseCaptureZone( int iEntity, char szEntData[2048] ) {
 		if( StrEqual( szKeyBuffer, "shouldBlock" ) )		TryPushNextInt( szEntData, sizeof( szEntData ), pdZone.bCanBlock );
 
 		for( int i = 0; i < OUTCAP_LAST; i++) {
-			if( StrEqual( szOutputCapNames[i], szKeyBuffer ) )	TryPushNextOutput( szEntData, sizeof( szEntData ), pdZone.hCapOutputs[i] );
+			if( StrEqual( szOutputCapNames[i], szKeyBuffer ) ) {
+				TryPushNextOutput( szEntData, sizeof( szEntData ), pdZone.hCapOutputs[i] );
+			}
 		}
 
 		iIndex = GetNextKey( szEntData, sizeof( szEntData ), szKeyBuffer, sizeof( szKeyBuffer ) );
 	}
 
 	int iRef = EntIndexToEntRef( iEntity );
-	//hTouch.HookEntity( Hook_Pre, iEntity, Hook_CaptureTouch );
 	IntToString( iRef, szKeyBuffer, sizeof( szKeyBuffer ) );
 	smCaptureZones.SetArray( szKeyBuffer, pdZone, PDZONE_SIZE );
+
+	SDKHook( iEntity, SDKHook_StartTouch, TestTouchStart );
+	SDKHook( iEntity, SDKHook_EndTouch, TestTouchEnd );
 
 	CreateTimer( 0.1, Timer_PDZoneThink, iRef, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
 }
@@ -437,6 +500,7 @@ void TryPushNextOutput( char[] szString, int iSize, ArrayList &hCapzone ) {
 	PDOutput pOutput;
 	static char szBuffer2[5][256]; //targetname, input, parameter, delay, refires 
 
+	ReplaceString( szBuffer, iSize, "\e", "," ); //selbyen uses the escape character instead of commas i guess?
 	ExplodeString( szBuffer, ",", szBuffer2, 5, 256 );
 
 	/*PrintToServer( "0: %s", szBuffer2[0] );
@@ -456,7 +520,6 @@ void TryPushNextOutput( char[] szString, int iSize, ArrayList &hCapzone ) {
 }
 
 void SpawnLogicDummy() {
-	PrintToServer("%i, %i", g_iLogicDummy, EntRefToEntIndex( g_iLogicDummy ) );
 	if( g_iLogicDummy != -1 && EntRefToEntIndex( g_iLogicDummy ) > 0 ) {
 		RemoveEntity( g_iLogicDummy );
 	}
@@ -485,11 +548,23 @@ void StrReduce( char[] szString, int iLength, int iStrip ) {
 */
 
 Action Event_PlayerSpawn( Event hEvent, const char[] szName, bool bDontBroadcast ) {
+	if( !bMapIsPD )
+		return Plugin_Continue;
+
 	CalculateMaxPoints();
 	return Plugin_Continue;
 }
 Action Event_PlayerDisconnect( Event hEvent, const char[] szName, bool bDontBroadcast ) {
+	if( !bMapIsPD )
+		return Plugin_Continue;
+
 	CalculateMaxPoints();
+
+	int iPlayer = hEvent.GetInt( "userid" );
+	iPlayer = GetClientOfUserId( iPlayer );
+
+	DropPickup( iPlayer, false );
+
 	return Plugin_Continue;
 }
 
@@ -517,19 +592,19 @@ MRESReturn Hook_AcceptInput( int iThis, DHookReturn hReturn, DHookParam hParams 
 	if( StrEqual( szInputName, "SetCountdownTimer" ) ) {
 		Address aStringTPointer = LoadFromAddress( hParams.GetAddress( 4 ), NumberType_Int32 );
 		LoadStringFromAddress( aStringTPointer, szString, sizeof( szString ) );
-		PrintToServer( "newtimer: %s", szString );
+		PrintToServer( "new timer: %s", szString );
 		flCountdownTimer = GetGameTime() + StringToFloat( szString );
 	}
 	if( StrEqual( szInputName, "SetFlagResetDelay" ) ) {
 		Address aStringTPointer = LoadFromAddress( hParams.GetAddress( 4 ), NumberType_Int32 );
 		LoadStringFromAddress( aStringTPointer, szString, sizeof( szString ) );
-		PrintToServer( "newpointsperdeath: %s", szString );
+		PrintToServer( "new flag reset delay: %s", szString );
 		iFlagResetDelay = StringToInt( szString );
 	}
 	if( StrEqual( szInputName, "SetPointsOnPlayerDeath" ) ) {
 		Address aStringTPointer = LoadFromAddress( hParams.GetAddress( 4 ), NumberType_Int32 );
 		LoadStringFromAddress( aStringTPointer, szString, sizeof( szString ) );
-		PrintToServer( "newpointsperdeath: %s", szString );
+		PrintToServer( "new points per death: %s", szString );
 		iPointsOnPlayerDeath = StringToInt( szString );
 	}
 
@@ -542,7 +617,6 @@ void FireFakeEvent( int iEvent, float flOverride = -1.0 ) {
 	for( int j = 0; j < hOutputs[ iEvent ].Length; j++ ) {
 		hOutputs[ iEvent ].GetArray( j, pOutput );
 
-		//PrintToServer( "%f", pOutput.flDelay );
 		if( pOutput.flDelay > 0.0 ) {
 			DataPack dPack = new DataPack();
 
@@ -562,10 +636,10 @@ void FireFakeEvent( int iEvent, float flOverride = -1.0 ) {
 
 void FireFakeEventZone( PDCapZone pdZone, int iEvent ) {
 	PDOutput pOutput;
+	PrintToServer( szOutputCapNames[ iEvent ] );
 	for( int j = 0; j < pdZone.hCapOutputs[ iEvent ].Length; j++ ) {
 		pdZone.hCapOutputs[ iEvent ].GetArray( j, pOutput );
 
-		//PrintToServer( "%f", pOutput.flDelay );
 		if( pOutput.flDelay > 0.0 ) {
 			DataPack dPack = new DataPack();
 
@@ -642,8 +716,11 @@ void SetPoints( int iTeam, int iAmount = 1 ) {
 		if( iRedScore != iOldAmount )
 			FireFakeEvent( OUT_ONREDSCORECHANGED, float( iRedScore ) / float( iPointsToWin ) );
 
-		if( iRedScore == iPointsToWin )
+		if( iRedScore == iPointsToWin ) {
 			FireFakeEvent( OUT_ONREDHITMAXPOINTS );
+			SetFinale( 2 );
+		}
+			
 	}
 	else {
 		iOldAmount = iBlueScore;
@@ -661,23 +738,34 @@ void SetPoints( int iTeam, int iAmount = 1 ) {
 		if( iBlueScore != iOldAmount )
 			FireFakeEvent( OUT_ONBLUESCORECHANGED, float( iBlueScore ) / float( iPointsToWin ) );
 
-		if( iBlueScore == iPointsToWin )
+		if( iBlueScore == iPointsToWin ) {
 			FireFakeEvent( OUT_ONBLUEHITMAXPOINTS );
+			SetFinale( 3 );
+		}
 	}
+}
+
+void SetFinale( int iTeam ) {
+	CreateTimer( flFinaleLength, Timer_EndFinale, iTeam, TIMER_FLAG_NO_MAPCHANGE );
+}
+
+Action Timer_EndFinale( Handle hTimer, int iTeam ) {
+	FireFakeEvent( iTeam == 2 ? OUT_ONREDFINALEPERIODEND : OUT_ONBLUEFINALEPERIODEND );
+	SetWinningTeam( iTeam );
+	return Plugin_Continue;
 }
 
 void CalculateMaxPoints() {
 	if( !bAllowMaxScoreUpdating )
 		return;
 
-	//iPointsToWin = 100;
 	iPointsToWin = MaxInt( iMinPoints, GetClientCount( true ) * iPointsPerPlayer );
 }
 
 void CalculateTeamLeader( int iTeam ) {
 	int iHighest = -1;
 	int iHighestAmount = 0;
-	for( int i = 1; i < MaxClients; i++ ) {
+	for( int i = 1; i <= MaxClients; i++ ) {
 		if( !IsClientInGame( i ) )
 			continue;
 
@@ -693,22 +781,161 @@ void CalculateTeamLeader( int iTeam ) {
 		}
 	}
 
-	if( iHighest == -1 )
+	SetTeamLeader( iHighest, iTeam );
+}
+
+void SetTeamLeader( int iPlayer, int iTeam ) {
+	if( iTeam == 2 ) {
+		if( iRedTeamLeader == iPlayer )
+			return;
+
+		iRedTeamLeader = iPlayer;
+	}
+	else {
+		if( iBlueTeamLeader == iPlayer )
+			return;
+
+		iBlueTeamLeader = iPlayer;
+	}
+
+	int iDispenser = EntRefToEntIndex( iTeam == 2 ? iRedLeaderDispenser : iBlueLeaderDispenser );
+	if( iDispenser > 0 ) {
+		RemoveEntity( iDispenser );
+		if( iTeam == 2 ) {
+			iRedLeaderDispenser = -1;
+		}
+		else {
+			iBlueLeaderDispenser = -1;
+		}
+	}
+
+	if( iPlayer == -1 )
 		return;
 
+	iDispenser = CreateEntityByName( "mapobj_cart_dispenser" );
+	SetEntProp( iDispenser, Prop_Send, "m_iTeamNum", iTeam );
+	SetEntPropEnt( iDispenser, Prop_Send, "m_hOwnerEntity", iPlayer );
+	DispatchSpawn( iDispenser );
+
+	float vecPos[3];
+	GetEntPropVector( iPlayer, Prop_Send, "m_vecOrigin", vecPos );
+	TeleportEntity( iDispenser, vecPos );
+	ActivateEntity( iDispenser );
+
+	ParentModel( iDispenser, iPlayer );
+	SetEntityMoveType( iDispenser, MOVETYPE_NONE );
+	
+	RequestFrame( Frame_SetupDispenserZone, EntIndexToEntRef( iDispenser ) );
+
+	if( iTeam == 2 ) {
+		iRedLeaderDispenser = EntIndexToEntRef( iDispenser );
+	}
+	else {
+		iBlueLeaderDispenser = EntIndexToEntRef( iDispenser );
+	}
+}
+
+//Action Timer_SetupDispenserZone( Handle hTimer, int iDispenser ) {
+void Frame_SetupDispenserZone( int iDispenser ) {
+	iDispenser = EntRefToEntIndex( iDispenser );
+	if( iDispenser == -1 )
+		return;
+
+	int iTriggerZone = LoadEntityHandleFromAddress( GetEntityAddress( iDispenser ) + view_as<Address>(2456) );
+	if( iTriggerZone == -1 )
+		return;
+
+	ParentModel( iTriggerZone, iDispenser );
+	SetEntityMoveType( iTriggerZone, MOVETYPE_NONE );
+
+	float vecMins[3];
+	float vecMaxs[3];
+
+	vecMins[0] = float( -iHealDistance );
+	vecMins[1] = float( -iHealDistance );
+	vecMins[2] = float( -iHealDistance );
+	vecMaxs[0] = float( iHealDistance );
+	vecMaxs[1] = float( iHealDistance );
+	vecMaxs[2] = float( iHealDistance );
+
+	SetSize( iTriggerZone, vecMins, vecMaxs );
+
+	return;
+}
+
+MRESReturn Detour_GetDispenserRadius( int iThis, DHookReturn hReturn ) {
+	int iThisRef = EntIndexToEntRef( iThis );
+	int iThisTeam = GetEntProp( iThis, Prop_Send, "m_iTeamNum" );
+	if( iThisRef != ( iThisTeam == 2 ? iRedLeaderDispenser : iBlueLeaderDispenser ) )
+		return MRES_Ignored;
+
+	hReturn.Value = float( iHealDistance );
+	return MRES_Supercede;
+}
+
+void CalculateTeamHolding( int iTeam ) {
+	int iAmount = 0;
+	for( int i = 1; i < MaxClients; i++ ) {
+		if( !IsClientInGame( i ) )
+			continue;
+
+		if( GetEntProp( i, Prop_Send, "m_iTeamNum" ) != iTeam )
+			continue;
+
+		iAmount += iPlayerCarrying[i];
+	}
+
 	if( iTeam == 2 )
-		iRedTeamLeader = iHighest;
+		iRedTeamHolding = iAmount;
 	else
-		iBlueTeamLeader = iHighest;
+		iBlueTeamHolding = iAmount;
+}
+
+Action TestTouchStart( int iEntity, int iOther ) {
+	if( !IsValidPlayer( iOther ) )
+		return Plugin_Continue;
+
+	int iRef = EntIndexToEntRef( iEntity );
+	
+	PDCapZone pdZone;
+	FindCaptureZone( iRef, pdZone );
+
+	int iOtherRef = EntIndexToEntRef( iOther );
+	if( pdZone.hPlayersTouching.FindValue( iOtherRef ) == -1 ) {
+		pdZone.hPlayersTouching.Push( iOtherRef );
+	}
+
+	return Plugin_Continue;
+}
+Action TestTouchEnd( int iEntity, int iOther ) {
+	if( !IsValidPlayer( iOther ) )
+		return Plugin_Continue;
+
+	int iRef = EntIndexToEntRef( iEntity );
+	
+	PDCapZone pdZone;
+	FindCaptureZone( iRef, pdZone );
+
+	int iOtherRef = EntIndexToEntRef( iOther );
+	int iIndex = pdZone.hPlayersTouching.FindValue( iOtherRef );
+	if( iIndex != -1 ) {
+		pdZone.hPlayersTouching.Erase( iIndex );
+	}
+
+	return Plugin_Continue;
+}
+
+bool FindCaptureZone( int iRef, PDCapZone pdZone ) {
+	static char szRefString[128];
+
+	IntToString( iRef, szRefString, sizeof( szRefString ) );
+	return smCaptureZones.GetArray( szRefString, pdZone, PDZONE_SIZE );
 }
 
 //manually read out the contents of m_hTouchingEntities
 Action Timer_PDZoneThink( Handle hTimer, int iData ) {
 	PDCapZone pdZone;
-	static char szRefString[128];
-
-	IntToString( iData, szRefString, sizeof( szRefString ) );
-	smCaptureZones.GetArray( szRefString, pdZone, PDZONE_SIZE );
+	FindCaptureZone( iData, pdZone );
 
 	int iIndex = EntRefToEntIndex( iData );
 	if( iIndex == -1 )
@@ -725,23 +952,22 @@ Action Timer_PDZoneThink( Handle hTimer, int iData ) {
 	int iInBlue[MAXPLAYERS];
 	int iBlueNext = 0;
 
-	int iVectorSize = LoadFromEntity( iIndex, 1148 );
-	for( int i = 0; i < iVectorSize; i++ ) {
-		Address aPointer = LoadFromEntity( iIndex, 1136 + (i * 4) );
-		int iPointer = LoadEntityHandleFromAddress( aPointer );
+	for( int i = 0; i < pdZone.hPlayersTouching.Length; i++ ) {
+		int iPlayer = pdZone.hPlayersTouching.Get( i );
+		iPlayer = EntRefToEntIndex( iPlayer );
 
-		if( !IsValidPlayer( iPointer ) )
+		if( iPlayer == -1)
 			continue;
 
-		int iTeam = GetEntProp( iPointer, Prop_Send, "m_iTeamNum" );
+		int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" );
 		if( iTeam == 2 ) {
 			bRedInZone = true;
-			iInRed[iRedNext] = iPointer;
+			iInRed[ iRedNext ] = iPlayer;
 			iRedNext++;
 		}
 		else if( iTeam == 3 ) {
 			bBlueInZone = true;
-			iInBlue[iBlueNext] = iPointer;
+			iInBlue[ iBlueNext ] = iPlayer;
 			iBlueNext++;
 		}
 	}
@@ -750,22 +976,21 @@ Action Timer_PDZoneThink( Handle hTimer, int iData ) {
 		return Plugin_Continue;
 
 	float flCapDelay = pdZone.flCaptureDelay - ( pdZone.flCaptureDelayOffset * GetClientCount( true ) );
-	for( int i = 0; i < iVectorSize; i++ ) {
-		Address aPointer = LoadFromEntity( iIndex, 1136 + (i * 4) );
-		int iPointer = LoadEntityHandleFromAddress( aPointer );
-
-		if( !IsValidPlayer( iPointer ) )
+	for( int i = 0; i < pdZone.hPlayersTouching.Length; i++ ) {
+		int iPlayer = pdZone.hPlayersTouching.Get( i );
+		iPlayer = EntRefToEntIndex( iPlayer );
+		
+		if( iPlayer == -1)
 			continue;
 
-		if( iPlayerCarrying[ iPointer ] == 0 || GetGameTime() < flNextCaptureTime[ iPointer ] )
+		if( iPlayerCarrying[ iPlayer ] == 0 || GetGameTime() < flNextCaptureTime[ iPlayer ] )
 			continue;
 
-		int iTeam = GetEntProp( iPointer, Prop_Send, "m_iTeamNum" );
+
+		int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" );
 		int iPointTeam = GetEntProp( iIndex, Prop_Data, "m_iTeamNum" );
 		if( iPointTeam != 0 && iPointTeam != iTeam )
 			continue;
-
-		PrintToServer("%i %i", iTeam, iPointTeam );
 
 		if( iTeam == 2 ) {
 			FireFakeEventZone( pdZone, OUTCAP_REDCAP );
@@ -780,14 +1005,20 @@ Action Timer_PDZoneThink( Handle hTimer, int iData ) {
 			EmitSound( iInRed, iRedNext, "ui/chime_rd_2base_neg.wav", -2, SNDCHAN_AUTO, SNDLEVEL_MINIBIKE, SND_CHANGEPITCH | SND_CHANGEVOL, 0.4, RoundToNearest( flNewPitch ) );
 		}
 
-		iPlayerCarrying[ iPointer ]--;
-		flNextCaptureTime[ iPointer ] = GetGameTime() + flCapDelay;
-
-		
+		SetPlayerPoints( iPlayer, iPlayerCarrying[ iPlayer ] - 1 );
+		flNextCaptureTime[ iPlayer ] = GetGameTime() + flCapDelay;
 	}
 
 	return Plugin_Continue;
 }
+
+void SetPlayerPoints( int iPlayer, int iPoints ) {
+	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" );
+	iPlayerCarrying[ iPlayer ] = MaxInt( 0, iPoints );
+
+	CalculateTeamHolding( iTeam );
+	CalculateTeamLeader( iTeam );
+} 
 
 Action Timer_HudThink( Handle hTimer ) {
 	for ( int i = 1; i <= MaxClients; i++ ) {
@@ -827,8 +1058,6 @@ void Hud_Display( int iPlayer ) {
 	if( flCountdownTimer > GetGameTime() ) {
 		Format( szBuffer, sizeof( szBuffer ), "       %-.0f", flCountdownTimer - GetGameTime() );
 		StrCat( szFinal, sizeof( szFinal ), szBuffer );
-
-		
 	}
 	SetHudTextParamsEx( 0.475, 0.91, 20.0, { 255, 255, 255, 1}, {255,255,255,0}, 0, 6.0, 0.0, 0.0 );
 	ShowSyncHudText( iPlayer, hHudSyncMiddle, szFinal );	
@@ -839,28 +1068,38 @@ void Hud_Display( int iPlayer ) {
 */
 
 Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast ) {
-	int iVictim = hEvent.GetInt( "victim_entindex" );
+	if( !bMapIsPD )
+		return Plugin_Continue;
 
+	int iVictim = hEvent.GetInt( "userid" );
+	iVictim = GetClientOfUserId( iVictim );
 	int iAttacker = hEvent.GetInt( "attacker" );
 	iAttacker = GetClientOfUserId( iAttacker );
 
 	//don't drop extra points on suicide
-	bool bSuicide = iVictim == iAttacker;
+	bool bSuicide = ( iVictim == iAttacker );
+	DropPickup( iVictim, !bSuicide );
 
-	int iPointsToDrop = iPlayerCarrying[ iVictim ];
-	if( !bSuicide )
+	return Plugin_Continue;
+}
+
+int DropPickup( int iPlayer, bool bAddPoints ) {
+	int iPointsToDrop = iPlayerCarrying[ iPlayer ];
+	if( bAddPoints )
 		iPointsToDrop+=iPointsOnPlayerDeath;
-
-	if( iPointsToDrop < 0 )
-		return Plugin_Continue;
+	if( iPointsToDrop <= 0 )
+		return -1;
 
 	float vecPlayerPos[3];
-	GetEntPropVector( iVictim, Prop_Send, "m_vecOrigin", vecPlayerPos );
+	GetEntPropVector( iPlayer, Prop_Send, "m_vecOrigin", vecPlayerPos );
 
+	iPlayerCarrying[ iPlayer ] = 0;
+	CalculateTeamHolding( GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) );
+	CalculateTeamLeader( GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) );
 	int iEntity = CreatePickup( iPointsToDrop );
 	TeleportEntity( iEntity, vecPlayerPos );
 
-	return Plugin_Continue;
+	return iEntity;
 }
 
 int CreatePickup( int iAmount ) {
@@ -869,10 +1108,8 @@ int CreatePickup( int iAmount ) {
 	pdPickup.flExpireTime = GetGameTime() + float( iFlagResetDelay );
 
 	int iEntity = CreateEntityByName( "prop_dynamic" );
-
+	SetSolidFlags( iEntity, FSOLID_TRIGGER );
 	SetEntityModel( iEntity, szPropModelName );
-	hTouch.HookEntity( Hook_Pre, iEntity, Hook_PickupTouch );
-
 	DispatchSpawn( iEntity );
 
 	static char szRefBuffer[48];
@@ -880,9 +1117,23 @@ int CreatePickup( int iAmount ) {
 	IntToString( iRef, szRefBuffer, sizeof( szRefBuffer ) );
 	smPickups.SetArray( szRefBuffer, pdPickup, PDPICKUP_SIZE );
 
-	EmitSoundToAll( szPropDropSound, iEntity );
+	EmitPDSoundToAll( szPropDropSound, iEntity );
+
+	int iSequence = SDKCall( hLookupSequence, iEntity, "spin" );
+	if( iSequence != -1 ) {
+		SetVariantString( "spin" );
+		AcceptEntityInput( iEntity, "SetAnimation" );
+	} else {
+		iSequence = SDKCall( hLookupSequence, iEntity, "idle" );
+		if( iSequence != -1 ) {
+			SetVariantString( "idle" );
+			AcceptEntityInput( iEntity, "SetAnimation" );
+		}
+	}
+	
 
 	CreateTimer( float( iFlagResetDelay ), Timer_PickupThink, iRef, TIMER_FLAG_NO_MAPCHANGE );
+	hTouch.HookEntity( Hook_Pre, iEntity, Hook_PickupTouch );
 
 	return iEntity;
 }
@@ -915,7 +1166,15 @@ MRESReturn Hook_PickupTouch( int iThis, DHookParam hParams ) {
 	if( !IsValidPlayer( iEntity ) )
 		return MRES_Ignored;
 
-	int iTeam = GetEntProp( iEntity, Prop_Send, "m_iTeam" );
+	if( GetGameTime() < flPickupCooler[ iEntity ] )
+		return MRES_Ignored;
+
+	float vecPos[3];
+	GetEntPropVector( iEntity, Prop_Send, "m_vecOrigin", vecPos );
+	if( SDKCall( hInRespawnRoom, iEntity, vecPos ) )
+		return MRES_Ignored;
+
+	int iTeam = GetEntProp( iEntity, Prop_Send, "m_iTeamNum" );
 	PDPickup pdPickup;
 
 	int iRef = EntIndexToEntRef( iThis );
@@ -924,11 +1183,55 @@ MRESReturn Hook_PickupTouch( int iThis, DHookParam hParams ) {
 		return MRES_Ignored;
 	}
 
-	EmitSoundToAll( szPropPickupSound, iEntity );
+	EmitPDSoundToAll( szPropPickupSound, iEntity );
 	iPlayerCarrying[ iEntity ] += pdPickup.iAmount;
+	CalculateTeamHolding( iTeam );
 	CalculateTeamLeader( iTeam );
 
 	RemovePickup( iRef );
 
 	return MRES_Handled;
+}
+
+MRESReturn Detour_RespawnTouch( int iThis, DHookParam hParams ) {
+	int iEntity = hParams.Get( 1 );
+
+	if( !IsValidPlayer( iEntity ) )
+		return MRES_Ignored;
+
+	if( iPlayerCarrying[ iEntity ] <= 0 )
+		return MRES_Ignored;
+
+	DropPickup( iEntity, false );
+	flPickupCooler[ iEntity ] = GetGameTime() + 1.0;
+
+	return MRES_Handled;
+}
+
+Action Command_Test( int iClient, int iArgs ) {
+	if(iArgs < 1) return Plugin_Handled;
+
+	int iMode = GetCmdArgInt( 1 );
+	switch( iMode ) {
+	case 0: {
+		int iEntity = CreatePickup( 1 );
+		float vecPos[3];
+		GetEntPropVector( iClient, Prop_Send, "m_vecOrigin", vecPos );
+		TeleportEntity( iEntity, vecPos );
+		return Plugin_Handled;
+	}
+	}
+	
+	return Plugin_Handled;
+}
+
+void SetWinningTeam( int iTeam ) {
+	SDKCall( hSetWinningTeam, iTeam, 0, true, false, false, false );
+}
+
+void EmitPDSoundToAll( char[] szString, int iSource ) {
+	if( StrContains( szString, ".wav" ) || StrContains( szString, ".mp3" ) )
+		EmitSoundToAll( szString, iSource );
+	else
+		EmitGameSoundToAll( szString, iSource );
 }
