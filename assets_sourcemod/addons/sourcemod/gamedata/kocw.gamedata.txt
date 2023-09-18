@@ -168,6 +168,36 @@
 		
 		"Functions"
 		{
+			"CBaseEntity::Touch"
+			{
+				"offset"		"CBaseEntity::Touch"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			"CFuncRespawnRoom::RespawnRoomTouch"
+			{
+				"signature"		"CFuncRespawnRoom::RespawnRoomTouch"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			
 			"CBaseEntity::AcceptInput"
 			{
 				"offset"		"CBaseEntity::AcceptInput"
@@ -306,6 +336,13 @@
 					}
 				}
 				
+			}
+			"CTFPlayer::DropFlag"
+			{
+				"signature"		"CTFPlayer::DropFlag"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
 			}
 			"CTFPlayerShared::Burn"
 			{
@@ -551,6 +588,13 @@
 				"signature"		"CObjectSentrygun::Attack"
 				"callconv"		"thiscall"
 				"return"		"void"
+				"this"			"entity"
+			}
+			"CObjectDispenser::GetDispenserRadius"
+			{
+				"signature"		"CObjectDispenser::GetDispenserRadius"
+				"callconv"		"thiscall"
+				"return"		"float"
 				"this"			"entity"
 			}
 			"CObjectDispenser::GetHealRate"
@@ -863,6 +907,17 @@
 				"linux"		"@_ZN10CUtlVectorI7CHandleI11CBaseEntityE10CUtlMemoryIS2_iEE12InsertBeforeEiRKS2_"
 			}
 		
+			"CFuncRespawnRoom::RespawnRoomTouch"
+			{
+				"library"	"server"
+				"linux"		"@_ZN16CFuncRespawnRoom16RespawnRoomTouchEP11CBaseEntity"
+			}
+			"PointInRespawnRoom"
+			{
+				"library"	"server"
+				"linux"		"@_Z18PointInRespawnRoomP11CBaseEntityRK6Vector"
+			}
+		
             //player
 			"CBaseCombatCharacter::SetAmmoCount" //good
 			{
@@ -899,6 +954,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CTFPlayer19ApplyPushFromDamageERK15CTakeDamageInfo6Vector"
+			}
+			"CTFPlayer::DropFlag"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFPlayer8DropFlagEv"
 			}
 			
 			"CTFPlayerShared::Burn" //good
@@ -953,6 +1013,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CObjectDispenser11GetHealRateEv"
+			}
+			"CObjectDispenser::GetDispenserRadius"
+			{
+				"library"	"server"
+				"linux"		"@_ZN16CObjectDispenser18GetDispenserRadiusEv"
 			}
             
             //weapons
@@ -1062,6 +1127,12 @@
 		
             //other
         
+			"CBaseAnimating::LookupSequence"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CBaseAnimating14LookupSequenceEPKc"
+			}
+			
 			"CBaseEntity::SetNextThink" //good
 			{
 				"library"	"server"
@@ -1088,6 +1159,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN12CTFGameRules29ApplyOnDamageAliveModifyRulesERK15CTakeDamageInfoP11CBaseEntityRNS_20DamageModifyExtras_tE"
+			}
+			"CTFGameRules::SetWinningTeam"
+			{
+				"library"	"server"
+				"linux"		"@_ZN12CTFGameRules14SetWinningTeamEiibbbb"
 			}
 			
 			"CTFAmmoPack::PackTouch"

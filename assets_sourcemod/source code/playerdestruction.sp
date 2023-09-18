@@ -8,7 +8,6 @@
 #include <dhooks>
 
 //TODO: implement refire limit
-//TODO: add outline to team leader
 
 /* MAP CHECKLIST
 	pd_watergate: working
@@ -24,6 +23,9 @@ public Plugin myinfo = {
 	version = "1.0",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
+
+#define REDCOLOR { 184, 56, 59, 1 }
+#define BLUCOLOR { 88, 133, 162, 1 }
 
 //func_capturezone
 //these already exist but need additional functionality
@@ -90,10 +92,14 @@ int iBlueScore;
 
 int iPlayerCarrying[MAXPLAYERS+1];
 float flNextCaptureTime[MAXPLAYERS+1];
+
 int iRedTeamLeader = -1;
-int iRedLeaderDispenser = -1;
+int iRedLeaderDispenser = INVALID_ENT_REFERENCE;
+int iRedLeaderGlow = INVALID_ENT_REFERENCE;
+
 int iBlueTeamLeader = -1;
-int iBlueLeaderDispenser = -1;
+int iBlueLeaderDispenser = INVALID_ENT_REFERENCE;
+int iBlueLeaderGlow = INVALID_ENT_REFERENCE;
 
 int iRedTeamHolding = 0;
 int iBlueTeamHolding = 0;
@@ -198,6 +204,7 @@ float flPickupCooler[MAXPLAYERS+1];
 DynamicDetour hParseEntity;
 DynamicDetour hRespawnTouch;
 DynamicDetour hDispenserRadius;
+DynamicDetour hDropFlag;
 DynamicHook hAcceptInput;
 DynamicHook hTouch;
 Handle hExtractValue;
@@ -232,6 +239,9 @@ public void OnPluginStart() {
 	hDispenserRadius = DynamicDetour.FromConf( hGameConf, "CObjectDispenser::GetDispenserRadius" );
 	hDispenserRadius.Enable( Hook_Pre, Detour_GetDispenserRadius );
 
+	hDropFlag = DynamicDetour.FromConf( hGameConf, "CTFPlayer::DropFlag" );
+	hDropFlag.Enable( Hook_Pre, Detour_DropFlag );
+
 	StartPrepSDKCall( SDKCall_Static );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "PointInRespawnRoom" );
 	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
@@ -249,7 +259,6 @@ public void OnPluginStart() {
 
 	StartPrepSDKCall( SDKCall_GameRules );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameRules::SetWinningTeam" );
-	//virtual void SetWinningTeam( int team, int iWinReason, bool bForceMapReset = true, bool bSwitchTeams = false, bool bDontAddScore = false, bool bFinal = false ) { return; }
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
@@ -281,7 +290,6 @@ public void OnPluginStart() {
 
 #if defined DEBUG
 	RegConsoleCmd( "sm_pd_test", Command_Test, "test" );
-	PrintToServer( "DEBUG MODE IS ON IF YOU ARE READING THIS BUG CLUE" );
 #endif
 	delete hGameConf;
 }
@@ -337,7 +345,7 @@ MRESReturn Detour_ParseEntityPost( DHookReturn hReturn, DHookParam hParams ) {
 	static char szEntData[2048];
 	static char szKeyBuffer[2048];
 
-	//trying to pass in as a cbaseentity causes the engine to have a stroke so just get by address
+	//trying to pass in as a cbaseentity causes sourcemod to have a stroke so just get by address
 	Address aEntity = hParams.GetAddress( 1 );
 	aEntity = LoadFromAddress( aEntity, NumberType_Int32 );
 	if( aEntity == Address_Null )
@@ -406,9 +414,14 @@ void ParseLogicEntity( char szEntData[2048] ) {
 
 	flCountdownTimer = 0.0;
 
+	#if defined DEBUG
+		PrintToChatAll( "[PD:C] DEBUG MODE IS ENABLED" );
+	#endif
+
 	for( int i = 0; i < MAXPLAYERS+1; i++ ) {
 		iPlayerCarrying[i] = 0;
 		flNextCaptureTime[i] = 0.0;
+		flPickupCooler[i] = GetGameTime();
 	}
 
 	CalculateMaxPoints();
@@ -431,7 +444,9 @@ void ParseCaptureZone( int iEntity, char szEntData[2048] ) {
 	pdZone.hCapOutputs[1] = new ArrayList( sizeof( PDOutput ) );
 
 	int iIndex = GetNextKey( szEntData, sizeof( szEntData ), szKeyBuffer, sizeof( szKeyBuffer ) );
-	PrintToServer("parsing capture zone");
+	#if defined DEBUG
+		PrintToServer("pasing capture zone");
+	#endif
 	while( iIndex != -1 ) {
 		if( StrEqual( szKeyBuffer, "}" ) )
 			break;
@@ -475,7 +490,9 @@ void TryPushNextInt( char[] szString, int iSize, int &iValue ) {
 
 	iValue = StringToInt( szBuffer );
 
-	PrintToServer("KEYPUSHINT: %s", szBuffer);
+	#if defined DEBUG
+		PrintToServer("KEYPUSHINT: %s", szBuffer);
+	#endif
 }
 
 void TryPushNextFloat( char[] szString, int iSize, float &flValue ) {
@@ -487,7 +504,9 @@ void TryPushNextFloat( char[] szString, int iSize, float &flValue ) {
 
 	flValue = StringToFloat( szBuffer );
 
-	PrintToServer("KEYPUSHFLOAT: %s", szBuffer);
+	#if defined DEBUG
+		PrintToServer("KEYPUSHFLOAT: %s", szBuffer);
+	#endif
 }
 
 void TryPushNextOutput( char[] szString, int iSize, ArrayList &hCapzone ) {
@@ -576,7 +595,9 @@ public void OnGameFrame() {
 MRESReturn Hook_AcceptInput( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	static char szInputName[256];
 	hParams.GetString( 1, szInputName, sizeof( szInputName ) );
-	PrintToServer("received event: %s", szInputName);
+	#if defined DEBUG
+		PrintToServer( "recieved event: %s", szInputName );
+	#endif
 
 	static char szString[128];
 
@@ -592,19 +613,25 @@ MRESReturn Hook_AcceptInput( int iThis, DHookReturn hReturn, DHookParam hParams 
 	if( StrEqual( szInputName, "SetCountdownTimer" ) ) {
 		Address aStringTPointer = LoadFromAddress( hParams.GetAddress( 4 ), NumberType_Int32 );
 		LoadStringFromAddress( aStringTPointer, szString, sizeof( szString ) );
-		PrintToServer( "new timer: %s", szString );
+		#if defined DEBUG
+			PrintToServer("new timer: %s", szString);
+		#endif
 		flCountdownTimer = GetGameTime() + StringToFloat( szString );
 	}
 	if( StrEqual( szInputName, "SetFlagResetDelay" ) ) {
 		Address aStringTPointer = LoadFromAddress( hParams.GetAddress( 4 ), NumberType_Int32 );
 		LoadStringFromAddress( aStringTPointer, szString, sizeof( szString ) );
-		PrintToServer( "new flag reset delay: %s", szString );
+		#if defined DEBUG
+			PrintToServer("new flag reset delay: %s", szString);
+		#endif
 		iFlagResetDelay = StringToInt( szString );
 	}
 	if( StrEqual( szInputName, "SetPointsOnPlayerDeath" ) ) {
 		Address aStringTPointer = LoadFromAddress( hParams.GetAddress( 4 ), NumberType_Int32 );
 		LoadStringFromAddress( aStringTPointer, szString, sizeof( szString ) );
-		PrintToServer( "new points per death: %s", szString );
+		#if defined DEBUG
+			PrintToServer("new points per player death: %s", szString);
+		#endif
 		iPointsOnPlayerDeath = StringToInt( szString );
 	}
 
@@ -636,7 +663,6 @@ void FireFakeEvent( int iEvent, float flOverride = -1.0 ) {
 
 void FireFakeEventZone( PDCapZone pdZone, int iEvent ) {
 	PDOutput pOutput;
-	PrintToServer( szOutputCapNames[ iEvent ] );
 	for( int j = 0; j < pdZone.hCapOutputs[ iEvent ].Length; j++ ) {
 		pdZone.hCapOutputs[ iEvent ].GetArray( j, pOutput );
 
@@ -684,7 +710,9 @@ Action Timer_FireFakeEvent( Handle hTimer, DataPack dPack ) {
 void CallEvent( PDOutput pOutput, float flOverride = -1.0 ) {
 	int iEntity = SDKCall( hFindByName, -1, pOutput.szTargetname, -1, -1, -1, Address_Null );
 	while( iEntity != -1 ) {
-		PrintToServer("firing event: %s", pOutput.szTargetInput );
+		#if defined DEBUG
+			PrintToServer( "calling event: %s", pOutput.szTargetInput );
+		#endif
 
 		if( flOverride == -1.0 )
 			SetVariantString( pOutput.szParameter );
@@ -802,11 +830,22 @@ void SetTeamLeader( int iPlayer, int iTeam ) {
 	if( iDispenser > 0 ) {
 		RemoveEntity( iDispenser );
 		if( iTeam == 2 ) {
-			iRedLeaderDispenser = -1;
+			iRedLeaderDispenser = INVALID_ENT_REFERENCE;
 		}
 		else {
-			iBlueLeaderDispenser = -1;
+			iBlueLeaderDispenser = INVALID_ENT_REFERENCE;
 		}
+	}
+
+	int iGlow = EntRefToEntIndex( iTeam == 2 ? iRedLeaderGlow : iBlueLeaderGlow );
+	if( iGlow > 0 ) {
+		int iOld = GetEntPropEnt( iGlow, Prop_Send, "m_hTarget" );
+		SetEntProp( iOld, Prop_Send, "m_bGlowEnabled", false );
+		RemoveEntity( iGlow );
+		if( iTeam == 2 )
+			iRedLeaderGlow = INVALID_ENT_REFERENCE;
+		else
+			iBlueLeaderGlow = INVALID_ENT_REFERENCE;
 	}
 
 	if( iPlayer == -1 )
@@ -827,12 +866,45 @@ void SetTeamLeader( int iPlayer, int iTeam ) {
 	
 	RequestFrame( Frame_SetupDispenserZone, EntIndexToEntRef( iDispenser ) );
 
+	SetPlayerOutline( iPlayer );
+
 	if( iTeam == 2 ) {
 		iRedLeaderDispenser = EntIndexToEntRef( iDispenser );
 	}
 	else {
 		iBlueLeaderDispenser = EntIndexToEntRef( iDispenser );
 	}
+}
+
+void SetPlayerOutline( int iPlayer ) {
+	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" );
+	int iGlow = CreateEntityByName( "tf_glow" );
+
+	static char szOldName[ 64 ];
+	GetEntPropString( iPlayer, Prop_Data, "m_iName", szOldName, sizeof(szOldName) );
+
+	char szNewName[ 128 ], szClassname[ 64 ];
+	GetEntityClassname( iPlayer, szClassname, sizeof( szClassname ) );
+	Format( szNewName, sizeof( szNewName ), "%s%i", szClassname, iPlayer );
+	DispatchKeyValue( iPlayer, "targetname", szNewName );
+
+	DispatchKeyValue( iGlow, "target", szNewName );
+	DispatchSpawn( iGlow );
+	
+	SetEntPropString( iPlayer, Prop_Data, "m_iName", szOldName );
+	
+	ParentModel( iGlow, iPlayer );
+
+	SetEdictFlags( iGlow, 0 );
+	SetVariantColor( iTeam == 2 ? REDCOLOR : BLUCOLOR );
+	AcceptEntityInput( iGlow, "SetGlowColor" );
+
+	SetEntProp( iPlayer, Prop_Send, "m_bGlowEnabled", true );
+
+	if( iTeam == 2 )
+		iRedLeaderGlow = EntIndexToEntRef( iGlow );
+	else
+		iBlueLeaderGlow = EntIndexToEntRef( iGlow );
 }
 
 //Action Timer_SetupDispenserZone( Handle hTimer, int iDispenser ) {
@@ -1039,7 +1111,7 @@ void Hud_Display( int iPlayer ) {
 	Format( szBuffer, sizeof( szBuffer ), "Holding: %i\n", iRedTeamHolding );
 	StrCat( szFinal, sizeof( szFinal ), szBuffer );
 
-	SetHudTextParamsEx( 0.23, 0.95, 20.0, {184, 56, 59, 1}, {255,255,255,0}, 0, 6.0, 0.0, 0.0 );
+	SetHudTextParamsEx( 0.23, 0.95, 20.0, REDCOLOR, {255,255,255,0}, 0, 6.0, 0.0, 0.0 );
 	ShowSyncHudText( iPlayer, hHudSyncRed, szFinal );
 	szFinal = "";
 
@@ -1048,7 +1120,7 @@ void Hud_Display( int iPlayer ) {
 	Format( szBuffer, sizeof( szBuffer ), "Holding: %i\n", iBlueTeamHolding );
 	StrCat( szFinal, sizeof( szFinal ), szBuffer );
 
-	SetHudTextParamsEx( 0.70, 0.95, 20.0, { 88, 133, 162, 1}, {255,255,255,0}, 0, 6.0, 0.0, 0.0 );
+	SetHudTextParamsEx( 0.70, 0.95, 20.0, BLUCOLOR, {255,255,255,0}, 0, 6.0, 0.0, 0.0 );
 	ShowSyncHudText( iPlayer, hHudSyncBlue, szFinal );
 	szFinal = "";
 
@@ -1130,7 +1202,6 @@ int CreatePickup( int iAmount ) {
 			AcceptEntityInput( iEntity, "SetAnimation" );
 		}
 	}
-	
 
 	CreateTimer( float( iFlagResetDelay ), Timer_PickupThink, iRef, TIMER_FLAG_NO_MAPCHANGE );
 	hTouch.HookEntity( Hook_Pre, iEntity, Hook_PickupTouch );
@@ -1189,6 +1260,16 @@ MRESReturn Hook_PickupTouch( int iThis, DHookParam hParams ) {
 	CalculateTeamLeader( iTeam );
 
 	RemovePickup( iRef );
+
+	return MRES_Handled;
+}
+
+MRESReturn Detour_DropFlag( int iThis ) {
+	if( iPlayerCarrying[ iThis ] < 1 )
+		return MRES_Handled;
+
+	DropPickup( iThis, false );
+	flPickupCooler[ iThis ] = GetGameTime() + 2.0;
 
 	return MRES_Handled;
 }
