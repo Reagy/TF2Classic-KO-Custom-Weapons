@@ -227,7 +227,7 @@ native void ApplyPushFromDamage( int iPlayer, Address tfInfo, float vecDir[3] );
 native int FindEntityInSphere( int iStartEntity, float vecSearchPoint[3], float flRadius );
 
 stock bool PlayerInRadius( float vecStart[3], float flRadius, int iPlayer ) {
-	if( !IsClientInGame( iPlayer ) || IsPlayerAlive( iPlayer ) )
+	if( !IsClientInGame( iPlayer ) || !IsPlayerAlive( iPlayer ) )
 		return false;
 
 	float vecTargetPos[3];
@@ -338,28 +338,30 @@ stock void StoreToEntity( int iEntity, int iOffset, any anValue, NumberType iSiz
 
 enum {
 	DI_FORCEX = 0,
-	DI_FORCEY = 4,
-	DI_FORCEZ = 8,
+	DI_FORCEY = 1,
+	DI_FORCEZ,
 
-	DI_SOURCEX = 12,
-	DI_SOURCEY = 16,
-	DI_SOURCEZ = 20,
+	DI_SOURCEX,
+	DI_SOURCEY,
+	DI_SOURCEZ,
 
-	DI_REPORTX = 24,
-	DI_REPORTY = 28,
-	DI_REPORTZ = 32,
+	DI_REPORTX,
+	DI_REPORTY,
+	DI_REPORTZ,
 
-	DI_INFLICTOR = 36,
-	DI_ATTACKER = 40,
-	DI_WEAPON = 44,
+	DI_INFLICTOR,
+	DI_ATTACKER,
+	DI_WEAPON,
 
-	DI_DAMAGE = 48,
-	DI_BASEDAMAGE = 52,
+	DI_DAMAGE,
+	DI_BASEDAMAGE,
 
-	DI_DAMAGEFLAGS = 60,
-	DI_DAMAGECUSTOM = 64,
+	DI_DAMAGEFLAGS,
+	DI_DAMAGECUSTOM,
 
-	DI_CRITTYPE = 108, //updated
+	DI_CRITTYPE, //updated
+
+	DI_SIZE
 }
 
 enum {
@@ -374,76 +376,113 @@ forward void OnTakeDamageAliveTF( int iTarget, Address aTakeDamageInfo );
 forward void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo );
 forward void OnTakeDamageBuilding( int iBuilding, Address aTakeDamageInfo );
 
+int iOffsetCache[DI_SIZE] = { -1, ... };
+static char szOffsetNames[][] = {
+	"CTakeDamageInfo::m_vecDamageForce.x",
+	"CTakeDamageInfo::m_vecDamageForce.y",
+	"CTakeDamageInfo::m_vecDamageForce.z",
+
+	"CTakeDamageInfo::m_vecDamagePosition.x",
+	"CTakeDamageInfo::m_vecDamagePosition.y",
+	"CTakeDamageInfo::m_vecDamagePosition.z",
+
+	"CTakeDamageInfo::m_vecReportedPosition.x",
+	"CTakeDamageInfo::m_vecReportedPosition.y",
+	"CTakeDamageInfo::m_vecReportedPosition.z",
+
+	"CTakeDamageInfo::m_hInflictor",
+	"CTakeDamageInfo::m_hAttacker",
+	"CTakeDamageInfo::m_hWeapon",
+
+	"CTakeDamageInfo::m_flDamage",
+	"CTakeDamageInfo::m_flBaseDamage",
+
+	"CTakeDamageInfo::m_bitsDamageType",
+	"CTakeDamageInfo::m_iDamageCustom",
+
+	"CTakeDamageInfo::m_iCritType",
+}
+
+int DMGInfoOffset( int iValue ) {
+	if( iOffsetCache[iValue] == -1 ) {
+		Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
+		iOffsetCache[iValue] = GameConfGetOffset( hGameConf, szOffsetNames[iValue] );
+		delete hGameConf;
+	}
+
+	return iOffsetCache[iValue];
+}
+
 methodmap TFDamageInfo {
 	public TFDamageInfo( Address aInfo ) {
 		return view_as<TFDamageInfo>( aInfo );
 	}
 
 	property int iInflictor {
-		public get() { return LoadEntityHandleFromAddress( address( this ) + address( DI_INFLICTOR ) ); }
-		public set( int iEntity ) { StoreEntityHandleToAddress( address( this ) + address( DI_INFLICTOR ), iEntity ); }
+		public get() { return LoadEntityHandleFromAddress( address( this ) + address( DMGInfoOffset( DI_INFLICTOR ) ) ); }
+		public set( int iEntity ) { StoreEntityHandleToAddress( address( this ) + address( DMGInfoOffset( DI_INFLICTOR ) ), iEntity ); }
 	}
 	property int iAttacker {
-		public get() { return LoadEntityHandleFromAddress( address( this ) + address( DI_ATTACKER ) ); }
-		public set( int iEntity ) { StoreEntityHandleToAddress( address( this ) + address( DI_ATTACKER ), iEntity ); }
+		public get() { return LoadEntityHandleFromAddress( address( this ) + address( DMGInfoOffset( DI_ATTACKER ) ) ); }
+		public set( int iEntity ) { StoreEntityHandleToAddress( address( this ) + address( DMGInfoOffset( DI_ATTACKER ) ), iEntity ); }
 	}
 	property int iWeapon {
-		public get() { return LoadEntityHandleFromAddress( address( this ) + address( DI_WEAPON ) ); }
-		public set( int iEntity ) { StoreEntityHandleToAddress( address( this ) + address( DI_WEAPON ), iEntity ); }
+		public get() { return LoadEntityHandleFromAddress( address( this ) + address( DMGInfoOffset( DI_WEAPON ) ) ); }
+		public set( int iEntity ) { StoreEntityHandleToAddress( address( this ) + address( DMGInfoOffset( DI_WEAPON ) ), iEntity ); }
 	}
 
 	property float flDamage {
-		public get() { return LoadFromAddressOffset( address( this ), DI_DAMAGE, NumberType_Int32 ); }
-		public set( float iValue ) { StoreToAddressOffset( address( this ), DI_DAMAGE, iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ), NumberType_Int32 ); }
+		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ), iValue, NumberType_Int32 ); }
 	}
 	property float flBaseDamage {
-		public get() { return LoadFromAddressOffset( address( this ), DI_BASEDAMAGE, NumberType_Int32 ); }
-		public set( float iValue ) { StoreToAddressOffset( address( this ), DI_BASEDAMAGE, iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE ), NumberType_Int32 ); }
+		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE ), iValue, NumberType_Int32 ); }
 	}
 
 	property int iFlags {
-		public get() { return LoadFromAddressOffset( address( this ), DI_DAMAGEFLAGS, NumberType_Int32 ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DI_DAMAGEFLAGS, iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ), NumberType_Int32 ); }
+		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ), iValue, NumberType_Int32 ); }
 	}
 	property int iCustom {
-		public get() { return LoadFromAddressOffset( address( this ), DI_DAMAGECUSTOM, NumberType_Int32 ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DI_DAMAGECUSTOM, iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ), NumberType_Int32 ); }
+		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ), iValue, NumberType_Int32 ); }
 	}
 
 	property int iCritType {
-		public get() { return LoadFromAddressOffset( address( this ), DI_CRITTYPE, NumberType_Int32 ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DI_CRITTYPE, iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ), NumberType_Int32 ); }
+		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ), iValue, NumberType_Int32 ); }
 	}
 
 	public void GetDamageForce( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DI_FORCEX, NumberType_Int32 );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DI_FORCEY, NumberType_Int32 );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DI_FORCEZ, NumberType_Int32 );
+		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ), NumberType_Int32 );
+		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ), NumberType_Int32 );
+		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ), NumberType_Int32 );
 	}
 	public void SetDamageForce( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DI_FORCEX, flX, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DI_FORCEY, flY, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DI_FORCEZ, flZ, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ), flX, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ), flY, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ), flZ, NumberType_Int32 );
 	}
 	public void GetDamageSource( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DI_SOURCEX, NumberType_Int32 );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DI_SOURCEY, NumberType_Int32 );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DI_SOURCEZ, NumberType_Int32 );
+		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ), NumberType_Int32 );
+		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ), NumberType_Int32 );
+		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ), NumberType_Int32 );
 	}
 	public void SetDamageSource( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DI_SOURCEX, flX, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DI_SOURCEY, flY, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DI_SOURCEZ, flZ, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ), flX, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ), flY, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ), flZ, NumberType_Int32 );
 	}
 	public void GetDamageReported( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DI_REPORTX, NumberType_Int32 );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DI_REPORTY, NumberType_Int32 );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DI_REPORTZ, NumberType_Int32 );
+		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ), NumberType_Int32 );
+		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ), NumberType_Int32 );
+		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ), NumberType_Int32 );
 	}
 	public void SetDamageReported( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DI_REPORTX, flX, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DI_REPORTY, flY, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DI_REPORTZ, flZ, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ), flX, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ), flY, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ), flZ, NumberType_Int32 );
 	}
 }
 

@@ -96,17 +96,12 @@ bool DoProjectileTracking( int iEntity ) {
 
 		float flAccuracy = GetProjectileAccuracy( iEntity );
 		flAccuracy = FloatClamp( flAccuracy, 0.0, 1.0 );
-		if(flAccuracy == 0.0) {
-			NormalizeVector( TargetVec, RocketVec );
-		}
-		else {
-			NormalizeVector( TargetVec, TargetVec );
-			NormalizeVector( RocketVec, RocketVec );
-			SubtractVectors( RocketVec, TargetVec );
-			ScaleVector( TargetVec, flAccuracy );
-			AddVectors( RocketVec, TargetVec, RocketVec );
-			NormalizeVector( RocketVec, RocketVec );
-		}
+
+		SubtractVectors( TargetVec, RocketVec, TargetVec ); //get the difference between desired and current angle
+		ScaleVector( TargetVec, flAccuracy ); //scale difference by accuracy
+		SubtractVectors( TargetVec, RocketVec, RocketVec ); //subtract difference into result
+
+		NormalizeVector( RocketVec, RocketVec );
 
 		GetVectorAngles( RocketVec, RocketAng );
 		SetEntPropVector( iEntity, Prop_Data, "m_angRotation", RocketAng );

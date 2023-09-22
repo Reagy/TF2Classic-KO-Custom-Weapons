@@ -14,6 +14,81 @@
 		}
         "Offsets"
         {
+			"CTakeDamageInfo::m_vecDamageForce.x"
+			{
+				"linux"		"0"
+			}
+			"CTakeDamageInfo::m_vecDamageForce.y"
+			{
+				"linux"		"4"
+			}
+			"CTakeDamageInfo::m_vecDamageForce.z"
+			{
+				"linux"		"8"
+			}
+
+			"CTakeDamageInfo::m_vecDamagePosition.x"
+			{
+				"linux"		"12"
+			}
+			"CTakeDamageInfo::m_vecDamagePosition.y"
+			{
+				"linux"		"16"
+			}
+			"CTakeDamageInfo::m_vecDamagePosition.z"
+			{
+				"linux"		"20"
+			}
+
+			"CTakeDamageInfo::m_vecReportedPosition.x"
+			{
+				"linux"		"24"
+			}
+			"CTakeDamageInfo::m_vecReportedPosition.y"
+			{
+				"linux"		"28"
+			}
+			"CTakeDamageInfo::m_vecReportedPosition.z"
+			{
+				"linux"		"32"
+			}
+
+			"CTakeDamageInfo::m_hInflictor"
+			{
+				"linux"		"36"
+			}
+			"CTakeDamageInfo::m_hAttacker"
+			{
+				"linux"		"40"
+			}
+			"CTakeDamageInfo::m_hWeapon"
+			{
+				"linux"		"44"
+			}
+
+			"CTakeDamageInfo::m_flDamage"
+			{
+				"linux"		"48"
+			}
+			"CTakeDamageInfo::m_flBaseDamage"
+			{
+				"linux"		"52"
+			}
+
+			"CTakeDamageInfo::m_bitsDamageType"
+			{
+				"linux"		"60"
+			}
+			"CTakeDamageInfo::m_iDamageCustom"
+			{
+				"linux"		"64"
+			}
+
+			"CTakeDamageInfo::m_iCritType"
+			{
+				"linux"		"108"
+			}
+		
 			"CBaseEntity::AcceptInput"
 			{
 				"linux"		"38"
@@ -21,6 +96,10 @@
 			"CBaseEntity::Touch"
 			{
 				"linux"		"101"
+			}
+			"CBaseEntity::OnTakeDamage" //good
+			{
+				"linux"		"64"
 			}
 		
             //player
@@ -30,10 +109,6 @@
 				"linux"		"473"
 			}
 		
-			"CTFPlayer::OnTakeDamage" //good
-			{
-				"linux"		"64"
-			}
 			"CTFPlayer::TakeHealth" //good
 			{
 				"linux"		"470"
@@ -279,9 +354,9 @@
 				}
 			}
 			
-			"CTFPlayer::OnTakeDamage"
+			"CBaseEntity::OnTakeDamage"
 			{
-				"offset"		"CTFPlayer::OnTakeDamage"
+				"offset"		"CBaseEntity::OnTakeDamage"
 				"hooktype"		"entity"
 				"callconv"		"thiscall"
 				"return"		"int"

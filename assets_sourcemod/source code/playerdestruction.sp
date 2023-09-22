@@ -1307,7 +1307,7 @@ Action Command_Test( int iClient, int iArgs ) {
 }
 
 void SetWinningTeam( int iTeam ) {
-	SDKCall( hSetWinningTeam, iTeam, 0, true, false, false, false );
+	SDKCall( hSetWinningTeam, iTeam, 13, true, false, false, false );
 }
 
 void EmitPDSoundToAll( char[] szString, int iSource ) {
