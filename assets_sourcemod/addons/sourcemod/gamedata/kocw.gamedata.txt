@@ -181,9 +181,13 @@
 				"linux"		"2396"
 			}
             
-            
             //weapons
             
+			"CBaseCombatWeapon::CanBeSelected"
+			{
+				"linux"		"237"
+			}
+			
 			"CTFWeaponBase::Holster" //changed
 			{
 				"linux"		"263"
@@ -306,6 +310,21 @@
 			}
 		
 			//player
+			
+			"CBaseCombatCharacter::Weapon_CanSwitchTo"
+			{
+				"signature"		"CBaseCombatCharacter::Weapon_CanSwitchTo"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+				"arguments"
+				{
+					"weapon"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
 			
 			"CBaseCombatCharacter::GiveAmmo"
 			{
@@ -716,6 +735,15 @@
 			
 			//weapons
 			
+			"CBaseCombatWeapon::CanBeSelected"
+			{
+				"offset"		"CBaseCombatWeapon::CanBeSelected"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+			}
+			
 			"CTFWeaponBase::ApplyOnHitAttributes"
 			{
 				"signature"		"CTFWeaponBase::ApplyOnHitAttributes"
@@ -994,6 +1022,12 @@
 			}
 		
             //player
+			"CBaseCombatCharacter::Weapon_CanSwitchTo"
+			{
+				"library"	"server"
+				"linux"		"@_ZN20CBaseCombatCharacter18Weapon_CanSwitchToEP17CBaseCombatWeapon"
+			}
+			
 			"CBaseCombatCharacter::SetAmmoCount" //good
 			{
 				"library"	"server"

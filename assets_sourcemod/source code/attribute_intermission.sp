@@ -10,6 +10,7 @@
 #include <hudframework>
 
 #define MDL_SAPPER              "models/weapons/c_models/c_remotesap/c_remotesap.mdl"
+
 #define SOUND_BOOT              "weapons/weapon_crit_charged_on.wav"
 #define SOUND_SAPPER_REMOVED    "weapons/sapper_removed.wav"
 #define SOUND_SAPPER_THROW      "weapons/knife_swing.wav"
@@ -17,29 +18,31 @@
 #define SOUND_SAPPER_NOISE2     "player/invulnerable_off.wav"
 #define SOUND_SAPPER_PLANT      "weapons/sapper_plant.wav"
 
-#define EFFECT_TRAIL_RED        "kritz_beam_trail_red"
-#define EFFECT_TRAIL_BLU        "kritz_beam_trail_blue"
-#define EFFECT_TRAIL_GRN        "kritz_beam_trail_green"
-#define EFFECT_TRAIL_YLW        "kritz_beam_trail_yellow"
 #define EFFECT_SMOKE            "sapper_smoke"
 #define EFFECT_SENTRY_FX        "sapper_sentry1_fx"
 #define EFFECT_SENTRY_SPARKS1   "sapper_sentry1_sparks1"
 #define EFFECT_SENTRY_SPARKS2   "sapper_sentry1_sparks2"
+
+#define EFFECT_CORE_FLASH       "sapper_coreflash"
+#define EFFECT_DEBRIS           "sapper_debris"
+#define EFFECT_FLASH            "sapper_flash"
+#define EFFECT_FLASHUP          "sapper_flashup"
+#define EFFECT_FLYINGEMBERS     "sapper_flyingembers"
+#define EFFECT_SMOKE            "sapper_smoke"
+
 #define SPRITE_ELECTRIC_WAVE    "sprites/laser.vmt"
 
 #define SAPPERKEYNAME "Sapper"
 
 #define INTERMISSION_DURATION 7.5
 #define INTERMISSION_RADIUS 350.0
-#define INTERMISSION_THINK 0.2
 #define INTERMISSION_DPS 10.0
+#define INTERMISSION_THINK 0.2
 
 /*
 	todo:
 	finish particles
 	attribute sap damage to spy
-	prevent spy from using sapper while not charged
-
 
 	duration increased 50% (5>7.5)
 	radius increased 16% (300>350)
@@ -64,7 +67,6 @@ StringMap smSappedBuildings; //contains an arraylist of every sapper sapping thi
 ArrayList hCheckList; //contains a list of buildings to check for
 
 PlayerFlags fHasIntermission;
-PlayerFlags fSapperDisabled;
 
 int g_hEffectSprite;                                                    // Handle for the lightning shockwave sprite.
 
@@ -78,6 +80,11 @@ public Plugin myinfo = {
 
 DynamicHook hOnTakeDamage;
 
+Handle hSetObjectMode;
+Handle hSetSubType;
+Handle hGiveEcon;
+Handle hSwapToBest;
+
 public void OnPluginStart() {
 	smSapperList = new StringMap();
 	smSappedBuildings = new StringMap();
@@ -87,10 +94,42 @@ public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
 	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
-	
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetVirtual( 450 );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hSetObjectMode = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetVirtual( 232 );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hSetSubType = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetSignature( SDKLibrary_Server, "@_ZN9CTFPlayer12GiveEconItemEPKcii", 0 );
+	PrepSDKCall_SetReturnInfo( SDKType_CBaseEntity, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hGiveEcon = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetSignature( SDKLibrary_Server, "@_ZN20CBaseCombatCharacter22SwitchToNextBestWeaponEP17CBaseCombatWeapon", 0 );
+	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
+	hSwapToBest = EndPrepSDKCall();
+
+	RegConsoleCmd( "sm_sapper_test", Command_Test, "test" );
+
 	delete hGameConf;
 
 	HookEvent( "post_inventory_application", Event_Inventory, EventHookMode_Post );
+}
+
+Action Command_Test( int iClient, int iArgs ) {
+	GiveSpySapper( iClient );
+
+	return Plugin_Handled;
 }
 
 public void OnMapStart() {
@@ -102,16 +141,12 @@ public void OnMapStart() {
 	PrecacheSound( SOUND_SAPPER_THROW, true);
 	PrecacheSound( SOUND_BOOT, true );
 
-	PrecacheGeneric( EFFECT_TRAIL_RED, true );
-	PrecacheGeneric( EFFECT_TRAIL_BLU, true );
-	PrecacheGeneric( EFFECT_TRAIL_GRN, true );
-	PrecacheGeneric( EFFECT_TRAIL_YLW, true );
 	PrecacheGeneric( EFFECT_SMOKE, true );
 	PrecacheGeneric( EFFECT_SENTRY_FX, true );
 	PrecacheGeneric( EFFECT_SENTRY_SPARKS1, true );
 	PrecacheGeneric( EFFECT_SENTRY_SPARKS2, true );
 
-	g_hEffectSprite = PrecacheModel(SPRITE_ELECTRIC_WAVE, true );
+	g_hEffectSprite = PrecacheModel( SPRITE_ELECTRIC_WAVE, true );
 }
 
 public void OnEntityCreated( int iEntity, const char[] szClassname ) {
@@ -122,6 +157,7 @@ public void OnEntityCreated( int iEntity, const char[] szClassname ) {
 		StrEqual( szClassname, "obj_jumppad" )
 	) {
 		hCheckList.Push( EntIndexToEntRef( iEntity ) );
+		return;
 	}
 }
 
@@ -132,17 +168,24 @@ public Action Event_Inventory( Event hEvent, const char[] sName, bool bDontBroad
 	if( !IsValidPlayer( iPlayer ) )
 		return Plugin_Continue;
 
-	//PrintToServer("%i", AttribHookFloat( 0.0, iPlayer, "custom_intermission" ));
+	RequestFrame( Frame_CheckSapper, EntIndexToEntRef( iPlayer ) );
+	
+	return Plugin_Continue;
+}
+
+void Frame_CheckSapper( int iRef ) {
+	int iPlayer = EntRefToEntIndex( iRef );
+	if( iPlayer == -1 )
+		return;
+
 	if( AttribHookFloat( 0.0, iPlayer, "custom_intermission" ) != 0.0 ) {
-		Tracker_Create( iPlayer, SAPPERKEYNAME, 100.0, 100.0 / 30.0, RTF_PERCENTAGE | RTF_DING | RTF_RECHARGES );
+		Tracker_Create( iPlayer, SAPPERKEYNAME, 100.0, 100.0 / 30.0, RTF_PERCENTAGE | RTF_FORWARDONFULL | RTF_DING | RTF_RECHARGES );
 		fHasIntermission.Set( iPlayer, true );
 	}
 	else {
 		Tracker_Remove( iPlayer, SAPPERKEYNAME );
 		fHasIntermission.Set( iPlayer, false );
 	}
-	
-	return Plugin_Continue;
 }
 
 int iOldButtons[ MAXPLAYERS+1 ];
@@ -176,7 +219,7 @@ void CheckThrowIntermission( int iPlayer, int iButtons ) {
 	}
 
 	CreateIntermission( iPlayer );
-	fSapperDisabled.Set( iPlayer, true );
+	TakeSpySapper( iPlayer );
 }
 
 int CreateIntermission( int iOwner ) {
@@ -198,17 +241,6 @@ int CreateIntermission( int iOwner ) {
 
 	int iRef = EntIndexToEntRef( iEntity );
 	CreateTimer( INTERMISSION_THINK, Timer_IntermissionThink, iRef, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
-
-	switch( GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) ) {
-	case 2: 
-		AttachParticle( iEntity, EFFECT_TRAIL_RED, 2.0 );
-	case 3: 
-		AttachParticle( iEntity, EFFECT_TRAIL_BLU, 2.0 );
-	case 4:
-		AttachParticle( iEntity, EFFECT_TRAIL_GRN, 2.0 );
-	case 5:
-		AttachParticle( iEntity, EFFECT_TRAIL_YLW, 2.0 );
-	}
 
 	EmitSoundToAll( SOUND_BOOT, iEntity, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEPITCH, 0.2, 30 );
 	EmitSoundToAll( SOUND_SAPPER_THROW, iOwner );
@@ -268,6 +300,17 @@ void RemoveIntermission( int iRef, bool bSilent = false ) {
 
 	if( iSapper != -1 ) {
 		StopSound( iSapper, 0, SOUND_BOOT );
+
+		float vecSapperPos[3];
+		GetEntPropVector( iSapper, Prop_Data, "m_vecAbsOrigin", vecSapperPos );
+
+		ShowParticle( EFFECT_CORE_FLASH, 1.0, vecSapperPos );
+		ShowParticle( EFFECT_DEBRIS, 1.0, vecSapperPos );
+		ShowParticle( EFFECT_FLASH, 1.0, vecSapperPos );
+		ShowParticle( EFFECT_FLASHUP, 1.0, vecSapperPos );
+		ShowParticle( EFFECT_FLYINGEMBERS, 1.0, vecSapperPos );
+		ShowParticle( EFFECT_SMOKE, 1.0, vecSapperPos );
+
 		if( !bSilent) EmitSoundToAll( SOUND_SAPPER_REMOVED, iSapper );
 
 		PrintToServer("remove entity");
@@ -278,7 +321,6 @@ void RemoveIntermission( int iRef, bool bSilent = false ) {
 Action Timer_IntermissionThink( Handle hTimer, int iRef ) {
 	int iEntity = EntRefToEntIndex( iRef );
 	if( iEntity == -1 ) {
-		PrintToServer("intermission couldn't be found %i %i", iEntity, iRef );
 		RemoveIntermission( iRef );
 		return Plugin_Stop;
 	}
@@ -367,6 +409,7 @@ void SapBuilding( int iSapperRef, int iObjectIndex ) {
 	AcceptEntityInput( iObjectIndex, "Disable" );
 }
 
+
 void UnsapBuilding( int iSapperRef, int iObjectIndex ) {
 	static char szRefString[32];
 
@@ -402,7 +445,6 @@ void UnsapBuilding( int iSapperRef, int iObjectIndex ) {
 }
 
 MRESReturn Hook_IntermissionTakeDamage( int iEntity, DHookReturn hReturn, DHookParam hParams ) {
-	PrintToServer("test");
 	TFDamageInfo tfInfo = TFDamageInfo( hParams.GetAddress( 1 ) );
 	hReturn.Value = 0;
 	
@@ -424,7 +466,6 @@ MRESReturn Hook_IntermissionTakeDamage( int iEntity, DHookReturn hReturn, DHookP
 }
 
 public void OnTakeDamageBuilding( int iTarget, Address aDamageInfo ) {
-	PrintToServer("test1");
 	if( GetEntProp( iTarget, Prop_Send, "m_iObjectType" ) != 2 ) //sentry gun
 		return;
 
@@ -437,18 +478,13 @@ public void OnTakeDamageBuilding( int iTarget, Address aDamageInfo ) {
 	if( !smSappedBuildings.GetValue( szRefString, hSappers ) )
 		return;
 
-	PrintToServer("test2");
-
 	for( int i = 0; i < hSappers.Length; i++ ) {
-		PrintToServer("test3");
 		int iSapper = EntRefToEntIndex( hSappers.Get( i ) );
 		if( iSapper == -1 )
 			continue;
 
 		int iSapperOwner = GetEntPropEnt( iSapper, Prop_Send, "m_hOwnerEntity" );
-		PrintToServer("%i %i", iSapperOwner, tfInfo.iAttacker);
 		if( tfInfo.iAttacker == iSapperOwner ) {
-			PrintToServer("test5");
 			tfInfo.flDamage *= 0.33;
 			return;
 		}
@@ -464,11 +500,9 @@ static int iColors[6][4] = {
 };
 //Attaches team colored electrical rings to a sapper. Not tested with other entities.
 stock void AttachRings( int iEntity ) {
-	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" );
-	
 	float vecSapperPos[3];
 	GetEntPropVector( iEntity, Prop_Data, "m_vecAbsOrigin", vecSapperPos );
-	MakeRings( vecSapperPos, iColors[ GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) ] );
+	MakeRings( vecSapperPos, iColors[ GetEntProp( iEntity, Prop_Send, "m_iTeamNum" ) ] );
 }
 
 void MakeRings( float vecSapperPos[3], int iColor[4] ) {
@@ -504,6 +538,19 @@ stock int AttachParticle( int iEntity, char szParticleName[64], float flTime, fl
 	return iParticle;
 }
 
+stock void ShowParticle(char szParticleName[64], float flTime, float vecPos[3], float vecAng[3]=NULL_VECTOR)
+{
+	int iParticle = CreateEntityByName("info_particle_system");
+
+	TeleportEntity( iParticle, vecPos, vecAng, NULL_VECTOR );
+
+	DispatchKeyValue( iParticle, "effect_name", szParticleName );
+	DispatchSpawn( iParticle );
+	ActivateEntity( iParticle );
+	AcceptEntityInput( iParticle, "start" );
+	CreateTimer( flTime, RemoveParticle, iParticle );
+}
+
 Action RemoveParticle( Handle hTimer, int iParticle ) {
 	iParticle = EntRefToEntIndex( iParticle );
 	if ( iParticle != -1 ) {
@@ -511,4 +558,30 @@ Action RemoveParticle( Handle hTimer, int iParticle ) {
 		AcceptEntityInput( iParticle, "Kill" );
 	}
 	return Plugin_Continue;
+}
+
+void GiveSpySapper( int iPlayer ) {
+	SDKCall( hGiveEcon, iPlayer, "TF_WEAPON_BUILDER_SPY_TEST", 4, 0 ); //todo: find a way to make this not hardcoded
+	int iSapper = GetEntityInSlot( iPlayer, 4 );
+
+	//i can't fathom why it's like this but you can't reequip the sapper unless i do whatever the fuck this is
+	SDKCall( hSetSubType, iSapper, 3 );
+	SDKCall( hSetObjectMode, iSapper, 0 );
+}
+void TakeSpySapper( int iPlayer ) {
+	int iWeapon = GetEntityInSlot( iPlayer, 4 );
+	if( iWeapon > 0 ) {
+		RemoveEntity( iWeapon );
+		SDKCall( hSwapToBest, iPlayer, -1 );
+	}
+}
+
+public void Tracker_OnRecharge( int iPlayer, const char szTrackerName[32], float flNewValue ) {
+	if( !StrEqual( szTrackerName, SAPPERKEYNAME ) )
+		return;
+
+	if( !fHasIntermission.Get( iPlayer ) || !IsPlayerAlive( iPlayer ) )
+		return;
+
+	GiveSpySapper( iPlayer );
 }
