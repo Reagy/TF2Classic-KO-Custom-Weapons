@@ -152,6 +152,10 @@
             {
                 "linux"     "329"
             }
+			"CBaseObject::Killed"
+			{
+				"linux"		"334"
+			}
             "CBaseObject::OnGoActive" //good
             {
                 "linux"     "342"
@@ -613,6 +617,20 @@
 			
             //buildings
             
+			"CBaseObject::Killed"
+			{
+				"offset"		"CBaseObject::Killed"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"info"
+					{
+						"type"	"objectptr"
+					}
+				}
+			}
             "CBaseObject::StartBuilding"
             {
                 "offset"        "CBaseObject::StartBuilding"

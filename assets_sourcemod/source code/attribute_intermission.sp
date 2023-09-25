@@ -34,39 +34,45 @@
 
 #define SAPPERKEYNAME "Sapper"
 
+//time to recharge sapper in seconds
+#define INTERMISSION_RECHARGE 30.0
+
+//duration of radial sap in seconds
 #define INTERMISSION_DURATION 7.5
+
+//radius of radial sap in hammer units
 #define INTERMISSION_RADIUS 350.0
+
+//damage per second dealt by radial sap
 #define INTERMISSION_DPS 10.0
+
+//interval sapper checks for nearby buildings
 #define INTERMISSION_THINK 0.2
 
 /*
-	todo:
-	finish particles
-	attribute sap damage to spy
-
 	duration increased 50% (5>7.5)
 	radius increased 16% (300>350)
 	no longer saps your cloak
 	recharges after 30s
+	can now sap jump pads (like you'd ever do that anyway)
 
 	spy receives a 66% damage penalty against sentries he sapped
+	spy can only place one sapper at a time
 	sapper can be destroyed by anything that can remove sappers
 	can no longer sap through walls
-	
-	fixed radial sap not working on jump pads (like you'd ever do that anyway)
 */
 
 enum struct ThrownSapper {
 	float flRemoveTime;
-	ArrayList hSapping;
+	ArrayList alSapping;
 }
 
-StringMap smSapperList; //contains a list of sappers
-StringMap smSappedBuildings; //contains an arraylist of every sapper sapping this building
+StringMap g_smSapperList; //contains a list of sappers
+StringMap g_smSappedBuildings; //contains an arraylist of every sapper sapping this building
 
-ArrayList hCheckList; //contains a list of buildings to check for
+ArrayList g_alCheckList; //contains a list of buildings to check for
 
-PlayerFlags fHasIntermission;
+PlayerFlags g_pfHasIntermission;
 
 int g_hEffectSprite;                                                    // Handle for the lightning shockwave sprite.
 
@@ -78,32 +84,43 @@ public Plugin myinfo = {
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 };
 
-DynamicHook hOnTakeDamage;
+DynamicHook g_dhOnTakeDamage;
+DynamicHook g_dhObjectKilled;
 
-Handle hSetObjectMode;
-Handle hSetSubType;
-Handle hGiveEcon;
-Handle hSwapToBest;
+#if defined SPY_LOSE_SAPPER
+DynamicHook g_dhOnGoActive;
+#endif
+
+Handle g_hSetObjectMode;
+Handle g_hSetSubType;
+Handle g_hGiveEcon;
+Handle g_hSwapToBest;
 
 public void OnPluginStart() {
-	smSapperList = new StringMap();
-	smSappedBuildings = new StringMap();
+	g_smSapperList = new StringMap();
+	g_smSappedBuildings = new StringMap();
 
-	hCheckList = new ArrayList();
+	g_alCheckList = new ArrayList();
 
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
-	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
+	g_dhOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
+
+	g_dhObjectKilled = DynamicHook.FromConf( hGameConf, "CBaseObject::Killed" );
+
+	#if defined SPY_LOSE_SAPPER
+	g_dhOnGoActive = DynamicHook.FromConf( hGameConf, "CBaseObject::OnGoActive" );
+	#endif
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetVirtual( 450 );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hSetObjectMode = EndPrepSDKCall();
+	g_hSetObjectMode = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetVirtual( 232 );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hSetSubType = EndPrepSDKCall();
+	g_hSetSubType = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetSignature( SDKLibrary_Server, "@_ZN9CTFPlayer12GiveEconItemEPKcii", 0 );
@@ -111,25 +128,17 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hGiveEcon = EndPrepSDKCall();
+	g_hGiveEcon = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetSignature( SDKLibrary_Server, "@_ZN20CBaseCombatCharacter22SwitchToNextBestWeaponEP17CBaseCombatWeapon", 0 );
 	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
-	hSwapToBest = EndPrepSDKCall();
-
-	RegConsoleCmd( "sm_sapper_test", Command_Test, "test" );
+	g_hSwapToBest = EndPrepSDKCall();
 
 	delete hGameConf;
 
 	HookEvent( "post_inventory_application", Event_Inventory, EventHookMode_Post );
-}
-
-Action Command_Test( int iClient, int iArgs ) {
-	GiveSpySapper( iClient );
-
-	return Plugin_Handled;
 }
 
 public void OnMapStart() {
@@ -150,21 +159,33 @@ public void OnMapStart() {
 }
 
 public void OnEntityCreated( int iEntity, const char[] szClassname ) {
-	if( 
-		StrEqual( szClassname, "obj_sentrygun" ) ||
-		StrEqual( szClassname, "obj_dispenser" ) ||
-		StrEqual( szClassname, "obj_teleporter" ) ||
-		StrEqual( szClassname, "obj_jumppad" )
-	) {
-		hCheckList.Push( EntIndexToEntRef( iEntity ) );
-		return;
+	if( StrContains( szClassname, "obj_" ) == 0 ) {
+		#if defined SPY_LOSE_SAPPER
+		if( StrEqual( szClassname, "obj_attachment_sapper" ) ) {
+			g_dhOnGoActive.HookEntity( Hook_Pre, iEntity, Hook_OnGoActive );
+			return;
+		}
+		#endif
+		g_alCheckList.Push( EntIndexToEntRef( iEntity ) );
+		g_dhObjectKilled.HookEntity( Hook_Pre, iEntity, Hook_ObjectKilled );
 	}
 }
+
+#if defined SPY_LOSE_SAPPER
+MRESReturn Hook_OnGoActive( int iThis ) {
+	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hBuilder" );
+	if( iOwner > 0 && g_pfHasIntermission.Get( iOwner ) )
+		TakeSpySapper( iOwner );
+
+	return MRES_Handled;
+}
+#endif
 
 public Action Event_Inventory( Event hEvent, const char[] sName, bool bDontBroadcast ) {
 	int iPlayer = hEvent.GetInt( "userid" );
 	iPlayer = GetClientOfUserId( iPlayer );
 
+	//should this ever happen? no. will i check for it? hell yes
 	if( !IsValidPlayer( iPlayer ) )
 		return Plugin_Continue;
 
@@ -179,12 +200,12 @@ void Frame_CheckSapper( int iRef ) {
 		return;
 
 	if( AttribHookFloat( 0.0, iPlayer, "custom_intermission" ) != 0.0 ) {
-		Tracker_Create( iPlayer, SAPPERKEYNAME, 100.0, 100.0 / 30.0, RTF_PERCENTAGE | RTF_FORWARDONFULL | RTF_DING | RTF_RECHARGES );
-		fHasIntermission.Set( iPlayer, true );
+		Tracker_Create( iPlayer, SAPPERKEYNAME, 100.0, 100.0 / INTERMISSION_RECHARGE, RTF_PERCENTAGE | RTF_FORWARDONFULL | RTF_DING | RTF_RECHARGES );
+		g_pfHasIntermission.Set( iPlayer, true );
 	}
 	else {
 		Tracker_Remove( iPlayer, SAPPERKEYNAME );
-		fHasIntermission.Set( iPlayer, false );
+		g_pfHasIntermission.Set( iPlayer, false );
 	}
 }
 
@@ -197,7 +218,7 @@ public Action OnPlayerRunCmd( int iPlayer, int &iButtons, int &iImpulse, float v
 }
 
 void CheckThrowIntermission( int iPlayer, int iButtons ) {
-	if( !fHasIntermission.Get( iPlayer ) )
+	if( !g_pfHasIntermission.Get( iPlayer ) )
 		return;
 
 	if( !IsPlayerAlive( iPlayer ) )
@@ -225,7 +246,7 @@ void CheckThrowIntermission( int iPlayer, int iButtons ) {
 int CreateIntermission( int iOwner ) {
 	int iEntity = CreateEntityByName( "prop_physics_override" );
 	SetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity", iOwner );
-	SetEntProp( iEntity, Prop_Data, "m_takedamage", DAMAGE_YES );
+	SetEntProp( iEntity, Prop_Data, "m_takedamage", DAMAGE_EVENTS_ONLY );
 	SetEntProp( iEntity, Prop_Send, "m_iTeamNum", GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) );
 	SetEntProp( iEntity, Prop_Data, "m_iHealth", AttribHookFloat( 100.0, iOwner, "mult_sapper_health" ) );
 
@@ -237,19 +258,17 @@ int CreateIntermission( int iOwner ) {
 
 	DispatchSpawn( iEntity );
 
-	hOnTakeDamage.HookEntity( Hook_Pre, iEntity, Hook_IntermissionTakeDamage );
+	g_dhOnTakeDamage.HookEntity( Hook_Pre, iEntity, Hook_IntermissionTakeDamage );
 
 	int iRef = EntIndexToEntRef( iEntity );
 	CreateTimer( INTERMISSION_THINK, Timer_IntermissionThink, iRef, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
 
-	EmitSoundToAll( SOUND_BOOT, iEntity, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEPITCH, 0.2, 30 );
+	EmitSoundToAll( SOUND_BOOT, iEntity, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEPITCH, 0.4, 30 );
 	EmitSoundToAll( SOUND_SAPPER_THROW, iOwner );
 
 	if ( TF2_IsPlayerInCondition( iOwner, TFCond_Disguised ) ) {
 		TF2_RemoveCondition( iOwner, TFCond_Disguised );
 	}
-
-	Tracker_SetValue( iOwner, SAPPERKEYNAME, 0.0 );
 
 	float vecPlayerPos[3];
 	float vecPlayerAngle[3];
@@ -270,40 +289,51 @@ int CreateIntermission( int iOwner ) {
 	static char szRefString[32];
 	IntToString( iRef, szRefString, sizeof( szRefString ) );
 
-	ThrownSapper hSapper;
-	hSapper.flRemoveTime = GetGameTime() + INTERMISSION_DURATION;
-	hSapper.hSapping = new ArrayList();
+	ThrownSapper tsSapper;
+	tsSapper.flRemoveTime = GetGameTime() + INTERMISSION_DURATION;
+	tsSapper.alSapping = new ArrayList();
 
-	smSapperList.SetArray( szRefString, hSapper, sizeof( ThrownSapper ) );
+	g_smSapperList.SetArray( szRefString, tsSapper, sizeof( ThrownSapper ) );
 	return iRef;
 }
 
-void RemoveIntermission( int iRef, bool bSilent = false ) {
-	PrintToServer("remove intermission");
+enum {
+	IR_SILENT = 0,
+	IR_EXPIRE = 1,
+	IR_DESTROY = 2
+}
 
+void RemoveIntermission( int iRef, int iRemoveType = 0 ) {
 	static char szRefString[32];
 	IntToString( iRef, szRefString, sizeof( szRefString ) );
 
 	int iSapper = EntRefToEntIndex( iRef );
-	ThrownSapper hSapper;
-	if( smSapperList.GetArray( szRefString, hSapper, sizeof( ThrownSapper ) ) ) {
-		for( int i = 0; i < hSapper.hSapping.Length; i++ ) {
-			int iObject = EntRefToEntIndex( hSapper.hSapping.Get( i ) );
+	ThrownSapper tsSapper;
+	if( g_smSapperList.GetArray( szRefString, tsSapper, sizeof( ThrownSapper ) ) ) {
+		for( int i = 0; i < tsSapper.alSapping.Length; i++ ) {
+			int iObject = EntRefToEntIndex( tsSapper.alSapping.Get( i ) );
 			if( iObject == -1 )
 				continue;
 
 			UnsapBuilding( iRef, iObject );
 		}
-		delete hSapper.hSapping;
-		smSapperList.Remove( szRefString );
+		delete tsSapper.alSapping;
+		g_smSapperList.Remove( szRefString );
 	}
 
-	if( iSapper != -1 ) {
-		StopSound( iSapper, 0, SOUND_BOOT );
+	if( iSapper == -1 )
+		return;
 
-		float vecSapperPos[3];
-		GetEntPropVector( iSapper, Prop_Data, "m_vecAbsOrigin", vecSapperPos );
+	StopSound( iSapper, 0, SOUND_BOOT );
 
+	float vecSapperPos[3];
+	GetEntPropVector( iSapper, Prop_Data, "m_vecAbsOrigin", vecSapperPos );
+
+	switch( iRemoveType ) {
+	case ( IR_SILENT ): {
+
+	}
+	case ( IR_EXPIRE ): {
 		ShowParticle( EFFECT_CORE_FLASH, 1.0, vecSapperPos );
 		ShowParticle( EFFECT_DEBRIS, 1.0, vecSapperPos );
 		ShowParticle( EFFECT_FLASH, 1.0, vecSapperPos );
@@ -311,68 +341,106 @@ void RemoveIntermission( int iRef, bool bSilent = false ) {
 		ShowParticle( EFFECT_FLYINGEMBERS, 1.0, vecSapperPos );
 		ShowParticle( EFFECT_SMOKE, 1.0, vecSapperPos );
 
-		if( !bSilent) EmitSoundToAll( SOUND_SAPPER_REMOVED, iSapper );
-
-		PrintToServer("remove entity");
-		RemoveEntity( iSapper );
+		EmitSoundToAll( SOUND_SAPPER_REMOVED, iSapper );
 	}
+	case ( IR_DESTROY ): {
+		ShowParticle( EFFECT_CORE_FLASH, 1.0, vecSapperPos );
+		ShowParticle( EFFECT_DEBRIS, 1.0, vecSapperPos );
+		ShowParticle( EFFECT_FLASH, 1.0, vecSapperPos );
+		ShowParticle( EFFECT_FLASHUP, 1.0, vecSapperPos );
+		ShowParticle( EFFECT_FLYINGEMBERS, 1.0, vecSapperPos );
+		ShowParticle( EFFECT_SMOKE, 1.0, vecSapperPos );
+
+		EmitGameSoundToAll( "Weapon_Grenade_Mirv.Disarm", iSapper );
+	}
+	}
+
+	RemoveEntity( iSapper );
 }
 
-Action Timer_IntermissionThink( Handle hTimer, int iRef ) {
-	int iEntity = EntRefToEntIndex( iRef );
-	if( iEntity == -1 ) {
-		RemoveIntermission( iRef );
+bool CheckLOS( int iThis, const float vecStart[3], const float vecEnd[3], int iTarget ) {
+	Handle hTrace = TR_TraceRayFilterEx( vecStart, vecEnd, CONTENTS_SOLID | CONTENTS_MOVEABLE | CONTENTS_MIST, RayType_EndPoint, LOSFilter, iThis );
+
+	if( TR_GetFraction( hTrace ) >= 1.0 ) return false;
+	if( TR_GetEntityIndex( hTrace ) != iTarget ) return false;
+	return true;
+}
+
+bool LOSFilter( int iEntity, int iMask, any data ) {
+	return !( data == iEntity || iEntity <= MaxClients );
+}
+
+Action Timer_IntermissionThink( Handle hTimer, int iSapperRef ) {
+	int iSapperIndex = EntRefToEntIndex( iSapperRef );
+	if( iSapperIndex == -1 ) {
+		RemoveIntermission( iSapperRef, IR_SILENT );
 		return Plugin_Stop;
 	}
 
-	AttachRings( iEntity );
+	AttachRings( iSapperIndex );
+
+	int iSapperOwner = GetEntPropEnt( iSapperIndex, Prop_Send, "m_hOwnerEntity" );
+	if( iSapperOwner == -1 || !g_pfHasIntermission.Get( iSapperOwner ) ) {
+		RemoveIntermission( iSapperRef, IR_SILENT );
+		return Plugin_Stop;
+	}
+	int iSapperTeam = GetEntProp( iSapperIndex, Prop_Send, "m_iTeamNum" );
+	if( iSapperTeam != GetEntProp( iSapperOwner, Prop_Send, "m_iTeamNum" ) ) {
+		RemoveIntermission( iSapperRef, IR_SILENT );
+		return Plugin_Stop;
+	}
 
 	float vecSapperPos[3];
-	GetEntPropVector( iEntity, Prop_Data, "m_vecAbsOrigin", vecSapperPos );
+	GetEntPropVector( iSapperIndex, Prop_Data, "m_vecAbsOrigin", vecSapperPos );
 
-	int iSapperTeam = GetEntProp( iEntity, Prop_Send, "m_iTeamNum" );
-
-	for( int i = 0; i < hCheckList.Length; i++ ) {
-		int iObject = EntRefToEntIndex( hCheckList.Get( i ) );
-		if( iObject == -1 ) {
-			hCheckList.Erase( i );
+	for( int i = 0; i < g_alCheckList.Length; i++ ) {
+		int iObjectIndex = EntRefToEntIndex( g_alCheckList.Get( i ) );
+		if( iObjectIndex == -1 ) {
+			g_alCheckList.Erase( i );
 			i--;
 			continue;
 		}
 
-		if( iSapperTeam == GetEntProp( iObject, Prop_Send, "m_iTeamNum" ) )
+		if( iSapperTeam == GetEntProp( iObjectIndex, Prop_Send, "m_iTeamNum" ) )
 			continue;
 
 		float vecTargetPos[3];
-		GetEntPropVector( iObject, Prop_Data, "m_vecAbsOrigin", vecTargetPos );
+		GetEntPropVector( iObjectIndex, Prop_Data, "m_vecAbsOrigin", vecTargetPos );
 		if( GetVectorDistance( vecSapperPos, vecTargetPos ) > INTERMISSION_RADIUS )
 			continue;
 
-		SapBuilding( iRef, iObject );
+		vecSapperPos[1] += 5.0;
+		if( !CheckLOS( iSapperIndex, vecSapperPos, vecTargetPos, iObjectIndex ) ) {
+			vecTargetPos[1] += 20.0; //check the top of the building
+			if( !CheckLOS( iSapperIndex, vecSapperPos, vecTargetPos, iObjectIndex ) ) {
+				continue;
+			}
+		}
+
+		SapBuilding( iSapperRef, iObjectIndex );
 	}
 
 	static char szRefString[32];
-	IntToString( iRef, szRefString, sizeof( szRefString ) );
+	IntToString( iSapperRef, szRefString, sizeof( szRefString ) );
 	
-	ThrownSapper hSapper;
-	smSapperList.GetArray( szRefString, hSapper, sizeof( ThrownSapper ) );
+	ThrownSapper tsSapper;
+	g_smSapperList.GetArray( szRefString, tsSapper, sizeof( ThrownSapper ) );
 
-	for( int i = 0; i < hSapper.hSapping.Length; i++ ) {
-		int iObjectRef = EntRefToEntIndex( hSapper.hSapping.Get( i ) );
+	for( int i = 0; i < tsSapper.alSapping.Length; i++ ) {
+		int iObjectIndex = EntRefToEntIndex( tsSapper.alSapping.Get( i ) );
 
-		if( iObjectRef == -1 ) {
-			hSapper.hSapping.Erase( i );
+		if( iObjectIndex == -1 ) {
+			tsSapper.alSapping.Erase( i );
 			i--;
 			continue;
 		}
 
-		SetVariantInt( RoundToNearest( INTERMISSION_DPS * INTERMISSION_THINK ) );
-		AcceptEntityInput( iObjectRef, "RemoveHealth" );
+		SDKHooks_TakeDamage( iObjectIndex, iSapperIndex, iSapperIndex, INTERMISSION_DPS * INTERMISSION_THINK, 0 );
+		RoundToNearest( INTERMISSION_DPS * INTERMISSION_THINK );
 	}
 
-	if( GetGameTime() > hSapper.flRemoveTime )  {
-		PrintToServer("intermission expired");
-		RemoveIntermission( iRef );
+	if( GetGameTime() > tsSapper.flRemoveTime )  {
+		RemoveIntermission( iSapperRef, IR_EXPIRE );
 		return Plugin_Stop;
 	}
 	
@@ -386,58 +454,63 @@ void SapBuilding( int iSapperRef, int iObjectIndex ) {
 
 	IntToString( iSapperRef, szRefString, sizeof( szRefString ) );
 
-	ThrownSapper hSapper;
-	smSapperList.GetArray( szRefString, hSapper, sizeof( hSapper ) );
+	ThrownSapper tsSapper;
+	g_smSapperList.GetArray( szRefString, tsSapper, sizeof( tsSapper ) );
 
-	if( hSapper.hSapping.FindValue( iObjectRef ) == -1 ) {
-		hSapper.hSapping.Push( iObjectRef );
+	if( tsSapper.alSapping.FindValue( iObjectRef ) == -1 ) {
+		tsSapper.alSapping.Push( iObjectRef );
 	}
 
 	IntToString( iObjectRef, szRefString, sizeof( szRefString ) );
-	ArrayList hSappedBy;
+	ArrayList alSappedBy;
 
-	if( !smSappedBuildings.GetValue( szRefString, hSappedBy ) ) {
-		hSappedBy = new ArrayList();
-		smSappedBuildings.SetValue( szRefString, hSappedBy );
+	if( !g_smSappedBuildings.GetValue( szRefString, alSappedBy ) ) {
+		alSappedBy = new ArrayList();
+		g_smSappedBuildings.SetValue( szRefString, alSappedBy );
 	}
 	
-	if( hSappedBy.FindValue( iSapperRef ) == -1 ) {
-		hSappedBy.Push( iSapperRef );
+	if( alSappedBy.FindValue( iSapperRef ) == -1 ) {
+		alSappedBy.Push( iSapperRef );
 	}
 
 	SetVariantInt( 1 ); //throws a tantrum without some kind of parameter
 	AcceptEntityInput( iObjectIndex, "Disable" );
 }
 
-
 void UnsapBuilding( int iSapperRef, int iObjectIndex ) {
-	static char szRefString[32];
+	if( !IsValidEntity( iObjectIndex ) )
+		return;
 
+	static char szRefString[32];
 	int iObjectRef = EntIndexToEntRef( iObjectIndex );
 
 	IntToString( iSapperRef, szRefString, sizeof( szRefString ) );
-
-	ThrownSapper hSapper;
-	smSapperList.GetArray( szRefString, hSapper, sizeof( hSapper ) );
-
-	int iValue = hSapper.hSapping.FindValue( iObjectRef );
+	ThrownSapper tsSapper;
+	if( !g_smSapperList.GetArray( szRefString, tsSapper, sizeof( tsSapper ) ) )
+		return;
+	
+	int iValue = tsSapper.alSapping.FindValue( iObjectRef );
 	if( iValue != -1 ) {
-		hSapper.hSapping.Erase( iValue );
+		tsSapper.alSapping.Erase( iValue );
 	}
 
 	IntToString( iObjectRef, szRefString, sizeof( szRefString ) );
-	ArrayList hSappedBy;
-	if( smSappedBuildings.GetValue( szRefString, hSappedBy ) ) {
-		iValue = hSappedBy.FindValue( iSapperRef );
+	ArrayList alSappedBy;
+	if( g_smSappedBuildings.GetValue( szRefString, alSappedBy ) ) {
+		iValue = alSappedBy.FindValue( iSapperRef );
 		if( iValue != -1 ) {
-			hSappedBy.Erase( iValue );
+			alSappedBy.Erase( iValue );
 
-			if( hSappedBy.Length == 0 ) {
+			if( alSappedBy.Length == 0 ) {
 				SetVariantInt( 1 ); //throws a tantrum without some kind of parameter
 				AcceptEntityInput( iObjectIndex, "Enable" );
-				smSappedBuildings.Remove( szRefString );
+				g_smSappedBuildings.Remove( szRefString );
 
-				delete hSappedBy;
+				StopSound( iObjectIndex, 0, SOUND_SAPPER_NOISE );
+				StopSound( iObjectIndex, 0, SOUND_SAPPER_NOISE2 );
+				StopSound( iObjectIndex, 0, SOUND_SAPPER_PLANT );
+
+				delete alSappedBy;
 			}
 		}
 	}
@@ -460,7 +533,7 @@ MRESReturn Hook_IntermissionTakeDamage( int iEntity, DHookReturn hReturn, DHookP
 
 	SetEntProp( iEntity, Prop_Data, "m_iHealth", GetEntProp( iEntity, Prop_Data, "m_iHealth" ) - RoundToFloor( tfInfo.flDamage ) );
 	if( GetEntProp( iEntity, Prop_Data, "m_iHealth" ) <= 0 )
-		RemoveIntermission( EntIndexToEntRef( iEntity ) );
+		RemoveIntermission( EntIndexToEntRef( iEntity ), IR_DESTROY );
 
 	return MRES_Supercede;
 }
@@ -474,12 +547,12 @@ public void OnTakeDamageBuilding( int iTarget, Address aDamageInfo ) {
 	static char szRefString[32];
 	IntToString( EntIndexToEntRef( iTarget ), szRefString, sizeof( szRefString ) );
 
-	ArrayList hSappers;
-	if( !smSappedBuildings.GetValue( szRefString, hSappers ) )
+	ArrayList alSappers;
+	if( !g_smSappedBuildings.GetValue( szRefString, alSappers ) )
 		return;
 
-	for( int i = 0; i < hSappers.Length; i++ ) {
-		int iSapper = EntRefToEntIndex( hSappers.Get( i ) );
+	for( int i = 0; i < alSappers.Length; i++ ) {
+		int iSapper = EntRefToEntIndex( alSappers.Get( i ) );
 		if( iSapper == -1 )
 			continue;
 
@@ -561,18 +634,19 @@ Action RemoveParticle( Handle hTimer, int iParticle ) {
 }
 
 void GiveSpySapper( int iPlayer ) {
-	SDKCall( hGiveEcon, iPlayer, "TF_WEAPON_BUILDER_SPY_TEST", 4, 0 ); //todo: find a way to make this not hardcoded
+	SDKCall( g_hGiveEcon, iPlayer, "TF_WEAPON_BUILDER_SPY_TEST", 4, 0 ); //todo: find a way to make this not hardcoded
 	int iSapper = GetEntityInSlot( iPlayer, 4 );
 
 	//i can't fathom why it's like this but you can't reequip the sapper unless i do whatever the fuck this is
-	SDKCall( hSetSubType, iSapper, 3 );
-	SDKCall( hSetObjectMode, iSapper, 0 );
+	SDKCall( g_hSetSubType, iSapper, 3 );
+	SDKCall( g_hSetObjectMode, iSapper, 0 );
 }
 void TakeSpySapper( int iPlayer ) {
 	int iWeapon = GetEntityInSlot( iPlayer, 4 );
 	if( iWeapon > 0 ) {
+		Tracker_SetValue( iPlayer, SAPPERKEYNAME, 0.0 );
 		RemoveEntity( iWeapon );
-		SDKCall( hSwapToBest, iPlayer, -1 );
+		SDKCall( g_hSwapToBest, iPlayer, -1 );
 	}
 }
 
@@ -580,8 +654,25 @@ public void Tracker_OnRecharge( int iPlayer, const char szTrackerName[32], float
 	if( !StrEqual( szTrackerName, SAPPERKEYNAME ) )
 		return;
 
-	if( !fHasIntermission.Get( iPlayer ) || !IsPlayerAlive( iPlayer ) )
+	if( !g_pfHasIntermission.Get( iPlayer ) || !IsPlayerAlive( iPlayer ) )
 		return;
 
 	GiveSpySapper( iPlayer );
+}
+
+MRESReturn Hook_ObjectKilled( int iThis, DHookParam hParams ) {
+	static char szRefString[32];
+
+	int iObjectRef = EntIndexToEntRef( iThis );
+	IntToString( iObjectRef, szRefString, sizeof( szRefString ) );
+
+	ArrayList alList;
+	if( !g_smSappedBuildings.GetValue( szRefString, alList ) )
+		return MRES_Ignored;
+
+	StopSound( iThis, 0, SOUND_SAPPER_NOISE );
+	StopSound( iThis, 0, SOUND_SAPPER_NOISE2 );
+	StopSound( iThis, 0, SOUND_SAPPER_PLANT );
+
+	return MRES_Handled;
 }

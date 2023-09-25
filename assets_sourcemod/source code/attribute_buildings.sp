@@ -118,12 +118,6 @@ DynamicHook hMakeCarry;
 DynamicHook hCanUpgrade;
 DynamicDetour hDispHeal;
 
-DynamicDetour hTeleporterTouch;
-DynamicDetour hTeleporterThink;
-DynamicHook   hDeterminePlaybackRate;
-DynamicDetour hSetTeleporterState;
-DynamicDetour hIsReady;
-
 bool bLateLoad = false;
 public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] error, int err_max ) {
 	bLateLoad = bLate;
@@ -166,23 +160,6 @@ public void OnPluginStart() {
 
 	hDispHeal = DynamicDetour.FromConf( hGameConf, "CObjectDispenser::GetHealRate" );
 	hDispHeal.Enable( Hook_Post, Detour_GetHealRate );
-
-	/*hSetTeleporterState = DynamicDetour.FromConf( hGameConf, "CObjectTeleporter::SetState");
-	hSetTeleporterState.Enable( Hook_Pre, Detour_TeleporterState );
-
-	hTeleporterTouch = DynamicDetour.FromConf( hGameConf, "CObjectTeleporter::TeleporterTouch");
-	hTeleporterTouch.Enable( Hook_Pre, Detour_TeleporterTouchPre );
-	hTeleporterTouch.Enable( Hook_Post, Detour_TeleporterTouchPost );
-
-	hTeleporterThink = DynamicDetour.FromConf( hGameConf, "CObjectTeleporter::TeleporterThink");
-	hTeleporterThink.Enable( Hook_Pre, Detour_TeleporterThinkPre );
-	hTeleporterThink.Enable( Hook_Post, Detour_TeleporterThinkPost );
-
-	hIsReady = DynamicDetour.FromConf( hGameConf, "CObjectTeleporter::IsReady");
-	hIsReady.Enable( Hook_Pre, Detour_IsMatchingPre );
-	hIsReady.Enable( Hook_Post, Detour_IsMatchingPost );
-
-	hDeterminePlaybackRate = DynamicHook.FromConf( hGameConf, "CObjectTeleporter::DeterminePlaybackRate");*/
 
 	g_iGoalBuildOffset = GameConfGetOffset( hGameConf, "CBaseObject::m_iGoalUpgradeLevel" );
 
@@ -607,11 +584,6 @@ void SetupObjectHooks( int iEntity ) {
 	hOnGoActive.HookEntity( Hook_Post, iEntity, Hook_OnGoActive );
 	hMakeCarry.HookEntity( Hook_Post, iEntity, Hook_MakeCarry );
 	hCanUpgrade.HookEntity( Hook_Pre, iEntity, Hook_CanBeUpgraded );
-
-	if( GetEntProp( iEntity, Prop_Send, "m_iObjectType" ) == OBJ_TELEPORTER && GetEntProp( iEntity, Prop_Send, "m_bMiniBuilding" ) ) {
-		hDeterminePlaybackRate.HookEntity( Hook_Pre, iEntity, Detour_PlaybackSpeedPre );
-		hDeterminePlaybackRate.HookEntity( Hook_Post, iEntity, Detour_PlaybackSpeedPost );
-	}
 }
 
 /*
@@ -665,8 +637,8 @@ void CreateSirenParticle( int iBuilding ) {
 	ActivateEntity( iParticle );
 
 	int iLookup[ 2 ];
-	iLookup[ 0 ] = iBuilding;
-	iLookup[ 1 ] = iParticle;
+	iLookup[ 0 ] = EntIndexToEntRef( iBuilding );
+	iLookup[ 1 ] = EntIndexToEntRef( iParticle );
 
 	g_hSirenList.PushArray( iLookup );
 }
@@ -674,9 +646,11 @@ void DestroySirenParticle( int iBuilding ) {
 	int iLookup[2];
 	for( int i = 0; i < g_hSirenList.Length; i++ ) {
 		g_hSirenList.GetArray( i, iLookup );
+		iLookup[ 0 ] = EntRefToEntIndex( iLookup[ 0 ] );
+		iLookup[ 1 ] = EntRefToEntIndex( iLookup[ 1 ] );
 		if( iLookup[ 0 ] == iBuilding ) {
 			g_hSirenList.Erase( i );
-			if( !IsValidEntity( iLookup[ 1 ] ) )
+			if( !( iLookup[ 1 ] > 0 ) )
 				return;
 				
 			AcceptEntityInput( iLookup[ 1 ], "stop" );
@@ -714,62 +688,10 @@ void Lateload() {
 		GetEntPropString( iIndex, Prop_Data, "m_iszEffectName", sEffectName, sizeof( sEffectName ) );
 		if( StrContains( sClassname, "obj_", true ) != 0 && StrContains( sEffectName, "cart_flashinglight", true ) != 0 ) {
 			int iLookup[ 2 ];
-			iLookup[ 0 ] = iParent;
-			iLookup[ 1 ] = iIndex;
+			iLookup[ 0 ] = EntIndexToEntRef( iParent );
+			iLookup[ 1 ] = EntIndexToEntRef( iIndex );
 
 			g_hSirenList.PushArray( iLookup );
 		}
 	}
-}
-
-int iRealStates[2049]; //todo: no
-
-#define NEWSTATE 1
-
-MRESReturn Detour_TeleporterState( int iThis, DHookParam hParams ) {
-	iRealStates[iThis] = hParams.Get( 1 );
-	SetEntProp( iThis, Prop_Send, "m_iState", NEWSTATE );
-	StoreToEntity( iThis, 2416, GetGameTime() );
-	return MRES_Supercede;
-}
-
-MRESReturn Detour_TeleporterTouchPre( int iThis, DHookParam hParams ) {
-	SetEntProp( iThis, Prop_Send, "m_iState", iRealStates[iThis] );
-	return MRES_Ignored;
-}
-MRESReturn Detour_TeleporterTouchPost( int iThis, DHookParam hParams ) {
-	SetEntProp( iThis, Prop_Send, "m_iState", NEWSTATE );
-	return MRES_Ignored;
-}
-
-MRESReturn Detour_PlaybackSpeedPre( int iThis ) {
-	SetEntProp( iThis, Prop_Send, "m_iState", iRealStates[iThis] );
-	return MRES_Ignored;
-}
-MRESReturn Detour_PlaybackSpeedPost( int iThis ) {
-	SetEntProp( iThis, Prop_Send, "m_iState", NEWSTATE );
-	return MRES_Ignored;
-}
-
-MRESReturn Detour_TeleporterThinkPre( int iThis ) {
-	SetEntProp( iThis, Prop_Send, "m_iState", iRealStates[iThis] );
-	return MRES_Ignored;
-}
-MRESReturn Detour_TeleporterThinkPost( int iThis ) {
-	SetEntProp( iThis, Prop_Send, "m_iState", NEWSTATE );
-	return MRES_Ignored;
-}
-
-MRESReturn Detour_IsMatchingPre( int iThis, DHookReturn hReturn ) {
-	PrintToServer("test1");
-	SetEntProp( iThis, Prop_Send, "m_iState", iRealStates[iThis] );
-	PrintToServer("test2");
-	//hReturn.Value = false;
-	return MRES_Ignored;
-}
-MRESReturn Detour_IsMatchingPost( int iThis, DHookReturn hReturn  ) {
-	PrintToServer("test3");
-	SetEntProp( iThis, Prop_Send, "m_iState", NEWSTATE );
-	PrintToServer("test4");
-	return MRES_Ignored;
 }
