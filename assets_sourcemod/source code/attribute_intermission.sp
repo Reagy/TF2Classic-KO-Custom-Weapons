@@ -35,7 +35,7 @@
 #define SAPPERKEYNAME "Sapper"
 
 //time to recharge sapper in seconds
-#define INTERMISSION_RECHARGE 30.0
+#define INTERMISSION_RECHARGE 20.0
 
 //duration of radial sap in seconds
 #define INTERMISSION_DURATION 7.5
@@ -53,14 +53,16 @@
 	duration increased 50% (5>7.5)
 	radius increased 16% (300>350)
 	no longer saps your cloak
-	recharges after 30s
-	can now sap jump pads (like you'd ever do that anyway)
+	recharges after 20s
+	can now affect jump pads (like you'd ever do that anyway)
 
-	spy receives a 66% damage penalty against sentries he sapped
-	spy can only place one sapper at a time
+	spy deals 66% less damage against sentries he sapped
 	sapper can be destroyed by anything that can remove sappers
 	can no longer sap through walls
 */
+
+//uncomment this line to cause the spy to lose his sapper if he places it in addition to when he throws it
+//#define SPY_LOSE_SAPPER
 
 enum struct ThrownSapper {
 	float flRemoveTime;
@@ -113,17 +115,17 @@ public void OnPluginStart() {
 	#endif
 
 	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetVirtual( 450 );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CBaseObject::SetObjectMode" );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	g_hSetObjectMode = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetVirtual( 232 );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CBaseObject::SetSubType" );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	g_hSetSubType = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetSignature( SDKLibrary_Server, "@_ZN9CTFPlayer12GiveEconItemEPKcii", 0 );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayer::GiveEconItem" );
 	PrepSDKCall_SetReturnInfo( SDKType_CBaseEntity, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
@@ -131,7 +133,7 @@ public void OnPluginStart() {
 	g_hGiveEcon = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetSignature( SDKLibrary_Server, "@_ZN20CBaseCombatCharacter22SwitchToNextBestWeaponEP17CBaseCombatWeapon", 0 );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseCombatCharacter::SwitchToNextBestWeapon" );
 	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
 	g_hSwapToBest = EndPrepSDKCall();
@@ -329,6 +331,7 @@ void RemoveIntermission( int iRef, int iRemoveType = 0 ) {
 	float vecSapperPos[3];
 	GetEntPropVector( iSapper, Prop_Data, "m_vecAbsOrigin", vecSapperPos );
 
+	//todo: these effects could be better
 	switch( iRemoveType ) {
 	case ( IR_SILENT ): {
 
@@ -451,7 +454,6 @@ void SapBuilding( int iSapperRef, int iObjectIndex ) {
 	static char szRefString[32];
 
 	int iObjectRef = EntIndexToEntRef( iObjectIndex );
-
 	IntToString( iSapperRef, szRefString, sizeof( szRefString ) );
 
 	ThrownSapper tsSapper;
@@ -473,6 +475,19 @@ void SapBuilding( int iSapperRef, int iObjectIndex ) {
 		alSappedBy.Push( iSapperRef );
 	}
 
+	EmitSoundToAll( SOUND_SAPPER_NOISE, iObjectIndex, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEPITCH, 1.0, 150 );
+	EmitSoundToAll( SOUND_SAPPER_NOISE2, iObjectIndex, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEPITCH, 1.0, 60 );
+	EmitSoundToAll( SOUND_SAPPER_PLANT, iObjectIndex );
+
+	float vecEffectPos[3];
+	vecEffectPos[0] = GetRandomFloat( -25.0, 25.0 );
+	vecEffectPos[1] = GetRandomFloat( -25.0, 25.0 );
+	vecEffectPos[2] = GetRandomFloat( 10.0, ( GetEntProp( iObjectIndex, Prop_Send, "m_iObjectType" ) == 1 ) ? 25.0 : 65.0 );
+
+	AttachParticle( iObjectIndex, EFFECT_SENTRY_FX, 0.5, vecEffectPos );
+	AttachParticle( iObjectIndex, EFFECT_SENTRY_SPARKS1, 0.5, vecEffectPos );
+	AttachParticle( iObjectIndex, EFFECT_SENTRY_SPARKS2, 0.5, vecEffectPos );
+
 	SetVariantInt( 1 ); //throws a tantrum without some kind of parameter
 	AcceptEntityInput( iObjectIndex, "Disable" );
 }
@@ -490,29 +505,30 @@ void UnsapBuilding( int iSapperRef, int iObjectIndex ) {
 		return;
 	
 	int iValue = tsSapper.alSapping.FindValue( iObjectRef );
-	if( iValue != -1 ) {
+	if( iValue != -1 )
 		tsSapper.alSapping.Erase( iValue );
-	}
 
 	IntToString( iObjectRef, szRefString, sizeof( szRefString ) );
 	ArrayList alSappedBy;
-	if( g_smSappedBuildings.GetValue( szRefString, alSappedBy ) ) {
-		iValue = alSappedBy.FindValue( iSapperRef );
-		if( iValue != -1 ) {
-			alSappedBy.Erase( iValue );
+	if( !g_smSappedBuildings.GetValue( szRefString, alSappedBy ) )
+		return;
 
-			if( alSappedBy.Length == 0 ) {
-				SetVariantInt( 1 ); //throws a tantrum without some kind of parameter
-				AcceptEntityInput( iObjectIndex, "Enable" );
-				g_smSappedBuildings.Remove( szRefString );
+	iValue = alSappedBy.FindValue( iSapperRef );
+	if( iValue == -1 )
+		return;
 
-				StopSound( iObjectIndex, 0, SOUND_SAPPER_NOISE );
-				StopSound( iObjectIndex, 0, SOUND_SAPPER_NOISE2 );
-				StopSound( iObjectIndex, 0, SOUND_SAPPER_PLANT );
+	alSappedBy.Erase( iValue );
 
-				delete alSappedBy;
-			}
-		}
+	if( alSappedBy.Length == 0 ) {
+		SetVariantInt( 1 ); //throws a tantrum without some kind of parameter
+		AcceptEntityInput( iObjectIndex, "Enable" );
+		g_smSappedBuildings.Remove( szRefString );
+
+		StopSound( iObjectIndex, 0, SOUND_SAPPER_NOISE );
+		StopSound( iObjectIndex, 0, SOUND_SAPPER_NOISE2 );
+		StopSound( iObjectIndex, 0, SOUND_SAPPER_PLANT );
+
+		delete alSappedBy;
 	}
 
 }
@@ -662,17 +678,25 @@ public void Tracker_OnRecharge( int iPlayer, const char szTrackerName[32], float
 
 MRESReturn Hook_ObjectKilled( int iThis, DHookParam hParams ) {
 	static char szRefString[32];
-
 	int iObjectRef = EntIndexToEntRef( iThis );
 	IntToString( iObjectRef, szRefString, sizeof( szRefString ) );
+
+	StopSound( iThis, 0, SOUND_SAPPER_NOISE );
+	StopSound( iThis, 0, SOUND_SAPPER_NOISE2 );
+	StopSound( iThis, 0, SOUND_SAPPER_PLANT );
 
 	ArrayList alList;
 	if( !g_smSappedBuildings.GetValue( szRefString, alList ) )
 		return MRES_Ignored;
 
-	StopSound( iThis, 0, SOUND_SAPPER_NOISE );
-	StopSound( iThis, 0, SOUND_SAPPER_NOISE2 );
-	StopSound( iThis, 0, SOUND_SAPPER_PLANT );
+	delete alList;
+
+	g_smSappedBuildings.Remove( szRefString );
+	
+	int iThisIndex = g_alCheckList.FindValue( iObjectRef );
+	if( iThisIndex != -1 ) {
+		g_alCheckList.Erase( iThisIndex );
+	}
 
 	return MRES_Handled;
 }

@@ -414,11 +414,10 @@ int GetHealingMode( int iWeapon ) {
 */
 
 int GetDummyGun( int iPlayer ) {
-	return g_iDummyGuns[ iPlayer ];
+	return EntRefToEntIndex( g_iDummyGuns[ iPlayer ] );
 }
 int CreateDummyGun( int iPlayer, int iMedigun ) {
-	if( GetDummyGun( iPlayer ) != -1 )
-		DeleteDummyGun( iPlayer );
+	DeleteDummyGun( iPlayer );
 
 	int iDummyGun = CreateEntityByName( "prop_dynamic_override" );
 	static char szModelName[64];
@@ -434,16 +433,16 @@ int CreateDummyGun( int iPlayer, int iMedigun ) {
 
 	SetFlags(iDummyGun);
 
-	g_iDummyGuns[ iPlayer ] = iDummyGun;
+	g_iDummyGuns[ iPlayer ] = EntIndexToEntRef( iDummyGun );
 	return iDummyGun;
 }
 void DeleteDummyGun( int iPlayer ) {
-	int iDummyGun = g_iDummyGuns[ iPlayer ];
-	if( IsValidEntity( iDummyGun ) ) {
+	int iDummyGun = EntRefToEntIndex( g_iDummyGuns[ iPlayer ] );
+	if( iDummyGun > 0 ) {
 		RemoveEntity( iDummyGun );
 	}
 
-	g_iDummyGuns[ iPlayer ] = -1;
+	g_iDummyGuns[ iPlayer ] = INVALID_ENT_REFERENCE;
 }
 
 /*
@@ -452,7 +451,7 @@ void DeleteDummyGun( int iPlayer ) {
 */
 
 int GetBeamEmitter( int iPlayer, bool bClient ) { 
-	return g_iBeamEmitters[ iPlayer ][ view_as<int>(bClient) ];
+	return EntRefToEntIndex( g_iBeamEmitters[ iPlayer ][ view_as<int>(bClient) ] );
 }
 int CreateBeamEmitter( int iPlayer, bool bClient ) {
 	if( GetBeamEmitter( iPlayer, bClient ) != -1 )
@@ -460,7 +459,7 @@ int CreateBeamEmitter( int iPlayer, bool bClient ) {
 
 	int iEmitter = CreateEntityByName( "info_particle_system" );
 	
-	g_iBeamEmitters[ iPlayer ][ view_as<int>(bClient) ] = iEmitter;
+	g_iBeamEmitters[ iPlayer ][ view_as<int>(bClient) ] = EntIndexToEntRef( iEmitter );
 	SetBeamParticle( iPlayer, bClient );
 
 	SetFlags(iEmitter);
@@ -475,13 +474,13 @@ int CreateBeamEmitter( int iPlayer, bool bClient ) {
 	return iEmitter;
 }
 void DeleteBeamEmitter( int iPlayer, bool bClient ) {
-	int iEmitter = g_iBeamEmitters[ iPlayer ][ view_as<int>(bClient) ];
-	if( IsValidEntity( iEmitter ) ) {
+	int iEmitter = EntRefToEntIndex( GetBeamEmitter( iPlayer, bClient ) );
+	if( iEmitter > 0 ) {
 		SDKUnhook( iEmitter, SDKHook_SetTransmit, Hook_EmitterTransmit );
 		AcceptEntityInput( iEmitter, "Stop" );
 		RemoveEntity( iEmitter );
 	}
-	g_iBeamEmitters[ iPlayer ][ view_as<int>(bClient) ] = -1;
+	g_iBeamEmitters[ iPlayer ][ view_as<int>(bClient) ] = INVALID_ENT_REFERENCE;
 }
 void SetBeamParticle( int iPlayer, bool bClient ) {
 	static char szBeamName[64];
@@ -761,226 +760,6 @@ MRESReturn AngelGunUber( int iMedigun ) {
 
 	return MRES_Ignored;
 }
-
-/*
-	OATHBREAKER
-*/
-
-/*static char g_szOathParticles[][] = {
-	"oathbreaker_emitter_red",
-	"oathbreaker_emitter_blue",
-	"oathbreaker_emitter_green",
-	"oathbreaker_emitter_yellow"
-};
-
-static char g_szOathHealParticles[][] = {
-	"oathbreaker_heal_red",
-	"oathbreaker_heal_blue",
-	"oathbreaker_heal_green",
-	"oathbreaker_heal_yellow"
-};
-
-const float RADIUSHEAL_INTERVAL = 0.5;
-
-int g_iRadialHealerEmitters[MAXPLAYERS+1] = { -1, ... };
-int g_iRadialPatientEmitters[MAXPLAYERS+1] = { -1, ... };
-
-int g_iRadialPatientBits[MAXPLAYERS+1][2]; //bitfields for each player to track who's giving a radial heal
-bool g_bRadialPatientHealed[MAXPLAYERS+1] = { false, ... };
-
-void StartRadialHeal( int iPlayer ) {
-	Tracker_Create( iPlayer, "Rage", 0.0 );
-	CreateRadialEmitter( iPlayer );
-	CreateTimer( RADIUSHEAL_INTERVAL, Timer_RadialHeal, iPlayer, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
-	g_bRadiusHealer[ iPlayer ] = true;
-}
-
-void CreateRadialEmitter( int iPlayer ) {
-	RemoveRadialEmitter( iPlayer );
-
-	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
-	int iEmitter = CreateEntityByName( "info_particle_system" );
-
-	DispatchKeyValue( iEmitter, "effect_name", g_szOathParticles[ iTeam ] );
-
-	float vecPos[3]; GetClientAbsOrigin( iPlayer, vecPos );
-	TeleportEntity( iEmitter, vecPos );
-
-	ParentModel( iEmitter, iPlayer );
-
-	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iPlayer );
-
-	SetFlags(iEmitter);
-	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_RadialParticle );
-
-	DispatchSpawn( iEmitter );
-	ActivateEntity( iEmitter );
-	AcceptEntityInput( iEmitter, "Start" );
-
-	g_iRadialHealerEmitters[ iPlayer ] = EntIndexToEntRef( iEmitter );
-}
-void RemoveRadialEmitter( int iPlayer ) {
-	int iEmitter = EntRefToEntIndex( g_iRadialHealerEmitters[ iPlayer ] );
-	if( iEmitter != -1 ) {
-		SDKUnhook( iEmitter, SDKHook_SetTransmit, Hook_RadialParticle );
-		RemoveEntity( iEmitter );
-	}
-		
-
-	g_iRadialHealerEmitters[ iPlayer ] = -1;
-}
-
-void StopRadialHeal( int iPlayer ) {
-	for( int i = 1; i <= MaxClients; i++ ) {
-		if( i == iPlayer || !IsClientInGame( i ) )
-			continue;
-
-		Address aShared = GetSharedFromPlayer( i );
-		SDKCall( hCallStopHeal, aShared, iPlayer );
-		
-		int iField = iPlayer != 0 ? iPlayer / 32 : 0;
-		int iBit = 1 << ( iPlayer % 32);
-		g_iRadialPatientBits[ i ][ iField ] &= ~iBit;
-
-		UpdatePatientRadialParticles( i );
-	}
-	RemoveRadialEmitter( iPlayer );
-}
-
-//TODO: optimize this
-Action Timer_RadialHeal( Handle hTimer, int iPlayer ) {
-	if( !IsClientConnected( iPlayer ) || !IsClientInGame( iPlayer ) || !IsPlayerAlive( iPlayer ) || RoundToFloor( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) != CMEDI_OATH ) {
-		//StopRadialHeal( iPlayer );
-		return Plugin_Stop;
-	}	
-
-	float vecSource[3]; GetClientAbsOrigin( iPlayer, vecSource );
-	bool bIsInRadius[MAXPLAYERS+1] = { false, ... };
-
-	int iTarget = -1;
-	while ( ( iTarget = FindEntityInSphere( iTarget, vecSource, 300.0 ) ) != -1 ) {
-		if( !IsValidPlayer( iTarget ) )
-			continue;
-
-		if( iTarget == iPlayer )
-			continue;
-
-		if( !ValidHealTarget( iPlayer, iTarget ) )
-			continue;
-
-		bIsInRadius[ iTarget ] = true;
-	}
-
-	for( int i = 1; i <= MaxClients; i++ ) {
-		if( i == iPlayer || !IsClientInGame( i ) )
-			continue;
-
-		Address aShared = GetSharedFromPlayer( i );
-
-		if( bIsInRadius[i] ) {
-			SDKCall( hCallHeal, aShared, iPlayer, 10.0, -1, false );
-
-			int iField = iPlayer != 0 ? iPlayer / 32 : 0;
-			int iBit = 1 << ( iPlayer % 32);
-			
-			g_iRadialPatientBits[ i ][ iField ] |= iBit;
-
-			UpdatePatientRadialParticles( i );
-
-			g_flLastHealed[ iPlayer ] = GetGameTime();
-		}
-		else {
-			SDKCall( hCallStopHeal, aShared, iPlayer );
-
-			int iField = iPlayer != 0 ? iPlayer / 32 : 0;
-			int iBit = 1 << ( iPlayer % 32);
-			g_iRadialPatientBits[ i ][ iField ] &= ~iBit;
-
-			UpdatePatientRadialParticles( i );
-		}
-	}
-
-	if( GetGameTime() > g_flLastHealed[ iPlayer ] + 8.0 ) {
-		float flTrackerVal = Tracker_GetValue( iPlayer, "Rage" ) * 0.95;
-		Tracker_SetValue( iPlayer, "Rage", MaxFloat( 0.0, flTrackerVal ) );
-	}
-	else if( GetGameTime() > g_flLastHealed[ iPlayer ] + 6.0 ) {
-		float flTrackerVal = Tracker_GetValue( iPlayer, "Rage" ) * 0.98;
-		Tracker_SetValue( iPlayer, "Rage", MaxFloat( 0.0, flTrackerVal ) );
-	}
-
-	return Plugin_Continue;
-}
-
-void CreatePatientRadialParticles( int iPlayer ) {
-	RemovePatientRadialParticles( iPlayer );
-
-	int iDisguise = GetEntProp( iPlayer, Prop_Send, "m_nDisguiseTeam" );
-	int iTeam;
-	if( iDisguise != 0 )
-		iTeam = iDisguise - 2;
-	else
-		iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
-
-	int iEmitter = CreateEntityByName( "info_particle_system" );
-
-	DispatchKeyValue( iEmitter, "effect_name", g_szOathHealParticles[ iTeam ] );
-
-	float vecPos[3]; GetClientAbsOrigin( iPlayer, vecPos );
-	TeleportEntity( iEmitter, vecPos );
-
-	ParentModel( iEmitter, iPlayer );
-
-	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iPlayer );
-
-	SetFlags(iEmitter);
-	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_RadialParticle );
-
-	DispatchSpawn( iEmitter );
-	ActivateEntity( iEmitter );
-	AcceptEntityInput( iEmitter, "Start" );
-
-	g_iRadialPatientEmitters[ iPlayer ] = EntIndexToEntRef( iEmitter );
-}
-void UpdatePatientRadialParticles( int iPlayer ) {
-	bool bHasHealer = ( g_iRadialPatientBits[ iPlayer ][0] != 0 || g_iRadialPatientBits[ iPlayer ][1] != 0 );
-	if( bHasHealer != g_bRadialPatientHealed[ iPlayer ] ) {
-		if( bHasHealer )
-			CreatePatientRadialParticles( iPlayer );
-		else
-			RemovePatientRadialParticles( iPlayer );
-	}
-	g_bRadialPatientHealed[ iPlayer ] = bHasHealer;
-}
-void RemovePatientRadialParticles( int iPlayer ) {
-	int iEmitter = EntRefToEntIndex( g_iRadialPatientEmitters[ iPlayer ] );
-	if( iEmitter != -1 )
-		RemoveEntity( iEmitter );
-
-	g_iRadialPatientEmitters[ iPlayer ] = -1;
-}
-
-Action Hook_RadialParticle( int iEntity, int iClient ) {
-	SetFlags( iEntity );
-	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" );
-
-	if( iClient == iOwner ) {
-		return Plugin_Handled;
-	}
-	return Plugin_Continue;
-}
-
-void OathbreakerDamageMult( int iTarget, TFDamageInfo tfInfo ) {
-	int iAttacker = tfInfo.iAttacker;
-	if( !IsValidPlayer( iAttacker ) )
-		return; 
-
-	if( RoundToFloor( AttribHookFloat( 0.0, iAttacker, "custom_medigun_type" ) ) != CMEDI_OATH )
-		return;
-
-	float flMult = Tracker_GetValue( iAttacker, "Rage" );
-	tfInfo.flDamage *= RemapValClamped(flMult, 0.0, 100.0, 1.0, 1.3 );
-}*/
 
 /*
 	UBERDOSIS

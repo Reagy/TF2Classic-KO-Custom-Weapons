@@ -148,6 +148,15 @@
             
             //buildings
             
+			"CBaseObject::SetObjectMode"
+			{
+				"linux"		"450"
+			}
+			"CBaseObject::SetSubType"
+			{
+				"linux"		"232"
+			}
+			
             "CBaseObject::StartBuilding" //good
             {
                 "linux"     "329"
@@ -1045,13 +1054,22 @@
 				"library"	"server"
 				"linux"		"@_ZN20CBaseCombatCharacter18Weapon_CanSwitchToEP17CBaseCombatWeapon"
 			}
-			
+			"CBaseCombatCharacter::SwitchToNextBestWeapon"
+			{
+				"library"	"server"
+				"linux"		"@_ZN20CBaseCombatCharacter22SwitchToNextBestWeaponEP17CBaseCombatWeapon"
+			}
 			"CBaseCombatCharacter::SetAmmoCount" //good
 			{
 				"library"	"server"
 				"linux"		"@_ZN20CBaseCombatCharacter12SetAmmoCountEii"
 			}
 			
+			"CTFPlayer::GiveEconItem"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFPlayer12GiveEconItemEPKcii"
+			}
             "CTFPlayer::GetEntityForLoadoutSlot" //good
 			{
 				"library"	"server"
