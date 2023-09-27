@@ -9,7 +9,7 @@
 #include <kocwtools>
 #include <hudframework>
 
-#define MDL_SAPPER              "models/weapons/c_models/c_remotesap/c_remotesap.mdl"
+#define MDL_SAPPER              "models/weapons/c_models/c_remotesap/c_sapper.mdl"
 
 #define SOUND_BOOT              "weapons/weapon_crit_charged_on.wav"
 #define SOUND_SAPPER_REMOVED    "weapons/sapper_removed.wav"
@@ -484,6 +484,7 @@ void SapBuilding( int iSapperRef, int iObjectIndex ) {
 	vecEffectPos[1] = GetRandomFloat( -25.0, 25.0 );
 	vecEffectPos[2] = GetRandomFloat( 10.0, ( GetEntProp( iObjectIndex, Prop_Send, "m_iObjectType" ) == 1 ) ? 25.0 : 65.0 );
 
+	//todo: this is really stupid
 	AttachParticle( iObjectIndex, EFFECT_SENTRY_FX, 0.5, vecEffectPos );
 	AttachParticle( iObjectIndex, EFFECT_SENTRY_SPARKS1, 0.5, vecEffectPos );
 	AttachParticle( iObjectIndex, EFFECT_SENTRY_SPARKS2, 0.5, vecEffectPos );

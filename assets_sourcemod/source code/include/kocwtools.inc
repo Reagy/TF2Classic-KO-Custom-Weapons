@@ -290,6 +290,26 @@ stock float RemapValClamped( float flVal, float flA, float flB, float flC, float
 	return flC + (flD - flC) * flCVal;
 }
 
+// hermite basis function for smooth interpolation
+// Similar to Gain() above, but very cheap to call
+// value should be between 0 & 1 inclusive
+stock float SimpleSpline( float flVal ) {
+	float flValSquared = flVal * flVal;
+
+	// Nice little ease-in, ease-out spline-like curve
+	return ( 3.0 * flValSquared - 2.0 * flValSquared * flVal );
+}
+
+// remaps a value in [startInterval, startInterval+rangeInterval] from linear to
+// spline using SimpleSpline
+stock float SimpleSplineRemapValClamped( float flVal, float flA, float flB, float flC, float flD ) {
+	if ( flA == flB )
+		return flVal >= flB ? flD : flC;
+	float flNewVal = ( flVal - flA ) / ( flB - flA );
+	flNewVal = FloatClamp( flNewVal, 0.0, 1.0 );
+	return flC + (flD - flC) * SimpleSpline( flNewVal );
+}
+
 /*
 	MEMORY FUNCTIONS
 */
@@ -527,4 +547,32 @@ stock int FindModelString( int iModelIndex, char[] szModelString, int iStringSiz
 		iStringTable = FindStringTable( "modelprecache" );
 	}
 	return ReadStringTable( iStringTable, iModelIndex, szModelString, iStringSize );
+}
+
+//shitty copypaste of tf2's falloff algorithm
+stock float TF2DamageFalloff( int iVictim, TFDamageInfo tfInfo ) {
+	float flRandomDamage = tfInfo.flDamage * 0.5;
+	float flCenter = 0.5;
+
+	if ( tfInfo.iFlags & DMG_USEDISTANCEMOD ) {
+		float vecOtherPos[3];
+		float vecPos[3];
+
+		GetEntPropVector( iVictim, Prop_Data, "m_vecAbsOrigin", vecPos );
+		GetEntPropVector( tfInfo.iAttacker, Prop_Data, "m_vecAbsOrigin", vecOtherPos );
+
+		SubtractVectors( vecPos, vecOtherPos, vecOtherPos );
+
+		float flDistance = MaxFloat( 1.0,  SquareRoot( GetVectorLength( vecOtherPos, true ) ) );
+		float flOptimalDistance = 512.0;
+
+		flCenter = RemapValClamped( flDistance / flOptimalDistance, 0.0, 2.0, 1.0, 0.0 );
+		if ( tfInfo.iFlags & DMG_NOCLOSEDISTANCEMOD ) {
+			if ( flCenter > 0.5 )
+				flCenter = RemapVal( flCenter, 0.5, 1.0, 0.5, 0.65 );
+		}
+	}
+
+	float flOut = SimpleSplineRemapValClamped( flCenter, 0.0, 1.0, -flRandomDamage, flRandomDamage );
+	return tfInfo.flDamage + flOut;
 }
