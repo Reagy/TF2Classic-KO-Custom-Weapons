@@ -125,7 +125,7 @@ MRESReturn Hook_PostFrame( int iThis ) {
 	int iShield = EntRefToEntIndex( g_iSphereShields[ iWeaponOwner ] );
 	float flTrackerValue = Tracker_GetValue( iWeaponOwner, SHIELDKEYNAME );
 
-	if( !( iWeaponState == 3 ) || flTrackerValue < 0.0 ) { //spinning
+	if( !( /*iWeaponState == 2 || */iWeaponState == 3 ) || flTrackerValue < 0.0 ) { //spinning
 		RemoveShield( iWeaponOwner );
 		return MRES_Handled;
 	}
@@ -203,7 +203,7 @@ void SpawnShield( int iOwner ) {
 	
 	DispatchSpawn( iShield );
 
-	SetSolid( iShield, SOLID_VPHYSICS );
+	SetSolid( iShield, SOLID_BBOX );
 	SetCollisionGroup( iShield, TFCOLLISION_GROUP_COMBATOBJECT );
 
 	//SetEntProp( iShield, Prop_Data, "m_takedamage", DAMAGE_EVENTS_ONLY );
@@ -264,7 +264,7 @@ void UpdateShield( int iClient ) {
 
 	vecEyeAngles[0] = 0.0;
 	TeleportEntity( iShield, vecEndPos, vecEyeAngles, { 0.0, 0.0, 0.0 } );
-	ChangeEdictState( iShield );
+	//ChangeEdictState( iShield );
 
 	int iManager = EntRefToEntIndex( g_iMaterialManager[ iClient ] );
 	if( iManager == -1 )
@@ -341,8 +341,6 @@ MRESReturn Hook_ShieldTakeDamage( int iThis, DHookReturn hReturn, DHookParam hPa
 	flTrackerValue = MaxFloat( 0.0, flTrackerValue - ( flFalloff * SHIELD_DAMAGE_DRAIN_SCALE ) );
 	Tracker_SetValue( iOwner, SHIELDKEYNAME, flTrackerValue );
 	
-	PrintToServer("%f", flFalloff );
-
 	g_flLastDamagedShield[ iOwner ] = GetGameTime();
 
 	return MRES_Handled;
@@ -375,7 +373,7 @@ void BuildShieldCharge( TFDamageInfo tfInfo ) {
 //offset 20: except entity
 
 
-//todo: sentry and flame particle collision
+//todo: flame particle collision?
 MRESReturn Detour_ShouldHitEntitySimple( Address aTrace, DHookReturn hReturn, DHookParam hParams ) {
 	//we only care about ignoring the shield so if we weren't going to hit it to begin with than ignore
 	if( hReturn.Value == false )
@@ -396,7 +394,7 @@ MRESReturn Detour_ShouldHitEntitySimple( Address aTrace, DHookReturn hReturn, DH
 
 	if( iTouched == EntRefToEntIndex( g_iSphereShields[ iOwner ] ) && GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) == GetEntProp( iPassEntity, Prop_Send, "m_iTeamNum" ) ) {
 		hReturn.Value = false;
-		return MRES_ChangedOverride;
+		return MRES_Supercede;
 	}
 
 	return MRES_Ignored;

@@ -5,6 +5,7 @@
 
 #include <tf2c>
 #include <stocksoup/memory>
+#include <sdkhooks>
 
 //functional-style typecasting
 #define address(%1) view_as<Address>(%1)
@@ -571,6 +572,17 @@ stock float TF2DamageFalloff( int iVictim, TFDamageInfo tfInfo ) {
 			if ( flCenter > 0.5 )
 				flCenter = RemapVal( flCenter, 0.5, 1.0, 0.5, 0.65 );
 		}
+	}
+
+	if( flCenter > 0.5 && IsValidEntity( tfInfo.iWeapon ) ) {
+		static char szClassname[48];
+		GetEntityClassname( tfInfo.iWeapon, szClassname, sizeof( szClassname ) );
+
+		if( StrEqual( szClassname, "tf_weapon_scattergun" ) )
+			flRandomDamage *= 1.5;
+		else if(StrEqual( szClassname, "tf_weapon_rocketlauncher" ) ||
+			StrEqual( szClassname, "tf_weapon_pipebomblauncher" ) )
+			flRandomDamage *= 0.5;
 	}
 
 	float flOut = SimpleSplineRemapValClamped( flCenter, 0.0, 1.0, -flRandomDamage, flRandomDamage );

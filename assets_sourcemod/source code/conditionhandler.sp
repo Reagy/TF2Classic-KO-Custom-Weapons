@@ -28,7 +28,7 @@ const float	TOXIN_DAMAGE		= 2.0;	//damage per tick
 const float	TOXIN_HEALING_MULT	= 0.25;	//multiplier for healing while under toxin
 
 const int	ANGSHIELD_HEALTH	= 80;	//angel shield health
-const float	ANGSHIELD_DURATION	= 2.0;	//angel shield duration
+const float	ANGSHIELD_DURATION	= 8.0;	//angel shield duration
 const float	ANGINVULN_DURATION	= 0.25;	//invulnerability period after a shield breaks
 
 const float	FLAME_HEALRATE		= 30.0;	//health per second restored by the hydro pump
@@ -501,14 +501,9 @@ public void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo ) {
 
 	if( HasCond( iTarget, TFCC_ANGELSHIELD ) )
 		AngelShieldTakeDamage( iTarget, tfInfo );
-	if( HasCond( iTarget, TFCC_ANGELINVULN ) )
-		AngelInvulnTakeDamage( iTarget );
 }
 public void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo ) {
-	if( HasCond( iTarget, TFCC_ANGELSHIELD ) )
-		AngelShieldTakeDamagePost( iTarget );
-	if( HasCond( iTarget, TFCC_ANGELINVULN ) )
-		AngelInvulnTakeDamagePost( iTarget );
+	AngelShieldTakeDamagePost( iTarget );
 }
 
 void CheckMultDamageAttribCustom( int iTarget, TFDamageInfo tfInfo ) {
@@ -780,9 +775,9 @@ void RemoveToxinUberEmitter( int iPlayer ) {
 	ANGEL SHIELD
 */
 
+Handle g_hShieldExpireTimers[ MAXPLAYERS+1 ] = { INVALID_HANDLE, ... };
 
-
-float g_flLastDamagedShield[MAXPLAYERS+1];
+float g_flLastDamagedShield[ MAXPLAYERS+1 ];
 
 static char szShieldMats[][] = {
 	"models/effects/resist_shield/resist_shield",
@@ -803,7 +798,10 @@ int GetAngelShield( int iPlayer, int iType ) {
 }
 
 bool AddAngelShield( int iPlayer ) {
-	CreateTimer( ANGSHIELD_DURATION, ExpireAngelShield, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
+	if( g_hShieldExpireTimers[ iPlayer ] != INVALID_HANDLE ) {
+		KillTimer( g_hShieldExpireTimers[ iPlayer ] );
+	}
+	g_hShieldExpireTimers[ iPlayer ] = CreateTimer( ANGSHIELD_DURATION, ExpireAngelShield, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
 	ePlayerConds[iPlayer][TFCC_ANGELSHIELD].iLevel = ANGSHIELD_HEALTH;
 
 	g_flLastDamagedShield[iPlayer] = GetGameTime();
@@ -858,19 +856,21 @@ bool AddAngelShield( int iPlayer ) {
 }
 
 Action ExpireAngelShield( Handle hTimer, int iPlayer ) {
+	g_hShieldExpireTimers[ iPlayer ] = INVALID_HANDLE;
 	RemoveCond( iPlayer, TFCC_ANGELSHIELD );
 
 	return Plugin_Stop;
 }
 void RemoveAngelShield( int iPlayer ) {
-	bool bBroken = ePlayerConds[iPlayer][TFCC_ANGELSHIELD].iLevel <= 0;
-	//TF2_RemoveCondition( iPlayer, TFCond_UberchargedOnTakeDamage );
+	/*bool bBroken = ePlayerConds[iPlayer][TFCC_ANGELSHIELD].iLevel <= 0;
 
 	if( bBroken ) {
 		AddCond( iPlayer, TFCC_ANGELINVULN );
 		CreateTimer( ANGINVULN_DURATION, RemoveAngelShield2, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
 		return;
-	}
+	}*/
+
+	RemoveAngelShield2( iPlayer );
 
 	if( IsClientInGame( iPlayer ) ) {
 		ClientCommand( iPlayer, "r_screenoverlay off");
@@ -884,6 +884,11 @@ void RemoveAngelShield( int iPlayer ) {
 		RemoveEntity( GetAngelShield( iPlayer, 1 ) );
 	}
 
+	if( g_hShieldExpireTimers[ iPlayer ] != INVALID_HANDLE ) {
+		KillTimer( g_hShieldExpireTimers[ iPlayer ] );
+		g_hShieldExpireTimers[ iPlayer ] = INVALID_HANDLE;
+	}
+
 	g_iAngelShields[iPlayer][0] = -1;
 	g_iAngelShields[iPlayer][1] = -1;
 }
@@ -895,7 +900,8 @@ static char szShieldKillParticle[][] = {
 	"angel_shieldbreak_yellow"
 };
 
-Action RemoveAngelShield2( Handle hTimer, int iPlayer ) {
+//Action RemoveAngelShield2( Handle hTimer, int iPlayer ) {
+void RemoveAngelShield2( int iPlayer ) {
 	EmitSoundToAll( "weapons/teleporter_explode.wav", iPlayer );
 	ClientCommand( iPlayer, "r_screenoverlay off"); 
 
@@ -925,7 +931,7 @@ Action RemoveAngelShield2( Handle hTimer, int iPlayer ) {
 	g_iAngelShields[iPlayer][0] = -1;
 	g_iAngelShields[iPlayer][1] = -1;
 
-	return Plugin_Continue;
+	//return Plugin_Continue;
 }
 Action RemoveEmitter( Handle hTimer, int iEmitter ) {
 	iEmitter = EntRefToEntIndex( iEmitter );
@@ -936,18 +942,19 @@ Action RemoveEmitter( Handle hTimer, int iEmitter ) {
 }
 
 void AngelShieldTakeDamage( int iTarget, TFDamageInfo tfInfo ) {
-	ePlayerConds[iTarget][TFCC_ANGELSHIELD].iLevel -= RoundToFloor( tfInfo.flDamage );
+	float flNewDamage = TF2DamageFalloff( iTarget, tfInfo );
+	ePlayerConds[iTarget][TFCC_ANGELSHIELD].iLevel -= RoundToFloor( flNewDamage );
 
 	float vecTarget[3];
 	GetEntPropVector( iTarget, Prop_Send, "m_vecOrigin", vecTarget );
 
-	TF2_AddCondition( iTarget, TFCond_UberchargedOnTakeDamage, 0.1 );
+	TF2_AddCondition( iTarget, TFCond_UberchargedOnTakeDamage, 0.1 ); //todo: hook some sort of function to replace this
 
 	Event eFakeDamage = CreateEvent( "player_hurt", true );
 	eFakeDamage.SetInt( "userid", GetClientUserId( iTarget ) );
 	eFakeDamage.SetInt( "health", 300 );
 	eFakeDamage.SetInt( "attacker", GetClientUserId( tfInfo.iAttacker ) );
-	eFakeDamage.SetInt( "damageamount", RoundToFloor( tfInfo.flDamage ) );
+	eFakeDamage.SetInt( "damageamount", RoundToFloor( flNewDamage ) );
 	eFakeDamage.SetInt( "bonuseffect", 2 );
 
 	eFakeDamage.Fire();
@@ -956,12 +963,8 @@ void AngelShieldTakeDamage( int iTarget, TFDamageInfo tfInfo ) {
 
 	if( ePlayerConds[iTarget][TFCC_ANGELSHIELD].iLevel <= 0 ) {
 		RemoveCond( iTarget, TFCC_ANGELSHIELD );
-		g_flLastDamagedShield[ iTarget ] = GetGameTime() + 100;
 	}
-	else
-		g_flLastDamagedShield[ iTarget ] = GetGameTime();
-
-	return;
+	g_flLastDamagedShield[ iTarget ] = GetGameTime();
 }
 void AngelShieldTakeDamagePost( int iTarget ) {
 	TF2_RemoveCondition( iTarget, TFCond_UberchargedOnTakeDamage );
@@ -1016,13 +1019,6 @@ Action ExpireAngelInvuln( Handle hTimer, int iPlayer ) {
 /*void RemoveAngelInvuln( int iPlayer ) {
 
 }*/
-
-void AngelInvulnTakeDamage( int iTarget ) {
-	TF2_AddCondition( iTarget, TFCond_UberchargedOnTakeDamage, 0.1 );
-}
-void AngelInvulnTakeDamagePost( int iTarget ) {
-	TF2_RemoveCondition( iTarget, TFCond_UberchargedOnTakeDamage );
-}
 
 /*
 	QUICK FIX UBER

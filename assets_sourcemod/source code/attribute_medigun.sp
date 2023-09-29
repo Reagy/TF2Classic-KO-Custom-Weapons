@@ -12,6 +12,13 @@
 #define MEDIGUN_THINK_INTERVAL 0.2
 #define FLAMEKEYNAME "Pressure"
 
+//guardian angel
+#define ANGEL_UBER_COST 0.33 //uber cost to grant bubble
+#define ANGEL_SELF_BUBBLE false //whether medic receives a bubble when using uber
+
+//bio waste pump
+#define BWP_TOXIN_MULTIPLIER 3.0 //amount of time that toxin should be added per second while healing enemies
+
 DynamicDetour	hCanTargetMedigun;
 DynamicDetour	hMedigunThink;
 DynamicHook	hMedigunSecondary;
@@ -183,12 +190,6 @@ public void OnPluginStart() {
 public void OnMapStart() {
 	PrecacheSound( "weapons/angel_shield_on.wav" );
 }
-
-/*public void OnTakeDamageTF( int iTarget, Address aDamageInfo ) {
-	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
-
-	//OathbreakerDamageMult( iTarget, tfInfo );
-}*/
 
 /*public void OnClientConnected( int iClient ) {
 	RequestFrame( Frame_Hook, iClient );
@@ -643,8 +644,6 @@ void PulseCustomUber( int iMedigun, int iType, int iTarget, int iOwner ) {
 	BIO WASTE PUMP
 */
 
-#define BWP_TOXIN_MULTIPLIER 3.0 //multiplier for the amount of time that toxin should be added while healing enemies
-
 MRESReturn Detour_MedigunThinkPost( int iThis ) {
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
 	int iTarget = GetEntPropEnt( iThis, Prop_Send, "m_hHealingTarget" );
@@ -717,8 +716,6 @@ MRESReturn Detour_HealStartPre( Address aThis, DHookParam hParams ) {
 	GUARDIAN ANGEL
 */
 
-#define ANGEL_UBER_COST 0.5
-
 MRESReturn AngelGunUber( int iMedigun ) {
 	float flChargeLevel = GetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel" );
 	if( flChargeLevel < ANGEL_UBER_COST )
@@ -729,6 +726,7 @@ MRESReturn AngelGunUber( int iMedigun ) {
 	int iOwner = GetEntPropEnt( iMedigun, Prop_Send, "m_hOwnerEntity" );
 	int iTarget = GetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget" );
 
+#if ANGEL_SELF_BUBBLE == true
 	int iApplyTo[2];
 	iApplyTo[0] = iOwner;
 	iApplyTo[1] = iTarget;
@@ -759,6 +757,21 @@ MRESReturn AngelGunUber( int iMedigun ) {
 	}
 
 	return MRES_Ignored;
+#else
+	if( iTarget == -1 )
+		return MRES_Ignored;
+
+	if( HasCustomCond( iTarget, TFCC_ANGELSHIELD ) || HasCustomCond( iTarget, TFCC_ANGELINVULN ) )
+		return MRES_Ignored;
+
+	AddCustomCond( iTarget, TFCC_ANGELSHIELD );
+	SetCustomCondSourcePlayer( iTarget, TFCC_ANGELSHIELD, iOwner );
+	SetCustomCondSourceWeapon( iTarget, TFCC_ANGELSHIELD, iMedigun );
+
+	EmitSoundToAll( "weapons/angel_shield_on.wav", iOwner, SNDCHAN_WEAPON, 85 );
+	SetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel", flChargeLevel - ANGEL_UBER_COST );
+	return MRES_Handled;
+#endif
 }
 
 /*
