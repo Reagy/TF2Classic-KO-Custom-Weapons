@@ -217,7 +217,7 @@ Handle hHudSyncRed;
 Handle hHudSyncBlue;
 Handle hHudSyncMiddle;
 
-#define DEBUG
+//#define DEBUG
 
 public void OnPluginStart() {
 	hHudSyncRed = CreateHudSynchronizer();

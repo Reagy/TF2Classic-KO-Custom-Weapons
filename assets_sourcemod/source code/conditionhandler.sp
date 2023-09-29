@@ -33,7 +33,7 @@ const float	ANGINVULN_DURATION	= 0.25;	//invulnerability period after a shield b
 
 const float	FLAME_HEALRATE		= 30.0;	//health per second restored by the hydro pump
 
-#define DEBUG
+//#define DEBUG
 
 enum {
 	TFCC_TOXIN = 0,
