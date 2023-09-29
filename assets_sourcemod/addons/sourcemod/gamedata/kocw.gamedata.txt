@@ -70,9 +70,13 @@
 			{
 				"linux"		"48"
 			}
-			"CTakeDamageInfo::m_flBaseDamage"
+			"CTakeDamageInfo::m_flMaxDamage"
 			{
 				"linux"		"52"
+			}
+			"CTakeDamageInfo::m_flBaseDamage"
+			{
+				"linux"		"56"
 			}
 
 			"CTakeDamageInfo::m_bitsDamageType"
@@ -89,6 +93,10 @@
 				"linux"		"108"
 			}
 		
+			"CBaseEntity::ShouldCollide"
+			{
+				"linux"		"18"
+			}
 			"CBaseEntity::AcceptInput"
 			{
 				"linux"		"38"
@@ -260,6 +268,26 @@
 		
 		"Functions"
 		{
+			"CBaseEntity::ShouldCollide"
+			{
+				"offset"		"CBaseEntity::ShouldCollide"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"int"
+					}
+					"other"
+					{
+						"type"	"int"
+					}
+				}
+			}
+		
 			"CBaseEntity::Touch"
 			{
 				"offset"		"CBaseEntity::Touch"
@@ -941,17 +969,32 @@
 			"CTraceFilterSimple::ShouldHitEntity"
 			{
 				"signature"		"CTraceFilterSimple::ShouldHitEntity"
-				"callconv"		"cdecl"
+				"callconv"		"thiscall"
 				"return"		"bool"
+				"this"			"address"
 				"arguments"
 				{
-					"fuck"
+					"toucher"
+					{
+						"type"	"objectptr"
+					}
+					"fuck2"
 					{
 						"type"	"int"
 					}
+				}
+			}
+			"CTraceFilterIgnoreTeammatesExceptEntity::ShouldHitEntity"
+			{
+				"signature"		"CTraceFilterIgnoreTeammatesExceptEntity::ShouldHitEntity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"address"
+				"arguments"
+				{
 					"toucher"
 					{
-						"type"	"cbaseentity"
+						"type"	"objectptr"
 					}
 					"fuck2"
 					{

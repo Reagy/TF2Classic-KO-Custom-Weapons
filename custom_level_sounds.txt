@@ -13934,3 +13934,64 @@
 	"volume"	"1.0"
 	"wave"		")weapons/DBSG_FireCrit.wav"
 }
+
+// ------------------------------------------------------------------------------------ //
+// Laika
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Laika.Reload"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"weapons/laika_reload.wav"
+}
+
+"Weapon_Laika.ClipEmpty"	
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"0.8"
+	"wave"		")weapons/laika_empty.wav"
+}
+
+"Weapon_Laika.Spin"	
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"0.6"
+	"wave"		")weapons/laika_spin_loop.wav"
+}
+
+"Weapon_Laika.SpinUp"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.6"
+	"wave"		")weapons/laika_spin_up.wav"
+}
+
+
+"Weapon_Laika.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.6"
+	"wave"		")weapons/laika_fire.wav"
+}
+
+"Weapon_Laika.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.6"
+	"wave"		")weapons/laika_fire_crit.wav"
+}
+
+"Weapon_Laika.StopSpin"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.6"
+	"wave"		")weapons/laika_spin_stop.wav"
+}
