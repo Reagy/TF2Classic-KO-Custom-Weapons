@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/props/blahaj/blahaj_red.vmt"
+	
+	insert
+	{
+	"$baseTexture" "props/blahaj/blahaj_yellow"
+	}
+}
