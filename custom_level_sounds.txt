@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V6r6
+// Knockout Custom Weapons V6r1
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 & Tangerine Paint & Grunt's Weapon Addons V2
 // ------------------------------------------------------------------------------------ //
@@ -8829,18 +8829,18 @@
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"pitch"		"95, 100"
-	"wave"		")weapons/OutbackM14_Fire.wav"
+	"volume"	"0.75"
+	"pitch"		"99, 105"
+	"wave"		")weapons/CarbineSniper_Fire.wav"
 }
 
 "Weapon_M14.SingleCrit"
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"pitch"		"95, 100"
-	"wave"		")weapons/OutbackM14_FireCrit.wav"
+	"volume"	"0.75"
+	"pitch"		"99, 105"
+	"wave"		")weapons/CarbineSniper_FireCrit.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -9499,9 +9499,9 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"pitch"		"95, 100"
+	"pitch"		"95, 101"
 	
-	"wave"		")weapons/assaultrifle_shoot.wav"
+	"wave"		")weapons/AR_Sniper_Fire.wav"
 }
 
 "Weapon_AR.SingleCrit"
@@ -9509,9 +9509,9 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"pitch"		"95, 100"
+	"pitch"		"95, 101"
 	
-	"wave"		")weapons/assaultrifle_shoot_crit.wav"
+	"wave"		")weapons/AR_Sniper_FireCrit.wav"
 }
 
 "Weapon_AR.WorldReload"
@@ -10378,8 +10378,28 @@
 	"volume"	"1.0"
 	"wave"		"weapons/default_reload.wav"
 }
-//SMALL GRENADE EXPLOSION
-"GrenadeSmallExplode.Sound"
+
+// ------------------------------------------------------------------------------------ //
+// DW
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_DrunkardWrath.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/drunkard_wrath_fire.wav"
+}
+
+"Weapon_DrunkardWrath.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/drunkard_wrath_fire.wav"
+}
+
+"Grenade.SmallExplode"
 {
 	"channel"	"CHAN_WEAPON"
 	"volume"	"1.0"
@@ -10391,16 +10411,6 @@
 			"wave"	")weapons/grenade_small_explode3.wav"
 			"wave"	")weapons/grenade_small_explode1.wav"
 	}
-}
-// ------------------------------------------------------------------------------------ //
-// DW
-// ------------------------------------------------------------------------------------ //
-"Weapon_DrunkardWrath.Single"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		")weapons/drunkard_wrath_fire.wav"
 }
 // ------------------------------------------------------------------------------------ //
 // Chair
@@ -13735,4 +13745,192 @@
 		"wave"		"weapons/civ_charge_crude1.wav"
 
 	}
+}
+
+
+// ------------------------------------------------------------------------------------ //
+// MY FISTS, THEY ARE GUNS!
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_GunShow.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"99,101"
+	"volume"	"0.9"
+	"wave"		")weapons/GunFist_Fire.wav"
+}
+
+"Weapon_GunShow.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"99,101"
+	"volume"	"0.9"
+	"wave"		")weapons/GunFist_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// BEEG CROSSBOW
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Angarsk.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"96,101"
+	"volume"	"0.85"
+	"wave"		")weapons/BallistaHeavy_Fire.wav"
+}
+
+"Weapon_Angarsk.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"96,101"
+	"volume"	"0.85"
+	"wave"		")weapons/BallistaHeavy_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// TURRET AUGMENT
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Augmentation_TurretGUN.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"90, 96"
+	"volume"	"1.0"
+	"wave"		")weapons/sentry_shoot.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// WELROD
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Welrod.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"100"
+	"volume"	"0.7"
+	"wave"		")weapons/Welrod_Shoot.wav"
+}
+
+"Weapon_Welrod.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"100"
+	"volume"	"0.7"
+	"wave"		")weapons/Welrod_Shoot_crit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// BURST PISTOL
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_BurstPistol.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+    "pitch"		"102, 108"
+	"wave"		")weapons\AirburstRifle_ShootGun.wav"
+
+}
+"Weapon_BurstPistol.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+    "pitch"		"102, 108"
+	"wave"			")weapons/AirburstRifle_ShootGun_Crit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// SHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKKKKKKKKKK
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_SHAAK.Hit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_85dB"
+	"volume"		"1.0"
+	"rndwave"
+	{
+		"wave"		")weapons/shork_hit.wav"
+		"wave"		")weapons/shork_hit1.wav"
+		"wave"		")weapons/shork_hit2.wav"
+		"wave"		")weapons/shork_hitbig1.wav"
+		"wave"		")weapons/shork_hitbig2.wav"
+		"wave"		")weapons/shork_hitrare.wav"
+	}
+}
+
+// ------------------------------------------------------------------------------------ //
+// DIGIDOOT
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Didgidoom.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"100"
+	"volume"	"0.8"
+	"wave"		")weapons/Didgidoom_Fire.wav"
+}
+
+"Weapon_Didgidoom.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"100"
+	"volume"	"0.8"
+	"wave"		")weapons/Didgidoom_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Vintorez
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_VintorezSR.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"100"
+	"volume"	"1.0"
+	"wave"		")weapons/VintorezSR_Fire.wav"
+}
+
+"Weapon_VintorezSR.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"100"
+	"volume"	"1.0"
+	"wave"		")weapons/VintorezSR_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Fire shotty secondary
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_DBShotSecondary.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"100"
+	"volume"	"1.0"
+	"wave"		")weapons/DBSG_Fire.wav"
+}
+
+"Weapon_DBShotSecondary.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"pitch"		"100"
+	"volume"	"1.0"
+	"wave"		")weapons/DBSG_FireCrit.wav"
 }
