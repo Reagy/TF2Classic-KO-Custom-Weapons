@@ -1,0 +1,52 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\w_grenade_napalm/w_grenade_napalm_red"
+//	"$selfillum" "1"
+	"$bumpmap" "models/weapons/w_grenade_napalm/w_grenade_napalm_normal"
+
+	"$phong" "1"
+//	"$phongexponenttexture" "models\weapons\w_grenade_napalm\w_grenade_napalm_exponent"
+	"$phongexponent" "20"
+	"$phongboost" "40"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges" "[0.25 0.5 1]"
+//	"$halflambert" "1"
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}
