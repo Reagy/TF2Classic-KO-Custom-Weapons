@@ -1,0 +1,74 @@
+"UnlitTwoTexture"
+{
+	 "$basetexture" "DR/counter_blu"
+	 "$texture2" "DR/gradient"
+
+	//Cloaking
+	"$glowcolor" "1"
+	"$cloakPassEnabled" "1"
+	"$txScale" "1"
+
+"$hp" "0.0"
+"$var" "0.0"
+"$speed" "0.0"
+"$zero" "-0.8"
+"$min" "-0.4"
+"$max" "1.6"
+"$neg" "-1.0"
+"$ramp" "0.0"
+
+	"Proxies"
+	{	
+		"PlayerSpeed"
+		{
+		"resultVar" "$speed"
+		"scale" "0.01"
+		}
+		"SelectFirstIfNonZero"
+		{
+		"srcVar1" "$speed" //<-- player moves, "speed" is taken
+		"srcVar2" "$zero" //<-- player stands, "zero" is taken
+		"resultVar" "$var"
+		}
+		"Multiply"
+		{
+		"srcVar1" "$var"  //<-- "speed" or  "zero" is negated, producing [-running speed] if moving or [0.8] if standing
+		"srcVar2" "$neg"
+		"resultVar" "$ramp"
+		}
+		"LinearRamp" //<-- added becouse it makes the "jump" from standing to moving more smooth... for some reason...
+		{
+		"rate" "$ramp"  
+		"initialValue" "-0.1"
+		"resultVar" "$hp"
+		}
+		"Clamp"
+		{
+		"srcVar1" "$hp"
+		"min" "$min"  //-0.2
+		"max" "$max"  //0.8
+		"resultVar" "$hp"
+		}
+		"TextureScroll"
+		{
+		"texturescrollvar" "$texture2transform"
+		"texturescrollrate" "$hp"
+		"texturescrollangle" 0
+		}
+		"TextureScroll"
+		{
+		"texturescrollvar" "$basetexturetransform"
+		"texturescrollrate" -0.4
+		"texturescrollangle" 0
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}
