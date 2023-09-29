@@ -1,0 +1,83 @@
+"VertexLitGeneric"
+{
+	"$basetexture"          "models/workshop/weapons/c_models/c_space_bow/c_space_bow_blue"
+
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "5"	
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	"$phongfresnelranges"	"[.25 .8 1.2]"
+
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.085 .085 .1]"
+	"$basealphaenvmapmask"		"1"
+
+	"$basemapalphaphongmask"	"1"
+
+	"$rimlight"             "1"     // To enable rim lighting (requires phong)
+	"$rimlightexponent"     "4"     // Exponent for phong component of rim 
+	"$rimlightboost"        "1"     // Boost for ambient cube component of rim lighting
+	"$halflambert"			"1"
+
+	"$selfillum" "1"
+	"$selfillummask" "models/workshop/weapons/c_models/c_space_bow/c_space_bow_selfillum"
+
+	"$glowcolor" "1"
+
+	// Variables for the cloak effect
+	"$cloakPassEnabled"     "1"
+	"$sheenPassEnabled" "1"
+
+	"$sheenmap" 		"cubemaps\cubemap_sheen001"
+	"$sheenmapmask" 		"Effects\AnimatedSheen\animatedsheen0"
+	"$sheenmaptint" 		"[ 1 1 1 ]"
+	"$sheenmapmaskframe" 	"0"
+	"$sheenindex" 		"0"
+
+	"$yellow" "0"
+
+	// The order of the proxies is important!
+	"Proxies"
+	{
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+		Sine
+		{
+			resultVar	$selfillumtint // The shader parameter to be manipulated
+			sineperiod	3
+			sinemin		.3
+			sinemax		.8
+		}
+        	}
+}

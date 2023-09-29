@@ -1,0 +1,24 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/weapons/c_items/c_acidflask_glass"
+	"$bumpmap" "models/effects/flat_normal" 
+	"$additive"	1
+//	$basealphaenvmapmask 1
+	"$envmap" "env_cubemap"
+//	"$envmaptint" "[.3 .3 .2]"
+
+//	"$envmaptint" "[0 0 0]"
+//	$envmapsaturation 1
+
+	"$phong" "1"
+	"$phongexponent" "65"
+	"$phongfresnelranges" "[1 2 4]"
+	"$lightwarptexture" "models/lightwarps/jarate_lightwarp"
+	"$phongboost" "6"
+//	"$phongtint" "[0.701960784 0.294117647 .2]"
+
+	"$rimlight" "1"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" "2"
+
+}

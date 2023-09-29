@@ -1,0 +1,15 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/v_machete/sniper_talibong"
+	
+	"$phong" "1"
+	"$phongexponent" "5"
+	"$phongboost" "1"
+	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+	"$phongfresnelranges" "[0.007 0.4 5]"
+	"$halflambert" "1"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "2"
+	"$rimlightboost" "0.2"
+}
