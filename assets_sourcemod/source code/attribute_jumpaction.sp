@@ -66,7 +66,7 @@ public Action Event_PlayerDeath( Event hEvent, const char[] sName, bool bDontBro
 }	
 
 MRESReturn Detour_CheckJumpButton( Address aThis, DHookReturn hReturn ) {
-	int iPlayer = GetEntityFromAddress( DereferencePointer( aThis + view_as< Address >( 3752 ) ) );
+	int iPlayer = GetEntityFromAddress( DereferencePointer( aThis + address( 3752 ) ) );
 	if( iPlayer == -1 )
 		return MRES_Ignored;
 

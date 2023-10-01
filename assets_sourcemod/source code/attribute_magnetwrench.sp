@@ -389,14 +389,18 @@ void CreateParticles( int iOrigin, int iTarget, int iType = 0 ) {
 	ActivateEntity( iParticles[1] );
 	AcceptEntityInput( iParticles[1], "Start" );
 
-	CreateTimer( 0.1, DeletThis, iParticles[0], TIMER_FLAG_NO_MAPCHANGE );
-	CreateTimer( 0.1, DeletThis, iParticles[1], TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( 0.1, DeletThis, EntIndexToEntRef( iParticles[0] ), TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( 0.1, DeletThis, EntIndexToEntRef( iParticles[1] ), TIMER_FLAG_NO_MAPCHANGE );
 
 	EmitSoundToAll( "weapons/teleporter_send.wav", iTarget );
 	EmitSoundToAll( "weapons/teleporter_receive.wav", iOrigin );
 }
 
 Action DeletThis( Handle hTimer, int iDelete ) {
+	iDelete = EntRefToEntIndex( iDelete );
+	if( iDelete == -1 )
+		return Plugin_Stop;
+		
 	RemoveEntity( iDelete );
 	return Plugin_Stop;
 }

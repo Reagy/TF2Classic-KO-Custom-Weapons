@@ -14,6 +14,102 @@
 		}
         "Offsets"
         {
+			"CTakeDamageInfo::m_vecDamageForce.x"
+			{
+				"linux"		"0"
+			}
+			"CTakeDamageInfo::m_vecDamageForce.y"
+			{
+				"linux"		"4"
+			}
+			"CTakeDamageInfo::m_vecDamageForce.z"
+			{
+				"linux"		"8"
+			}
+
+			"CTakeDamageInfo::m_vecDamagePosition.x"
+			{
+				"linux"		"12"
+			}
+			"CTakeDamageInfo::m_vecDamagePosition.y"
+			{
+				"linux"		"16"
+			}
+			"CTakeDamageInfo::m_vecDamagePosition.z"
+			{
+				"linux"		"20"
+			}
+
+			"CTakeDamageInfo::m_vecReportedPosition.x"
+			{
+				"linux"		"24"
+			}
+			"CTakeDamageInfo::m_vecReportedPosition.y"
+			{
+				"linux"		"28"
+			}
+			"CTakeDamageInfo::m_vecReportedPosition.z"
+			{
+				"linux"		"32"
+			}
+
+			"CTakeDamageInfo::m_hInflictor"
+			{
+				"linux"		"36"
+			}
+			"CTakeDamageInfo::m_hAttacker"
+			{
+				"linux"		"40"
+			}
+			"CTakeDamageInfo::m_hWeapon"
+			{
+				"linux"		"44"
+			}
+
+			"CTakeDamageInfo::m_flDamage"
+			{
+				"linux"		"48"
+			}
+			"CTakeDamageInfo::m_flMaxDamage"
+			{
+				"linux"		"52"
+			}
+			"CTakeDamageInfo::m_flBaseDamage"
+			{
+				"linux"		"56"
+			}
+
+			"CTakeDamageInfo::m_bitsDamageType"
+			{
+				"linux"		"60"
+			}
+			"CTakeDamageInfo::m_iDamageCustom"
+			{
+				"linux"		"64"
+			}
+
+			"CTakeDamageInfo::m_iCritType"
+			{
+				"linux"		"108"
+			}
+		
+			"CBaseEntity::ShouldCollide"
+			{
+				"linux"		"18"
+			}
+			"CBaseEntity::AcceptInput"
+			{
+				"linux"		"38"
+			}
+			"CBaseEntity::Touch"
+			{
+				"linux"		"101"
+			}
+			"CBaseEntity::OnTakeDamage" //good
+			{
+				"linux"		"64"
+			}
+		
             //player
         
 			"CBaseCombatCharacter::GiveAmmo" //good
@@ -21,10 +117,6 @@
 				"linux"		"473"
 			}
 		
-			"CTFPlayer::OnTakeDamage" //good
-			{
-				"linux"		"64"
-			}
 			"CTFPlayer::TakeHealth" //good
 			{
 				"linux"		"470"
@@ -64,10 +156,23 @@
             
             //buildings
             
+			"CBaseObject::SetObjectMode"
+			{
+				"linux"		"450"
+			}
+			"CBaseObject::SetSubType"
+			{
+				"linux"		"232"
+			}
+			
             "CBaseObject::StartBuilding" //good
             {
                 "linux"     "329"
             }
+			"CBaseObject::Killed"
+			{
+				"linux"		"334"
+			}
             "CBaseObject::OnGoActive" //good
             {
                 "linux"     "342"
@@ -97,9 +202,13 @@
 				"linux"		"2396"
 			}
             
-            
             //weapons
             
+			"CBaseCombatWeapon::CanBeSelected"
+			{
+				"linux"		"237"
+			}
+			
 			"CTFWeaponBase::Holster" //changed
 			{
 				"linux"		"263"
@@ -159,7 +268,104 @@
 		
 		"Functions"
 		{
+			"CBaseEntity::ShouldCollide"
+			{
+				"offset"		"CBaseEntity::ShouldCollide"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"int"
+					}
+					"other"
+					{
+						"type"	"int"
+					}
+				}
+			}
+		
+			"CBaseEntity::Touch"
+			{
+				"offset"		"CBaseEntity::Touch"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			"CFuncRespawnRoom::RespawnRoomTouch"
+			{
+				"signature"		"CFuncRespawnRoom::RespawnRoomTouch"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			
+			"CBaseEntity::AcceptInput"
+			{
+				"offset"		"CBaseEntity::AcceptInput"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+				"arguments"
+				{
+					"input"
+					{
+						"type"	"charptr"
+					}
+					"activator"
+					{
+						"type"	"cbaseentity"
+					}
+					"caller"
+					{
+						"type"	"cbaseentity"
+					}
+					"value"
+					{
+						"type"	"objectptr"
+					}
+					"outputid"
+					{
+						"type"	"int"
+					}
+				}
+			}
+		
 			//player
+			
+			"CBaseCombatCharacter::Weapon_CanSwitchTo"
+			{
+				"signature"		"CBaseCombatCharacter::Weapon_CanSwitchTo"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+				"arguments"
+				{
+					"weapon"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
 			
 			"CBaseCombatCharacter::GiveAmmo"
 			{
@@ -208,9 +414,9 @@
 				}
 			}
 			
-			"CTFPlayer::OnTakeDamage"
+			"CBaseEntity::OnTakeDamage"
 			{
-				"offset"		"CTFPlayer::OnTakeDamage"
+				"offset"		"CBaseEntity::OnTakeDamage"
 				"hooktype"		"entity"
 				"callconv"		"thiscall"
 				"return"		"int"
@@ -265,6 +471,13 @@
 					}
 				}
 				
+			}
+			"CTFPlayer::DropFlag"
+			{
+				"signature"		"CTFPlayer::DropFlag"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
 			}
 			"CTFPlayerShared::Burn"
 			{
@@ -441,6 +654,20 @@
 			
             //buildings
             
+			"CBaseObject::Killed"
+			{
+				"offset"		"CBaseObject::Killed"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"info"
+					{
+						"type"	"objectptr"
+					}
+				}
+			}
             "CBaseObject::StartBuilding"
             {
                 "offset"        "CBaseObject::StartBuilding"
@@ -512,6 +739,13 @@
 				"return"		"void"
 				"this"			"entity"
 			}
+			"CObjectDispenser::GetDispenserRadius"
+			{
+				"signature"		"CObjectDispenser::GetDispenserRadius"
+				"callconv"		"thiscall"
+				"return"		"float"
+				"this"			"entity"
+			}
 			"CObjectDispenser::GetHealRate"
 			{
 				"signature"		"CObjectDispenser::GetHealRate"
@@ -555,6 +789,15 @@
 			}
 			
 			//weapons
+			
+			"CBaseCombatWeapon::CanBeSelected"
+			{
+				"offset"		"CBaseCombatWeapon::CanBeSelected"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+			}
 			
 			"CTFWeaponBase::ApplyOnHitAttributes"
 			{
@@ -726,17 +969,32 @@
 			"CTraceFilterSimple::ShouldHitEntity"
 			{
 				"signature"		"CTraceFilterSimple::ShouldHitEntity"
-				"callconv"		"cdecl"
+				"callconv"		"thiscall"
 				"return"		"bool"
+				"this"			"address"
 				"arguments"
 				{
-					"fuck"
+					"toucher"
+					{
+						"type"	"objectptr"
+					}
+					"fuck2"
 					{
 						"type"	"int"
 					}
+				}
+			}
+			"CTraceFilterIgnoreTeammatesExceptEntity::ShouldHitEntity"
+			{
+				"signature"		"CTraceFilterIgnoreTeammatesExceptEntity::ShouldHitEntity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"address"
+				"arguments"
+				{
 					"toucher"
 					{
-						"type"	"cbaseentity"
+						"type"	"objectptr"
 					}
 					"fuck2"
 					{
@@ -790,6 +1048,28 @@
 					}
 				}
 			}
+			
+			"MapEntity_ParseEntity"
+			{
+				"signature"		"MapEntity_ParseEntity"
+				"callconv"		"cdecl"
+				"return"		"charptr"
+				"arguments"
+				{
+					"out"
+					{
+						"type"	"objectptr"
+					}
+					"entdata"
+					{
+						"type"	"charptr"
+					}
+					"filter"
+					{
+						"type"	"objectptr"
+					}
+				}
+			}
 		}
 		
 		"Signatures"
@@ -800,13 +1080,39 @@
 				"linux"		"@_ZN10CUtlVectorI7CHandleI11CBaseEntityE10CUtlMemoryIS2_iEE12InsertBeforeEiRKS2_"
 			}
 		
+			"CFuncRespawnRoom::RespawnRoomTouch"
+			{
+				"library"	"server"
+				"linux"		"@_ZN16CFuncRespawnRoom16RespawnRoomTouchEP11CBaseEntity"
+			}
+			"PointInRespawnRoom"
+			{
+				"library"	"server"
+				"linux"		"@_Z18PointInRespawnRoomP11CBaseEntityRK6Vector"
+			}
+		
             //player
+			"CBaseCombatCharacter::Weapon_CanSwitchTo"
+			{
+				"library"	"server"
+				"linux"		"@_ZN20CBaseCombatCharacter18Weapon_CanSwitchToEP17CBaseCombatWeapon"
+			}
+			"CBaseCombatCharacter::SwitchToNextBestWeapon"
+			{
+				"library"	"server"
+				"linux"		"@_ZN20CBaseCombatCharacter22SwitchToNextBestWeaponEP17CBaseCombatWeapon"
+			}
 			"CBaseCombatCharacter::SetAmmoCount" //good
 			{
 				"library"	"server"
 				"linux"		"@_ZN20CBaseCombatCharacter12SetAmmoCountEii"
 			}
 			
+			"CTFPlayer::GiveEconItem"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFPlayer12GiveEconItemEPKcii"
+			}
             "CTFPlayer::GetEntityForLoadoutSlot" //good
 			{
 				"library"	"server"
@@ -836,6 +1142,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CTFPlayer19ApplyPushFromDamageERK15CTakeDamageInfo6Vector"
+			}
+			"CTFPlayer::DropFlag"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFPlayer8DropFlagEv"
 			}
 			
 			"CTFPlayerShared::Burn" //good
@@ -890,6 +1201,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CObjectDispenser11GetHealRateEv"
+			}
+			"CObjectDispenser::GetDispenserRadius"
+			{
+				"library"	"server"
+				"linux"		"@_ZN16CObjectDispenser18GetDispenserRadiusEv"
 			}
             
             //weapons
@@ -999,6 +1315,12 @@
 		
             //other
         
+			"CBaseAnimating::LookupSequence"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CBaseAnimating14LookupSequenceEPKc"
+			}
+			
 			"CBaseEntity::SetNextThink" //good
 			{
 				"library"	"server"
@@ -1010,10 +1332,10 @@
 				"linux"		"@_ZN11CBaseEntity17SetCollisionGroupEi"
 			}
 			
-			"CGlobalEntityList::FindEntityInSphere" //good
+			"CGlobalEntityList::FindEntityByName" //good
 			{
 				"library"	"server"
-				"linux"		"@_ZN17CGlobalEntityList18FindEntityInSphereEP11CBaseEntityRK6Vectorf"
+				"linux"		"@_ZN17CGlobalEntityList16FindEntityByNameEP11CBaseEntityPKcS1_S1_S1_P17IEntityFindFilter"
 			}
 			
 			"CTFGameRules::ApplyOnDamageModifyRules" //good
@@ -1025,6 +1347,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN12CTFGameRules29ApplyOnDamageAliveModifyRulesERK15CTakeDamageInfoP11CBaseEntityRNS_20DamageModifyExtras_tE"
+			}
+			"CTFGameRules::SetWinningTeam"
+			{
+				"library"	"server"
+				"linux"		"@_ZN12CTFGameRules14SetWinningTeamEiibbbb"
 			}
 			
 			"CTFAmmoPack::PackTouch"
@@ -1078,6 +1405,17 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN12CTFGameStats23Event_PlayerHealedOtherEP9CTFPlayerf"
+			}
+			
+			"MapEntity_ExtractValue"
+			{
+				"library"	"server"
+				"linux"		"@_Z22MapEntity_ExtractValuePKcS0_Pc"
+			}
+			"MapEntity_ParseEntity"
+			{
+				"library"	"server"
+				"linux"		"@_Z21MapEntity_ParseEntityRP11CBaseEntityPKcP16IMapEntityFilter"
 			}
 		}
     }

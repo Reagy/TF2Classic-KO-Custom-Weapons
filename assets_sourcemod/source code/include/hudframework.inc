@@ -1,3 +1,8 @@
+#if defined _hudtracker_included
+	#endinput
+#endif
+#define _hudtracker_included
+
 /**
  * Create a new Resource Tracker
  * 
@@ -13,9 +18,12 @@ enum {
 	RTF_RECHARGES = 1 << 3,
 	RTF_NOOVERWRITE = 1 << 4,	//do not overwrite existing tracker
 	RTF_CLEARONSPAWN = 1 << 5,	//reset on respawning
+	RTF_FORWARDONFULL = 1 << 6,	//send a global forward when recharged
 }
 
 native void		Tracker_Create( int iPlayer, const char sName[32], float flStartAt = 100.0, float flRechargeRate = 0.0, int iFlags = 0 );
 native void		Tracker_Remove( int iPlayer, const char sName[32] );
 native float		Tracker_GetValue( int iPlayer, const char sName[32] );
 native void		Tracker_SetValue( int iPlayer, const char sName[32], float flValue );
+
+forward void 		Tracker_OnRecharge( int iPlayer, const char szTrackerName[32], float flValue );

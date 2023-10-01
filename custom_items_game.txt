@@ -5372,7 +5372,7 @@ Edited by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"custom_rocket_homing_rate"
-					"value" 			"0.2"
+					"value" 			"0.8"
 				}
 			}
 			"visuals"
@@ -22518,17 +22518,17 @@ Weapon by: 'Noclue'"
 			    "ubercharge rate bonus"
 				{
 					"attribute_class"	"mult_medigun_uberchargerate"
-					"value"				"1.5"
+					"value"				"1.66"
 				}
 				"powerup max charges"
 				{
 					"attribute_class"	"dummy"
-					"value"				"2"
+					"value"				"3"
 				}
 				"powerup duration"
 				{
 					"attribute_class"	"dummy"
-					"value"				"4"
+					"value"				"8"
 				}
 				"overheal penalty"																
 				{
@@ -26502,8 +26502,8 @@ Cosmetic by: 'blueNES' 'YeetGod'
 Weapon by: 'Reagy'"
 			"item_logname"				"Intermission"
 			"item_iconname"				"Intermission"
-			"model_world"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
-			"model_player"				"models/weapons/c_models/c_remotesap/c_remotesap.mdl"
+			"model_world"				"models/weapons/c_models/c_remotesap/c_sapper.mdl"
+			"model_player"				"models/weapons/c_models/c_remotesap/c_sapper.mdl"
 			"extra_wearable" 			"models/workshop/player/items/spy/stylish_satchel/stylish_satchel.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
@@ -26512,6 +26512,11 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
+				"scattergun no reload single"
+				{
+					"attribute_class"	"custom_intermission"
+					"value"				"1.0"
+				}
 			    "sapper is radar"											
 				{
 					"attribute_class"	"sapper_is_radar"
@@ -33411,6 +33416,85 @@ Weapon by: 'Noclue'"
 			    "sound_single_shot"		"Weapon_AirBurstRifle.Single"
 				"sound_burst"			"Weapon_AirBurstRifle.SingleCrit"
 				"tracer_effect"         "bullet_hunting_revolver_tracer01"
+			}
+		}
+//-------------------------------------
+//-------------------------------------
+// THE SPHERE -- 9965
+//-------------------------------------
+//-------------------------------------	
+		"9965"
+		{
+			"name"						"TF_WEAPON_SPHERE"
+			"prefab"					"weapon_minigun"
+			"item_class"				"tf_weapon_minigun"
+			
+			"show_in_armory"			"1"
+			
+			"propername"				"1"
+			"item_name"					"Sphere"
+			
+			"item_logname"				"Sphere"
+			"item_iconname"				"Sphere"
+			
+			"item_description"			"
+Alt-Fire: Project a bulletproof shield
+
+Model by: 'svdl'
+Weapon by: 'Noclue'"
+			
+			"model_world"				"models/workshop/weapons/c_models/c_spheregun/c_spheregun.mdl"
+			"model_player"				"models/workshop/weapons/c_models/c_spheregun/c_spheregun.mdl"
+			"attach_to_hands"			"1"
+			
+			"used_by_classes"
+			{
+				"heavy"					"1"
+			}
+			
+			"attributes"
+			{
+				"scattergun no reload single"
+				{
+					"attribute_class"	"custom_sphere"
+					"value"				"1.0"
+				}
+				
+				"hidden separator"
+				{
+					"attribute_class"	"hidden_separator"
+					"value"				"1"
+				}
+				
+				
+				"bullets per shot penalty"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.8"
+				}
+				
+				"spread penalty"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"1.25"
+				}
+				
+				"Projectile range increased"
+				{
+					"attribute_class"	"mult_projectile_range"
+					"value"				"0.06"
+				}
+			}
+			
+			"visuals"
+			{
+				"sound_double_shot"		"Weapon_Laika.Fire"	
+				"sound_burst"			"Weapon_Laika.FireCrit"	
+				"sound_single_shot"		"Weapon_Laika.SpinUp"
+				"sound_special2"		"Weapon_Laika.StopSpin"	
+				"sound_special3"		"Weapon_Laika.Spin"
+				
+				"tracer_effect"         "bullet_scattershock_tracer01"	
 			}
 		}
 //--------------------------------

@@ -198,7 +198,9 @@ public void OnMapStart() {
 
 	g_iBuildingBlueprints[ OBJ_DISPENSER ][ 0 ] =				PrecacheModel( "models/buildables/dispenser_blueprint.mdl" );
 
-	//teleporter	
+	//teleporter
+	g_iBuildingModels[ OBJ_TELEPORTER ][ TELEPORT_MINI ][ 0 ][ 0 ] =	PrecacheModel( "models/buildables/mini_teleporter_light.mdl" );
+	g_iBuildingModels[ OBJ_TELEPORTER ][ TELEPORT_MINI ][ 0 ][ 1 ] =	PrecacheModel( "models/buildables/mini_teleporter.mdl" );
 
 	g_iBuildingBlueprints[ OBJ_TELEPORTER ][ 0 ] =				PrecacheModel( "models/buildables/teleporter_blueprint_enter.mdl" );
 	g_iBuildingBlueprints[ OBJ_TELEPORTER ][ 1 ] =				PrecacheModel( "models/buildables/teleporter_blueprint_exit.mdl" );
@@ -254,11 +256,16 @@ MRESReturn Hook_StartBuilding( int iThis ) {
 		}
 	}
 	case OBJ_TELEPORTER: {
+		if( iOverride == TELEPORT_MINI ) {
+			SetEntProp( iThis, Prop_Send, "m_iHighestUpgradeLevel", 0 );
+			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );
+			//SetEntPropFloat( iThis, Prop_Send, "m_flModelScale", 1.35 );
+		}
 	}
 	case OBJ_SENTRYGUN: {
 		if( iOverride == SENTRY_MINI ) {
 			SetEntProp( iThis, Prop_Send, "m_iHighestUpgradeLevel", 0 );
-			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );	
+			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );
 		}
 	}
 	}
@@ -280,6 +287,7 @@ MRESReturn Hook_OnGoActive( int iThis ) {
 	SetBuildingModel( iThis, false );
 	return MRES_Handled;
 }
+
 //called when an upgrade animation starts
 MRESReturn Hook_StartUpgrade( int iThis ) {
 	SetBuildingModel( iThis, true );
@@ -629,8 +637,8 @@ void CreateSirenParticle( int iBuilding ) {
 	ActivateEntity( iParticle );
 
 	int iLookup[ 2 ];
-	iLookup[ 0 ] = iBuilding;
-	iLookup[ 1 ] = iParticle;
+	iLookup[ 0 ] = EntIndexToEntRef( iBuilding );
+	iLookup[ 1 ] = EntIndexToEntRef( iParticle );
 
 	g_hSirenList.PushArray( iLookup );
 }
@@ -638,9 +646,11 @@ void DestroySirenParticle( int iBuilding ) {
 	int iLookup[2];
 	for( int i = 0; i < g_hSirenList.Length; i++ ) {
 		g_hSirenList.GetArray( i, iLookup );
+		iLookup[ 0 ] = EntRefToEntIndex( iLookup[ 0 ] );
+		iLookup[ 1 ] = EntRefToEntIndex( iLookup[ 1 ] );
 		if( iLookup[ 0 ] == iBuilding ) {
 			g_hSirenList.Erase( i );
-			if( !IsValidEntity( iLookup[ 1 ] ) )
+			if( !( iLookup[ 1 ] > 0 ) )
 				return;
 				
 			AcceptEntityInput( iLookup[ 1 ], "stop" );
@@ -678,8 +688,8 @@ void Lateload() {
 		GetEntPropString( iIndex, Prop_Data, "m_iszEffectName", sEffectName, sizeof( sEffectName ) );
 		if( StrContains( sClassname, "obj_", true ) != 0 && StrContains( sEffectName, "cart_flashinglight", true ) != 0 ) {
 			int iLookup[ 2 ];
-			iLookup[ 0 ] = iParent;
-			iLookup[ 1 ] = iIndex;
+			iLookup[ 0 ] = EntIndexToEntRef( iParent );
+			iLookup[ 1 ] = EntIndexToEntRef( iIndex );
 
 			g_hSirenList.PushArray( iLookup );
 		}

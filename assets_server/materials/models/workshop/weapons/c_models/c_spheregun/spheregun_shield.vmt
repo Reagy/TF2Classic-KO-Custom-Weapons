@@ -1,0 +1,20 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\workshop\weapons\c_models\c_spheregun\spheregun.vtf"
+	"$translucent"	1
+
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.6 .3 .1]"
+
+	"$phong" "1"
+	"$phongtint" "[.9 .3 .1]"
+	"$phongexponent" "65"
+	"$phongfresnelranges" "[1 2 4]"
+	"$lightwarptexture" "models/lightwarps/jarate_lightwarp"
+	"$phongboost" "6"
+
+	"$rimlight" "1"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" "2"
+
+}

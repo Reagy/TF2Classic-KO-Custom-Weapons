@@ -45,38 +45,6 @@ public void OnTakeDamageBuilding( int iTarget, Address aDamageInfo ) {
 
 float g_flHurtMe[ MAXPLAYERS+1 ];
 
-void CheckLifesteal( int iTarget, TFDamageInfo tfInfo ) {
-	int iAttacker = tfInfo.iAttacker;
-
-	if( !IsValidPlayer( iAttacker ) )
-		return;
-
-	int iWeapon = tfInfo.iWeapon;
-	float flMult = AttribHookFloat( 0.0, iWeapon, "custom_lifesteal" );
-	if( flMult == 0.0 )
-		return;
-
-	float flAmount = tfInfo.flDamage * flMult;
-
-	float flHurtAmount = AttribHookFloat( 0.0, iWeapon, "custom_hurt_on_fire" );
-	if( flHurtAmount > 0.0  ) {
-		//if( g_flHurtMe[ iAttacker ] == 0.0 )
-			//g_flHurtMe[ iAttacker ] = flHurtAmount;
-
-		g_flHurtMe[ iAttacker ] -= flAmount;
-	}
-	
-	if( flHurtAmount > 0.0 || g_flHurtMe[ iAttacker ] < 0 ) {
-		int iGave = HealPlayer( iAttacker, flAmount, iAttacker, HF_NOCRITHEAL | HF_NOOVERHEAL );
-
-		Event eHealEvent = CreateEvent( "player_healonhit" );
-		eHealEvent.SetInt( "entindex", iAttacker );
-		eHealEvent.SetInt( "amount", iGave );
-		eHealEvent.FireToClient( iAttacker );
-		delete eHealEvent;
-	}
-}
-
 MRESReturn Hook_PrimaryFire( int iEntity ) {
 	if( GetEntPropFloat( iEntity, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() ) {
 		return MRES_Ignored;
@@ -97,16 +65,37 @@ MRESReturn Hook_PrimaryFire( int iEntity ) {
 	return MRES_Handled;
 }
 
+void CheckLifesteal( int iTarget, TFDamageInfo tfInfo ) {
+	int iAttacker = tfInfo.iAttacker;
+
+	if( !IsValidPlayer( iAttacker ) )
+		return;
+
+	int iWeapon = tfInfo.iWeapon;
+	float flMult = AttribHookFloat( 0.0, iWeapon, "custom_lifesteal" );
+	if( flMult == 0.0 )
+		return;
+
+	float flAmount = tfInfo.flDamage * flMult;
+	g_flHurtMe[ iAttacker ] -= flAmount;
+}
+
 void HurtPlayerDelay( int iPlayer ) {
 	if( !IsPlayerAlive( iPlayer ) )
 		return;
 
-	float flAmount = MaxFloat( 0.0, g_flHurtMe[ iPlayer ] );
-	SDKHooks_TakeDamage( iPlayer, iPlayer, iPlayer, flAmount );
-	
+	float flAmount = g_flHurtMe[ iPlayer ];
+	int iDiff = 0;
+	if( flAmount > 0.0 ) {
+		SDKHooks_TakeDamage( iPlayer, iPlayer, iPlayer, flAmount );
+		iDiff = -RoundToFloor( flAmount );
+	} else if( flAmount < 0.0 ) {
+		iDiff = HealPlayer( iPlayer, -flAmount, iPlayer, HF_NOCRITHEAL | HF_NOOVERHEAL );
+	}
+
 	Event eHealEvent = CreateEvent( "player_healonhit" );
 	eHealEvent.SetInt( "entindex", iPlayer );
-	eHealEvent.SetInt( "amount", -RoundToFloor( flAmount ) );
+	eHealEvent.SetInt( "amount", iDiff );
 	eHealEvent.FireToClient( iPlayer );
 	delete eHealEvent;
 

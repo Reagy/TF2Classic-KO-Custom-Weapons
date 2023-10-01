@@ -24,6 +24,7 @@ enum {
 	RTF_RECHARGES = 1 << 3,
 	RTF_NOOVERWRITE = 1 << 4,	//do not overwrite existing tracker
 	RTF_CLEARONSPAWN = 1 << 5,	//reset on respawning
+	RTF_FORWARDONFULL = 1 << 6,	//send a global forward when recharged
 }
 
 enum struct ResourceTracker {
@@ -40,6 +41,8 @@ enum struct ResourceTracker {
 #define TRACKERMAXSIZE sizeof(ResourceTracker)
 #define UPDATEINTERVAL 0.2
 
+GlobalForward g_OnRecharge;
+
 public void OnPluginStart() {
 	hHudSync = CreateHudSynchronizer();
 
@@ -51,6 +54,8 @@ public void OnPluginStart() {
 			
 		hResources[i] = new ArrayList(TRACKERMAXSIZE);
 	}
+
+	g_OnRecharge = new GlobalForward( "Tracker_OnRecharge", ET_Ignore, Param_Cell, Param_String, Param_Float );
 
 #if defined DEBUG
 	RegConsoleCmd("sm_hf_test", Command_Test, "test");
@@ -128,6 +133,7 @@ void Tracker_Create( int iPlayer, const char sName[32], float flStartAt, float f
 	hTracker.iFlags = iFlags;
 	hTracker.sName = sName;
 	hTracker.flValue = flStartAt;
+	hTracker.flMax = flStartAt;
 
 	if( flRechargeTime == 0.0 ) hTracker.flRechargeRate = 0.0;
 	else hTracker.flRechargeRate = flRechargeTime * UPDATEINTERVAL;
@@ -186,11 +192,21 @@ void Tracker_SetValue( int iPlayer, const char sName[32], float flValue ) {
 	int iLoc = Tracker_Find( iPlayer, sName );
 	if( iLoc == -1 ) return;
 
+	Tracker_SetValueIndex( iPlayer, iLoc, flValue );
+}
+void Tracker_SetValueIndex( int iPlayer, int iIndex, float flNewValue ) {
 	ResourceTracker hTracker;
-	hResources[iPlayer].GetArray( iLoc, hTracker );
-	if( flValue >= 100.0 && hTracker.HasFlags( RTF_DING ) ) EmitGameSoundToClient( iPlayer, "TFPlayer.Recharged" );
-	hTracker.flValue = flValue;
-	hResources[iPlayer].SetArray( iLoc, hTracker );
+	hResources[iPlayer].GetArray( iIndex, hTracker );
+	flNewValue = FloatClamp( flNewValue, 0.0, hTracker.flMax );
+	if( hTracker.flValue < hTracker.flMax && flNewValue >= hTracker.flMax ) {
+		if( hTracker.HasFlags( RTF_DING ) )
+			EmitGameSoundToClient( iPlayer, "TFPlayer.Recharged" );
+
+		if( hTracker.HasFlags( RTF_FORWARDONFULL ) )
+			Tracker_OnRecharge( iPlayer, hTracker.sName, flNewValue );
+	}
+	hTracker.flValue = flNewValue;
+	hResources[ iPlayer ].SetArray( iIndex, hTracker );
 }
 
 int Tracker_Find( int iPlayer, const char sName[32] ) {
@@ -231,11 +247,11 @@ void Tracker_Display( int iPlayer ) {
 void Tracker_Recharge( int iPlayer, int iIndex ) {
 	ResourceTracker hTracker;
 
-	hResources[iPlayer].GetArray(iIndex, hTracker );
-	if(hTracker.flValue != 100.0 && hTracker.flValue + hTracker.flRechargeRate >= 100.0 && hTracker.HasFlags( RTF_DING ) ) EmitGameSoundToClient( iPlayer, "TFPlayer.Recharged" );
-	hTracker.flValue = FloatClamp( hTracker.flValue + hTracker.flRechargeRate, 0.0, 100.0 );
-	
-	hResources[iPlayer].SetArray(iIndex, hTracker );
+	hResources[iPlayer].GetArray( iIndex, hTracker );
+	if( !( hTracker.iFlags & RTF_RECHARGES ) )
+		return;
+
+	Tracker_SetValueIndex( iPlayer, iIndex, hTracker.flValue + hTracker.flRechargeRate );
 }
 
 //generates the string for a single tracker entry
@@ -243,6 +259,17 @@ void Tracker_CreateString( ResourceTracker hTracker, char sBuffer[64] ) {
 	Format( sBuffer, sizeof( sBuffer ), "%s: %-.0f", hTracker.sName, hTracker.flValue );
 	if( hTracker.HasFlags(RTF_PERCENTAGE) ) StrCat( sBuffer, sizeof( sBuffer ), "%%");
 }
+
+
+/*
+Call_StartForward( g_OnTakeDamageTF );
+
+	Call_PushCell( iThis );
+	Call_PushCell( hParams.GetAddress( 1 ) );
+
+	Call_Finish();
+*/
+
 
 #if defined DEBUG
 Action Command_Test(int client, int args)
@@ -256,3 +283,14 @@ Action Command_Test(int client, int args)
 	return Plugin_Handled;
 }
 #endif
+
+//forward void Tracker_OnRecharge( int iPlayer, const char szTrackerName[32], float flValue );
+void Tracker_OnRecharge( int iPlayer, char szName[32], float flNewValue ) {
+	Call_StartForward( g_OnRecharge );
+
+	Call_PushCell( iPlayer );
+	Call_PushString( szName );
+	Call_PushFloat( flNewValue );
+
+	Call_Finish();
+}
