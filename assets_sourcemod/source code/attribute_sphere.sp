@@ -165,7 +165,7 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 public void OnGameFrame() {
 	for( int i = 1; i <= MaxClients; i++ ) {
 		if( !IsClientInGame( i ) )
-			return;
+			continue;
 
 		float flValue = Tracker_GetValue( i, SHIELDKEYNAME );
 		if( EntRefToEntIndex( g_iSphereShields[ i ] ) == -1 ) {
@@ -176,7 +176,7 @@ public void OnGameFrame() {
 
 		if( !IsPlayerAlive( i ) || !g_HasSphere.Get( i ) || flValue <= 0.0 ) {
 			RemoveShield( i );
-			return;
+			continue;
 		}
 
 		UpdateShield( i );
