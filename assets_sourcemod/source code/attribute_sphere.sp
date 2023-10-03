@@ -330,7 +330,7 @@ MRESReturn Hook_ShieldTakeDamage( int iThis, DHookReturn hReturn, DHookParam hPa
 		static char szClassname[64];
 		GetEntityClassname( iWeapon, szClassname, sizeof( szClassname ) );
 		if( StrEqual( szClassname, "tf_weapon_minigun" ) )
-			tfInfo.flDamage *= 0.25;
+			tfInfo.flDamage *= 0.4;
 	}
 	
 	EmitSoundToAll( szSoundNames[ GetRandomInt(0, 3) ], iThis, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEPITCH, 1.0, GetRandomInt( 90, 110 ) );
@@ -414,7 +414,7 @@ MRESReturn Detour_ShouldHitEntitySentry( Address aTrace, DHookReturn hReturn, DH
 	if( !IsValidPlayer( iExcept ) )
 		return MRES_Ignored;
 
-	int iTouched = GetEntityFromAddress( hParams.Get( 1 ) );
+	int iTouched = GetEntityFromAddress( hParams.GetAddress( 1 ) );
 	int iOwner = GetEntPropEnt( iTouched, Prop_Send, "m_hOwnerEntity" );
 	if( !IsValidPlayer( iOwner ) )
 		return MRES_Ignored;
