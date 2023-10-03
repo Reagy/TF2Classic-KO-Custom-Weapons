@@ -221,7 +221,7 @@ Handle g_sdkSetRoundScore;
 
 Handle g_hsHudSyncMiddle;
 
-#define DEBUG
+//#define DEBUG
 
 Address g_pCTFGameRules = Address_Null;
 Address g_pCTFLogicDomination = Address_Null;
@@ -598,7 +598,7 @@ void SpawnLogicDummy() {
 	delete hGameConf;
 
 	if( g_pCTFGameRules == Address_Null || g_iCTFObjectiveResource == -1 ) {
-		PrintToServer("could not dereference address of singleton %i %i", g_pCTFGameRules, g_iCTFObjectiveResource);
+		PrintToServer("[PD:C] could not dereference address of singleton %i %i", g_pCTFGameRules, g_iCTFObjectiveResource);
 		return;
 	}
 
@@ -732,8 +732,6 @@ void FireFakeEventZone( PDCapZone pdZone, int iEvent ) {
 	PDOutput pOutput;
 	for( int j = 0; j < pdZone.hCapOutputs[ iEvent ].Length; j++ ) {
 		pdZone.hCapOutputs[ iEvent ].GetArray( j, pOutput );
-		PrintToServer(pOutput.szTargetname);
-		PrintToServer(pOutput.szTargetInput);
 
 		if( pOutput.flDelay > 0.0 ) {
 			DataPack dPack = new DataPack();
@@ -1194,7 +1192,6 @@ Action Timer_PDZoneThink( Handle hTimer, int iData ) {
 
 		SetPlayerPoints( iPlayer, g_iPlayerCarrying[ iPlayer ] - 1 );
 		g_flNextCaptureTime[ iPlayer ] = GetGameTime() + flCapDelay;
-		PrintToServer("%f", flCapDelay);
 	}
 
 	return Plugin_Continue;
@@ -1382,7 +1379,7 @@ MRESReturn Hook_PickupTouch( int iThis, DHookParam hParams ) {
 
 	int iRef = EntIndexToEntRef( iThis );
 	if( !FindPickup( iRef, pdPickup ) ) {
-		PrintToServer("could not find data for pickup, this should not happen");
+		PrintToServer("[PD:C] could not find data for pickup, this should not happen");
 		return MRES_Ignored;
 	}
 
@@ -1421,6 +1418,7 @@ MRESReturn Detour_RespawnTouch( int iThis, DHookParam hParams ) {
 	return MRES_Handled;
 }
 
+#if defined DEBUG
 Action Command_Test( int iClient, int iArgs ) {
 	if(iArgs < 4) return Plugin_Handled;
 
@@ -1454,6 +1452,7 @@ Action Command_Test( int iClient, int iArgs ) {
 	
 	return Plugin_Handled;
 }
+#endif
 
 void SetWinningTeam( int iTeam ) {
 	SDKCall( g_sdkSetWinningTeam, iTeam, 13, true, false, false, false );
@@ -1476,7 +1475,6 @@ void CheckFillLogicSingleton() {
 		
 		Address aAddress2 = GetEntityAddress( iLogic );
 
-		PrintToServer( "%i %i", g_pCTFLogicDomination, aAddress2 );
 		StoreToAddress( g_pCTFLogicDomination, aAddress2, NumberType_Int32 );
 	}
 }
