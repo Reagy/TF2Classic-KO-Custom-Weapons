@@ -11,6 +11,27 @@
 					"signature"		"CTFGameStats"
 				}
 			}
+			"CTFGameRules"
+			{
+				"linux"
+				{
+					"signature"		"CTFGameRules"
+				}
+			}
+			"CTFObjectiveResource"
+			{
+				"linux"
+				{
+					"signature"		"CTFObjectiveResource"
+				}
+			}
+			"CTFLogicDomination"
+			{
+				"linux"
+				{
+					"signature"		"CTFLogicDomination"
+				}
+			}
 		}
         "Offsets"
         {
@@ -268,6 +289,14 @@
 		
 		"Functions"
 		{
+			"CTFTeam::GetDominationPointRate"
+			{
+				"signature"		"CTFTeam::GetDominationPointRate"
+				"callconv"		"thiscall"
+				"return"		"int"
+				"this"			"address"
+			}
+		
 			"CBaseEntity::ShouldCollide"
 			{
 				"offset"		"CBaseEntity::ShouldCollide"
@@ -1396,10 +1425,16 @@
 				"linux"		"@_ZN39CTraceFilterIgnoreTeammatesExceptEntity15ShouldHitEntityEP13IHandleEntityi"
 			}
 			
+			"CTFObjectiveResource"
+			{
+				"library"	"server"
+				"linux"		"@g_pObjectiveResource"
+			}
+			
 			"CTFGameStats" //good
 			{
-				"library" "server"
-				"linux"   "@CTF_GameStats"
+				"library"	"server"
+				"linux"  	"@CTF_GameStats"
 			}
 			"CTFGameStats::Event_PlayerHealedOther" //good
 			{
@@ -1407,10 +1442,43 @@
 				"linux"		"@_ZN12CTFGameStats23Event_PlayerHealedOtherEP9CTFPlayerf"
 			}
 			
+			"CTFGameRules" //good
+			{
+				"library" 	"server"
+				"linux"   	"@g_pGameRules"
+			}
+			
+			"CTFLogicDomination"
+			{
+				"library"	"server"
+				"linux"		"@g_pDominationLogic"
+			}
+			
+			"GetGlobalTeam"
+			{
+				"library"	"server"
+				"linux"		"@_Z13GetGlobalTeami"
+			}
+			"CTFTeam::SetRoundScore"
+			{
+				"library"	"server"
+				"linux"		"@_ZN7CTFTeam13SetRoundScoreEi"
+			}
+			"CTFTeam::GetDominationPointRate"
+			{
+				"library"	"server"
+				"linux"		"@_ZN7CTFTeam22GetDominationPointRateEv"
+			}
+			
 			"MapEntity_ExtractValue"
 			{
 				"library"	"server"
 				"linux"		"@_Z22MapEntity_ExtractValuePKcS0_Pc"
+			}
+			"MapEntity_ParseToken"
+			{
+				"library"	"server"
+				"linux"		"@_Z20MapEntity_ParseTokenPKcPc"
 			}
 			"MapEntity_ParseEntity"
 			{

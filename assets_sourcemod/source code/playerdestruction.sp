@@ -9,18 +9,19 @@
 
 //TODO: implement refire limit
 
-/* MAP CHECKLIST
-	pd_watergate: working
-	pd_selbyen: working
-	pd_monster_bash: working
-	pd_suijin_event: working
+/* fixes
+	fixed capture sounds
+	fixed parser being shit hopefully
+	fixed being able to cap past maximum score
+	added outlines to pickups
+	implemented domination hud
 */
 
 public Plugin myinfo = {
 	name = "Player Destruction Classic",
 	author = "Noclue",
 	description = "Wrapper to allow running PD maps in TF2C",
-	version = "1.0",
+	version = "1.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -31,7 +32,7 @@ public Plugin myinfo = {
 //these already exist but need additional functionality
 
 //stores PDCapZones using the object's entity reference for lookup
-StringMap smCaptureZones;
+StringMap g_smCaptureZones;
 
 #define PDZONE_SIZE sizeof( PDCapZone )
 enum struct PDCapZone {
@@ -62,51 +63,51 @@ static char szOutputCapNames[][] = {
 //there should only ever be one of these so nothing complicated has to be done
 //need to do a bunch of heavy lifting here since the engine discards the entity completely
 
-char szLogicTargetname[128];
+char g_szLogicTargetname[2048];
 
-char szPropModelName[128];
-char szPropDropSound[128];
-char szPropPickupSound[128];
+char g_szPropModelName[128];
+char g_szPropDropSound[128];
+char g_szPropPickupSound[128];
 
-float flBlueRespawnTime;
-float flRedRespawnTime;
+float g_flBlueRespawnTime;
+float g_flRedRespawnTime;
 
-int iMinPoints;
-int iPointsPerPlayer;
+int g_iMinPoints;
+int g_iPointsPerPlayer;
 
-float flFinaleLength;
+float g_flFinaleLength;
 
-int iFlagResetDelay;
-int iHealDistance;
+int g_iFlagResetDelay;
+int g_iHealDistance;
 
 //current gamemode info
 
 int g_iLogicDummy; //dummy object to catch inputs
 
-float flCountdownTimer;
+float g_flCountdownTimer;
 
-int iPointsToWin;
+int g_iPointsToWin;
 
-int iRedScore;
-int iBlueScore;
+int g_iRedScore;
+int g_iBlueScore;
 
-int iPlayerCarrying[MAXPLAYERS+1];
-float flNextCaptureTime[MAXPLAYERS+1];
+int g_iPlayerCarrying[ MAXPLAYERS+1 ];
+float g_flNextCaptureTime[ MAXPLAYERS+1 ];
 
-int iRedTeamLeader = -1;
-int iRedLeaderDispenser = INVALID_ENT_REFERENCE;
-int iRedLeaderGlow = INVALID_ENT_REFERENCE;
+int g_iRedTeamLeader = -1;
+int g_iRedLeaderDispenser = INVALID_ENT_REFERENCE;
+int g_iRedLeaderGlow = INVALID_ENT_REFERENCE;
 
-int iBlueTeamLeader = -1;
-int iBlueLeaderDispenser = INVALID_ENT_REFERENCE;
-int iBlueLeaderGlow = INVALID_ENT_REFERENCE;
+int g_iBlueTeamLeader = -1;
+int g_iBlueLeaderDispenser = INVALID_ENT_REFERENCE;
+int g_iBlueLeaderGlow = INVALID_ENT_REFERENCE;
 
-int iRedTeamHolding = 0;
-int iBlueTeamHolding = 0;
+int g_iRedTeamHolding = 0;
+int g_iBlueTeamHolding = 0;
 
-int iPointsOnPlayerDeath = 1;
+int g_iPointsOnPlayerDeath = 1;
 
-bool bAllowMaxScoreUpdating = true;
+bool g_bAllowMaxScoreUpdating = true;
 
 enum struct PDOutput {
 	char szTargetname[96];
@@ -182,80 +183,88 @@ static char szOutputNames[][] = {
 };
 
 //array of all the outputs that the logic ent can fire
-ArrayList hOutputs[OUT_LAST];
+ArrayList g_alOutputs[OUT_LAST];
 
 /*
 	PICKUPS
 */
 
-StringMap smPickups;
+StringMap g_smPickups;
 
 #define PDPICKUP_SIZE 2
 enum struct PDPickup {
 	int iAmount;
 	float flExpireTime;
+
+	int iGlowRef;
 }
 
-float flPickupCooler[MAXPLAYERS+1];
+float g_flPickupCooler[ MAXPLAYERS+1 ];
 
 #define OUTPUT_CELLSIZE sizeof( PDOutput )
 #define HUD_UPDATEINTERVAL 0.5
 
-DynamicDetour hParseEntity;
-DynamicDetour hRespawnTouch;
-DynamicDetour hDispenserRadius;
-DynamicDetour hDropFlag;
-DynamicHook hAcceptInput;
-DynamicHook hTouch;
-Handle hExtractValue;
-Handle hFindByName;
-Handle hInRespawnRoom;
-Handle hSetWinningTeam;
-Handle hLookupSequence;
+DynamicDetour g_dtParseEntity;
+DynamicDetour g_dtRespawnTouch;
+DynamicDetour g_dtDispenserRadius;
+DynamicDetour g_dtDropFlag;
+DynamicDetour g_dtGetDominationPointRate;
+DynamicHook g_dhAcceptInput;
+DynamicHook g_dhTouch;
+Handle g_sdkExtractValue;
+Handle g_sdkFindByName;
+Handle g_sdkInRespawnRoom;
+Handle g_sdkSetWinningTeam;
+Handle g_sdkLookupSequence;
+Handle g_sdkGetTeam;
+Handle g_sdkSetRoundScore;
 
-Handle hHudSyncRed;
-Handle hHudSyncBlue;
-Handle hHudSyncMiddle;
+Handle g_hsHudSyncMiddle;
 
 //#define DEBUG
 
+Address g_pCTFGameRules = Address_Null;
+Address g_pCTFLogicDomination = Address_Null;
+int g_iCTFObjectiveResource = -1;
+
 public void OnPluginStart() {
-	hHudSyncRed = CreateHudSynchronizer();
-	hHudSyncBlue = CreateHudSynchronizer();
-	hHudSyncMiddle = CreateHudSynchronizer();
+	g_hsHudSyncMiddle = CreateHudSynchronizer();
 
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
-	hParseEntity = DynamicDetour.FromConf( hGameConf, "MapEntity_ParseEntity" );
-	hParseEntity.Enable( Hook_Pre, Detour_ParseEntity );
-	hParseEntity.Enable( Hook_Post, Detour_ParseEntityPost );
+	g_dtParseEntity = DynamicDetour.FromConf( hGameConf, "MapEntity_ParseEntity" );
+	g_dtParseEntity.Enable( Hook_Pre, Detour_ParseEntity );
+	g_dtParseEntity.Enable( Hook_Post, Detour_ParseEntityPost );
 
-	hRespawnTouch = DynamicDetour.FromConf( hGameConf, "CFuncRespawnRoom::RespawnRoomTouch" );
-	hRespawnTouch.Enable( Hook_Pre, Detour_RespawnTouch );
+	g_dtRespawnTouch = DynamicDetour.FromConf( hGameConf, "CFuncRespawnRoom::RespawnRoomTouch" );
+	g_dtRespawnTouch.Enable( Hook_Pre, Detour_RespawnTouch );
 
-	hAcceptInput = DynamicHook.FromConf( hGameConf, "CBaseEntity::AcceptInput" );
-	hTouch = DynamicHook.FromConf( hGameConf, "CBaseEntity::Touch" );
+	g_dhAcceptInput = DynamicHook.FromConf( hGameConf, "CBaseEntity::AcceptInput" );
+	g_dhTouch = DynamicHook.FromConf( hGameConf, "CBaseEntity::Touch" );
 
-	hDispenserRadius = DynamicDetour.FromConf( hGameConf, "CObjectDispenser::GetDispenserRadius" );
-	hDispenserRadius.Enable( Hook_Pre, Detour_GetDispenserRadius );
+	g_dtDispenserRadius = DynamicDetour.FromConf( hGameConf, "CObjectDispenser::GetDispenserRadius" );
+	g_dtDispenserRadius.Enable( Hook_Pre, Detour_GetDispenserRadius );
 
-	hDropFlag = DynamicDetour.FromConf( hGameConf, "CTFPlayer::DropFlag" );
-	hDropFlag.Enable( Hook_Pre, Detour_DropFlag );
+	g_dtDropFlag = DynamicDetour.FromConf( hGameConf, "CTFPlayer::DropFlag" );
+	g_dtDropFlag.Enable( Hook_Pre, Detour_DropFlag );
+
+	g_dtGetDominationPointRate = DynamicDetour.FromConf( hGameConf, "CTFTeam::GetDominationPointRate" );
+	g_dtGetDominationPointRate.Enable( Hook_Pre, Hook_PointRate );
 
 	StartPrepSDKCall( SDKCall_Static );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "PointInRespawnRoom" );
 	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
-	hInRespawnRoom = EndPrepSDKCall();
+	g_sdkInRespawnRoom = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Static );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "MapEntity_ExtractValue" );
 	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
-	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
-	hExtractValue = EndPrepSDKCall();
+	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer, VDECODE_FLAG_BYREF );
+	g_sdkExtractValue = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_GameRules );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameRules::SetWinningTeam" );
@@ -265,13 +274,13 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hSetWinningTeam = EndPrepSDKCall();
+	g_sdkSetWinningTeam = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseAnimating::LookupSequence" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
-	hLookupSequence = EndPrepSDKCall();
+	g_sdkLookupSequence = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_EntityList );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CGlobalEntityList::FindEntityByName" );
@@ -282,7 +291,18 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL | VDECODE_FLAG_ALLOWWORLD );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL | VDECODE_FLAG_ALLOWWORLD );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain, VDECODE_FLAG_ALLOWNULL );
-	hFindByName = EndPrepSDKCall();
+	g_sdkFindByName = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Static );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "GetGlobalTeam" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkGetTeam = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFTeam::SetRoundScore" );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkSetRoundScore = EndPrepSDKCall();
 
 	HookEvent( "player_spawn", Event_PlayerSpawn );
 	HookEvent( "player_disconnect", Event_PlayerDisconnect );
@@ -291,27 +311,32 @@ public void OnPluginStart() {
 #if defined DEBUG
 	RegConsoleCmd( "sm_pd_test", Command_Test, "test" );
 #endif
+
+	
+
 	delete hGameConf;
 }
 
-bool bMapIsPD;
+bool g_bMapIsPD;
 public void OnMapInit( const char[] szMapName ) {
-	bMapIsPD = StrContains( szMapName, "pd_", true ) == 0;
+	g_bMapIsPD = StrContains( szMapName, "pd_", true ) == 0;
 
 	for( int i = 0; i < OUT_LAST; i++) {
-		hOutputs[i] = new ArrayList( OUTPUT_CELLSIZE );
+		g_alOutputs[i] = new ArrayList( OUTPUT_CELLSIZE );
 	}
 
-	smCaptureZones = new StringMap();
-	smPickups = new StringMap();
+	g_smCaptureZones = new StringMap();
+	g_smPickups = new StringMap();
 }
 
 public void OnMapStart() {
-	if( !bMapIsPD )
+	if( !g_bMapIsPD )
 		return;
 
 	CreateTimer( HUD_UPDATEINTERVAL, Timer_HudThink, 0, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
 	RequestFrame( SpawnLogicDummy );
+
+	CheckFillLogicSingleton();
 
 	PrecacheSound("ui/chime_rd_2base_pos.wav");
 	PrecacheSound("ui/chime_rd_2base_neg.wav");
@@ -322,15 +347,15 @@ public void OnMapStart() {
 */
 
 MRESReturn Detour_ParseEntity( DHookReturn hReturn, DHookParam hParams ) {
-	if( !bMapIsPD )
+	if( !g_bMapIsPD )
 		return MRES_Ignored;
 
 	static char szEntData[2048];
 	static char szKeyBuffer[2048];
 
 	hParams.GetString( 2, szEntData, sizeof( szEntData ) );
-	
-	if( !SDKCall( hExtractValue, szEntData, "classname", szKeyBuffer ) )
+
+	if( !SDKCall( g_sdkExtractValue, szEntData, "classname", szKeyBuffer ) )
 		return MRES_Handled;
 	if( StrEqual( szKeyBuffer, "tf_logic_player_destruction" ) )
 		ParseLogicEntity( szEntData );
@@ -339,7 +364,7 @@ MRESReturn Detour_ParseEntity( DHookReturn hReturn, DHookParam hParams ) {
 }
 
 MRESReturn Detour_ParseEntityPost( DHookReturn hReturn, DHookParam hParams ) {
-	if( !bMapIsPD )
+	if( !g_bMapIsPD )
 		return MRES_Ignored;
 
 	static char szEntData[2048];
@@ -367,74 +392,85 @@ MRESReturn Detour_ParseEntityPost( DHookReturn hReturn, DHookParam hParams ) {
 
 void ParseLogicEntity( char szEntData[2048] ) {
 	static char szKeyBuffer[2048];
+	
+	g_iHealDistance = 450;
+	g_iFlagResetDelay = 60;
 
-	iHealDistance = 450;
-	iFlagResetDelay = 60;
+	SDKCall( g_sdkExtractValue, szEntData, "targetname", g_szLogicTargetname );
 
 	int iIndex = GetNextKey( szEntData, sizeof( szEntData ), szKeyBuffer, sizeof( szKeyBuffer ) );
 	while( iIndex != -1 ) {
 		if( StrEqual( szKeyBuffer, "}" ) )
 			break;
 
-		//lord please forgive me
-		if( StrEqual( szKeyBuffer, "targetname" ) )		GetNextKey( szEntData, sizeof( szEntData ), szLogicTargetname, sizeof( szLogicTargetname ) );
+		if( StrEqual( szKeyBuffer, "prop_model_name" ) )	GetNextKey( szEntData, sizeof( szEntData ), g_szPropModelName, sizeof( g_szPropModelName ) );
+		if( StrEqual( szKeyBuffer, "prop_drop_sound" ) )	GetNextKey( szEntData, sizeof( szEntData ), g_szPropDropSound, sizeof( g_szPropDropSound ) );
+		if( StrEqual( szKeyBuffer, "prop_pickup_sound" ) )	GetNextKey( szEntData, sizeof( szEntData ), g_szPropPickupSound, sizeof( g_szPropPickupSound ) );
 
-		if( StrEqual( szKeyBuffer, "prop_model_name" ) )	GetNextKey( szEntData, sizeof( szEntData ), szPropModelName, sizeof( szPropModelName ) );
-		if( StrEqual( szKeyBuffer, "prop_drop_sound" ) )	GetNextKey( szEntData, sizeof( szEntData ), szPropDropSound, sizeof( szPropDropSound ) );
-		if( StrEqual( szKeyBuffer, "prop_pickup_sound" ) )	GetNextKey( szEntData, sizeof( szEntData ), szPropPickupSound, sizeof( szPropPickupSound ) );
+		if( StrEqual( szKeyBuffer, "blue_respawn_time" ) )	TryPushNextFloat( szEntData, sizeof( szEntData ), g_flBlueRespawnTime );
+		if( StrEqual( szKeyBuffer, "red_respawn_time" ) )	TryPushNextFloat( szEntData, sizeof( szEntData ), g_flRedRespawnTime );
 
-		if( StrEqual( szKeyBuffer, "blue_respawn_time" ) )	TryPushNextFloat( szEntData, sizeof( szEntData ), flBlueRespawnTime );
-		if( StrEqual( szKeyBuffer, "red_respawn_time" ) )	TryPushNextFloat( szEntData, sizeof( szEntData ), flRedRespawnTime );
+		if( StrEqual( szKeyBuffer, "min_points" ) )		TryPushNextInt( szEntData, sizeof( szEntData ), g_iMinPoints );
+		if( StrEqual( szKeyBuffer, "points_per_player" ) )	TryPushNextInt( szEntData, sizeof( szEntData ), g_iPointsPerPlayer );
 
-		if( StrEqual( szKeyBuffer, "min_points" ) )		TryPushNextInt( szEntData, sizeof( szEntData ), iMinPoints );
-		if( StrEqual( szKeyBuffer, "points_per_player" ) )	TryPushNextInt( szEntData, sizeof( szEntData ), iPointsPerPlayer );
+		if( StrEqual( szKeyBuffer, "finale_length" ) )		TryPushNextFloat( szEntData, sizeof( szEntData ), g_flFinaleLength );
 
-		if( StrEqual( szKeyBuffer, "finale_length" ) )		TryPushNextFloat( szEntData, sizeof( szEntData ), flFinaleLength );
-
-		if( StrEqual( szKeyBuffer, "flag_reset_delay" ) )	TryPushNextInt( szEntData, sizeof( szEntData ), iFlagResetDelay );
-		if( StrEqual( szKeyBuffer, "heal_distance" ) )		TryPushNextInt( szEntData, sizeof( szEntData ), iHealDistance );
+		if( StrEqual( szKeyBuffer, "flag_reset_delay" ) )	TryPushNextInt( szEntData, sizeof( szEntData ), g_iFlagResetDelay );
+		if( StrEqual( szKeyBuffer, "heal_distance" ) )		TryPushNextInt( szEntData, sizeof( szEntData ), g_iHealDistance );
 
 		for( int i = 0; i < OUT_LAST; i++) {
-			if( StrEqual( szOutputNames[i], szKeyBuffer ) )		TryPushNextOutput( szEntData, sizeof( szEntData ), hOutputs[ i ] );
+			if( StrEqual( szOutputNames[i], szKeyBuffer ) )		TryPushNextOutput( szEntData, sizeof( szEntData ), g_alOutputs[ i ] );
 		}
 
 		iIndex = GetNextKey( szEntData, sizeof( szEntData ), szKeyBuffer, sizeof( szKeyBuffer ) );
 	}
 
-	iRedScore = 0;
-	iRedTeamHolding = 0;
-	iBlueScore = 0;
-	iBlueTeamHolding = 0;
+	g_iRedScore = 0;
+	g_iBlueScore = 0;
+
+	if( g_iCTFObjectiveResource != -1 ) {
+		SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iDominationRate", 0, 4, 0 );
+		SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iDominationRate", 0, 4, 1 );
+	}
+
+	RequestFrame( Frame_Logic );
 
 	SetTeamLeader( -1, 2 );
 	SetTeamLeader( -1, 3 );
 
-	iPointsOnPlayerDeath = 1;
-	bAllowMaxScoreUpdating = true;
+	g_iPointsOnPlayerDeath = 1;
+	g_bAllowMaxScoreUpdating = true;
 
-	flCountdownTimer = 0.0;
+	g_flCountdownTimer = 0.0;
 
 	#if defined DEBUG
 		PrintToChatAll( "[PD:C] DEBUG MODE IS ENABLED" );
 	#endif
 
 	for( int i = 0; i < MAXPLAYERS+1; i++ ) {
-		iPlayerCarrying[i] = 0;
-		flNextCaptureTime[i] = 0.0;
-		flPickupCooler[i] = GetGameTime();
+		g_iPlayerCarrying[i] = 0;
+		g_flNextCaptureTime[i] = 0.0;
+		g_flPickupCooler[i] = GetGameTime();
 	}
 
 	CalculateMaxPoints();
 
-	if( !StrEqual( szPropModelName, "" ) )
-		PrecacheModel( szPropModelName );
-	if( !StrEqual( szPropDropSound, "" ) )
-		PrecacheSound( szPropDropSound );
-	if( !StrEqual( szPropPickupSound, "" ) )
-		PrecacheSound( szPropPickupSound );
+	if( !StrEqual( g_szPropModelName, "" ) )
+		PrecacheModel( g_szPropModelName );
+	if( !StrEqual( g_szPropDropSound, "" ) )
+		PrecacheSound( g_szPropDropSound );
+	if( !StrEqual( g_szPropPickupSound, "" ) )
+		PrecacheSound( g_szPropPickupSound );
+}
+void Frame_Logic() {
+	CheckFillLogicSingleton();
 }
 
 void ParseCaptureZone( int iEntity, char szEntData[2048] ) {
+	#if defined DEBUG
+		PrintToServer("pasing capture zone");
+	#endif
+
 	static char szKeyBuffer[2048];
 
 	PDCapZone pdZone;
@@ -443,18 +479,20 @@ void ParseCaptureZone( int iEntity, char szEntData[2048] ) {
 	pdZone.hCapOutputs[0] = new ArrayList( sizeof( PDOutput ) );
 	pdZone.hCapOutputs[1] = new ArrayList( sizeof( PDOutput ) );
 
+	if( SDKCall( g_sdkExtractValue, szEntData, "capture_delay", szKeyBuffer ) ) {
+		pdZone.flCaptureDelay = StringToFloat( szKeyBuffer );
+	}
+	if( SDKCall( g_sdkExtractValue, szEntData, "capture_delay_offset", szKeyBuffer ) ) {
+		pdZone.flCaptureDelayOffset = StringToFloat( szKeyBuffer );
+	}
+	if( SDKCall( g_sdkExtractValue, szEntData, "shouldBlock", szKeyBuffer ) ) {
+		pdZone.bCanBlock = view_as<bool>( StringToInt( szKeyBuffer ) );
+	}
+
 	int iIndex = GetNextKey( szEntData, sizeof( szEntData ), szKeyBuffer, sizeof( szKeyBuffer ) );
-	#if defined DEBUG
-		PrintToServer("pasing capture zone");
-	#endif
 	while( iIndex != -1 ) {
 		if( StrEqual( szKeyBuffer, "}" ) )
 			break;
-
-		//lord please forgive me
-		if( StrEqual( szKeyBuffer, "capture_delay" ) )		TryPushNextFloat( szEntData, sizeof( szEntData ), pdZone.flCaptureDelay );
-		if( StrEqual( szKeyBuffer, "capture_delay_offset" ) )	TryPushNextFloat( szEntData, sizeof( szEntData ), pdZone.flCaptureDelayOffset );
-		if( StrEqual( szKeyBuffer, "shouldBlock" ) )		TryPushNextInt( szEntData, sizeof( szEntData ), pdZone.bCanBlock );
 
 		for( int i = 0; i < OUTCAP_LAST; i++) {
 			if( StrEqual( szOutputCapNames[i], szKeyBuffer ) ) {
@@ -467,7 +505,7 @@ void ParseCaptureZone( int iEntity, char szEntData[2048] ) {
 
 	int iRef = EntIndexToEntRef( iEntity );
 	IntToString( iRef, szKeyBuffer, sizeof( szKeyBuffer ) );
-	smCaptureZones.SetArray( szKeyBuffer, pdZone, PDZONE_SIZE );
+	g_smCaptureZones.SetArray( szKeyBuffer, pdZone, PDZONE_SIZE );
 
 	SDKHook( iEntity, SDKHook_StartTouch, TestTouchStart );
 	SDKHook( iEntity, SDKHook_EndTouch, TestTouchEnd );
@@ -491,7 +529,7 @@ void TryPushNextInt( char[] szString, int iSize, int &iValue ) {
 	iValue = StringToInt( szBuffer );
 
 	#if defined DEBUG
-		PrintToServer("KEYPUSHINT: %s", szBuffer);
+		PrintToServer("KEYPUSHINT69: %s", szBuffer);
 	#endif
 }
 
@@ -544,9 +582,38 @@ void SpawnLogicDummy() {
 	}
 
 	g_iLogicDummy = EntIndexToEntRef( CreateEntityByName( "info_target" ) );
-	SetEntPropString( g_iLogicDummy, Prop_Data, "m_iName", szLogicTargetname );
+	SetEntPropString( g_iLogicDummy, Prop_Data, "m_iName", g_szLogicTargetname );
 	DispatchSpawn( g_iLogicDummy );
-	hAcceptInput.HookEntity( Hook_Pre, g_iLogicDummy, Hook_AcceptInput );
+	g_dhAcceptInput.HookEntity( Hook_Pre, g_iLogicDummy, Hook_AcceptInput );
+
+	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
+
+	//prevent segfault when CTFGameRules::PlayerKilled tries to look up tf_logic_domination singleton
+
+	g_pCTFLogicDomination = GameConfGetAddress( hGameConf, "CTFLogicDomination" );
+
+	g_pCTFGameRules = LoadFromAddress( GameConfGetAddress( hGameConf, "CTFGameRules" ), NumberType_Int32 );
+	g_iCTFObjectiveResource = GetEntityFromAddress( LoadFromAddress( GameConfGetAddress( hGameConf, "CTFObjectiveResource" ), NumberType_Int32 ) );
+
+	delete hGameConf;
+
+	if( g_pCTFGameRules == Address_Null || g_iCTFObjectiveResource == -1 ) {
+		PrintToServer("[PD:C] could not dereference address of singleton %i %i", g_pCTFGameRules, g_iCTFObjectiveResource);
+		return;
+	}
+
+	StoreToAddressOffset( g_pCTFGameRules, 2804, 4, NumberType_Int32 ); //m_nHudType
+	StoreToAddressOffset( g_pCTFGameRules, 2816, 1, NumberType_Int8 ); //m_bPlayingDomination
+
+	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iNumControlPoints", 2 );
+	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_bCPIsVisible", 0, 1, 0 );
+	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_bCPIsVisible", 0, 1, 1 );
+
+	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iOwner", 2, 1, 0 );
+	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iOwner", 3, 1, 4 );
+
+	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iDominationRate", 0, 4, 0 );
+	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iDominationRate", 0, 4, 1 );
 }
 
 //not fast but we only need this at map load so fuck it
@@ -567,14 +634,14 @@ void StrReduce( char[] szString, int iLength, int iStrip ) {
 */
 
 Action Event_PlayerSpawn( Event hEvent, const char[] szName, bool bDontBroadcast ) {
-	if( !bMapIsPD )
+	if( !g_bMapIsPD )
 		return Plugin_Continue;
 
 	CalculateMaxPoints();
 	return Plugin_Continue;
 }
 Action Event_PlayerDisconnect( Event hEvent, const char[] szName, bool bDontBroadcast ) {
-	if( !bMapIsPD )
+	if( !g_bMapIsPD )
 		return Plugin_Continue;
 
 	CalculateMaxPoints();
@@ -588,7 +655,7 @@ Action Event_PlayerDisconnect( Event hEvent, const char[] szName, bool bDontBroa
 }
 
 public void OnGameFrame() {
-	if( flCountdownTimer != 0.0 && GetGameTime() > flCountdownTimer )
+	if( g_flCountdownTimer != 0.0 && GetGameTime() > g_flCountdownTimer )
 		FireFakeEvent( OUT_ONCOUNTDOWNTIMEREXPIRED );
 }
 
@@ -602,21 +669,21 @@ MRESReturn Hook_AcceptInput( int iThis, DHookReturn hReturn, DHookParam hParams 
 	static char szString[128];
 
 	if( StrEqual( szInputName, "ScoreRedPoints" ) )
-		SetPoints( 2, iRedScore+1 );
+		SetPoints( 2, g_iRedScore+1 );
 	if( StrEqual( szInputName, "ScoreBluePoints" ) )
-		SetPoints( 3, iBlueScore+1 );
+		SetPoints( 3, g_iBlueScore+1 );
 
 	if( StrEqual( szInputName, "EnableMaxScoreUpdating" ) )
-		bAllowMaxScoreUpdating = true;
+		g_bAllowMaxScoreUpdating = true;
 	if( StrEqual( szInputName, "DisableMaxScoreUpdating" ) )
-		bAllowMaxScoreUpdating = false;
+		g_bAllowMaxScoreUpdating = false;
 	if( StrEqual( szInputName, "SetCountdownTimer" ) ) {
 		Address aStringTPointer = LoadFromAddress( hParams.GetAddress( 4 ), NumberType_Int32 );
 		LoadStringFromAddress( aStringTPointer, szString, sizeof( szString ) );
 		#if defined DEBUG
 			PrintToServer("new timer: %s", szString);
 		#endif
-		flCountdownTimer = GetGameTime() + StringToFloat( szString );
+		g_flCountdownTimer = GetGameTime() + StringToFloat( szString );
 	}
 	if( StrEqual( szInputName, "SetFlagResetDelay" ) ) {
 		Address aStringTPointer = LoadFromAddress( hParams.GetAddress( 4 ), NumberType_Int32 );
@@ -624,7 +691,7 @@ MRESReturn Hook_AcceptInput( int iThis, DHookReturn hReturn, DHookParam hParams 
 		#if defined DEBUG
 			PrintToServer("new flag reset delay: %s", szString);
 		#endif
-		iFlagResetDelay = StringToInt( szString );
+		g_iFlagResetDelay = StringToInt( szString );
 	}
 	if( StrEqual( szInputName, "SetPointsOnPlayerDeath" ) ) {
 		Address aStringTPointer = LoadFromAddress( hParams.GetAddress( 4 ), NumberType_Int32 );
@@ -632,7 +699,7 @@ MRESReturn Hook_AcceptInput( int iThis, DHookReturn hReturn, DHookParam hParams 
 		#if defined DEBUG
 			PrintToServer("new points per player death: %s", szString);
 		#endif
-		iPointsOnPlayerDeath = StringToInt( szString );
+		g_iPointsOnPlayerDeath = StringToInt( szString );
 	}
 
 
@@ -641,8 +708,8 @@ MRESReturn Hook_AcceptInput( int iThis, DHookReturn hReturn, DHookParam hParams 
 
 void FireFakeEvent( int iEvent, float flOverride = -1.0 ) {
 	PDOutput pOutput;
-	for( int j = 0; j < hOutputs[ iEvent ].Length; j++ ) {
-		hOutputs[ iEvent ].GetArray( j, pOutput );
+	for( int j = 0; j < g_alOutputs[ iEvent ].Length; j++ ) {
+		g_alOutputs[ iEvent ].GetArray( j, pOutput );
 
 		if( pOutput.flDelay > 0.0 ) {
 			DataPack dPack = new DataPack();
@@ -706,9 +773,13 @@ Action Timer_FireFakeEvent( Handle hTimer, DataPack dPack ) {
 	return Plugin_Stop;
 }
 
-//TODO: respect delay and refire
+//TODO: respect refire
 void CallEvent( PDOutput pOutput, float flOverride = -1.0 ) {
-	int iEntity = SDKCall( hFindByName, -1, pOutput.szTargetname, -1, -1, -1, Address_Null );
+	static char szTest[64];
+	int iDummy = EntRefToEntIndex( g_iLogicDummy );
+	GetEntPropString( iDummy, Prop_Data, "m_iName", szTest, 64 );
+
+	int iEntity = SDKCall( g_sdkFindByName, -1, pOutput.szTargetname, -1, -1, -1, Address_Null );
 	while( iEntity != -1 ) {
 		#if defined DEBUG
 			PrintToServer( "calling event: %s", pOutput.szTargetInput );
@@ -721,7 +792,7 @@ void CallEvent( PDOutput pOutput, float flOverride = -1.0 ) {
 
 		AcceptEntityInput( iEntity, pOutput.szTargetInput, -1, -1, -1 );
 
-		iEntity = SDKCall( hFindByName, iEntity, pOutput.szTargetname, -1, -1, -1, Address_Null );
+		iEntity = SDKCall( g_sdkFindByName, iEntity, pOutput.szTargetname, -1, -1, -1, Address_Null );
 	}
 }
 
@@ -729,44 +800,50 @@ void SetPoints( int iTeam, int iAmount = 1 ) {
 	int iOldAmount;
 
 	if( iTeam == 2 ) {
-		iOldAmount = iRedScore;
-		iRedScore = iAmount;
+		iOldAmount = g_iRedScore;
+		g_iRedScore = iAmount;
 
-		if( iOldAmount == 0 && iRedScore > 0 )
+		Address aTeam = SDKCall( g_sdkGetTeam, 2 );
+		SDKCall( g_sdkSetRoundScore, aTeam, g_iRedScore );
+
+		if( iOldAmount == 0 && g_iRedScore > 0 )
 			FireFakeEvent( OUT_ONREDHASPOINTS );
 
-		if( iOldAmount == iPointsToWin && iRedScore < iPointsToWin )
+		if( iOldAmount == g_iPointsToWin && g_iRedScore < g_iPointsToWin )
 			FireFakeEvent( OUT_ONREDLEAVEMAXPOINTS );
 
-		if( iOldAmount != 0 && iRedScore == 0 )
+		if( iOldAmount != 0 && g_iRedScore == 0 )
 			FireFakeEvent( OUT_ONREDHITZEROPOINTS );
 
-		if( iRedScore != iOldAmount )
-			FireFakeEvent( OUT_ONREDSCORECHANGED, float( iRedScore ) / float( iPointsToWin ) );
+		if( g_iRedScore != iOldAmount )
+			FireFakeEvent( OUT_ONREDSCORECHANGED, float( g_iRedScore ) / float( g_iPointsToWin ) );
 
-		if( iRedScore == iPointsToWin ) {
+		if( g_iRedScore == g_iPointsToWin ) {
 			FireFakeEvent( OUT_ONREDHITMAXPOINTS );
 			SetFinale( 2 );
 		}
 			
 	}
 	else {
-		iOldAmount = iBlueScore;
-		iBlueScore = iAmount;
+		iOldAmount = g_iBlueScore;
+		g_iBlueScore = iAmount;
 
-		if( iOldAmount == 0 && iBlueScore > 0 )
+		Address aTeam = SDKCall( g_sdkGetTeam, 3 );
+		SDKCall( g_sdkSetRoundScore, aTeam, g_iBlueScore );
+
+		if( iOldAmount == 0 && g_iBlueScore > 0 )
 			FireFakeEvent( OUT_ONBLUEHASPOINTS );
 
-		if( iOldAmount == iPointsToWin && iBlueScore < iPointsToWin )
+		if( iOldAmount == g_iPointsToWin && g_iBlueScore < g_iPointsToWin )
 			FireFakeEvent( OUT_ONBLUELEAVEMAXPOINTS );
 
-		if( iOldAmount != 0 && iBlueScore == 0 )
+		if( iOldAmount != 0 && g_iBlueScore == 0 )
 			FireFakeEvent( OUT_ONBLUEHITZEROPOINTS );
 
-		if( iBlueScore != iOldAmount )
-			FireFakeEvent( OUT_ONBLUESCORECHANGED, float( iBlueScore ) / float( iPointsToWin ) );
+		if( g_iBlueScore != iOldAmount )
+			FireFakeEvent( OUT_ONBLUESCORECHANGED, float( g_iBlueScore ) / float( g_iPointsToWin ) );
 
-		if( iBlueScore == iPointsToWin ) {
+		if( g_iBlueScore == g_iPointsToWin ) {
 			FireFakeEvent( OUT_ONBLUEHITMAXPOINTS );
 			SetFinale( 3 );
 		}
@@ -774,7 +851,7 @@ void SetPoints( int iTeam, int iAmount = 1 ) {
 }
 
 void SetFinale( int iTeam ) {
-	CreateTimer( flFinaleLength, Timer_EndFinale, iTeam, TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( g_flFinaleLength, Timer_EndFinale, iTeam, TIMER_FLAG_NO_MAPCHANGE );
 }
 
 Action Timer_EndFinale( Handle hTimer, int iTeam ) {
@@ -784,10 +861,23 @@ Action Timer_EndFinale( Handle hTimer, int iTeam ) {
 }
 
 void CalculateMaxPoints() {
-	if( !bAllowMaxScoreUpdating )
+	if( !g_bAllowMaxScoreUpdating )
 		return;
 
-	iPointsToWin = MaxInt( iMinPoints, GetClientCount( true ) * iPointsPerPlayer );
+	g_iPointsToWin = MaxInt( g_iMinPoints, GetClientCount( true ) * g_iPointsPerPlayer );
+
+	if( g_pCTFLogicDomination == Address_Null )
+		return;
+
+	/*int iLogic = GetEntityFromAddress( LoadFromAddress( g_pCTFLogicDomination, NumberType_Int32 ) );
+	if( iLogic != -1 ) {
+		SetVariantInt( iPointsToWin );
+		AcceptEntityInput( iLogic, "" )
+	}*/
+
+	if( g_pCTFGameRules != Address_Null ) {
+		StoreToAddressOffset( g_pCTFGameRules, 2856, g_iPointsToWin, NumberType_Int32 );
+	}
 }
 
 void CalculateTeamLeader( int iTeam ) {
@@ -803,9 +893,9 @@ void CalculateTeamLeader( int iTeam ) {
 		if( GetEntProp( i, Prop_Send, "m_iClass" ) == 8 ) //spy cannot be team leader
 			continue;
 
-		if( iPlayerCarrying[i] > iHighestAmount ) {
+		if( g_iPlayerCarrying[i] > iHighestAmount ) {
 			iHighest = i;
-			iHighestAmount = iPlayerCarrying[i];
+			iHighestAmount = g_iPlayerCarrying[i];
 		}
 	}
 
@@ -814,38 +904,38 @@ void CalculateTeamLeader( int iTeam ) {
 
 void SetTeamLeader( int iPlayer, int iTeam ) {
 	if( iTeam == 2 ) {
-		if( iRedTeamLeader == iPlayer )
+		if( g_iRedTeamLeader == iPlayer )
 			return;
 
-		iRedTeamLeader = iPlayer;
+		g_iRedTeamLeader = iPlayer;
 	}
 	else {
-		if( iBlueTeamLeader == iPlayer )
+		if( g_iBlueTeamLeader == iPlayer )
 			return;
 
-		iBlueTeamLeader = iPlayer;
+		g_iBlueTeamLeader = iPlayer;
 	}
 
-	int iDispenser = EntRefToEntIndex( iTeam == 2 ? iRedLeaderDispenser : iBlueLeaderDispenser );
+	int iDispenser = EntRefToEntIndex( iTeam == 2 ? g_iRedLeaderDispenser : g_iBlueLeaderDispenser );
 	if( iDispenser > 0 ) {
 		RemoveEntity( iDispenser );
 		if( iTeam == 2 ) {
-			iRedLeaderDispenser = INVALID_ENT_REFERENCE;
+			g_iRedLeaderDispenser = INVALID_ENT_REFERENCE;
 		}
 		else {
-			iBlueLeaderDispenser = INVALID_ENT_REFERENCE;
+			g_iBlueLeaderDispenser = INVALID_ENT_REFERENCE;
 		}
 	}
 
-	int iGlow = EntRefToEntIndex( iTeam == 2 ? iRedLeaderGlow : iBlueLeaderGlow );
+	int iGlow = EntRefToEntIndex( iTeam == 2 ? g_iRedLeaderGlow : g_iBlueLeaderGlow );
 	if( iGlow > 0 ) {
 		int iOld = GetEntPropEnt( iGlow, Prop_Send, "m_hTarget" );
 		SetEntProp( iOld, Prop_Send, "m_bGlowEnabled", false );
 		RemoveEntity( iGlow );
 		if( iTeam == 2 )
-			iRedLeaderGlow = INVALID_ENT_REFERENCE;
+			g_iRedLeaderGlow = INVALID_ENT_REFERENCE;
 		else
-			iBlueLeaderGlow = INVALID_ENT_REFERENCE;
+			g_iBlueLeaderGlow = INVALID_ENT_REFERENCE;
 	}
 
 	if( iPlayer == -1 )
@@ -869,10 +959,10 @@ void SetTeamLeader( int iPlayer, int iTeam ) {
 	SetPlayerOutline( iPlayer );
 
 	if( iTeam == 2 ) {
-		iRedLeaderDispenser = EntIndexToEntRef( iDispenser );
+		g_iRedLeaderDispenser = EntIndexToEntRef( iDispenser );
 	}
 	else {
-		iBlueLeaderDispenser = EntIndexToEntRef( iDispenser );
+		g_iBlueLeaderDispenser = EntIndexToEntRef( iDispenser );
 	}
 }
 
@@ -902,9 +992,9 @@ void SetPlayerOutline( int iPlayer ) {
 	SetEntProp( iPlayer, Prop_Send, "m_bGlowEnabled", true );
 
 	if( iTeam == 2 )
-		iRedLeaderGlow = EntIndexToEntRef( iGlow );
+		g_iRedLeaderGlow = EntIndexToEntRef( iGlow );
 	else
-		iBlueLeaderGlow = EntIndexToEntRef( iGlow );
+		g_iBlueLeaderGlow = EntIndexToEntRef( iGlow );
 }
 
 //Action Timer_SetupDispenserZone( Handle hTimer, int iDispenser ) {
@@ -923,12 +1013,12 @@ void Frame_SetupDispenserZone( int iDispenser ) {
 	float vecMins[3];
 	float vecMaxs[3];
 
-	vecMins[0] = float( -iHealDistance );
-	vecMins[1] = float( -iHealDistance );
-	vecMins[2] = float( -iHealDistance );
-	vecMaxs[0] = float( iHealDistance );
-	vecMaxs[1] = float( iHealDistance );
-	vecMaxs[2] = float( iHealDistance );
+	vecMins[0] = float( -g_iHealDistance );
+	vecMins[1] = float( -g_iHealDistance );
+	vecMins[2] = float( -g_iHealDistance );
+	vecMaxs[0] = float( g_iHealDistance );
+	vecMaxs[1] = float( g_iHealDistance );
+	vecMaxs[2] = float( g_iHealDistance );
 
 	SetSize( iTriggerZone, vecMins, vecMaxs );
 
@@ -938,10 +1028,10 @@ void Frame_SetupDispenserZone( int iDispenser ) {
 MRESReturn Detour_GetDispenserRadius( int iThis, DHookReturn hReturn ) {
 	int iThisRef = EntIndexToEntRef( iThis );
 	int iThisTeam = GetEntProp( iThis, Prop_Send, "m_iTeamNum" );
-	if( iThisRef != ( iThisTeam == 2 ? iRedLeaderDispenser : iBlueLeaderDispenser ) )
+	if( iThisRef != ( iThisTeam == 2 ? g_iRedLeaderDispenser : g_iBlueLeaderDispenser ) )
 		return MRES_Ignored;
 
-	hReturn.Value = float( iHealDistance );
+	hReturn.Value = float( g_iHealDistance );
 	return MRES_Supercede;
 }
 
@@ -954,13 +1044,19 @@ void CalculateTeamHolding( int iTeam ) {
 		if( GetEntProp( i, Prop_Send, "m_iTeamNum" ) != iTeam )
 			continue;
 
-		iAmount += iPlayerCarrying[i];
+		iAmount += g_iPlayerCarrying[i];
 	}
 
-	if( iTeam == 2 )
-		iRedTeamHolding = iAmount;
-	else
-		iBlueTeamHolding = iAmount;
+	if( iTeam == 2 ) {
+		g_iRedTeamHolding = iAmount;
+		if( g_iCTFObjectiveResource != -1 )
+			SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iDominationRate", iAmount, 4, 0 );
+	}
+	else {
+		g_iBlueTeamHolding = iAmount;
+		if( g_iCTFObjectiveResource != -1 )
+			SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iDominationRate", iAmount, 4, 1 );
+	}
 }
 
 Action TestTouchStart( int iEntity, int iOther ) {
@@ -1001,8 +1097,10 @@ bool FindCaptureZone( int iRef, PDCapZone pdZone ) {
 	static char szRefString[128];
 
 	IntToString( iRef, szRefString, sizeof( szRefString ) );
-	return smCaptureZones.GetArray( szRefString, pdZone, PDZONE_SIZE );
+	return g_smCaptureZones.GetArray( szRefString, pdZone, PDZONE_SIZE );
 }
+
+#define EMITTARGET -2
 
 //manually read out the contents of m_hTouchingEntities
 Action Timer_PDZoneThink( Handle hTimer, int iData ) {
@@ -1019,9 +1117,9 @@ Action Timer_PDZoneThink( Handle hTimer, int iData ) {
 	bool bRedInZone = false;
 	bool bBlueInZone = false;
 
-	int iInRed[MAXPLAYERS];
+	int iInRed[MAXPLAYERS+1];
 	int iRedNext = 0;
-	int iInBlue[MAXPLAYERS];
+	int iInBlue[MAXPLAYERS+1];
 	int iBlueNext = 0;
 
 	for( int i = 0; i < pdZone.hPlayersTouching.Length; i++ ) {
@@ -1034,15 +1132,27 @@ Action Timer_PDZoneThink( Handle hTimer, int iData ) {
 		int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" );
 		if( iTeam == 2 ) {
 			bRedInZone = true;
-			iInRed[ iRedNext ] = iPlayer;
-			iRedNext++;
 		}
 		else if( iTeam == 3 ) {
 			bBlueInZone = true;
-			iInBlue[ iBlueNext ] = iPlayer;
-			iBlueNext++;
 		}
 	}
+
+	if( pdZone.hPlayersTouching.Length > 0 )
+		for( int i = 1; i <= MaxClients; i++ ) {
+			if( !IsClientInGame( i ) )
+				continue;
+
+			int iTeam = GetEntProp( i, Prop_Send, "m_iTeamNum" );
+			if( iTeam == 2 ) {
+				iInRed[ iRedNext ] = i;
+				iRedNext++;
+			}
+			else if( iTeam == 3 ) {
+				iInBlue[ iBlueNext ] = i;
+				iBlueNext++;
+			}
+		}
 
 	if( pdZone.bCanBlock && bRedInZone && bBlueInZone )
 		return Plugin_Continue;
@@ -1055,30 +1165,33 @@ Action Timer_PDZoneThink( Handle hTimer, int iData ) {
 		if( iPlayer == -1)
 			continue;
 
-		if( iPlayerCarrying[ iPlayer ] == 0 || GetGameTime() < flNextCaptureTime[ iPlayer ] )
+		if( g_iPlayerCarrying[ iPlayer ] == 0 || GetGameTime() < g_flNextCaptureTime[ iPlayer ] )
 			continue;
 
 
 		int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" );
+		if( ( iTeam == 2 ? g_iRedScore : g_iBlueScore ) >= g_iPointsToWin )
+			continue;
+
 		int iPointTeam = GetEntProp( iIndex, Prop_Data, "m_iTeamNum" );
 		if( iPointTeam != 0 && iPointTeam != iTeam )
 			continue;
 
 		if( iTeam == 2 ) {
 			FireFakeEventZone( pdZone, OUTCAP_REDCAP );
-			float flNewPitch = RemapValClamped( float( iRedScore ), 0.0, float( iPointsToWin ), 100.0, 120.0 ); 
-			EmitSound( iInRed, iRedNext, "ui/chime_rd_2base_pos.wav", -2, SNDCHAN_AUTO, SNDLEVEL_MINIBIKE, SND_CHANGEPITCH | SND_CHANGEVOL, 0.4, RoundToNearest( flNewPitch ) );
-			EmitSound( iInBlue, iBlueNext, "ui/chime_rd_2base_neg.wav", -2, SNDCHAN_AUTO, SNDLEVEL_MINIBIKE, SND_CHANGEPITCH | SND_CHANGEVOL, 0.4, RoundToNearest( flNewPitch ) );
+			float flNewPitch = RemapValClamped( float( g_iRedScore ), 0.0, float( g_iPointsToWin ), 100.0, 120.0 ); 
+			EmitSound( iInRed, iRedNext, "ui/chime_rd_2base_pos.wav", EMITTARGET, SNDCHAN_AUTO, SNDLEVEL_MINIBIKE, SND_CHANGEPITCH | SND_CHANGEVOL, 0.5, RoundToNearest( flNewPitch ) );
+			EmitSound( iInBlue, iBlueNext, "ui/chime_rd_2base_neg.wav", EMITTARGET, SNDCHAN_AUTO, SNDLEVEL_MINIBIKE, SND_CHANGEPITCH | SND_CHANGEVOL, 0.5, RoundToNearest( flNewPitch ) );
 		}
 		else if( iTeam == 3 ) {
 			FireFakeEventZone( pdZone, OUTCAP_BLUECAP );
-			float flNewPitch = RemapValClamped( float( iBlueScore ), 0.0, float( iPointsToWin ), 100.0, 120.0 ); 
-			EmitSound( iInBlue, iBlueNext, "ui/chime_rd_2base_pos.wav", -2, SNDCHAN_AUTO, SNDLEVEL_MINIBIKE, SND_CHANGEPITCH | SND_CHANGEVOL, 0.4, RoundToNearest( flNewPitch ) );
-			EmitSound( iInRed, iRedNext, "ui/chime_rd_2base_neg.wav", -2, SNDCHAN_AUTO, SNDLEVEL_MINIBIKE, SND_CHANGEPITCH | SND_CHANGEVOL, 0.4, RoundToNearest( flNewPitch ) );
+			float flNewPitch = RemapValClamped( float( g_iBlueScore ), 0.0, float( g_iPointsToWin ), 100.0, 120.0 ); 
+			EmitSound( iInBlue, iBlueNext, "ui/chime_rd_2base_pos.wav", EMITTARGET, SNDCHAN_AUTO, SNDLEVEL_MINIBIKE, SND_CHANGEPITCH | SND_CHANGEVOL, 0.5, RoundToNearest( flNewPitch ) );
+			EmitSound( iInRed, iRedNext, "ui/chime_rd_2base_neg.wav", EMITTARGET, SNDCHAN_AUTO, SNDLEVEL_MINIBIKE, SND_CHANGEPITCH | SND_CHANGEVOL, 0.5, RoundToNearest( flNewPitch ) );
 		}
 
-		SetPlayerPoints( iPlayer, iPlayerCarrying[ iPlayer ] - 1 );
-		flNextCaptureTime[ iPlayer ] = GetGameTime() + flCapDelay;
+		SetPlayerPoints( iPlayer, g_iPlayerCarrying[ iPlayer ] - 1 );
+		g_flNextCaptureTime[ iPlayer ] = GetGameTime() + flCapDelay;
 	}
 
 	return Plugin_Continue;
@@ -1086,7 +1199,7 @@ Action Timer_PDZoneThink( Handle hTimer, int iData ) {
 
 void SetPlayerPoints( int iPlayer, int iPoints ) {
 	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" );
-	iPlayerCarrying[ iPlayer ] = MaxInt( 0, iPoints );
+	g_iPlayerCarrying[ iPlayer ] = MaxInt( 0, iPoints );
 
 	CalculateTeamHolding( iTeam );
 	CalculateTeamLeader( iTeam );
@@ -1105,34 +1218,17 @@ void Hud_Display( int iPlayer ) {
 	static char szFinal[256];
 	static char szBuffer[64];
 	szFinal = "";
+	szBuffer = "";
 
-	Format( szBuffer, sizeof( szBuffer ), "Red Score: %i/%i\n", iRedScore, iPointsToWin );
-	StrCat( szFinal, sizeof( szFinal ), szBuffer );
-	Format( szBuffer, sizeof( szBuffer ), "Holding: %i\n", iRedTeamHolding );
-	StrCat( szFinal, sizeof( szFinal ), szBuffer );
-
-	SetHudTextParamsEx( 0.23, 0.95, 20.0, REDCOLOR, {255,255,255,0}, 0, 6.0, 0.0, 0.0 );
-	ShowSyncHudText( iPlayer, hHudSyncRed, szFinal );
-	szFinal = "";
-
-	Format( szBuffer, sizeof( szBuffer ), "Blue Score: %i/%i\n", iBlueScore, iPointsToWin );
-	StrCat( szFinal, sizeof( szFinal ), szBuffer );
-	Format( szBuffer, sizeof( szBuffer ), "Holding: %i\n", iBlueTeamHolding );
+	Format( szBuffer, sizeof( szBuffer ), "Holding: %i\n", g_iPlayerCarrying[iPlayer] );
 	StrCat( szFinal, sizeof( szFinal ), szBuffer );
 
-	SetHudTextParamsEx( 0.70, 0.95, 20.0, BLUCOLOR, {255,255,255,0}, 0, 6.0, 0.0, 0.0 );
-	ShowSyncHudText( iPlayer, hHudSyncBlue, szFinal );
-	szFinal = "";
-
-	Format( szBuffer, sizeof( szBuffer ), "Holding: %i\n", iPlayerCarrying[iPlayer] );
-	StrCat( szFinal, sizeof( szFinal ), szBuffer );
-
-	if( flCountdownTimer > GetGameTime() ) {
-		Format( szBuffer, sizeof( szBuffer ), "       %-.0f", flCountdownTimer - GetGameTime() );
+	if( g_flCountdownTimer > GetGameTime() ) {
+		Format( szBuffer, sizeof( szBuffer ), "       %-.0f", g_flCountdownTimer - GetGameTime() );
 		StrCat( szFinal, sizeof( szFinal ), szBuffer );
 	}
 	SetHudTextParamsEx( 0.475, 0.91, 20.0, { 255, 255, 255, 1}, {255,255,255,0}, 0, 6.0, 0.0, 0.0 );
-	ShowSyncHudText( iPlayer, hHudSyncMiddle, szFinal );	
+	ShowSyncHudText( iPlayer, g_hsHudSyncMiddle, szFinal );	
 }
 
 /*
@@ -1140,7 +1236,7 @@ void Hud_Display( int iPlayer ) {
 */
 
 Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast ) {
-	if( !bMapIsPD )
+	if( !g_bMapIsPD )
 		return Plugin_Continue;
 
 	int iVictim = hEvent.GetInt( "userid" );
@@ -1156,16 +1252,16 @@ Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast
 }
 
 int DropPickup( int iPlayer, bool bAddPoints ) {
-	int iPointsToDrop = iPlayerCarrying[ iPlayer ];
+	int iPointsToDrop = g_iPlayerCarrying[ iPlayer ];
 	if( bAddPoints )
-		iPointsToDrop+=iPointsOnPlayerDeath;
+		iPointsToDrop+=g_iPointsOnPlayerDeath;
 	if( iPointsToDrop <= 0 )
 		return -1;
 
 	float vecPlayerPos[3];
 	GetEntPropVector( iPlayer, Prop_Send, "m_vecOrigin", vecPlayerPos );
 
-	iPlayerCarrying[ iPlayer ] = 0;
+	g_iPlayerCarrying[ iPlayer ] = 0;
 	CalculateTeamHolding( GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) );
 	CalculateTeamLeader( GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) );
 	int iEntity = CreatePickup( iPointsToDrop );
@@ -1177,49 +1273,82 @@ int DropPickup( int iPlayer, bool bAddPoints ) {
 int CreatePickup( int iAmount ) {
 	PDPickup pdPickup;
 	pdPickup.iAmount = iAmount;
-	pdPickup.flExpireTime = GetGameTime() + float( iFlagResetDelay );
+	pdPickup.flExpireTime = GetGameTime() + float( g_iFlagResetDelay );
 
 	int iEntity = CreateEntityByName( "prop_dynamic" );
 	SetSolidFlags( iEntity, FSOLID_TRIGGER );
-	SetEntityModel( iEntity, szPropModelName );
+	SetEntityModel( iEntity, g_szPropModelName );
 	DispatchSpawn( iEntity );
 
-	static char szRefBuffer[48];
-	int iRef = EntIndexToEntRef( iEntity );
-	IntToString( iRef, szRefBuffer, sizeof( szRefBuffer ) );
-	smPickups.SetArray( szRefBuffer, pdPickup, PDPICKUP_SIZE );
+	EmitPDSoundToAll( g_szPropDropSound, iEntity );
 
-	EmitPDSoundToAll( szPropDropSound, iEntity );
-
-	int iSequence = SDKCall( hLookupSequence, iEntity, "spin" );
+	int iSequence = SDKCall( g_sdkLookupSequence, iEntity, "spin" );
 	if( iSequence != -1 ) {
 		SetVariantString( "spin" );
 		AcceptEntityInput( iEntity, "SetAnimation" );
 	} else {
-		iSequence = SDKCall( hLookupSequence, iEntity, "idle" );
+		iSequence = SDKCall( g_sdkLookupSequence, iEntity, "idle" );
 		if( iSequence != -1 ) {
 			SetVariantString( "idle" );
 			AcceptEntityInput( iEntity, "SetAnimation" );
 		}
 	}
 
-	CreateTimer( float( iFlagResetDelay ), Timer_PickupThink, iRef, TIMER_FLAG_NO_MAPCHANGE );
-	hTouch.HookEntity( Hook_Pre, iEntity, Hook_PickupTouch );
+	pdPickup.iGlowRef = EntIndexToEntRef( SetPickupGlow( iEntity ) );
+
+	static char szRefBuffer[48];
+	int iRef = EntIndexToEntRef( iEntity );
+	IntToString( iRef, szRefBuffer, sizeof( szRefBuffer ) );
+	g_smPickups.SetArray( szRefBuffer, pdPickup, PDPICKUP_SIZE );
+
+	CreateTimer( float( g_iFlagResetDelay ), Timer_PickupThink, iRef, TIMER_FLAG_NO_MAPCHANGE );
+	g_dhTouch.HookEntity( Hook_Pre, iEntity, Hook_PickupTouch );
 
 	return iEntity;
+}
+int SetPickupGlow( int iPickup ) {
+	int iGlow = CreateEntityByName( "tf_glow" );
+
+	static char szOldName[ 64 ];
+	GetEntPropString( iPickup, Prop_Data, "m_iName", szOldName, sizeof(szOldName) );
+
+	char szNewName[ 128 ], szClassname[ 64 ];
+	GetEntityClassname( iPickup, szClassname, sizeof( szClassname ) );
+	Format( szNewName, sizeof( szNewName ), "%s%i", szClassname, iPickup );
+	DispatchKeyValue( iPickup, "targetname", szNewName );
+
+	DispatchKeyValue( iGlow, "target", szNewName );
+	DispatchSpawn( iGlow );
+	
+	SetEntPropString( iPickup, Prop_Data, "m_iName", szOldName );
+	
+	ParentModel( iGlow, iPickup );
+
+	int iColor[4] = { 255,255,255,255 };
+	SetVariantColor( iColor );
+	AcceptEntityInput( iGlow, "SetGlowColor" );
+	
+	return iGlow;
 }
 
 bool FindPickup( int iRef, PDPickup pdPickup ) {
 	static char szRefString[128];
 	IntToString( iRef, szRefString, sizeof( szRefString ) );
-	return smPickups.GetArray( szRefString, pdPickup, PDPICKUP_SIZE );
+	return g_smPickups.GetArray( szRefString, pdPickup, PDPICKUP_SIZE );
 }
 
 void RemovePickup( int iPickupReference ) {
 	static char szRefString[128];
 	IntToString( iPickupReference, szRefString, sizeof( szRefString ) );
 
-	smPickups.Remove( szRefString );
+	PDPickup pdPickup;
+	if( FindPickup( iPickupReference, pdPickup ) ) {
+		int iGlowIndex = EntRefToEntIndex( pdPickup.iGlowRef );
+		if( iGlowIndex > 0 )
+			RemoveEntity( iGlowIndex );
+	}
+
+	g_smPickups.Remove( szRefString );
 
 	int iIndex = EntRefToEntIndex( iPickupReference );
 	if( iIndex > 0 )
@@ -1237,12 +1366,12 @@ MRESReturn Hook_PickupTouch( int iThis, DHookParam hParams ) {
 	if( !IsValidPlayer( iEntity ) )
 		return MRES_Ignored;
 
-	if( GetGameTime() < flPickupCooler[ iEntity ] )
+	if( GetGameTime() < g_flPickupCooler[ iEntity ] )
 		return MRES_Ignored;
 
 	float vecPos[3];
 	GetEntPropVector( iEntity, Prop_Send, "m_vecOrigin", vecPos );
-	if( SDKCall( hInRespawnRoom, iEntity, vecPos ) )
+	if( SDKCall( g_sdkInRespawnRoom, iEntity, vecPos ) )
 		return MRES_Ignored;
 
 	int iTeam = GetEntProp( iEntity, Prop_Send, "m_iTeamNum" );
@@ -1250,12 +1379,12 @@ MRESReturn Hook_PickupTouch( int iThis, DHookParam hParams ) {
 
 	int iRef = EntIndexToEntRef( iThis );
 	if( !FindPickup( iRef, pdPickup ) ) {
-		PrintToServer("could not find data for pickup, this should not happen");
+		PrintToServer("[PD:C] could not find data for pickup, this should not happen");
 		return MRES_Ignored;
 	}
 
-	EmitPDSoundToAll( szPropPickupSound, iEntity );
-	iPlayerCarrying[ iEntity ] += pdPickup.iAmount;
+	EmitPDSoundToAll( g_szPropPickupSound, iEntity );
+	g_iPlayerCarrying[ iEntity ] += pdPickup.iAmount;
 	CalculateTeamHolding( iTeam );
 	CalculateTeamLeader( iTeam );
 
@@ -1265,11 +1394,11 @@ MRESReturn Hook_PickupTouch( int iThis, DHookParam hParams ) {
 }
 
 MRESReturn Detour_DropFlag( int iThis ) {
-	if( iPlayerCarrying[ iThis ] < 1 )
+	if( g_iPlayerCarrying[ iThis ] < 1 )
 		return MRES_Handled;
 
 	DropPickup( iThis, false );
-	flPickupCooler[ iThis ] = GetGameTime() + 2.0;
+	g_flPickupCooler[ iThis ] = GetGameTime() + 2.0;
 
 	return MRES_Handled;
 }
@@ -1280,34 +1409,53 @@ MRESReturn Detour_RespawnTouch( int iThis, DHookParam hParams ) {
 	if( !IsValidPlayer( iEntity ) )
 		return MRES_Ignored;
 
-	if( iPlayerCarrying[ iEntity ] <= 0 )
+	if( g_iPlayerCarrying[ iEntity ] <= 0 )
 		return MRES_Ignored;
 
 	DropPickup( iEntity, false );
-	flPickupCooler[ iEntity ] = GetGameTime() + 1.0;
+	g_flPickupCooler[ iEntity ] = GetGameTime() + 1.0;
 
 	return MRES_Handled;
 }
 
+#if defined DEBUG
 Action Command_Test( int iClient, int iArgs ) {
-	if(iArgs < 1) return Plugin_Handled;
+	if(iArgs < 4) return Plugin_Handled;
 
 	int iMode = GetCmdArgInt( 1 );
+	int iSecond = GetCmdArgInt( 2 );
+	int iThird = GetCmdArgInt( 3 );
+	int iFourth = GetCmdArgInt( 4 );
+	
 	switch( iMode ) {
 	case 0: {
 		int iEntity = CreatePickup( 1 );
 		float vecPos[3];
-		GetEntPropVector( iClient, Prop_Send, "m_vecOrigin", vecPos );
+		GetEntPropVector( iSecond, Prop_Send, "m_vecOrigin", vecPos );
 		TeleportEntity( iEntity, vecPos );
 		return Plugin_Handled;
+	}
+	case 1: {
+		if( LoadFromAddress( g_pCTFLogicDomination, NumberType_Int32 ) == Address_Null ) {
+			int iLogic = CreateEntityByName( "tf_logic_domination" );
+			DispatchSpawn( iLogic );
+			
+			Address aAddress2 = GetEntityAddress( iLogic );
+
+			PrintToServer( "%i %i", g_pCTFLogicDomination, aAddress2 );
+			StoreToAddress( g_pCTFLogicDomination, aAddress2, NumberType_Int32 );
+		}
+
+		PrintToServer("%i", GetEntityFromAddress( LoadFromAddress( g_pCTFLogicDomination, NumberType_Int32 ) ) );
 	}
 	}
 	
 	return Plugin_Handled;
 }
+#endif
 
 void SetWinningTeam( int iTeam ) {
-	SDKCall( hSetWinningTeam, iTeam, 13, true, false, false, false );
+	SDKCall( g_sdkSetWinningTeam, iTeam, 13, true, false, false, false );
 }
 
 void EmitPDSoundToAll( char[] szString, int iSource ) {
@@ -1315,4 +1463,27 @@ void EmitPDSoundToAll( char[] szString, int iSource ) {
 		EmitSoundToAll( szString, iSource );
 	else
 		EmitGameSoundToAll( szString, iSource );
+}
+
+//CTFGameRules::PlayerKilled checks for a domination logic when the hud is enabled so i need to fill it so it doesn't segfault
+void CheckFillLogicSingleton() {
+	if( g_pCTFLogicDomination != Address_Null && LoadFromAddress( g_pCTFLogicDomination, NumberType_Int32 ) == Address_Null ) {
+		int iLogic = CreateEntityByName( "tf_logic_domination" );
+		DispatchKeyValueInt( iLogic, "point_limit", g_iPointsToWin );
+		DispatchKeyValueInt( iLogic, "win_on_limit", 0 );
+		DispatchSpawn( iLogic );
+		
+		Address aAddress2 = GetEntityAddress( iLogic );
+
+		StoreToAddress( g_pCTFLogicDomination, aAddress2, NumberType_Int32 );
+	}
+}
+
+MRESReturn Hook_PointRate( Address aThis, DHookReturn hReturn ) {
+	if( g_bMapIsPD ) {
+		hReturn.Value = 0;
+		return MRES_Supercede;
+	}
+
+	return MRES_Ignored;
 }
