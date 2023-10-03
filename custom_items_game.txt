@@ -1426,6 +1426,7 @@ Weapon from: New Old Weapons Pack"
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_umbrella"
+			"item_class"                "tf_weapon_bat"
 			"show_in_armory"			"1"
 
 			"item_quality"				"rarity2"
@@ -1433,6 +1434,7 @@ Weapon from: New Old Weapons Pack"
 			"item_type_name"			"Special Equipment"
 			"item_description"			"
 You Peppino'd your last Spaghetti: Swing your melee to charge forward to deal impact damage!
+No manual boost.
 
 Now which one of your simpletons put pineapples on my pizza!?!
 
@@ -33438,12 +33440,13 @@ Weapon by: 'Noclue'"
 			
 			"propername"				"1"
 			"item_name"					"Sphere"
+			"item_type_name"			"Prototype Tesla Device"
 			
 			"item_logname"				"Sphere"
 			"item_iconname"				"Sphere"
 			
 			"item_description"			"
-Alt-Fire: Project a bulletproof shield
+Location of origin: [REDACTED]
 
 Model by: 'svdl'
 Weapon by: 'Noclue'"
@@ -33459,12 +33462,31 @@ Weapon by: 'Noclue'"
 			
 			"attributes"
 			{
+			    "Sphere Damage"
+				{
+					"attribute_class"	"dummy"
+					"value"				"1"
+				}
+				"Sphere Mechanic"
+				{
+					"attribute_class"	"dummy"
+					"value"				"1"
+				}
 				"scattergun no reload single"
 				{
 					"attribute_class"	"custom_sphere"
 					"value"				"1.0"
 				}
-				
+				"Limited Range Dummy"
+				{
+					"attribute_class"	"dummy"
+					"value"				"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}	
 				"hidden separator"
 				{
 					"attribute_class"	"hidden_separator"
@@ -34295,6 +34317,27 @@ Fan-Fire: Hold fire button for maximum destruction!"
 			"description_string"	"Execution Warrant: Alt-fire (Mouse2): Mark an enemy for hyper death (20 sec cooldown)"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
+		}
+		"7588"
+		{
+			"name"					"Sphere Damage"
+			"description_string"	"Dealing damage with this weapon builds up shield energy"												
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
+		}
+		"7589"
+		{
+			"name"					"Sphere Mechanic"
+			"description_string"	"Alt-fire (Mouse2): Deploys energy shield that blocks bullets and projectiles"												
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
+		}
+		"7590"
+		{
+			"name"					"Limited Range Dummy"
+			"description_string"	"Weapon has limited range"												
+			"description_format"	"value_is_additive"
+			"effect_type"			"negative"
 		}
 //clooey zone
 
