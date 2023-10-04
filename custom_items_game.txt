@@ -9352,7 +9352,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"Gravy Maker"
 			"image_inventory"			"backpack/weapons/c_models/c_overunder_kocw/c_overunder_kocw"
 			"model_world"				"models/weapons/c_models/c_overunder_kocw/c_overunder_kocw1.mdl"
-			"model_player"				"models/weapons/v_models/v_double_barrel_engi.mdl"	
+			"model_player"				"models/weapons/v_models/v_double_barrel_engi.mdl"
+			"extra_wearable"			"models/workshop/player/items/engineer/texmex_combined.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -9415,10 +9416,6 @@ Weapon by: 'The One Of Wonders'"
 				"sound_burst"			"Weapon_SuperShotGun_Remaster.SingleCrit"
 				"sound_reload"			"Weapon_SuperShotGun.WorldReload"
 				"sound_special1"		"Weapon_Null"										
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -12095,8 +12092,8 @@ Weapon by: 'Reagy'"
 			{
 				"sound_single_shot"		"Weapon_Tau.Single"
 				"sound_double_shot"		"Weapon_Tau.Double"
-				"sound_special1"		"Weapon_Tau.Charged"
 				"sound_special2"		"Weapon_Tau.Discharge"
+				"sound_special3"		"Weapon_Tau.ChargeLoop"				
 				"sound_empty"			"Weapon_Pistol.ClipEmpty"
 				"sound_burst"			"Weapon_Tau.Double"
 			}
