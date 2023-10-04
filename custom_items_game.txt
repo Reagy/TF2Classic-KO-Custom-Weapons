@@ -9351,7 +9351,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Gravy Maker"
 			"item_iconname"				"Gravy Maker"
 			"image_inventory"			"backpack/weapons/c_models/c_overunder_kocw/c_overunder_kocw"
-			"model_world"				"models/weapons/c_models/c_overunder_kocw/c_overunder_kocw.mdl"
+			"model_world"				"models/weapons/c_models/c_overunder_kocw/c_overunder_kocw1.mdl"
 			"model_player"				"models/weapons/v_models/v_double_barrel_engi.mdl"	
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -11369,7 +11369,7 @@ Weapon by: 'Zadrave'"
 			"item_slot"				"primary"
 			"anim_slot"				"item1"
 			"image_inventory"			"backpack/weapons/c_models/c_flarerevolver/c_flarerevolver"
-			"model_world"				"models/workshop/weapons/c_models/c_flarevolver_rifle/c_flarevolver_rifle.mdl"
+			"model_world"				"models/workshop/weapons/c_models/c_flarevolver_rifle/c_rifle_new.mdl"
 			"model_player"				"models/weapons/v_models/v_flare_revolver.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -33450,7 +33450,8 @@ Location of origin: [REDACTED]
 
 Model by: 'svdl'
 Weapon by: 'Noclue'"
-			
+
+			"image_inventory"			"backpack/weapons/c_models/c_sphere"
 			"model_world"				"models/workshop/weapons/c_models/c_spheregun/c_spheregun.mdl"
 			"model_player"				"models/workshop/weapons/c_models/c_spheregun/c_spheregun.mdl"
 			"attach_to_hands"			"1"
