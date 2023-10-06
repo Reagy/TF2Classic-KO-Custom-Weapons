@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V6r6
+// Knockout Custom Weapons V6.1
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 + Tangerine Paint & Grunt's Weapon Addons V2
 // Adoptions taken from Renaissance Revival V1 by Yakibomb
@@ -1426,6 +1426,7 @@ Weapon from: New Old Weapons Pack"
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_umbrella"
+			"item_class"                "tf_weapon_bat"
 			"show_in_armory"			"1"
 
 			"item_quality"				"rarity2"
@@ -1433,6 +1434,7 @@ Weapon from: New Old Weapons Pack"
 			"item_type_name"			"Special Equipment"
 			"item_description"			"
 You Peppino'd your last Spaghetti: Swing your melee to charge forward to deal impact damage!
+No manual boost.
 
 Now which one of your simpletons put pineapples on my pizza!?!
 
@@ -2993,12 +2995,14 @@ Edited by: 'The One Of Wonders'"
 			"item_description"			"
 Heavy needs to be self-sufficient, this will do.
 
-Weapon from: New Old Weapons Pack
-Modified by: 'The One Of Wonders'"
-			"image_inventory"			"backpack/workshop/player/items/engineer/dec15_winter_backup/dec15_winter_backup"
-			"model_player"				"models/weapons/custom/v_models/v_berserk_fists_engineer.mdl"
-			"model_world"				"models/player/items/engineer_winter_backup_backpack.mdl"
-			"extra_wearable"			"models/player/items/engineer_winter_backup_backpack.mdl"
+Cosmetic by: 'NeoDement' 'Yrrzy'
+Tool by: 'The One Of Wonders'
+Viewmodel hack by: 'Reagy'"
+			"image_inventory"			"backpack/workshop/player/items/all_class/ammo_pack/ammo_pack"
+			"model_player"				"models/items/v_ammopack_medium.mdl"
+			"model_world"				"models/workshop/player/items/all_class/ammo_pack/ammo_pack_heavy.mdl"
+			"extra_wearable"			"models/workshop/player/items/all_class/ammo_pack/ammo_pack_heavy.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"heavy"				"1"
@@ -3037,7 +3041,7 @@ Modified by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"fuse_mult"
-					"value"				"0.2"
+					"value"				"0.4"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -3047,13 +3051,24 @@ Modified by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"blast_dmg_to_self"
-					"value"				"0.01"
+					"value"				"0.001"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmgself_push_force"
 					"value"				"0.01"
 				}
+				"custom projectile model"
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/items/ammopack_medium.mdl"
+				}
+			}
+			"visuals"
+			{
+				"sound_special1"		"Player.PickupWeapon"
+				"sound_special2"		"Player.PickupWeapon"
+				"explosion_effect"		"impact_glass"
 			}
 			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
 			"drop_sound"				"#ui/item_pack_drop.wav"
@@ -3687,11 +3702,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"DISPLAY_ONLY"
 					"value"				"1" 
 				}
-				"dmg taken increased"															
-				{
-					"attribute_class"	"mult_dmgtaken"
-					"value"				"1.15"
-				}
 				"melee taken becomes crit on wearer"															
 				{
 					"attribute_class"	"melee_taken_becomes_crit_wearer"
@@ -3997,7 +4007,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.1"
+					"value" 			"0.15"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -5896,7 +5906,7 @@ Weapon by: 'The One Of Wonders'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.3"
+					"value"				"0.4"
 				}
 				"maxammo secondary reduced"
 				{
@@ -9349,8 +9359,9 @@ Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Gravy Maker"
 			"item_iconname"				"Gravy Maker"
 			"image_inventory"			"backpack/weapons/c_models/c_overunder_kocw/c_overunder_kocw"
-			"model_world"				"models/weapons/c_models/c_overunder_kocw/c_overunder_kocw.mdl"
-			"model_player"				"models/weapons/v_models/v_double_barrel_engi.mdl"	
+			"model_world"				"models/weapons/c_models/c_overunder_kocw/c_overunder_kocw1.mdl"
+			"model_player"				"models/weapons/v_models/v_double_barrel_engi.mdl"
+			"extra_wearable"			"models/workshop/player/items/engineer/texmex_combined.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -9413,10 +9424,6 @@ Weapon by: 'The One Of Wonders'"
 				"sound_burst"			"Weapon_SuperShotGun_Remaster.SingleCrit"
 				"sound_reload"			"Weapon_SuperShotGun.WorldReload"
 				"sound_special1"		"Weapon_Null"										
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -11284,6 +11291,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"		"mult_dmg"
 					"value"					"0.8"
 				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0" 
+				}
 				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
@@ -11362,7 +11374,7 @@ Weapon by: 'Zadrave'"
 			"item_slot"				"primary"
 			"anim_slot"				"item1"
 			"image_inventory"			"backpack/weapons/c_models/c_flarerevolver/c_flarerevolver"
-			"model_world"				"models/workshop/weapons/c_models/c_flarevolver_rifle/c_flarevolver_rifle.mdl"
+			"model_world"				"models/workshop/weapons/c_models/c_flarevolver_rifle/c_rifle_new.mdl"
 			"model_player"				"models/weapons/v_models/v_flare_revolver.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -11381,6 +11393,11 @@ Weapon by: 'Zadrave'"
 					"attribute_class"	"mult_dmg"
 					"value"				"5.0"
 				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.1"
+				}
 				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
@@ -11395,7 +11412,12 @@ Weapon by: 'Zadrave'"
 				{
 					"attribute_class"	"custom_burn_pyro" // yes, this sets other pyros on fire god save us all.
 					"value"				"1"													
-				}					
+				}
+                "rocket limited lifetime"														
+				{
+					"attribute_class"	"rocket_lifetime"
+					"value"				"0.5"
+				}				
 			}
 			"visuals"
 			{
@@ -12088,8 +12110,8 @@ Weapon by: 'Reagy'"
 			{
 				"sound_single_shot"		"Weapon_Tau.Single"
 				"sound_double_shot"		"Weapon_Tau.Double"
-				"sound_special1"		"Weapon_Tau.Charged"
 				"sound_special2"		"Weapon_Tau.Discharge"
+				"sound_special3"		"Weapon_Tau.ChargeLoop"				
 				"sound_empty"			"Weapon_Pistol.ClipEmpty"
 				"sound_burst"			"Weapon_Tau.Double"
 			}
@@ -13901,6 +13923,12 @@ Weapon by: 'Majro'"
 				{
 					"attribute_class"	"grenade_cook"
 					"value"				"1"
+				}
+				
+				"crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
 				}
 				
 
@@ -22403,7 +22431,12 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
-				}					
+				}	
+                "Reload time no anim speed mod"
+                {
+                    "attribute_class"    "mult_reload_time_noanimmod"
+                    "value"                "0.725"
+                }				
 			}
 			"visuals"
 			{
@@ -23604,16 +23637,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_rocket_gravity"
 					"value"				"1.2"
 				}
-				"mod no reload DISPLAY ONLY"												
-				{
-					"attribute_class"	"ditto"
-					"value"				"1"
-				}
-				"strange restriction type 1"												
-				{
-					"attribute_class"	"mod_max_primary_clip_override"
-					"value"				"-1"
-				}
 				"Set DamageType Ignite"												
 				{
 					"attribute_class"	"set_dmgtype_ignite"
@@ -23633,11 +23656,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	    "mult_dmg"
 					"value" 				"0.8"
-				}
-				"maxammo primary reduced"
-				{
-					"attribute_class"	    "mult_maxammo_primary"
-					"value" 				"0.5"
 				}
 				"weapon burn time reduced"
 				{
@@ -23663,6 +23681,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_dmgself_push_force"
 					"value" 			"0.0"													
+				}
+                "crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
 				}				
 			}
 			"visuals"																			
@@ -24460,7 +24483,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"	 // should be about ~6 RPS
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.4"
+					"value"				"1.7"
 				}
 				"move speed penalty"	 
 				{
@@ -24492,11 +24515,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
-				"bullet is a hull"
-				{
-					"attribute_class"	"bullet_is_a_hull"
-					"value"				"1.15"
-				}
 				"punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
@@ -24507,6 +24525,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
 				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
+				}	
 			}
 			"visuals"
 			{
@@ -30471,8 +30494,8 @@ Weapon by: 'Reagy'"
 			"item_iconname"				"Festive Twig (Heavy)"
 			"image_inventory"			"backpack/weapons/c_models/c_twigbells/c_twigbells"
  		    "model_world"				"models/weapons/c_models/twigbells/twigbells_hwg.mdl"
-			"model_player"			    "models/weapons/c_models/twigbells/twigbells_twig.mdl"
-			"attach_to_hands"			"1"
+			"model_player"			    "models/weapons/c_models/twigbells/twigbells_hwg_v.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"heavy"					"1"
@@ -33433,16 +33456,18 @@ Weapon by: 'Noclue'"
 			
 			"propername"				"1"
 			"item_name"					"Sphere"
+			"item_type_name"			"Prototype Tesla Device"
 			
 			"item_logname"				"Sphere"
 			"item_iconname"				"Sphere"
 			
 			"item_description"			"
-Alt-Fire: Project a bulletproof shield
+Location of origin: [REDACTED]
 
 Model by: 'svdl'
 Weapon by: 'Noclue'"
-			
+
+			"image_inventory"			"backpack/weapons/c_models/c_sphere"
 			"model_world"				"models/workshop/weapons/c_models/c_spheregun/c_spheregun.mdl"
 			"model_player"				"models/workshop/weapons/c_models/c_spheregun/c_spheregun.mdl"
 			"attach_to_hands"			"1"
@@ -33454,12 +33479,36 @@ Weapon by: 'Noclue'"
 			
 			"attributes"
 			{
+			    "Sphere Charge Passive"
+				{
+					"attribute_class"	"dummy"
+					"value"				"1"
+				}
+			    "Sphere Damage"
+				{
+					"attribute_class"	"dummy"
+					"value"				"1"
+				}
+				"Sphere Mechanic"
+				{
+					"attribute_class"	"dummy"
+					"value"				"1"
+				}
 				"scattergun no reload single"
 				{
 					"attribute_class"	"custom_sphere"
 					"value"				"1.0"
 				}
-				
+				"Limited Range Dummy"
+				{
+					"attribute_class"	"dummy"
+					"value"				"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}	
 				"hidden separator"
 				{
 					"attribute_class"	"hidden_separator"
@@ -34290,6 +34339,34 @@ Fan-Fire: Hold fire button for maximum destruction!"
 			"description_string"	"Execution Warrant: Alt-fire (Mouse2): Mark an enemy for hyper death (20 sec cooldown)"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
+		}
+		"7588"
+		{
+			"name"					"Sphere Damage"
+			"description_string"	"Dealing damage with this weapon builds up shield energy"												
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
+		}
+		"7589"
+		{
+			"name"					"Sphere Mechanic"
+			"description_string"	"Alt-fire (Mouse2): Deploys energy shield that blocks bullets and projectiles"												
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
+		}
+		"7590"
+		{
+			"name"					"Limited Range Dummy"
+			"description_string"	"Weapon has limited range"												
+			"description_format"	"value_is_additive"
+			"effect_type"			"negative"
+		}
+		"7591"
+		{
+			"name"					"Sphere Charge Passive"
+			"description_string"	"Shield energy builds up passively"												
+			"description_format"	"value_is_additive"
+			"effect_type"			"neutral"
 		}
 //clooey zone
 
