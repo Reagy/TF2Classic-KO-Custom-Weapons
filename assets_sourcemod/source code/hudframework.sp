@@ -227,7 +227,7 @@ public any Native_TrackerSetRechargeRate( Handle hPlugin, int iNumParams ) {
 	if( iLoc == -1 )
 		return 0;
 
-	Tracker_SetRechargeRateIndex( iPlayer, iLoc, flRechargeRate );
+	Tracker_SetRechargeRateIndex( iPlayer, iLoc, flRechargeRate * UPDATEINTERVAL );
 	return 0;
 }
 void Tracker_SetRechargeRateIndex( int iPlayer, int iIndex, float flRechargeRate ) {
