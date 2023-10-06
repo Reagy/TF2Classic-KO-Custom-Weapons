@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name = "Condition Handler",
 	author = "Noclue",
 	description = "Core plugin for custom conditions.",
-	version = "1.1",
+	version = "1.1.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -1133,7 +1133,7 @@ void TickFlameHeal( int iPlayer ) {
 
 	g_iFlameHealBatch[ iPlayer ] += iHealed;
 
-	Tracker_SetValue( iSource, "Pressure", MinFloat( Tracker_GetValue( iSource, "Pressure" ) + ( float( iHealed ) * 0.2 ), 100.0 ) );
+	Tracker_SetValue( iSource, "Pressure", Tracker_GetValue( iSource, "Pressure" ) + ( float( iHealed ) * 0.2 ) );
 
 	g_flFlameHealDebt[ iPlayer ] = flAmount - RoundToFloor( flAmount );
 

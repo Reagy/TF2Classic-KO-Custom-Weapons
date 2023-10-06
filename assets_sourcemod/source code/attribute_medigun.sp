@@ -74,7 +74,6 @@ float g_flLastHealed[MAXPLAYERS+1] = { 0.0, ... };
 
 //flame healer
 int g_iFlameHealEmitters[MAXPLAYERS+1][2];
-bool g_bPlayerHydroPump[MAXPLAYERS+1] = { false, ... };
 
 //int g_iRocketDamageOffset = -1; //1204
 int g_iCollideWithTeamOffset = -1; //1168
@@ -232,12 +231,12 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 
 	if( IsValidPlayer( iPlayer ) ) {
 		if( RoundToNearest( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) == CMEDI_FLAME ) {
-			Tracker_Create( iPlayer, FLAMEKEYNAME, 0.0, 0.0, RTF_NOOVERWRITE | RTF_CLEARONSPAWN  );
-			g_bPlayerHydroPump[ iPlayer ] = true;
+			Tracker_Create( iPlayer, FLAMEKEYNAME, false );
+			Tracker_SetMax( iPlayer, FLAMEKEYNAME, 100.0 );
+			Tracker_SetFlags( iPlayer, FLAMEKEYNAME, RTF_CLEARONSPAWN );
 		}
 		else {
 			Tracker_Remove( iPlayer, FLAMEKEYNAME );
-			g_bPlayerHydroPump[ iPlayer ] = false;
 		}
 	}
 
@@ -284,7 +283,7 @@ Action Event_PlayerHealed( Event hEvent, const char[] szName, bool bDontBroadcas
 
 	float flTrackerVal = Tracker_GetValue( iHealer, "Rage" );
 	float flTrackerAdd = flTrackerVal + ( float( iHealed ) * 0.1 );
-	Tracker_SetValue( iHealer, "Rage", MinFloat( 100.0, flTrackerAdd ) );
+	Tracker_SetValue( iHealer, "Rage", flTrackerAdd );
 
 	g_flLastHealed[ iHealer ] = GetGameTime();
 
