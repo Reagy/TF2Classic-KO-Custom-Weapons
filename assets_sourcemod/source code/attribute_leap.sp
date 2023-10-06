@@ -11,11 +11,12 @@ public Plugin myinfo =
 	name = "Attribute: Leap Ability",
 	author = "Noclue",
 	description = "Leaping attribute.",
-	version = "1.1",
+	version = "1.2",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
-bool bCanLeap[MAXPLAYERS+1];
+//bool bCanLeap[MAXPLAYERS+1];
+PlayerFlags g_pfCanLeap;
 #define LEAPKEYNAME "Leap"
 
 public void OnPluginStart() {
@@ -35,9 +36,15 @@ public Action Event_Inventory( Event hEvent, const char[] sName, bool bDontBroad
 
 	if( IsValidPlayer( iPlayer ) ) {
 		float flValue = AttribHookFloat( 0.0, iPlayer, "custom_leap_ability" );
-		bCanLeap[iPlayer] = flValue != 0.0 && TF2_GetPlayerClass( iPlayer ) != TFClass_Spy; //todo: find non-hack solution for this
-		if( bCanLeap[iPlayer] )
-			Tracker_Create( iPlayer, LEAPKEYNAME, 100.0, flValue );
+		//bCanLeap[iPlayer] = flValue != 0.0 && TF2_GetPlayerClass( iPlayer ) != TFClass_Spy; //todo: find non-hack solution for this
+		g_pfCanLeap.Set( iPlayer, flValue != 0.0 && TF2_GetPlayerClass( iPlayer ) != TFClass_Spy );
+		if( g_pfCanLeap.Get( iPlayer ) ) {
+			Tracker_Create( iPlayer, LEAPKEYNAME );
+			Tracker_SetMax( iPlayer, LEAPKEYNAME, 100.0 );
+			Tracker_SetRechargeRate( iPlayer, LEAPKEYNAME, flValue );
+			Tracker_SetValue( iPlayer, LEAPKEYNAME, 100.0 );
+			Tracker_SetFlags( iPlayer, LEAPKEYNAME, RTF_RECHARGES | RTF_DING | RTF_PERCENTAGE );
+		}
 		else
 			Tracker_Remove( iPlayer, LEAPKEYNAME );
 	}
@@ -48,7 +55,7 @@ public Action Event_PlayerDeath( Event hEvent, const char[] sName, bool bDontBro
 	int iPlayer = hEvent.GetInt( "attacker" );
 	iPlayer = GetClientOfUserId( iPlayer );
 
-	if( IsValidPlayer( iPlayer ) && bCanLeap[ iPlayer ] )
+	if( IsValidPlayer( iPlayer ) && g_pfCanLeap.Get( iPlayer ) )
 		Tracker_SetValue( iPlayer, LEAPKEYNAME, 100.0 );
 
 	return Plugin_Continue;
@@ -58,7 +65,7 @@ public Action Event_PlayerDeath( Event hEvent, const char[] sName, bool bDontBro
 int iOldButtons[MAXPLAYERS+1];
 public Action OnPlayerRunCmd( int iClient, int &iButtons, int &iImpulse, float flVel[3], float flAngles[3], int &iWeapon, int &iSubtype, int &iCmdnum, int &iTickcount, int &iSeed, int iMouse[2] ) {
 	if( iButtons & IN_ATTACK2 && !( iOldButtons[iClient] & IN_ATTACK2 ) ) {
-		if( bCanLeap[iClient] )
+		if( g_pfCanLeap.Get( iClient ) )
 			PlayerLeap( iClient, flAngles );
 	}
 	iOldButtons[iClient] = iButtons;
