@@ -306,11 +306,11 @@
 				"this"			"entity"
 				"arguments"
 				{
-					"other"
+					"collisionGroup"
 					{
 						"type"	"int"
 					}
-					"other"
+					"contentsMask"
 					{
 						"type"	"int"
 					}
