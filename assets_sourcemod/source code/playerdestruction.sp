@@ -610,7 +610,7 @@ void SpawnLogicDummy() {
 	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_bCPIsVisible", 0, 1, 1 );
 
 	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iOwner", 2, 1, 0 );
-	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iOwner", 3, 1, 4 );
+	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iOwner", 3, 1, 1 );
 
 	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iDominationRate", 0, 4, 0 );
 	SetEntProp( g_iCTFObjectiveResource, Prop_Send, "m_iDominationRate", 0, 4, 1 );
@@ -869,11 +869,14 @@ void CalculateMaxPoints() {
 	if( g_pCTFLogicDomination == Address_Null )
 		return;
 
-	/*int iLogic = GetEntityFromAddress( LoadFromAddress( g_pCTFLogicDomination, NumberType_Int32 ) );
+	Address aLogicDomination = LoadFromAddress( g_pCTFLogicDomination, NumberType_Int32 );
+	if( aLogicDomination == Address_Null )
+		return;
+
+	int iLogic = GetEntityFromAddress( aLogicDomination );
 	if( iLogic != -1 ) {
-		SetVariantInt( iPointsToWin );
-		AcceptEntityInput( iLogic, "" )
-	}*/
+		SetEntProp( iLogic, Prop_Data, "m_iPointLimitMap", g_iPointsToWin );
+	}
 
 	if( g_pCTFGameRules != Address_Null ) {
 		StoreToAddressOffset( g_pCTFGameRules, 2856, g_iPointsToWin, NumberType_Int32 );
@@ -1361,20 +1364,23 @@ Action Timer_PickupThink( Handle hTimer, int iRef ) {
 }
 
 MRESReturn Hook_PickupTouch( int iThis, DHookParam hParams ) {
-	int iEntity = hParams.Get( 1 );
+	int iToucher = hParams.Get( 1 );
 
-	if( !IsValidPlayer( iEntity ) )
+	if( !IsValidPlayer( iToucher ) )
 		return MRES_Ignored;
 
-	if( GetGameTime() < g_flPickupCooler[ iEntity ] )
+	if( GetGameTime() < g_flPickupCooler[ iToucher ] )
+		return MRES_Ignored;
+
+	if( TF2_IsPlayerInCondition( iToucher, TFCond_Cloaked ) || TF2_IsPlayerInCondition( iToucher, TFCond_Disguised ) )
 		return MRES_Ignored;
 
 	float vecPos[3];
-	GetEntPropVector( iEntity, Prop_Send, "m_vecOrigin", vecPos );
-	if( SDKCall( g_sdkInRespawnRoom, iEntity, vecPos ) )
+	GetEntPropVector( iToucher, Prop_Send, "m_vecOrigin", vecPos );
+	if( SDKCall( g_sdkInRespawnRoom, iToucher, vecPos ) )
 		return MRES_Ignored;
 
-	int iTeam = GetEntProp( iEntity, Prop_Send, "m_iTeamNum" );
+	int iTeam = GetEntProp( iToucher, Prop_Send, "m_iTeamNum" );
 	PDPickup pdPickup;
 
 	int iRef = EntIndexToEntRef( iThis );
@@ -1383,8 +1389,8 @@ MRESReturn Hook_PickupTouch( int iThis, DHookParam hParams ) {
 		return MRES_Ignored;
 	}
 
-	EmitPDSoundToAll( g_szPropPickupSound, iEntity );
-	g_iPlayerCarrying[ iEntity ] += pdPickup.iAmount;
+	EmitPDSoundToAll( g_szPropPickupSound, iToucher );
+	g_iPlayerCarrying[ iToucher ] += pdPickup.iAmount;
 	CalculateTeamHolding( iTeam );
 	CalculateTeamLeader( iTeam );
 
