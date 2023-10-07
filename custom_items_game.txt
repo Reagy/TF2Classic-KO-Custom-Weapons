@@ -466,7 +466,7 @@
 				"ubercharge overheal rate penalty" 
 				{
 					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"0.25"
+					"value"				"0.9"
 				}
 			}
 		}
@@ -514,7 +514,7 @@
 				"ubercharge overheal rate penalty" 
 				{
 					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"0.25"
+					"value"				"0.9"
 				}
 			}
 			"visuals"
@@ -2822,7 +2822,7 @@ A wee lad in a mask was in a mighty hurry and left this pretty bloody thing behi
 T'is me lucky day!
 
 Original weapon from: New Old Weapons Pack
-Weapon design by: Azzy"																				// IS THAT A FUCKIN' 「OPEN FORTRESS」 REFERENCE!?!?!?!?!!?!?!?!?!?!?!?!?!?!?
+Weapon design by: Azzy"																						
 			"item_logname"				"Ol' Brimstone"
 			"item_iconname"				"Ol' Brimstone"
 			"image_inventory"			"backpack/weapons/w_models/w_grenadelauncher_dm"
@@ -2836,7 +2836,7 @@ Weapon design by: Azzy"																				// IS THAT A FUCKIN' 「OPEN FORTRESS
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"8 0 -6"
-				"mod brimstone slamfire damage required"	"200"
+				"mod brimstone slamfire damage required"	"20"
 			}
 			"attributes" // TODO prettify
 			{
@@ -3703,9 +3703,9 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"DISPLAY_ONLY"
 					"value"				"1" 
 				}
-				"melee taken becomes crit on wearer"															
+				"melee taken becomes minicrit on active"															
 				{
-					"attribute_class"	"melee_taken_becomes_crit_wearer"
+					"attribute_class"	"melee_taken_becomes_minicrit_active"
 					"value"				"1"
 				}
 				"crit mod disabled"
@@ -9818,6 +9818,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"set_detonate_mode"
 					"value"				"3"
 				}	
+				"projectile speed increased"																
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value" 			"1.2"
+				}
                 "grenade impact splash display only"
 				{
 					"attribute_class"	"dmuuy"
@@ -11250,7 +11255,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-			    "mod brimstone slamfire damage required"    "80"
+			    "mod brimstone slamfire damage required"    "-80"
 				"mult brimstone slamfire postfiredelay"     "0.4"
 				"mult brimstone slamfire duration"          "0.16666666666"
 				"meter_label"                               "FAN-FIRE"
@@ -15762,7 +15767,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-				"min_viewmodel_offset"					"10 0 -11"
+				"min_viewmodel_offset"					"4 -1 -4"
 				"mod use custom ammo type"              "1"
 			}
 			"attributes"
@@ -15805,7 +15810,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"2.5"
+					"value"				"2"
 				}	
 				"crit mod disabled"
 				{
@@ -16908,7 +16913,7 @@ Weapon By: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"2.2"
+					"value"				"2.64"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -17781,7 +17786,7 @@ Weapon by: 'Noclue'"
 				"ubercharge overheal rate penalty" 
 				{
 					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"0.25"
+					"value"				"0.9"
 				}
 			}
 			"visuals"
@@ -22587,7 +22592,7 @@ Weapon by: 'Noclue'"
 				"ubercharge overheal rate penalty" 
 				{
 					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"0.25"
+					"value"				"0.9"
 				}
 			}
 			"visuals"
@@ -24303,12 +24308,12 @@ Weapon by: 'The One Of Wonders'"
 				"overheal penalty"																
 				{
 					"attribute_class"	"mult_medigun_overheal_amount"
-					"value" 			"0.001"
+					"value" 			"0.8"
 				}
 				"ubercharge overheal rate penalty" 
 				{
 					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"0.25"
+					"value"				"0.9"
 				}
 				"lunchbox adds minicrits" 
 				{
@@ -27558,15 +27563,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"blast_dmg_to_self"
 					"value"				"0.1"
 				}
-				"sticky air burst mode"
-				{
-					"attribute_class"	"set_detonate_mode"
-					"value"				"2"
-				}
 				"maxammo primary reduced"
 				{
 					"attribute_class"	"mult_maxammo_primary"
 					"value"				"0.75"
+				}
+				"fuse penalty"
+				{
+					"attribute_class"	"fuse_mult"
+					"value"				"1.30"
 				}
 				"custom projectile model"
 				{
@@ -29073,7 +29078,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Nail Storm"
 			"item_type_name"			"Heavy-Duty Nailgun"
-			"item_description"			"Hold the trigger to unleash a violent stream of high-velocity nails!
+			"item_description"			"Hold the trigger to unleash a violent spread of high-velocity nails!
 
 We use these to put together the greatest buildings in Texas, as well as nail morons to our doors.
 
@@ -29105,7 +29110,7 @@ Weapon by: 'The One Of Wonders'"
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.83333333333"
+					"value" 			"1.111111"
 				}
 				 "weapon_stattrak_module_scale"
 				{
@@ -29125,7 +29130,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.5"
+					"value"				"0.8"
 				}
 				"move speed penalty"
 				{
@@ -29155,6 +29160,16 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"-1.0"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
 				}
 			}
@@ -34368,6 +34383,13 @@ Fan-Fire: Hold fire button for maximum destruction!"
 			"description_string"	"Shield energy builds up passively"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"neutral"
+		}
+		"7592"
+		{
+			"name"					"fuse penalty"
+			"description_string"	"%s1% longer fuse time"												
+			"description_format"	"value_is_percentage"
+			"effect_type"			"negative"
 		}
 //clooey zone
 
