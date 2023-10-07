@@ -32,7 +32,7 @@ int g_iMaterialManager[ MAXPLAYERS+1 ] = { -1, ... };
 float g_flShieldCooler[ MAXPLAYERS+1 ];
 float g_flLastDamagedShield[ MAXPLAYERS+1 ];
 
-#define SHIELD_MODEL "models/props_mvm/mvm_player_shield.mdl"
+#define SHIELD_MODEL "models/props_mvm/kocw_player_shield.mdl"
 #define SHIELDKEYNAME "Shield"
 
 //max shield energy
@@ -145,7 +145,9 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 
 	if( IsValidPlayer( iPlayer ) ) {
 		if( AttribHookFloat( 0.0, iPlayer, "custom_sphere" ) != 0.0 ) {
-			Tracker_Create( iPlayer, SHIELDKEYNAME, SHIELD_MAX, 0.0, RTF_NOOVERWRITE );
+			Tracker_Create( iPlayer, SHIELDKEYNAME, false );
+			Tracker_SetMax( iPlayer, SHIELDKEYNAME, SHIELD_MAX );
+			Tracker_SetFlags( iPlayer, SHIELDKEYNAME, RTF_RECHARGES  );
 
 			if( !g_HasSphere.Get( iPlayer ) ) {
 				Tracker_SetValue( iPlayer, SHIELDKEYNAME, 0.0 );

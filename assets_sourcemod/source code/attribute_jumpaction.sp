@@ -16,13 +16,14 @@
 DynamicDetour hCheckJumpButton;
 
 float g_flDamageBuffer[ MAXPLAYERS + 1 ] = { 0.0, ... };
-bool g_bPlayerJumpaction[ MAXPLAYERS + 1 ] = { false, ... };
+//bool g_bPlayerJumpaction[ MAXPLAYERS + 1 ] = { false, ... };
+PlayerFlags g_pfJumpaction;
 
 public Plugin myinfo = {
 	name = "Attribute: Jump Action",
 	author = "Noclue",
 	description = "Attributes for Jump Action Shotgun",
-	version = "1.0",
+	version = "1.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -44,12 +45,14 @@ public Action Event_Inventory( Event hEvent, const char[] sName, bool bDontBroad
 
 	if( IsValidPlayer( iPlayer ) ) {
 		if( AttribHookFloat( 0.0, iPlayer, "custom_jumpaction" ) != 0.0 ) {
-			Tracker_Create( iPlayer, JUMPKEYNAME, 0.0, 0.0, RTF_NOOVERWRITE | RTF_CLEARONSPAWN );
-			g_bPlayerJumpaction[ iPlayer ] = true;
+			Tracker_Create( iPlayer, JUMPKEYNAME, false );
+			Tracker_SetFlags( iPlayer, JUMPKEYNAME, RTF_CLEARONSPAWN );
+			Tracker_SetMax( iPlayer, JUMPKEYNAME, MAX_JUMPS );
+			g_pfJumpaction.Set( iPlayer, true );
 		}
 		else {
 			Tracker_Remove( iPlayer, JUMPKEYNAME );
-			g_bPlayerJumpaction[ iPlayer ] = false;
+			g_pfJumpaction.Set( iPlayer, false );
 		}
 	}
 	
@@ -59,18 +62,21 @@ public Action Event_PlayerDeath( Event hEvent, const char[] sName, bool bDontBro
 	int iPlayer = hEvent.GetInt( "attacker" );
 	iPlayer = GetClientOfUserId( iPlayer );
 
-	if( IsValidPlayer( iPlayer ) )
+	int iKilled = hEvent.GetInt( "userid" );
+	iKilled = GetClientOfUserId( iKilled );
+
+	if( iPlayer != iKilled && IsValidPlayer( iPlayer ) )
 		Tracker_SetValue( iPlayer, JUMPKEYNAME, FloatClamp( Tracker_GetValue( iPlayer, JUMPKEYNAME ) + JUMPS_PER_KILL, 0.0, MAX_JUMPS ) );
 
 	return Plugin_Continue;
 }	
 
 MRESReturn Detour_CheckJumpButton( Address aThis, DHookReturn hReturn ) {
-	int iPlayer = GetEntityFromAddress( DereferencePointer( aThis + address( 3752 ) ) );
+	int iPlayer = GetEntityFromAddress( DereferencePointer( aThis + address( 3752 ) ) ); //todo: move to gamedata
 	if( iPlayer == -1 )
 		return MRES_Ignored;
 
-	if( !g_bPlayerJumpaction[ iPlayer ] )
+	if( !g_pfJumpaction.Get( iPlayer ) )
 		return MRES_Ignored;
 
 	if( GetEntPropEnt( iPlayer, Prop_Send, "m_hGroundEntity" ) != -1 )
@@ -97,7 +103,7 @@ public void OnTakeDamageTF( int iTarget, Address aDamageInfo ) {
 	if( !IsValidPlayer( iAttacker ) )
 		return;
 
-	if( !g_bPlayerJumpaction[ iAttacker ] )
+	if( !g_pfJumpaction.Get( iAttacker ) )
 		return;
 
 	g_flDamageBuffer[ iAttacker ] += tfInfo.flDamage;
