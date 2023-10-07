@@ -2821,7 +2821,8 @@ Weapon from: New Old Weapons Pack"
 A wee lad in a mask was in a mighty hurry and left this pretty bloody thing behind.
 T'is me lucky day!
 
-Weapon from: New Old Weapons Pack"																				// IS THAT A FUCKIN' 「OPEN FORTRESS」 REFERENCE!?!?!?!?!!?!?!?!?!?!?!?!?!?!?
+Original weapon from: New Old Weapons Pack
+Weapon design by: Azzy"																				// IS THAT A FUCKIN' 「OPEN FORTRESS」 REFERENCE!?!?!?!?!!?!?!?!?!?!?!?!?!?!?
 			"item_logname"				"Ol' Brimstone"
 			"item_iconname"				"Ol' Brimstone"
 			"image_inventory"			"backpack/weapons/w_models/w_grenadelauncher_dm"
