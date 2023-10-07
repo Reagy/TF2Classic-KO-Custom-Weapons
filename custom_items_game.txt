@@ -680,12 +680,12 @@
 				"strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_falloff"
-					"value"				"0.25"
+					"value"				"0.58"
 				}	
 				"longer damage falloff distance"
 				{
 					"attribute_class"	"mult_falloff_distance"
-					"value"				"1.5"
+					"value"				"1.9"
 				}
 				"strange restriction type 1"
 				{
@@ -1642,7 +1642,7 @@ Weapon by: 'The One Of Wonders'"
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_falloff"
-					"value"				"0.25"
+					"value"				"0.4"
 				}		
                 "strange restriction type 1"													
 				{
@@ -2233,7 +2233,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.13333333333"
+					"value" 			"0.16666666666"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -2280,6 +2280,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_falloff_distance"
 					"value"				"1.9"
 				}	
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_falloff"
+					"value"				"0.79"
+				}
 			}
 			"visuals"
 			{
@@ -10796,7 +10801,7 @@ Weapon by: 'The One Of Wonders'"
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_falloff"
-					"value"				"0.25"
+					"value"				"0.48"
 				}	
                 "longer damage falloff distance"
 				{
@@ -11403,6 +11408,11 @@ Weapon by: 'Zadrave'"
 				{
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.15"
 				}
 				"custom projectile model"
 				{
@@ -26549,7 +26559,7 @@ Weapon by: 'Reagy'"
 			    "sapper is radar"											
 				{
 					"attribute_class"	"sapper_is_radar"
-					"value"				"1028"
+					"value"				"512"
 				}
 				"sapper health penalty"											
 				{
