@@ -17,11 +17,15 @@ public Plugin myinfo =
 }
 
 DynamicHook hPrimaryFire;
+DynamicDetour dtGetMedigun;
 
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
 	hPrimaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::PrimaryAttack" );
+
+	dtGetMedigun = DynamicDetour.FromConf( hGameConf, "CTFPlayer::GetMedigun" );
+	dtGetMedigun.Enable( Hook_Pre, Hook_GetMedigun );
 
 	delete hGameConf;
 }
@@ -41,6 +45,16 @@ public void OnTakeDamageAlivePostTF( int iTarget, Address aDamageInfo ) {
 public void OnTakeDamageBuilding( int iTarget, Address aDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
 	CheckLifesteal( iTarget, tfInfo );
+}
+
+//fix segfault when disconnecting while healing someone with a paintball rifle
+MRESReturn Hook_GetMedigun( int iPlayer, DHookReturn hReturn ) {
+	if( iPlayer == -1 ) {
+		hReturn.Value = INVALID_ENT_REFERENCE;
+		return MRES_Supercede;
+	}
+
+	return MRES_Ignored;
 }
 
 float g_flHurtMe[ MAXPLAYERS+1 ];
