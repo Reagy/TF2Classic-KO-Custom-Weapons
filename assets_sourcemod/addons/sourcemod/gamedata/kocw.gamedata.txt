@@ -473,6 +473,13 @@
 					}
 				}
 			}
+			"CTFPlayer::GetMedigun"
+			{
+				"signature"		"CTFPlayer::GetMedigun"
+				"callconv"		"thiscall"
+				"return"		"cbaseentity"
+				"this"			"entity"
+			}
 			"CTFPlayer::TakeHealth"
 			{
 				"offset"		"CTFPlayer::TakeHealth"
@@ -1137,6 +1144,11 @@
 				"linux"		"@_ZN20CBaseCombatCharacter12SetAmmoCountEii"
 			}
 			
+			"CTFPlayer::GetMedigun"
+			{
+				"library"	"server"
+				"linux"		"@_ZNK9CTFPlayer10GetMedigunEv"
+			}
 			"CTFPlayer::GiveEconItem"
 			{
 				"library"	"server"
