@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V6.1
+// Knockout Custom Weapons V6r1
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 & Tangerine Paint & Grunt's Weapon Addons V2
 // ------------------------------------------------------------------------------------ //
@@ -11095,9 +11095,9 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"pitch"		"95, 100"
+	"pitch"		"94, 100"
 	
-	"wave"		")weapons/fal_shoot.wav"
+	"wave"		")weapons/FAL_ReduxFP.wav"
 }
 
 "Weapon_FAL.SingleCrit"
@@ -11105,9 +11105,9 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"pitch"		"95, 100"
+	"pitch"		"94, 100"
 	
-	"wave"		")weapons/fal_shoot_crit.wav"
+	"wave"		")weapons/FAL_ReduxFPCrit.wav"
 }
 // ------------------------------------------------------------------------------------ //
 // BRRRT Launcher
@@ -13936,62 +13936,201 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// Laika
+// GRAIL KNIGHT
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_Laika.Reload"
-{
-	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"wave"		"weapons/laika_reload.wav"
-}
-
-"Weapon_Laika.ClipEmpty"	
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"0.8"
-	"wave"		")weapons/laika_empty.wav"
-}
-
-"Weapon_Laika.Spin"	
+"Weapon_Paladin.Blessing"	
 {
 	"channel"	"CHAN_ITEM"
 	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"0.6"
-	"wave"		")weapons/laika_spin_loop.wav"
+	"volume"	"0.85"
+	"rndwave"
+	{
+		"wave"		")weapons/Paladin_GrailShout.wav"
+		"wave"		")weapons/Paladin_GrailShout2.wav"
+		"wave"		")weapons/Paladin_GrailShout3.wav"
+	}
 }
 
-"Weapon_Laika.SpinUp"	
+"Weapon_Paladin.Cast"	
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_98dB"
+	"volume"	"0.9"
+	"wave"		")weapons/Paladin_Cast.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// BRUTE TANK
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Brute.ChargeYell"	
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"0.85"
+	"rndwave"
+	{
+		"wave"		")weapons/Brute_Charge.wav"
+		"wave"		")weapons/Brute_Charge2.wav"
+		"wave"		")weapons/Brute_Charge3.wav"
+		"wave"		")weapons/Brute_Charge4.wav"
+	}
+}
+
+"Weapon_Brute.Cast"	
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_98dB"
+	"volume"	"0.9"
+	"wave"		")weapons/Brute_Cast.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// SNIPER MACHINE GUN
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_MG.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+    "pitch"		"96, 102"
+	"wave"		")weapons\Jammer_Fire.wav"
+
+}
+"Weapon_MG.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+    "pitch"		"96, 102"
+	"wave"			")weapons/Jammer_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Oil flamer
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_OilFlamer.FireStart"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/Lampflamer_Start.wav"
+}
+"Weapon_OilFlamer.FireLoop"	
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/Lampflamer_Loop.wav"
+}
+"Weapon_OilFlamer.FireLoopCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"wave"			")weapons/Lampflamer_LoopCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// SCOTTISH CANNON
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_SteelCannon.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"rndwave"
+	{
+		"wave"		")weapons/SteelCannon_Fire.wav"
+		"wave"		")weapons/SteelCannon_Fire2.wav"
+		"wave"		")weapons/SteelCannon_Fire3.wav"
+	}
+
+}
+
+// ------------------------------------------------------------------------------------ //
+// CIV WIZARD
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_CivWizard.Cast"
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"0.6"
-	"wave"		")weapons/laika_spin_up.wav"
+	"volume"	"0.8"
+	"pitch"		"95, 105"
+	
+	"wave"		")weapons/CivWizard_Cast.wav"
 }
 
-
-"Weapon_Laika.Fire"	
+"Weapon_CivWizard.CastCrit"
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"0.6"
-	"wave"		")weapons/laika_fire.wav"
+	"volume"	"0.8"
+	"pitch"		"95, 105"
+	
+	"wave"		")weapons/CivWizard_Cast_Crit.wav"
 }
 
-"Weapon_Laika.FireCrit"	
+"Weapon_CivWizard.ReloadSnap"
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"0.6"
-	"wave"		")weapons/laika_fire_crit.wav"
+	"volume"	"0.8"
+	"pitch"		"95, 105"
+	
+	"rndwave"
+	{
+		"wave"		")weapons/umbrella_snap1.wav"
+		"wave"		")weapons/umbrella_snap2.wav"
+	}
 }
 
-"Weapon_Laika.StopSpin"	
+"Weapon_CivWizard.Taunt"
 {
-	"channel"	"CHAN_WEAPON"
+	"channel"		"CHAN_VOICE"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"0.6"
-	"wave"		")weapons/laika_spin_stop.wav"
+	"volume"		"1.0"
+	"rndwave"
+	{
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		")weapons/CivWizard_Cheer.wav"
+		"wave"		")weapons/CivWizard_Laugh1.wav"
+		"wave"	    "vo/civilian_success03.wav"
+		"wave"	    "vo/civilian_success04.wav"
+		"wave"	    "vo/civilian_battlecry03.wav"
+	}
+
+}
+
+"Weapon_CivWizard.TauntSpecial"
+{
+	"channel"		"CHAN_VOICE"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"rndwave"
+	{
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		"common/null.wav"
+		"wave"		")weapons/CivWizard_Laugh1.wav"
+		"wave"		")weapons/CivWizard_Screw.wav"
+		"wave"		")weapons/CivWizard_Screw2.wav"
+	}
+
 }
