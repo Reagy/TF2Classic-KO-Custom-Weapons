@@ -310,10 +310,11 @@ MRESReturn Hook_MedigunHolster( int iThis ) {
 	return MRES_Handled;
 }
 
-MRESReturn Hook_MedigunSecondaryPost( int iThis ) {
+MRESReturn Hook_MedigunSecondaryPre( int iThis ) {
 	switch( RoundToNearest( AttribHookFloat( 0.0, iThis, "custom_medigun_type" ) ) ) {
 	case CMEDI_ANGEL: {
-		return AngelGunUber( iThis );
+		AngelGunUber( iThis );
+		return MRES_Supercede;
 	}	
 	}
 
@@ -321,7 +322,7 @@ MRESReturn Hook_MedigunSecondaryPost( int iThis ) {
 }
 
 void HookMedigun( int iMedigun ) {
-	hMedigunSecondary.HookEntity( Hook_Post, iMedigun, Hook_MedigunSecondaryPost );
+	hMedigunSecondary.HookEntity( Hook_Pre, iMedigun, Hook_MedigunSecondaryPre );
 	hWeaponPostframe.HookEntity( Hook_Post, iMedigun, Hook_ItemPostFrame );
 	hWeaponHolster.HookEntity( Hook_Post, iMedigun, Hook_MedigunHolster );
 }
@@ -715,10 +716,10 @@ MRESReturn Detour_HealStartPre( Address aThis, DHookParam hParams ) {
 	GUARDIAN ANGEL
 */
 
-MRESReturn AngelGunUber( int iMedigun ) {
+void AngelGunUber( int iMedigun ) {
 	float flChargeLevel = GetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel" );
 	if( flChargeLevel < ANGEL_UBER_COST )
-		return MRES_Ignored;
+		return;
 
 	SetEntProp( iMedigun, Prop_Send, "m_bChargeRelease", false );
 	
@@ -744,24 +745,22 @@ MRESReturn AngelGunUber( int iMedigun ) {
 		SetCustomCondSourcePlayer( iGive, TFCC_ANGELSHIELD, iOwner );
 		SetCustomCondSourceWeapon( iGive, TFCC_ANGELSHIELD, iMedigun );
 		
-		
-
 		bApplied = true;
 	}
 
 	if( bApplied ) {
 		EmitSoundToAll( "weapons/angel_shield_on.wav", iOwner, SNDCHAN_WEAPON, 85 );
 		SetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel", flChargeLevel - ANGEL_UBER_COST );
-		return MRES_Handled;
+		return;
 	}
 
-	return MRES_Ignored;
+	return;
 #else
 	if( iTarget == -1 )
-		return MRES_Ignored;
+		return;
 
 	if( HasCustomCond( iTarget, TFCC_ANGELSHIELD ) || HasCustomCond( iTarget, TFCC_ANGELINVULN ) )
-		return MRES_Ignored;
+		return;
 
 	AddCustomCond( iTarget, TFCC_ANGELSHIELD );
 	SetCustomCondSourcePlayer( iTarget, TFCC_ANGELSHIELD, iOwner );
@@ -769,7 +768,7 @@ MRESReturn AngelGunUber( int iMedigun ) {
 
 	EmitSoundToAll( "weapons/angel_shield_on.wav", iOwner, SNDCHAN_WEAPON, 85 );
 	SetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel", flChargeLevel - ANGEL_UBER_COST );
-	return MRES_Handled;
+	return;
 #endif
 }
 
