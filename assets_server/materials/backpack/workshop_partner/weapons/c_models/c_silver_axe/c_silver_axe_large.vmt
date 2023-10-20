@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/workshop_partner/weapons/c_models/c_silver_axe/c_silver_axe_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}

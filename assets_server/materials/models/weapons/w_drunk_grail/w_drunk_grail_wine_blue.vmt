@@ -1,0 +1,51 @@
+"VertexLitGeneric"
+{
+	"$baseTexture"	"models/weapons/w_drunk_grail/w_drunk_grail_wine_blue"
+	
+	"$phong"				"1"
+	"$phongexponent"		"20"
+	"$phongboost"			"4"	
+	"$phongfresnelranges"	"[.25 .5 1]"
+	"$lightwarptexture"		"models/player/pyro/pyro_lightwarp"
+	
+	"$rimlight" 			"1"												
+	"$rimlightexponent"		"4"					
+	"$rimlightboost"		"2"	
+	
+	"$envmap"		"env_cubemap"
+	"$envmaptint"	"[.2 .2 .4]"
+
+	"$glowcolor"	"1"
+	"$yellow"		"0"
+
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}

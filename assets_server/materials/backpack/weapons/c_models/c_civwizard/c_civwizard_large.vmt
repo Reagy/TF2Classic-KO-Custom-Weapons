@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_civwizard/c_civwizard_large"
+	"$translucent" 1
+	$vertexcolor 1
+}
