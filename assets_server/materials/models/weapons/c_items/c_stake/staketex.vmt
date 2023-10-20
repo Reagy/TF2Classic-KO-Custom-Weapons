@@ -1,0 +1,42 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_stake/stake"
+//	"$bumpmap" "models/weapons/c_items/c_stake/stakenorm"
+	"$nocull" 1	
+"$phong" "1"
+	"$phongexponent" "6"
+	"$phongboost" "0.001"	
+	"$lightwarptexture" "models\player\pyro\pyro_lightwarp"
+	"$phongfresnelranges"	"[.25 .5 1]"
+$BASEMAPALPHAPHONGMASK 1
+	"$rimlight" "1"
+	"$rimlightexponent" "0.1"	
+	"$rimlightboost" ".2"
+
+	"$glowcolor" "1"
+
+	"$cloakPassEnabled" "1"
+
+	"Proxies"
+	{
+		"vm_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+
+	}
+
+}

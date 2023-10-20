@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\weapons\w_cannonball\w_cannonball_red.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\weapons\w_cannonball\w_cannonball_green"
+	}
+}
