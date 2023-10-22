@@ -12,12 +12,16 @@ public Plugin myinfo =
 	name = "Attribute: Misc",
 	author = "Noclue",
 	description = "Miscellaneous attributes.",
-	version = "1.0",
+	version = "1.2",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
 DynamicHook hPrimaryFire;
 DynamicDetour dtGetMedigun;
+DynamicDetour dtRestart;
+
+int g_iScrambleOffset = -1;
+int g_iRestartTimeOffset = -1;
 
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
@@ -27,8 +31,58 @@ public void OnPluginStart() {
 	dtGetMedigun = DynamicDetour.FromConf( hGameConf, "CTFPlayer::GetMedigun" );
 	dtGetMedigun.Enable( Hook_Pre, Hook_GetMedigun );
 
+	dtRestart = DynamicDetour.FromConf( hGameConf, "CTFGameRules::ResetMapTime" );
+	dtRestart.Enable( Hook_Pre, Detour_ResetMapTimePre );
+	dtRestart.Enable( Hook_Post, Detour_ResetMapTimePost );
+
+	g_iScrambleOffset = GameConfGetOffset( hGameConf, "CTFGameRules::m_bScrambleTeams" );
+	g_iRestartTimeOffset = GameConfGetOffset( hGameConf, "CTFGameRules::m_flMapResetTime" );
+
 	delete hGameConf;
 }
+
+/*
+	BUGFIX:
+	Prevent the game from resetting the map change timer when calling a vote scramble.
+	I have no idea if this is intended behavior or not
+*/
+
+float g_flRestartTime = 0.0;
+MRESReturn Detour_ResetMapTimePre( Address aThis ) {
+	bool bScramble = LoadFromAddressOffset( aThis, g_iScrambleOffset, NumberType_Int8 );
+	if( bScramble ) {
+		g_flRestartTime = LoadFromAddressOffset( aThis, g_iRestartTimeOffset, NumberType_Int32 );
+	}
+	return MRES_Handled;
+}
+
+MRESReturn Detour_ResetMapTimePost( Address aThis ) {
+	if( g_flRestartTime != -1.0 ) {
+		StoreToAddressOffset( aThis, g_iRestartTimeOffset, g_flRestartTime, NumberType_Int32 );
+		g_flRestartTime = -1.0;
+	}
+	return MRES_Handled;
+}
+
+/*
+	BUGFIX:
+	Fix segmentation fault when a player disconnects while healing someone with a paintball rifle.
+*/
+
+MRESReturn Hook_GetMedigun( int iPlayer, DHookReturn hReturn ) {
+	if( iPlayer == -1 ) {
+		hReturn.Value = INVALID_ENT_REFERENCE;
+		return MRES_Supercede;
+	}
+
+	return MRES_Ignored;
+}
+
+/*
+	WEAPON: Broken Mann's Legacy
+	Hurts the player, and then heals them for the damage dealt.
+	Will not kill the player if self damage is counteracted by received healing.
+*/
 
 public void OnEntityCreated( int iEntity ) {
 	static char szEntityName[ 32 ];
@@ -47,15 +101,6 @@ public void OnTakeDamageBuilding( int iTarget, Address aDamageInfo ) {
 	CheckLifesteal( iTarget, tfInfo );
 }
 
-//fix segfault when disconnecting while healing someone with a paintball rifle
-MRESReturn Hook_GetMedigun( int iPlayer, DHookReturn hReturn ) {
-	if( iPlayer == -1 ) {
-		hReturn.Value = INVALID_ENT_REFERENCE;
-		return MRES_Supercede;
-	}
-
-	return MRES_Ignored;
-}
 
 float g_flHurtMe[ MAXPLAYERS+1 ];
 
