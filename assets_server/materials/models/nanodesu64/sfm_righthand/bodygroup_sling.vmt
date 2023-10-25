@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/Nanodesu64/sfm_righthand/bodygroup_sling"
+	"$nocull" 1
+}
