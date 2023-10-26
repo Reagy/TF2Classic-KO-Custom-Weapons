@@ -1783,7 +1783,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"High-power unstable machine gun prototype 
 No warranty or refunds!
 
-Model by: 'GHOST CAGE, Goatking'
+Model by: 'GHOST CAGE' 'Goatking'
 Animations by: 'GHOST CAGE'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Big Buddy"
@@ -3198,6 +3198,8 @@ Edited by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_quality"				"rarity3"
 			"item_name"					"Storage Backpack"
+			"item_logname"				"Storage Backpack"
+			"item_iconname"				"Storage Backpack"
 			"item_type_name"			"Backpack"
 			"item_description"			"
 Heavy needs to be self-sufficient, this will do.
@@ -9894,7 +9896,7 @@ Weapon by: 'The One Of Wonders'"
 
 Didn't your momma teach you not to deal with the devil?
 
-Model by: 'Hau, The One Of Wonders'
+Model by: 'Hau' 'The One Of Wonders'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Acolyte's Armament"
 			"item_iconname"				"Acolyte's Armament"
@@ -25058,7 +25060,7 @@ Weapon by: 'Reagy, Noclue'"
 Ancient Honour: This suit of armour provides you with a powerful Odachi melee
 Odachi performs a powerful 3-swing combo upon use! (15 second cooldown between uses)
 
-Model by: 'Bapaul, blaholtzen, Square, ToxicWeasel, Boomsta'
+Model by: 'Bapaul' 'blaholtzen' 'Square' 'ToxicWeasel' 'Boomsta'
 Weapon Model by: 'Yaredevil'
 Wearable by: 'The One Of Wonders'
 Weapon by 'The One Of Wonders'"
@@ -30264,8 +30266,8 @@ Weapon by: 'Reagy'"
 Armour-clad Beefcake: Passive: Dealing damage grants you mini-crits for 3 seconds
 Primary fire: Charge forward for colossal impact damage! (requires an enemy in your line of sight)
 Armour-clad Beefcake Primary fire has a 10 second cooldown
-			
-Model by: 'DeRosaJ, Square, Spooky-Majora'
+
+Model by: 'DeRosaJ' 'Square' 'Spooky-Majora'
 Wearable by: 'Yakibomb'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Brassline Brute"
@@ -30817,7 +30819,7 @@ Grail's Blessing: Passive: Dealing damage improves your health regen for 5 secon
 Primary Fire: Fully restore nearby ally hp, enemies hit grant you Übercharge for 5 seconds
 Grail's Blessing Primary fire has a 30 second cooldown.
 
-Model by: 'Texman, JPRAS, Tabby, Spooky-Majora'
+Model by: 'Texman' 'JPRAS' 'Tabby' 'Spooky-Majora'
 Wearable by: 'Yakibomb'
 Weapon by 'The One Of Wonders'"
             "item_logname"				"Grail Knight"
