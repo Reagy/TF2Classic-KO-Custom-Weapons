@@ -340,6 +340,8 @@ public void OnMapStart() {
 
 	PrecacheSound("ui/chime_rd_2base_pos.wav");
 	PrecacheSound("ui/chime_rd_2base_neg.wav");
+
+	PrecacheModel( "models/error.mdl" );
 }
 
 /*
@@ -818,7 +820,7 @@ void SetPoints( int iTeam, int iAmount = 1 ) {
 		if( g_iRedScore != iOldAmount )
 			FireFakeEvent( OUT_ONREDSCORECHANGED, float( g_iRedScore ) / float( g_iPointsToWin ) );
 
-		if( g_iRedScore == g_iPointsToWin ) {
+		if( g_iRedScore >= g_iPointsToWin ) {
 			FireFakeEvent( OUT_ONREDHITMAXPOINTS );
 			SetFinale( 2 );
 		}
@@ -843,7 +845,7 @@ void SetPoints( int iTeam, int iAmount = 1 ) {
 		if( g_iBlueScore != iOldAmount )
 			FireFakeEvent( OUT_ONBLUESCORECHANGED, float( g_iBlueScore ) / float( g_iPointsToWin ) );
 
-		if( g_iBlueScore == g_iPointsToWin ) {
+		if( g_iBlueScore >= g_iPointsToWin ) {
 			FireFakeEvent( OUT_ONBLUEHITMAXPOINTS );
 			SetFinale( 3 );
 		}
@@ -865,6 +867,8 @@ void CalculateMaxPoints() {
 		return;
 
 	g_iPointsToWin = MaxInt( g_iMinPoints, GetClientCount( true ) * g_iPointsPerPlayer );
+	SetPoints( 2, g_iRedScore );
+	SetPoints( 3, g_iBlueScore );
 
 	if( g_pCTFLogicDomination == Address_Null )
 		return;
@@ -879,7 +883,7 @@ void CalculateMaxPoints() {
 	}
 
 	if( g_pCTFGameRules != Address_Null ) {
-		StoreToAddressOffset( g_pCTFGameRules, 2856, g_iPointsToWin, NumberType_Int32 );
+		StoreToAddressOffset( g_pCTFGameRules, 2856, g_iPointsToWin, NumberType_Int32 ); //TODO: move to gamedata
 	}
 }
 
@@ -1029,6 +1033,9 @@ void Frame_SetupDispenserZone( int iDispenser ) {
 }
 
 MRESReturn Detour_GetDispenserRadius( int iThis, DHookReturn hReturn ) {
+	if( !g_bMapIsPD )
+		return MRES_Ignored;
+
 	int iThisRef = EntIndexToEntRef( iThis );
 	int iThisTeam = GetEntProp( iThis, Prop_Send, "m_iTeamNum" );
 	if( iThisRef != ( iThisTeam == 2 ? g_iRedLeaderDispenser : g_iBlueLeaderDispenser ) )
@@ -1273,6 +1280,15 @@ int DropPickup( int iPlayer, bool bAddPoints ) {
 	return iEntity;
 }
 
+int FindModelStringIndex( const char[] szModelString, int iStringSize ) {
+	static int iStringTable = INVALID_STRING_TABLE;
+	if ( iStringTable == INVALID_STRING_TABLE ) {
+		iStringTable = FindStringTable( "modelprecache" );
+	}
+	return FindStringIndex( iStringTable, szModelString );
+}
+
+
 int CreatePickup( int iAmount ) {
 	PDPickup pdPickup;
 	pdPickup.iAmount = iAmount;
@@ -1280,7 +1296,17 @@ int CreatePickup( int iAmount ) {
 
 	int iEntity = CreateEntityByName( "prop_dynamic" );
 	SetSolidFlags( iEntity, FSOLID_TRIGGER );
-	SetEntityModel( iEntity, g_szPropModelName );
+
+	int iModelIndex = FindModelStringIndex( g_szPropModelName, sizeof( g_szPropModelName ) );
+#if defined DEBUG
+	PrintToServer("[DEBUG] setting model index for drop: %i", iModelIndex );
+#endif
+
+	if( iModelIndex == -1 ) {
+		SetEntityModel( iEntity, "models/error.mdl" );
+	} else
+		SetEntityModel( iEntity, g_szPropModelName );
+	
 	DispatchSpawn( iEntity );
 
 	EmitPDSoundToAll( g_szPropDropSound, iEntity );
@@ -1400,6 +1426,9 @@ MRESReturn Hook_PickupTouch( int iThis, DHookParam hParams ) {
 }
 
 MRESReturn Detour_DropFlag( int iThis ) {
+	if( !g_bMapIsPD )
+		return MRES_Ignored;
+
 	if( g_iPlayerCarrying[ iThis ] < 1 )
 		return MRES_Handled;
 
@@ -1410,6 +1439,9 @@ MRESReturn Detour_DropFlag( int iThis ) {
 }
 
 MRESReturn Detour_RespawnTouch( int iThis, DHookParam hParams ) {
+	if( !g_bMapIsPD )
+		return MRES_Ignored;
+
 	int iEntity = hParams.Get( 1 );
 
 	if( !IsValidPlayer( iEntity ) )
