@@ -6753,8 +6753,8 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"bleeding duration"
 				{
-					"attribute_class"	"bleeding_duration"							
-					"value" 			"1"
+					"attribute_class"	"bleeding_duration"
+					"value"				"1"
 				}
 				"add condition on kill"
 				{
@@ -25038,7 +25038,7 @@ Weapon by: 'Reagy, Noclue'"
 		"9152"
 		{
 		    "name"						"TF_WEARABLE_DEMOKNIGHT_SAMURAIPLATE"									
-			"item_class"				"tf_weapon_club"
+			"item_class"				"tf_weapon_beacon"
 			"show_in_armory"			"1"
 			"item_slot"					"primary"										
 			"anim_slot"					"melee"
@@ -25057,8 +25057,8 @@ Weapon by: 'Reagy, Noclue'"
 			"item_iconname"				"Shogun Champion Odachi"
 			"item_type_name"			"Suit of Armour"
 			"item_description"			"
-Ancient Honour: This suit of armour provides you with a powerful Odachi melee
-Odachi performs a powerful 3-swing combo upon use! (15 second cooldown between uses)
+Ancient Honour: This suit of armour provides you with a powerful Odachi melee that burns enemies on hit
+Odachi acquires a guaranteed crit after dealing 20 ticks of burn to enemies
 
 Model by: 'Bapaul' 'blaholtzen' 'Square' 'ToxicWeasel' 'Boomsta'
 Weapon Model by: 'Yaredevil'
@@ -25078,7 +25078,8 @@ Weapon by 'The One Of Wonders'"
 			{
 				"class select override vcd"				"taunt03"
                 "melee range multiplier"				"1.9"							
-				"melee bounds multiplier"				"1.7"				
+				"melee bounds multiplier"				"1.7"			
+                "mod beacon max ticks"                  "-10"				
 			}
 			"attributes"
 			{
@@ -25114,35 +25115,30 @@ Weapon by 'The One Of Wonders'"
 					"value"				"1"
 				}	
                 // Blade properties
-				"strange restriction type 1" // 3 swings in rather short succession, fast and deadly!
-				{
-					"attribute_class"	"set_burstfire"
-					"value"				"3"
-				}
-				"weapon_stattrak_module_scale" 
-				{
-					"attribute_class"	"mult_burstfiredelay"
-					"value"				"0.8375"
-				}
-				"weapon_stattrak_module_scale"  // 15 second cooldown, very brutal if you end up whiffing!
+				"weapon_stattrak_module_scale"  
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"18.75"
-				}
-				"add condition on swing"													
-				{
-					"attribute_class"	"add_onswing_addcond"
-					"value"				"56 1"
+					"value"				"1.5"
 				}
 				"mod melee crit swing custom damage" //Decapitation on crits
 				{
 					"attribute_class"	"mod_melee_crit_swing_custom_damage"
 					"value"				"27"
 				}
+				"strange restriction type 1"												
+				{
+					"attribute_class"	"set_dmgtype_ignite"
+					"value" 			"1"
+				}	
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_wpn_burndmg"
+					"value"				"0.333333333"
+				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_crit_chance"
-					"value"				"69.0"
+					"value"				"0"
 				}
 			}
 			"visuals"
