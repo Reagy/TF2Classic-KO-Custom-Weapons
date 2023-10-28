@@ -10509,6 +10509,11 @@ Weapon by: 'Reagy'"
 				"sound_special3"        "Weapon_Null"
 				"animation_replacement"
 				{
+				    "ACT_ITEM2_VM_CHARGE"					"ACT_PRIMARY_ATTACK_STAND_PREFIRE"
+					"ACT_ITEM2_VM_CHARGE_IDLE_3"			"ACT_PRIMARY_VM_SECONDARYATTACK"
+					"ACT_VM_PRIMARYATTACK"					"ACT_PRIMARY_ATTACK_STAND_POSTFIRE"
+					"ACT_ITEM2_VM_DRYFIRE"					"ACT_PRIMARY_ATTACK_STAND_POSTFIRE"
+					
 					"ACT_MP_STAND_PRIMARY"						"ACT_MP_DEPLOYED_PRIMARY"
 					"ACT_MP_RUN_PRIMARY"						"ACT_MP_DEPLOYED_PRIMARY"
 					"ACT_MP_CROUCHWALK_PRIMARY"					"ACT_MP_CROUCHWALK_PRIMARY"
@@ -21330,6 +21335,10 @@ Weapon by: 'Noclue'"
 			"used_by_classes"
 			{
 				"engineer"				"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"5 -2 -10"
 			}
 			"attributes"
 			{
