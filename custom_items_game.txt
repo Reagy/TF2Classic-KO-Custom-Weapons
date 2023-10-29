@@ -1400,11 +1400,6 @@ Weapon from: New Old Weapons Pack"
 					"attribute_class"	"mult_dmg"
 					"value"				"0.7"
 				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}
 			}
 			"visuals"
 			{
@@ -1808,10 +1803,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"can_headshot"
 					"value"				"1"
 				}
-				"move speed penalty"
+				"Move Speed Penalty Active"
 				{
-					"attribute_class"	"mult_player_movespeed"
-					"value" 			"0.9"
+					"attribute_class"	"mult_player_movespeed_active"
+					"value"				"0.9"
 				}
 				"strange restriction type 1" // 2 drums, 2 shots per burst
 				{
@@ -1851,7 +1846,7 @@ Weapon by: 'The One Of Wonders'"
 				"punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
-					"value" 			"0.9"
+					"value" 			"0.675"
 				}
 				"punch angle is constant"
 				{
@@ -6979,7 +6974,7 @@ Weapon from: New Old Weapons Pack"
 				"wearable add cond on right click"
 				{
 					"attribute_class"	"add_wearable_cond_on_secondary_attack"
-					"value"				"17 1.5 12.0"											// This has REALLY weird syntax... but this add the charge cond, for 1.5s, and has it recharge in 12s
+					"value"				"17 1.0 8.0"											// This has REALLY weird syntax... but this add the charge cond, for 1.5s, and has it recharge in 12s
 				}
 				"wearable cond on effect percent"
 				{
@@ -11643,22 +11638,22 @@ Item by: 'Reagy'"
 			"item_name"					"W.A.L.L"
 			"item_logname"				"W.A.L.L"
 			"item_iconname"				"W.A.L.L"
-			"item_type_name"			"SWAT Shield"
+			"item_type_name"			"Heavy Riot Shield"
 			"item_description"			"
 Only Heavy can use such an outrageously heavy thing...
 
-Model by: 'PogoTheMunty'
+Model by: 'boomsta'
 Cosmetic by: 'Jukebox' 'Sync'
 Animations by: 'Raptor Dan'
 Weapon by: 'Reagy'"
 			"item_slot"					"primary"
 			"min_ilevel"				"1"
 			"max_ilevel"				"1"
-			"image_inventory"			"backpack/weapons/c_models/c_riotshield_heavy/c_riotshield_heavy"
+			"image_inventory"			"backpack/weapons/c_models/c_democop_shield"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
-			"model_world"				"models/weapons/w_models/w_riot_heavy.mdl"
-			"model_player"				"models/weapons/v_models/v_riot_heavy.mdl"
+			"model_world"				"models/weapons/w_models/w_bobby_riot_heavy.mdl"
+			"model_player"				"models/weapons/v_models/v_riot_heavy/v_bobby_riot_heavy_v2.mdl"
 			"extra_wearable"			"models/player/items/custom/heavy/bullet_resistant_vest.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -11674,7 +11669,7 @@ Weapon by: 'Reagy'"
 			    "hidden primary max ammo bonus"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value"				"2.5"
+					"value"				"2.25"
 				}
 			    "Shield Positive"
 				{
@@ -11696,10 +11691,10 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"add_shield_bash_aoe_knockback"
 					"value"				"150"
 				}
-			    "move speed penalty"
+			    "Move Speed Penalty Active"
 				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.8"
+					"attribute_class"	"mult_player_movespeed_active"
+					"value"				"0.85"
 				}
 			    "weapon_stattrak_module_scale"
 				{
@@ -11739,7 +11734,7 @@ Weapon by: 'Reagy'"
 				"strange restriction type 3"
 				{
 					"attribute_class"	"no_primary_ammo_from_dispensers"
-					"value"		"1"
+					"value"		        "1"
 				}
 				"HIDDEN primary ammo from dropped weapons penalty"
 				{
@@ -11749,6 +11744,12 @@ Weapon by: 'Reagy'"
 			}
 			"visuals"
             {
+			    "sound_melee_miss"		"Weapon_MetalGloves.Miss"						
+				"sound_melee_hit"		"Weapon_MetalGloves.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_MetalGloves.HitWorld"
+				"sound_burst"			"Weapon_MetalGloves.MissCrit"
+				"sound_special1"		"Weapon_MetalGloves.HitWorld"								
+				"sound_special2"		"Weapon_MetalGloves.HitWorld"
                 "animation_replacement"
                 {
                     "ACT_MP_STAND_MELEE"                        "ACT_MP_DEPLOYED_PRIMARY"
@@ -13421,15 +13422,21 @@ Weapon by: 'The One Of Wonders'"
 		"7097"
 		{
 			"name"						"TF_WEAPON_SACRIFICE_KNIFE"
-			"prefab"					"weapon_knife"
+			"item_class"			    "tf_weapon_bat"
 			"show_in_armory"			"1"
+			"item_slot"                 "melee"
+			"anim_slot"                 "melee"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
 
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
 			"item_name"					"Cutting Devotion"
 			"item_type_name"			"Rapier"
-			"item_description"			"This weapon has increased range and slower deploy time
+			"item_description"			"This weapon performs a triple-stab combo per attack
+cannot deal critical damage to tranquilized players
 
 Sometimes you question your motivations, but the rewards are worth it.
 
@@ -13449,13 +13456,15 @@ Weapon by: 'The One Of Wonders'"
 			"static_attrs"
 			{
 				"special taunt"							"1"
+				"melee range multiplier"				"1.7"							
+				"melee bounds multiplier"				"1.75"
 			}
 			"attributes"
 			{
-				"provide on active"															
+				"max health additive bonus"
 				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
+					"attribute_class"	"add_maxhealth"
+					"value" 			"25"
 				}
 				"Mini-critboost on kill"
 				{
@@ -13467,46 +13476,77 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"add_onkill_addcond_self"							
 					"value" 			"112 3"
 				}
-				"ragdolls become ash"
-				{
-					"attribute_class"	"ragdolls_become_ash"
-					"value"				"1"
-				}
 				"heal on kill"
 				{
 					"attribute_class"	"heal_on_kill"
 					"value" 			"50"
 				}
-				"melee bounds multiplier"
+				"no melee crit from tranq"
 				{
-					"attribute_class"	"melee_bounds_multiplier"
-					"value"				"1.5"
+					"attribute_class"	"no_melee_crit_from_tranq"
+					"value" 			"1"
 				}
-				"melee range multiplier"
+				"Demoknight Melee Negative"
 				{
-					"attribute_class"	"melee_range_multiplier"
-					"value"				"1.5"
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1" 
 				}
-				"fire rate penalty"
+				"crit mod disabled"
 				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.25"
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				"weapon_stattrak_module_scale"												
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.2"
+				}
+				"weapon_stattrak_module_scale"												
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"				"1.33"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"1.37"
+					"attribute_class"	"mult_deploy_time"
+					"value"				"1.33"
 				}
-				"sapper health penalty"											
+				"mod melee crit swing custom damage" //Decapitation on crits
 				{
-					"attribute_class"	"mult_sapper_health"
-					"value"				"0.5"
+					"attribute_class"	"mod_melee_crit_swing_custom_damage"
+					"value"				"27"
 				}
-				"move speed penalty"
+				"strange restriction type 1" // 3 swings
 				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.85"
+					"attribute_class"	"set_burstfire"
+					"value"				"3"
 				}
+				"weapon_stattrak_module_scale" // swing-swing-swing!
+				{
+					"attribute_class"	"mult_burstfiredelay"
+					"value"				"0.66666666667"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"1.5"
+				}
+				"mult melee smack delay"
+				{
+					"attribute_class"	"mult_melee_smack_delay"
+					"value" 			"0.2"														
+				}
+			}
+            "visuals"
+			{
+				"sound_melee_miss"		"Weapon_Knife.Miss"
+				"sound_melee_hit"		"Weapon_Knife.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_Knife.HitWorld"
+				"sound_burst"			"Weapon_Knife.MissCrit"
+				"sound_single_shot"		"Weapon_Knife.HitFlesh"
+				"sound_single_shot_npc"	"Weapon_Knife.HitWorld"
+				"sound_double_shot"		"Weapon_Knife.HitFlesh"
+				"sound_double_shot_npc"	"Weapon_Knife.HitWorld"
 			}
 			"mouse_pressed_sound"		"#ui/item_knife_small_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -13641,7 +13681,7 @@ Weapon by: 'The One Of Wonders'"
 			    "Haste killer"
 				{
 					"attribute_class"	"dummy"							
-					"value" 			"5"
+					"value" 			"2"
 				}
 				"Cloak time decreased"																
 				{
@@ -13651,7 +13691,7 @@ Weapon by: 'The One Of Wonders'"
 				"add condition on kill"
 				{
 					"attribute_class"	"add_onkill_addcond_self"							
-					"value" 			"121 5"
+					"value" 			"121 2"
 				}
 			    "dmg taken from fire increased"
 				{
@@ -18341,12 +18381,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 				{
 					"attribute_class"	"sentry_build_rate_multiplier"
 					"value"				"2.5"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
-				}		
+				}	
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -22185,7 +22220,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"Vintage Second Amendment"
 			"image_inventory"			"backpack/weapons/c_models/c_muricamusket/c_muricamusket"
 			"model_world"				"models/weapons/c_models/c_murica_musket/c_murica_musket.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_musket.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_musket_v2.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -22193,11 +22228,21 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "provide on active"											
+				{
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
+				}
 				"mod crit while airborne"
                 {
                     "attribute_class"    "crit_while_airborne"
                     "value"              "1"
                 }
+				"instant reload on kill"
+				{
+					"attribute_class"	"instant_reload_on_kill"
+					"value"				"1"
+				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
@@ -22223,11 +22268,21 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_clipsize"
 					"value"				"0.1"
 				}
-				"weapon_stattrak_module_scale"
+				"single wep deploy time hidden"
 				{
-					"attribute_class"	"mult_reload_time"
-					"value"				"7.76"
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"				"1.5"
 				}
+				"override mult deploy weapon time animation"
+				{
+					"attribute_class"	"override_mult_deploy_time_anim"
+					"value"				"1.0"
+				}
+                "Reload time no anim speed mod"
+                {
+                    "attribute_class"    "mult_reload_time_noanimmod"
+                    "value"                "6.90"
+                }				
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
@@ -22235,24 +22290,34 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"1.25"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_switch_from_wep_deploy_time"
-					"value"				"1.25"
-				}
-				"weapon_stattrak_module_scale"
-				{
 					"attribute_class"	"mult_rocketjump_deploy_time"
-					"value"				"0.5"
+					"value"				"0.25"
+				}
+				"apply self knockback hidden"
+				{
+					"attribute_class"	"apply_self_knockback"
+					"value"				"260"
+				}
+				"weapon enemy knockback mod mult hidden"
+				{
+					"attribute_class"	"weapon_enemy_knockback_mod"
+					"value"				"0.2"
+				}
+                "punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"5"
+				}
+                "punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value"				"1"
 				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}	
+				}		
 			}
 			"visuals"
 			{
@@ -22462,7 +22527,8 @@ Modified by: 'Reagy'"
 			"propername"				"1"
 			"item_name"					"Twisted Champion's Blade"
 			"item_type_name"			"Claymore"
-			"item_description"			"
+			"item_description"			"This weapon performs 2-swing combos per attack
+
 It may not be the Excalibur but it'll cut down any maggot just like it!
   
 Model by: 'DuckSink'
@@ -22487,17 +22553,17 @@ Weapon by: 'The One Of Wonders'"
 			    "damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.2"
+					"value"				"1.15"
 				}
 				"Hammer Sweep Bonus"											
 				{
 					"attribute_class"	"display_only"
 					"value"				"1"
 				}
-				"max health additive penalty"											
+				"health regen"											
 				{
-					"attribute_class"	"add_maxhealth"
-					"value"				"-25"
+					"attribute_class"	"add_health_regen"
+					"value"				"5"
 				}
 				"move speed penalty"
 				{
@@ -22528,6 +22594,21 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_melee_crit_swing_custom_damage"
 					"value"				"27"
+				}
+				"strange restriction type 1" // 2 swings
+				{
+					"attribute_class"	"set_burstfire"
+					"value"				"2"
+				}
+				"weapon_stattrak_module_scale" // swing swing!
+				{
+					"attribute_class"	"mult_burstfiredelay"
+					"value"				"0.85"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"1.25"
 				}
 			}
 			"visuals"
@@ -23549,11 +23630,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "maxammo grenades1 increased" 						
-				{
-					"attribute_class"	"mult_maxammo_grenades1"
-					"value" 			"2.0"
-				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
@@ -25196,7 +25272,7 @@ Weapon by: 'Reagy, Noclue'"
 			"item_type_name"			"Suit of Armour"
 			"item_description"			"
 Ancient Honour: This suit of armour provides you with a powerful Odachi melee that burns enemies on hit
-Odachi acquires a guaranteed crit after dealing 20 ticks of burn to enemies
+Odachi acquires a guaranteed crit after dealing 10 ticks of burn to enemies
 
 Model by: 'Bapaul' 'blaholtzen' 'Square' 'ToxicWeasel' 'Boomsta'
 Weapon Model by: 'Yaredevil'
@@ -25217,7 +25293,7 @@ Weapon by 'The One Of Wonders'"
 				"class select override vcd"				"taunt03"
                 "melee range multiplier"				"1.9"							
 				"melee bounds multiplier"				"1.7"			
-                "mod beacon max ticks"                  "-10"				
+                "mod beacon max ticks"                  "-20"				
 			}
 			"attributes"
 			{
@@ -25237,6 +25313,11 @@ Weapon by 'The One Of Wonders'"
 					"attribute_class"	"mult_dmgtaken_from_fall"
 					"value"				"0.25"
 				}
+				"heal on kill on crit beacon"
+				{
+					"attribute_class"	"heal_on_kill_crit"
+					"value"				"100"
+				}	
 				"maxammo secondary reduced"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
@@ -25256,7 +25337,7 @@ Weapon by 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"  
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.5"
+					"value"				"1.2"
 				}
 				"mod melee crit swing custom damage" //Decapitation on crits
 				{
@@ -26133,10 +26214,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"0.85" 
 				}
-				"LongKnife super MFD on swing"
+				"heal on hit for rapidfire"
 				{
-					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"3" 
+					"attribute_class"	"add_onhit_addhealth"
+					"value"				"20" 
+				}
+				"fire rate penalty with reduced health"													
+				{
+					"attribute_class"	"mult_postfiredelay_with_reduced_health"
+					"value"				"1.33"
 				}
 				"Demoknight Melee Negative"
 				{
@@ -26162,11 +26248,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_melee_crit_swing_custom_damage"
 					"value"				"27"
-				}
-				"add condition on swing"															
-				{
-					"attribute_class"	"add_onswing_addcond"
-					"value"				"116 3"
 				}
 			}
 			"visuals"
@@ -28972,7 +29053,7 @@ Weapon by: 'The One Of Wonders'"
 				"add condition on hit"																
 				{
 					"attribute_class"	"add_onhit_addcond_self_weapon"  
-					"value" 			"41 42069"                   
+					"value" 			"41 17"                   
  				}
 				"add condition on kill"																
 				{
@@ -30064,7 +30145,7 @@ Weapon by: 'Colrot' and 'Mister Mann'"
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			".30"
+					"value" 			".34"
 				}
 				"damage force reduction"
 				{
@@ -30399,7 +30480,7 @@ Weapon by: 'Reagy'"
 			"item_description"			"
 Armour-clad Beefcake: Passive: Dealing damage grants you mini-crits for 3 seconds
 Primary fire: Charge forward for colossal impact damage! (requires an enemy in your line of sight)
-Armour-clad Beefcake Primary fire has a 10 second cooldown
+Armour-clad Beefcake Primary fire has a 8 second cooldown
 
 Model by: 'DeRosaJ' 'Square' 'Spooky-Majora'
 Wearable by: 'Yakibomb'
@@ -32036,7 +32117,7 @@ Weapon by: 'Reagy'"
 				"damage penalty" 
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"0.95"
 				}
 				"allowed in medieval mode"
 				{
@@ -32109,7 +32190,7 @@ Weapon by: 'Reagy'"
 				"damage penalty" 
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"0.95"
 				}
 				"allowed in medieval mode"
 				{
@@ -32181,7 +32262,7 @@ Weapon by: 'Reagy'"
 				"damage penalty" 
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"0.95"
 				}
 				"allowed in medieval mode"
 				{
@@ -32253,7 +32334,7 @@ Weapon by: 'Reagy'"
 				"damage penalty" 
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"0.95"
 				}
 				"allowed in medieval mode"
 				{
@@ -32326,7 +32407,7 @@ Weapon by: 'Reagy'"
 				"damage penalty" 
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"0.95"
 				}
 				"allowed in medieval mode"
 				{
@@ -32403,7 +32484,7 @@ Weapon by: 'Reagy'"
 				"damage penalty" 
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"0.95"
 				}
 				"allowed in medieval mode"
 				{
@@ -32475,7 +32556,7 @@ Weapon by: 'Reagy'"
 				"damage penalty" 
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"0.95"
 				}
 				"allowed in medieval mode"
 				{
@@ -32547,7 +32628,7 @@ Weapon by: 'Reagy'"
 				"damage penalty" 
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"0.95"
 				}
 				"allowed in medieval mode"
 				{
@@ -32619,7 +32700,7 @@ Weapon by: 'Reagy'"
 				"damage penalty" 
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"0.95"
 				}
 				"allowed in medieval mode"
 				{
@@ -32707,7 +32788,7 @@ Weapon by: 'Reagy'"
 				"damage penalty" 
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"0.95"
 				}
 				"allowed in medieval mode"
 				{
@@ -34945,12 +35026,7 @@ Weapon by: 'The One Of Wonders'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.67"
-				}
-				"spread penalty"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"1.33"
+					"value" 			"0.8"
 				}
 				"mod horizontal spread"													
 				{
@@ -34960,7 +35036,7 @@ Weapon by: 'The One Of Wonders'"
 				"fire rate penalty with reduced health"													
 				{
 					"attribute_class"	"mult_postfiredelay_with_reduced_health"
-					"value"				"1.75"
+					"value"				"1.4"
 				}
 				"crit mod disabled"
 				{
@@ -36095,7 +36171,7 @@ This weapon has a %s1% higher random critical hit chance."
 		{
 			"name"					"Curse of the Dark Tale"
 			"description_string"	"Curse of the Dark Tale: 
-On hitting an enemy, you are forced to use this weapon until you die."
+On hitting an enemy, you are forced to use this weapon for 17 seconds."
             "custom_color"			"175 24 227 255"
 			"attribute_type"		"string"													
 			"description_format"	"value_is_additive"
@@ -36434,6 +36510,13 @@ Fan-Fire: Hold fire button for maximum destruction!"
 			"description_string"	"On Hit: Your next swing will be a guaranteed critical hit"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
+		}
+		"7600"
+		{
+			"name"					"Move Speed Penalty Active"
+			"description_string"	"%s1% slower move speed while active"												
+			"description_format"	"value_is_percentage"
+			"effect_type"			"negative"
 		}
 //clooey zone
 
