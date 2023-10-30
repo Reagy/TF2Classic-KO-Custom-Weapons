@@ -1423,6 +1423,12 @@
 				"library"	"server"
 				"linux"		"@_ZN11CTFAmmoPack9PackTouchEP11CBaseEntity"
 			}
+			"CItem::ItemTouch"
+			{
+				"library"	"server"
+				"linux"		"@_ZN5CItem9ItemTouchEP11CBaseEntity"
+			}
+			
 			"CObjectDispenser::DispenseAmmo"
 			{
 				"library"	"server"
