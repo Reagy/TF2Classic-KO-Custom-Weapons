@@ -6,6 +6,40 @@
 // Some of this is not needed, too lazy to cleanup atm
 // ------------------------------------------------------------------------------------ //
 
+//-----------------------------------------------------------------------------
+// Haunted Pumpkin Bomb!
+//-----------------------------------------------------------------------------
+//
+"sf15.Pumpkin.Bomb"
+{
+	"channel"	"CHAN_VOICE2"
+	"volume"	"1"
+	"soundlevel"	"SNDLVL_NONE"
+	"pitch"		"PITCH_NORM"
+	"rndwave"
+	{
+		"wave" 			"vo/halloween_merasmus/hall2015_pumpbomb_02.mp3"
+		"wave" 			"vo/halloween_merasmus/hall2015_pumpbomb_03.mp3"
+		"wave" 			"vo/halloween_merasmus/hall2015_pumpbomb_05.mp3"
+		"wave" 			"vo/halloween_merasmus/hall2015_pumpbomb_11.mp3"
+		"wave" 			"vo/halloween_merasmus/hall2015_pumpbomb_15.mp3"
+
+	}
+}
+"sf15.Pumpkin.Bomb.Explode"
+{
+	"channel"	"CHAN_VOICE2"
+	"volume"	"1"
+	"soundlevel"	"SNDLVL_NONE"
+	"pitch"		"PITCH_NORM"
+	"rndwave"
+	{
+		"wave" 			"vo/halloween_merasmus/hall2015_pumpbombboom_01.mp3"
+		"wave" 			"vo/halloween_merasmus/hall2015_pumpbombboom_03.mp3"
+		"wave" 			"vo/halloween_merasmus/hall2015_pumpbombboom_04.mp3"
+	}
+}
+
 // ------------------------------------------------------------------------------------ //
 //CRITPOWER
 // ------------------------------------------------------------------------------------ //
