@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials/models/workshop/weapons/c_models/c_heirloom_minigun/c_heirloom_minigun.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models/workshop/weapons/c_models/c_heirloom_minigun/c_heirloom_minigun_wood"
-	}
-}

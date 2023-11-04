@@ -1,0 +1,45 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\workshop\weapons\c_models\c_electrogun\c_electrogun_blue"
+
+	"$phong" "1"
+	"$phongexponent" "12.5"
+	"$phongboost" "1.75"
+//	"$lightwarptexture" "models\workshop\weapons\c_models\c_snubrevolver\c_snubrevolver_lightwarp"
+	"$lightwarptexture" "models\weapons\c_items/c_ambassador_lightwarp"	
+//	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[1.5 .5 3]"
+	"$halflambert" "1"
+
+
+	
+	"$rimlight" "1"						
+	"$rimlightexponent" "4"				
+	"$rimlightboost" "1"
+	"$basemapalphaphongmask" "1"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

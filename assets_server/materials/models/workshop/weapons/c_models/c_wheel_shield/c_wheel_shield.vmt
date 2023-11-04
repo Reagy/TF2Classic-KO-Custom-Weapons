@@ -1,0 +1,55 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\workshop\weapons\c_models\c_wheel_shield/c_wheel_shield"
+	"$baseMapAlphaPhongMask" "1"
+	"$bumpmap" "models\effects\flat_normal"
+	"$lightwarptexture" "models\lightwarps\softened_weapon_lightwarp"
+	//"$lightwarptexture" "models\weapons\c_items/c_ambassador_lightwarp"
+	"$phong" "1"
+	"$phongexponent" "18"
+	"$phongboost" "1"
+	"$phongfresnelranges"	"[.25.25 1]"
+	"$phongtint" "[0.87 0.69 0.46]"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "4"
+	"$rimlightboost" "2"
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

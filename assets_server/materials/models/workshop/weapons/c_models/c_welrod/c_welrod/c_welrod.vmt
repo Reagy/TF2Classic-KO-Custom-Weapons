@@ -1,0 +1,54 @@
+"VertexlitGeneric"
+{
+	//TexturePath
+	"$baseTexture" "models\workshop\weapons\c_models\c_welrod\c_welrod\c_welrod"
+
+	//Phong Parameters
+	"$phong" "1"
+	"$phongexponent" "30"
+	"$phongboost" "0.6"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[1.5 .5 3]"
+	"halflambert" "1"
+	"$basemapalphaphongmask" "1"
+	
+	"$blendtintbybasealpha" "1" 
+ 	"$blendtintcoloroverbase" "0"  
+
+	"$colortint_base" "{183 56 61}"  
+	"$colortint_tmp" "[0 0 0]" 
+
+	"$color2" "{55 55 55}"  
+
+
+	//RimLighting Parameters
+	"$rimlight" "1"
+	"$rimlightexponent" "20"	
+	"$rimlightboost" "1"	
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}				
+}
+

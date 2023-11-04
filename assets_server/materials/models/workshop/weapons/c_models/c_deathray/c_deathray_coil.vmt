@@ -1,0 +1,65 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\workshop\weapons\c_models\c_deathray\c_deathray"
+	
+	"$selfillum" "1"
+	"$nodecal" "1"
+	"$phongtint" "[1 .6 .2]"
+	"$phong" "1"
+	"$phongexponent" "9"
+	"$phongboost" "6"
+
+	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	
+	"$phongfresnelranges"	"[.3 .5 3]"
+	"$glowcolor" "1"
+
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"StickybombGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"Sine"
+		{
+			"resultVar" $selfillumtint
+			"sinemin" .1
+			"sinemax" 2
+			"sineperiod" 4
+		}
+		"Sine"
+		{
+			"resultVar" $phongboost
+			"sinemin" 5
+			"sinemax" 2
+			"sineperiod" 4
+		}
+		"Sine"
+		{
+			"resultVar" $phongexponent
+			"sinemin" 6
+			"sinemax" 2
+			"sineperiod" 4
+		}
+	}
+	
+
+
+}

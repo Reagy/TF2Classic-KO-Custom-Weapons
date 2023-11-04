@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture"		"backpack\workshop\player\items\soldier\lunar_landers\lunar_landers_large"
+	"$translucent"		"1"
+}

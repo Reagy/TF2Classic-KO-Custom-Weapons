@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture"		"backpack/workshop/player/items/all_class/ammo_pack/ammo_pack_large"
+	"$translucent"		"1"
+}

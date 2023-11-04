@@ -12,7 +12,7 @@ public Plugin myinfo = {
 	name = "Attribute: Buildings",
 	author = "Noclue",
 	description = "Attributes for sentries.",
-	version = "1.1",
+	version = "1.2",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -26,7 +26,7 @@ static int g_iBaseHealth[][][] = {
 	{ //teleporter
 		{ 150, 180, 216 },	//normal
 		{ 100, 100, 100 },	//mini
-		{ 216, 216, 216 },	//jump pad
+		{ 100, 100, 100 },	//dummy
 		{ 100, 100, 100 },	//dummy
 	},
 	{ //sentry
@@ -46,7 +46,7 @@ static int g_iLevelCost[][][] = {
 	{ //teleporter
 		{ 200, 200 },	//normal
 		{ 000, 000 },	//mini
-		{ 000, 000 },	//jump pad
+		{ 000, 000 },	//dummy
 		{ 000, 000 },	//dummy
 	},
 	{ //sentry
@@ -70,6 +70,8 @@ enum {
 	OBJ_SENTRYGUN,
 
 	OBJ_SAPPER,
+
+	OBJ_JUMPPAD,
 }
 
 enum {
@@ -79,7 +81,6 @@ enum {
 enum {
 	TELEPORT_NORMAL = 0,
 	TELEPORT_MINI,
-	TELEPORT_JUMP,
 }
 enum {
 	SENTRY_NORMAL = 0,
@@ -104,8 +105,6 @@ int g_iBuildingTypes[MAXPLAYERS][3];
 ArrayList g_hSirenList;
 
 int g_iGoalBuildOffset = -1;
-int g_iTurnSpeedOffset = -1;
-int g_iNextAttackOffset = -1;
 
 Handle hDetonateOwned;
 Handle hGetObject;
@@ -117,9 +116,7 @@ DynamicHook hFinishUpgrade;
 DynamicHook hOnGoActive;
 DynamicHook hMakeCarry;
 DynamicHook hCanUpgrade;
-DynamicDetour hSentryAttack;
 DynamicDetour hDispHeal;
-DynamicDetour hTeleJump;
 
 bool bLateLoad = false;
 public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] error, int err_max ) {
@@ -161,22 +158,10 @@ public void OnPluginStart() {
 	hFinishUpgrade =	DynamicHook.FromConf( hGameConf, "CBaseObject::FinishUpgrading" );
 	hMakeCarry =		DynamicHook.FromConf( hGameConf, "CBaseObject::MakeCarriedObject" );
 
-	hSentryAttack = DynamicDetour.FromConf( hGameConf, "CObjectSentrygun::Attack" );
-	hSentryAttack.Enable( Hook_Pre, Detour_SentryAttackPre );
-	hSentryAttack.Enable( Hook_Post, Detour_SentryAttack );
-
 	hDispHeal = DynamicDetour.FromConf( hGameConf, "CObjectDispenser::GetHealRate" );
 	hDispHeal.Enable( Hook_Post, Detour_GetHealRate );
 
-	hTeleJump = DynamicDetour.FromConf( hGameConf, "CObjectTeleporter::TeleporterDoJump" );
-	hTeleJump.Enable( Hook_Post, Detour_TeleJump );
-	//doesn't work properly; game will accept if build request is made through console but PDA does it's own verification
-	/*hGetCost = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::CalculateObjectCost" );
-	hGetCost.Enable( Hook_Post, Hook_GetCost );*/
-
 	g_iGoalBuildOffset = GameConfGetOffset( hGameConf, "CBaseObject::m_iGoalUpgradeLevel" );
-	g_iTurnSpeedOffset = GameConfGetOffset( hGameConf, "CObjSentrygun::m_iBaseTurnRate" );
-	g_iNextAttackOffset = GameConfGetOffset( hGameConf, "CObjSentrygun::m_flNextAttack" );
 
 	g_hSirenList = new ArrayList( 2 );
 
@@ -205,23 +190,23 @@ public void OnMapStart() {
 	g_iBuildingModels[ OBJ_SENTRYGUN ][ SENTRY_CLOVER ][ 1 ][ 1 ] =		PrecacheModel( "models/buildables/sentry_clover2_build.mdl" );
 	g_iBuildingModels[ OBJ_SENTRYGUN ][ SENTRY_CLOVER ][ 2 ][ 1 ] =		PrecacheModel( "models/buildables/sentry_clover3_build.mdl" );
 
-	g_iBuildingBlueprints[ OBJ_SENTRYGUN ][ 0 ] =	PrecacheModel( "models/buildables/sentry1_blueprint.mdl" );
+	g_iBuildingBlueprints[ OBJ_SENTRYGUN ][ 0 ] =				PrecacheModel( "models/buildables/sentry1_blueprint.mdl" );
 
 	//dispenser
 	g_iBuildingModels[ OBJ_DISPENSER ][ DISPENSER_MINI ][ 0 ][ 0 ] = 	PrecacheModel( "models/buildables/minidispenser.mdl" );
 	g_iBuildingModels[ OBJ_DISPENSER ][ DISPENSER_MINI ][ 0 ][ 1 ] = 	PrecacheModel( "models/buildables/minidispenser.mdl" );
 
-	g_iBuildingBlueprints[ OBJ_DISPENSER ][ 0 ] =	PrecacheModel( "models/buildables/dispenser_blueprint.mdl" );
+	g_iBuildingBlueprints[ OBJ_DISPENSER ][ 0 ] =				PrecacheModel( "models/buildables/dispenser_blueprint.mdl" );
 
-	//teleporter	
-	g_iBuildingModels[ OBJ_TELEPORTER ][ TELEPORT_JUMP ][ 2 ][ 0 ] = 	PrecacheModel( "models/buildables/custom/jumppad.mdl" );
-	g_iBuildingModels[ OBJ_TELEPORTER ][ TELEPORT_JUMP ][ 0 ][ 1 ] = 	PrecacheModel( "models/buildables/custom/jumppad.mdl" );
+	//teleporter
+	g_iBuildingModels[ OBJ_TELEPORTER ][ TELEPORT_MINI ][ 0 ][ 0 ] =	PrecacheModel( "models/buildables/mini_teleporter_light.mdl" );
+	g_iBuildingModels[ OBJ_TELEPORTER ][ TELEPORT_MINI ][ 0 ][ 1 ] =	PrecacheModel( "models/buildables/mini_teleporter.mdl" );
 
-	g_iBuildingBlueprints[ OBJ_TELEPORTER ][ 0 ] =	PrecacheModel( "models/buildables/teleporter_blueprint_enter.mdl" );
-	g_iBuildingBlueprints[ OBJ_TELEPORTER ][ 1 ] =	PrecacheModel( "models/buildables/teleporter_blueprint_exit.mdl" );
+	g_iBuildingBlueprints[ OBJ_TELEPORTER ][ 0 ] =				PrecacheModel( "models/buildables/teleporter_blueprint_enter.mdl" );
+	g_iBuildingBlueprints[ OBJ_TELEPORTER ][ 1 ] =				PrecacheModel( "models/buildables/teleporter_blueprint_exit.mdl" );
 
 	//sapper
-	g_iSapperModels[ SAPPER_INTERMISSION ] = 	PrecacheModel( "models/buildables/intermission_placed.mdl" );
+	g_iSapperModels[ SAPPER_INTERMISSION ] = 				PrecacheModel( "models/buildables/intermission_placed.mdl" );
 
 	PrecacheSound( "weapons/sentry_shoot_mini.wav" );
 
@@ -252,10 +237,14 @@ public void OnMapStart() {
 
 //called when a building is created or placed from carry
 MRESReturn Hook_StartBuilding( int iThis ) {
+	int iType = GetEntProp( iThis, Prop_Send, "m_iObjectType" );
+
+	if( iType == OBJ_JUMPPAD )
+		return MRES_Handled;
+
 	SetBuildingModel( iThis, true );
 	UpdateBuilding( iThis );
 
-	int iType = GetEntProp( iThis, Prop_Send, "m_iObjectType" );
 	int iPlayer = GetEntPropEnt( iThis, Prop_Send, "m_hBuilder" );
 	int iOverride = g_iBuildingTypes[ iPlayer ][ iType ];
 
@@ -267,15 +256,16 @@ MRESReturn Hook_StartBuilding( int iThis ) {
 		}
 	}
 	case OBJ_TELEPORTER: {
-		if( iOverride == TELEPORT_JUMP ) {
+		if( iOverride == TELEPORT_MINI ) {
 			SetEntProp( iThis, Prop_Send, "m_iHighestUpgradeLevel", 0 );
+			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );
+			//SetEntPropFloat( iThis, Prop_Send, "m_flModelScale", 1.35 );
 		}
 	}
 	case OBJ_SENTRYGUN: {
-		SetSentryRotate( iThis );
 		if( iOverride == SENTRY_MINI ) {
 			SetEntProp( iThis, Prop_Send, "m_iHighestUpgradeLevel", 0 );
-			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );	
+			SetEntProp( iThis, Prop_Send, "m_bMiniBuilding", 1 );
 		}
 	}
 	}
@@ -285,6 +275,10 @@ MRESReturn Hook_StartBuilding( int iThis ) {
 //called when a building activates at level 1 only
 MRESReturn Hook_OnGoActive( int iThis ) {
 	int iType = GetEntProp( iThis, Prop_Send, "m_iObjectType" );
+
+	if( iType == OBJ_JUMPPAD )
+		return MRES_Handled;
+
 	int iPlayer = GetEntPropEnt( iThis, Prop_Send, "m_hBuilder" );
 
 	if( iType == OBJ_SENTRYGUN && g_iBuildingTypes[ iPlayer ][ iType ] == SENTRY_MINI )
@@ -293,6 +287,7 @@ MRESReturn Hook_OnGoActive( int iThis ) {
 	SetBuildingModel( iThis, false );
 	return MRES_Handled;
 }
+
 //called when an upgrade animation starts
 MRESReturn Hook_StartUpgrade( int iThis ) {
 	SetBuildingModel( iThis, true );
@@ -328,31 +323,6 @@ MRESReturn Hook_CanBeUpgraded( int iThis, DHookReturn hReturn ) {
 	return MRES_Ignored;
 }
 
-//good thing multithreading was a joke in 2007
-float flOldAttack;
-MRESReturn Detour_SentryAttackPre( int iThis ) {
-	float flNextAttack = LoadFromEntity( iThis, g_iNextAttackOffset );
-	flOldAttack = flNextAttack;
-
-	//PrintToServer("%f", GetEntPropFloat( iThis, Prop_Send, "m_flPlaybackRate" ) );
-	return MRES_Handled;
-}
-MRESReturn Detour_SentryAttack( int iThis ) {
-	float flNextAttack = LoadFromEntity( iThis, g_iNextAttackOffset );
-
-	if( flOldAttack != flNextAttack ) {
-		float flNewInterval = GetEntProp( iThis, Prop_Send, "m_iUpgradeLevel" ) == 1 ? 0.2 : 0.1;
-		if( IsBuildingMini( iThis ) ) {
-			flNewInterval *= 0.75;
-		}
-		int iBuilder = GetEntPropEnt( iThis, Prop_Send, "m_hBuilder" );
-		flNewInterval = AttribHookFloat( flNewInterval, iBuilder, "custom_sentry_firerate" );
-		StoreToEntity( iThis, g_iNextAttackOffset, GetGameTime() + flNewInterval );
-	}
-
-	return MRES_Handled;
-}
-
 //returns the health per second of a dispenser
 MRESReturn Detour_GetHealRate( int iThis, DHookReturn hReturn ) {
 	int iChanged = false;
@@ -377,14 +347,6 @@ MRESReturn Detour_GetHealRate( int iThis, DHookReturn hReturn ) {
 	}
 	return MRES_Ignored;
 }
-
-//called when a jump pad is used
-MRESReturn Detour_TeleJump( int iThis, DHookParam hParams ) {
-	//TODO: reverse engineer recharge times
-	//SetEntPropFloat( iThis, Prop_Send, "m_flRechargeTime", GetGameTime() + 1.0 );
-	return MRES_Handled;
-}
-
 
 Action Hook_BuildingSounds( int iClients[MAXPLAYERS], int& iNumClients, char sSample[PLATFORM_MAX_PATH], int& iEntity, int& iChannel, float& flVolume, int& iLevel, int& iPitch, int& iFlags, char sSoundEntry[PLATFORM_MAX_PATH], int &iSeed ) {
 	if( !IsValidEntity( iEntity ) )
@@ -467,11 +429,6 @@ Action SentrySoundHook( int iBuilding, char sSample[PLATFORM_MAX_PATH], int &iPi
 
 
 public void OnEntityCreated( int iEntity, const char[] sClassname ) {
-	if( IsValidPlayer( iEntity ) ) {
-		SDKHook( iEntity, SDKHook_OnTakeDamage, Hook_OnTakeDamage );
-		return;
-	}
-
 	if( StrContains( sClassname, "obj_", true ) != 0 ) 
 		return;
 	
@@ -481,30 +438,6 @@ public void OnEntityCreated( int iEntity, const char[] sClassname ) {
 	}
 		
 	SetupObjectHooks( iEntity );
-}
-
-Action Hook_OnTakeDamage( int iVictim, int& iAttacker, int& iInflictor, float& flDamage, int& iDamageType, int& iWeapon, float flDamageForce[3], float flDamagePosition[3], int iDamageCustom ) {
-	if(iWeapon >= 4096) iWeapon -= 4096;
-	if(iAttacker >= 4096) iAttacker -= 4096;
-	if(iInflictor >= 4096) iInflictor -= 4096;
-
-	if( !IsValidEntity( iWeapon ) ) 
-		return Plugin_Changed;
-
-	static char sClassname[64];
-	GetEntityClassname( iWeapon, sClassname, sizeof( sClassname ) );
-	if( !StrEqual( sClassname, "obj_sentrygun" ) )
-		return Plugin_Changed;
-
-	if( IsBuildingMini( iWeapon ) ) {
-		flDamage *= 0.5;
-		//tried scaling damage force here, doesn't seem to work
-	}
-
-	int iBuilder = GetEntPropEnt( iWeapon, Prop_Send, "m_hBuilder" );
-	flDamage = AttribHookFloat( flDamage, iBuilder, "custom_sentry_damage" );
-
-	return Plugin_Changed;
 }
 
 Action Event_PostInventory( Event hEvent, const char[] sName, bool bDontBroadcast ) {
@@ -569,6 +502,9 @@ static char g_szBuildingHealthAttribs[][] = {
 
 void UpdateBuildingHealth( int iPlayer, int iBuilding, bool bHeal = false ) {
 	int iBuildingType = GetEntProp( iBuilding, Prop_Send, "m_iObjectType" );
+	if( iBuildingType == OBJ_JUMPPAD )
+		return;
+
 	int iBuildingLevel = GetEntProp( iBuilding, Prop_Send, "m_bCarryDeploy" ) ? 
 		BuildingTargetLevel( iBuilding ) - 1 :
 		GetEntProp( iBuilding, Prop_Send, "m_iUpgradeLevel" ) - 1;
@@ -648,7 +584,6 @@ void SetupObjectHooks( int iEntity ) {
 	hOnGoActive.HookEntity( Hook_Post, iEntity, Hook_OnGoActive );
 	hMakeCarry.HookEntity( Hook_Post, iEntity, Hook_MakeCarry );
 	hCanUpgrade.HookEntity( Hook_Pre, iEntity, Hook_CanBeUpgraded );
-	SDKHook( iEntity, SDKHook_OnTakeDamage, Hook_OnTakeDamage );
 }
 
 /*
@@ -680,18 +615,6 @@ void DestroyScreens( int iBuilding ) {
 	OTHER
 */
 
-
-//sets the rotation speed of a sentry gun
-void SetSentryRotate( int iBuilding ) {
-	int iBuilder = GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" );
-
-	float flSpeed = AttribHookFloat( 6.0, iBuilder, "custom_sentry_turnspeed" );
-	if( IsBuildingMini( iBuilding ) )
-		flSpeed *= 1.35;
-
-	StoreToEntity( iBuilding, g_iTurnSpeedOffset, RoundToNearest( flSpeed ) );
-}
-
 void CreateSirenParticle( int iBuilding ) {
 	//todo: convert to a stock function
 
@@ -714,8 +637,8 @@ void CreateSirenParticle( int iBuilding ) {
 	ActivateEntity( iParticle );
 
 	int iLookup[ 2 ];
-	iLookup[ 0 ] = iBuilding;
-	iLookup[ 1 ] = iParticle;
+	iLookup[ 0 ] = EntIndexToEntRef( iBuilding );
+	iLookup[ 1 ] = EntIndexToEntRef( iParticle );
 
 	g_hSirenList.PushArray( iLookup );
 }
@@ -723,9 +646,11 @@ void DestroySirenParticle( int iBuilding ) {
 	int iLookup[2];
 	for( int i = 0; i < g_hSirenList.Length; i++ ) {
 		g_hSirenList.GetArray( i, iLookup );
+		iLookup[ 0 ] = EntRefToEntIndex( iLookup[ 0 ] );
+		iLookup[ 1 ] = EntRefToEntIndex( iLookup[ 1 ] );
 		if( iLookup[ 0 ] == iBuilding ) {
 			g_hSirenList.Erase( i );
-			if( !IsValidEntity( iLookup[ 1 ] ) )
+			if( !( iLookup[ 1 ] > 0 ) )
 				return;
 				
 			AcceptEntityInput( iLookup[ 1 ], "stop" );
@@ -740,8 +665,6 @@ void Lateload() {
 	for(int i = 1; i <= MaxClients; i++) {
 		if( !IsClientInGame( i ) )
 			continue;
-
-		SDKHook( i, SDKHook_OnTakeDamage, Hook_OnTakeDamage );
 
 		int iSentryType = 	RoundToNearest( AttribHookFloat( 0.0, i, "custom_sentry_type" ) );
 		int iDispenserType = 	RoundToNearest( AttribHookFloat( 0.0, i, "custom_dispenser_type" ) );
@@ -765,8 +688,8 @@ void Lateload() {
 		GetEntPropString( iIndex, Prop_Data, "m_iszEffectName", sEffectName, sizeof( sEffectName ) );
 		if( StrContains( sClassname, "obj_", true ) != 0 && StrContains( sEffectName, "cart_flashinglight", true ) != 0 ) {
 			int iLookup[ 2 ];
-			iLookup[ 0 ] = iParent;
-			iLookup[ 1 ] = iIndex;
+			iLookup[ 0 ] = EntIndexToEntRef( iParent );
+			iLookup[ 1 ] = EntIndexToEntRef( iIndex );
 
 			g_hSirenList.PushArray( iLookup );
 		}

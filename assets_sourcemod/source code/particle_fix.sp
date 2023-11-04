@@ -9,22 +9,26 @@ public Plugin myinfo =
 	name = "Bugfix: Particle Precaching",
 	author = "Noclue",
 	description = "Fixes janky particle precaching.",
-	version = "1.0",
+	version = "1.1",
 	url = "no"
 }
 
 public void OnMapStart() {
 	PrecacheEffect("ParticleEffect");
-	PrecacheParticleEffect("laser_tracer_red");
-	PrecacheParticleEffect("laser_tracer_red_crit");
-	PrecacheParticleEffect("laser_tracer_blue");
-	PrecacheParticleEffect("laser_tracer_blue_crit");
-	PrecacheParticleEffect("laser_tracer_green");
-	PrecacheParticleEffect("laser_tracer_green_crit");
-	PrecacheParticleEffect("laser_tracer_yellow");
-	PrecacheParticleEffect("laser_tracer_yellow_crit");
+	PrecacheParticleEffect("mediflame_red");
+	PrecacheParticleEffect("mediflame_blue");
+	PrecacheParticleEffect("mediflame_green");
+	PrecacheParticleEffect("mediflame_yellow");
 
-	AddFileToDownloadsTable("particles/laser_tracers.pcf");
+	FuckMe( "particles/kocw_beams.pcf" );
+	FuckMe( "particles/db_tracers.pcf" );
+	FuckMe( "particles/medicflames.pcf" );
+	FuckMe( "particles/scattershock_fx.pcf" );
+}
+
+void FuckMe( const char[] szFuckMe ) {
+	AddFileToDownloadsTable( szFuckMe );
+	PrecacheGeneric( szFuckMe, true );
 }
 
 //thank you internet people

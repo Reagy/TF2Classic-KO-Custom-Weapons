@@ -1,0 +1,20 @@
+written in python 3.12, idfk compatability with other versions
+
+install the following python libraries with the terminal
+	pip install vdf
+	pip install bsp_tool
+	pip install srctools
+	
+create a folder named "live" in this folder
+extract all contents of live tf2's .vpk files into it
+
+create a folder named "classic" in this folder
+extract all contents of tf2c's as well as the source sdk2013's .vpk files into it
+	
+move bsp file into this folder
+
+run ClassicMapFix.py
+enter the name of the bsp file to repack
+enter the name of the repacked bsp file
+
+it should (hopefully) bundle all missing files into the bsp

@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_broomhandle/c_broomhandle_large"
+	$translucent 1
+	$vertexcolor 1
+}

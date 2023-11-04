@@ -1,0 +1,61 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\workshop\weapons\c_models\c_councilman\c_councilman_color"
+	"$bumpmap" "models\workshop\weapons\c_models\c_councilman\c_councilman_normal"
+	"$envmap" "env_cubemap"
+
+	"$envmaptint" "[.9 .45 .2]"
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "10"	
+	//"$phongtint" "[.9 .5 .25]"
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	//"$lightwarptexture" "models\weapons\c_items/c_ambassador_lightwarp"
+	"$phongfresnelranges" "[0.25 0.5 1]"
+	"$normalmapalphaphongmask" "1"
+	$normalmapalphaenvmapmask "1"
+
+	//"$PhongWarpTexture" "models\workshop\weapons\c_models\c_councilman\c_councilman_phongwarp"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "8"	
+	"$rimlightboost" "2"
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

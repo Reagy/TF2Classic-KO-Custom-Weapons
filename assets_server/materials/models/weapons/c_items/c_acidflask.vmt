@@ -1,0 +1,58 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\weapons\c_items/c_acidflask"
+	"$phong" "1"
+	"$bumpmap" "models/effects/flat_normal" 
+
+
+
+//	"$phongtint" "[0.529411765 0.501960784 0.68627451]"
+
+
+	"$phongexponent" 2.5
+//	"$phongfresnelranges" "[1 2 5]"
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+//	"$lightwarptexture" "models\lightwarps\hand_lightwarp"
+	"$basemapalphaphongmask" "1"
+
+
+
+	"$phong" "1"
+	"$phongexponent" "5"
+	"$phongboost" ".2"	
+	"$phongfresnelranges"	"[.3 1 8]"
+	"$halflambert" "0"
+
+
+	"$rimlight" "1"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" ".25"
+
+
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}
+

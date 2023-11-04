@@ -32,19 +32,33 @@ GlobalForward g_OnTakeDamagePostTF;
 GlobalForward g_OnTakeDamageAliveTF;
 GlobalForward g_OnTakeDamageAlivePostTF;
 
+GlobalForward g_OnTakeDamageBuilding;
+
 Handle hApplyPushFromDamage;
 
 Address offs_CTFPlayerShared_pOuter;
 Address offs_CTFPlayer_mShared;
+Address g_iCTFGameStats;
 
 StringMap g_AllocPooledStringCache;
+
+Handle hTakeHealth;
+Handle hGetMaxHealth;
+Handle hGetBuffedMaxHealth;
+
+Handle hSetSolid;
+Handle hSetSolidFlags;
+Handle hSetGroup;
+Handle hSetSize;
+
+Handle hPlayerHealedOther;
 
 public Plugin myinfo =
 {
 	name = "KOCW Tools",
 	author = "Noclue",
 	description = "Standard functions for custom weapons.",
-	version = "1.1",
+	version = "1.5",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -77,6 +91,13 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 
 	CreateNative( "FindEntityInSphere", Native_EntityInRadius );
 
+	CreateNative( "SetSolid", Native_SetSolid );
+	CreateNative( "SetSolidFlags", Native_SetSolidFlags );
+	CreateNative( "SetCollisionGroup", Native_SetCollisionGroup );
+	CreateNative( "SetSize", Native_SetSize );
+
+	CreateNative( "HealPlayer", Native_HealPlayer );
+
 	RegPluginLibrary( "kocwtools" );
 
 	return APLRes_Success;
@@ -90,13 +111,38 @@ public void OnPluginStart() {
 	HookEvent( EVENT_POSTINVENTORY, Event_PostInventory, EventHookMode_Post );
 
 	/*
+		OBJECT FUNCTIONS
+	*/
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseEntity::SetCollisionGroup" );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hSetGroup = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseEntity::SetSize" );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	hSetSize = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CCollisionProperty::SetSolid" );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hSetSolid = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CCollisionProperty::SetSolidFlags" );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	hSetSolidFlags = EndPrepSDKCall();
+
+	/*
 		INVENTORY FUNCTIONS
 	*/
 
 	//CEconEntity::GetAttributeManager(void)
-	StartPrepSDKCall(SDKCall_Entity);
-	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CEconEntity::GetAttributeManager");
-	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CEconEntity::GetAttributeManager" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	hEconGetAttributeManager = EndPrepSDKCall();
 	if(!hEconGetAttributeManager)
 		SetFailState("SDKCall setup for CEconEntity::GetAttributeManager failed");
@@ -173,11 +219,19 @@ public void OnPluginStart() {
 		MEMORY FUNCTIONS
 	*/
 
+	g_iCTFGameStats = GameConfGetAddress( hGameConf, "CTFGameStats" );
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameStats::Event_PlayerHealedOther" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	hPlayerHealedOther = EndPrepSDKCall();
+
 	/*
 		DAMAGE FUNCTIONS
 	*/
 
-	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CTFPlayer::OnTakeDamage" );
+	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
 	hOnTakeDamageAlive = DynamicHook.FromConf( hGameConf, "CTFPlayer::OnTakeDamageAlive" );
 	hModifyRules = DynamicDetour.FromConf( hGameConf, "CTFGameRules::ApplyOnDamageModifyRules" );
 
@@ -211,12 +265,38 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
 	hFindInRadius = EndPrepSDKCall();
 
+	/*
+		PLAYER FUNCTIONS
+	*/
+
+	//float int player bool
+	StartPrepSDKCall( SDKCall_Player );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::TakeHealth" );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
+	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	hTakeHealth = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Player );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::GetMaxHealth" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	hGetMaxHealth = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetBuffedMaxHealth" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	hGetBuffedMaxHealth = EndPrepSDKCall();
+
 	delete hGameConf;
 
 	g_OnTakeDamageTF = new GlobalForward( "OnTakeDamageTF", ET_Ignore, Param_Cell, Param_Cell );
 	g_OnTakeDamagePostTF = new GlobalForward( "OnTakeDamagePostTF", ET_Ignore, Param_Cell, Param_Cell );
 	g_OnTakeDamageAliveTF = new GlobalForward( "OnTakeDamageAliveTF", ET_Ignore, Param_Cell, Param_Cell );
 	g_OnTakeDamageAlivePostTF = new GlobalForward( "OnTakeDamageAlivePostTF", ET_Ignore, Param_Cell, Param_Cell );
+
+	g_OnTakeDamageBuilding = new GlobalForward( "OnTakeDamageBuilding", ET_Ignore, Param_Cell, Param_Cell );
 }
 
 
@@ -247,12 +327,71 @@ void DoPlayerHooks( int iPlayer ) {
 	hOnTakeDamageAlive.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamageAlivePost );
 }
 
+public void OnEntityCreated( int iEntity ) {
+	static char szEntityName[ 32 ];
+	GetEntityClassname( iEntity, szEntityName, sizeof( szEntityName ) );
+	if( StrContains( szEntityName, "obj_", false ) == 0 )
+		hOnTakeDamage.HookEntity( Hook_Pre, iEntity, Hook_OnTakeDamageBuilding );
+}
+
 public any Native_EntityInRadius( Handle hPlugin, int iParams ) {
 	int iStart = GetNativeCell( 1 );
 	float vecSource[3]; GetNativeArray( 2, vecSource, 3 );
 	float flRadius = GetNativeCell( 3 );	
 
 	return SDKCall( hFindInRadius, iStart, vecSource, flRadius );
+}
+
+/*
+	OBJECT FUNCTIONS
+*/
+
+
+
+
+//native void	SetSolid( int iEntity, iSolid );
+public any Native_SetSolid( Handle hPlugin, int iParams ) {
+	int iEntity, iSolid;
+	iEntity = GetNativeCell( 1 );
+	iSolid = GetNativeCell( 2 );
+
+	Address aCollision = GetEntityAddress( iEntity ) + address( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
+	SDKCall( hSetSolid, aCollision, iSolid );
+
+	return 0;
+}
+//native void	SetSolidFlags( int iEntity, int iFlags );
+public any Native_SetSolidFlags( Handle hPlugin, int iParams ) {
+	int iEntity, iFlags;
+	iEntity = GetNativeCell( 1 );
+	iFlags = GetNativeCell( 2 );
+
+	Address aCollision = GetEntityAddress( iEntity ) + address( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
+	SDKCall( hSetSolidFlags, aCollision, iFlags );
+
+	return 0;
+}
+//native void	SetCollisionGroup( int iEntity, int iGroup );
+public any Native_SetCollisionGroup( Handle hPlugin, int iParams ) {
+	int iEntity, iGroup;
+	iEntity = GetNativeCell( 1 );
+	iGroup = GetNativeCell( 2 );
+
+	SDKCall( hSetGroup, iEntity, iGroup );
+
+	return 0;
+}
+//native void	SetSize( int iEntity, const float vecSizeMin[3], const float vecSizeMax[3] );
+public any Native_SetSize( Handle hPlugin, int iParams ) {
+	int iEntity;
+	float vecSizeMin[3], vecSizeMax[3];
+	iEntity = GetNativeCell( 1 );
+	GetNativeArray( 2, vecSizeMin, 3 );
+	GetNativeArray( 3, vecSizeMax, 3 );
+
+	SDKCall( hSetSize, iEntity, vecSizeMin, vecSizeMax );
+
+	return 0;
 }
 
 /*
@@ -283,9 +422,9 @@ stock Address AllocPooledString( const char[] sValue ) {
 	if ( iOffset <= 0 ) {
 		return Address_Null;
 	}
-	Address pOrig = view_as<Address>( GetEntData( iEntity, iOffset ) );
+	Address pOrig = address( GetEntData( iEntity, iOffset ) );
 	DispatchKeyValue( iEntity, "targetname", sValue );
-	aValue = view_as<Address>( GetEntData( iEntity, iOffset ) );
+	aValue = address( GetEntData( iEntity, iOffset ) );
 	SetEntData( iEntity, iOffset, pOrig );
 	
 	g_AllocPooledStringCache.SetValue( sValue, aValue );
@@ -350,7 +489,7 @@ public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 	}
 		
 	Address aStringAlloc = AllocPooledString( szAttributeClass );
-	Address aAttribute = SDKCall( hIterateAttributes, aWeapon + view_as<Address>( iItemOffset ), aStringAlloc );
+	Address aAttribute = SDKCall( hIterateAttributes, aWeapon + address( iItemOffset ), aStringAlloc );
 
 	if( aAttribute == Address_Null ) {
 		SetNativeString( 1, "", GetNativeCell( 2 ) );
@@ -358,7 +497,7 @@ public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 	}
 
 	static char szValue[64];
-	LoadStringFromAddress( aAttribute + view_as<Address>( 12 ), szValue, 64 );
+	LoadStringFromAddress( aAttribute + address( 12 ), szValue, 64 );
 
 	SetNativeString( 1, szValue, GetNativeCell( 2 ) );
 	return 1;
@@ -409,7 +548,7 @@ int GetPlayerFromSharedAddress( Address pShared ) {
 
 public any Native_GetSharedFromPlayer( Handle hPlugin, int iParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	return GetEntityAddress( iPlayer ) + view_as<Address>( offs_CTFPlayer_mShared );
+	return GetEntityAddress( iPlayer ) + address( offs_CTFPlayer_mShared );
 }
 
 public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
@@ -422,8 +561,8 @@ public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
 } 
 
 static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
-	Address aOffs = view_as<Address>( GameConfGetOffset( hGamedata, sKey ) );
-	if ( aOffs == view_as<Address>( -1 ) ) {
+	Address aOffs = address( GameConfGetOffset( hGamedata, sKey ) );
+	if ( aOffs == address( -1 ) ) {
 		SetFailState( "Failed to get member offset %s", sKey );
 	}
 	return aOffs;
@@ -433,13 +572,9 @@ static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 	DAMAGE FUNCTIONS
 */
 
-/*
-	trying to do custom damage handling, not ready yet
-*/
-
-//0/4/8: damage force vector
-//12/16/20: damage source vector
-//24/28/32/: damage reported vector
+//0/4/8: m_vecDamageForce
+//12/16/20: m_vecDamagePosition
+//24/28/32/: m_vecReportedPosition
 
 //48: damage
 //52: some kind of "base damage"
@@ -522,6 +657,17 @@ MRESReturn Hook_OnTakeDamageAlivePost( int iThis, DHookReturn hReturn, DHookPara
 	return MRES_Handled;
 }
 
+//forward void OnTakeDamageBuilding( int iBuilding, Address aTakeDamageInfo );
+MRESReturn Hook_OnTakeDamageBuilding( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	Call_StartForward( g_OnTakeDamageBuilding );
+
+	Call_PushCell( iThis );
+	Call_PushCell( hParams.GetAddress( 1 ) );
+
+	Call_Finish();
+
+	return MRES_Handled;
+}
 
 MRESReturn Detour_ApplyOnDamageModifyRulesPre( Address aThis, DHookReturn hReturn, DHookParam hParams ) {
 	//TFDamageInfo tfInfo = TFDamageInfo( hParams.GetAddress( 1 ) );
@@ -535,11 +681,58 @@ MRESReturn Detour_ApplyOnDamageModifyRulesPost( Address aThis, DHookReturn hRetu
 	//bool bCanDamage = hParams.Get( 3 );
 
 	if( tfInfo.iCritType == CT_MINI ) {
-		tfInfo.iFlags = tfInfo.iFlags & ~( 1 << 20);
-		StoreToEntity( iTarget, 6049, 1, NumberType_Int8 );
-		StoreToEntity( iTarget, 6502, 1, NumberType_Int32 );
+		tfInfo.iFlags = tfInfo.iFlags & ~( 1 << 20 );
+		StoreToEntity( iTarget, 6049, 1, NumberType_Int8 ); //6248?
+		StoreToEntity( iTarget, 6502, 1, NumberType_Int32 ); //6252?
 	}
 
 	return MRES_Handled;
 	
+}
+
+//native void HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
+public any Native_HealPlayer( Handle hPlugin, int iParams ) {
+	int iPlayer = GetNativeCell( 1 );
+	float flAmount = GetNativeCell( 2 );
+	int iSource = GetNativeCell( 3 );
+	int iFlags = GetNativeCell( 4 );
+
+	int iMaxHealth = SDKCall( hGetMaxHealth, iPlayer );
+	int iHealth = GetClientHealth( iPlayer );
+
+	float flMult = 0.5;
+
+	//TODO: pass weapon as parameter instead of getting activeweapon
+	flMult = AttribHookFloat( flMult, iPlayer, "mult_patient_overheal_penalty" );
+	int iWeapon = GetEntPropEnt( iPlayer, Prop_Send, "m_hActiveWeapon" );
+	if( iWeapon != -1 ) {
+		flMult = AttribHookFloat( flMult, iWeapon, "mult_patient_overheal_penalty_active" );
+	}
+
+	if( iSource != -1 ) {
+		flMult = AttribHookFloat( flMult, iSource, "mult_medigun_overheal_amount" );
+	}
+	flMult += 1.0;
+
+	int iBuffedMax = RoundFloat( float(iMaxHealth) * flMult );
+
+	if( !( iFlags & HF_NOCRITHEAL ) ) {
+		float flTimeSinceDamage = GetGameTime() - GetEntPropFloat( iPlayer, Prop_Send, "m_flLastDamageTime" );
+		flAmount *= RemapValClamped( flTimeSinceDamage, 10.0, 15.0, 1.0, 3.0 );
+	}
+	
+	flAmount = MinFloat( float( iBuffedMax - iHealth ), flAmount );
+
+	int iNewFlags = 0;
+	if( !( iFlags & HF_NOOVERHEAL ) )
+		iNewFlags = 1 << 1;
+
+	int iReturn = SDKCall( hTakeHealth, iPlayer, flAmount, iNewFlags, iSource, false );
+
+	//TODO: account for spy leech event
+	if( iSource != -1 ) {
+		SDKCall( hPlayerHealedOther, g_iCTFGameStats, iSource, float( iReturn ) );
+	}
+
+	return iReturn;
 }

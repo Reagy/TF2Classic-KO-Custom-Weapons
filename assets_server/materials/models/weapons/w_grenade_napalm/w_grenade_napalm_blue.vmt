@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\weapons\w_grenade_napalm\w_grenade_napalm_red.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\weapons\w_grenade_napalm\w_grenade_napalm_blue"
+	}
+}

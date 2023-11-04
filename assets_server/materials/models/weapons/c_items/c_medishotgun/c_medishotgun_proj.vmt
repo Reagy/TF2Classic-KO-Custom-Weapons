@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\weapons\c_items\c_medishotgun_proj"
+	"$phong" "1"
+	"$phongexponent" "55"
+	"$phongboost" "1"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[1 .5 1]"
+	"$halflambert" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+	}
+
+}

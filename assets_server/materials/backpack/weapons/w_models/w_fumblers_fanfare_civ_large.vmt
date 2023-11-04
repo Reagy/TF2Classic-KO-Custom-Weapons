@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/w_models/w_fumblers_fanfare_civ_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}

@@ -1,0 +1,5 @@
+
+assets_sourcemod/source code/.vscode/settings.json
+*.zip
+assets_server/sound/sound.cache
+*.bz2

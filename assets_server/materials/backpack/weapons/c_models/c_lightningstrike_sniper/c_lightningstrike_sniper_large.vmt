@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_lightningstrike_sniper\c_lightningstrike_sniper_large"
+	$translucent 1
+	$vertexcolor 1
+}

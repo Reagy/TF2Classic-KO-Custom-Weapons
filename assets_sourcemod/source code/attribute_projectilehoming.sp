@@ -32,7 +32,7 @@ public void OnMapStart() {
 
 public void OnEntityCreated(int iEntity, const char[] sClassname) {
 	if (strcmp(sClassname, "tf_projectile_rocket") == 0) {
-		RequestFrame(Frame_OnRocketSpawn, iEntity); //just being sure that all properties have been initialized first
+		RequestFrame( Frame_OnRocketSpawn, EntIndexToEntRef( iEntity ) ); //just being sure that all properties have been initialized first
 		return;
 	}
 }
@@ -96,14 +96,12 @@ bool DoProjectileTracking( int iEntity ) {
 
 		float flAccuracy = GetProjectileAccuracy( iEntity );
 		flAccuracy = FloatClamp( flAccuracy, 0.0, 1.0 );
-		if(flAccuracy == 0.0) {
-			NormalizeVector( TargetVec, RocketVec );
-		}
-		else {
-			ScaleVector( TargetVec, flAccuracy );
-			AddVectors( RocketVec, TargetVec, RocketVec );
-			NormalizeVector( RocketVec, RocketVec );
-		}
+
+		SubtractVectors( TargetVec, RocketVec, TargetVec ); //get the difference between desired and current angle
+		ScaleVector( TargetVec, flAccuracy ); //scale difference by accuracy
+		AddVectors( TargetVec, RocketVec, RocketVec ); //subtract difference into result
+
+		NormalizeVector( RocketVec, RocketVec );
 
 		GetVectorAngles( RocketVec, RocketAng );
 		SetEntPropVector( iEntity, Prop_Data, "m_angRotation", RocketAng );
@@ -123,9 +121,13 @@ bool DoProjectileTracking( int iEntity ) {
 
 //todo: does funky stuff during server start
 void Frame_OnRocketSpawn( int iProjectile ) {
-	if( !( IsValidEntity( iProjectile ) ) ) return;
+	iProjectile = EntRefToEntIndex( iProjectile );
+	if( iProjectile == -1 ) 
+		return;
+
 	int iWeapon = GetEntPropEnt( iProjectile, Prop_Send, "m_hLauncher");
-	if( !CanThisWeaponHome( iWeapon ) ) return;
+	if( !CanThisWeaponHome( iWeapon ) ) 
+		return;
 
 	SDKHook( iProjectile, SDKHook_Think, Hook_RocketThink );
 }

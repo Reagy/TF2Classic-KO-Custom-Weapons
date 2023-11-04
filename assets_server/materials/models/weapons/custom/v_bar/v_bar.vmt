@@ -1,0 +1,15 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/custom/v_bar/v_bar"
+	"$nocull" 1
+	"$basemapalphaphongmask" "1"
+	"$phong" "1"
+	"$phongexponent" "20"
+	"$phongboost" "10"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.25 .5 1]"
+	"$halflambert" "1"
+	"$rimlight" "1"
+	"$rimlightexponent" "25"	
+	"$rimlightboost" "1"
+}
