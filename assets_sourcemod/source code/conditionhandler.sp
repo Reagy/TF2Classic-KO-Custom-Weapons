@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name = "Condition Handler",
 	author = "Noclue",
 	description = "Core plugin for custom conditions.",
-	version = "1.1.1",
+	version = "1.1.2",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -179,6 +179,11 @@ public void OnClientConnected( int iClient ) {
 	if( IsValidEdict( iClient ) )
 		RequestFrame( DoPlayerHooks, iClient );
 }
+void DoPlayerHooks( int iPlayer ) {
+	hTakeHealth.HookEntity( Hook_Pre, iPlayer, Hook_TakeHealth );
+	hOnKill.HookEntity( Hook_Post, iPlayer, Hook_OnPlayerKill );
+}
+
 public void OnClientDisconnect( int iClient ) {
 	ClearConds( iClient );
 }
@@ -204,11 +209,6 @@ MRESReturn Hook_OnPlayerKill( int iThis, DHookParam hParams ) {
 	CheckOnKillCond( iAttacker, iWeapon );
 
 	return MRES_Handled;
-}
-
-void DoPlayerHooks( int iPlayer ) {
-	hTakeHealth.HookEntity( Hook_Pre, iPlayer, Hook_TakeHealth );
-	hOnKill.HookEntity( Hook_Post, iPlayer, Hook_OnPlayerKill );
 }
 
 public void OnMapStart() {
@@ -597,7 +597,7 @@ static char szToxinParticle[] = "toxin_particles";
 int g_iToxinEmitters[MAXPLAYERS+1] = { -1, ... };
 
 bool AddToxin( int iPlayer ) {
-	EmitSoundToAll( "items/powerup_pickup_plague_infected_loop.wav",  iPlayer, SNDCHAN_STATIC );
+	EmitSoundToAll( "items/powerup_pickup_plague_infected_loop.wav",  iPlayer );
 
 	SetCondDuration( iPlayer, TFCC_TOXIN, 0.0, false );
 
@@ -651,13 +651,14 @@ void TickToxin( int iPlayer ) {
 }
 
 void RemoveToxin( int iPlayer ) {
-	StopSound( iPlayer, SNDCHAN_STATIC, "items/powerup_pickup_plague_infected_loop.wav" );
+	StopSound( iPlayer, 0, "items/powerup_pickup_plague_infected_loop.wav" );
 	RemoveToxinEmitter( iPlayer );
 }
 
 float flHealthBuffer[MAXPLAYERS+1] = { 0.0, ... }; //buffer for health cut off by rounding
 //name is misleading, TakeHealth is used to RESTORE health because valve
 MRESReturn Hook_TakeHealth( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	//PrintToServer("test");
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Ignored;
 
@@ -674,7 +675,10 @@ MRESReturn Hook_TakeHealth( int iThis, DHookReturn hReturn, DHookParam hParams )
 	int iRoundedHealth = RoundToFloor( flAddHealth );
 	flHealthBuffer[ iThis ] = flAddHealth - float( iRoundedHealth );
 
-	hParams.Set( 1, flAddHealth );
+#if defined DEBUG
+	PrintToServer("healtest: %f", float( iRoundedHealth ) );
+#endif
+	hParams.Set( 1, float( iRoundedHealth ) );
 
 	return MRES_ChangedHandled;
 }
