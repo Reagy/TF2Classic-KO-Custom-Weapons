@@ -26,31 +26,6 @@ from pathlib import PurePosixPath
 
 from typing import Dict
 
-
-classic_files : set = set()
-live_files : set = set()
-pakfile_files : set = set()
-userinc_files : set = set() #extra user provided files in case the tool can't find these in live
-
-models_dependencies :		set = set()	#models
-tex_vmt_dependencies :		set = set()	#vmt files
-tex_vtf_dependencies :		set = set()	#vtf files
-sound_dependencies : 		set = set()	#raw wav/mp3 files
-soundscript_dependencies :	set = set()	#soundscript entries
-particle_dependencies :		set = set()	#particles
-
-soundscript_keys_classic : Dict = {}
-soundscript_keys_live : Dict = {}
-soundscript_keys_unpack : Dict = {}
-
-particle_keys_live : Dict = {}
-particle_keys_classic : Dict = {}
-particle_keys_unpack : Dict = {}
-
-retrieve : set = set()
-particle_retrieve : set = set()
-soundscript_retrieve : dict = dict()
-
 def populate_from_folder( folder : str, output : set ):
 	for root, dirs, files in os.walk(folder, topdown=True): 
 		for name in files:
@@ -272,7 +247,7 @@ def check_present_soundscript( scripts : dict ):
 			else:
 				print("not found in soundscript sets:", key)
 
-def handle_level_sounds():
+def handle_level_sounds( mapstr : str ):
 	kvfile : VDFDict
 	try:
 		with open( ".\\unzip\\maps\\" + mapstr + "_level_sounds.txt", "r" ) as levelsounds_existing:
@@ -331,7 +306,7 @@ def check_present_particles( particles : Dict, should_retrieve : bool, dependenc
 
 	dependency -= removelist
 
-def handle_level_particles():
+def handle_level_particles( mapstr : str ):
 	kvfile : VDFDict
 	with open( ".\\unzip\\maps\\" + mapstr + "_particles.txt", "r" ) as script:
 		kvfile = vdf.parse( script, VDFDict, False, False )
@@ -344,134 +319,176 @@ def handle_level_particles():
 	with open( ".\\unzip\\maps\\" + mapstr + "_particles.txt", "w" ) as script:
 		vdf.dump( kvfile, script, True, False )
 
+def parse_map( filepath : str ):
+	map_filepath : str = filepath
+	map_filename : str = os.path.basename( filepath )
+	map_name : str = map_filename.removesuffix( ".bsp" )
+	map_newname : str = map_name + "_tf2c"
 
 
-fsys = get_filesystem(".")
+	subprocess.run( [ bspzip_path, "-repack", map_filepath ] )
 
-mapstr : str = input("Enter the name of the target file (without extension):")
-newmapstr : str = input("Enter the name of the output file (without extension):")
-mapname : str = mapstr + ".bsp"
+	map = bsp_tool.load_bsp( map_filename )
 
-mappath_raw : str = os.path.abspath( ".\\" + mapname )
+	if os.path.isdir( ".\\unzip" ):
+		shutil.rmtree( ".\\unzip" )
 
-subprocess.run( [ "G:\\SteamLibrary\\steamapps\\common\\Team Fortress 2\\bin\\bspzip.exe", "-repack", mappath_raw ] )
+	print("Extracting pakfile")
+	pakfile = map.PAKFILE
+	pakfile.extractall( ".\\unzip" )
 
-map = bsp_tool.load_bsp( mapname )
+	print( "Scanning content" )
+	populate_from_folder( ".\\unzip", pakfile_files )
 
-if os.path.isdir( ".\\unzip" ):
-	shutil.rmtree( ".\\unzip" )
+	print("Gathering dependencies")
+	for retrieve_item in map.ENTITIES:
+		if "classname" in retrieve_item:
+			parse_entity( retrieve_item )
+		else:
+			print("entity with no classname?", retrieve_item)
 
-print("Extracting pakfile")
-pakfile = map.PAKFILE
-pakfile.extractall( ".\\unzip" )
+	for texture in map.TEXTURE_DATA_STRING_DATA:
+		tex_vmt_dependencies.add( path_fix( texture, ".vmt", "materials/" ) )
 
-print( "Scanning content" )
+	#clear lists of present files
+	for model in models_dependencies:
+		model_get_textures( model )
+
+	for vmt in tex_vmt_dependencies:
+		parse_vmt( vmt )
+
+	check_present( models_dependencies )
+
+	check_present_particles( particle_keys_unpack, False, particle_dependencies )
+	check_present_particles( particle_keys_classic, False, particle_dependencies )
+	check_present_particles( particle_keys_live, True, particle_dependencies )
+
+	check_present( tex_vmt_dependencies )
+
+	check_present( tex_vtf_dependencies )
+
+	populate_soundscripts( pakfile_files, soundscript_keys_unpack, ".\\unzip\\" )
+
+	check_present_soundscript( soundscript_keys_unpack )
+	check_present_soundscript( soundscript_keys_classic )
+	check_present_soundscript( soundscript_keys_live )
+
+	check_present( sound_dependencies )
+
+	handle_level_sounds( map_name )
+	handle_level_particles( map_name )
+
+	filelist : str = os.path.abspath( ".\\addlist.txt" )
+	mappath_output : str = os.path.abspath( ".\\" + map_newname + ".bsp" )
+
+	copylist : set = set()
+
+	try:
+		for folder_name, sub_folders, file_names in os.walk( ".\\unzip\\maps" ):
+			for file in file_names:
+				if map_name in file and file.endswith(".txt"):
+					copylist.add( os.path.join( folder_name, file ) )
+					#os.rename( os.path.join( folder_name, file ), os.path.join( folder_name, file.replace( mapstr, newmapstr ) ) )
+
+		for folder_name, sub_folders, file_names in os.walk( ".\\unzip\\materials\\maps" ):
+			if folder_name == ".\\unzip\\materials\\maps\\" + map_name:
+				for retrieve_item in file_names:
+					if retrieve_item.endswith(".vtf"):
+						copylist.add( os.path.join( folder_name, retrieve_item ) )
+
+		for folder_name, sub_folders, file_names in os.walk( ".\\unzip\\scripts" ):
+			for retrieve_item in file_names:
+				if retrieve_item.startswith("soundscapes") and retrieve_item.endswith(".txt"):
+					copylist.add( os.path.join( folder_name, retrieve_item ) )
+	except FileNotFoundError:
+		print("file not found")
+
+	extlist : set = set( { "vvd", "dx90.vtx", "phy" } )
+
+	retrieve_extend : set = set()
+
+	#grab other model files (vtx, phy, etc)
+	for retrieve_item in retrieve:
+		if retrieve_item.endswith( ".mdl" ):
+			foldername = os.path.abspath( ".\\live\\" + os.path.dirname( retrieve_item ) )
+			modellist = [ f for f in os.listdir(foldername) if os.path.isfile( os.path.join( foldername, f ) ) ]
+			split = os.path.splitext( os.path.basename(retrieve_item) )
+			for j in modellist:
+				split2 = j.split( ".", 1 )
+				if split2[0] == split[0] and split2[1] in extlist:
+					retrieve_extend.add( os.path.join( os.path.dirname( retrieve_item ) + "\\" + j ) )
+
+	retrieve.update( retrieve_extend )
+
+	sortlist : list = list()
+
+	print("files to retrieve --------------------")
+	for retrieve_item in retrieve:
+		sortlist.append(retrieve_item)
+
+	sortlist.sort()
+	for retrieve_item in sortlist:
+		print(retrieve_item)
+
+	with open( "addlist.txt", "w" ) as addlist:
+		for file in retrieve:
+			addlist.write( file + "\n" )
+			addlist.write( os.path.abspath( ".\\live\\" + file + "\n" ) )
+			
+		for file2 in copylist:
+			addlist.write( file2.replace( map_name, map_newname ).removeprefix(".\\unzip\\") + "\n" )
+			addlist.write( os.path.abspath( file2 ) + "\n" )
+
+	subprocess.run( [ bspzip_path, "-addorupdatelist", map_filepath, filelist, mappath_output ] )
+
+classic_files : set = set()
+live_files : set = set()
+pakfile_files : set = set()
+
+models_dependencies :		set = set()	#models
+tex_vmt_dependencies :		set = set()	#vmt files
+tex_vtf_dependencies :		set = set()	#vtf files
+sound_dependencies : 		set = set()	#raw wav/mp3 files
+soundscript_dependencies :	set = set()	#soundscript entries
+particle_dependencies :		set = set()	#particles
+
+soundscript_keys_classic : Dict = {}
+soundscript_keys_live : Dict = {}
+soundscript_keys_unpack : Dict = {}
+
+particle_keys_live : Dict = {}
+particle_keys_classic : Dict = {}
+particle_keys_unpack : Dict = {}
+
+retrieve : set = set()
+particle_retrieve : set = set()
+soundscript_retrieve : dict = dict()
+
+bsplist : list = list()
+for file in os.listdir( ".\\bsp" ):
+	filepath : str = os.path.join( ".\\bsp", file )
+	if os.path.isfile( filepath ):
+		bsplist.append( filepath )
+
 populate_from_folder( ".\\classic", classic_files )
 populate_from_folder( ".\\live", live_files )
-populate_from_folder( ".\\unzip", pakfile_files )
 
-print("Gathering dependencies")
-for retrieve_item in map.ENTITIES:
-	if "classname" in retrieve_item:
-		parse_entity( retrieve_item )
-	else:
-		print("entity with no classname?", retrieve_item)
-
-for texture in map.TEXTURE_DATA_STRING_DATA:
-	tex_vmt_dependencies.add( path_fix( texture, ".vmt", "materials/" ) )
-
-#clear lists of present files
-for model in models_dependencies:
-	model_get_textures( model )
-
-for vmt in tex_vmt_dependencies:
-	parse_vmt( vmt )
-
-check_present( models_dependencies )
-
-check_present_particles( particle_keys_unpack, False, particle_dependencies )
-check_present_particles( particle_keys_classic, False, particle_dependencies )
-check_present_particles( particle_keys_live, True, particle_dependencies )
-
-check_present( tex_vmt_dependencies )
-
-check_present( tex_vtf_dependencies )
-
-populate_soundscripts( pakfile_files, soundscript_keys_unpack, ".\\unzip\\" )
 populate_soundscripts( classic_files, soundscript_keys_classic, ".\\classic\\" )
 populate_soundscripts( live_files, soundscript_keys_live, ".\\live\\" )
 
-check_present_soundscript( soundscript_keys_unpack )
-check_present_soundscript( soundscript_keys_classic )
-check_present_soundscript( soundscript_keys_live )
+fsys = get_filesystem(".")
 
-check_present( sound_dependencies )
+#G:\SteamLibrary\steamapps\common\Team Fortress 2\bin\bspzip.exe
+bspzip_path : str = input( "Enter the full path of BSPZIP.exe: " )
 
-handle_level_sounds()
-handle_level_particles()
+for i in bsplist:
+	for j in [ pakfile_files, models_dependencies, tex_vmt_dependencies, tex_vtf_dependencies, sound_dependencies, particle_dependencies, retrieve, particle_retrieve ]:
+		j.clear()
 
-filelist : str = os.path.abspath( ".\\addlist.txt" )
-mappath_output : str = os.path.abspath( ".\\" + newmapstr + ".bsp" )
+	for j in [ soundscript_keys_unpack, particle_keys_unpack, soundscript_retrieve ]:
+		j.clear()
 
-copylist : set = set()
-
-try:
-	for folder_name, sub_folders, file_names in os.walk( ".\\unzip\\maps" ):
-		for file in file_names:
-			if mapstr in file and file.endswith(".txt"):
-				copylist.add( os.path.join( folder_name, file ) )
-				#os.rename( os.path.join( folder_name, file ), os.path.join( folder_name, file.replace( mapstr, newmapstr ) ) )
-
-	for folder_name, sub_folders, file_names in os.walk( ".\\unzip\\materials\\maps" ):
-		if folder_name == ".\\unzip\\materials\\maps\\" + mapstr:
-			for retrieve_item in file_names:
-				if retrieve_item.endswith(".vtf"):
-					copylist.add( os.path.join( folder_name, retrieve_item ) )
-
-	for folder_name, sub_folders, file_names in os.walk( ".\\unzip\\scripts" ):
-		for retrieve_item in file_names:
-			if retrieve_item.startswith("soundscapes") and retrieve_item.endswith(".txt"):
-				copylist.add( os.path.join( folder_name, retrieve_item ) )
-except FileNotFoundError:
-	print("file not found")
-
-extlist : set = set( { "vvd", "dx90.vtx", "phy" } )
-
-retrieve_extend : set = set()
-
-#grab other model files (vtx, phy, etc)
-for retrieve_item in retrieve:
-	if retrieve_item.endswith( ".mdl" ):
-		foldername = os.path.abspath( ".\\live\\" + os.path.dirname( retrieve_item ) )
-		modellist = [ f for f in os.listdir(foldername) if os.path.isfile( os.path.join( foldername, f ) ) ]
-		split = os.path.splitext( os.path.basename(retrieve_item) )
-		for j in modellist:
-			split2 = j.split( ".", 1 )
-			if split2[0] == split[0] and split2[1] in extlist:
-				retrieve_extend.add( os.path.join( os.path.dirname( retrieve_item ) + "\\" + j ) )
-
-retrieve.update( retrieve_extend )
-
-sortlist : list = list()
-
-print("files to retrieve --------------------")
-for retrieve_item in retrieve:
-	sortlist.append(retrieve_item)
-
-sortlist.sort()
-for retrieve_item in sortlist:
-	print(retrieve_item)
-
-with open( "addlist.txt", "w" ) as addlist:
-	for file in retrieve:
-		addlist.write( file + "\n" )
-		addlist.write( os.path.abspath( ".\\live\\" + file + "\n" ) )
-		
-	for file2 in copylist:
-		addlist.write( file2.replace( mapstr, newmapstr ).removeprefix(".\\unzip\\") + "\n" )
-		addlist.write( os.path.abspath( file2 ) + "\n" )
-
-subprocess.run( [ "G:\\SteamLibrary\\steamapps\\common\\Team Fortress 2\\bin\\bspzip.exe", "-addorupdatelist", mappath_raw, filelist, mappath_output ] )
+	parse_map( i )
 
 """
 print("moving files to temp --------------------")

@@ -11,10 +11,10 @@ extract all contents of live tf2's .vpk files into it
 create a folder named "classic" in this folder
 extract all contents of tf2c's as well as the source sdk2013's .vpk files into it
 	
-move bsp file into this folder
+create a folder named "bsp" in this folder
+move all bsps into the new bsp folder
 
 run ClassicMapFix.py
-enter the name of the bsp file to repack
-enter the name of the repacked bsp file
+enter the filepath to BSPZIP.exe
 
-it should (hopefully) bundle all missing files into the bsp
+it should (hopefully) bundle all missing files into all the bsps
