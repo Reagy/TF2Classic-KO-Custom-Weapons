@@ -319,7 +319,7 @@ MRESReturn Hook_ShieldTakeDamage( int iThis, DHookReturn hReturn, DHookParam hPa
 	static char szBuffer[64];
 	if( iAttacker != -1 ) {
 		GetEntityClassname( iAttacker, szBuffer, sizeof( szBuffer ) );
-		if( StrContains( szBuffer, "func_tracktrain" ) ) {
+		if( StrContains( szBuffer, "func_tracktrain" ) == 0 ) {
 			hReturn.Value = 0;
 			return MRES_Supercede;
 		}
