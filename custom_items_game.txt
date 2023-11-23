@@ -6632,7 +6632,12 @@ Weapon by: 'Reagy'"
 				"airblast cannot push players"
 				{
 					"attribute_class"	"airblast_functionality_flags"
-					"value"				"6"
+					"value"				"4"
+				}
+				"Airblast no extinguish"
+				{
+					"attribute_class"	"dummy"
+					"value"				"1"
 				}
 				"Airblast no mini-crit"
 				{
@@ -36634,6 +36639,13 @@ Fan-Fire: Hold fire button for maximum destruction!"
 			"name"					"Flame Range Reduced"
 			"description_string"	"%s1% reduced flame range"												
 			"description_format"	"value_is_percentage"
+			"effect_type"			"negative"
+		}
+		"7602"
+		{
+			"name"					"Airblast no extinguish"
+			"description_string"	"Airblast cannot extinguish teammates"												
+			"description_format"	"value_is_additive"
 			"effect_type"			"negative"
 		}
 //clooey zone
