@@ -6576,6 +6576,117 @@ Weapon from: New Old Weapons Pack"
 //-----------------------------------
 		"3461"
 		{
+		    "name"						"TF_WEAPON_FLAME"
+			"prefab"					"weapon_flamethrower"
+			"show_in_armory"			"1"
+
+			"anim_slot"					"SECONDARY"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			"item_name"					"Flamed Feedback"
+			"item_type_name"			"Miniature Flame Thrower"
+			"item_description"			"Alt-Fire: Parry Projectiles
+
+Stylish...
+
+Model by: 'A Paint Bucket Named Huey'
+Animations by: 'Raptor Dan'
+Weapon by: 'Reagy'"
+			"item_logname"				"Flamed Feedback"
+			"item_iconname"				"Flamed Feedback"
+			"image_inventory"			"backpack/weapons/c_models/c_flame"			
+			"model_world"				"models/weapons/custom/c_models/c_flame.mdl"	
+			"model_player"				"models/weapons/v_models/v_parrythisbitch.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"pyro"					"1"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt02"						
+			}
+			"attributes"																		
+			{
+				"flame ammopersec decreased"
+				{
+					"attribute_class"	"mult_flame_ammopersec"
+					"value"				"0.6"
+				}
+				"flame size bonus"
+				{
+					"attribute_class"	"mult_flame_size"
+					"value"				"3.5"
+				}
+				"airblast cost decreased"																
+				{
+					"attribute_class"	"mult_airblast_cost"
+					"value"				"0"
+				}
+				"mult airblast refire time"
+				{
+					"attribute_class"	"mult_airblast_refire_time"
+					"value"				"0.85"
+				}
+				"airblast cannot push players"
+				{
+					"attribute_class"	"airblast_functionality_flags"
+					"value"				"6"
+				}
+				"Airblast no mini-crit"
+				{
+					"attribute_class"	"dummy"
+					"value"				"1"
+				}
+				"mod deflect no minicrit"
+				{
+					"attribute_class"	"mod_deflect_no_minicrit"
+					"value"				"1"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.50"
+				}
+				"Flame Range Reduced"
+				{
+					"attribute_class"	"mult_flame_velocity"
+					"value"				"0.65"
+				}
+				"maxammo primary reduced"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.336"
+				}				
+			}	
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_TearGasSpray.FireStart"
+				"sound_reload"			"Weapon_TearGasSpray.FireLoop"	
+				"sound_burst"			"Weapon_TearGasSpray.FireLoopCrit"
+				"sound_double_shot"		"EvictionNotice.Swing"
+				"animation_replacement" // Absolute mess
+				{
+					"ACT_MP_ATTACK_STAND_SECONDARYFIRE"			"ACT_MP_ATTACK_STAND_GRENADE"
+					"ACT_MP_ATTACK_CROUCH_SECONDARYFIRE"		"ACT_MP_ATTACK_STAND_GRENADE"
+					"ACT_MP_ATTACK_SWIM_SECONDARYFIRE"			"ACT_MP_ATTACK_STAND_GRENADE"
+					"ACT_MP_JUMP_START_PRIMARY"					"ACT_MP_JUMP_START_SECONDARY"
+					"ACT_MP_JUMP_FLOAT_PRIMARY"					"ACT_MP_JUMP_FLOAT_SECONDARY"
+					"ACT_MP_JUMP_END_PRIMARY"					"ACT_MP_JUMP_END_SECONDARY"
+					"ACT_MP_AIRWALK_PRIMARY"					"ACT_MP_AIRWALK_SECONDARY"
+					"ACT_MP_STAND_PRIMARY"						"ACT_MP_STAND_SECONDARY"
+					"ACT_MP_RUN_PRIMARY"						"ACT_MP_RUN_SECONDARY"
+					"ACT_MP_ATTACK_STAND_PRIMARY"				"ACT_MP_RUN_SECONDARY"					
+					"ACT_MP_CROUCH_PRIMARY"						"ACT_MP_CROUCH_SECONDARY"
+					"ACT_MP_CROUCHWALK_PRIMARY"					"ACT_MP_CROUCHWALK_SECONDARY"
+					"ACT_MP_ATTACK_CROUCH_PRIMARY"				"ACT_MP_CROUCHWALK_SECONDARY"
+					"ACT_MP_SWIM_PRIMARY"						"ACT_MP_SWIM_SECONDARY"
+					"ACT_MP_ATTACK_SWIM_PRIMARY"				"ACT_MP_SWIM_SECONDARY"
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //---------------------------------
 //---------------------------------
@@ -11630,7 +11741,7 @@ Item by: 'Reagy'"
 			"name"						"TF_WEAPON_HEAVY_SHEILD"
 			"prefab"				    "weapon_riot_shield"
 			"item_class"				"tf_weapon_riot"
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 			
 			"item_quality"				"rarity2"
 
@@ -26484,9 +26595,9 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"scout"				"1"
 			}
-			"static_attrs"
+            "static_attrs"
 			{
-				"class select override vcd"				"taunt02_v2"
+				"class select override vcd"				"class_select_nailgun"			
 			}
 			"attributes"
 			{
@@ -31172,8 +31283,8 @@ Weapon by 'The One Of Wonders'"
 			"name"							"TF_SCOUT_SPEEDBOOSTER"
 			"prefab"						"weapon_armor"
 
-			"bucket"					"0"														
-			"bucket_position"			"0"
+			"bucket"						"0"														
+			"bucket_position"				"0"
 			
 			"item_quality"					"rarity2"			
 						
@@ -31202,10 +31313,10 @@ Questioned by: 'The One Of Wonders'"
 			"act_as_wearable"				"1"
 			"attributes"
 			{
-				"move speed bonus"															// Has a bit of back-end to make the text appear right! This lowers movement speed while cloaked - opposite of the Tactical Retreat.
+				"move speed bonus"
 				{
 					"attribute_class"		"mult_player_movespeed"
-					"value"					"1.05"
+					"value"					"1.1"
 				}
 			    "increased jump height"													
 				{
@@ -36515,6 +36626,13 @@ Fan-Fire: Hold fire button for maximum destruction!"
 		{
 			"name"					"Move Speed Penalty Active"
 			"description_string"	"%s1% slower move speed while active"												
+			"description_format"	"value_is_percentage"
+			"effect_type"			"negative"
+		}
+		"7601"
+		{
+			"name"					"Flame Range Reduced"
+			"description_string"	"%s1% reduced flame range"												
 			"description_format"	"value_is_percentage"
 			"effect_type"			"negative"
 		}
