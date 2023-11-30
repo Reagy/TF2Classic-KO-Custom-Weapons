@@ -172,6 +172,8 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 
 	if( IsValidPlayer( iPlayer ) ) {
 		if( AttribHookFloat( 0.0, iPlayer, "custom_sphere" ) != 0.0 ) {
+			g_flShieldCooler[iPlayer] = GetGameTime();
+
 			Tracker_Create( iPlayer, SHIELDKEYNAME, false );
 			Tracker_SetMax( iPlayer, SHIELDKEYNAME, SHIELD_MAX );
 			Tracker_SetFlags( iPlayer, SHIELDKEYNAME, RTF_RECHARGES );
