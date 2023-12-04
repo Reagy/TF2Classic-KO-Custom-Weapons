@@ -515,7 +515,7 @@ methodmap TFDamageInfo {
 stock int TeamSeenBy( int iViewer, int iViewed ) {
 	int iViewerTeam = GetEntProp( iViewer, Prop_Send, "m_iTeamNum" );
 	int iViewedRealTeam = GetEntProp( iViewed, Prop_Send, "m_iTeamNum" );
-	int iViewedDisguiseTeam = GetEntProp( iViewer, Prop_Send, "m_nDisguiseTeam" );
+	int iViewedDisguiseTeam = GetEntProp( iViewed, Prop_Send, "m_nDisguiseTeam" );
 
 	//if viewed is undisguised or really is the viewer's team, show the real team
 	if( iViewedDisguiseTeam == 0 || iViewerTeam == iViewedRealTeam )
