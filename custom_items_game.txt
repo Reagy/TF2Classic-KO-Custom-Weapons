@@ -15615,7 +15615,11 @@ Reworked by: 'Colrot'"
 					"value" 			"1"
 				}
 				// hidden
-				"hidden separator"		"1"
+				"hidden separator"		
+				{
+					"attribute_class"	"hidden_separator"
+					"value"				"1"
+				}
 
 				"lifesteal crit"
 				{			
