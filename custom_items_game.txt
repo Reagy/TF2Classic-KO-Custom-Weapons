@@ -32017,8 +32017,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"Insanerator"
 			"item_type_name"			"Handheld Furnace"
 //Break//
-"item_description"			
-"'Choo Choo!'
+"item_description"			"'Choo Choo!'
   
 Model by: 'Sparkwire & Natko'
 Weapon from: Fred's Fight Starters"
