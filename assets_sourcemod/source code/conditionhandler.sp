@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name = "Condition Handler",
 	author = "Noclue",
 	description = "Core plugin for custom conditions.",
-	version = "1.1.2",
+	version = "1.1.3",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 

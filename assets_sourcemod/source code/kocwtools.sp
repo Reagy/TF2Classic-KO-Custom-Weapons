@@ -38,7 +38,12 @@ Handle hApplyPushFromDamage;
 
 Address offs_CTFPlayerShared_pOuter;
 Address offs_CTFPlayer_mShared;
+Address offs_CTFPlayer_pCurrentCommand;
 Address g_iCTFGameStats;
+Address g_iCLagCompensation;
+
+Handle hStartLagComp;
+Handle hEndLagComp;
 
 StringMap g_AllocPooledStringCache;
 
@@ -58,7 +63,7 @@ public Plugin myinfo =
 	name = "KOCW Tools",
 	author = "Noclue",
 	description = "Standard functions for custom weapons.",
-	version = "1.5",
+	version = "1.6.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -97,6 +102,9 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 	CreateNative( "SetSize", Native_SetSize );
 
 	CreateNative( "HealPlayer", Native_HealPlayer );
+
+	CreateNative( "StartLagCompensation", Native_StartLagComp );
+	CreateNative( "FinishLagCompensation", Native_EndLagComp );
 
 	RegPluginLibrary( "kocwtools" );
 
@@ -220,6 +228,18 @@ public void OnPluginStart() {
 	*/
 
 	g_iCTFGameStats = GameConfGetAddress( hGameConf, "CTFGameStats" );
+	g_iCLagCompensation = GameConfGetAddress( hGameConf, "CLagCompensationManager" );
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CLagCompensationManager::StartLagCompensation" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer );
+	hStartLagComp = EndPrepSDKCall();
+	
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CLagCompensationManager::FinishLagCompensation" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	hEndLagComp = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameStats::Event_PlayerHealedOther" );
@@ -256,6 +276,7 @@ public void OnPluginStart() {
 
 	offs_CTFPlayerShared_pOuter = GameConfGetAddressOffset( hGameConf, "CTFPlayerShared::m_pOuter" );
 	offs_CTFPlayer_mShared = GameConfGetAddressOffset( hGameConf, "CTFPlayer::m_Shared" );
+	offs_CTFPlayer_pCurrentCommand = GameConfGetAddressOffset( hGameConf, "CTFPlayer::m_pCurrentCommand" );
 
 	StartPrepSDKCall( SDKCall_EntityList );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CGlobalEntityList::FindEntityInSphere" );
@@ -346,7 +367,33 @@ public any Native_EntityInRadius( Handle hPlugin, int iParams ) {
 	OBJECT FUNCTIONS
 */
 
+//CreateNative( "StartLagCompensation", Native_StartLagComp );
+//CreateNative( "FinishLagCompensation", Native_EndLagComp );
 
+//lagcompensation->StartLagCompensation( pOwner, pOwner->GetCurrentCommand() );
+//lagcompensation->FinishLagCompensation( pOwner );
+
+public any Native_StartLagComp( Handle hPlugin, int iParams ) {
+	int iPlayer = GetNativeCell( 1 );
+	if( !IsValidPlayer( iPlayer ) )
+		return 0;
+
+	Address aUserCmd = GetEntityAddress( iPlayer ) + offs_CTFPlayer_pCurrentCommand;
+	PrintToServer("testing start: %i %i", g_iCLagCompensation, aUserCmd );
+	SDKCall( hStartLagComp, g_iCLagCompensation, iPlayer, aUserCmd );
+
+	return 0;
+}
+public any Native_EndLagComp( Handle hPlugin, int iParams ) {
+	int iPlayer = GetNativeCell( 1 );
+	if( !IsValidPlayer( iPlayer ) )
+		return 0;
+
+	PrintToServer("testing end: %i", g_iCLagCompensation );
+	SDKCall( hEndLagComp, g_iCLagCompensation, iPlayer );
+
+	return 0;
+}
 
 
 //native void	SetSolid( int iEntity, iSolid );
@@ -606,11 +653,7 @@ static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 
 //TakeDamageInfo offsets
 
-enum {
-	DMG_CRITICAL = 20,
-	DMG_USEDISTANCEMOD = 21,
-
-}
+#define DMB_CRITICAL 20
 
 //forward void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo );
 MRESReturn Hook_OnTakeDamagePre( int iThis, DHookReturn hReturn, DHookParam hParams ) {

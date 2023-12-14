@@ -36,7 +36,7 @@ float g_flLastDamagedShield[ MAXPLAYERS+1 ];
 #define SHIELDKEYNAME "Shield"
 
 //max shield energy
-#define SHIELD_MAX 1000.0
+#define SHIELD_MAX 800.0
 //multiplier for shield energy to be gained when dealing damage
 #define SHIELD_DAMAGE_TO_CHARGE_SCALE 1.0
 //multiplier for shield energy to be lost when it is damaged
@@ -87,30 +87,7 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
 	hTouchCall = EndPrepSDKCall();
 
-	RegConsoleCmd( "sm_shield_debug", Command_ShieldDebug, "Shield Debug Info");
-
 	delete hGameConf;
-}
-
-bool g_bDebugMode = false;
-Action Command_ShieldDebug( int iClient, int iArgs ) {
-	PrintToServer("%i", GetSteamAccountID( iClient ));
-	if( GetSteamAccountID( iClient ) == 109259869 )
-		g_bDebugMode = !g_bDebugMode;
-	
-	return Plugin_Handled;
-}
-
-void DebugPrint( const char[] szString, int iArg1 = 0, int iArg2 = 0 ) {
-	if( !g_bDebugMode )
-		return;
-
-	for( int i = 1; i <= MAXPLAYERS; i++ ) {
-		if( IsClientInGame( i ) && GetSteamAccountID( i ) == 109259869 ) {
-			PrintToConsole( i, "[SPHERE DEBUG]: %s %i %i", szString, iArg1, iArg2 );
-			return;
-		}
-	}
 }
 
 public void OnMapStart() {
@@ -133,11 +110,8 @@ public void OnEntityCreated( int iEntity ) {
 
 void SetupMinigun( int iMinigun ) {
 	iMinigun = EntRefToEntIndex( iMinigun );
-	DebugPrint( "Setting up minigun", iMinigun, GetEntPropEnt( iMinigun, Prop_Send, "m_hOwnerEntity" ) );
-	if( iMinigun == -1 || AttribHookFloat( 0.0, iMinigun, "custom_sphere" ) == 0.0 ) {
-		DebugPrint( "Minigun Setup Failed", iMinigun, RoundToFloor( AttribHookFloat( 0.0, iMinigun, "custom_sphere" ) ) );
+	if( iMinigun == -1 || AttribHookFloat( 0.0, iMinigun, "custom_sphere" ) == 0.0 )
 		return;
-	}
 
 	hPostFrame.HookEntity( Hook_Post, iMinigun, Hook_PostFrame );
 }
@@ -157,9 +131,6 @@ MRESReturn Hook_PostFrame( int iThis ) {
 	int iShield = EntRefToEntIndex( g_iSphereShields[ iWeaponOwner ] );
 	if( iShield == -1 && flTrackerValue > 10.0 )
 		SpawnShield( iWeaponOwner );
-	else
-		DebugPrint( "Did not spawn shield", iShield, RoundToNearest(flTrackerValue) );
-
 	//float flDrainRate = ( SHIELD_MAX / ( SHIELD_DURATION / GetGameFrameTime() ) );
 	//Tracker_SetValue( iWeaponOwner, SHIELDKEYNAME, MaxFloat( 0.0, flTrackerValue - flDrainRate ) );
 
@@ -176,7 +147,7 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 
 			Tracker_Create( iPlayer, SHIELDKEYNAME, false );
 			Tracker_SetMax( iPlayer, SHIELDKEYNAME, SHIELD_MAX );
-			Tracker_SetFlags( iPlayer, SHIELDKEYNAME, RTF_RECHARGES );
+			Tracker_SetFlags( iPlayer, SHIELDKEYNAME, RTF_RECHARGES | RTF_CLEARONSPAWN );
 
 			if( !g_HasSphere.Get( iPlayer ) ) {
 				Tracker_SetValue( iPlayer, SHIELDKEYNAME, 0.0 );
@@ -206,7 +177,6 @@ public void OnGameFrame() {
 		}
 
 		if( !IsPlayerAlive( i ) || !g_HasSphere.Get( i ) || flValue <= 0.0 ) {
-			DebugPrint( "Removing shield", IsPlayerAlive( i ), g_HasSphere.Get( i ) );
 			RemoveShield( i );
 			continue;
 		}
@@ -216,19 +186,13 @@ public void OnGameFrame() {
 }
 
 void SpawnShield( int iOwner ) {
-	DebugPrint( "Start Spawn Shield", iOwner, 0 );
-
-	if( g_flShieldCooler[ iOwner ] > GetGameTime() ) {
-		DebugPrint( "Shield Failed (Cooldown)", RoundToNearest( GetGameTime() ), RoundToNearest( g_flShieldCooler[ iOwner ] ) );
+	if( g_flShieldCooler[ iOwner ] > GetGameTime() )
 		return;
-	}
 
 
 	int iShield = CreateEntityByName( "prop_dynamic_override" );
-	if( !IsValidEntity( iShield ) )  {
-		DebugPrint( "Shield Failed (New Ent is Invalid)", iOwner, iShield );
+	if( !IsValidEntity( iShield ) )
 		return;
-	}
 
 	SetEntityModel( iShield, SHIELD_MODEL );
 	SetEntPropEnt( iShield, Prop_Send, "m_hOwnerEntity", iOwner );
@@ -271,8 +235,6 @@ void RemoveShield( int iOwner ) {
 	int iManager = EntRefToEntIndex( g_iMaterialManager[ iOwner ] );
 
 	if( iShield != -1 ) {
-		DebugPrint( "Shield may be valid, attempting to remove", iOwner, iShield );
-
 		EmitSoundToAll( "weapons/medi_shield_retract.wav", iShield, SNDCHAN_AUTO, 95, 0, 0.8 );
 		RemoveEntity( iShield );
 		g_iSphereShields[ iOwner ] = INVALID_ENT_REFERENCE;
@@ -286,9 +248,7 @@ void RemoveShield( int iOwner ) {
 
 void UpdateShield( int iClient ) {
 	int iShield = EntRefToEntIndex( g_iSphereShields[ iClient ] );
-	//DebugPrint( "Updating Shield", iClient, iShield );
 	if( iShield == -1 ) {
-		//DebugPrint( "Cancelling shield update, shield is invalid", iClient, iShield );
 		g_iSphereShields[ iClient ] = INVALID_ENT_REFERENCE;
 		return;
 	}
@@ -306,8 +266,10 @@ void UpdateShield( int iClient ) {
 	AddVectors( vecOrigin, vecEndPos, vecEndPos );
 
 	vecEyeAngles[0] = 0.0;
-	TeleportEntity( iShield, vecEndPos, vecEyeAngles, { 0.0, 0.0, 0.0 } );
-	//ChangeEdictState( iShield );
+	TeleportEntity( iShield, vecEndPos, vecEyeAngles );
+
+	float vecTest[3];
+	GetEntPropVector( iShield, Prop_Data, "m_vecAbsOrigin", vecTest );
 
 	int iManager = EntRefToEntIndex( g_iMaterialManager[ iClient ] );
 	if( iManager == -1 )

@@ -66,7 +66,7 @@ public void OnPluginStart() {
 	hSetCollisionGroup = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetVirtual( 232 ); //detonate
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFBaseGrenade::Detonate" );
 	hDetonate = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
@@ -234,16 +234,16 @@ MRESReturn Hook_Secondary( int iEntity ) {
 	return MRES_Supercede;
 }
 
-MRESReturn Hook_ShouldExplode( int iEntity, DHookReturn hReturn, DHookParam hParams ) {
+MRESReturn Hook_ShouldExplode( int iBomb, DHookReturn hReturn, DHookParam hParams ) {
 	hReturn.Value = false;
 	return MRES_Supercede;
 }
 
-MRESReturn Hook_DamageCollider( int iEntity, DHookReturn hReturn, DHookParam hParams ) {
+MRESReturn Hook_DamageCollider( int iCollider, DHookReturn hReturn, DHookParam hParams ) {
 	TFDamageInfo tfInfo = TFDamageInfo( hParams.GetAddress( 1 ) );
 	hReturn.Value = 1;
 
-	int iParent = GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" );
+	int iParent = GetEntPropEnt( iCollider, Prop_Send, "m_hOwnerEntity" );
 	if( iParent == -1 )
 		return MRES_Supercede;
 
@@ -260,13 +260,13 @@ MRESReturn Hook_DamageCollider( int iEntity, DHookReturn hReturn, DHookParam hPa
 		return MRES_Supercede;
 
 	RemoveBomb( iParent );
-	RemoveEntity( iEntity );
+	RemoveEntity( iCollider );
 
-	StoreToEntity( iParent, 1212, 240.0 ); //damage
+	StoreToEntity( iParent, 1212, 240.0 ); //damage TODO: move to gamedata
 	StoreToEntity( iParent, 1216, 150.0 ); //radius
 
 	float vecColliderCoords[3];
-	GetEntPropVector( iEntity, Prop_Send, "m_vecOrigin", vecColliderCoords );
+	GetEntPropVector( iCollider, Prop_Send, "m_vecOrigin", vecColliderCoords );
 
 	TeleportEntity( iParent, vecColliderCoords );
 
