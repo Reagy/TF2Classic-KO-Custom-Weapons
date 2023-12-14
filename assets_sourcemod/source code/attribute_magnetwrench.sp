@@ -42,7 +42,7 @@ public void OnPluginStart() {
 	hDroppedTouch = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CItem::ItemTouch" );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CItem::ItemTouch" );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
 	hAmmoPackTouch = EndPrepSDKCall();
 
@@ -285,10 +285,6 @@ bool CheckLOS( const float vecStart[3], const float vecEnd[3], int iEntity ) {
 
 bool LOSFilter( int iEntity, int iMask, any data ) {
 	return !(iEntity <= MaxClients);
-	//if( iEntity <= MaxClients )
-		//return false;
-
-	//return true;
 }
 
 void PickupAmmoBox( int iAmmo, int iClient ) {
@@ -370,24 +366,28 @@ void CreateParticles( int iOrigin, int iTarget, int iType = 0 ) {
 	float vecTarget[3];
 	GetEntPropVector( iTarget, Prop_Data, "m_vecAbsOrigin", vecTarget );
 
-	if( iType == AMMO_DISPENSER )
+	if( iType == AMMO_DISPENSER ) {
 		ParentModel( iParticles[0], iTarget, "build_point_0" );
+	}
 	else if( iType == AMMO_WORLD ) {
 		vecTarget[2] += 25.0;
 		TeleportEntity( iParticles[0], vecTarget );
 	}
-	else
+	else {
 		TeleportEntity( iParticles[0], vecTarget );
+	}
 
 	SetEntPropEnt( iParticles[0], Prop_Send, "m_hControlPointEnts", iOrigin, 0 );
 	DispatchSpawn( iParticles[0] );
 	ActivateEntity( iParticles[0] );
 	AcceptEntityInput( iParticles[0], "Start" );
 
-	TeleportEntity( iParticles[1], vecTarget );
 	DispatchSpawn( iParticles[1] );
 	ActivateEntity( iParticles[1] );
 	AcceptEntityInput( iParticles[1], "Start" );
+	TeleportEntity( iParticles[1], vecTarget );
+
+	GetEntPropVector( iParticles[1], Prop_Data, "m_vecAbsOrigin", vecTarget );
 
 	CreateTimer( 0.1, DeletThis, EntIndexToEntRef( iParticles[0] ), TIMER_FLAG_NO_MAPCHANGE );
 	CreateTimer( 0.1, DeletThis, EntIndexToEntRef( iParticles[1] ), TIMER_FLAG_NO_MAPCHANGE );
