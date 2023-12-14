@@ -104,10 +104,10 @@ def model_get_textures( model_name : str ):
 #keys that point to textures
 texturekeys : set = { "$basetexture", "$basetexture2",
 		      "$detail", "$detail1", "$detail2",
-		      "$bumpmap", "$bumpmap2", "$bumpmask" 
+		      "$bumpmap", "$bumpmap2", "$bumpmask",
 		      "$phongexponenttexture", "$phongwarptexture", 
-		      "$envmapmask", "$selfilluimmask", "$selfillumtexture"
-		      "$lightwarptexture", "$ambientocclcolor", "$blendmodulatetexture" }
+		      "$envmapmask", "$selfillummask", "$selfillumtexture",
+		      "$lightwarptexture", "$ambientoccltexture", "$blendmodulatetexture" }
 
 def parse_vmt( vmt_path : str ):
 	if vmt_path.startswith("*"):
