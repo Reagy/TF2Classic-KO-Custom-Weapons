@@ -11742,7 +11742,7 @@ Item by: 'Reagy'"
 			"name"						"TF_WEAPON_HEAVY_SHEILD"
 			"prefab"				    "weapon_riot_shield"
 			"item_class"				"tf_weapon_riot"
-			"show_in_armory"			"0" // Oops
+			"show_in_armory"			"1" // FIGSED!
 			
 			"item_quality"				"rarity2"
 
