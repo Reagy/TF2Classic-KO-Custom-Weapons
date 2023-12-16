@@ -1,0 +1,42 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\weapons\c_items\c_nitrobottle\c_nitrobottle_blue"
+
+	"$phong" "1"
+	"$phongexponent" "30"
+	"$phongboost" "0.8"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[1.5 .5 3]"
+	"halflambert" "1"
+	"$basemapalphaphongmask" "1"
+	
+	"$rimlight" "1"
+	"$rimlightexponent" "30"	
+	"$rimlightboost" "0.5"
+
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

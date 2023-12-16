@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_scatterbrain/c_scatterbrain_large"
+	$translucent 1
+}
