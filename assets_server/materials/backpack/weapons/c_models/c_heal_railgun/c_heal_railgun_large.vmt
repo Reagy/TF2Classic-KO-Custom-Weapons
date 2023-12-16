@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_heal_railgun\c_heal_railgun_large"
+	$translucent 1
+}

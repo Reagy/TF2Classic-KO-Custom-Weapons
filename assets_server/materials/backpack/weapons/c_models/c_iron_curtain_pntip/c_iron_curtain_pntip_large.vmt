@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_iron_curtain_pntip\c_iron_curtain_pntip_large"
+	$translucent 1
+}

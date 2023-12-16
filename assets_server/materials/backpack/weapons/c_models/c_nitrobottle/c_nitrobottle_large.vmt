@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_nitrobottle\c_nitrobottle_large"
+	$translucent 1
+}
