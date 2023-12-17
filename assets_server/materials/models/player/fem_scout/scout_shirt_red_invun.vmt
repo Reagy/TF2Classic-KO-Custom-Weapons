@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\player\shared\red_invun.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\player\fem_scout\scout_shirt_red"
+	}
+}

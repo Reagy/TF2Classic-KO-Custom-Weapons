@@ -1,0 +1,51 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/player/administrator/admin_body_blue"
+	"$bumpmap" "models/player/administrator/admin_body_n"
+
+	"$yellow" "0"
+	"$one" "1"
+
+	"$phong" "1"
+	"$phongexponenttexture" "models/player/administrator/admin_body_expo"
+	"$phongboost" "7"	
+	"$phongalbedotint" "1"	
+	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+	"$phongfresnelranges"	"[.3 1 8]"
+	"$halflambert" "0"
+
+	// Rim lighting parameters
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "4"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "2"										// Boost for ambient cube component of rim lighting
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+
+	"360?$color2" "[ 0.9 0.8 0.8 ]"
+	"Proxies"
+	{
+		"spy_invis"
+		{
+		}
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$detail"
+			"animatedtextureframenumvar" "$detailframe"
+			"animatedtextureframerate" 30
+		}
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Equals"
+		{
+			"srcVar1" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}

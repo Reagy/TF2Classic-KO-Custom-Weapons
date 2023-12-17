@@ -1,0 +1,54 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\player\fem_scout\fem_scout_red"
+	"$bumpmap" "models/player/shared/shared_normal" //No point, normal map didn't affect hands or hats.
+
+	"$detail" "effects/tiledfire/fireLayeredSlowTiled512.vtf"	
+	"$detailscale" "5"
+	"$detailblendfactor" .01
+	"$detailblendmode" 6
+
+	"$yellow" "0"
+	"$one" "1"
+
+	"$phong" "1"
+	"$phongboost" "0.05"
+	"$phongexponenttexture" "models/player/fem_scout/scout_phongexponent" //Hat needs its own texture, aaaaaaaaaaa
+	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+	"$phongfresnelranges"	"[.3 1 8]"
+	"$halflambert" "0"
+		
+	"$rimlight" "1"
+	"$rimlightexponent" "4"
+	"$rimlightboost" "0"
+	"$rimmask" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"spy_invis"
+		{
+		}
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$detail"
+			"animatedtextureframenumvar" "$detailframe"
+			"animatedtextureframerate" 30
+		}
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$yellow"
+			"resultVar" "$color2"
+		}
+
+	}
+}
