@@ -1,0 +1,29 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\weapons\c_items\xsniper"
+	"$bumpmap" "models/weapons/c_items/c_urinejar_glass_phongmask"
+	"$additive"	1
+
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.3 .2 .2]"
+
+	"$phong" "1"
+	"$phongexponent" "35"
+	"$phongfresnelranges" "[1 2 4]"
+	"$lightwarptexture" "models/lightwarps/jarate_lightwarp"
+	"$phongboost" "10"
+
+	"$rimlight" "1"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" "2"
+	
+	"$model" "1"
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"spy_invis"
+		{
+		}
+	}
+}
