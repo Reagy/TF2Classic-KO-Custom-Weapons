@@ -34092,7 +34092,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Insanerator"
 			"item_type_name"			"Handheld Furnace"
-            "item_description"			"'Choo Choo!'
+            "item_description"			"
+'Choo Choo!'
   
 Model by: 'Sparkwire, Natko'
 Weapon By: 'The One Of Wonders'"
