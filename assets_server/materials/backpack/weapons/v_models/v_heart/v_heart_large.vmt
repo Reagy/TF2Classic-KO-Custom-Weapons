@@ -1,6 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" "backpack/weapons/v_models/v_heart/v_heart_large"
-	"$translucent" 1
-	$vertexcolor 1
-}

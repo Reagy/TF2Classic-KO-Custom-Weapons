@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models\weapons\V_knife\v_eosd_knife.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models\weapons\V_knife\v_eosd_knife_bloody"
-	}
-}
