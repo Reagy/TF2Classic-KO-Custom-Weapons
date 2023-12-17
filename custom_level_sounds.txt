@@ -13750,9 +13750,22 @@
 	"volume"	"1.0"
 	"rndwave"
 	{
+	    "wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
 		"wave"		"weapons/civ_charge_crude.wav"
 		"wave"		"weapons/civ_charge_crude1.wav"
-
 	}
 }
 
@@ -14334,4 +14347,89 @@
 	"volume"	"1.0"
 	"pitch"		"95, 101"
 	"wave"		")weapons/FireArm_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// PISSER
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_source.shoot"
+{
+		"channel"		"CHAN_STATIC"
+		"soundlevel"	"SNDLV_74dB"
+		"volume"		"1"
+		"rndwave"
+		{
+			"wave"		")weapons/source/urine1.wav"
+			"wave"		")weapons/source/urine2.wav"
+			"wave"		")weapons/source/urine3.wav"
+			"wave"		")weapons/source/urine4.wav"
+			"wave"		")weapons/source/urine5.wav"
+		}
+}
+
+"Draw.Zipper"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		"1.0"
+	"rndwave"
+	{
+		"wave"		")weapons\draw_zipper.wav"
+		"wave"		")weapons\holster_zipper.wav"
+	}
+}
+"PostalDude.TimeToTakeAPiss" // TimeToTakeAPiss
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_95dB"
+	"rndwave"
+	{
+		"wave"		"vo/postal_cantbegoodbut.wav"
+		"wave"		"vo/postal_flowers.wav"
+		"wave"		"vo/postal_needtopiss.wav"
+		"wave"		"vo/postal_ohyeah1.wav"
+		"wave"		"vo/postal_ohyeah2.wav"
+		"wave"		"vo/postal_takealeak.wav"
+	}
+}
+
+// ------------------------------------------------------------------------------------ //
+// PETITION
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_postalpet.swing"
+{
+		"channel"		"CHAN_STATIC"
+		"soundlevel"	"SNDLV_74dB"
+		"volume"		"1"
+		"rndwave"
+		{
+			"wave"		")weapons/postal_pet/postal_pet_swing1.wav"
+			"wave"		")weapons/postal_pet/postal_pet_swing2.wav"
+			"wave"		")weapons/postal_pet/postal_pet_swing4.wav"
+		}
+}
+"Weapon_postalpet.hit"
+{
+		"channel"		"CHAN_STATIC"
+		"soundlevel"	"SNDLV_74dB"
+		"volume"		"1"
+		"rndwave"
+		{
+			"wave"		")weapons/postal_pet/postal_pet_hit.wav"
+		}
+}
+"Weapon_postalpet.hitworld"
+{
+		"channel"		"CHAN_STATIC"
+		"soundlevel"	"SNDLV_74dB"
+		"volume"		"1"
+		"rndwave"
+		{
+			"wave"		")weapons/postal_pet/postal_hit1.wav"
+			"wave"		")weapons/postal_pet/postal_hit2.wav"
+			"wave"		")weapons/postal_pet/postal_hit3.wav"
+		}
 }

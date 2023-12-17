@@ -2,7 +2,7 @@ written in python 3.12, idfk compatability with other versions
 
 install the following python libraries with the terminal
 	pip install vdf
-	pip install bsp_tool
+	pip install --upgrade https://github.com/snake-biscuits/bsp_tool/tarball/master
 	pip install srctools
 	
 create a folder named "live" in this folder

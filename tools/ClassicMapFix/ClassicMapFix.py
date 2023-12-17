@@ -127,18 +127,36 @@ def parse_vmt( vmt_path : str ):
 		print("---------------------------")
 		return
 
-	qcfile : dict
-	with open( new_path, "r" ) as vmt:
-		qcfile = vdf.parse( vmt, dict, True, False )
+	qcfile : dict = modders_are_stupid( vmt_path.replace( "/", "\\" ), new_path, dict, True, False )
 	
 	for tex in qcfile:
 		for k, v in qcfile[tex].items():
 			if k.lower() in texturekeys:
 				tex_vtf_dependencies.add( path_fix( v, ".vtf", "materials\\" ) )
 
+def modders_are_stupid( local_path, full_path, mapper = dict, merge_duplicate_keys = True, escaped = True ) -> dict:
+	try:
+		with open( full_path, "r" ) as vmt:
+			return vdf.parse( vmt, mapper, merge_duplicate_keys, escaped )
+	except SyntaxError:
+		try:
+			override_path : str = ".\\override\\" + local_path
+			with open( override_path, "r" ) as vmt:
+				return vdf.parse( vmt, mapper, merge_duplicate_keys, escaped )
+		except FileNotFoundError:
+			try:
+				shutil.copy2( full_path, ".\\override\\" + local_path )
+			except FileNotFoundError:
+				os.makedirs( os.path.dirname( ".\\override\\" + local_path ) )
+				shutil.copy2( full_path, ".\\override\\" + local_path )
+			dummy = input( f"{local_path} is formatted incorrectly and was copied to the override folder, edit this file and press enter" )
+			return modders_are_stupid( local_path, full_path )
+		except SyntaxError:
+			dummy = input( f"{local_path} is formatted incorrectly and was copied to the override folder, edit this file and press enter" )
+			return modders_are_stupid( local_path, full_path )
+
 propentities : set = { "prop_static", "prop_dynamic", "prop_physics", "prop_detail",
-		       "prop_ragdoll", "prop_dynamic_override", "prop_physics_override",
-		       "prop_physics_override" }
+		       "prop_ragdoll", "prop_dynamic_override", "prop_physics_override" }
 
 #are these needed?
 soundscape_entities : set = { "env_soundscape", "env_soundscape_triggerable" }
@@ -262,7 +280,11 @@ def handle_level_sounds( mapstr : str ):
 
 	except FileNotFoundError:
 		print("no level sounds exists")
-		with open( ".\\unzip\\maps\\" + mapstr + "_level_sounds.txt", "w" ) as levelsounds_existing:
+		dest : str = ".\\unzip\\maps\\" + mapstr + "_level_sounds.txt"
+		if not os.path.exists( ".\\unzip\\maps\\" + mapstr ):
+			os.makedirs( ".\\unzip\\maps\\" + mapstr )
+
+		with open( dest, "w" ) as levelsounds_existing:
 			kvfile = VDFDict()
 			for key, value in soundscript_retrieve.items():
 				#todo: sanity checks for sounds with no extension
@@ -307,14 +329,19 @@ def check_present_particles( particles : Dict, should_retrieve : bool, dependenc
 	dependency -= removelist
 
 def handle_level_particles( mapstr : str ):
-	kvfile : VDFDict
-	with open( ".\\unzip\\maps\\" + mapstr + "_particles.txt", "r" ) as script:
-		kvfile = vdf.parse( script, VDFDict, False, False )
-		try:
-			for i in particle_retrieve:
-				kvfile["particles_manifest"].update( { "file":i.replace("\\", "/") } )
-		except:
-			print("bad")
+	kvfile : VDFDict = VDFDict()
+	try:
+		with open( ".\\unzip\\maps\\" + mapstr + "_particles.txt", "r" ) as script:
+			kvfile = vdf.parse( script, VDFDict, False, False )
+	except:
+		print("map has no particle schema")
+
+	manifest_key : VDFDict = kvfile.get( "particles_manifest", 0 )
+	if not manifest_key:
+		kvfile.update( { "particles_manifest":VDFDict() } )
+
+	for i in particle_retrieve:
+		kvfile["particles_manifest"].update( { "file":i.replace("\\", "/") } )
 
 	with open( ".\\unzip\\maps\\" + mapstr + "_particles.txt", "w" ) as script:
 		vdf.dump( kvfile, script, True, False )
@@ -325,10 +352,9 @@ def parse_map( filepath : str ):
 	map_name : str = map_filename.removesuffix( ".bsp" )
 	map_newname : str = map_name + "_tf2c"
 
-
 	subprocess.run( [ bspzip_path, "-repack", map_filepath ] )
 
-	map = bsp_tool.load_bsp( map_filename )
+	map = bsp_tool.load_bsp( map_filepath )
 
 	if os.path.isdir( ".\\unzip" ):
 		shutil.rmtree( ".\\unzip" )
