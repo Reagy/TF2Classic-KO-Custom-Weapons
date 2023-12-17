@@ -13750,9 +13750,22 @@
 	"volume"	"1.0"
 	"rndwave"
 	{
+	    "wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
+		"wave"      "common/null.wav"
 		"wave"		"weapons/civ_charge_crude.wav"
 		"wave"		"weapons/civ_charge_crude1.wav"
-
 	}
 }
 
