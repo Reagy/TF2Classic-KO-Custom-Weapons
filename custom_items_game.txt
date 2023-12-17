@@ -16950,12 +16950,13 @@ Edited by: 'Reagy'"
 		{
 		}
 // V5.3.3 New model, name and sounds!
+// V6.7 Replaced by Petition
 		"8058"
 		{
 		    "item_name"					"Positive Reinforcement"
 			"prefab"                    "weapon_umbrella"
 			"item_type_name"			"Whip"
-			"show_in_armory"            "1"
+			"show_in_armory"            "0"
 			"item_description"			"
 Manual Boost (Mouse2): Marked for Death
 Manual Boost applies to enemies only
@@ -29391,6 +29392,7 @@ Weapon by: 'Reagy'"
 				"reload time increased hidden"			"1.05"									
 				"min_viewmodel_offset"					"10 0 -11"
 				"decrease player capture value"			"-2"
+				"custom magazine model"					"models/weapons/custom/w_models/w_lamplighter_new.mdl"
 			}
 			"attributes"
             {

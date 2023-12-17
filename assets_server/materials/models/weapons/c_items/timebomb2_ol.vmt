@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"models/weapons/c_items/timebomb_ol"
+	"$surfaceprop"	"no_decal"
+	"$translucent"	1
+	"$model"		1
+	"$nocull"		1
+}
