@@ -1,6 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" "backpack\weapons\c_models\c_nailgun_burst\c_nailgun_burst_large"
-	$translucent 1
-	$vertexcolor 1
-}

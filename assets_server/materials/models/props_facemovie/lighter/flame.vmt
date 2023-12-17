@@ -1,8 +1,0 @@
-"unlitgeneric"
-{
-	"$basetexture"	"models/props_facemovie/lighter/flame"
-	"$translucent" 	"1"
-	"$surfaceprop"	"glassbottle"
-	"$selfillum"	"1"
-	"$model" 		"1"
-}
