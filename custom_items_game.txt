@@ -36314,7 +36314,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.9"
+					"value"				"0.7"
 				}
 				"punch angle mod add hidden"
 				{
