@@ -14243,6 +14243,7 @@ Wearable by: 'Reagy'"
 //------------------------
 //------------------------
 //--BIG GOON - 7093---
+// Incorrect credits smh
 //------------------------
 //------------------------			
 		"7093"
@@ -14260,8 +14261,7 @@ Wearable by: 'Reagy'"
 			"item_description"			"
 Ha! now this is a weapon made for Heavy!
   
-Original Model by: Volv lol
-Model Edit by: 'Mr Hunterman'
+Model by: 'Snood'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Oppressive Force"
 			"item_iconname"				"Oppressive Force"
