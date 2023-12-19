@@ -17049,8 +17049,8 @@ Weapon by: 'The One Of Wonders'"
             {
 				"damage bonus hidden"					"1.785"									
 				"clip size penalty hidden"				"0.5"
-				"fire rate penalty hidden"				"5.0"									
-				"hidden secondary max ammo penalty"		"0.06"
+				"fire rate penalty hidden"				"4.0"									
+				"hidden secondary max ammo penalty"		"0.18"
 				"always draw tracer"					"1"
 				"class select override vcd"				"taunt01"
 			}
@@ -17064,12 +17064,17 @@ Weapon by: 'The One Of Wonders'"
 		        "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value" 			"1.20"
+					"value" 			"1.05"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value" 			"0.5"
 				}
 				"punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
-					"value" 			"5.00"
+					"value" 			"2.50"
 				}
 				"punch angle is constant"
 				{
@@ -17079,7 +17084,7 @@ Weapon by: 'The One Of Wonders'"
 				"decrease player capture value"
 				{
 					"attribute_class"		"add_player_capturevalue"
-					"value" 				"-2"
+					"value" 				"-4"
 				}
 				"crit mod disabled"
 				{
