@@ -14243,7 +14243,6 @@ Wearable by: 'Reagy'"
 //------------------------
 //------------------------
 //--BIG GOON - 7093---
-// Incorrect credits smh
 //------------------------
 //------------------------			
 		"7093"
@@ -37394,6 +37393,10 @@ Weapon by: 'Noclue'"
 			}
 			"visuals"
 			{
+			    "sound_single_shot"		"Weapon_HydroPump.Start"
+				"sound_reload"	        "Weapon_HydroPump.Loop"
+				"sound_burst"			"Weapon_HydroPump.Loop"
+				"sound_special3"		"Weapon_HydroPump.End"	
 				"sound_double_shot"     "Weapon_HydroPump.AirBurstAttack"
 			
 				"player_bodygroups"

@@ -13697,7 +13697,7 @@
 	"channel"		"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
-	"wave"			")weapons/HydroPump_Start.wav"
+	"wave"			")weapons/HPump_Start.wav"
 }
 
 "Weapon_HydroPump.Loop"
@@ -13705,7 +13705,15 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"wave"		")weapons\HydroPump_Loop.wav"
+	"wave"		")weapons\HPump_Loop.wav"
+}
+
+"Weapon_HydroPump.End"	
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/HPump_Stop.wav"
 }
 
 "Weapon_HydroPump.AirBurstAttack"
@@ -14432,4 +14440,3 @@
 			"wave"		")weapons/postal_pet/postal_hit2.wav"
 			"wave"		")weapons/postal_pet/postal_hit3.wav"
 		}
-}
