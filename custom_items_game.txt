@@ -2002,13 +2002,18 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"
 				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.1"
+				}
+				"weapon_stattrak_module_scale"
+				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"2.5"
 				}
                 "Reload time no anim speed mod"
                 {
                     "attribute_class"    "mult_reload_time_noanimmod"
-                    "value"               "2.25"
+                    "value"              "2.25"
                 }	
 				"punch angle mod add hidden"
 				{
@@ -2872,10 +2877,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_reload_time_start"
 					"value"				"0.5"
 				}
-				"strange restriction type 2"
+				"max health additive penalty"
 				{
-					"attribute_class"	"add_maxhealth"
-					"value"				"25"
+					"attribute_class"	"display_dmmuy"
+					"value"				"-25"
 				}	
 				"strange restriction type 2"
 				{
@@ -5944,7 +5949,7 @@ Weapon by: 'The One Of Wonders'"
 			    "damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"2.0"
+					"value"				"1.6666666666667"
 				}
 				"Danger Close n' Far"
 				{
@@ -9432,7 +9437,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.111111111111" 
+					"value"				"1.5" 
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -9457,7 +9462,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"																		
 			{
-				"sound_empty"			"Weapon_AAGun.ClipEmpty"
+				"sound_empty"			"Weapon_MachineGun.Spin"
 				"sound_burst"			"Weapon_GatlingShot.FireCrit"
 				"sound_double_shot"		"Weapon_GatlingShot.Fire"
 				"sound_single_shot"		"Weapon_MachineGun.WindUp"
@@ -10740,7 +10745,7 @@ Weapon by: 'The One Of Wonders'"
 			    "apply heal on explosion"
 				{
 					"attribute_class"	"apply_heal_explosion"
-					"value"				"8"
+					"value"				"5"
 				}
 				"bleeding duration"
 				{
@@ -12209,6 +12214,11 @@ Remastered by: 'The One Of Wonders'"
 			}			
 			"attributes"
 			{
+			    "Move Speed Penalty Active"
+				{
+					"attribute_class"	"mult_player_movespeed_active"
+					"value"				"0.85"
+				}
 			    "strange restriction type 1"
 				{
 					"attribute_class"	"mod_ammo_per_shot"
@@ -12227,12 +12237,12 @@ Remastered by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"2.25" 
+					"value" 			"2.5" 
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.875" 
+					"value"				"0.75" 
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -12381,7 +12391,7 @@ Weapon by: 'Reagy'"
 			    "hidden primary max ammo bonus"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value"				"2.25"
+					"value"				"1.5"
 				}
 			    "Shield Positive"
 				{
@@ -12407,6 +12417,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_player_movespeed_active"
 					"value"				"0.85"
+				}
+				"deploy time increased"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"1.5"
 				}
 			    "weapon_stattrak_module_scale"
 				{
@@ -12798,7 +12813,7 @@ Weapon by: 'Zadrave'"
                 "rocket limited lifetime"														
 				{
 					"attribute_class"	"rocket_lifetime"
-					"value"				"0.25"
+					"value"				"0.3625"
 				}				
 			}
 			"visuals"
@@ -14274,16 +14289,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "Oppressive Force"																
-				{
-					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"1"
-				}
-			    "add condition on hit"															
-				{
-					"attribute_class"	"add_onhit_addcond_weapon"
-					"value"				"128 1.5"
-				}
 			    "explosive bullets"																
 				{
 					"attribute_class"	"explosive_bullets"
@@ -14297,7 +14302,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.444444444444444"
+					"value"				"0.456"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -14322,12 +14327,17 @@ Weapon by: 'The One Of Wonders'"
 				"blast radius decreased"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.75"
+					"value"				"0.7"
 				}
 				"blast splash damage decreased"
 				{
 					"attribute_class"	"mult_explosion_splash_damage"
 					"value"				"0.33"
+				}
+				"limited range DISPLAY ONLY"
+				{
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1"
 				}
 				"crit mod disabled"															
 				{
@@ -14347,7 +14357,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"																
 				{
 					"attribute_class"	"mult_projectile_range"
-					"value" 			"7.5"
+					"value" 			"1.3"
 				}
                 "punch angle mod add hidden"
 				{
@@ -17879,7 +17889,7 @@ Weapon by: 'Raptor Dan, The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "move speed bonus"
+			    "move speed bonus active"
 				{
 					"attribute_class"	"mult_player_movespeed"
 					"value" 			"1.2"
@@ -18703,12 +18713,12 @@ Weapon by: 'The One Of Wonders'"
                 "damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.85"
+					"value"				"0.8"
 				} 				
 				"minigun spinup time increased"
 				{
 					"attribute_class"	"mult_minigun_spinup_time"
-					"value"				"1.15"
+					"value"				"1.2"
 				}
 				"minigun spindown time decreased HIDDEN"
 				{
@@ -19273,7 +19283,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.55555555555556"
+					"value"				"0.6"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -19288,7 +19298,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value" 			"1.28"
+					"value" 			"1.6"
 				}
 				"no damage falloff over distance"
 				{
@@ -21622,6 +21632,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"
 			{
+			    "sound_empty"           "Weapon_FlakGun.Spin"
 				"sound_double_shot"		"Weapon_FlakGun.Fire"	
 				"sound_burst"			"Weapon_FlakGun.FireCrit"	
 				"sound_single_shot"		"Weapon_FlakGun.WindUp"	
@@ -21775,9 +21786,8 @@ Weapon from: Renaissance Revival"
 				"min_viewmodel_offset"					"10 0 -10"
 				
 				"custom projectile model"				"models/weapons/w_models/w_grenade_cannonball_demoman/w_grenade_cannonball_thrown.mdl"
-				"fire rate bonus hidden"				"1.33"
 				"override projectile type"				"3"		//pipe bomb
-				"maxammo grenades1 increased"			"2"
+				"maxammo grenades1 increased"			"3"
 				"effect bar recharge rate increased"	"0.5"
 				"meter_label"                           "BOMB"
 			}
@@ -21798,10 +21808,10 @@ Weapon from: Renaissance Revival"
 					"attribute_class"	"rocket_jump_dmg_reduction"
 					"value"				"0.4"
 				}
-				"Blast radius decreased"
+				"grenade cook"
 				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"	"0.7"
+					"attribute_class"	"grenade_cook"
+					"value"				"1"
 				}
 				"damage bonus hidden"
 				{
@@ -21812,7 +21822,12 @@ Weapon from: Renaissance Revival"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}	
+				}
+                "Grenade Cook Display"
+				{
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1"
+				}				
 			}
 			"visuals"
 			{
@@ -22272,7 +22287,7 @@ Weapon by: 'The One Of Wonders'"
 				"flame ammopersec increased"
 				{
 					"attribute_class"	"mult_flame_ammopersec"
-					"value" 			"1.5"
+					"value" 			"1.25"
 				}
 				"crit mod disabled"
 				{
@@ -28544,11 +28559,6 @@ Wearable by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "max health additive bonus"									
-				{
-					"attribute_class"	"add_maxhealth"
-					"value"				"10"
-				}
 			    "deploy time decreased"
 				{
 					"attribute_class"	"mult_deploy_time"
@@ -29010,7 +29020,7 @@ Weapon by: 'The One Of Wonders'"
 		"9178"
 		{
 			"name"						"Lunarian Landers"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_class"				"tf_wearable"
 			"item_name"					"Lunarian Landers"
 			"item_description"			"
@@ -30945,12 +30955,12 @@ Weapon by: 'The One Of Wonders'"
 				"dmg taken from crit reduced"											
 				{
 					"attribute_class"	"mult_dmgtaken_from_crit"
-					"value"				"0.001"
+					"value"				"0.5"
 				}
 				"move speed penalty"
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.85"
+					"value"				"0.75"
 				}
 				// Weapon specific stuff
 				"strange restriction type 1"																
@@ -30962,11 +30972,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_use_custom_ammo_type"
 					"value" 			"1"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"1.333333333"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -30993,15 +30998,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_explosion_radius"
 					"value"				"0.6"
 				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"1.33"
-				}
 				"crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"custom bullet impact collision mode"
+				{
+					"attribute_class"	"mod_bullet_impact_collision_mode"
+					"value"				"1"
 				}
 			}
 			"visuals"
@@ -31475,7 +31480,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"2.56"
+					"value"				"1.28"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -31525,8 +31530,8 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"  
 				{
-					"attribute_class"	"mult_projectile_range" //~1920 HUs
-					"value"				"0.234260615"
+					"attribute_class"	"mult_projectile_range" //~1000 HUs
+					"value"				"0.122070312"
 				}
 				"strange restriction type 1"
 				{
@@ -36231,7 +36236,7 @@ Weapon by: 'Colrot'"
 			"name"						"TF_WEAPON_ASTRO_ROCKETLAUNCHER"							
 			"prefab"					"weapon_rocketlauncher"
 			"item_class"                "tf_weapon_grenadelauncher"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
             "anim_slot"                 "primary"
 			
@@ -37145,7 +37150,7 @@ Weapon by: 'The One Of Wonders'"
 			    "aiming movespeed increased"
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"1.15"
+					"value"				"1.35"
 				}
 				"minigun spinup time decreased"
 				{
