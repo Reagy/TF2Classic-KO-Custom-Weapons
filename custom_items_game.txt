@@ -693,6 +693,11 @@
 					"attribute_class"	"mod_pierce_resists_absorbs"
 					"value"				"1"
 				}
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.2"
+				}
 				"dmg bonus vs buildings"
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
@@ -703,20 +708,10 @@
 					"attribute_class"	"mult_projectile_speed"
 					"value"				"1.5"
 				}
-				"Crits against Heavy"
+				"blast radius decreased"
 				{
-					"attribute_class"	"damn bro that sucks"
-					"value"				"1"
-				}
-				"crits vs class"
-				{
-					"attribute_class"	"crit_vs_class"
-					"value"				"32"
-				}
-				"Crits have fall-off"
-				{
-					"attribute_class"	"crit_dmg_falloff"
-					"value"				"1"
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"0.25"
 				}
 				"clip size penalty"
 				{
@@ -4211,7 +4206,7 @@ Weapon by: 'The One Of Wonders'"
 				"move speed bonus"
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value" 			"1.2"
+					"value" 			"1.15"
 				}
 				"aiming movespeed removal"											
 				{
@@ -5281,7 +5276,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"Arms-Deal Armament"
 			"item_type_name"			"Bandolier"
 			"item_description"			"Running Mann: You get access to a Hunting Shotgun primary weapon.
-			
+Scoring Hunting Shotgun kills gives you haste for 5 seconds.
+
 Start running! makes killing you more fun!
 
 Weapon by: 'The One Of Wonders'"
@@ -5302,11 +5298,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-				"move speed bonus"
-				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"1.05"
-				}
+	
 				"maxammo secondary increased"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
@@ -5341,6 +5333,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"add condition on kill"
+				{
+					"attribute_class"	"add_onkill_addcond_self"							
+					"value" 			"121 5"
 				}
 			}
 			"visuals"
@@ -7790,11 +7787,8 @@ the glory of a misfired firework."																// MIRV used here as a "Second
 				"min_viewmodel_offset"					"10 0 -10"
 
 				"fire rate penalty hidden"				"3"										// This feels... about right?
-				"special taunt"							"1"
-//				"armor footsteps"						"2"										// Disabled since I need the space, and I suppose it doesn't make sense since the Jetpack isn't on his feet anywway... aka shouldn't be making these noises
-//				"crit mod disabled hidden"				"1"										// Unnecessary but eh
+				"special taunt"							"1"								
 				"hide extra wearable on active"			"1"
-				"meter_label"							"JETPACK"								// The text in Live TF2 is technically "Charges", but comes with its own UI element. Since this just uses the MIRV element, this word fits better.
 			}
 			"attributes"
 			{
@@ -7852,7 +7846,7 @@ the glory of a misfired firework."																// MIRV used here as a "Second
 				"damage force increase hidden"													// Negative propulsive force generally means this sends you in the direction you were looking!
 				{
 					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"-0.35"
+					"value" 			"-0.7"
 				}
 				"hide_attrib_additive"															// Enough lift-off force on taking damage to get you off the ground, even if you use it from a standstill
 				{
@@ -14934,7 +14928,7 @@ Remastered by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.03"
+					"value"				"0.075"
 				}	
                 "voice pitch scale"
 				{
@@ -17746,6 +17740,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_custom_falloff"
 					"value"				"0.75"
+				}	
+                "strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.75"
 				}					
 			}
 			"visuals"
@@ -23412,7 +23411,7 @@ Weapon by: 'The One Of Wonders'"
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.26666666666"
+					"value" 			"0.3"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -23437,7 +23436,7 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.06"
+					"value"				"0.04"
 				}
 				"strange restriction type 1"
 				{
@@ -23448,7 +23447,7 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}	
+ 				}				
 			}
 			"visuals"
 			{
@@ -26393,7 +26392,7 @@ Sentry replacement by: 'rotzloeffel' 'Gadget'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_sentry_range"
-					"value"				"0.85"
+					"value"				"0.909090909"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -26618,11 +26617,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"display_only"
 					"value"				"1"
-				}
-				"move speed penalty"											
-				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.9"
 				}
 				"fire rate penalty"
 				{
@@ -30627,7 +30621,7 @@ Weapon by: 'The One Of Wonders'"
                 "strange restriction type 2"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.075"
+					"value"				"0.06"
 				}	
 				"punch angle mod add hidden"
 				{
@@ -30677,7 +30671,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_sniper_charge_per_sec"
-					"value" 			"4.0"
+					"value" 			"5.0"
 				}				
 			}
 			"visuals"
@@ -30960,7 +30954,7 @@ Weapon by: 'The One Of Wonders'"
 				"move speed penalty"
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.75"
+					"value"				"0.85"
 				}
 				// Weapon specific stuff
 				"strange restriction type 1"																
@@ -31099,8 +31093,8 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"  
 				{
-					"attribute_class"	"mult_projectile_range" //~58 HUs
-					"value"				"0.007"
+					"attribute_class"	"mult_projectile_range" //~69 HUs
+					"value"				"0.00842285156"
 				}
 				"weapon_stattrak_module_scale"
 				{
