@@ -14440,3 +14440,4 @@
 			"wave"		")weapons/postal_pet/postal_hit2.wav"
 			"wave"		")weapons/postal_pet/postal_hit3.wav"
 		}
+}
