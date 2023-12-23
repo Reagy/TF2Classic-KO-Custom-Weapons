@@ -15,14 +15,40 @@ public Plugin myinfo =
 
 public void OnMapStart() {
 	PrecacheEffect("ParticleEffect");
+
+	// Hydro Pump
 	PrecacheParticleEffect("mediflame_red");
 	PrecacheParticleEffect("mediflame_blue");
 	PrecacheParticleEffect("mediflame_green");
 	PrecacheParticleEffect("mediflame_yellow");
 
-	FuckMe( "particles/kocw_beams.pcf" );
+	// db tracers
+	PrecacheParticleEffect("db_tracer01_red");
+	PrecacheParticleEffect("db_tracer01_blue");
+	PrecacheParticleEffect("db_tracer01_green");
+	PrecacheParticleEffect("db_tracer01_yellow");
+
+	// Medibeams
+	PrecacheParticleEffect("medicgun_beam_red_new");
+	PrecacheParticleEffect("medicgun_invulnstatus_fullcharge_red_new");
+	PrecacheParticleEffect("medicgun_beam_blue_new");
+	PrecacheParticleEffect("medicgun_invulnstatus_fullcharge_blue_new");
+	PrecacheParticleEffect("medicgun_beam_green_new");
+	PrecacheParticleEffect("medicgun_invulnstatus_fullcharge_green_new");
+	PrecacheParticleEffect("medicgun_beam_yellow_new");
+	PrecacheParticleEffect("medicgun_invulnstatus_fullcharge_yellow_new");
+
+	// PISS
+	PrecacheParticleEffect("muzzle_piss_red");
+	PrecacheParticleEffect("muzzle_piss_blue");
+	PrecacheParticleEffect("muzzle_piss_green");
+	PrecacheParticleEffect("muzzle_piss_yellow");
+
 	FuckMe( "particles/db_tracers.pcf" );
+	FuckMe( "particles/kocw_beams.pcf" );
+	FuckMe( "particles/laser_tracers.pcf" );
 	FuckMe( "particles/medicflames.pcf" );
+	FuckMe( "particles/pisser.pcf" );
 	FuckMe( "particles/scattershock_fx.pcf" );
 }
 
