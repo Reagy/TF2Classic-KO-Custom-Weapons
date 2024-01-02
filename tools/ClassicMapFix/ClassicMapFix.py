@@ -275,8 +275,9 @@ def handle_level_sounds( mapstr : str ):
 				#todo: sanity checks for sounds with no extension
 				add_key_to_script( kvfile, key, value )
 
-		with open( ".\\unzip\\maps\\" + mapstr + "_level_sounds.txt", "w" ) as levelsounds_existing:
-			vdf.dump( kvfile, levelsounds_existing, True, False )
+		if len(kvfile) > 0:
+			with open( ".\\unzip\\maps\\" + mapstr + "_level_sounds.txt", "w" ) as levelsounds_existing:
+				vdf.dump( kvfile, levelsounds_existing, True, False )
 
 	except FileNotFoundError:
 		print("no level sounds exists")
@@ -290,7 +291,8 @@ def handle_level_sounds( mapstr : str ):
 				#todo: sanity checks for sounds with no extension
 				add_key_to_script( kvfile, key, value )
 
-			vdf.dump( kvfile, levelsounds_existing, True, False )
+			if len(kvfile) > 0:
+				vdf.dump( kvfile, levelsounds_existing, True, False )
 
 def add_key_to_script( inputscript : VDFDict, soundscript_name : str, filepath : str ):
 	kvfile : VDFDict
@@ -340,17 +342,24 @@ def handle_level_particles( mapstr : str ):
 	if not manifest_key:
 		kvfile.update( { "particles_manifest":VDFDict() } )
 
-	for i in particle_retrieve:
-		kvfile["particles_manifest"].update( { "file":i.replace("\\", "/") } )
+	in_set : set = set()
+	for particle in kvfile["particles_manifest"]:
+		in_set.add( particle )
 
-	with open( ".\\unzip\\maps\\" + mapstr + "_particles.txt", "w" ) as script:
-		vdf.dump( kvfile, script, True, False )
+	for i in particle_retrieve:
+		if i not in in_set:
+			kvfile["particles_manifest"].update( { "file":i.replace("\\", "/") } )
+
+	if len(kvfile["particles_manifest"]) > 0:
+		with open( ".\\unzip\\maps\\" + mapstr + "_particles.txt", "w" ) as script:
+			vdf.dump( kvfile, script, True, False )
 
 def parse_map( filepath : str ):
 	map_filepath : str = filepath
 	map_filename : str = os.path.basename( filepath )
 	map_name : str = map_filename.removesuffix( ".bsp" )
-	map_newname : str = map_name + "_tf2c"
+	map_newname : str = map_name + "_" + user_prefix
+	#map_newname : str = map_name + "_tf2c"
 
 	subprocess.run( [ bspzip_path, "-repack", map_filepath ] )
 
@@ -506,6 +515,7 @@ fsys = get_filesystem(".")
 
 #G:\SteamLibrary\steamapps\common\Team Fortress 2\bin\bspzip.exe
 bspzip_path : str = input( "Enter the full path of BSPZIP.exe: " )
+user_prefix : str = input( "Enter a prefix for packed maps (ie tf2c)" )
 
 for i in bsplist:
 	for j in [ pakfile_files, models_dependencies, tex_vmt_dependencies, tex_vtf_dependencies, sound_dependencies, particle_dependencies, retrieve, particle_retrieve ]:
