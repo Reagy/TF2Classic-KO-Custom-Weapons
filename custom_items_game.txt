@@ -1988,7 +1988,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"2.66666667"
+					"value"				"2.40963855"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -1998,7 +1998,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.1"
+					"value"				"0.33333333333"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -6633,7 +6633,7 @@ Weapon by: 'The One Of Wonders'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.4"
+					"value"				"0.25"
 				}
 				"maxammo secondary reduced"
 				{
@@ -7573,6 +7573,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "bleeding duration"
+				{
+					"attribute_class"	"bleeding_duration"
+					"value"				"3"
+				}
 			    "maxammo primary increased"									
 				{
 					"attribute_class"	"mult_maxammo_primary"
@@ -7586,7 +7591,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_splash_damage" // holy shit
-					"value"				"2.5"													
+					"value"				"3.0"													
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -7596,7 +7601,7 @@ Weapon by: 'The One Of Wonders'"
 				"hide_attrib_percentage"	
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"1.75"												
+					"value"				"1.5"												
 				}
 				"custom projectile model"
 				{
@@ -13025,9 +13030,9 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"5 -2 -10"
-				"clip size penalty hidden"				"1.4"
-				"damage bonus hidden"					"0.85"
-				"fire rate bonus hidden"				"0.9"
+				"clip size bonus"				        "1.4"
+				"fire rate bonus"				        "0.9"
+				"damage penalty"					   "0.85"
 				"crit mod disabled"                     "0"
 			}
 			"visuals"
@@ -13071,9 +13076,9 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"5 -2 -10"
-				"clip size penalty hidden"				"1.4"
-				"damage bonus hidden"					"0.85"
-				"fire rate bonus hidden"				"0.9"
+				"clip size bonus"				        "1.4"
+				"fire rate bonus"				        "0.9"
+				"damage penalty"					    "0.85"
 				"crit mod disabled"                     "0"
 			}
 			"visuals"
@@ -13117,9 +13122,9 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"5 -2 -10"
-				"clip size penalty hidden"				"1.4"
-				"damage bonus hidden"					"0.85"
-				"fire rate bonus hidden"				"0.9"
+				"clip size bonus"				        "1.4"
+				"fire rate bonus"				        "0.9"
+				"damage penalty"					    "0.85"
 				"crit mod disabled"                     "0"
 			}
 			"visuals"
@@ -13165,9 +13170,9 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"5 -2 -10"
-				"clip size penalty hidden"				"1.4"
-				"damage bonus hidden"					"0.95"
-				"fire rate bonus hidden"				"0.9"
+				"clip size bonus"				        "1.4"
+				"fire rate bonus"				        "0.9"
+				"damage penalty"					    "0.95"
 				"crit mod disabled"                     "0"
 			}
 			"visuals"
@@ -13199,7 +13204,8 @@ Weapon by: 'Reagy'"
 			"propername"				"0"												
 			"item_name"					"SPAS-12" 									
 			"item_type_name"			"#TF_Weapon_Shotgun" 												
-			"item_description"			"
+			"item_description"			"-25% reduced ramp-up damage (compared to Scattergun)
+
 Found this in the Office Complex
 Not sure how it ended up there...
 
@@ -13218,9 +13224,9 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"5 -2 -10"
-				"clip size penalty hidden"				"1.4"
-				"damage bonus hidden"					"0.85"
-				"fire rate bonus hidden"				"0.9"
+				"clip size bonus"				        "1.4"
+				"fire rate bonus"				        "0.9"
+				"damage penalty"					    "0.85"
 				"crit mod disabled"                     "0"
 			}
 			"visuals"
@@ -16414,7 +16420,7 @@ Weapon by: 'Majro'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.7"
+					"value" 			"0.75"
 				}
 				"clip size penalty"
 				{
@@ -16462,6 +16468,16 @@ Weapon by: 'Majro'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_falloff"
+					"value"				"1.0"
+				}		
+                "strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.0"
 				}
             }
 			"visuals"
@@ -17597,7 +17613,12 @@ Edited by: 'The One Of Wonders'"
 //					"attribute_class"	"mult_reload_time_hidden"
 //					"value"				"3.25"
 //				}
-				"spread penalty"
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.9"
+				}
+				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
 					"value"				"1.1"
@@ -22033,7 +22054,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{			
-                "mod beacon max ticks"                  "-20"				
+                "mod beacon max ticks"                  "-15"				
 			}
 			"attributes"
 			{
@@ -22067,10 +22088,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"on_death_remove_targets_afterburn"
 					"value"				"1"
 				}
-				"dmg taken from crit increased"
+				"self mark for death"
 				{
-					"attribute_class"	"mult_dmgtaken_from_crit"
-					"value"				"2"
+					"attribute_class"	"self_mark_for_death"
+					"value"				"1"
 				}
 				"fire rate penalty"
 				{
@@ -22276,7 +22297,7 @@ Weapon by: 'The One Of Wonders'"
 				"Dmg V Burning Display Bonus"
 				{
 					"attribute_class"	"mult_dmg_vs_burning"
-					"value"				"1.10"
+					"value"				"1.20"
 				}
 				"burn dmg reduced on wearer"
 				{
@@ -25387,17 +25408,12 @@ Weapon from: 'The One Of Wonders'"
 				"add uber charge on hit"
 				{
 					"attribute_class"	"add_onhit_ubercharge"
-					"value"				"0.01"
+					"value"				"0.03"
 				}	
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"5.0"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_reload_time"
-					"value" 			"1.2"
+					"value" 			"6.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -25501,7 +25517,7 @@ Weapon from: 'The One Of Wonders'"
 				"add uber charge on hit"
 				{
 					"attribute_class"	"add_onhit_ubercharge"
-					"value"				"0.05"
+					"value"				"0.1"
 				}	
 			    "weapon_stattrak_module_scale"
 				{
@@ -25522,6 +25538,11 @@ Weapon from: 'The One Of Wonders'"
 				{
 					"attribute_class"	"add_health_regen"
 					"value" 			"-6"
+				}
+				"ubercharge rate penalty on wearer"
+				{
+					"attribute_class"	"mult_medigun_uberchargerate_wearer" 
+					"value"				"0.5"														
 				}
 				"crit mod disabled"															
 				{
@@ -25552,11 +25573,6 @@ Weapon from: 'The One Of Wonders'"
 				{
 					"attribute_class"	"apply_heal_explosion"
 					"value"				"1"
-				}
-				"apply self knockback hidden"
-				{
-					"attribute_class"	"apply_self_knockback"
-					"value"				"133.8"
 				}
 				"punch angle mod add hidden"
 				{
@@ -29097,7 +29113,8 @@ Wearable by: 'Colrot'"
 			"item_description"			"
 The teeth of Russian Wolf stay sharp in the face of war.
 
-Model by: 'Kirillin, YeWelshTabby'"
+Model by: 'Kirillin, YeWelshTabby'
+Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Reznov's Butcher"
 			"item_iconname"				"Reznov's Butcher"
 			"image_inventory"			"backpack/workshop_partner/weapons/c_models/c_spetsnaz_machete/c_spetsnaz_machete"
@@ -29124,15 +29141,15 @@ Model by: 'Kirillin, YeWelshTabby'"
 					"attribute_class"	"mult_dmg"
 					"value"				"1.15"
 				}
-				"fire rate bonus"
+				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.75"
+					"value"				"1.2"
 				}
 				"mult dmg crit multiplier"
 				{
 					"attribute_class"	"mult_dmg_crit_multiplier"
-					"value"				"4.44444444"
+					"value"				"4.46"
 				}
                 "mod melee crit swing custom damage" //Decapitation on crits
 				{
@@ -29142,10 +29159,15 @@ Model by: 'Kirillin, YeWelshTabby'"
 			}
 			"visuals"
 			{
-				"sound_melee_miss"		"Weapon_Crowbar.Miss"
-				"sound_melee_hit"		"Weapon_Crowbar.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_Crowbar_HL1.HitWorld"
-				"sound_burst"			"Weapon_Crowbar.MissCrit"
+				"sound_melee_miss"		"Weapon_Sword.Swing"
+				"sound_melee_hit"		"Weapon_Sword.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_Sword.HitWorld"
+				"sound_burst"			"Weapon_Sword.SwingCrit"
+				"sound_special1"		"Weapon_Sword.HitHeads"
+				"sound_single_shot"		"Weapon_Sword.HitFlesh"
+				"sound_single_shot_npc"	"Weapon_Sword.HitWorld"
+				"sound_double_shot"		"Weapon_Sword.HitFlesh"
+				"sound_double_shot_npc"	"Weapon_Sword.HitWorld"
 			}
 			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
@@ -35738,7 +35760,6 @@ Weapon by 'The One Of Wonders'"
 			"item_name"					"Honcho Hunter"
 			"item_type_name"			"Special Equipment"
 			"item_description"			"Mafia's Debt: This item grants you an auto-gatling gun primary
-Damage you deal with this weapon will mark enemies for death with sustained damage.
 
 Hmf, you dare not pay your due? Heavy will show you true pain!
 
@@ -35759,12 +35780,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "add condition on hit"
-				{
-					"attribute_class"	"add_onhit_addcond_weapon"
-					"value"				"30 0.5"
-				}
-			    "add ammo on kill"
+			   "add ammo on kill"
 				{
 					"attribute_class"	"add_ammo_on_kill"
 					"value" 			"50"
@@ -35773,6 +35789,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"heal_on_kill"
 					"value"				"50"
+				}
+			    "move speed bonus"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"1.05"
 				}
 				"max health additive penalty"											
 				{
@@ -35787,7 +35808,7 @@ Weapon by: 'The One Of Wonders'"
 				"reduced_healing_from_medics"
 				{
 					"attribute_class"	"mult_healing_from_medics"
-					"value"				"0.001"
+					"value"				"0.25"
 				}
 			    "weapon_stattrak_module_scale"											
 				{
@@ -35806,8 +35827,18 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"
 				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"1.5" 
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.7"
+				}
+				"weapon_stattrak_module_scale"
+				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"0.25"
+					"value"				"0.5"
 				}
 				"weapon_stattrak_module_scale"
 				{
