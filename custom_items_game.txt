@@ -29374,7 +29374,7 @@ Weapon by: 'Reagy'"
 				"crit mod disabled hidden"				"100000.0"
 				"fire rate penalty hidden"				"0.8"									
 				"damage bonus hidden"					"1.533333333"
-				"reload time increased hidden"			"1.05"									
+				"reload time increased hidden"			"0.9"									
 				"min_viewmodel_offset"					"10 0 -11"
 				"decrease player capture value"			"-2"
 				"custom magazine model"					"models/weapons/custom/w_models/w_lamplighter_new.mdl"
@@ -29391,10 +29391,15 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"3.03"
 				}
-				"longer damage falloff distance"
+				//"longer damage falloff distance"
+				//{
+				//	"attribute_class"	"mult_falloff_distance"
+				//	"value"				"1.69"
+				//}
+				"no damage falloff over distance"
 				{
-					"attribute_class"	"mult_falloff_distance"
-					"value"				"1.69"
+					"attribute_class"	"mod_no_dmg_falloff"
+					"value"				"1"
 				}
 			}
 			"visuals"
