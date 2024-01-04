@@ -6094,7 +6094,7 @@ Weapon by: 'NotClue'"
 				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/w_rocket_libertylauncher.mdl"
+					"value"			"models/weapons/w_models/w_rocket_libertylauncher.mdl"
 				}
 				"damage force increase hidden"
 				{
@@ -10910,7 +10910,7 @@ Weapon by: 'Reagy'"
 				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/custom/w_models/w_moyai_mirv_demo_projectile.mdl"
+					"value"			"models/weapons/custom/w_models/w_moyai_mirv_demo_projectile.mdl"
 				}
 				"crit mod disabled"
 				{
@@ -25320,11 +25320,6 @@ Weapon by: 'Noclue'"
 					"attribute_class"	"custom_medigun_type"
 					"value"				"1"
 				}
-				"scattergun no reload single"
-				{
-					"attribute_class"	"custom_medibeamtype"
-					"value"				"2"
-				}
 				"lunchbox adds minicrits" //disables vanilla uber behavior
 				{
 					"attribute_class"	"set_charge_type"
@@ -25341,7 +25336,25 @@ Weapon by: 'Noclue'"
 				"player_bodygroups"
 				{
 					"medic_backpack"	"1"
-				}			
+				}
+			}
+			
+			//enable these once particle precaching is fixed
+			"visuals_red"
+			{
+				//"beam_effect"		"overhealer_red_beam"
+			}
+			"visuals_blu"
+			{
+				//"beam_effect"		"overhealer_blue_beam"
+			}
+			"visuals_grn"
+			{
+				//"beam_effect"		"overhealer_green_beam"
+			}
+			"visuals_ylw"
+			{
+				//"beam_effect"		"overhealer_yellow_beam"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -27304,11 +27317,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-				"strange restriction type 1" 					 // this adds custom particles, unsure if these were made for this though lol								
-				{
-					"attribute_class"	"custom_medibeamtype"
-					"value"				"2"														
-				}
 				"Move Speed Bonus Active"															
 				{
 					"attribute_class"	"mult_player_movespeed_active"
@@ -27346,6 +27354,24 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"medic_backpack"	"1"
 				}			
+			}
+			
+			//enable these once particle precaching is fixed
+			"visuals_red"
+			{
+				//"beam_effect"		"overhealer_red_beam"
+			}
+			"visuals_blu"
+			{
+				//"beam_effect"		"overhealer_blue_beam"
+			}
+			"visuals_grn"
+			{
+				//"beam_effect"		"overhealer_green_beam"
+			}
+			"visuals_ylw"
+			{
+				//"beam_effect"		"overhealer_yellow_beam"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -29374,7 +29400,7 @@ Weapon by: 'Reagy'"
 				"crit mod disabled hidden"				"100000.0"
 				"fire rate penalty hidden"				"0.8"									
 				"damage bonus hidden"					"1.533333333"
-				"reload time increased hidden"			"0.9"									
+				"reload time increased hidden"			"1.05"									
 				"min_viewmodel_offset"					"10 0 -11"
 				"decrease player capture value"			"-2"
 				"custom magazine model"					"models/weapons/custom/w_models/w_lamplighter_new.mdl"
@@ -29391,15 +29417,10 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"3.03"
 				}
-				//"longer damage falloff distance"
-				//{
-				//	"attribute_class"	"mult_falloff_distance"
-				//	"value"				"1.69"
-				//}
-				"no damage falloff over distance"
+				"longer damage falloff distance"
 				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
+					"attribute_class"	"mult_falloff_distance"
+					"value"				"1.69"
 				}
 			}
 			"visuals"
@@ -37321,7 +37342,7 @@ Model by: 'GoLDeN'
 Weapon by: 'Noclue'"
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/c_models/c_brandspuit/c_brandspuit"
-			"model_player"				"models/workshop/weapons/c_models/c_brandspuit/c_brandspuit.mdl"
+			"model_player"				"models/workshop/weapons/c_models/c_brandspuit/c_brandspuit_v2.mdl"
 			"extra_wearable"			"models/weapons/c_models/c_biomed_backpack/c_biomed_backpack.mdl"
 			"attach_to_hands"			"1"
 			"min_ilevel"				"8"
@@ -37350,6 +37371,12 @@ Weapon by: 'Noclue'"
 				{
 					"attribute_class"	"hidden_seperator"
 					"value"				"1"
+				}
+				
+				"mult flame velocity"
+				{
+					"attribute_class"	"mult_flame_velocity"
+					"value"				"1.25"
 				}
 				
 				"flame ammopersec decreased"
@@ -37393,6 +37420,23 @@ Weapon by: 'Noclue'"
 				{
 					"medic_backpack"			"1"
 				}
+			}
+			
+			"visuals_red"
+			{
+				"beam_effect"		"mediflame_red"
+			}
+			"visuals_blu"
+			{
+				"beam_effect"		"mediflame_blue"
+			}
+			"visuals_grn"
+			{
+				"beam_effect"		"mediflame_green"
+			}
+			"visuals_ylw"
+			{
+				"beam_effect"		"mediflame_yellow"
 			}
 		}
 //-------------------------------------
