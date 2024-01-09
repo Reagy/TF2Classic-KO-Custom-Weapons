@@ -15712,9 +15712,8 @@ Weapon by: 'The One Of Wonders'"
 				"sound_single_shot"		"Weapon_DemoRiotGun.Fire"
 				"sound_burst"			"Weapon_DemoRiotGun.FireCrit"
 				"muzzle_flash"			"muzzle_grenadelauncher"	
-                "trail_effect"			"fuse_sparks"	
+                "trail_effect"			"bullet_distortion_trail"	
 			}		
-			
 			"visuals_red"
 			{
 				"trail_effect_crit"		"fuse_sparks_crit_red"
@@ -15731,7 +15730,6 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"trail_effect_crit"		"fuse_sparks_crit_yellow"
 			}				
-			
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}		
@@ -26072,12 +26070,9 @@ Weapon by: 'Noclue'"
 			"item_class"                "tf_weapon_paintballrifle"
 			"show_in_armory"			"1"
 			
-			"item_slot"                 "primary"
+			"item_slot"                 "secondary"
 			"anim_slot"                 "primary"
 			
-			"bucket"					"0"														
-			"bucket_position"			"0"
-
 			"propername"				"1"
 			"item_quality"				"rarity2"
 			"item_name"					"Medical Administration"										
@@ -26100,7 +26095,8 @@ Weapon from: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-				"override projectile type" 				"35"								
+				"override projectile type" 				"35"
+                "class select override vcd"				"taunt02"					
 			}
 			"attributes"
 			{
@@ -26112,7 +26108,7 @@ Weapon from: 'The One Of Wonders'"
 			    "apply heal on explosion"
 				{
 					"attribute_class"	"apply_heal_explosion"
-					"value"				"10"
+					"value"				"30"
 				}
 				"heal on hit for rapidfire"
 				{
@@ -26149,11 +26145,6 @@ Weapon from: 'The One Of Wonders'"
 					"attribute_class"	"add_health_regen"
 					"value" 			"-6"
 				}
-			    "ubercharge rate penalty on wearer"
-				{
-					"attribute_class"	"mult_medigun_uberchargerate_wearer" 
-					"value"				"0.5"														
-				}
 				"crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -26164,8 +26155,24 @@ Weapon from: 'The One Of Wonders'"
 			{
 				"sound_single_shot"		"Weapon_SelfPreserve.Single"
 				"sound_burst"			"Weapon_SelfPreserve.SingleCrit"
-				"tracer_effect"			"bullet_scattergun_tracer01"
+				"trail_effect"			"bullet_distortion_trail"	
+			}		
+			"visuals_red"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_red"
 			}
+			"visuals_blu"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_blue"
+			}
+			"visuals_grn"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_green"
+			}
+			"visuals_ylw"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_yellow"
+			}		
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
@@ -26181,11 +26188,8 @@ Weapon from: 'The One Of Wonders'"
 			"item_class"                "tf_weapon_paintballrifle"
 			"show_in_armory"			"1"
 			
-			"item_slot"                 "primary"
+			"item_slot"                 "secondary"
 			"anim_slot"                 "primary"
-			
-			"bucket"					"0"														
-			"bucket_position"			"0"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
@@ -26209,7 +26213,8 @@ Weapon from: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-				"override projectile type" 				"35"								
+				"override projectile type" 				"35"	
+                "class select override vcd"				"taunt02"					
 			}
 			"attributes"
 			{
@@ -26252,11 +26257,6 @@ Weapon from: 'The One Of Wonders'"
 				{
 					"attribute_class"	"add_health_regen"
 					"value" 			"-6"
-				}
-				"ubercharge rate penalty on wearer"
-				{
-					"attribute_class"	"mult_medigun_uberchargerate_wearer" 
-					"value"				"0.5"														
 				}
 				"crit mod disabled"															
 				{
@@ -27636,7 +27636,7 @@ Weapon by: 'Reagy, Noclue'"
 		"9152"
 		{
 		    "name"						"TF_WEARABLE_DEMOKNIGHT_SAMURAIPLATE"									
-			"item_class"				"tf_weapon_beacon"
+			"item_class"				"tf_weapon_taser"
 			"show_in_armory"			"1"
 			"item_slot"					"primary"										
 			"anim_slot"					"melee"
@@ -27655,8 +27655,9 @@ Weapon by: 'Reagy, Noclue'"
 			"item_iconname"				"Shogun Champion Odachi"
 			"item_type_name"			"Suit of Armour"
 			"item_description"			"
-Ancient Honour: This suit of armour provides you with a powerful Odachi melee that burns enemies on hit
-Odachi acquires a guaranteed crit after dealing 10 ticks of burn to enemies
+Ancient Honour: This suit of armour provides you with a powerful Odachi melee that charges up for maximum damage!
+Fully charged strikes on your teammates will restore 90% of their HP.
+charge is depleted on hit.
 
 Model by: 'Bapaul' 'blaholtzen' 'Square' 'ToxicWeasel' 'Boomsta'
 Weapon Model by: 'Yaredevil'
@@ -27675,9 +27676,9 @@ Weapon by 'The One Of Wonders'"
 			"static_attrs"
 			{
 				"class select override vcd"				"taunt03"
-                "melee range multiplier"				"1.75"							
-				"melee bounds multiplier"				"1.7"			
-                "mod beacon max ticks"                  "-20"				
+                "melee range multiplier"				"1.7"							
+                "fire rate burst"					"0.0"
+				"add condition on swing"			"35 0.03"				
 			}
 			"attributes"
 			{
@@ -27718,30 +27719,35 @@ Weapon by 'The One Of Wonders'"
 					"value"				"1"
 				}	
                 // Blade properties
-				"weapon_stattrak_module_scale"  
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"6.0"
-				}
 				"mod melee crit swing custom damage" //Decapitation on crits
 				{
 					"attribute_class"	"mod_melee_crit_swing_custom_damage"
 					"value"				"27"
 				}
-				"strange restriction type 1"												
-				{
-					"attribute_class"	"set_dmgtype_ignite"
-					"value" 			"1"
-				}	
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_wpn_burndmg"
-					"value"				"0.333333333"
-				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"effectbar_recharge_rate"
+					"value"				"0.3333333333333333"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"use_ammo_meter"
+					"value"				"1"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"set_burstfire"
+					"value"				"20"
+				}
+				"mult taser heal scale"
+				{
+					"attribute_class"	"mult_taser_heal_scale"
+					"value"				"0.9"
 				}
 			}
 			"visuals"
@@ -32694,7 +32700,7 @@ Weapon by: 'The One Of Wonders'"
 			    "max health additive bonus"
 				{
 					"attribute_class"	"add_maxhealth"
-					"value"				"15"
+					"value"				"10"
 				}
 				"damage bonus"
 				{
@@ -37631,7 +37637,7 @@ Weapon by: 'The One Of Wonders'"
 			    "sapper damage bonus"											
 				{
 					"attribute_class"	"mult_sapper_damage"
-					"value"				"1.75"
+					"value"				"1.33"
 				}
 				"sapper health penalty"											
 				{
@@ -37848,7 +37854,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"0.25"
+					"value"				"0.5"
 				}
 				"strange restriction type 1"
 				{
