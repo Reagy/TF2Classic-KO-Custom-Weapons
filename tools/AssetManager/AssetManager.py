@@ -21,7 +21,7 @@ def populate_from_folder( folder : str, output : set ):
 			new_file.write(f"{file}\n")
 
 def check_asset( asset : str ):
-	asset_combine : str = asset_directory + "/" + asset
+	asset_combine : str = asset_directory + "/" + asset.replace("\\", "/")
 	if asset_combine in asset_set:
 		if ".mdl" in asset_combine:
 			model_get_textures( asset_combine )
@@ -35,28 +35,42 @@ def check_asset_icon( asset : str ):
 		asset_combine = asset_directory + "/materials/" + asset
 		if asset_combine in asset_set:
 			assets_used.add( asset_combine )
-			return
 
-	asset_combine = asset_directory + "/materials/" + asset + "_large.vmt"
-	if asset_combine in asset_set:
-		assets_used.add( asset_combine )
-		parse_vmt( asset_combine )
+		asset_combine = asset_combine.replace( ".vtf", ".vmt" )
+		if asset_combine in asset_set:
+			assets_used.add( asset_combine )
+			parse_vmt( asset_combine )
+
+	else:
+		asset_combine = asset_directory + "/materials/" + asset + "_large.vmt"
+		if asset_combine in asset_set:
+			assets_used.add( asset_combine )
+			parse_vmt( asset_combine )
 
 model_attribs : set = { "custom_lunchbox_throwable_model", "custom_hand_viewmodel",
 			"custom_magazine_model", "custom_projectile_model" }
+
+static_model_attribs : set = { "custom lunchbox throwable model", "custom hand viewmodel",
+	"custom magazine model", "custom projectile model" }
 
 def parse_item( item : VDFDict ):
 	show_armory : str = item.get( "show_in_armory", "1" )
 	if show_armory == "0":
 		return
+	
 	for key, value in item.items():
+		key = key.lower()
 		if key == "attributes":
 			parse_attributes( value )
 		elif key == "visuals":
 			parse_visuals( value )
+		elif key == "static_attrs":
+			parse_static_attrs( value )
 		elif type(value) is str:
 			if key in [ "model_world", "model_player", "extra_wearable" ]:
 				check_asset( value )
+			elif key in [ "mouse_pressed_sound", "drop_sound" ]:
+				check_asset( "sound/" + value.removeprefix("#") )
 			elif key in [ "image_inventory" ]:
 				check_asset_icon( value )
 			
@@ -64,9 +78,13 @@ def parse_attributes( attributes : VDFDict ):
 	for key, value in attributes.items():
 		if type(value) is str:
 			continue
-		elif value.get("attribute_class"):
-			if value["attribute_class"] in model_attribs:
-				check_asset( value["value"] )
+		if value.get("attribute_class", "").lower() in model_attribs:
+			check_asset( value["value"] )
+
+def parse_static_attrs( attributes : VDFDict ):
+	for key, value in attributes.items():
+		if key.lower() in static_model_attribs:
+			check_asset( value )
 
 def parse_visuals( visuals : VDFDict ):
 	for key, value in visuals.items():
@@ -78,7 +96,6 @@ def model_get_dependencies( model_name : str ):
 		new_model_name = model_name.removesuffix(".mdl") + ext
 		if new_model_name in asset_set:
 			assets_used.add( new_model_name )
-
 
 def model_get_textures( model_name : str ):
 	local_model_name = model_name
@@ -137,17 +154,21 @@ texturekeys : set = { "$basetexture", "$basetexture2",
 
 def parse_vmt( vmt_path : str ):
 	qcfile : dict
-	with open( vmt_path.removesuffix("\n"), "r" ) as vmt:
-		qcfile = vdf.parse( vmt, dict, True, False )
-	
-	for tex in qcfile:
-		for k, v in qcfile[tex].items():
-			if k.lower() in texturekeys:
-				newstr : str = asset_directory + "/materials/" + v.replace("\\", "/")
-				if not newstr.endswith(".vtf"):
-					newstr += ".vtf"
-				if newstr in asset_set:
-					assets_used.add(newstr.removesuffix("\n"))
+
+	try:
+		with open( vmt_path.removesuffix("\n"), "r" ) as vmt:
+			qcfile = vdf.parse( vmt, dict, True, False )
+		
+		for tex in qcfile:
+			for k, v in qcfile[tex].items():
+				if k.lower() in texturekeys:
+					newstr : str = asset_directory + "/materials/" + v.replace("\\", "/")
+					if not newstr.endswith(".vtf"):
+						newstr += ".vtf"
+					if newstr in asset_set:
+						assets_used.add(newstr.removesuffix("\n"))
+	except FileNotFoundError:
+		print(f"vmt {vmt_path} does not exist")
 
 asset_directory : str = r"E:/TF2C Projects/Github/assets_server"
 asset_set : set = set()
@@ -174,9 +195,10 @@ try:
 				continue
 			check_asset( item.removesuffix("\n") )
 except FileNotFoundError:
-	print("no ignore file")
+	print("no extra files file")
 
 item_schema_path : str = r"E:/TF2C Projects/Github/custom_items_game.txt"
+#item_schema_path : str = r"E:/TF2C Projects/Github/tools/AssetManager/testschema.txt"
 soundscripts_path : str = r"E:/TF2C Projects/Github/custom_level_sounds.txt"
 
 item_schema : VDFDict
@@ -236,7 +258,7 @@ with open( ".\\output.txt", "w" ) as new_file:
 	for line2 in outputlist:
 		new_file.write( line2 )
 
-copy = True
+copy = False
 if copy:
 	for copy in asset_set:
 		if copy in assets_used:

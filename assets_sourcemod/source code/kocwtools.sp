@@ -6,6 +6,7 @@
 #include <dhooks>
 
 #include <kocwtools>
+#include <sourcescramble>
 
 //inventory
 Handle hEconGetAttributeManager;
@@ -40,10 +41,10 @@ Address offs_CTFPlayerShared_pOuter;
 Address offs_CTFPlayer_mShared;
 Address offs_CTFPlayer_pCurrentCommand;
 Address g_iCTFGameStats;
-Address g_iCLagCompensation;
+Address g_aLagCompensation;
 
-Handle hStartLagComp;
-Handle hEndLagComp;
+Handle hCreateLagCompensation;
+Handle hDestroyLagCompensation;
 
 StringMap g_AllocPooledStringCache;
 
@@ -228,18 +229,16 @@ public void OnPluginStart() {
 	*/
 
 	g_iCTFGameStats = GameConfGetAddress( hGameConf, "CTFGameStats" );
-	g_iCLagCompensation = GameConfGetAddress( hGameConf, "CLagCompensationManager" );
 
 	StartPrepSDKCall( SDKCall_Raw );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CLagCompensationManager::StartLagCompensation" );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CEnableLagCompensation::CEnableLagCompensation" );
 	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer );
-	hStartLagComp = EndPrepSDKCall();
-	
+	hCreateLagCompensation = EndPrepSDKCall();
+
 	StartPrepSDKCall( SDKCall_Raw );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CLagCompensationManager::FinishLagCompensation" );
-	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
-	hEndLagComp = EndPrepSDKCall();
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CEnableLagCompensation::~CEnableLagCompensation" );
+	hDestroyLagCompensation = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameStats::Event_PlayerHealedOther" );
@@ -373,14 +372,16 @@ public any Native_EntityInRadius( Handle hPlugin, int iParams ) {
 //lagcompensation->StartLagCompensation( pOwner, pOwner->GetCurrentCommand() );
 //lagcompensation->FinishLagCompensation( pOwner );
 
+MemoryBlock mbFuckThis;
 public any Native_StartLagComp( Handle hPlugin, int iParams ) {
 	int iPlayer = GetNativeCell( 1 );
 	if( !IsValidPlayer( iPlayer ) )
 		return 0;
 
-	Address aUserCmd = GetEntityAddress( iPlayer ) + offs_CTFPlayer_pCurrentCommand;
-	PrintToServer("testing start: %i %i", g_iCLagCompensation, aUserCmd );
-	SDKCall( hStartLagComp, g_iCLagCompensation, iPlayer, aUserCmd );
+	Address aUserCmd = LoadFromEntity( iPlayer, view_as<int>(offs_CTFPlayer_pCurrentCommand) );
+
+	mbFuckThis = new MemoryBlock( 3 );
+	SDKCall( hCreateLagCompensation, mbFuckThis.Address, iPlayer, aUserCmd, true );
 
 	return 0;
 }
@@ -389,8 +390,8 @@ public any Native_EndLagComp( Handle hPlugin, int iParams ) {
 	if( !IsValidPlayer( iPlayer ) )
 		return 0;
 
-	PrintToServer("testing end: %i", g_iCLagCompensation );
-	SDKCall( hEndLagComp, g_iCLagCompensation, iPlayer );
+	SDKCall( hDestroyLagCompensation, mbFuckThis.Address );
+	delete mbFuckThis;
 
 	return 0;
 }

@@ -4,6 +4,7 @@
 #define _kocw_included
 
 #include <tf2c>
+#include <dhooks>
 #include <stocksoup/memory>
 #include <sdkhooks>
 

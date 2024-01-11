@@ -124,11 +124,13 @@ public void OnMapStart() {
 
 //todo: restore this to prevent hydro pump from picking up ammo
 /*public void OnClientConnected( int iClient ) {
-	RequestFrame( Frame_Hook, iClient );
+	RequestFrame( Frame_Hook, EntIndexToEntRef( iClient ) );
 }
 
 void Frame_Hook( int iClient ) {
-	hGiveAmmo.HookEntity( Hook_Pre, iClient, Hook_GiveAmmo );
+	iClient = EntRefToEntIndex( iClient );
+	if( iClient != -1 )
+		hGiveAmmo.HookEntity( Hook_Pre, iClient, Hook_GiveAmmo );
 }*/
 
 public void OnEntityCreated( int iThis, const char[] szClassname ) {

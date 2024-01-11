@@ -73,7 +73,7 @@ public void Midhook_MetalPerHit( MidHookRegisters hRegs ) {
 
 	int iPlayer = GetEntityFromAddress( aPlayer );
 	int iBuilding = GetEntityFromAddress( hRegs.Load( DHookRegister_EBP, 8, NumberType_Int32 ) );
-	if( GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" ) != iPlayer ) {
+	if( GetEntProp( iBuilding, Prop_Send, "m_iObjectType" ) == 2 && GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" ) != iPlayer ) {
 		int iAmountToAdd = hRegs.Get( DHookRegister_EAX, NumberType_Int32 );
 		hRegs.Set( DHookRegister_EAX, RoundToNearest( float( iAmountToAdd ) * g_flUpgradePenaltyValue ) );
 	}
@@ -82,10 +82,8 @@ public void Midhook_MetalPerHit( MidHookRegisters hRegs ) {
 //doing heirarchal detour nonsense
 int g_iBuilding = -1;
 MRESReturn Detour_OnFriendlyBuildingHitPre( int iWrench, DHookParam hParams ) {
-	if( !hParams.IsNull( 1 ) && GetEntProp( hParams.Get( 1 ), Prop_Send, "m_iObjectType" ) == 2 )	
-		g_iBuilding = hParams.Get( 1 );
-	else
-		g_iBuilding = -1;
+	int iBuilding = hParams.Get( 1 );
+	g_iBuilding = !hParams.IsNull( 1 ) && GetEntProp( iBuilding, Prop_Send, "m_iObjectType" ) == 2 ? iBuilding : -1;
 
 	return MRES_Ignored;
 }

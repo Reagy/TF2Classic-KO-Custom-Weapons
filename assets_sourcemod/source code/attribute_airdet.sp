@@ -95,10 +95,11 @@ public void OnEntityCreated( int iEntity, const char[] szClassname ) {
 	if( StrContains( szName, "tf_weapon" ) == -1 )
 		return;
 
-	RequestFrame( Frame_WeaponHook, iEntity );
+	RequestFrame( Frame_WeaponHook, EntIndexToEntRef( iEntity ) );
 }
 
 void Frame_WeaponHook( int iEntity ) {
+	iEntity = EntRefToEntIndex( iEntity );
 	if( AttribHookFloat( 0.0, iEntity, "custom_airdet" ) == 0.0 )
 		return;
 
