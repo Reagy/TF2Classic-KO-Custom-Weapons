@@ -45,7 +45,10 @@ static char g_szAirblastPlayerSound[] = "TFPlayer.AirBlastImpact";
 static char g_szDeflectParticle[] = "deflect_fx";
 static char g_szDeleteParticle[] = "explosioncore_sapperdestroyed";
 
+ArrayList g_alAirblasted[MAXPLAYERS+1];
 ArrayList g_alEntList; //ent list for airblast enumeration
+float g_flAirblastEndTime[MAXPLAYERS+1];
+
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
@@ -86,7 +89,6 @@ public void OnPluginStart() {
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::AirblastPlayer" );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
 	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
@@ -105,7 +107,21 @@ public void OnPluginStart() {
 
 	g_alEntList = new ArrayList();
 
+	for( int i = 0; i < sizeof(g_alAirblasted); i++ ) {
+		g_alAirblasted[i] = new ArrayList();
+	}
+
+	HookEvent( "post_inventory_application", Event_Inventory, EventHookMode_Post );
+
 	delete hGameConf;
+}
+
+public Action Event_Inventory( Event hEvent, const char[] sName, bool bDontBroadcast ) {
+	int iPlayer = hEvent.GetInt( "userid" );
+	iPlayer = GetClientOfUserId( iPlayer );
+	g_alAirblasted[iPlayer].Clear();
+	g_flAirblastEndTime[iPlayer] = GetGameTime();
+	return Plugin_Continue;
 }
 
 public void OnMapStart() {
@@ -137,11 +153,9 @@ void Frame_CheckAttrib( int iEntity ) {
 		
 }
 
-float g_flAirblastEndTime[MAXPLAYERS+1];
-
 MRESReturn Hook_SecondaryFire( int iThis ) {
-	//if( GetEntPropFloat( iThis, Prop_Send, "m_flNextSecondaryAttack" ) > GetGameTime() )
-		//return MRES_Ignored;
+	if( GetEntPropFloat( iThis, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() || GetEntPropFloat( iThis, Prop_Send, "m_flNextSecondaryAttack" ) > GetGameTime() )
+		return MRES_Ignored;
 
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwner" );
 	if( iOwner == -1 )
@@ -184,6 +198,8 @@ MRESReturn Hook_ItemPostFrame( int iThis ) {
 		FinishLagCompensation( iOwner );
 
 		return MRES_Handled;
+	} else if( g_alAirblasted[iOwner].Length > 0 ) {
+		g_alAirblasted[iOwner].Clear();
 	}
 
 	return MRES_Ignored;
@@ -196,6 +212,7 @@ enum {
 }
 
 void DoAirblast( int iWeapon, int iOwner ) {
+	PrintToServer("test1");
 	int iFlags = RoundToFloor( AttribHookFloat( -1.0, iWeapon, g_szAttribAirblastFlags ) );
 	if( iFlags == -1 ) iFlags = AB_PUSH | AB_EXTINGUISH | AB_REFLECT;
 
@@ -231,58 +248,6 @@ void DoAirblast( int iWeapon, int iOwner ) {
 	g_alEntList.Clear();
 	TR_EnumerateEntitiesBox( vecMins, vecMaxs, 0, Airblast_BoxFilter, iOwner );
 
-#if defined AIRBLAST_DEBUG
-	float vecFuck[3];
-
-	vecFuck[0] = vecMins[0];
-	vecFuck[1] = vecBoxOrigin[1];
-	vecFuck[2] = vecBoxOrigin[2];
-	int iFuck = CreateEntityByName("prop_dynamic");
-	SetEntityModel( iFuck, "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl" );
-	TeleportEntity( iFuck, vecFuck );
-	DispatchSpawn( iFuck );
-
-	vecFuck[0] = vecBoxOrigin[0];
-	vecFuck[1] = vecMins[1];
-	vecFuck[2] = vecBoxOrigin[2];
-	iFuck = CreateEntityByName("prop_dynamic");
-	SetEntityModel( iFuck, "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl" );
-	TeleportEntity( iFuck, vecFuck );
-	DispatchSpawn( iFuck );
-
-	vecFuck[0] = vecBoxOrigin[0];
-	vecFuck[1] = vecBoxOrigin[1];
-	vecFuck[2] = vecMins[2];
-	iFuck = CreateEntityByName("prop_dynamic");
-	SetEntityModel( iFuck, "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl" );
-	TeleportEntity( iFuck, vecFuck );
-	DispatchSpawn( iFuck );
-
-	vecFuck[0] = vecMaxs[0];
-	vecFuck[1] = vecBoxOrigin[1];
-	vecFuck[2] = vecBoxOrigin[2];
-	iFuck = CreateEntityByName("prop_dynamic");
-	SetEntityModel( iFuck, "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl" );
-	TeleportEntity( iFuck, vecFuck );
-	DispatchSpawn( iFuck );
-
-	vecFuck[0] = vecBoxOrigin[0];
-	vecFuck[1] = vecMaxs[1];
-	vecFuck[2] = vecBoxOrigin[2];
-	iFuck = CreateEntityByName("prop_dynamic");
-	SetEntityModel( iFuck, "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl" );
-	TeleportEntity( iFuck, vecFuck );
-	DispatchSpawn( iFuck );
-
-	vecFuck[0] = vecBoxOrigin[0];
-	vecFuck[1] = vecBoxOrigin[1];
-	vecFuck[2] = vecMaxs[2];
-	iFuck = CreateEntityByName("prop_dynamic");
-	SetEntityModel( iFuck, "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl" );
-	TeleportEntity( iFuck, vecFuck );
-	DispatchSpawn( iFuck );
-#endif
-
 	for( int i = 0; i < g_alEntList.Length; i++ ) {
 		int iEntity = g_alEntList.Get(i);
 		float vecEntPos[3];
@@ -294,12 +259,9 @@ void DoAirblast( int iWeapon, int iOwner ) {
 		}
 
 		if( IsValidPlayer( iEntity ) ) {
-			PrintToServer("test6");
 			bool bSameTeam = GetEntProp( iEntity, Prop_Send, "m_iTeamNum" ) == GetEntProp( iOwner, Prop_Send, "m_iTeamNum" );
-			if( iFlags & AB_PUSH && !bSameTeam ) {
-				PrintToServer("test5");
-				float angPushDir[3];
-				GetClientEyeAngles( iEntity, angPushDir );
+			if( iFlags & AB_PUSH && !bSameTeam  ) {
+				float angPushDir[3]; angPushDir[0] = vecAngDir[0]; angPushDir[1] = vecAngDir[1]; angPushDir[2] = vecAngDir[2];
 				angPushDir[0] = MinFloat( -45.0, angPushDir[0] );
 
 				float vecPushDir[3];
@@ -344,26 +306,25 @@ void DoAirblast( int iWeapon, int iOwner ) {
 }
 
 void AirblastPlayer( int iTarget, int iAttacker, int iWeapon, const float vecDir[3] ) {
-	PrintToServer("test4");
+	if( g_alAirblasted[iAttacker].FindValue( iTarget ) != -1 )
+		return;
+
 	float vecVictimDir[3];
 	float vecTargetPos[3];
 	float vecAttackerPos[3];
 
-	//GetClientAbsOrigin( iTarget, vecTargetPos );
-	//GetClientAbsOrigin( iAttacker, vecAttackerPos );
 	SDKCall( g_sdkWorldSpaceCenter, iTarget, vecTargetPos );
 	SDKCall( g_sdkWorldSpaceCenter, iAttacker, vecAttackerPos );
 
 	SubtractVectors( vecTargetPos, vecAttackerPos, vecVictimDir );
 
-	float vecVictimDir2D[3]; vecVictimDir2D[0] = vecVictimDir[0]; vecVictimDir2D[1] = vecVictimDir[1]; vecVictimDir2D[2] = 0.0;
+	float vecVictimDir2D[3]; vecVictimDir2D[0] = vecVictimDir[0]; vecVictimDir2D[1] = vecVictimDir[1];
 	NormalizeVector( vecVictimDir2D, vecVictimDir2D );
 
-	float vecDir2D[3]; vecDir2D[0] = vecDir[0]; vecDir2D[1] = vecDir[1]; vecDir2D[2] = 0.0;
+	float vecDir2D[3]; vecDir2D[0] = vecDir[0]; vecDir2D[1] = vecDir[1];
 	NormalizeVector( vecDir2D, vecDir2D );
 
 	float flDot = GetVectorDotProduct( vecDir2D, vecVictimDir2D );
-	PrintToServer("%f", flDot);
 	if( flDot >= 0.8 ) {
 		EmitGameSoundToAll( g_szAirblastPlayerSound, iTarget );
 
@@ -374,13 +335,10 @@ void AirblastPlayer( int iTarget, int iAttacker, int iWeapon, const float vecDir
 		eDeflectedEvent.SetInt( "object_entindex", iTarget );
 		eDeflectedEvent.Fire();
 
-		PrintToServer("test1");
 		SDKCall( g_sdkAddDamagerToHistory, iTarget, iAttacker, iWeapon );
 
-		PrintToServer("test2");
 		SDKCall( g_sdkAirblastPlayer, GetSharedFromPlayer( iTarget ), iAttacker, vecDir, 500.0 );
-
-		PrintToServer("test3");
+		g_alAirblasted[iAttacker].Push( iTarget );
 	}
 }
 
