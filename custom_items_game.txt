@@ -8237,7 +8237,7 @@ Weapon from: Valve"
 		"5016"
 		{
 			"name"						"TF_WEAPON_BRICK"
-			"item_class"				"tf_weapon_grenade_mirv"
+			"item_class"				"tf_weapon_throwable"
 			"show_in_armory"			"1"
 			"item_slot"					"secondary"
 			"anim_slot"					"melee"
@@ -8268,46 +8268,12 @@ Weapon from: New Old Weapons Pack"
 			}
 			"static_attrs"																		// Stats are the SAME across all permutations - feel free to copy across all of them!
 			{
-				"override projectile type" 				"3"
-				"damage bonus hidden"					"0.366"
+				"override projectile type" 				"33"
 				"allowed in medieval mode"				"1"
 				"min_viewmodel_offset"					"10 0 -10"
-
-				"bleeding duration"						"2"
-				"maxammo grenades1 increased"			"3"
-				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
 				"meter_label"                           "BRICK"
-			}
-			"attributes"
-			{
-				// Backend stuff.
-				"effect bar recharge rate increased"
-				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.7"
-				}
-				"hand scale"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.1"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.25"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"blast_dmg_to_self"
-					"value" 			"0"
-				}
-				"damage force increase hidden"
-				{
-					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.2"
-				}
 			}
 			"visuals"
 			{
@@ -8324,7 +8290,7 @@ Weapon from: New Old Weapons Pack"
 		"5017"
 		{
 			"name"						"TF_WEAPON_BRICK"
-			"item_class"				"tf_weapon_grenade_mirv"
+			"item_class"				"tf_weapon_throwable"
 			"show_in_armory"			"1"
 			"item_slot"					"secondary"
 			"anim_slot"					"melee"
@@ -8353,46 +8319,12 @@ Weapon from: New Old Weapons Pack"
 			}
 			"static_attrs"																		// Stats are the SAME across all permutations - feel free to copy across all of them!
 			{
-				"override projectile type" 				"3"
-				"damage bonus hidden"					"0.366"
+				"override projectile type" 				"33"
 				"allowed in medieval mode"				"1"
 				"min_viewmodel_offset"					"10 0 -10"
-
-				"bleeding duration"						"2"
-				"maxammo grenades1 increased"			"3"
-				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
 				"meter_label"                           "BRICK"
-			}
-			"attributes"
-			{
-				// Backend stuff.
-				"effect bar recharge rate increased"
-				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.7"
-				}
-				"hand scale"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.1"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.25"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"blast_dmg_to_self"
-					"value" 			"0"
-				}
-				"damage force increase hidden"
-				{
-					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.2"
-				}
 			}
 			"visuals"
 			{
@@ -8409,7 +8341,7 @@ Weapon from: New Old Weapons Pack"
 		"5018"
 		{
 			"name"						"TF_WEAPON_BRICK"
-			"item_class"				"tf_weapon_grenade_mirv"
+			"item_class"				"tf_weapon_throwable"
 			"show_in_armory"			"1"
 			"item_slot"					"secondary"
 			"anim_slot"					"item2"
@@ -8440,47 +8372,12 @@ Weapon from: New Old Weapons Pack"
 			}
 			"static_attrs"																		// Stats are the SAME across all permutations - feel free to copy across all of them!
 			{
-				"special taunt"							"1"
-				"override projectile type" 				"3"
-				"damage bonus hidden"					"0.366"
+				"override projectile type" 				"33"
 				"allowed in medieval mode"				"1"
 				"min_viewmodel_offset"					"10 0 -10"
-
-				"bleeding duration"						"2"
-				"maxammo grenades1 increased"			"3"
-				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
 				"meter_label"                           "BRICK"
-			}
-			"attributes"
-			{
-				// Backend stuff.
-				"effect bar recharge rate increased"
-				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.7"
-				}
-				"hand scale"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.1"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.25"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"blast_dmg_to_self"
-					"value" 			"0"
-				}
-				"damage force increase hidden"
-				{
-					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.2"
-				}
 			}
 			"visuals"
 			{
@@ -8497,7 +8394,7 @@ Weapon from: New Old Weapons Pack"
 		"5019"
 		{
 			"name"						"TF_WEAPON_BRICK"
-			"item_class"				"tf_weapon_grenade_mirv"
+			"item_class"				"tf_weapon_throwable"
 			"show_in_armory"			"1"
 			"item_slot"					"secondary"
 			"anim_slot"					"item1"
@@ -8528,14 +8425,10 @@ Weapon from: New Old Weapons Pack"
 			}
 			"static_attrs"																		// Stats are the SAME across all permutations - feel free to copy across all of them!
 			{
-				"override projectile type" 				"3"
-				"damage bonus hidden"					"0.4"
+				"override projectile type" 				"33"
 				"allowed in medieval mode"				"1"
+				"damage bonus hidden"                   "1.2"
 				"min_viewmodel_offset"					"10 0 -10"
-
-				"bleeding duration"						"2"
-				"maxammo grenades1 increased"			"3"
-				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
 				"meter_label"                           "BRICK"
@@ -8543,30 +8436,10 @@ Weapon from: New Old Weapons Pack"
 			"attributes"
 			{
 				// Backend stuff.
-				"effect bar recharge rate increased"
-				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.7"
-				}
-				"hand scale"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.1"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.25"
-				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"blast_dmg_to_self"
-					"value" 			"0"
-				}
-				"damage force increase hidden"
-				{
-					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.2"
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"1.2"
 				}
 			}
 			"visuals"
@@ -8592,7 +8465,7 @@ Weapon from: New Old Weapons Pack"
 		{
 			"name"						"TF_WEAPON_BRICK"
 			"item_class"				"tf_weapon_grenade_mirv"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"secondary"
 			"anim_slot"					"secondary"
 			
@@ -8689,7 +8562,7 @@ Weapon from: New Old Weapons Pack"
 		"5022"
 		{
 			"name"						"TF_WEAPON_BRICK"
-			"item_class"				"tf_weapon_grenade_mirv"
+			"item_class"				"tf_weapon_throwable"
 			"show_in_armory"			"1"
 			"item_slot"					"secondary"
 			"anim_slot"					"item1"
@@ -8721,46 +8594,12 @@ Weapon from: New Old Weapons Pack"
 			}
 			"static_attrs"																		// Stats are the SAME across all permutations - feel free to copy across all of them!
 			{
-				"override projectile type" 				"3"
-				"damage bonus hidden"					"0.366"
+				"override projectile type" 				"33"
 				"allowed in medieval mode"				"1"
 				"min_viewmodel_offset"					"10 0 -10"
-
-				"bleeding duration"						"2"
-				"maxammo grenades1 increased"			"3"
-				"fire rate penalty"						"1.75"
 				"crit mod disabled"						"0"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
 				"meter_label"                           "BRICK"
-			}
-			"attributes"
-			{
-				// Backend stuff.
-				"effect bar recharge rate increased"
-				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.7"
-				}
-				"hand scale"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.1"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.25"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"blast_dmg_to_self"
-					"value" 			"0"
-				}
-				"damage force increase hidden"
-				{
-					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.2"
-				}
 			}
 			"visuals"
 			{
@@ -8781,7 +8620,7 @@ Weapon from: New Old Weapons Pack"
 		"5024"
 		{
 			"name"						"TF_WEAPON_BRICK"
-			"item_class"				"tf_weapon_grenade_mirv"
+			"item_class"				"tf_weapon_throwable"
 			"show_in_armory"			"1"
 			"item_slot"					"melee"
 			"anim_slot"					"melee"
@@ -8814,15 +8653,14 @@ Weapon from: New Old Weapons Pack"
 			}
 			"static_attrs"																		// Stats are the SAME across all permutations - feel free to copy across all of them!
 			{
-				"class select override vcd"				"taunt06"
-				"override projectile type" 				"3"
-				"damage bonus hidden"					"0.366"
+				"override projectile type" 				"33"
+				"allowed in medieval mode"				"1"
 				"min_viewmodel_offset"					"10 0 -10"
-
-				"bleeding duration"						"2"
-				"maxammo grenades1 increased"			"3"
-				"fire rate penalty"						"1.75"
-				"crit mod disabled"						"0"
+				"damage bonus hidden"                   "0.65"
+				"apply look velocity on damage"			"-300"	
+				"apply z velocity on damage"			"-40"
+				"maxammo grenades1 increased"			"6"
+				"fire rate penalty hidden"			    "2.75"
 				"custom projectile model"				"models/weapons/w_models/w_brick.mdl"
 				"meter_label"                           "BRICK"
 			}
@@ -8832,32 +8670,32 @@ Weapon from: New Old Weapons Pack"
 				"effect bar recharge rate increased"
 				{
 					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.35"													// Civilian is a special boy and gets slightly reduced (but not removed) cooldown time since it's his ONLY weapon!
-				}
-				"hand scale"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.1"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"1.25"
+					"value"				"0.3"													// Civilian is a special boy and gets slightly reduced (but not removed) cooldown time since it's his ONLY weapon!
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"blast_dmg_to_self"
-					"value" 			"0"
+					"attribute_class"		"mult_projectile_speed"
+					"value" 				"0.65"
 				}
-				"damage force increase hidden"
-				{
-					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.265"
-				}
+				"strange restriction type 1"
+                {
+                    "attribute_class"    "mult_spread_scale"
+                    "value"                "0.06"
+				}	
+				"projectile spread angle penalty"
+                {
+                    "attribute_class"    "DISPLAY_ONLY"
+                    "value"                "3"
+                }
 				"decrease player capture value"
 				{
 					"attribute_class"		"add_player_capturevalue"
 					"value" 				"-3"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
 				}
 			}
 			"visuals"
