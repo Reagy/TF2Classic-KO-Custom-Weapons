@@ -1063,7 +1063,7 @@
 		"49"
 		{
 			"name"						"Chekhov's Punch"
-			"item_class"				"tf_weapon_russianroulette"
+			"item_class"				"tf_weapon_fists"
 			"item_name"					"#TF_Weapon_Chekhov"
 			"item_description"			"#TF_Weapon_Chekhov_Desc"
 			"item_type_name"			"#TF_Weapon_Chains"
@@ -1086,50 +1086,51 @@
 			}
 			"attributes"
 			{
-				"chekhov punch VISUAL ONLY STORE 3 CRITS"
+				"Mini-critboost on hit"														
 				{
-					"attribute_class"	"VISUALONLY"
+					"attribute_class"	"dmmuy"
+					"value"				"3"
+				}
+				"critboost on kill"
+				{
+					"attribute_class"	"add_onkill_critboost_time"
+					"value"				"3"
+				}
+				"minicrits become crits"														
+				{
+					"attribute_class"	"minicrits_become_crits"
 					"value"				"1"
 				}
-				"chekhov punch VISUAL ONLY CRITS CONSUMED BY ALL WEAPONS"
+				"minicrit vs player under feet"
 				{
-					"attribute_class"	"VISUALONLY"
+					"attribute_class"	"minicrit_vs_player_under_feet"
 					"value"				"1"
 				}
-				"melee taken becomes crit on wearer"
+				"add condition on hit"															
 				{
-					"attribute_class"	"melee_taken_becomes_crit_wearer"
+					"attribute_class"	"add_onhit_addcond_self_weapon"
+					"value"				"112 3"
+				}
+				"damage penalty"															
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.8"
+				}
+				"fire rate penalty"															
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.25"
+				}
+				"melee taken becomes crit on active"
+				{
+					"attribute_class"	"melee_taken_becomes_crit_active"
 					"value"				"1"
 				}
-				"chekhov punch VISUAL ONLY CRIT ONLY AT FULL CAPACITY"
-				{
-					"attribute_class"	"VISUALONLY"
-					"value"				"1"
-				}
+				
 				
 				// hidden
 				"hidden separator"		"1"
 
-				"gain stored crits on hit"
-				{
-					"attribute_class"	"gain_stored_crits_on_hit"
-					"value"				"1"
-				}
-				"lose stored crits on miss"
-				{
-					"attribute_class"	"lose_stored_crits_on_miss"
-					"value"				"1"
-				}
-				"always crits on full stored crits"
-				{
-					"attribute_class"	"always_crit_full_stored_crits"
-					"value"				"1"
-				}
-				"cannot use stored crits hidden"
-				{
-					"attribute_class"	"cannot_use_stored_crits"
-					"value"				"1"
-				}
 				"crit mod disabled hidden"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -1291,7 +1292,7 @@
 				"blast dmg to self increased hidden"
 				{
 					"attribute_class"	"blast_dmg_to_self"
-					"value"				"2.0"
+					"value"				"0.6"
 				}
 				"self dmg push force hidden"				
 				{
@@ -1308,6 +1309,11 @@
 					"attribute_class"	"mod_custom_falloff"
 					"value"				"0.75"
 				}
+				"custom rampup"
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.2"
+				}
 				"modifier mini crit airborne direct hit only hidden"
 				{
 					"attribute_class"	"mod_minicrit_airborne_direct_hit_only"
@@ -1316,7 +1322,7 @@
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.04"
+					"value"				"1.3"
 				}
 				"crit mod disabled"
 				{
@@ -25905,7 +25911,12 @@ Weapon by: 'Noclue'"
 			"item_quality"				"rarity2"
 			"item_name"					"Medical Administration"										
 			"item_type_name"			"Healing Heavy Syringe Gun"
-			"item_description"			"
+			"item_description"			"ÜberCharge provides 8 seconds of invulnerability 
+!!! IMPORTANT: YOU MUST READ THIS! !!!
+This weapon uses +attack3 to trigger the ÜberCharge, this is not bound by default, you MUST bind this yourself in the console.
+
+Example: bind h +attack3
+
 I will continue to thrive even in war, my oath is not over!
 
 Model by: 'svdl'
@@ -25965,13 +25976,18 @@ Weapon from: 'The One Of Wonders'"
 				}
 				"strange restriction type 1"
 				{
+					"attribute_class"	"set_charge_type"
+					"value"				"0"
+				}
+				"strange restriction type 1"
+				{
 					"attribute_class"	"unimplemented_mod_sniper_no_charge" // No zooming in, dumpkohf!
 					"value"				"1"														
 				}
 				"health drain"
 				{
 					"attribute_class"	"add_health_regen"
-					"value" 			"-6"
+					"value" 			"-4"
 				}
 				"crit mod disabled"															
 				{
@@ -26018,12 +26034,20 @@ Weapon from: 'The One Of Wonders'"
 			
 			"item_slot"                 "secondary"
 			"anim_slot"                 "primary"
+			
+			"bucket"					"1"														
+			"bucket_position"			"1"
 
 			"propername"				"1"
 			"item_quality"				"rarity2"
 			"item_name"					"Surgical Precision"										
 			"item_type_name"			"Experimental Healing Linear Fusion Rifle"
 			"item_description"			"
+!!! IMPORTANT: YOU MUST READ THIS! !!!
+This weapon uses +attack3 to trigger the ÜberCharge, this is not bound by default, you MUST bind this yourself in the console.
+
+Example: bind h +attack3
+			
 Precision engineering meets surgical precision! A marvelous combination! 
 
 Model by: 'ColonelBD'
@@ -26041,56 +26065,41 @@ Weapon from: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-				"override projectile type" 				"35"	
+				"override projectile type" 				"1"	
                 "class select override vcd"				"taunt02"					
 			}
 			"attributes"
 			{
-			    "Healing allies builds Ubercharge"
-				{
-					"attribute_class"	"dmmuy"
-					"value"				"1"
-				}
-			    "apply heal on explosion"
-				{
-					"attribute_class"	"apply_heal_explosion"
-					"value"				"50"
-				}
-				"heal on hit for rapidfire"
-				{
-					"attribute_class"	"add_onhit_addhealth"
-					"value"				"50"
-				}
 				"add uber charge on hit"
 				{
 					"attribute_class"	"add_onhit_ubercharge"
 					"value"				"0.1"
 				}	
-			    "weapon_stattrak_module_scale"
+				"medigun charge is push buff"
 				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"10.0"
+					"attribute_class"	"set_charge_type"
+					"value"				"2"
 				}
-				"weapon_stattrak_module_scale"
+				"apply heal on explosion"
 				{
-					"attribute_class"	"mult_clipsize"
-					"value" 			"0.166666666667"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"unimplemented_mod_sniper_no_charge" // No zooming in, dumpkohf!
-					"value"				"1"														
-				}
+					"attribute_class"	"apply_heal_explosion"
+					"value"				"50"
+				}	
 				"health drain"
 				{
 					"attribute_class"	"add_health_regen"
 					"value" 			"-6"
 				}
+				"ubercharge rate penalty on wearer"
+				{
+					"attribute_class"	"mult_medigun_uberchargerate_wearer" 
+					"value"				"0.5"														
+				}
 				"crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}	
+				}
 				"weapon_stattrak_module_scale"													
 				{
 					"attribute_class"	"mult_postfiredelay"
@@ -26098,49 +26107,35 @@ Weapon from: 'The One Of Wonders'"
 				}	
 				"weapon_stattrak_module_scale"													
 				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.33"
+					"attribute_class"	"mult_dmg"
+					"value"				"13.0"
 				}	
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
-					"value"				"2.0"
+					"value"				"1.34"
 				}
-				"punch angle mod add hidden"
+				"strange restriction type 1"
 				{
-					"attribute_class"	"punch_angle_mod"
-					"value" 			"13.38"
+					"attribute_class"	"unimplemented_mod_sniper_no_charge" // No zooming in, dumpkohf!
+					"value"				"1"														
 				}
-				"punch angle is constant"
+				"hitscan hits allies"
 				{
-					"attribute_class"	"punch_angle_is_constant"
-					"value" 			"1"
+					"attribute_class"	"hitscan_hits_allies"
+					"value"				"1"
+				}
+				"clip size penalty hidden"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.17"
 				}
 			}
 			"visuals"
 			{
 				"sound_single_shot"		"Weapon_Railgun.Single"								
-				"sound_burst"			"Weapon_Railgun.SingleCrit"	
-			}
-			"visuals_red"
-			{
-				"trail_effect"			"coilgun_trail_red"									
-				"trail_effect_crit"		"coilgun_trail_crit_red"
-			}
-			"visuals_blu"
-			{
-				"trail_effect"			"coilgun_trail_blue"
-				"trail_effect_crit"		"coilgun_trail_crit_blue"
-			}
-			"visuals_grn"
-			{
-				"trail_effect"			"coilgun_trail_green"
-				"trail_effect_crit"		"coilgun_trail_crit_green"
-			}
-			"visuals_ylw"
-			{
-				"trail_effect"			"coilgun_trail_yellow"
-				"trail_effect_crit"		"coilgun_trail_crit_yellow"
+				"sound_burst"			"Weapon_Railgun.SingleCrit"
+				"tracer_effect"			"railgun_tracer01"
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -39508,8 +39503,8 @@ Weapon by: 'The One Of Wonders'"
 		}         
 		"7545"
 		{
-			"name"					"Mini-critboost on kill"
-			"description_string"	"On Kill: %s1 seconds of mini-crits"												
+			"name"					"Mini-critboost on hit"
+			"description_string"	"On Hit: %s1 seconds of mini-crits"													
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
 		}
