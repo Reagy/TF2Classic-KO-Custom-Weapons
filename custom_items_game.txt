@@ -184,7 +184,7 @@
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 				"crit mod disabled"
 				{
@@ -213,7 +213,7 @@
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 				"crit mod disabled"
 				{
@@ -242,7 +242,7 @@
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 				"crit mod disabled"
 				{
@@ -270,7 +270,7 @@
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 				"crit mod disabled"
 				{
@@ -293,7 +293,7 @@
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 				"crit mod disabled"
 				{
@@ -1089,41 +1089,36 @@
 				"Mini-critboost on hit"														
 				{
 					"attribute_class"	"dmmuy"
-					"value"				"3"
+					"value"				"2"
 				}
-				"critboost on kill"
+				"heal on hit for rapidfire"
 				{
-					"attribute_class"	"add_onkill_critboost_time"
-					"value"				"3"
+					"attribute_class"	"add_onhit_addhealth"
+					"value"				"30"
+				}
+				"heal on kill on crit"
+				{
+					"attribute_class"	"heal_on_kill_crit"
+					"value"				"120"
 				}
 				"minicrits become crits"														
 				{
 					"attribute_class"	"minicrits_become_crits"
 					"value"				"1"
 				}
-				"minicrit vs player under feet"
-				{
-					"attribute_class"	"minicrit_vs_player_under_feet"
-					"value"				"1"
-				}
 				"add condition on hit"															
 				{
 					"attribute_class"	"add_onhit_addcond_self_weapon"
-					"value"				"112 3"
-				}
-				"damage penalty"															
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"112 2"
 				}
 				"fire rate penalty"															
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.25"
+					"value"				"1.15"
 				}
-				"melee taken becomes crit on active"
+				"melee taken becomes crit on wearer"
 				{
-					"attribute_class"	"melee_taken_becomes_crit_active"
+					"attribute_class"	"melee_taken_becomes_crit_wearer"
 					"value"				"1"
 				}
 				
@@ -1228,7 +1223,7 @@
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 			}			
 			"visuals"
@@ -3711,6 +3706,11 @@ Viewmodel hack by: 'Reagy'"
 			}
 			"attributes"
 			{
+			    "health regen"
+				{
+					"attribute_class"	"add_health_regen"
+					"value"				"5"
+				}
 			    "Backpack Positive"
 				{
 					"attribute_class"	"DISPLAY_ONLY"
@@ -5885,7 +5885,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 			}
 			"visuals"
@@ -5926,6 +5926,7 @@ Weapon by: 'The One Of Wonders'"
 			"static_attrs"
 			{
 			    "class select override vcd"				"taunt02"	
+				"override projectile type" 				"30"
 			}
 			"attributes"
 			{
@@ -5933,11 +5934,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_single_wep_deploy_time"
 					"value"				"0.5"
-				}
-				"health regen"
-				{
-					"attribute_class"	"add_health_regen"
-					"value"				"6"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -5948,11 +5944,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"add_onhit_addhealth"
 					"value"				"30"
-				}
-				"no damage falloff over distance"
-				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -5971,14 +5962,41 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"0.1"
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"1.3"
 				}
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"2.5"
+				}
+                "longer damage falloff distance"
+				{
+					"attribute_class"	"mult_falloff_distance"
+					"value"				"1.75"
+				}		
 			}
 			"visuals"
 			{
 			    "sound_single_shot"		"Weapon_Saratov.Fire"							
 				"sound_burst"			"Weapon_Saratov.FireCrit"	
+				"trail_effect"			"bullet_distortion_trail"	
+			}		
+			"visuals_red"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_red"
+			}
+			"visuals_blu"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_blue"
+			}
+			"visuals_grn"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_green"
+			}
+			"visuals_ylw"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_yellow"
 			}
 		}
 //---------------------------
@@ -6077,7 +6095,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.734832"
+					"value"				"0.94058496"
 				}
 			}
 			"visuals"
@@ -7348,27 +7366,27 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.05"
+					"value"				"1.1"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"0.8"
+					"value"				"1.28"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.5"
+					"value"				"1.875"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value"				"1.6"
+					"value"				"1.70666667"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.9"
+					"value"				"2.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -7385,6 +7403,16 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_use_custom_ammo_type"
 					"value" 			"1"
 				}	
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.75"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
+				}
 			}
 			"visuals"
 			{
@@ -10206,7 +10234,7 @@ Weapon by: 'Reagy'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value" 			"0.5355"
+					"value" 			"0.68544"
 				}				
 			}
 			"visuals"
@@ -12965,7 +12993,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.525"
+					"value"				"0.672"
 				}
 			}
 			"visuals"
@@ -13058,7 +13086,7 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 			}
 			"visuals"
@@ -13112,7 +13140,7 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 			}
 			"visuals"
@@ -13166,7 +13194,7 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 			}
 			"visuals"
@@ -13222,7 +13250,7 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 			}
 			"visuals"
@@ -13284,7 +13312,7 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 			}
 			"visuals"
@@ -13433,7 +13461,7 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 			}
 			"visuals"
@@ -13497,7 +13525,7 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 			}
 			"visuals"
@@ -15220,7 +15248,7 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"0.75"
+					"value"				"0.9"
 				}	
 				"weapon_stattrak_module_scale"
 				{
@@ -16352,12 +16380,6 @@ Weapon by: 'Majro'"
 					"attribute_class"		"add_player_capturevalue"
 					"value" 				"-2"
 				}
-				
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.71"
-				}				
 				
 				"fire rate penalty"
 				{
@@ -17949,7 +17971,7 @@ Edited by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 				"crit mod disabled"															
 				{
@@ -18030,16 +18052,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "clipsize increase on kill"
-				{
-					"attribute_class"	"clipsize_increase_on_kill"
-					"value"				"5"
-				}
-                "clipsize increase on kill cap"
-				{
-					"attribute_class"	"clipsize_increase_on_kill_cap"
-					"value"				"25"
-				}	
 			    "Building Break Buff"
 				{
 					"attribute_class"	"dumme"
@@ -18070,6 +18082,16 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_spread_scale"
 					"value"				"2"
 				}	
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"2"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.25"
+				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -20540,7 +20562,7 @@ Weapon by: 'Noclue'"
 				"ubercharge rate bonus"
 				{
 					"attribute_class"	"mult_medigun_uberchargerate"
-					"value"				"1.1"
+					"value"				"1.2"
 				}
 				"overheal penalty"
 				{
@@ -21308,7 +21330,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 			}
 			"visuals"
@@ -21611,7 +21633,7 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"override projectile type" 				"30"									
-				"damage bonus hidden"					"0.25"								
+				"damage bonus hidden"					"0.3"								
 				"allowed in medieval mode"				"1"
 				"UNIQUE maxammo grenades1 HIDDEN"		"3"
 				"min_viewmodel_offset"					"10 0 -10"
@@ -21652,11 +21674,6 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_dmgself_push_force"
 					"value" 			"0"
-				}
-				"weapon_stattrak_module_scale"															
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"2"
 				}
 				"weapon_stattrak_module_scale"															
 				{
@@ -23086,7 +23103,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.8379"
+					"value"				"1.072512"
 				}				
 			}
 			"visuals"
@@ -23619,17 +23636,12 @@ Weapon by: 'Reagy'"
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.9"
+					"value"				"0.8"
 				}
 				"clip size bonus"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"2.0"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.85"
 				}
 				"spread penalty"
 				{
@@ -25685,7 +25697,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.5"
+					"value"				"1.92"
 				}
 				"crit mod disabled"
 				{
@@ -25715,7 +25727,7 @@ Weapon by: 'The One Of Wonders'"
                 "Reload time no anim speed mod"
                 {
                     "attribute_class"    "mult_reload_time_noanimmod"
-                    "value"                "0.725"
+                    "value"              "0.725"
                 }				
 			}
 			"visuals"
@@ -25947,12 +25959,7 @@ Weapon from: 'The One Of Wonders'"
 			    "apply heal on explosion"
 				{
 					"attribute_class"	"apply_heal_explosion"
-					"value"				"30"
-				}
-				"heal on hit for rapidfire"
-				{
-					"attribute_class"	"add_onhit_addhealth"
-					"value"				"10"
+					"value"				"20"
 				}
 				"add uber charge on hit"
 				{
@@ -25987,7 +25994,7 @@ Weapon from: 'The One Of Wonders'"
 				"health drain"
 				{
 					"attribute_class"	"add_health_regen"
-					"value" 			"-4"
+					"value" 			"-2"
 				}
 				"crit mod disabled"															
 				{
@@ -26088,7 +26095,7 @@ Weapon from: 'The One Of Wonders'"
 				"health drain"
 				{
 					"attribute_class"	"add_health_regen"
-					"value" 			"-6"
+					"value" 			"-2"
 				}
 				"ubercharge rate penalty on wearer"
 				{
@@ -27879,7 +27886,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Booster Shot"
 			"item_iconname"				"Booster Shot"
 			"item_type_name"			"Medi Gun"
-			"item_description"			"ÜberCharge provides 15 seconds of enhanced healing rate and grants patients mini-crits
+			"item_description"			"ÜberCharge provides 10 seconds of enhanced healing rate and grants patients mini-crits
 
 This is a sacrifice I'm willing to take! I've done worse things anyway haha-
 
@@ -27909,12 +27916,12 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"																
 				{
 					"attribute_class"	"add_uber_time"
-					"value" 			"7"
+					"value" 			"2"
 				}
 				"heal rate bonus"																
 				{
 					"attribute_class"	"mult_medigun_healrate"
-					"value" 			"1.75"
+					"value" 			"1.6"
 				}
 				"Medi-gun range decreased"																
 				{
@@ -28077,11 +28084,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "provide on active"	
-				{
-					"attribute_class"	"provide_on_active"
-					"value"				"1"
-				}
 				"Sentry Backpack Display Only"	 
 				{
 					"attribute_class"	"display_dummy"
@@ -28092,19 +28094,19 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg"
 					"value"				"2.0"
 				}
-				"weapon_stattrak_module_scale"	 // 3 degrees of spread
+				"weapon_stattrak_module_scale"	 // 1 degree of spread
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.5"
+					"value"				"0.5"
 				}
 				"weapon_stattrak_module_scale"	 // should be about ~6 RPS
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"1.55"
 				}
-				"move speed penalty"	 
+				"Move Speed Penalty Active"
 				{
-					"attribute_class"	"mult_player_movespeed"
+					"attribute_class"	"mult_player_movespeed_active"
 					"value"				"0.5"
 				}
 				"no primary ammo from dispensers fixed"	 
@@ -28122,11 +28124,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"1.25"
 				}
-				"crits become minicrits"															
-				{
-					"attribute_class"	"crits_become_minicrits"
-					"value"				"1"
-				}
 				"crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -28135,7 +28132,7 @@ Weapon by: 'The One Of Wonders'"
 				"punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
-					"value"				"0.5"
+					"value"				"0.25"
 				}
 				"punch angle mod add hidden"
 				{
@@ -28370,7 +28367,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.1025"
+					"value"				"1.4112"
 				}
 			}
 			"visuals"
@@ -30531,8 +30528,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-				"override projectile type" 				"2"									
-				"damage bonus hidden"					"0.9"								
+				"override projectile type" 				"2"																	
 				"allowed in medieval mode"				"1"
 				"min_viewmodel_offset"					"10 0 -10"
 				"meter_label"                           "AXE"
@@ -30547,7 +30543,7 @@ Weapon by: 'The One Of Wonders'"
 				"bleeding duration"
 				{
 					"attribute_class"	"bleeding_duration"
-					"value"				"1"
+					"value"				"3"
 				}
 				"hand scale"															
 				{
@@ -30770,7 +30766,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 			}
 			"visuals"
@@ -30935,7 +30931,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"4.0"
+					"value"				"5.12"
 				}	
                 "weapon_stattrak_module_scale"
 				{
@@ -32021,7 +32017,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.454"
+					"value"				"0.58112"
 				}
 				"crit mod disabled"
 				{
@@ -33770,10 +33766,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.8"
 				}
-				"move speed penalty"
+				"Move Speed Penalty Active"
 				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.8"
+					"attribute_class"	"mult_player_movespeed_active"
+					"value"				"0.85"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -33924,7 +33920,7 @@ Weapon by: 'Reagy'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}				
 			}
 			"visuals"
@@ -36271,7 +36267,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.89"
+					"value"				"2.4192"
 				}
 				"crit mod disabled"
 				{
@@ -37552,7 +37548,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -38206,7 +38202,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.68"
+					"value"				"0.75"
 				}				
 			}
 			"visuals"
