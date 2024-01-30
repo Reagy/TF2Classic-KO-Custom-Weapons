@@ -27,23 +27,23 @@ Handle g_sdkAirblastPlayer;
 Handle g_sdkAddDamagerToHistory;
 Handle g_sdkWorldSpaceCenter;
 
-static char g_szAttribAirblastEnable[] = "custom_force_airblast";
-static char g_szAttribAirblastRefire[] = "mult_airblast_refire_time";
-static char g_szAttribAirblastScale[] = "deflection_size_multiplier";
-static char g_szAttribAirblastCost[] = "mult_airblast_cost";
-static char g_szAttribAirblastSelfPush[] = "apply_self_knockback_airblast";
-static char g_szAttribAirblastFlags[] = "airblast_functionality_flags";
-static char g_szAttribAirblastNoPush[] = "disable_airblasting_players";
-static char g_szAttribAirblastDestroy[] = "airblast_destroy_projectile";
+static char g_szAttribAirblastEnable[] = 	"custom_force_airblast";
+static char g_szAttribAirblastRefire[] = 	"mult_airblast_refire_time";
+static char g_szAttribAirblastScale[] = 	"deflection_size_multiplier";
+static char g_szAttribAirblastCost[] = 		"mult_airblast_cost";
+static char g_szAttribAirblastSelfPush[] = 	"apply_self_knockback_airblast";
+static char g_szAttribAirblastFlags[] = 	"airblast_functionality_flags";
+static char g_szAttribAirblastNoPush[] = 	"disable_airblasting_players";
+static char g_szAttribAirblastDestroy[] = 	"airblast_destroy_projectile";
 
-static char g_szAirblastSound[] = "";
-static char g_szDeleteAirblastSound[] = "Fire.Engulf";
-static char g_szExtinguishSound[] = "TFPlayer.FlameOut";
-static char g_szDeflectSound[] = "Weapon_FlameThrower.AirBurstAttackDeflect";
-static char g_szAirblastPlayerSound[] = "TFPlayer.AirBlastImpact";
+static char g_szAirblastSound[] = 		"";
+static char g_szDeleteAirblastSound[] = 	"Fire.Engulf";
+static char g_szExtinguishSound[] = 		"TFPlayer.FlameOut";
+static char g_szDeflectSound[] = 		"Weapon_FlameThrower.AirBurstAttackDeflect";
+static char g_szAirblastPlayerSound[] = 	"TFPlayer.AirBlastImpact";
 
-static char g_szDeflectParticle[] = "deflect_fx";
-static char g_szDeleteParticle[] = "explosioncore_sapperdestroyed";
+static char g_szDeflectParticle[] = 		"deflect_fx";
+static char g_szDeleteParticle[] = 		"explosioncore_sapperdestroyed";
 
 ArrayList g_alAirblasted[MAXPLAYERS+1];
 ArrayList g_alEntList; //ent list for airblast enumeration
