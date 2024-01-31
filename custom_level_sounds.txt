@@ -6798,49 +6798,49 @@
 // CHAINSAW
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_ChainSaw.Draw"
+"Weapon_Chainsaw.Draw"
 {
 	"channel"		"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_draw.wav"
 }
-"Weapon_ChainSaw.ClipEmpty"	
+"Weapon_Chainsaw.ClipEmpty"	
 {
 	"channel"		"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_NORM"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_empty.wav"
 }
-"Weapon_ChainSaw.Rev"	
+"Weapon_Chainsaw.Rev"	
 {
 	"channel"		"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_rev.wav"
 }
-"Weapon_ChainSaw.Fire"	
+"Weapon_Chainsaw.Fire"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_fire.wav"
 }
-"Weapon_ChainSaw.FireCrit"	
+"Weapon_Chainsaw.FireCrit"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_fire_crit.wav"
 }
-"Weapon_ChainSaw.WindUp"	
+"Weapon_Chainsaw.WindUp"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_wind_up.wav"
 }
-"Weapon_ChainSaw.WindDown"	
+"Weapon_Chainsaw.WindDown"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
@@ -8937,8 +8937,11 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_64dB"
 	"volume"	".6"
-	"wave"		")weapons/knife_sniper_swing.wav"
-	"wave"		")weapons/knife_sniper_swing_02.wav"
+	"rndwave"
+	{
+		"wave"		")weapons/knife_sniper_swing.wav"
+		"wave"		")weapons/knife_sniper_swing_02.wav"
+	}
 }
 
 "Weapon_Sknife.MissCrit"
@@ -8967,10 +8970,7 @@
 	"channel"	"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_NORM"
 	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		")weapons/blade_hitworld.wav"
-	}
+	"wave"		")weapons/blade_hitworld.wav"
 }
 
 "Weapon_Sknife.Draw"
