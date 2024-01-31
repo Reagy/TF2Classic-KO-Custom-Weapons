@@ -377,6 +377,7 @@ void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
 	SetCustomCondLevel( iCollide, TFCC_FLAMEHEAL, iLevel + 75 );
 
 	//this appends to the flame's internal list that keeps track of who it has hit
+	//todo: move to gamedata
 	Address aVector = aThis + address( 120 );
 	Address aSize = aThis + address( 132 );
 	Address aEHandle = GetEntityAddress( iCollide ) + address( 836 );

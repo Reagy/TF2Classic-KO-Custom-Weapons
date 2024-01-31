@@ -19,6 +19,7 @@ static char g_szSoundSapperThrow[] =	"weapons/knife_swing.wav";
 static char g_szSoundSapperNoise[] =	"weapons/sapper_timer.wav";
 static char g_szSoundSapperNoise2[] =	"player/invulnerable_off.wav";
 static char g_szSoundSapperPlant[] =	"weapons/sapper_plant.wav";
+static char g_szSndscrSapperDestroy[] =	"Weapon_Grenade_Mirv.Disarm";
 
 #define EFFECT_SMOKE            "sapper_smoke"
 #define EFFECT_SENTRY_FX        "sapper_sentry1_fx"
@@ -37,7 +38,7 @@ static char g_szSoundSapperPlant[] =	"weapons/sapper_plant.wav";
 #define SAPPERKEYNAME "Sapper"
 
 //time to recharge sapper in seconds
-#define INTERMISSION_RECHARGE 10.0
+#define INTERMISSION_RECHARGE 20.0
 
 //duration of radial sap in seconds
 #define INTERMISSION_DURATION 7.5
@@ -51,6 +52,7 @@ static char g_szSoundSapperPlant[] =	"weapons/sapper_plant.wav";
 //interval sapper checks for nearby buildings
 #define INTERMISSION_THINK 0.2
 
+//damage multiplier for attacking sentries the spy is sapping
 #define INTERMISSION_SELF_DAMAGE_MULT 0.66
 
 //uncomment this line to cause the spy to lose his sapper if he places it in addition to when he throws it
@@ -350,7 +352,7 @@ void RemoveIntermission( int iOwner, int iRemoveType = 0 ) {
 		ShowParticle( EFFECT_FLYINGEMBERS, 1.0, vecSapperPos );
 		ShowParticle( EFFECT_SMOKE, 1.0, vecSapperPos );
 
-		EmitGameSoundToAll( "Weapon_Grenade_Mirv.Disarm", iSapper );
+		EmitGameSoundToAll( g_szSndscrSapperDestroy, iSapper );
 	}
 	}
 
@@ -361,7 +363,7 @@ bool CheckLOS( int iThis, const float vecStart[3], const float vecEnd[3], int iT
 	Handle hTrace = TR_TraceRayFilterEx( vecStart, vecEnd, CONTENTS_SOLID | CONTENTS_MOVEABLE | CONTENTS_MIST, RayType_EndPoint, LOSFilter, iThis );
 
 	if( TR_GetFraction( hTrace ) >= 1.0 ) return false;
-	if( TR_GetEntityIndex( hTrace ) != iTarget ) return false;
+	//if( TR_GetEntityIndex( hTrace ) != iTarget ) return false;
 	return true;
 }
 
@@ -534,7 +536,7 @@ public void OnTakeDamageBuilding( int iBuilding, Address aDamageInfo ) {
 
 	tfInfo.flDamage *= INTERMISSION_SELF_DAMAGE_MULT;
 }
-static int g_iColors[6][4] = {
+static int g_iRingColors[6][4] = {
 	{ 0, 0, 0, 0 }, //spectator
 	{ 0, 0, 0, 0 }, //unassigned
 	{ 184, 56, 59, 255 }, //red
@@ -546,7 +548,7 @@ static int g_iColors[6][4] = {
 stock void AttachRings( int iEntity ) {
 	float vecSapperPos[3];
 	GetEntPropVector( iEntity, Prop_Data, "m_vecAbsOrigin", vecSapperPos );
-	MakeRings( vecSapperPos, g_iColors[ GetEntProp( iEntity, Prop_Send, "m_iTeamNum" ) ] );
+	MakeRings( vecSapperPos, g_iRingColors[ GetEntProp( iEntity, Prop_Send, "m_iTeamNum" ) ] );
 }
 
 void MakeRings( float vecSapperPos[3], int iColor[4] ) {
