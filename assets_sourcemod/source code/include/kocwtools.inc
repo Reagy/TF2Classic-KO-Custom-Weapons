@@ -24,6 +24,9 @@ native void	SetSolidFlags( int iEntity, int iFlags );
 native void	SetCollisionGroup( int iEntity, int iGroup );
 native void	SetSize( int iEntity, const float vecSizeMin[3], const float vecSizeMax[3] );
 
+native void	StartLagCompensation( int iPlayer );
+native void	FinishLagCompensation( int iPlayer );
+
 //http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
 stock int CountBits( int iBits ) {
 	iBits = iBits - ( ( iBits >> 1 ) & 0x55555555 );			// reuse input as temporary
@@ -515,7 +518,7 @@ methodmap TFDamageInfo {
 stock int TeamSeenBy( int iViewer, int iViewed ) {
 	int iViewerTeam = GetEntProp( iViewer, Prop_Send, "m_iTeamNum" );
 	int iViewedRealTeam = GetEntProp( iViewed, Prop_Send, "m_iTeamNum" );
-	int iViewedDisguiseTeam = GetEntProp( iViewer, Prop_Send, "m_nDisguiseTeam" );
+	int iViewedDisguiseTeam = GetEntProp( iViewed, Prop_Send, "m_nDisguiseTeam" );
 
 	//if viewed is undisguised or really is the viewer's team, show the real team
 	if( iViewedDisguiseTeam == 0 || iViewerTeam == iViewedRealTeam )
@@ -535,7 +538,7 @@ stock bool IsValidPlayer( int iPlayer ) {
 
 stock void ParentModel( int iChild, int iParent, const char[] szAttach = "" ) {
 	SetVariantString( "!activator" );
-	AcceptEntityInput( iChild, "SetParent", iParent, iChild, 0 );
+	AcceptEntityInput( iChild, "SetParent", iParent, iParent, 0 );
 	if( !StrEqual( "", szAttach ) ) {
 		SetVariantString( szAttach );
 		AcceptEntityInput( iChild, "SetParentAttachment", iChild, iChild, 0 );

@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name = "Attribute: Sphere",
 	author = "Noclue",
 	description = "Attributes for The Sphere.",
-	version = "1.0",
+	version = "1.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -27,8 +27,8 @@ DynamicHook hTakeDamage;
 Handle hTouchCall;
 
 PlayerFlags g_HasSphere;
-int g_iSphereShields[ MAXPLAYERS+1 ] = { -1, ... };
-int g_iMaterialManager[ MAXPLAYERS+1 ] = { -1, ... };
+int g_iSphereShields[ MAXPLAYERS+1 ] = { INVALID_ENT_REFERENCE, ... };
+int g_iMaterialManager[ MAXPLAYERS+1 ] = { INVALID_ENT_REFERENCE, ... };
 float g_flShieldCooler[ MAXPLAYERS+1 ];
 float g_flLastDamagedShield[ MAXPLAYERS+1 ];
 
@@ -36,7 +36,7 @@ float g_flLastDamagedShield[ MAXPLAYERS+1 ];
 #define SHIELDKEYNAME "Shield"
 
 //max shield energy
-#define SHIELD_MAX 1000.0
+#define SHIELD_MAX 800.0
 //multiplier for shield energy to be gained when dealing damage
 #define SHIELD_DAMAGE_TO_CHARGE_SCALE 1.0
 //multiplier for shield energy to be lost when it is damaged
@@ -122,17 +122,15 @@ MRESReturn Hook_PostFrame( int iThis ) {
 		return MRES_Ignored;
 
 	int iWeaponState = GetEntProp( iThis, Prop_Send, "m_iWeaponState" );
-	int iShield = EntRefToEntIndex( g_iSphereShields[ iWeaponOwner ] );
 	float flTrackerValue = Tracker_GetValue( iWeaponOwner, SHIELDKEYNAME );
-
-	if( !( /*iWeaponState == 2 || */iWeaponState == 3 ) || flTrackerValue < 0.0 ) { //spinning
+	if( !( iWeaponState == 3 ) || flTrackerValue <= 0.0 ) { //spinning
 		RemoveShield( iWeaponOwner );
 		return MRES_Handled;
 	}
 
+	int iShield = EntRefToEntIndex( g_iSphereShields[ iWeaponOwner ] );
 	if( iShield == -1 && flTrackerValue > 10.0 )
 		SpawnShield( iWeaponOwner );
-
 	//float flDrainRate = ( SHIELD_MAX / ( SHIELD_DURATION / GetGameFrameTime() ) );
 	//Tracker_SetValue( iWeaponOwner, SHIELDKEYNAME, MaxFloat( 0.0, flTrackerValue - flDrainRate ) );
 
@@ -145,9 +143,11 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 
 	if( IsValidPlayer( iPlayer ) ) {
 		if( AttribHookFloat( 0.0, iPlayer, "custom_sphere" ) != 0.0 ) {
+			g_flShieldCooler[iPlayer] = GetGameTime();
+
 			Tracker_Create( iPlayer, SHIELDKEYNAME, false );
 			Tracker_SetMax( iPlayer, SHIELDKEYNAME, SHIELD_MAX );
-			Tracker_SetFlags( iPlayer, SHIELDKEYNAME, RTF_RECHARGES  );
+			Tracker_SetFlags( iPlayer, SHIELDKEYNAME, RTF_RECHARGES | RTF_CLEARONSPAWN );
 
 			if( !g_HasSphere.Get( iPlayer ) ) {
 				Tracker_SetValue( iPlayer, SHIELDKEYNAME, 0.0 );
@@ -189,8 +189,9 @@ void SpawnShield( int iOwner ) {
 	if( g_flShieldCooler[ iOwner ] > GetGameTime() )
 		return;
 
+
 	int iShield = CreateEntityByName( "prop_dynamic_override" );
-	if( !IsValidEntity( iShield ) ) 
+	if( !IsValidEntity( iShield ) )
 		return;
 
 	SetEntityModel( iShield, SHIELD_MODEL );
@@ -236,19 +237,19 @@ void RemoveShield( int iOwner ) {
 	if( iShield != -1 ) {
 		EmitSoundToAll( "weapons/medi_shield_retract.wav", iShield, SNDCHAN_AUTO, 95, 0, 0.8 );
 		RemoveEntity( iShield );
-		g_iSphereShields[ iOwner ] = -1;
+		g_iSphereShields[ iOwner ] = INVALID_ENT_REFERENCE;
 		g_flShieldCooler[ iOwner ] = GetGameTime() + 2.0;
 	}
 	if( iManager != -1 ) {
 		RemoveEntity( iManager );
-		g_iMaterialManager[ iOwner ] = -1;
+		g_iMaterialManager[ iOwner ] = INVALID_ENT_REFERENCE;
 	}
 }
 
 void UpdateShield( int iClient ) {
 	int iShield = EntRefToEntIndex( g_iSphereShields[ iClient ] );
 	if( iShield == -1 ) {
-		g_iSphereShields[ iClient ] = -1;
+		g_iSphereShields[ iClient ] = INVALID_ENT_REFERENCE;
 		return;
 	}
 
@@ -265,8 +266,10 @@ void UpdateShield( int iClient ) {
 	AddVectors( vecOrigin, vecEndPos, vecEndPos );
 
 	vecEyeAngles[0] = 0.0;
-	TeleportEntity( iShield, vecEndPos, vecEyeAngles, { 0.0, 0.0, 0.0 } );
-	//ChangeEdictState( iShield );
+	TeleportEntity( iShield, vecEndPos, vecEyeAngles );
+
+	float vecTest[3];
+	GetEntPropVector( iShield, Prop_Data, "m_vecAbsOrigin", vecTest );
 
 	int iManager = EntRefToEntIndex( g_iMaterialManager[ iClient ] );
 	if( iManager == -1 )
@@ -314,12 +317,21 @@ MRESReturn Hook_ShieldTouch( int iThis, DHookParam hParams ) {
 }
 
 MRESReturn Hook_ShieldTakeDamage( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	TFDamageInfo tfInfo = TFDamageInfo( hParams.GetAddress( 1 ) );
+	int iAttacker = tfInfo.iAttacker;
+
+	static char szBuffer[64];
+	if( iAttacker != -1 ) {
+		GetEntityClassname( iAttacker, szBuffer, sizeof( szBuffer ) );
+		if( StrEqual( szBuffer, "func_tracktrain" ) || StrEqual( szBuffer, "trigger_hurt" ) ) {
+			hReturn.Value = 0;
+			return MRES_Supercede;
+		}
+	}
+
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
 	if( !IsValidPlayer( iOwner ) )
 		return MRES_Ignored;
-
-	TFDamageInfo tfInfo = TFDamageInfo( hParams.GetAddress( 1 ) );
-	int iAttacker = tfInfo.iAttacker;
 
 	int iOwnerTeam = GetEntProp( iOwner, Prop_Send, "m_iTeamNum" );
 	int iAttackerTeam = GetEntProp( iAttacker, Prop_Send, "m_iTeamNum" );

@@ -4,6 +4,14 @@
     {
 		"Addresses"
 		{
+			"CLagCompensationManager"
+			{
+				"linux"
+				{
+					"signature"		"CLagCompensationManager"
+				}
+			}
+		
 			"CTFGameStats"
 			{
 				"linux"
@@ -35,6 +43,11 @@
 		}
         "Offsets"
         {
+			"Teleport"
+			{
+				"linux"		"110"
+			}
+		
 			"CTakeDamageInfo::m_vecDamageForce.x"
 			{
 				"linux"		"0"
@@ -135,33 +148,41 @@
         
 			"CBaseCombatCharacter::GiveAmmo" //good
 			{
-				"linux"		"473"
+				"linux"		"256"
+			}
+			"CTFPlayer::GiveAmmo"
+			{
+				"linux"		"474"
 			}
 		
 			"CTFPlayer::TakeHealth" //good
 			{
-				"linux"		"470"
+				"linux"		"471"
 			}
 			"CTFPlayer::OnTakeDamageAlive" //good
 			{
-				"linux"		"275"
+				"linux"		"276"
 			}
 			"CTFPlayer::GetMaxHealth" //good
 			{
-				"linux"		"472"
+				"linux"		"473"
 			}
             "CTFPlayer::GetAttributeManager" //good
 			{
-				"linux"		"474"
+				"linux"		"475"
 			}
 			"CTFPlayer::GetAttributeContainer" //good
 			{
-				"linux"		"475"
+				"linux"		"476"
 			}
 			
 			"CTFPlayer::m_Shared" //changed
 			{
 				"linux"		"4268"
+			}
+			"CTFPlayer::m_pCurrentCommand" //changed
+			{
+				"linux"		"3300"
 			}
 			
 			//pointer to player contained in CTFPlayerShared
@@ -186,42 +207,42 @@
             
             //buildings
             
-			"CBaseObject::SetObjectMode"
+			"CTFWeaponBuilder::SetObjectMode"
 			{
 				"linux"		"450"
 			}
-			"CBaseObject::SetSubType"
+			"CTFWeaponBuilder::SetSubType"
 			{
 				"linux"		"232"
 			}
 			
             "CBaseObject::StartBuilding" //good
             {
-                "linux"     "329"
+                "linux"     "330"
             }
 			"CBaseObject::Killed"
 			{
-				"linux"		"334"
+				"linux"		"335"
 			}
             "CBaseObject::OnGoActive" //good
             {
-                "linux"     "342"
+                "linux"     "343"
             }
             "CBaseObject::CanBeUpgraded" //good
             {
-                "linux"     "347"
+                "linux"     "348"
             }
             "CBaseObject::StartUpgrading" //good
             {
-                "linux"     "348"
+                "linux"     "349"
             }
             "CBaseObject::FinishUpgrading" //good
             {
-                "linux"     "349"
+                "linux"     "350"
             }
             "CBaseObject::MakeCarriedObject" //good
             {
-                "linux"     "353"
+                "linux"     "354"
             }
             "CBaseObject::m_iGoalUpgradeLevel" //good
             {
@@ -236,37 +257,41 @@
             
 			"CBaseCombatWeapon::CanBeSelected"
 			{
-				"linux"		"237"
+				"linux"		"238"
 			}
 			
 			"CTFWeaponBase::Holster" //changed
 			{
-				"linux"		"263"
+				"linux"		"264"
 			}
 			"CTFWeaponBase::ItemPostFrame" //changed
 			{
-				"linux"		"273"
+				"linux"		"274"
 			}
 			"CTFWeaponBase::ItemBusyFrame" //changed
 			{
-				"linux"		"274"
+				"linux"		"275"
 			}
 			"CTFWeaponBase::PrimaryAttack" //changed
 			{
-				"linux"		"288"
+				"linux"		"289"
 			}
 			"CTFWeaponBase::SecondaryAttack" //changed
 			{
-				"linux"		"289"
+				"linux"		"290"
 			}
 			"CTFWeaponBase::GetFireRate" //changed
 			{
-				"linux"		"299"
+				"linux"		"300"
 			}
-			
+
+			"CTFBaseGrenade::Detonate"
+			{
+				"linux"		"233"
+			}
 			"CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" //good
 			{
-				"linux"		"242"
+				"linux"		"243"
 			}
 			
 			"CAttributeManager::ApplyAttributeFloat" //good
@@ -287,7 +312,7 @@
             
 			"CEconEntity::GetAttributeManager" //good
 			{
-				"linux"		"226"
+				"linux"		"227"
 			}
 			//pointer to CEconItemView on CEconEntity
 			"CEconEntity::m_Item" //good
@@ -531,6 +556,20 @@
 				"callconv"		"thiscall"
 				"return"		"void"
 				"this"			"entity"
+			}
+			"CTFPlayerShared::StopCharge"
+			{
+				"signature"		"CTFPlayerShared::StopCharge"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"impact"
+					{
+						"type"	"bool"
+					}
+				}
 			}
 			"CTFPlayerShared::Burn"
 			{
@@ -1147,7 +1186,7 @@
 			"PointInRespawnRoom"
 			{
 				"library"	"server"
-				"linux"		"@_Z18PointInRespawnRoomP11CBaseEntityRK6Vector"
+				"linux"		"@_Z18PointInRespawnRoomP11CBaseEntityRK6Vectorb"
 			}
 		
             //player
@@ -1248,6 +1287,12 @@
 				"library"	"server"
 				"linux"		"@_ZN15CTFPlayerShared24RecalculateChargeEffectsEb"
 			}
+			
+			"CTFPlayerShared::StopCharge"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared10StopChargeEb"
+			}
             
 			"CTFGameMovement::CheckJumpButton" //good
 			{
@@ -1284,6 +1329,12 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTFWeaponBase20CalcIsAttackCriticalEv"
+			}
+			
+			"CTFWeaponBaseGun::GetProjectileReflectSetup"
+			{
+				"library"	"server"
+				"linux"		"@_ZN16CTFWeaponBaseGun25GetProjectileReflectSetupEP9CTFPlayerRK6VectorRS2_bb"
 			}
 			
 			"CWeaponMedigun::AllowedToHealTarget" //good

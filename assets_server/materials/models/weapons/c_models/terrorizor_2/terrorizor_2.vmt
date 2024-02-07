@@ -64,3 +64,5 @@
 			"srcVar2" "$yellow"
 			"resultVar" "$color2"
 		}
+	}
+}

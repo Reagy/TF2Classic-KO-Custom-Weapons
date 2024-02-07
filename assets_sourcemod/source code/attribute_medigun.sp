@@ -190,6 +190,7 @@ public void OnMapStart() {
 	PrecacheSound( "weapons/angel_shield_on.wav" );
 }
 
+//todo: restore this to prevent hydro pump from picking up ammo
 /*public void OnClientConnected( int iClient ) {
 	RequestFrame( Frame_Hook, iClient );
 }

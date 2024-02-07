@@ -61,7 +61,6 @@ public Action Event_PlayerDeath( Event hEvent, const char[] sName, bool bDontBro
 	return Plugin_Continue;
 }
 
-
 int iOldButtons[MAXPLAYERS+1];
 public Action OnPlayerRunCmd( int iClient, int &iButtons, int &iImpulse, float flVel[3], float flAngles[3], int &iWeapon, int &iSubtype, int &iCmdnum, int &iTickcount, int &iSeed, int iMouse[2] ) {
 	if( iButtons & IN_ATTACK2 && !( iOldButtons[iClient] & IN_ATTACK2 ) ) {

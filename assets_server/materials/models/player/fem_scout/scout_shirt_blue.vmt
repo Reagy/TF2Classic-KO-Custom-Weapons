@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\player\fem_scout\scout_shirt_red.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\player\fem_scout\scout_shirt_blue"
+	}
+}

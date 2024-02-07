@@ -1,0 +1,20 @@
+written in python 3.12, idfk compatability with other versions
+
+install the following python libraries with the terminal
+	pip install vdf
+	pip install --upgrade https://github.com/snake-biscuits/bsp_tool/tarball/master
+	pip install srctools
+	
+create a folder named "live" in this folder
+extract all contents of live tf2's .vpk files into it
+
+create a folder named "classic" in this folder
+extract all contents of tf2c's as well as the source sdk2013's .vpk files into it
+	
+create a folder named "bsp" in this folder
+move all bsps into the new bsp folder
+
+run ClassicMapFix.py
+enter the filepath to BSPZIP.exe
+
+it should (hopefully) bundle all missing files into all the bsps
