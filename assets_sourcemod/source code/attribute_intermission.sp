@@ -195,7 +195,6 @@ public Action Event_Inventory( Event hEvent, const char[] sName, bool bDontBroad
 	if( !IsValidPlayer( iPlayer ) )
 		return Plugin_Continue;
 
-	PrintToServer("a");
 	RequestFrame( Frame_CheckSapper, EntIndexToEntRef( iPlayer ) );
 	
 	return Plugin_Continue;
@@ -206,7 +205,6 @@ void Frame_CheckSapper( int iRef ) {
 	if( iPlayer == -1 )
 		return;
 
-	PrintToServer("b");
 	if( AttribHookFloat( 0.0, iPlayer, "custom_intermission" ) != 0.0 ) {
 		Tracker_Create( iPlayer, SAPPERKEYNAME );
 		Tracker_SetMax( iPlayer, SAPPERKEYNAME, 100.0 );
@@ -626,7 +624,6 @@ public void Tracker_OnRecharge( int iPlayer, const char szTrackerName[32], float
 	if( !StrEqual( szTrackerName, SAPPERKEYNAME ) )
 		return;
 
-	PrintToServer("c");
 	if( iPlayer == -1 )
 		return;
 

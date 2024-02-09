@@ -16,10 +16,10 @@ public Plugin myinfo = {
 }
 
 DynamicHook g_dhSecondaryFire;
+DynamicHook g_dhReload;
 DynamicHook g_dhItemPostFrame;
 
 Handle g_sdkLookupSequence;
-Handle g_sdkLookupAttachment;
 Handle g_sdkGetProjectileSetup;
 Handle g_sdkIsDeflectable;
 Handle g_sdkDeflected;
@@ -27,6 +27,7 @@ Handle g_sdkGetWeaponID;
 Handle g_sdkAirblastPlayer;
 Handle g_sdkAddDamagerToHistory;
 Handle g_sdkWorldSpaceCenter;
+Handle g_sdkSendWeaponAnim;
 
 static char g_szAttribAirblastEnable[] = 	"custom_force_airblast";
 static char g_szAttribAirblastParticle[] =	"custom_airblast_particle";
@@ -64,12 +65,6 @@ public void OnPluginStart() {
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
 	g_sdkLookupSequence = EndPrepSDKCall();
-
-	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseAnimating::LookupAttachment" );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
-	g_sdkLookupAttachment = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFWeaponBaseGun::GetProjectileReflectSetup" );
@@ -115,6 +110,12 @@ public void OnPluginStart() {
 	PrepSDKCall_SetReturnInfo( SDKType_Vector, SDKPass_ByRef );
 	g_sdkWorldSpaceCenter = EndPrepSDKCall();
 
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CBaseCombatWeapon::SendWeaponAnim" );
+	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkSendWeaponAnim = EndPrepSDKCall();
+
 	g_alEntList = new ArrayList();
 
 	for( int i = 0; i < sizeof(g_alAirblasted); i++ ) {
@@ -140,8 +141,6 @@ public void OnMapStart() {
 	PrecacheScriptSound( g_szExtinguishSound );
 	PrecacheScriptSound( g_szDeflectSound );
 	PrecacheScriptSound( g_szAirblastPlayerSound );
-
-	PrecacheModel( "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl" );
 }
 
 public void OnEntityCreated( int iEntity ) {
@@ -157,50 +156,39 @@ void Frame_CheckAttrib( int iWeapon ) {
 		return;
 
 	if( AttribHookFloat( 0.0, iWeapon, g_szAttribAirblastEnable ) != 0.0 ) {
-
-
 		g_dhSecondaryFire.HookEntity( Hook_Pre, iWeapon, Hook_SecondaryFire );
 		g_dhItemPostFrame.HookEntity( Hook_Pre, iWeapon, Hook_ItemPostFrame );
 	}	
 }
 
 MRESReturn Hook_SecondaryFire( int iWeapon ) {
-	if( GetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() || GetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack" ) > GetGameTime() )
-		return MRES_Ignored;
-
 	int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwner" );
 	if( iOwner == -1 )
 		return MRES_Ignored;
 
-	int iAmmoType = GetEntProp( iWeapon, Prop_Send, "m_iPrimaryAmmoType" );
-	int iAmmo = GetEntProp( iOwner, Prop_Send, "m_iAmmo", 4, iAmmoType );
-	int iAmmoCost = RoundToNearest( AttribHookFloat( 20.0, iWeapon, g_szAttribAirblastCost ) );
-	if( iAmmo < iAmmoCost )
+	if( !HasAmmoToFire( iWeapon, iOwner ) )
 		return MRES_Ignored;
-	SetEntProp( iOwner, Prop_Send, "m_iAmmo", iAmmo - iAmmoCost, 4, iAmmoType );
 
-	float flAirblastInterval = AttribHookFloat( 0.8, iWeapon, g_szAttribAirblastRefire );
+	if( GetEntProp( iWeapon, Prop_Send, "m_iReloadMode" ) != 0 ) {
+		SetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() );
+		SetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() );
+		SetEntProp( iWeapon, Prop_Send, "m_iReloadMode", 0 );
+	}
+	
+	if( GetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() || GetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack" ) > GetGameTime() )
+		return MRES_Ignored;
+
+	float flAirblastInterval = AttribHookFloat( 0.75, iWeapon, g_szAttribAirblastRefire );
 	SetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + flAirblastInterval );
 	SetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() + flAirblastInterval );
 
-	int iViewmodel = GetEntPropEnt( iOwner, Prop_Send, "m_hViewModel" );
-	int iSequence;
-	if( GetEntProp( iWeapon, Prop_Send, "m_iViewModelType" ) == 1 )
-		iSequence = SDKCall( g_sdkLookupSequence, iViewmodel, "ft_alt_fire" );
-	else
-		iSequence = SDKCall( g_sdkLookupSequence, iViewmodel, "alt_fire" );
-	SetEntProp( iViewmodel, Prop_Send, "m_nSequence", iSequence );
-	SetEntPropFloat( iWeapon, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + flAirblastInterval );
+	SDKCall( g_sdkSendWeaponAnim, iWeapon, 181 ); //ACT_VM_SECONDARYATTACK
+	SetEntProp( iWeapon, Prop_Send, "m_iWeaponMode", 1 );
+	SetEntPropFloat( iWeapon, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + flAirblastInterval - GetClientAvgLatency( iOwner, NetFlow_Both ) );
 
 	EmitGameSoundToAll( g_szAirblastSound, iOwner, SNDCHAN_AUTO );
 
-	/*
-	int iAttachment = SDKCall( g_sdkLookupAttachment, iWeapon, "muzzle" );
-	TE_Particle( g_szAirblastParticle, .entindex = iWeapon, .attachtype = PATTACH_POINT_FOLLOW, .attachpoint = iAttachment );
-	*/
-
 	DoAirblastParticles( iWeapon, iOwner );
-
 
 	g_flAirblastEndTime[iOwner] = GetGameTime() + 0.06;
 
@@ -209,36 +197,59 @@ MRESReturn Hook_SecondaryFire( int iWeapon ) {
 	return MRES_Supercede;
 }
 
+bool HasAmmoToFire( int iWeapon, int iOwner ) {
+	//todo: implement this
+	bool bUsesClip = true;
+
+	int iAmmoCost = RoundToNearest( AttribHookFloat( 20.0, iWeapon, g_szAttribAirblastCost ) );
+	if( bUsesClip ) {
+		int iClip = GetEntProp( iWeapon, Prop_Send, "m_iClip1" );
+		if( iClip < iAmmoCost )
+			return false;
+
+		SetEntProp( iWeapon, Prop_Send, "m_iClip1", iClip - iAmmoCost );
+	}
+	else {
+		int iAmmoType = GetEntProp( iWeapon, Prop_Send, "m_iPrimaryAmmoType" );
+		int iAmmo = GetEntProp( iOwner, Prop_Send, "m_iAmmo", 4, iAmmoType );
+		if( iAmmo < iAmmoCost )
+			return false;
+
+		SetEntProp( iOwner, Prop_Send, "m_iAmmo", iAmmo - iAmmoCost, 4, iAmmoType );
+	}
+	return true;
+}
+
 void DoAirblastParticles( int iWeapon, int iOwner ) {
 	//first person
 	int iParticle = CreateParticle( g_szAirblastParticle, .flDuration = 1.0 );
 	ParentParticleToViewmodel( iParticle, iWeapon );
-	//janky hack: store the behavior of the emitter in some dataprop that isn't used
-	SetEntProp( iParticle, Prop_Data, "m_iHealth", 1 );
+	SetEntProp( iParticle, Prop_Data, "m_iHealth", 1 ); //janky hack: store the behavior of the emitter in some dataprop that isn't used
 	SetEntPropEnt( iParticle, Prop_Send, "m_hOwnerEntity", iOwner );
 	SDKHook( iParticle, SDKHook_SetTransmit, Hook_EmitterTransmit );
 	SetEdictFlags( iParticle, 0 );
 
 	//third person
 
-	//fixes particle attachment in third person
+	//tricks the server into seeing what the client does, i think?
 	static char szModelName[128];
 	static char szModelNameOld[128];
 	FindModelString( GetEntProp( iWeapon, Prop_Send, "m_iWorldModelIndex" ), szModelName, sizeof( szModelName ) );
 	FindModelString( GetEntProp( iWeapon, Prop_Send, "m_nModelIndex" ), szModelNameOld, sizeof( szModelNameOld ) );
-
 	SetEntityModel( iWeapon, szModelName );
 
 	iParticle = CreateParticle( g_szAirblastParticle, .flDuration = 1.0 );
 	ParentModel( iParticle, iWeapon, "muzzle" );
-	SetEntPropEnt( iParticle, Prop_Send, "m_hOwnerEntity", iOwner );
 	SetEntProp( iParticle, Prop_Data, "m_iHealth", 0 );
+	SetEntPropEnt( iParticle, Prop_Send, "m_hOwnerEntity", iOwner );
 	SDKHook( iParticle, SDKHook_SetTransmit, Hook_EmitterTransmit );
-	
-	SetEntityModel( iWeapon, szModelNameOld );
 	SetEdictFlags( iParticle, 0 );
+	
+	//untrick the server
+	SetEntityModel( iWeapon, szModelNameOld );
 }
 
+//would love to not have to do this but tempent parenting just doesn't work i guess :))))))))
 Action Hook_EmitterTransmit( int iEntity, int iClient ) {
 	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" );
 	SetEdictFlags( iEntity, 0 );
@@ -247,7 +258,6 @@ Action Hook_EmitterTransmit( int iEntity, int iClient ) {
 	bool bIsFirstPersonEmitter = GetEntProp( iEntity, Prop_Data, "m_iHealth" ) == 1;
 	if( iClient == iOwner ) {
 		return bIsFirstPersonEmitter ? Plugin_Continue : Plugin_Handled;
-		
 	}
 	return bIsFirstPersonEmitter ? Plugin_Handled : Plugin_Continue;
 }
@@ -415,12 +425,18 @@ void AirblastEntity( int iProjectile, int iAttacker, int iWeapon, const float ve
 	eDeflectedEvent.SetInt( "object_entindex", iProjectile );
 	eDeflectedEvent.Fire();
 
+	float vecEntPos[3];
+	GetEntPropVector( iProjectile, Prop_Data, "m_vecAbsOrigin", vecEntPos );
+
 	if( AttribHookFloat( 0.0, iWeapon, g_szAttribAirblastDestroy ) != 0.0 ) {
+		TE_Particle( g_szDeleteParticle, vecEntPos );
+
 		EmitGameSoundToAll( g_szDeleteAirblastSound, iProjectile );
 		RemoveEntity( iProjectile );
-		//do particles
 	}
 	else {
+		TE_Particle( g_szDeflectParticle, vecEntPos );
+
 		EmitGameSoundToAll( g_szDeflectSound, iProjectile );
 		SDKCall( g_sdkDeflected, iProjectile, iAttacker, vecPushDir );
 	}
