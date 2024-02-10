@@ -1,8 +1,8 @@
 particles_manifest
 {
-	file	"!particles/db_tracers.pcf"
-	file    "!particles/kocw_beams.pcf"
-	file    "!particles/medicflames.pcf"
-	file	"!particles/scattershock_fx.pcf"
-	file	"!particles/pisser.pcf"
+	file    "particles/scattershock_fx.pcf"
+	file    "particles/db_tracers.pcf"
+        file    "particles/nowp_medigun.pcf"
+        file    "particles/renaissance_revival_v2_0_particles.pcf"   
+        file    "particles/fireball_test.pcf"                  
 }
