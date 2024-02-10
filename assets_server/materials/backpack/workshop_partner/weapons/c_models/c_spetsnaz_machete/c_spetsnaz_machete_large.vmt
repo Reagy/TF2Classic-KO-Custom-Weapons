@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture"		"backpack/workshop_partner/weapons/c_models/c_spetsnaz_machete/c_spetsnaz_machete_large"
+	"$translucent"		"1"
+	"$vertexcolor"		"1"
+}

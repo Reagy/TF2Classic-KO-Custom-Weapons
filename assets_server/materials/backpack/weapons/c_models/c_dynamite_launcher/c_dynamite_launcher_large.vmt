@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_dynamite_launcher\c_dynamite_launcher_large"
+	$translucent 1
+	$vertexcolor 1
+}
