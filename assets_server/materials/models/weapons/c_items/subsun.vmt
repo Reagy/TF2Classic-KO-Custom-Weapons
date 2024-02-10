@@ -1,0 +1,42 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\weapons\c_items/subsun"
+	"$selfillum" "1"
+	"$bumpmap" "models/weapons/c_items/subsun_normal"
+	"$phong" "1"
+	"$phongexponent" "55"
+	"$phongboost" "1"	
+	"$lightwarptexture" "models/weapons/c_items/c_pocket_watch_lightwarp"
+	"$phongwarptexture"  "models/weapons/c_items/c_pocket_watch_phongwarp"
+
+
+
+	"$rimlight" "1"						
+	"$rimlightexponent" "55"				
+	"$rimlightboost" "0.2"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"vm_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}
