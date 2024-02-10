@@ -3369,7 +3369,7 @@ Rebalanced by: 'Vror'"
 			"model_world"				"models/weapons/w_models/w_boxing_gloves_urgent.mdl"
 			"model_player"				"models/weapons/v_models/v_boxing_gloves_urgent_heavy.mdl"
 			"attach_to_hands"			"2"
-			//"extra_wearable"			"models/weapons/w_models/w_boxing_gloves_urgent_alt.mdl"
+			"extra_wearable"			"models/weapons/w_models/w_boxing_gloves_urgent_alt.mdl"
 			"used_by_classes"
 			{
 				"heavy"					"1"
@@ -3390,23 +3390,17 @@ Rebalanced by: 'Vror'"
 					"attribute_class"	"mult_player_movespeed_active"
 					"value" 			"1.3"
 				}
-				"GRU Special"															
-				{
-					"attribute_class"	"DMUUY"
-					"value"				"1.15"
-				}
-				"weapon_stattrak_module_scale"															
+				"dmg taken increased"
 				{
 					"attribute_class"	"mult_dmgtaken"
-					"value"				"1.15"
+					"value"				"1.10"
 				}
-				"weapon_stattrak_module_scale"															
+				"melee taken becomes crit on wearer"
 				{
-					"attribute_class"	"mult_dmgtaken_active"
-					"value"				"0.82"
+					"attribute_class"	"melee_taken_becomes_crit_wearer"
+					"value"				"1"
 				}
 			}
-			"hide_bodygroups_deployed_only"	"1"
 			"visuals"
 			{
 				"player_bodygroups"
@@ -4510,7 +4504,7 @@ Weapon by: 'The One Of Wonders'"
 				"Move Speed Penalty Active"
 				{
 					"attribute_class"	"mult_player_movespeed_active"
-					"value"				"0.85"
+					"value"				"0.95"
 				}
 				"crit mod disabled"
 				{
@@ -6627,7 +6621,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "Oppressive Force"																
+				"Markov Special"
 				{
 					"attribute_class"	"DISPLAY_ONLY"
 					"value"				"1"
@@ -6639,18 +6633,18 @@ Weapon by: 'The One Of Wonders'"
 				}
 			    "add condition on hit"															
 				{
-					"attribute_class"	"add_onhit_addcond_weapon"
-					"value"				"128 5.0"
+					"attribute_class"	"add_onhit_addcond_self_weapon"
+					"value"				"111 1.0"
 				}
-				"damage penalty"
+				"Cloak time decreased"																
 				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.25"
+					"attribute_class"	"mult_cloak_rate"
+					"value" 			"0.5"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg_crit_multiplier"
-					"value"				"0.1"
+					"value"				"0.125"
 				}
 				"melee range multiplier"
 				{
@@ -6759,10 +6753,10 @@ Weapon by: 'The One Of Wonders'"
                     "attribute_class"    "crit_while_airborne"
                     "value"              "1"
                 }
-                "take crits from projectile during blast jump"
+                "fire rate penalty"
 				{
-					"attribute_class"	"take_crits_projectile_blast_jump"
-					"value"				"1"
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.2"
 				}	
                 "crit mod disabled"
                 {
@@ -7038,11 +7032,11 @@ Weapon by: 'The One Of Wonders'"
                     "attribute_class"    "crit_while_airborne"
                     "value"              "1"
                 }
-                "take crits from projectile during blast jump"
+                "fire rate penalty"
 				{
-					"attribute_class"	"take_crits_projectile_blast_jump"
-					"value"				"1"
-				}	
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.1"
+				}
                 "crit mod disabled"
                 {
                     "attribute_class"    "mult_crit_chance"
@@ -7517,6 +7511,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value" 			"0.6"
+				}
+				"Move Speed Bonus Active"															
+				{
+					"attribute_class"	"mult_player_movespeed_active"
+					"value" 			"1.1"
 				}
 				"damage penalty"
 				{
@@ -10060,6 +10059,11 @@ Weapon by 'The One Of Wonders'"
 					"attribute_class"	"apply_z_velocity_on_damage"
 					"value"				"100"
 				}
+				"mod use custom ammo type" // to fix the Rhynx exploit, get fucked
+				{
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value" 			"5"
+				}		
 			}
 			"visuals"
 			{
@@ -16795,6 +16799,8 @@ Weapon by: 'Majro'"
 			{
 				"meter_label"	"BALL" //Oh how I wish this worked. psst it does now~
 				"min_viewmodel_offset"		"10 0 -7"
+				"apply look velocity on damage"			"-300"	
+				"apply z velocity on damage"			"-40"
 			}
 			"attributes" {
 				"tranq on hit"
@@ -20820,11 +20826,12 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"propername"				"1"
 			"item_name"					"Firestarter"
 			"item_type_name"			"Torch"
-			"item_description"			"
+			"item_description"			"This weapon performs a fast 2-swing combo per attack
+
 Look ma, I'm playin' with fire!
 
 Weapon from: Tangerine Paint and Grunt's Weapon Addons
-Reworked by: 'The One Of Wonders, Vror'"
+Reworked by: 'The One Of Wonders'"
 			"item_logname"				"Firestarter"
 			"item_iconname"				"Firestarter"
 			"image_inventory_size_w"		"128"
@@ -20844,25 +20851,35 @@ Reworked by: 'The One Of Wonders, Vror'"
 					"attribute_class"	"set_dmgtype_ignite"
 					"value" 			"1"
 				}	
-                "crit vs burning players"													
+                "Mini-Crit Burning"													
 				{
-					"attribute_class"	"single_crit_vs_playercond_no_dot"
+					"attribute_class"	"single_minicrit_vs_playercond_no_dot"
 					"value" 			"23"
 				}					
 				"weapon burn time reduced"
 				{
 					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.2"
+					"value"				"0.5"
 				}
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.67"
+					"value"				"2.0"
 				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"set_burstfire"
+					"value"				"2"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_burstfiredelay"
+					"value"				"0.8"
 				}
 			}
 			"visuals"
@@ -21173,6 +21190,11 @@ Weapon by: 'Reagy'"
 			}
 			"attributes"
 			{
+			    "provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
 				"deflect on swing"
 				{
 					"attribute_class"	"deflect_on_swing"
@@ -21192,11 +21214,6 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"2.0"
-				}
-				"self mark for death"
-				{
-					"attribute_class"	"self_mark_for_death"
-					"value"				"1"
 				}
 				"airblast no players"
 				{
@@ -23973,7 +23990,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.333333333333333"
+					"value"				"0.5"
 				}
 				"strange restriction type 1"
 				{
@@ -24005,10 +24022,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_single_wep_deploy_time"
 					"value"				"1.5"
 				}
-				"fire rate penalty"
+				"self mark for death"
 				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"2.0"
+					"attribute_class"	"self_mark_for_death"
+					"value"				"3"
 				}
 				"crit mod disabled"
 				{
@@ -26610,7 +26627,7 @@ Weapon from: 'The One Of Wonders'"
 			    "apply heal on explosion"
 				{
 					"attribute_class"	"apply_heal_explosion"
-					"value"				"15"
+					"value"				"20"
 				}
 				"add uber charge on hit"
 				{
@@ -28558,9 +28575,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Heart Stopper"
 			"item_type_name"			"Portable Defibrillator"
-			"item_description"			"
-Special Hand in Medicine: This weapon drains 25% ubercharge on hit from the user.
-Higher Ubercharge percentage increases damage dealt.
+			"item_description"			"Heals teammates for 67% HP with full charge
 
 Just because it can save your life doesn't mean it can't KILL YOU.
 
@@ -28583,27 +28598,27 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"provide_on_active"
 					"value"				"1"
 				}
-				"dmg bonus vs buildings"  // Display only FYI, thanks kiri for the suggest ily
+				"Oppressive Force"
 				{
-					"attribute_class"	"mod_sniper_soft_zoom"
-					"value"				"6"
+					"attribute_class"	"dmmuy"
+					"value"				"5"
 				}
-				"strange restriction type 3"														
+                "add condition on hit"				
 				{
-					"attribute_class"	"add_onhit_ubercharge"
-					"value"				"-0.25"
-				}
-			    "weapon_stattrak_module_scale"
+					"attribute_class"	"add_onhit_addcond_weapon"
+					"value"				"128 5"
+				}	
+				"tranq on hit"
 				{
-					"attribute_class"	"mult_dmg"
-					"value"				"4"
+					"attribute_class"	"mod_tranq_onhit"
+					"value"				"5.0"
 				}
-				"weapon_stattrak_module_scale"
+				"Targets Outlined on Hit"																
 				{
-					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"				"6"
+					"attribute_class"	"outline_on_hit"
+					"value"				"5"
 				}
-				"weapon_stattrak_module_scale"
+				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"1.5"
@@ -28612,11 +28627,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}
-				"strange restriction type 3"
-				{
-					"attribute_class"	"custom_uber_scales_damage"
-					"value"				"1"
 				}
 				"mult taser heal scale"
 				{
@@ -29202,6 +29212,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_postfiredelay_with_reduced_health"
 					"value"				"1.5"
+				}
+				"crits become minicrits"															
+				{
+					"attribute_class"	"crits_become_minicrits"
+					"value"				"1"
 				}
 				"Demoknight Melee Negative"
 				{
@@ -30574,10 +30589,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_player_movespeed_active"
 					"value"				"1.15"
 				}
-				"deploy time increased"
+				"DMG Vulnerability while Active"																
 				{
-					"attribute_class"	"mult_deploy_time"
-					"value"				"1.34"
+					"attribute_class"	"mult_dmgtaken_active"
+					"value"				"1.3"
 				}
 			    "crit mod disabled"															
 				{
@@ -30636,10 +30651,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_player_movespeed_active"
 					"value"				"1.20"
 				}
-				"deploy time increased"
+				"DMG Vulnerability while Active"																
 				{
-					"attribute_class"	"mult_deploy_time"
-					"value"				"1.34"
+					"attribute_class"	"mult_dmgtaken_active"
+					"value"				"1.4"
 				}
                 "crit mod disabled"
                 {
@@ -30788,15 +30803,15 @@ Weapon By: 'Colrot'"
 					"attribute_class"	"mult_dmg_vs_buildings"
 					"value"				"1.15"
 				}
-				"Single wep deploy time increased fix"
-				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"1.30"
-				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
 					"value"				"0.85"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.1"
 				}
 				"crit mod disabled"
 				{
@@ -31568,7 +31583,7 @@ Weapon by: 'The One Of Wonders'"
 			    "damage bonus"													
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.35"
+					"value"				"1.55"
 				}
 				"heal on kill"													
 				{
@@ -31758,11 +31773,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"add_health_regen"
 					"value"				"100"
-				}
-				"max health additive penalty"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value"				"-65"
 				}
 				"weapon_stattrak_module_scale"															
 				{
@@ -32642,7 +32652,7 @@ Weapon by: 'The One Of Wonders'"
 				"Single wep deploy time increased fix"
 				{
 					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"2.0"
+					"value"				"1.6"
 				}
 				"crit mod disabled"
 				{
@@ -40766,7 +40776,7 @@ Fan-Fire: Hold fire button for maximum destruction!"
 		"7599"
 		{
 			"name"					"Scythe Crit hit"
-			"description_string"	"On Hit: Your next swing will be a guaranteed critical hit"												
+			"description_string"	"On Hit: Gain a crit boost for %s1 seconds"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
 		}
@@ -40821,8 +40831,8 @@ Fan-Fire: Hold fire button for maximum destruction!"
 		}
 		"7607"
 		{
-			"name"					"Crits against Heavy"
-			"description_string"	"100% critical hit vs heavy"												
+			"name"					"Markov Special"
+			"description_string"	"Gain 20% damage resistance and health regeneration from bleeding enemies"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
 		}
@@ -41034,50 +41044,17 @@ Fan-Fire: Hold fire button for maximum destruction!"
 		}
 		"7637"
 		{
-			"name"					"GRU Special"
-			"description_string"	"%s1% damage vulnerability while holstered"												
-			"description_format"	"value_is_percentage"
-			"effect_type"			"negative"
-		}
-		"7638"
-		{
 			"name"					"DMG Vulnerability while Active"	
 			"description_string"	"%s1% damage vulnerability while active"												
 			"description_format"	"value_is_percentage"
 			"effect_type"			"negative"
 		}
-		"7639"
+		"7638"
 		{
 			"name"					"Chaingun Special"
 			"description_string"	"Has full mobility when spun-up or firing"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
-		}
-		"7640"
-		{
-			"name"	"Kit Mechanic Descriptor"
-			"description_string"	"Alt-Fire: Aim the weapon and fire grenades that explode on impact"
-			"effect_type"	"neutral"
-		}
-		"7641"
-		{
-			"name"	"Kit Credits A"
-			"description_string"	"
-It's God's greatest gift to me.. and I will kill so many commies with it that their red flag will be painted with THEIR BLOOD!"
-			"effect_type"	"neutral"
-		}
-		"7642"
-		{
-			"name"	"Kit Credits B"
-			"description_string"	"
-Model by: 'Hau, Kibbleknight'"
-			"effect_type"	"neutral"
-		}
-		"7643"
-		{
-			"name"	"Kit Credits C"
-			"description_string"	"Weapon by: 'The One Of Wonders'"
-			"effect_type"	"neutral"
 		}
 //clooey zone
 
