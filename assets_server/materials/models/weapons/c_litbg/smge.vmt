@@ -1,0 +1,40 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/weapons/c_litbg/smge"
+	$BASEMAPALPHAPHONGMASK 1
+
+
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "1"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[2 4 .5]"
+
+
+	"$glowcolor" "1"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

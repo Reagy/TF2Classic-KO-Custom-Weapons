@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_kralle/c_kralle_large"
+	"$translucent" 1
+	$vertexcolor 1
+}

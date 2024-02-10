@@ -1,0 +1,11 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_bio_syringe_gun/bio_syringe_gun_glass"
+	"$additive" 1
+	"$translucent" 1
+	"$envmap" "cubemaps/cubemap_specular001"
+              
+
+	"$selfillum" "1"
+    	"$selfillummask" "models/weapons/c_items/c_bio_syringe_gun/bio_syringe_gun_glass_illum"
+}

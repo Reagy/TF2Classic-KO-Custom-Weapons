@@ -1,0 +1,46 @@
+// ### This basic VMT was written based on the game/sdktools/python/site-packages/templateStrings.py script ###
+"VertexLitGeneric"
+{
+	$baseTexture "models/weapons/c_items/c_cannon.vtf"
+	$bumpmap "models\weapons\c_items/c_cannon_normal"
+	$halflambert 1
+	
+	"$normalmapalphaenvmapmask" 1
+
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "5"	
+	"$lightwarptexture" "models\weapons\c_items/c_cannon_lightwarp"
+	"$phongfresnelranges"	"[.5 .5 3]"
+	"$phongwarptexture"  "models\weapons\c_items/c_cannon_phongwarp"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "6"	
+	"$rimlightboost" ".5"
+
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"vm_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

@@ -1,0 +1,55 @@
+"VertexlitGeneric"
+{
+        "$baseTexture" "models\weapons\c_items\american_flamethrower"
+ 
+        "$detail" "effects/tiledfire/fireLayeredSlowTiled512.vtf"       
+        "$detailscale" "5"
+        "$detailblendfactor" .00
+        "$detailblendmode" 6
+        "$yellow" "0"
+		"$glowcolor" "1"
+
+ 
+        "$phong" "1"
+        "$phongexponent" "20"
+        "$phongboost" "5"
+        "$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+        "$phongfresnelranges"   "[.25 1 4]"
+        "$basemapalphaphongmask" "1"
+ 
+ 
+        // Rim lighting parameters
+        "$rimlight" "1"                                                                                         // To enable rim lighting (requires phong)
+        "$rimlightexponent" "15"                                                                         // Exponent for phong component of rim lighting 
+        "$rimlightboost" "1.25"                                                                            // Boost for ambient cube component of rim lighting
+ 
+        // Cloaking
+        "$cloakPassEnabled" "1"
+ 
+        "Proxies"
+	{
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

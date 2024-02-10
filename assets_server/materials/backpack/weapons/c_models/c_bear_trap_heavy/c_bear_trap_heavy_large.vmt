@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_bear_trap_heavy/c_bear_trap_heavy_large"
+	"$translucent" 1
+	$vertexcolor 1
+}

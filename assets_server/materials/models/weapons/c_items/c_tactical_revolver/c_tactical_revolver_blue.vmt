@@ -1,0 +1,41 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\weapons\c_items/c_tactical_revolver/c_tactical_revolver_blue.vtf"
+
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "1.3"	
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	"$phongfresnelranges" "[1 .5 1.5]"
+	"$halflambert" "1"
+	"$basemapalphaphongmask" "1"
+	"$rimlight" "1"
+	"$rimlightexponent" "15"	
+	"$rimlightboost" "2"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}
+
