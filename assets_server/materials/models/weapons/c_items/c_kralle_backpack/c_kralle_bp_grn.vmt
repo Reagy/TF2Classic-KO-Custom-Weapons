@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\weapons\c_items\c_kralle_backpack\c_kralle_bp_red.vmt"
+	
+	insert
+	{
+	"$basetexture"			"\models\weapons\c_items\c_kralle_backpack\c_kralle_bp_grn_off"
+	}
+}

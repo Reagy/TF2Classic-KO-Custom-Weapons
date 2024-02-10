@@ -1,0 +1,21 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_bio_syringe_gun/bio_syringe_gun"
+	"$bumpmap" "models/weapons/c_items/c_bio_syringe_gun/bio_syringe_gun_normal"
+	"$lightwarptexture" "models/lightwarps/robot_lightwarp"
+                "$envmap" "cubemaps/cubemap_specular001"
+
+	"$bumpmapalphaphongmask" 	"1"
+
+	"$selfillum" "1"
+    	"$selfillummask" "models/weapons/c_items/c_bio_syringe_gun/bio_syringe_gun_illum"
+
+	"$phong" "1"
+	"$phongexponent" "25"
+	"$phongboost" "5"	
+	"$phongfresnelranges"	"[.5 .5 3]"
+	
+	"$rimlight" "1"						
+	"$rimlightexponent" "6"				
+	"$rimlightboost" ".5"
+}
