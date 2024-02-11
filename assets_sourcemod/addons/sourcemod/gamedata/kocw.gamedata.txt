@@ -177,6 +177,11 @@
 				"linux"		"474"
 			}
 		
+			"CTFPlayer::SetAnimation"
+			{
+				"linux"		"369"
+			}
+		
 			"CTFPlayer::TakeHealth" //good
 			{
 				"linux"		"471"
@@ -293,6 +298,14 @@
 			"CTFWeaponBase::ItemBusyFrame" //changed
 			{
 				"linux"		"275"
+			}
+			"CTFWeaponBase::Reload"
+			{
+				"linux"		"285"
+			}
+			"CBaseCombatWeapon::SendWeaponAnim"
+			{
+				"linux"		"250"
 			}
 			"CTFWeaponBase::PrimaryAttack" //changed
 			{
@@ -1017,6 +1030,14 @@
 				"return"		"float"
 				"this"			"entity"
 			}
+			"CTFWeaponBase::Reload"
+			{
+				"offset"		"CTFWeaponBase::Reload"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+			}
 			"CTFWeaponBase::PrimaryAttack"
 			{
 				"offset"		"CTFWeaponBase::PrimaryAttack"
@@ -1255,6 +1276,12 @@
 		
 		"Signatures"
 		{
+			"CBaseAnimating::ResetSequence"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CBaseAnimating13ResetSequenceEi"
+			}
+		
 			"CTFGameRules::ResetMapTime"
 			{
 				"library"	"server"
@@ -1583,6 +1610,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN14CBaseAnimating14LookupSequenceEPKc"
+			}
+			"CBaseAnimating::LookupAttachment"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CBaseAnimating16LookupAttachmentEPKc"
 			}
 			
 			"CBaseEntity::SetNextThink" //good
