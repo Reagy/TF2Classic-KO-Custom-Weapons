@@ -34,7 +34,7 @@ const float	ANGINVULN_DURATION	= 0.25;	//invulnerability period after a shield b
 
 const float	FLAME_HEALRATE		= 30.0;	//health per second restored by the hydro pump
 
-static char	g_szToxinLoopSound[] = "items/powerup_pickup_plague_infected_loop.wav";
+static char	g_szToxinLoopSound[]	= "items/powerup_pickup_plague_infected_loop.wav";
 
 //#define DEBUG
 
@@ -644,6 +644,8 @@ void TickToxin( int iPlayer ) {
 void RemoveToxin( int iPlayer ) {
 	StopSound( iPlayer, 0, g_szToxinLoopSound );
 	RemoveToxinEmitter( iPlayer );
+
+	RemoveEconItem( iPlayer, 11000 );
 }
 
 //name is misleading, TakeHealth is used to RESTORE health because valve

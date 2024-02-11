@@ -18,9 +18,13 @@ Handle g_sdkGetItemDefinition;
 
 Handle g_hGiveEcon;
 
+//#define DEBUG
+
 public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] szError, int iErrMax ) {
+#if defined DEBUG
 	CreateNative( "GiveEconItem", Native_GiveEconItem );
-	CreateNative( "RemoveEconItem", Native_GiveEconItem );
+	CreateNative( "RemoveEconItem", Native_RemoveEconItem );
+#endif
 
 	return APLRes_Success;
 }
@@ -55,8 +59,10 @@ public void OnPluginStart() {
 		g_alPlayerBuffRefs[i] = new ArrayList();
 	}
 
+#if defined DEBUG
 	RegConsoleCmd( "sm_attr_add", Command_Add, "test" );
 	RegConsoleCmd( "sm_attr_remove", Command_Remove, "test" );
+#endif
 }
 
 //native int GiveEconItem( int iPlayer, int iItemID );
@@ -142,6 +148,7 @@ bool RemovePlayerEcon( int iPlayer, int iItemID ) {
 	return true;
 }
 
+#if defined DEBUG
 Action Command_Add( int iClient, int iArgs ) {
 	if( iArgs < 1 ) return Plugin_Handled;
 	
@@ -156,3 +163,4 @@ Action Command_Remove( int iClient, int iArgs ) {
 
 	return Plugin_Handled;
 }
+#endif

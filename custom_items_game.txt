@@ -39553,6 +39553,31 @@ Weapon by: 'Noclue'"
 				"tracer_effect"         "bullet_scattershock_tracer01"	
 			}
 		}
+		
+		//goofy hack to make the toxin heal penalty work correctly
+		"11000"
+		{
+			"name"						"TF_TOXIN_WEARABLE"
+			"item_class"				"tf_wearable"											
+			"item_slot"					"misc"												
+
+			"anim_slot"					"FORCE_NOT_USED"
+			"act_as_wearable"			"1"
+			
+			"attributes"
+			{
+				"healing received penalty"
+				{
+					"attribute_class"	"mult_healing_received"
+					"value"				"0.25"
+				}
+				"health from packs decreased"
+				{
+					"attribute_class"	"mult_health_frompacks"
+					"value"				"0.25"
+				}
+			}
+		}
 //-------------------------------------
 //-------------------------------------
 // Marker Grenade -- 9966
