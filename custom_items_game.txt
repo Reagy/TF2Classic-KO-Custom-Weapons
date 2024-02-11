@@ -2339,7 +2339,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"																	
 			{
-				"override projectile type" 				"2"									
+				"override projectile type" 				"3"									
 				"damage bonus hidden"					"0.06666"																					
 				"allowed in medieval mode"				"1"
 				"meter_label"                           "ACID FLASK"
@@ -2381,6 +2381,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmgself_push_force"
 					"value" 			"0.0"
 				}
+				"grenades explode on impact"
+				{
+					"attribute_class"	"set_detonate_mode"
+					"value"				"3"
+				}	
 			}
 			"visuals"
 			{
@@ -2450,7 +2455,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"																	
 			{
-				"override projectile type" 				"2"									
+				"override projectile type" 				"3"									
 				"damage bonus hidden"					"0.002"																					
 				"allowed in medieval mode"				"1"
 				"meter_label"                           "TOXIN JAR"
@@ -2487,6 +2492,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmgself_push_force"
 					"value" 			"0.0"
 				}
+				"grenades explode on impact"
+				{
+					"attribute_class"	"set_detonate_mode"
+					"value"				"3"
+				}	
 			}
 			"visuals"
 			{
@@ -3324,7 +3334,7 @@ Rebalanced by: 'Vror'"
 				"DMG Vulnerability while Active"															
 				{
 					"attribute_class"	"mult_dmgtaken_active"
-					"value"				"0.85"
+					"value"				"0.9"
 				}
 				"crit mod disabled"
 				{
@@ -3390,10 +3400,10 @@ Rebalanced by: 'Vror'"
 					"attribute_class"	"mult_player_movespeed_active"
 					"value" 			"1.3"
 				}
-				"dmg taken increased"
+				"max health additive penalty"
 				{
-					"attribute_class"	"mult_dmgtaken"
-					"value"				"1.10"
+					"attribute_class"	"add_maxhealth"
+					"value"				"-50"
 				}
 				"melee taken becomes crit on wearer"
 				{
@@ -5326,7 +5336,8 @@ Weapon by: 'The One Of Wonders'"
 			"name"						"TF_WEAPON_REVOLVER_CIVILIAN"
 			"prefab"					"weapon_umbrella"
 			"item_class"				"tf_weapon_revolver"
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
+			"item_quality"              "rarity2"
 
 			"propername"				"1"
 			
@@ -9461,7 +9472,6 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"min_viewmodel_offset"		"10 0 -7"
-				"apply self knockback on swing"		"-125"
 				"crit mod disabled hidden"                "0.5"
 			}
 			"attributes"
@@ -11601,7 +11611,7 @@ Weapon by: 'Reagy'"
 			}
 			"static_attrs"																	
 			{
-				"override projectile type" 				"2"									
+				"override projectile type" 				"3"									
 				"damage bonus hidden"					"0.02"																					
 				"allowed in medieval mode"				"1"
 				"meter_label"                           "ANT JAR"
@@ -11658,6 +11668,11 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mult_dmgself_push_force"
 					"value" 			"0.01"
 				}
+				"grenades explode on impact"
+				{
+					"attribute_class"	"set_detonate_mode"
+					"value"				"3"
+				}	
 			}
 			"visuals"
 			{
@@ -12539,7 +12554,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"Fires a short-duration blast that launches the Engineer in the direction they are aiming.
 Remember to jump before firing.
 
-Cannot build teleporters or upgrade buildings
+Replaces your Teleporters with Jump Pads and your buildings cannot be upgraded
 
 Hoowee!
 
@@ -12592,10 +12607,10 @@ Item by: 'Reagy'"
 					"attribute_class"	"upgrade_rate_mod"
 					"value"				"0.00001"
 				}
-				"weapon_stattrak_module_scale"													
+				"strange restriction type 1"													
 				{
-					"attribute_class"	"mod_teleporter_cost"
-					"value"				"999"
+					"attribute_class"	"set_teleporter_mode"
+					"value"				"1"
 				}
 				"custom projectile model"
 				{
@@ -12666,7 +12681,7 @@ Item by: 'Reagy'"
 		    "name"						"The R.P.G."							
 			"prefab"					"weapon_rocketlauncher"
 			"show_in_armory"			"1"
-			"item_quality"				"rarity2"
+			"item_quality"				"rarity3"
 
 			"propername"				"1"
 			"item_name"					"Rain-maker"
@@ -14002,7 +14017,7 @@ Weapon by: 'Reagy'"
 			"name"						"TF_WEAPON_SPAS12_SNIPER" 									
 			"prefab"					"weapon_shotgun" 
 			"item_class"         		"tf_weapon_shotgun_pyro"			
-			"show_in_armory"			"1"													
+			"show_in_armory"			"0"													
 			"item_slot"					"secondary"
 			"anim_slot"					"primary"											
 
@@ -16265,6 +16280,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_pierce_resists_absorbs"
 					"value"				"1"
 				}
+				"projectile speed increased"																
+			    {
+				    "attribute_class"	"mult_projectile_speed"
+				    "value" 			"2"
+				}
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
@@ -16274,11 +16294,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_explosion_radius"
 					"value"				"0.05"
-				}
-       			"weapon_stattrak_module_scale"																
-			    {
-				    "attribute_class"	"mult_projectile_speed"
-				    "value" 			"2"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -16676,6 +16691,7 @@ Weapon by: 'Majro'"
 			"show_in_armory"			"1"
 			"item_slot"					"secondary"
 			"anim_slot"					"secondary"
+			"item_quality"              "rarity2"
 			"propername"				"0"
 			"item_name"					"Pipebomb Launcher"
 			"item_type_name"			"Grenade Launcher"
@@ -16949,7 +16965,7 @@ Item by: 'Majro'"
 			"prefab"					"weapon_umbrella" 											
 			"show_in_armory"			"1"														
 			"item_slot"					"melee"	
-            "item_quality"				"rarity3"			
+            "item_quality"				"rarity2"			
 
 			"propername"				"1"														
 			"item_name"					"Backhand" 										
@@ -18217,7 +18233,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"																
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"1.55172414"
+					"value" 			"1.12068966"
 				}
 				"crit mod disabled"
 				{
@@ -18226,8 +18242,8 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"																
 				{
-					"attribute_class"	"mult_projectile_range"
-					"value" 			"25"
+					"attribute_class"	"mult_maxammo_primary"
+					"value" 			"1.5"
 				}
                 "punch angle mod add hidden"
 				{
@@ -18253,6 +18269,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"custom_projectile_model"
 					"value"				"models/weapons/w_models/w_ballista_bolt.mdl"
+				}	
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.91"
 				}				
 			}
 			"visuals"																			
@@ -19328,7 +19349,7 @@ Reworked by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			
-			"item_quality"				"rarity2"
+			"item_quality"              "rarity3"
 			
 			"item_name"					"Super Syringe Gun"
 			"item_type_name"			"Heavy Syringe Gun"
@@ -21079,7 +21100,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 			"equip_region"				"medigun_backpack"										// ...probably.. vestigial..?
 
 			"propername"				"1"
-			"item_quality"				"rarity3"
+			"item_quality"				"rarity2"
 			"item_logname"				"Totenwerfer"
 			"item_iconname"				"Totenwerfer"
 			"item_name"					"Totenwerfer"
@@ -21882,13 +21903,13 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"fire rate penalty"
 				{
-					"attribute_class"	"mult_postfiredelay"
+					"attribute_class"	"dmmuy"
 					"value"				"1.3"
 				}
-				"Single wep deploy time increased fix"
+				"reload time increased"
 				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"1.3"
+					"attribute_class"	"mult_reload_time"
+					"value"				"1.15"
 				}
 				"crit mod disabled"
 				{
@@ -21905,7 +21926,7 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.75"
 				}
-				"fire rate penalty"
+				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"0.72"
@@ -22179,7 +22200,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_class"				"tf_weapon_grenade_mirv"							
 			"show_in_armory"			"1"
 			
-			"item_quality"				"rarity3"
+			"item_quality"				"rarity2"
 			
 			"item_slot"					"secondary"
 			"anim_slot"					"melee"
@@ -22859,6 +22880,7 @@ Weapon from: Renaissance Revival"
 			"anim_slot"					"ITEM2"
 			"bucket"                    "0"
 			"bucket_position"           "0"
+			"item_quality"              "rarity3"
 			"item_logname"				"Whiff of Olde Brimstone"
 			"item_iconname"				"pumpkindeath"
 			"image_inventory"			"backpack/weapons/w_grenade_bombs_demoman/bombs"
@@ -26429,7 +26451,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"1.2" 
+					"value"				"1.77777777777777" 
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -26469,7 +26491,7 @@ Weapon by: 'The One Of Wonders'"
                 "Reload time no anim speed mod"
                 {
                     "attribute_class"    "mult_reload_time_noanimmod"
-                    "value"              "0.725"
+                    "value"              "0.7"
                 }				
 			}
 			"visuals"
@@ -26830,7 +26852,7 @@ Weapon from: 'The One Of Wonders'"
 			"prefab"					"weapon_flamethrower"
 			"show_in_armory"			"1"
 
-			"item_quality"				"rarity2"
+			"item_quality"				"rarity3"
 
 			"propername"				"1"
 			"item_name"					"Blood Boiler"
@@ -26839,7 +26861,7 @@ Weapon from: 'The One Of Wonders'"
 Keep away from face... my face? or theirs?
 
 Model by: 'Svdl'
-Weapon by: 'The One Of Wonders'"					
+Weapon by: 'Vror'"					
 			"item_logname"				"Blood Boiler"
 			"item_iconname"				"Blood Boiler"
 			"image_inventory"			"backpack/weapons/c_models/c_weldkit/c_weldkit"
@@ -27592,7 +27614,7 @@ Weapon by: 'The One Of Wonders'"
 			    "weapon_stattrak_module_scale"																
 				{
 					"attribute_class"	"mult_clipsize"
-					"value" 			"5"
+					"value" 			"2.0"
 				}
 				"weapon_stattrak_module_scale"																
 				{
@@ -29517,32 +29539,37 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale" 						
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value" 			"1.5"
+					"value" 			"1.666666666667"
 				}
 				"weapon_stattrak_module_scale" 						
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.4"
+					"value" 			"0.3333333333"
 				}
 				"weapon_stattrak_module_scale" 						
 				{
 					"attribute_class"	"mult_reload_time"
 					"value" 			"1.5"
 				}
+				"weapon_stattrak_module_scale" 						
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"0.75"
+				}
+				"weapon_stattrak_module_scale" 						
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" 			"1.66666667"
+				}
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mod_always_draw_tracer_effect"
 					"value"				"1"
 				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}
 				"punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
-					"value"				"3.33"
+					"value"				"1.5656"
 				}
 				"punch angle mod add hidden"
 				{
@@ -29557,7 +29584,7 @@ Weapon by: 'The One Of Wonders'"
 				"longer damage falloff distance"
 				{
 					"attribute_class"	"mult_falloff_distance"
-					"value"				"1.6"
+					"value"				"1.5"
 				}
 				"Reload time no anim speed mod"
                 {
@@ -29955,7 +29982,7 @@ Wearable by: 'The One Of Wonders'"
 			    "deploy time decreased"
 				{
 					"attribute_class"	"mult_deploy_time"
-					"value"				"0.67"
+					"value"				"0.85"
 				}
                 "move speed bonus"
 				{
@@ -29980,7 +30007,7 @@ Wearable by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.8379"
+					"value"				"1.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -30584,21 +30611,41 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "Move Speed Bonus Active"														
+			    "gain stored crits on kill"														
 				{
-					"attribute_class"	"mult_player_movespeed_active"
-					"value"				"1.15"
+					"attribute_class"	"gain_stored_crits_on_kill"
+					"value"				"1"
 				}
-				"DMG Vulnerability while Active"																
+				"fire rate bonus with reduced health"													
 				{
-					"attribute_class"	"mult_dmgtaken_active"
-					"value"				"1.3"
+					"attribute_class"	"mult_postfiredelay_with_reduced_health"
+					"value"				"0.75"
 				}
-			    "crit mod disabled"															
+				"Mark Self on Kill"
 				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
+					"attribute_class"	"dmmuy"
+					"value"				"10"
 				}
+				"add condition on kill"
+				{
+					"attribute_class"	"add_onkill_addcond_self"							
+					"value" 			"30 10"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"1.2"
+				}
+				"damage penalty"																
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.8"
+				}
+                "crit mod disabled"
+                {
+                    "attribute_class"    "mult_crit_chance"
+                    "value"             "0"
+                }
 			}
 			"visuals"																			
 			{
@@ -30646,15 +30693,35 @@ Weapon by: 'The One Of Wonders'"
 			}
             "attributes"
             {
-				"Move Speed Bonus Active"														
+				"gain stored crits on kill"														
 				{
-					"attribute_class"	"mult_player_movespeed_active"
-					"value"				"1.20"
+					"attribute_class"	"gain_stored_crits_on_kill"
+					"value"				"1"
 				}
-				"DMG Vulnerability while Active"																
+				"fire rate bonus with reduced health"													
 				{
-					"attribute_class"	"mult_dmgtaken_active"
-					"value"				"1.4"
+					"attribute_class"	"mult_postfiredelay_with_reduced_health"
+					"value"				"0.75"
+				}
+				"Mark Self on Kill"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"10"
+				}
+				"add condition on kill"
+				{
+					"attribute_class"	"add_onkill_addcond_self"							
+					"value" 			"30 10"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"1.2"
+				}
+				"damage penalty"																
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.8"
 				}
                 "crit mod disabled"
                 {
@@ -33375,25 +33442,15 @@ Weapon by: 'The One Of Wonders'"
 			"attributes"
 			{
 			    
-				"gain stored crits on kill"
+				"apply weapon damage boost on kill" 
 				{
-					"attribute_class"	"gain_stored_crits_on_kill"
-					"value"				"1"
+					"attribute_class"	"apply_weapon_damage_boost_on_kill"
+					"value"				"3"
 				} 
-				"damage bonus"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"1.1"
-				}
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"1.2"
-				}
-				"crits become minicrits"															
-				{
-					"attribute_class"	"crits_become_minicrits"
-					"value"				"1"
 				}
 				"crit mod disabled"															
 				{
@@ -33403,7 +33460,7 @@ Weapon by: 'The One Of Wonders'"
                 "punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
-					"value"				"4.44"
+					"value"				"1.11"
 				}
 				"punch angle mod add hidden"
 				{
@@ -39090,6 +39147,7 @@ Weapon by: 'The One Of Wonders'"
 			"prefab"					"weapon_medigun"
 			"item_class"				"tf_weapon_flamethrower"
 			"show_in_armory"			"1"
+			"item_quality"              "rarity2"
 			"item_name"					"Hydro Pump"
 			"item_logname" 				"Hydro Pump"
 			"item_iconname"				"Hydro Pump"
@@ -39249,6 +39307,7 @@ Weapon ported by: 'Noclue'"
 			"name"						"TF_WEAPON_AIRBURST"
 			"prefab"					"weapon_stickybomb_launcher"
 			"item_class"				"tf_weapon_shotgun"
+			"item_quality"              "rarity2"
 			"item_logname"				"Airburst Rifle"
 			"item_iconname"				"Airburst Rifle"
 			"show_in_armory"			"1"
@@ -39363,6 +39422,7 @@ Weapon by: 'Noclue'"
 			"item_class"				"tf_weapon_minigun"
 			
 			"show_in_armory"			"1"
+			"item_quality"              "rarity2"
 			
 			"propername"				"1"
 			"item_name"					"Sphere"
@@ -39595,6 +39655,7 @@ Weapon from: Colrot"
             "show_in_armory"			"1"
             "item_slot"					"melee"
             "anim_slot"					"melee"
+			"item_quality"              "rarity3"
 			"bucket"                    "2"
 			"bucket_position"           "0"
 			"image_inventory"			"backpack/weapons/c_models/Ballistic_Knife"
@@ -39701,6 +39762,7 @@ Weapon from: Colrot"
             "name"						"Direct Source"
             "prefab"					"weapon_club"
             "item_class"				"tf_weapon_revolver"
+			"item_quality"              "rarity2"
             "item_name"					"Direct Source"
             "item_type_name"			"Lemonade"
             "item_description"			"
@@ -39807,6 +39869,7 @@ Edited by: 'Reagy'"
             "name"						"Postal Papers"
             "prefab"					"weapon_umbrella"
             "item_name"					"Postal Papers"
+			"item_quality"              "rarity2"
             "item_type_name"			"Petition"
             "item_description"			"Passive Boost: Speeeeeed
 Manual Boost (Mouse2): Marked for Death
