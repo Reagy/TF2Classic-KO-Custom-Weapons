@@ -556,7 +556,7 @@ stock int FindModelString( int iModelIndex, char[] szModelString, int iStringSiz
 
 //shitty copypaste of tf2's falloff algorithm
 //todo: respect falloff modifying attributes
-stock float TF2DamageFalloff( int iVictim, TFDamageInfo tfInfo ) {
+/*stock float TF2DamageFalloff( int iVictim, TFDamageInfo tfInfo ) {
 	float flRandomDamage = tfInfo.flDamage * 0.5;
 	float flCenter = 0.5;
 
@@ -592,7 +592,113 @@ stock float TF2DamageFalloff( int iVictim, TFDamageInfo tfInfo ) {
 
 	float flOut = SimpleSplineRemapValClamped( flCenter, 0.0, 1.0, -flRandomDamage, flRandomDamage );
 	return tfInfo.flDamage + flOut;
+}*/
+
+stock float TF2DamageFalloff( int iVictim, TFDamageInfo tfInfo ) {
+	return TF2DamageFalloff2( iVictim, tfInfo.flDamage, tfInfo.iAttacker, tfInfo.iWeapon, tfInfo.iFlags );
 }
+stock float TF2DamageFalloff2( int iVictim, float flDamage, int iAttacker, int iWeapon, int iFlags, bool bWeakRampup = false ) {
+	float flRandomDamage = flDamage * 0.5;
+	float flCenter = 0.5;
+
+	if ( iFlags & DMG_USEDISTANCEMOD ) {
+		float vecOtherPos[3];
+		float vecPos[3];
+
+		GetEntPropVector( iVictim, Prop_Data, "m_vecAbsOrigin", vecPos );
+		GetEntPropVector( iAttacker, Prop_Data, "m_vecAbsOrigin", vecOtherPos );
+
+		SubtractVectors( vecPos, vecOtherPos, vecOtherPos );
+
+		float flDistance = MaxFloat( 1.0,  SquareRoot( GetVectorLength( vecOtherPos, true ) ) );
+		float flOptimalDistance = 512.0;
+
+		flCenter = RemapValClamped( flDistance / flOptimalDistance, 0.0, 2.0, 1.0, 0.0 );
+		if ( iFlags & DMG_NOCLOSEDISTANCEMOD ) {
+			if ( flCenter > 0.5 )
+				flCenter = RemapVal( flCenter, 0.5, 1.0, 0.5, 0.65 );
+		}
+	}
+
+	if( flCenter > 0.5 && IsValidEntity( iWeapon ) ) {
+		static char szClassname[96];
+		GetEntityClassname( iWeapon, szClassname, sizeof( szClassname ) );
+
+		if( StrEqual( szClassname, "tf_weapon_scattergun" ) )
+			flRandomDamage *= 1.5;
+		else if(StrEqual( szClassname, "tf_weapon_rocketlauncher" ) ||
+			StrEqual( szClassname, "tf_weapon_pipebomblauncher" ) || bWeakRampup )
+			flRandomDamage *= 0.5;
+	}
+
+	float flOut = SimpleSplineRemapValClamped( flCenter, 0.0, 1.0, -flRandomDamage, flRandomDamage );
+	return flDamage + flOut;
+}
+stock float TF2DamageFalloff3( float flDamage, const float vecAttackerPos[3], const float vecVictimPos[3], int iWeapon, int iFlags, bool bWeakRampup = false ) {
+	float flRandomDamage = flDamage * 0.5;
+	float flCenter = 0.5;
+
+	if ( iFlags & DMG_USEDISTANCEMOD ) {
+		float vecOtherPos[3];
+		SubtractVectors( vecAttackerPos, vecVictimPos, vecOtherPos );
+
+		float flDistance = MaxFloat( 1.0, SquareRoot( GetVectorLength( vecOtherPos, true ) ) );
+		float flOptimalDistance = 512.0;
+
+		flCenter = RemapValClamped( flDistance / flOptimalDistance, 0.0, 2.0, 1.0, 0.0 );
+		if ( iFlags & DMG_NOCLOSEDISTANCEMOD ) {
+			if ( flCenter > 0.5 )
+				flCenter = RemapVal( flCenter, 0.5, 1.0, 0.5, 0.65 );
+		}
+	}
+
+	if( flCenter > 0.5 ) {
+		if( bWeakRampup )
+			flRandomDamage *= 0.25;
+		else if( IsValidEntity( iWeapon ) ) {
+			static char szClassname[96];
+			GetEntityClassname( iWeapon, szClassname, sizeof( szClassname ) );
+
+			if( StrEqual( szClassname, "tf_weapon_scattergun" ) )
+				flRandomDamage *= 1.5;
+			else if( StrEqual( szClassname, "tf_weapon_rocketlauncher" ) ||
+				StrEqual( szClassname, "tf_weapon_pipebomblauncher" ) )
+				flRandomDamage *= 0.5;
+		}
+
+		
+	}
+
+	float flOut = SimpleSplineRemapValClamped( flCenter, 0.0, 1.0, -flRandomDamage, flRandomDamage );
+	return flDamage + flOut;
+}
+
+stock bool HasAmmoToFire( int iWeapon, int iOwner, int iAmmoCost, bool bUsesClip ) {
+	if( bUsesClip ) {
+		int iClip = GetEntProp( iWeapon, Prop_Send, "m_iClip1" );
+		if( iClip < iAmmoCost )
+			return false;
+	}
+	else {
+		int iAmmoType = GetEntProp( iWeapon, Prop_Send, "m_iPrimaryAmmoType" );
+		int iAmmo = GetEntProp( iOwner, Prop_Send, "m_iAmmo", 4, iAmmoType );
+		if( iAmmo < iAmmoCost )
+			return false;
+	}
+	return true;
+}
+stock void ConsumeAmmo( int iWeapon, int iOwner, int iAmmoCost, bool bUsesClip ) {
+	if( bUsesClip ) {
+		int iClip = GetEntProp( iWeapon, Prop_Send, "m_iClip1" );
+		SetEntProp( iWeapon, Prop_Send, "m_iClip1", iClip - iAmmoCost );
+	}
+	else {
+		int iAmmoType = GetEntProp( iWeapon, Prop_Send, "m_iPrimaryAmmoType" );
+		int iAmmo = GetEntProp( iOwner, Prop_Send, "m_iAmmo", 4, iAmmoType );
+		SetEntProp( iOwner, Prop_Send, "m_iAmmo", iAmmo - iAmmoCost, 4, iAmmoType );
+	}
+}
+
 
 enum
 {

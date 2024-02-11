@@ -29,7 +29,7 @@ Handle g_sdkAddDamagerToHistory;
 Handle g_sdkWorldSpaceCenter;
 Handle g_sdkSendWeaponAnim;
 
-static char g_szAttribAirblastEnable[] = 	"custom_force_airblast";
+static char g_szAttribAirblastEnable[] = 	"custom_airblast";
 static char g_szAttribAirblastParticle[] =	"custom_airblast_particle";
 static char g_szAttribAirblastSound[] =		"custom_airblast_sound";
 static char g_szAttribAirblastRefire[] = 	"mult_airblast_refire_time";
@@ -166,7 +166,8 @@ MRESReturn Hook_SecondaryFire( int iWeapon ) {
 	if( iOwner == -1 )
 		return MRES_Ignored;
 
-	if( !HasAmmoToFire( iWeapon, iOwner ) )
+	int iAmmoCost = RoundToNearest( AttribHookFloat( 20.0, iWeapon, g_szAttribAirblastCost ) );
+	if( !HasAmmoToFire( iWeapon, iOwner, iAmmoCost, true ) )
 		return MRES_Ignored;
 
 	if( GetEntProp( iWeapon, Prop_Send, "m_iReloadMode" ) != 0 ) {
@@ -177,6 +178,8 @@ MRESReturn Hook_SecondaryFire( int iWeapon ) {
 	
 	if( GetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() || GetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack" ) > GetGameTime() )
 		return MRES_Ignored;
+
+	ConsumeAmmo( iWeapon, iOwner, iAmmoCost, true );
 
 	float flAirblastInterval = AttribHookFloat( 0.75, iWeapon, g_szAttribAirblastRefire );
 	SetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + flAirblastInterval );
@@ -195,29 +198,6 @@ MRESReturn Hook_SecondaryFire( int iWeapon ) {
 	//airblast_self_push
 
 	return MRES_Supercede;
-}
-
-bool HasAmmoToFire( int iWeapon, int iOwner ) {
-	//todo: implement this
-	bool bUsesClip = true;
-
-	int iAmmoCost = RoundToNearest( AttribHookFloat( 20.0, iWeapon, g_szAttribAirblastCost ) );
-	if( bUsesClip ) {
-		int iClip = GetEntProp( iWeapon, Prop_Send, "m_iClip1" );
-		if( iClip < iAmmoCost )
-			return false;
-
-		SetEntProp( iWeapon, Prop_Send, "m_iClip1", iClip - iAmmoCost );
-	}
-	else {
-		int iAmmoType = GetEntProp( iWeapon, Prop_Send, "m_iPrimaryAmmoType" );
-		int iAmmo = GetEntProp( iOwner, Prop_Send, "m_iAmmo", 4, iAmmoType );
-		if( iAmmo < iAmmoCost )
-			return false;
-
-		SetEntProp( iOwner, Prop_Send, "m_iAmmo", iAmmo - iAmmoCost, 4, iAmmoType );
-	}
-	return true;
 }
 
 void DoAirblastParticles( int iWeapon, int iOwner ) {

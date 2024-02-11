@@ -20,6 +20,7 @@ Handle g_sdkPipebombCreate;
 Handle g_sdkSetCollisionGroup;
 Handle g_sdkDetonate;
 Handle g_sdkAttackIsCritical;
+Handle g_sdkSendWeaponAnim;
 
 DynamicHook g_dhPrimaryFire;
 DynamicHook g_dhSecondaryFire;
@@ -44,7 +45,7 @@ enum struct BombLagComp {
 }
 ArrayList hLagCompensation;
 
-int iBombUnlag = -1;
+int g_iBombUnlag = -1;
 
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
@@ -76,6 +77,12 @@ public void OnPluginStart() {
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFWeaponBase::CalcAttackIsCritical" );
 	g_sdkAttackIsCritical = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CBaseCombatWeapon::SendWeaponAnim" );
+	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkSendWeaponAnim = EndPrepSDKCall();
 
 	g_dhShouldExplode = DynamicHook.FromConf( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
 	g_dhOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
@@ -161,35 +168,39 @@ MRESReturn Hook_PrimaryPost( int iEntity ) {
 		return MRES_Ignored;
 
 
-	if( iBombUnlag != -1 )
+	if( g_iBombUnlag != -1 )
 		EndBombUnlag( iOwner );
 
 	return MRES_Handled;
 }
 
 MRESReturn Hook_Secondary( int iWeapon ) {
-	if( GetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() || GetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack" ) > GetGameTime() ) {
-		return MRES_Ignored;
-	}
-
 	int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwner" );
 	if( iOwner == -1 )
 		return MRES_Ignored;
 
-	int iAmmoType = 2;
-	int iAmmo = GetEntProp( iOwner, Prop_Send, "m_iAmmo", 4, iAmmoType );
-	if( iAmmo <= 0 )
+	if( !HasAmmoToFire( iWeapon, iOwner, 1, false ) )
 		return MRES_Ignored;
+
+	if( GetEntProp( iWeapon, Prop_Send, "m_iReloadMode" ) != 0 ) {
+		SetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() );
+		SetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() );
+		SetEntProp( iWeapon, Prop_Send, "m_iReloadMode", 0 );
+	}
+
+	if( GetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() || GetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack" ) > GetGameTime() )
+		return MRES_Ignored;
+
+	ConsumeAmmo( iWeapon, iOwner, 1, false );
 
 	SetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + 0.3 );
 	SetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() + 0.6 );
 
-	int iViewmodel = GetEntPropEnt( iOwner, Prop_Send, "m_hViewModel" );
-	SetEntProp( iViewmodel, Prop_Send, "m_nSequence", 2 );
-	SetEntPropFloat( iWeapon, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.5 );
-
-	SetEntProp( iOwner, Prop_Send, "m_iAmmo", iAmmo - 1, 4, iAmmoType );
-
+	SDKCall( g_sdkSendWeaponAnim, iWeapon, 181 ); //ACT_VM_SECONDARYATTACK
+	SetEntProp( iWeapon, Prop_Send, "m_iWeaponMode", 1 );
+	//adding latentcy prevents animation bugs
+	SetEntPropFloat( iWeapon, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.6 - GetClientAvgLatency( iOwner, NetFlow_Both ) );
+	
 	EmitSoundToAll( g_szFireSound, iOwner, SNDCHAN_WEAPON );
 
 	float vecSrc[3], vecEyeAng[3], vecVel[3], vecImpulse[3];
@@ -275,7 +286,10 @@ MRESReturn Hook_DamageCollider( int iCollider, DHookReturn hReturn, DHookParam h
 	RemoveBomb( iBomb );
 	RemoveEntity( iCollider );
 
-	float flDamage = TF2DamageFalloff3( 160.0, vecOwnerPos, vecBombPos, iLauncher, DMG_USEDISTANCEMOD );
+	float flDamage = TF2DamageFalloff3( 215.0, vecOwnerPos, vecBombPos, iLauncher, DMG_USEDISTANCEMOD, true );
+	//float flDamage = 240.0;
+
+	PrintToServer("fldamage %f", flDamage);
 
 	//todo: move to gamedata
 	StoreToEntity( iBomb, 1212, flDamage, NumberType_Int32 ); //damage
@@ -336,7 +350,7 @@ void StartBombUnlag( int iPlayer ) {
 	float flLatency = GetClientLatency( iPlayer, NetFlow_Both );
 	float flTargetTime = GetGameTime() - flLatency;
 
-	iBombUnlag = iPlayer;
+	g_iBombUnlag = iPlayer;
 
 	BombLagComp comp;
 	int iIndex = 0;
@@ -409,5 +423,5 @@ void EndBombUnlag( int iPlayer ) {
 		iIndex++;
 	}
 
-	iBombUnlag = -1;
+	g_iBombUnlag = -1;
 }
