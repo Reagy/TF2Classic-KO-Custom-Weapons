@@ -23068,7 +23068,17 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"set_scattergun_no_reload_single"
 					"value"				"1"
-				}	
+				}
+				"scattergun no reload single"													
+				{
+					"attribute_class"	"custom_airblast"
+					"value"				"1"
+				}
+				"weapon_stattrak_module_scale"												
+				{
+					"attribute_class"	"mult_airblast_cost"
+					"value"				"0.1"
+				}				
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time_noanimmod"
@@ -31972,7 +31982,17 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"set_scattergun_no_reload_single"
 					"value"				"1"
-				}				
+				}
+				"scattergun no reload single"													
+				{
+					"attribute_class"	"custom_airblast"
+					"value"				"1"
+				}
+				"weapon_stattrak_module_scale"												
+				{
+					"attribute_class"	"mult_airblast_cost"
+					"value"				"0.05"
+				}	
                 "crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -39352,11 +39372,6 @@ Weapon by: 'Noclue'"
 					"attribute_class"	"set_detonate_mode"
 					"value"				"2"
 				}
-				"sticky detonate mode"
-				{
-					"attribute_class"	"mod_no_autoreload"
-					"value"				"1"
-				}
 				"mod use custom ammo type"
 				{
 					"attribute_class"	"mod_use_custom_ammo_type"
@@ -39396,11 +39411,6 @@ Weapon by: 'Noclue'"
 				{
 					"attribute_class"	"mult_dmg"
 					"value" 			"4.0"
-				}
-				"always draw tracer"
-				{
-					"attribute_class"	"mod_always_draw_tracer_effect"
-					"value"				"1"
 				}
 			}
 			"visuals"
