@@ -7,6 +7,7 @@
 #include <dhooks>
 #include <kocwtools>
 #include <hudframework>
+#include <give_econ>
 
 public Plugin myinfo =
 {
@@ -33,7 +34,7 @@ const float	ANGINVULN_DURATION	= 0.25;	//invulnerability period after a shield b
 
 const float	FLAME_HEALRATE		= 30.0;	//health per second restored by the hydro pump
 
-static char	g_szToxinLoopSound[] = "items/powerup_pickup_plague_infected_loop.wav";
+static char	g_szToxinLoopSound[]	= "items/powerup_pickup_plague_infected_loop.wav";
 
 //#define DEBUG
 
@@ -180,7 +181,7 @@ public void OnClientConnected( int iClient ) {
 		RequestFrame( DoPlayerHooks, iClient );
 }
 void DoPlayerHooks( int iPlayer ) {
-	g_dhTakeHealth.HookEntity( Hook_Pre, iPlayer, Hook_TakeHealth );
+	//g_dhTakeHealth.HookEntity( Hook_Pre, iPlayer, Hook_TakeHealth );
 	g_dhOnKill.HookEntity( Hook_Post, iPlayer, Hook_OnPlayerKill );
 }
 
@@ -603,6 +604,8 @@ bool AddToxin( int iPlayer ) {
 	AcceptEntityInput( iEmitter, "Start" );
 
 	g_iToxinEmitters[iPlayer] = EntIndexToEntRef( iEmitter );
+
+	GiveEconItem( iPlayer, 11000 );
 	
 	return true;
 }
@@ -613,6 +616,7 @@ void RemoveToxinEmitter( int iPlayer ) {
 		RemoveEntity( iEmitter );
 	}
 	g_iToxinEmitters[iPlayer] = -1;
+	RemoveEconItem( iPlayer, 11000 );
 }
 
 void TickToxin( int iPlayer ) {
@@ -640,6 +644,8 @@ void TickToxin( int iPlayer ) {
 void RemoveToxin( int iPlayer ) {
 	StopSound( iPlayer, 0, g_szToxinLoopSound );
 	RemoveToxinEmitter( iPlayer );
+
+	RemoveEconItem( iPlayer, 11000 );
 }
 
 //name is misleading, TakeHealth is used to RESTORE health because valve
