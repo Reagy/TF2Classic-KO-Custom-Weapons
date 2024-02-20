@@ -21929,7 +21929,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.72"
+					"value"				"1.38"
 				}
 			}
 			"visuals"
@@ -32707,7 +32707,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Blast Resort"
 			"item_type_name"			"Improvised Explosive"
-			"item_description"			"Single-use item that explodes in your face on swing (12 sec cooldown)
+			"item_description"			"Single-use item that blows you up and anyone nearby on use.
 
 I don't think ye want to know what's crammed into this bottle, laddie.. it's definitely not safe fer drinking!
 
@@ -32727,7 +32727,7 @@ Weapon by: 'The One Of Wonders'"
 			"static_attrs"																	
 			{
 				"override projectile type" 				"1"		//hitscan								
-				"damage bonus hidden"					"2"																									
+				"damage bonus hidden"					"2.4"																									
 			}
 			"attributes"
 			{
@@ -32740,6 +32740,16 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_single_wep_deploy_time"
 					"value"				"1.6"
+				}
+				"crits become minicrits"															
+				{
+					"attribute_class"	"crits_become_minicrits"
+					"value"				"1"
+				}
+				"self damage penetrates uber"															
+				{
+					"attribute_class"	"mod_self_damage_penetrates_uber"
+					"value"				"1"
 				}
 				"crit mod disabled"
 				{
@@ -32759,17 +32769,17 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"												
 				{
 					"attribute_class"	"blast_dmg_to_self"
-					"value" 			"1.5"
+					"value" 			"100.0"
 				}		
                 "weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"1.5"
+					"value"				"1.8"
 				} 
 				"weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"1.15"
+					"value"				"1.2"
 				}
 				"weapon_stattrak_module_scale"															
 				{
