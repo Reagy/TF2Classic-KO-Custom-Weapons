@@ -10069,7 +10069,7 @@ Weapon by 'The One Of Wonders'"
 					"attribute_class"	"apply_z_velocity_on_damage"
 					"value"				"100"
 				}
-				"mod use custom ammo type" // to fix the Rhynx exploit, get fucked
+				"mod use custom ammo type" 
 				{
 					"attribute_class"	"mod_use_custom_ammo_type"
 					"value" 			"5"
@@ -24074,6 +24074,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_melee_crit_swing_custom_damage"
 					"value"				"29"
 				}
+				"mod use custom ammo type" 
+				{
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value" 			"5"
+				}	
 			}
 			"visuals"
 			{
@@ -30802,7 +30807,7 @@ Weapon by: 'Reagy'"
                 "reload time increased hidden"            "0.9"
                 "min_viewmodel_offset"                    "10 0 -11"
                 "decrease player capture value"            "-4"
-                "custom magazine model"                    "models/weapons/custom/w_models/w_lamplighter_new.mdl"
+                "custom magazine model"                    "models/weapons/custom/w_models/w_lamplighter_new1.mdl"
             }
 			"attributes"
             {
@@ -31707,6 +31712,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_taser_heal_scale"
 					"value"				"0"
 				}
+				"mod use custom ammo type" 
+				{
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value" 			"5"
+				}	
 			}
 			"visuals"
 			{
