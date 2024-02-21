@@ -21,10 +21,8 @@ Handle g_hGiveEcon;
 //#define DEBUG
 
 public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] szError, int iErrMax ) {
-#if defined DEBUG
 	CreateNative( "GiveEconItem", Native_GiveEconItem );
 	CreateNative( "RemoveEconItem", Native_RemoveEconItem );
-#endif
 
 	return APLRes_Success;
 }
