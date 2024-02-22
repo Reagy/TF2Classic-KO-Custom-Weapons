@@ -16750,6 +16750,12 @@ Weapon by: 'Majro'"
 					"attribute_class"	"add_max_pipebombs"
 					"value" 			"-2"
 				}
+				
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
 
 				"Reload time start" //Tried matching the Grenade Launcher as best as I could
 				{
