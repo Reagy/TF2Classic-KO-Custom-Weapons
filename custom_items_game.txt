@@ -12750,7 +12750,7 @@ Weapon by: 'Vror'"
                 "custom falloff"
                 {
                     "attribute_class"    "mod_custom_falloff"
-                    "value"                "0.9"
+                    "value"                "0.8"
                 }
 				"custom projectile model"
 				{
