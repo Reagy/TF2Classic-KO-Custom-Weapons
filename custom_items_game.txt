@@ -26914,6 +26914,11 @@ Weapon by: 'Vror'"
 					"attribute_class"	"dummy"
 					"value"				"1"
 				}
+				"mod deflect no minicrit"
+				{
+					"attribute_class"	"mod_deflect_no_minicrit"
+					"value"				"1"
+				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -26965,16 +26970,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-				"Oppressive Force"
-				{
-					"attribute_class"	"dmmuy"
-					"value"				"2"
-				}
-                "add condition on hit"				
-				{
-					"attribute_class"	"add_onhit_addcond_weapon"
-					"value"				"128 1"
-				}	
 			    "flame size bonus"
 				{
 					"attribute_class"	"mult_flame_size"
@@ -26988,7 +26983,7 @@ Weapon by: 'The One Of Wonders'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.3"
+					"value"				"0.35"
 				}
 				"weapon burn time reduced"
 				{
@@ -39276,6 +39271,22 @@ Weapon by: 'Noclue'"
 				{
 					"medic_backpack"			"1"
 				}
+			}
+			"visuals_red"
+			{
+				"beam_effect"			"mediflame_red"
+			}
+			"visuals_blu"
+			{
+				"beam_effect"			"mediflame_blue"
+			}
+			"visuals_grn"
+			{
+				"beam_effect"			"mediflame_green"
+			}
+			"visuals_ylw"
+			{
+				"beam_effect"			"mediflame_yellow"
 			}
 		}
 //-------------------------------------
