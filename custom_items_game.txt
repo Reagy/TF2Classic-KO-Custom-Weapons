@@ -39204,7 +39204,7 @@ Model by: 'GoLDeN'
 Weapon by: 'Noclue'"
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/c_models/c_brandspuit/c_brandspuit"
-			"model_player"				"models/workshop/weapons/c_models/c_brandspuit/c_brandspuit.mdl"
+			"model_player"				"models/workshop/weapons/c_models/c_brandspuit/c_brandspuit_v2.mdl"
 			"extra_wearable"			"models/weapons/c_models/c_biomed_backpack/c_biomed_backpack.mdl"
 			"attach_to_hands"			"1"
 			"min_ilevel"				"8"
