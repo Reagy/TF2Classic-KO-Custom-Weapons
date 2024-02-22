@@ -23007,6 +23007,7 @@ Weapon from: Renaissance Revival"
 Pyro reassures you that it's just a bad sunburn.
 
 Model by:  'Corvalho'
+Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"						
 			"item_logname"				"Solar Flare"
 			"item_iconname"				"Solar Flare"
@@ -26894,6 +26895,11 @@ Weapon by: 'Vror'"
 			}
 			"attributes"
 			{
+			    "Airblast Deflection is Destroy"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"1"
+				}
 				"damage bonus"													
 				{
 					"attribute_class"	"mult_dmg"
@@ -26909,14 +26915,9 @@ Weapon by: 'Vror'"
 					"attribute_class"	"mult_flame_size"
 					"value"				"0.3"
 				}
-				"Airblast no mini-crit"
+				"strange restriction type 1"
 				{
-					"attribute_class"	"dummy"
-					"value"				"1"
-				}
-				"mod deflect no minicrit"
-				{
-					"attribute_class"	"mod_deflect_no_minicrit"
+					"attribute_class"	"airblast_destroy_projectile"
 					"value"				"1"
 				}
 				"crit mod disabled"
@@ -26970,6 +26971,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "Airblast Deflection is Destroy"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"1"
+				}
 			    "flame size bonus"
 				{
 					"attribute_class"	"mult_flame_size"
@@ -26978,7 +26984,12 @@ Weapon by: 'The One Of Wonders'"
 				"Flame Range Increased"
 				{
 					"attribute_class"	"mult_flame_velocity"
-					"value"				"1.75"
+					"value"				"1.5"
+				}
+				"airblast cost decreased"																
+				{
+					"attribute_class"	"mult_airblast_cost"
+					"value"				"0.5"
 				}
 				"damage penalty"
 				{
@@ -26990,14 +27001,9 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_wpn_burntime"
 					"value"				"0.5"
 				}
-				"Airblast no mini-crit"
+				"strange restriction type 1"
 				{
-					"attribute_class"	"dummy"
-					"value"				"1"
-				}
-				"mod deflect no minicrit"
-				{
-					"attribute_class"	"mod_deflect_no_minicrit"
+					"attribute_class"	"airblast_destroy_projectile"
 					"value"				"1"
 				}
 				"maxammo primary reduced"
@@ -31916,6 +31922,7 @@ Weapon by: 'The One Of Wonders'"
 An extra spicy mix of the hottest stuff in the black market.
 
 Model by: 'CoBalt'
+Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"											
 			"item_logname"				"Napalm Blaster"
 			"item_iconname"				"Napalm Blaster"
@@ -32007,7 +32014,17 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}		
+				}	
+                "Napalm Desc"													
+				{
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1"
+				}
+				"Napalm Credits"													
+				{
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1"
+				}				
                 "rocket limited lifetime"														
 				{
 					"attribute_class"	"rocket_lifetime"
@@ -37858,7 +37875,17 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_projectile_range"
 					"value"				"0.06253365"
-				}				
+				}	
+                "scattergun no reload single"													
+				{
+					"attribute_class"	"custom_airblast"
+					"value"				"1"
+				}
+				"weapon_stattrak_module_scale"												
+				{
+					"attribute_class"	"mult_airblast_cost"
+					"value"				"0.95"
+				}					
 			}
 			"visuals"
 			{
@@ -41189,6 +41216,30 @@ Fan-Fire: Hold fire button for maximum destruction!"
 			"description_string"	"Has full mobility when spun-up or firing"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
+		}
+		"7639"
+		{
+			"name"					"Airblast Deflection is Destroy"
+			"description_string"	"Airblast destroys projectiles"												
+			"description_format"	"value_is_additive"
+			"effect_type"			"neutral"
+		}
+		"7640"
+		{
+			"name"					"Napalm Desc"
+			"description_string"	"This weapon fires powerful fireballs 
+
+An extra spicy mix of the hottest stuff in the black market."												
+			"effect_type"			"neutral"
+		}
+		"7641"
+		{
+			"name"					"Napalm Credits"
+			"description_string"	"
+Model by: 'CoBalt'
+Animations by: 'Raptor Dan'
+Weapon by: 'The One Of Wonders'"												
+			"effect_type"			"neutral"
 		}
 //clooey zone
 
