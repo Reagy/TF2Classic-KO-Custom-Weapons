@@ -21770,17 +21770,22 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-				"weapon_stattrak_module_scale"
+				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
 					"value"				"1.33"
 				}
-				"weapon_stattrak_module_scale"
+				"Blast radius increased"
 				{
 					"attribute_class"	"mult_explosion_radius"
 					"value"				"1.2"
 				}
-				"weapon_stattrak_module_scale"
+				"Rainmaker Payload"
+                {
+                    "attribute_class"    "dummi"
+                    "value"                "1"
+                }
+				"blast splash damage decreased"
 				{
 					"attribute_class"	"mult_explosion_splash_damage"
 					"value"				"0.75"
@@ -21790,12 +21795,12 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"disable_explosion_falloff"
 					"value"				"1"
 				}	
-				"weapon_stattrak_module_scale"
+				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"1.5"
 				}
-				"weapon_stattrak_module_scale"
+				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"0.25"
