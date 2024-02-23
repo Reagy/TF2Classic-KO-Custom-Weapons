@@ -2577,7 +2577,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon spread bonus"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.8" 
+					"value"				"0.85" 
 				}
 				"damage bonus"
 				{
@@ -3647,6 +3647,11 @@ Weapon by: 'Azzy'"
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}	
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mult_reload_time_start"
+					"value"				"-0.86"
+				}
             }
 			"visuals"
 			{
@@ -5367,16 +5372,27 @@ Weapon by: 'Reagy'"
 			"static_attrs"
 			{
 				"class select override vcd"				"taunt01"								// So he isn't posing strangely
-//				"clip size penalty hidden"				"0.5"									// 3 shots!	
 				"hidden secondary max ammo penalty"		"1.5"									// 36 ammo in secondary!
-//				"fire rate penalty hidden"				"0.8"									// Around 14% slower compared to the Shortstop
-//				"damage bonus hidden"					"0.10"
-//				"reload time increased hidden"			"0.9"									// Slightly faster reload, to match the Pistol's..?
+				"damage penalty"					    "0.9"
+                "spread penalty"                        "2.0"
 				"fire rate penalty"						"1.2"
 				"Reload time increased"					"1.25"
 				"min_viewmodel_offset"					"10 0 -11"
 				"decrease player capture value"			"-4"
 				"crit mod disabled"                     "0"
+			}
+			"attributes"
+			{
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"0.9"
+				}
+                "punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value"				"1"
+				}
 			}
 			"visuals"
 			{
@@ -5672,7 +5688,7 @@ Weapon by: 'The One Of Wonders'"
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"2.5"
+					"value" 			"1.875"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -7046,7 +7062,7 @@ Weapon by: 'The One Of Wonders'"
                 "fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.1"
+					"value"				"1.2"
 				}
                 "crit mod disabled"
                 {
@@ -9871,7 +9887,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"											
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"1.75"
+					"value"				"1.5"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -9912,6 +9928,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"punch_angle_is_constant"
 					"value" 			"1"
+				}
+                "custom falloff"
+				{
+					"attribute_class"	"mod_custom_falloff"
+					"value"				"0.75"
 				}				
 			}
 			"visuals"																		
@@ -12302,11 +12323,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg"
 					"value" 			"0.8"
 				}
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.9"
-				}
 				"crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -13393,7 +13409,7 @@ Weapon by: 'Zadrave'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.8"
+					"value"				"0.01"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -13410,6 +13426,11 @@ Weapon by: 'Zadrave'"
 					"attribute_class"	"custom_projectile_model"
 					"value"				"models/weapons/w_models/w_revolver_flareshell.mdl"
 				}
+				"weapon burn time reduced"
+				{
+					"attribute_class"	"mult_wpn_burntime"
+					"value"				"0.2"
+				}
                 "crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -13419,11 +13440,11 @@ Weapon by: 'Zadrave'"
 				{
 					"attribute_class"	"custom_burn_pyro" // yes, this sets other pyros on fire god save us all.
 					"value"				"1"													
-				}
-                "rocket limited lifetime"														
+				}	
+                "mult dmg crit multiplier"
 				{
-					"attribute_class"	"rocket_lifetime"
-					"value"				"0.75"
+					"attribute_class"	"mult_dmg_crit_multiplier"
+					"value"				"0.888888889"
 				}				
 			}
 			"visuals"
@@ -14090,7 +14111,7 @@ Weapon by: 'Reagy'"
 //			"propername"				"1"
 			"item_quality"				"rarity2"
 			"item_name"					"Greedy Pig's Pocket Pistol"										
-			"item_type_name"			"#TF_Weapon_Revolver"
+			"item_type_name"			"Shotgun Revolver"
 			"item_description"			"Civilian cannot handle firearms effectively
 
 Get your dirty hands off of my oil industry!
@@ -15073,11 +15094,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
-				}
-                "apply self knockback hidden"
-				{
-					"attribute_class"	"apply_self_knockback"
-					"value"				"50"
 				}
 				"mult dmg crit multiplier"
 				{
@@ -16393,6 +16409,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
 			    "dmg bonus vs buildings"
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
@@ -17734,6 +17755,7 @@ Edited by: 'Reagy'"
 			{
 				"class select override vcd"				"taunt01"
 				"min_viewmodel_offset"					"10 0 -11"
+				"fire rate penalty"                     "1.2"
 				"Reload time increased"					"1.1"
 				"spread penalty"                        "1.5"
 				"decrease player capture value"			"-4"
@@ -18048,7 +18070,17 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"can_headshot"											
 					"value"				"1"
-				}																			
+				}
+                "damage penalty"
+				{
+					"attribute_class"	"dmmuy"
+					"value" 			"0.666"
+				}			
+                "spread penalty"
+				{
+					"attribute_class"	"dmmuy"
+					"value" 			"1.5"
+				}					
 		        "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
@@ -18572,7 +18604,7 @@ Weapon by: 'The One Of Wonders'"
 				"bullets per shot penalty"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"0.8"
+					"value"				"0.9"
 				}
 				"secondary ammo from ammo packs penalty rewritten"
 				{
@@ -18777,7 +18809,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"2"
+					"value"				"2.5"
 				}	
 				"weapon_stattrak_module_scale"
 				{
@@ -18809,11 +18841,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_always_draw_tracer_effect"
 					"value"				"1"
 				}
-                "strange restriction type 1"													
-				{
-					"attribute_class"	"mod_custom_falloff"
-					"value"				"0.75"
-				}	
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
@@ -22557,6 +22584,11 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"
 				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"1.125"
+				}
+				"weapon_stattrak_module_scale"
+				{
 					"attribute_class"	"mult_dmg"
 					"value"				"0.9"
 				}
@@ -23457,7 +23489,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_type_name"			"Tear gas flamethrower hybrid..?"
 			"item_description"			"
 Deadly Mixture: This weapon applies 2 seconds of Toxin to target (stacks up to 10 seconds)
-Medics affected by Toxin have reduced healing from their medi-guns.
+Enemies affected by Toxin receive less healing from all sources.
 
 Great, as if this doesn't sting enough it also singes your already sore skin.
 
@@ -24743,7 +24775,7 @@ Weapon by: 'The One Of Wonders'"
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.3"
+					"value" 			"0.24"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -27158,6 +27190,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_rocket_gravity"
 					"value"				"0.7"
 				}
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.21"
+				}
 			}
 			"visuals"
 			{
@@ -28797,7 +28834,7 @@ Weapon by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_name"					"Degrader"										
-			"item_type_name"			"Syringe Gun"
+			"item_type_name"			"Bio-Chemical Syringe Gun"
 			"item_description"			"
 A touch of poison won't hurt anyone! so I have to amp up the dosage...
 
@@ -28854,15 +28891,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_projectile_speed"
 					"value"				"0.75"
 				}
-				"deploy time increased"
+				"Mark Self on Hit"
 				{
-					"attribute_class"	"mult_deploy_time"
-					"value"				"1.25"
-				}	
-				"move speed penalty"
+					"attribute_class"	"dmmuy"
+					"value"				"3"
+				}
+				"add condition on kill"
 				{
-					"attribute_class"	"mult_player_movespeed"
-					"value" 			"0.9"
+					"attribute_class"	"add_onhit_addcond_self_weapon"							
+					"value" 			"30 3"
 				}
 				"crit mod disabled"															
 				{
@@ -30963,7 +31000,7 @@ Weapon By: 'Colrot'"
 			"propername"				"1"
 			"item_name"					"Menshevik's Mann-Trap"
 			"item_type_name"			"Bear Traps"
-			"item_description"			"Can only place 8 traps at a time
+			"item_description"			"Can only place 4 traps at a time
 Enemies tagged by the trap will give you a speed boost that wears off if the victim stops bleeding
 
 Hunting is easy for heavy! baby men walk into trap, lose their leg and then I go for kill!
@@ -30986,9 +31023,9 @@ Weapon by: 'The One Of Wonders, Majro"
 			}			
 			"attributes"																	
 			{
-			    "move speed bonus"
+			    "move speed bonus active"
 				{
-					"attribute_class"	"mult_player_movespeed"
+					"attribute_class"	"mult_player_movespeed_active"
 					"value"				"1.25"
 				}
 		        "strange restriction type 1"
@@ -31024,12 +31061,32 @@ Weapon by: 'The One Of Wonders, Majro"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"2.0"
+					"value" 			"6.0"
 				}	
 				"crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"Mann-Trap Desc"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"1"
+				}
+				"Mann-Trap Desc2"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"1"
+				}
+				"Mann-Trap Quote"
+				{
+					"attribute_class"	"dmuy"
+					"value"				"1"
+				}
+				"Mann-Trap Credits"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"1"
 				}
 				"custom projectile model"
 				{
@@ -31065,6 +31122,11 @@ Weapon by: 'The One Of Wonders, Majro"
 				{
 					"attribute_class"	"mult_proxymine_detonate_time"
 					"value" 			"0.2"
+				}
+				"strange restriction type 1"											
+				{
+					"attribute_class"	"add_max_pipebombs"
+					"value" 			"-4"
 				}
                 "add condition on hit"															
 				{
@@ -32127,7 +32189,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.75"
+					"value"				"1.6"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -32137,7 +32199,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.5"
+					"value"				"0.6"
 				}
 				"strange restriction type 1"												
 				{
@@ -32152,12 +32214,12 @@ Weapon by: 'The One Of Wonders'"
                 "Move Speed Penalty Active"
 				{
 					"attribute_class"	"mult_player_movespeed_active"
-					"value"				"0.8"
+					"value"				"0.9"
 				}
 				"deploy time increased"
 				{
 					"attribute_class"	"mult_deploy_time"
-					"value"				"1.6"
+					"value"				"1.5"
 				}	
                 "airblast disabled"
 				{
@@ -32172,7 +32234,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"1.6"
+					"value"				"1.5"
 				}
                 "weapon_stattrak_module_scale"
 				{
@@ -32745,7 +32807,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Blast Resort"
 			"item_type_name"			"Improvised Explosive"
-			"item_description"			"Single-use item that blows you up and anyone nearby on use.
+			"item_description"			"Single-use item that explodes in your face on use (12 sec cooldown)
 
 I don't think ye want to know what's crammed into this bottle, laddie.. it's definitely not safe fer drinking!
 
@@ -32765,7 +32827,7 @@ Weapon by: 'The One Of Wonders'"
 			"static_attrs"																	
 			{
 				"override projectile type" 				"1"		//hitscan								
-				"damage bonus hidden"					"2.4"																									
+				"damage bonus hidden"					"2.0"																									
 			}
 			"attributes"
 			{
@@ -32778,16 +32840,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_single_wep_deploy_time"
 					"value"				"1.6"
-				}
-				"crits become minicrits"															
-				{
-					"attribute_class"	"crits_become_minicrits"
-					"value"				"1"
-				}
-				"self damage penetrates uber"															
-				{
-					"attribute_class"	"mod_self_damage_penetrates_uber"
-					"value"				"1"
 				}
 				"crit mod disabled"
 				{
@@ -32807,12 +32859,12 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"												
 				{
 					"attribute_class"	"blast_dmg_to_self"
-					"value" 			"100.0"
+					"value" 			"1.5"
 				}		
                 "weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"1.8"
+					"value"				"1.5"
 				} 
 				"weapon_stattrak_module_scale"															
 				{
@@ -35708,7 +35760,7 @@ Weapon by: 'The One Of Wonders'"
 			    "apply heal on explosion"
 				{
 					"attribute_class"	"apply_heal_explosion"
-					"value"				"5"
+					"value"				"8"
 				}
 				"add uber charge on hit"
 				{
@@ -35739,6 +35791,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"add_uber_time"
 					"value"				"0.625"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value"				"2.4"
 				}
 				"strange restriction type 1"
 				{
@@ -38512,6 +38569,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"dummy"
 					"value"				"1"
 				}
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
 				"strange restriction type 1"												
 				{
 					"attribute_class"	"set_dmgtype_ignite"
@@ -39980,7 +40042,7 @@ Edited by: 'Reagy'"
             "item_name"					"Postal Papers"
 			"item_quality"              "rarity2"
             "item_type_name"			"Petition"
-            "item_description"			"Passive Boost: Speeeeeed
+            "item_description"			"
 Manual Boost (Mouse2): Marked for Death
 Manual Boost applies to enemies only
 
@@ -40022,11 +40084,6 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"add_civ_boost_override"
 					"value" 			"30 1" 
-				}
-                "civ boost aura override"
-				{
-					"attribute_class"	"add_civ_aura_override"
-					"value" 			"32 1" 
 				}
 				"civ boost targets enemies"
 				{
@@ -41252,6 +41309,40 @@ Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"												
 			"effect_type"			"neutral"
 		}
+		"7642"
+		{
+			"name"					"Mann-Trap Desc"
+			"description_string"	"Can only place 4 traps at a time"												
+			"effect_type"			"neutral"
+		}
+		"7643"
+		{
+			"name"					"Mann-Trap Desc2"
+			"description_string"	"Enemies tagged by the trap will give you a speed boost that wears off if the victim stops bleeding"												
+			"effect_type"			"neutral"
+		}
+		"7644"
+		{
+			"name"					"Mann-Trap Quote"
+			"description_string"	"
+Hunting is easy for heavy! baby men walk into trap, lose their leg and then I go for kill!"												
+			"effect_type"			"neutral"
+		}
+		"7645"
+		{
+			"name"					"Mann-Trap Credits"
+			"description_string"	"
+Model by: 'Eminoma'
+Weapon by: 'The One Of Wonders, Majro"												
+			"effect_type"			"neutral"
+		}
+		"7646"
+		{
+			"name"					"Mark self on hit"	
+			"description_string"	"On Hit: Mark yourself for death for %s1 seconds"												
+			"description_format"	"value_is_additive"
+			"effect_type"			"negative"
+		}	
 //clooey zone
 
 		"12000"
