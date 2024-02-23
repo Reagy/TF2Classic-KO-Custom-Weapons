@@ -23046,7 +23046,8 @@ Weapon from: Renaissance Revival"
 			"item_quality"				"rarity2"
 			"item_name"					"Solar Flare"
 			"item_type_name"			"Energy Fireball Launcher"
-			"item_description"			"
+			"item_description"			"Alt-Fire: Use 2 ammo in your clip to airblast 
+
 Pyro reassures you that it's just a bad sunburn.
 
 Model by:  'Corvalho'
@@ -26688,6 +26689,11 @@ Weapon by: 'Noclue'"
 			"item_type_name"			"Healing Heavy Syringe Gun"
 			"item_description"			"ÜberCharge provides 4 seconds of invulnerability 
 
+!!! IMPORTANT: YOU MUST READ THIS! !!!
+This weapon uses +attack3 to trigger the ÜberCharge, this is not bound by default, you MUST bind this yourself in the console.
+
+Example: bind h +attack3
+
 I will continue to thrive even in war, my oath is not over!
 
 Model by: 'svdl'
@@ -26812,6 +26818,11 @@ Weapon from: 'The One Of Wonders'"
 			"item_name"					"Surgical Precision"										
 			"item_type_name"			"Experimental Healing Linear Fusion Rifle"
 			"item_description"			"ÜberCharge provides 10 seconds of mini-crits and damage resistance 
+
+!!! IMPORTANT: YOU MUST READ THIS! !!!
+This weapon uses +attack3 to trigger the ÜberCharge, this is not bound by default, you MUST bind this yourself in the console.
+
+Example: bind h +attack3
 
 Precision engineering meets surgical precision! A marvelous combination! 
 
@@ -35735,6 +35746,11 @@ Weapon by: 'The One Of Wonders'"
 			"item_type_name"			"Experimental Heavy Healing Syringe Gun"
 			"item_description"			"ÜberCharge provides 5 seconds of 100% critical chance
 
+!!! IMPORTANT: YOU MUST READ THIS! !!!
+This weapon uses +attack3 to trigger the ÜberCharge, this is not bound by default, you MUST bind this yourself in the console.
+
+Example: bind h +attack3
+
 Madman, madman! I am such a god-forsaken madman! 
 
 Model by: 'Hau'
@@ -37845,7 +37861,7 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Spark Shower"
 			"item_type_name"			"Experimental Spark-Thrower"
-			"item_description"			"
+			"item_description"			"Alt-Fire: Use 19 ammo in your clip to airblast 
 This weapon fires a huge burst of sparks with limited range
 
 The looks are deceiving, this thing is basically a madman's not-so-wet dream!
@@ -41295,7 +41311,7 @@ Fan-Fire: Hold fire button for maximum destruction!"
 		"7640"
 		{
 			"name"					"Napalm Desc"
-			"description_string"	"This weapon fires powerful fireballs 
+			"description_string"	"Alt-Fire: Use 1 ammo in your clip to airblast 
 
 An extra spicy mix of the hottest stuff in the black market."												
 			"effect_type"			"neutral"
