@@ -17231,6 +17231,11 @@ Item by: 'Majro'"
 			"attributes"
 			{
 			
+			    "boots falling stomp"
+				{
+					"attribute_class"	"boots_falling_stomp"
+					"value" 			"1"
+				}
 				"energy weapon no ammo"
 				{
 					"attribute_class"	"hide_ammo_hud"
