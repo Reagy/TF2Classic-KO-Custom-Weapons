@@ -4516,11 +4516,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"melee_taken_becomes_minicrit_active"
 					"value"				"1"
 				}
-				"Move Speed Penalty Active"
-				{
-					"attribute_class"	"mult_player_movespeed_active"
-					"value"				"0.95"
-				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -5091,18 +5086,13 @@ Weapon by: 'The One Of Wonders, Vror'"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_explosion_radius"
-					"value" 			"0.6"
-				}
-				"weapon_stattrak_module_scale"
-				{
 					"attribute_class"	"mult_postfiredelay"
 					"value" 			"1.35"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.5"
+					"value" 			"0.6"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -12746,7 +12736,7 @@ Weapon by: 'Vror'"
                 "blast splash damage decreased"
                 {
                     "attribute_class"    "mult_explosion_splash_damage"
-                    "value"                "0.75"
+                    "value"                "0.8"
                 }
                 "rocket whistle"
                 {
@@ -12766,7 +12756,7 @@ Weapon by: 'Vror'"
                 "custom falloff"
                 {
                     "attribute_class"    "mod_custom_falloff"
-                    "value"                "0.8"
+                    "value"                "0.85"
                 }
 				"custom projectile model"
 				{
@@ -18572,7 +18562,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_quality"				"rarity2"
 			"item_name"					"Steel Commander"
 			"item_type_name"			"Shotgun"
-			"item_description"			"
+			"item_description"			"This weapon fires slugs 
+
 Armed and ready is the only acceptable state any mercenary should be in, so talk rudely and carry a shotgun.
 
 Model by:  'Mooses Suuri, Overpovered'
@@ -18589,6 +18580,10 @@ Weapon by: 'The One Of Wonders'"
 				"soldier"               "1"
 				"pyro"                  "1"
 			}
+			"static_attrs"
+			{
+				"override projectile type" 				"30"
+			}
 			"attributes"
 			{
 			    "primary ammo from ammo packs bonus rewritten"
@@ -18601,21 +18596,41 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_primary_ammo_from_dropped_weapons"
 					"value" 			"1.5"
 				}
-				"bullets per shot penalty"
-				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"0.9"
-				}
 				"secondary ammo from ammo packs penalty rewritten"
 				{
 					"attribute_class"	"mult_secondary_ammo_from_ammo_packs"
-					"value"				"0.2"
+					"value"				"0.75"
 				}
 				"secondary ammo from dropped weapons penalty rewritten"
 				{
 					"attribute_class"	"mult_secondary_ammo_from_dropped_weapons"
-					"value"				"0.25"
+					"value"				"0.75"
 				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"4.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"1.3"
+				}
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"3.0"
+				}
+                "longer damage falloff distance"
+				{
+					"attribute_class"	"mult_falloff_distance"
+					"value"				"1.75"
+				}		
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -18626,6 +18641,23 @@ Weapon by: 'The One Of Wonders'"
 			{
 			    "sound_single_shot"		"Weapon_JungleShotgun.Shoot"
 				"sound_burst"			"Weapon_JungleShotgun.ShootCrit"
+				"trail_effect"			"bullet_distortion_trail"	
+			}		
+			"visuals_red"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_red"
+			}
+			"visuals_blu"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_blue"
+			}
+			"visuals_grn"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_green"
+			}
+			"visuals_ylw"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_yellow"
 			}
 			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
 			"drop_sound"				"#ui/item_pack_drop.wav"
@@ -20227,12 +20259,12 @@ Weapon By: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"2.68"
+					"value"				"3.3333333333333333"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"3.0"
+					"value"				"2.25"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -24285,11 +24317,6 @@ Weapon by: 'Noclue'"
 			}
 			"attributes"																		
 			{
-			    "revolver use hit locations"
-				{
-					"attribute_class"	"can_headshot"											
-					"value"				"1"
-				}
 				"strange restriction type 1" 
 				{
 					"attribute_class"	"mod_no_scope"
@@ -25041,6 +25068,7 @@ Weapon by 'The One Of Wonders'"
 The key to our constitution, gentlemen! treat her like she's your wife!
 
 Model by: 'svdl'
+Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"											
 			"item_logname"				"Vintage Second Amendment"
 			"item_iconname"				"Vintage Second Amendment"
@@ -25051,6 +25079,10 @@ Weapon by: 'The One Of Wonders'"
 			"used_by_classes"
 			{
 				"soldier"				"1"
+			}
+			"static_attrs"
+			{
+				"override projectile type" 				"2"
 			}
 			"attributes"
 			{
@@ -25069,30 +25101,55 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"instant_reload_on_kill"
 					"value"				"1"
 				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				"Musket Description"
+				{
+					"attribute_class"	"ddmuty"
+					"value"				"1"
+				}
+				"Musket Credits"
+				{
+					"attribute_class"	"AMERICA!"
+					"value"				"1"
+				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.15"
+					"value"				"6.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"5"
+					"value"				"2.5"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"40"
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"1.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"0.01"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"2.333"
+					"value"				"0.2"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"0.1"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mod_rocket_gravity"
+					"value"				"0.5"
 				}
 				"single wep deploy time hidden"
 				{
@@ -25139,10 +25196,25 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
 				}
-				"crit mod disabled"
+				"strange restriction type 2"
 				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
+					"attribute_class"	"crit_dmg_falloff"
+					"value"				"1"
+				}
+				"custom falloff"
+				{
+					"attribute_class"	"mod_custom_falloff"
+					"value"				"0.25"
+				}
+				"custom rampup"
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.1"
+				}
+				"shorter damage falloff distance"
+				{
+					"attribute_class"	"mult_falloff_distance"
+					"value"				"0.75"
 				}		
 			}
 			"visuals"
@@ -25150,8 +25222,9 @@ Weapon by: 'The One Of Wonders'"
 			    "sound_single_shot"		"Weapon_Musket.Single"
 				"sound_burst"			"Weapon_Musket.SingleCrit"
 				"tracer_effect"			"bullet_scattergun_tracer01"
-				"muzzle_flash"			"muzzle_grenadelauncher"	
-			}
+				"muzzle_flash"			"muzzle_grenadelauncher"
+                "trail_effect"			"bullet_distortion_trail"	
+			}		
 			"mouse_pressed_sound"		"#weapons/musket_horn1.wav"
 		}
 //----------------------
@@ -25389,12 +25462,12 @@ Weapon by: 'The One Of Wonders'"
 				"health regen"											
 				{
 					"attribute_class"	"add_health_regen"
-					"value"				"10"
+					"value"				"15"
 				}
 				"dmg taken increased"															
 				{
 					"attribute_class"	"mult_dmgtaken"
-					"value"				"1.15"
+					"value"				"1.1"
 				}
 				"Demoknight Melee Negative"
 				{
@@ -25409,12 +25482,12 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"												
 				{
 					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"1.33"
+					"value"				"1.25"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_deploy_time"
-					"value"				"1.33"
+					"value"				"1.2"
 				}
 				"mod melee crit swing custom damage" //Decapitation on crits
 				{
@@ -27440,7 +27513,7 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"Gaelic Gibber"
 			"item_type_name"			"Pipebomb Launcher"
-			"item_description"			"Proximity Detonation has a 3 second fuse time 
+			"item_description"			"Proximity Detonation has a 2 second fuse time 
 
 Hah! you call that a bomb, laddie? Let me show ye what a real bomb can do!
   
@@ -27496,7 +27569,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"0.33"
+					"value"				"0.66"
 				}
 				"crit mod disabled"															
 				{
@@ -27516,7 +27589,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"											
 				{
 					"attribute_class"	"mult_proxymine_detonate_time"
-					"value" 			"5.0"
+					"value" 			"3.0"
 				}
 				"Reload time start" 
 				{
@@ -28613,12 +28686,12 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"0.8"
+					"value"				"1.28"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"2.5"
+					"value"				"1.5"
 				}	
 				"crit mod disabled"
 				{
@@ -28643,7 +28716,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value" 			"1.6"
+					"value" 			"1.70666667"
 				}
 				"mod use custom ammo type" // primary
 				{
@@ -30716,11 +30789,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_postfiredelay"
 					"value" 			"1.2"
 				}
-				"damage penalty"																
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
-				}
                 "crit mod disabled"
                 {
                     "attribute_class"    "mult_crit_chance"
@@ -30797,11 +30865,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value" 			"1.2"
-				}
-				"damage penalty"																
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
 				}
                 "crit mod disabled"
                 {
@@ -31687,7 +31750,7 @@ Weapon by: 'The One Of Wonders'"
 				"clip size penalty"													
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"0.4"
+					"value"				"0.67"
 				}
 				"crit mod disabled"													
 				{
@@ -31839,7 +31902,7 @@ Weapon by: 'The One Of Wonders'"
 
 			"item_name"				    "Judge Death"
 			"item_type_name"			"Shotgun Cartridge Revolver"
-			"item_description"			"Fire multiple pellets per shot 
+			"item_description"			"Fire multiple pellets per shot with limited range
 
 Your sentence is a fatal shot in the face.
 
@@ -31861,23 +31924,18 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"																
 				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value" 			"6"
+					"value" 			"5"
 				}
 				"heal on hit for rapidfire"																
 				{
 					"attribute_class"	"add_onhit_addhealth"
-					"value" 			"15"
+					"value" 			"10"
 				}
 				"clip size penalty"																
 				{
 					"attribute_class"	"mult_clipsize"
 					"value" 			"0.85"
 				}				
-				"weapon_stattrak_module_scale"																
-				{
-					"attribute_class"	"mult_flame_life"
-					"value" 			"0.3"
-				}
 				// backend stuff
                 "weapon_stattrak_module_scale"
 				{
@@ -31887,13 +31945,18 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.2"
+					"value"				"0.22"
 				}				
                 "crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}				
+				}
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_projectile_range"
+					"value"				"0.15625"
+				}					
 			}
 			"visuals"
 			{
@@ -33487,7 +33550,7 @@ Weapon by: 'The One Of Wonders' 'Azzy'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.55"
+					"value"				"0.6"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -41359,6 +41422,22 @@ Weapon by: 'The One Of Wonders, Majro"
 			"description_format"	"value_is_additive"
 			"effect_type"			"negative"
 		}	
+		"7647"
+		{
+			"name"					"Musket Description"
+			"description_string"	"
+The key to our constitution, gentlemen! treat her like she's your wife!"												
+			"effect_type"			"neutral"
+		}
+		"76458"
+		{
+			"name"					"Musket Credits"
+			"description_string"	"
+Model by: 'svdl'
+Animations by: 'Raptor Dan'
+Weapon by: 'The One Of Wonders'"												
+			"effect_type"			"neutral"
+		}
 //clooey zone
 
 		"12000"
