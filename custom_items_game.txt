@@ -19437,7 +19437,7 @@ Weapon by: 'Vror'"
 			"item_iconname"				"Super Syringe Gun"
 			"image_inventory"			"backpack/weapons/w_models/w_tfc_syringegun"
 			"model_world"				"models/weapons/w_models/w_tfc_syringegun.mdl"
-			"model_player"				"models/weapons/v_models/v_tfc_syringegun_medic.mdl"
+			"model_player"				"models/weapons/v_models/v_tfc_syringegun_medic_alt.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
