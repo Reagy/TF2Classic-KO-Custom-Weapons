@@ -8241,7 +8241,7 @@ Weapon by: 'The One Of Wonders'"
 				"heal rate bonus"
 				{
 					"attribute_class"	"mult_medigun_healrate"
-					"value"				"1.33"
+					"value"				"1.6"
 				}
 				"Medi-gun range increased"																
 				{
