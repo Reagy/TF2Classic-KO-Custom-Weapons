@@ -6715,20 +6715,10 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-				"Markov Special"
-				{
-					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"1"
-				}
 				"bleeding duration"
 				{
 					"attribute_class"	"bleeding_duration"
 					"value"				"10"
-				}
-			    "add condition on hit"															
-				{
-					"attribute_class"	"add_onhit_addcond_self_weapon"
-					"value"				"111 1.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
