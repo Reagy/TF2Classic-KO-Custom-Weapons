@@ -8236,7 +8236,12 @@ Weapon by: 'The One Of Wonders'"
 				"ubercharge overheal rate bonus" 
 				{
 					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"4.0"
+					"value"				"4.33"
+				}
+				"health regen"
+				{
+					"attribute_class"	"add_health_regen"
+					"value"				"6"
 				}
 				"heal rate bonus"
 				{
@@ -8261,7 +8266,7 @@ Weapon by: 'The One Of Wonders'"
 				"ubercharge rate penalty on wearer"																
 				{
 					"attribute_class"	"mult_medigun_uberchargerate_wearer"
-					"value" 			"0.25"
+					"value" 			"0.4"
 				}
 				"strange restriction type 1"																
 				{
@@ -28945,7 +28950,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Booster Shot"
 			"item_iconname"				"Booster Shot"
 			"item_type_name"			"Medi Gun"
-			"item_description"			"ÜberCharge provides 10 seconds of enhanced healing rate and grants patients mini-crits
+			"item_description"			"ÜberCharge provides 20 seconds of enhanced healing rate and grants patients mini-crits
 
 This is a sacrifice I'm willing to take! I've done worse things anyway haha-
 
@@ -28970,27 +28975,22 @@ Weapon by: 'The One Of Wonders'"
 				"Move Speed Bonus Active"															
 				{
 					"attribute_class"	"mult_player_movespeed_active"
-					"value" 			"1.1"
+					"value" 			"1.15"
 				}
 				"strange restriction type 1"																
 				{
 					"attribute_class"	"add_uber_time"
-					"value" 			"2"
+					"value" 			"12"
 				}
-				"heal rate bonus"																
+				"heal rate penalty"																
 				{
 					"attribute_class"	"mult_medigun_healrate"
-					"value" 			"1.6"
+					"value" 			"0.8"
 				}
 				"Medi-gun range decreased"																
 				{
 					"attribute_class"	"mult_weapon_range"
 					"value" 			"0.75"
-				}
-				"ubercharge overheal rate penalty" 
-				{
-					"attribute_class"	"mult_medigun_overheal_uberchargerate"
-					"value"				"0.25"
 				}
 				"lunchbox adds minicrits" 
 				{
