@@ -612,17 +612,43 @@
 				"return"		"void"
 				"this"			"entity"
 			}
-			"CTFPlayerShared::StopCharge"
+			"CTFPlayer::ApplyPushFromDamage"
 			{
-				"signature"		"CTFPlayerShared::StopCharge"
+				"signature"		"CTFPlayer::ApplyPushFromDamage"
 				"callconv"		"thiscall"
 				"return"		"void"
 				"this"			"entity"
 				"arguments"
 				{
-					"impact"
+					"damageinfo"
 					{
-						"type"	"bool"
+						"type"	"objectptr"
+					}
+					"force"
+					{
+						"type"	"vectorptr"
+					}
+				}
+			}
+			"CTFPlayerShared::AirblastPlayer"
+			{
+				"signature"		"CTFPlayerShared::AirblastPlayer"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"address"
+				"arguments"
+				{
+					"attacker"
+					{
+						"type"	"cbaseentity"
+					}
+					"dir"
+					{
+						"type"	"vectorptr"
+					}
+					"force"
+					{
+						"type"	"float"
 					}
 				}
 			}

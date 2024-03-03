@@ -14,7 +14,7 @@ public Plugin myinfo =
 	name = "Condition Handler",
 	author = "Noclue",
 	description = "Core plugin for custom conditions.",
-	version = "1.1.3",
+	version = "1.1.4",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -75,6 +75,8 @@ int 		g_iAngelShields[MAXPLAYERS+1][2];
 DynamicHook g_dhTakeHealth;
 DynamicDetour g_dtHealConds;
 DynamicDetour g_dtApplyOnHit;
+DynamicDetour g_dtApplyPushForce;
+DynamicDetour g_dtAirblastPlayer;
 
 DynamicHook g_dhOnKill;
 
@@ -139,6 +141,11 @@ public void OnPluginStart() {
 	g_dhOnKill.AddParam( HookParamType_CBaseEntity );
 	g_dhOnKill.AddParam( HookParamType_ObjectPtr );
 
+	g_dtApplyPushForce = DynamicDetour.FromConf( hGameConf, "CTFPlayer::ApplyPushFromDamage" );
+	g_dtApplyPushForce.Enable( Hook_Pre, Detour_ApplyPushFromDamage );
+	g_dtAirblastPlayer = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::AirblastPlayer" );
+	g_dtAirblastPlayer.Enable( Hook_Pre, Detour_AirblastPlayer );
+
 	StartPrepSDKCall( SDKCall_Player );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::GetMaxHealth" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
@@ -182,6 +189,7 @@ public void OnClientConnected( int iClient ) {
 }
 void DoPlayerHooks( int iPlayer ) {
 	//g_dhTakeHealth.HookEntity( Hook_Pre, iPlayer, Hook_TakeHealth );
+	//todo: migrate to a kill event
 	g_dhOnKill.HookEntity( Hook_Post, iPlayer, Hook_OnPlayerKill );
 }
 
@@ -648,6 +656,25 @@ void RemoveToxin( int iPlayer ) {
 	RemoveEconItem( iPlayer, 11000 );
 }
 
+MRESReturn Detour_ApplyPushFromDamage( int iVictim, DHookParam hParams ) {
+	if( !HasCond( iVictim, TFCC_QUICKUBER ) )
+		return MRES_Ignored;
+
+	TFDamageInfo tfInfo = TFDamageInfo( hParams.GetAddress( 1 ) );
+	if( tfInfo.iAttacker == iVictim )
+		return MRES_Ignored;
+
+	return MRES_Supercede;
+}
+
+MRESReturn Detour_AirblastPlayer( Address aVictimShared, DHookParam hParams ) {
+	int iVictim = GetPlayerFromShared( aVictimShared );
+	if( !HasCond( iVictim, TFCC_QUICKUBER ) )
+		return MRES_Ignored;
+
+	return MRES_Supercede;
+}
+
 //name is misleading, TakeHealth is used to RESTORE health because valve
 MRESReturn Hook_TakeHealth( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	if( !IsValidPlayer( iThis ) )
@@ -890,7 +917,7 @@ static char g_szShieldKillParticle[][] = {
 	"angel_shieldbreak_blue",
 	"angel_shieldbreak_green",
 	"angel_shieldbreak_yellow"
-};
+}; 
 
 //Action RemoveAngelShield2( Handle hTimer, int iPlayer ) {
 void RemoveAngelShield2( int iPlayer ) {
@@ -1050,7 +1077,6 @@ bool AddQuickUber( int iPlayer ) {
 
 	g_iQuickFixEmitters[iPlayer] = EntIndexToEntRef( iEmitter );
 
-	TF2_AddCondition( iPlayer, TFCond_MegaHeal );
 	static char szCommand[64];
 	Format( szCommand, sizeof(szCommand), "r_screenoverlay %s", g_szShieldOverlays[iTeam] );
 
@@ -1076,11 +1102,8 @@ void TickQuickUber( int iPlayer ) {
 
 void RemoveQuickUber( int iPlayer ) {
 	RemoveQuickFixEmitter( iPlayer );
-
-	if( IsClientInGame( iPlayer ) ) {
-		//TF2_RemoveCondition( iPlayer, TFCond_MegaHeal );
+	if( IsClientInGame( iPlayer ) )
 		ClientCommand( iPlayer, "r_screenoverlay off");
-	}
 }
 
 /*
