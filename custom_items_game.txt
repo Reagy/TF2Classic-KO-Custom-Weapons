@@ -39251,7 +39251,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_AIRBURST_SOLDIER"
 			"prefab"					"weapon_rocketlauncher"
-			"item_class"				"tf_weapon_shotgun"
+			"item_class"				"tf_weapon_shotgun_primary"
 			"item_quality"              "rarity2"
 			"item_logname"				"Unfortunate Son"
 			"item_iconname"					"Unfortunate Son"
