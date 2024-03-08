@@ -20489,6 +20489,7 @@ Weapon from: Tangerine Paint and Grunt's Weapon Addons"
 Imma beat your ass so hard that your medical bill will look more like a death sentence!
 
 Model by: 'XylemTube'
+Animations by: 'Fence'
 Weapon By: 'The One Of Wonders'"
 			"item_logname"				"Fighter's Fury"
 			"item_iconname"				"Fighter's Fury"
@@ -24719,7 +24720,7 @@ Weapon by: 'Noclue'"
 Two guns for the price of one.
  
 Model by: 'Svdl'
-Animations by: 'deskpacito'
+Animations by: 'Fence'
 Weapon by: 'Reagy'"
 			"item_slot"					"secondary"
 			"image_inventory"			"backpack/weapons/c_models/c_elites"
