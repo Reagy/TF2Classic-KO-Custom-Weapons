@@ -747,6 +747,32 @@
 			"mouse_pressed_sound"		"#ui/item_knife_small_pickup.wav"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
+		"35"
+		{
+			"name"						"The Flare Gun"
+			"prefab"					"valve weapon_flaregun"
+			"model_world"				"models/weapons/w_models/w_flaregun.mdl"
+			"model_player"				"models/weapons/v_models/v_flaregun_pyro.mdl"
+			"attach_to_hands"			"2"
+			"attributes"
+			{
+				"allowed in medieval mode"
+				{
+					"attribute_class"	"allowed_in_medieval_mode"
+					"value"				"1"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value"				"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}	
+			}
+		}
 		"37"
 		{
 			"name"						"The Huntsman"
@@ -3120,20 +3146,18 @@ Weapon by: 'The One Of Wonders'"
 //----------------------------
 //----------------------------
 //--REMOTE DEPLOY PDA - 3351--
-// DISABLED (for removal)
 //----------------------------
 //----------------------------
 		"3351"																					// Another unused weapon! This one lets you deploy buildings remotely, either by hitting it with a Wrench, or activating "Build" again.
         {
             "name"						"TF_WEAPON_REMOTEDEPLOY_PDA"
             "prefab"					"weapon_pda"
-            "show_in_armory"			"0"
+            "show_in_armory"			"1"
 
 			"item_quality"				"rarity3"
 			"item_name"					"PDA: Remote Signal"
 			"item_type_name"			"#TF_Weapon_PDA_Engineer"
-			"item_description"			"Dispenser generates ammo + metal slowly
-
+			"item_description"			"
 Original weapon from: New Old Weapons Pack
 Edited by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/w_models/w_remotesignal_pda"			// Prior to 2.2.5, this used the Rush Order's teamcolored PDA model, but I felt that model fit more on that one.
@@ -3154,24 +3178,31 @@ Edited by: 'Reagy'"
 				"engineer dispenser build rate multiplier"
 				{
 					"attribute_class"	"dispenser_build_rate_multiplier"
-					"value"				"3.0"
+					"value"				"3.5"
 				}
 				"engineer teleporter build rate multiplier"
 				{
 					"attribute_class"	"teleporter_build_rate_multiplier"
-					"value"				"3.0"
+					"value"				"4.0"
 				}
 				"engineer sentry build rate multiplier"										
 				{
 					"attribute_class"	"sentry_build_rate_multiplier"
-					"value" 			"2.5"
+					"value" 			"1.75"
 				}
-				"torso scale"
+				"dispenser rate penalty"
 				{
 					"attribute_class"	"mult_dispenser_rate"									// Dispensers give significantly less ammo and generate less metal per tick of those
 					"value"				"0.5"
 				}
             }
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_MP_GESTURE_VC_FINGERPOINT_PDA"			"ACT_MP_ATTACK_STAND_PDA"
+				}
+			}
 			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
 			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
         }
@@ -6663,6 +6694,11 @@ Weapon by: 'The One Of Wonders, Vror'"
 				"cloak blink time percentage penalty"
 				{
 					"attribute_class"	"cloak_blink_time_penalty"
+					"value"				"1.5"
+				}
+				"cloak consume rate increased"
+				{
+					"attribute_class"	"mult_cloak_meter_consume_rate"
 					"value"				"1.25"
 				}
 				"No Tranq Crits"
@@ -7157,7 +7193,6 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"PDA: Rush Order"
 			"item_type_name"			"#TF_Weapon_PDA_Engineer"
 			"item_description"			"Dispenser generates ammo + metal slowly
--70% max building health
 
 Deploy fast-building yet fragile buildings!
 You are unable to upgrade with the Wrench
@@ -7174,25 +7209,20 @@ Weapon by: 'The One Of Wonders'"
 			"static_attrs"
 			{
 				// Sentry
-				"engineer sentry build rate multiplier" 	"2.5"				
+				"engineer sentry build rate multiplier" 	"3.0"				
 				// Dispenser
-				"engineer dispenser build rate multiplier" 	"2.5"
+				"engineer dispenser build rate multiplier" 	"3.0"
 				// Teleporter
-				"engineer teleporter build rate multiplier" "2.5"
+				"engineer teleporter build rate multiplier" "3.0"
 				// General
 				"building cost reduction" 				"0.8"									// The numbers here aren't perfect, but I can't fine-tune it to all buildings, and the next closest I found with acceptable numbers is... 50% building cost. Which is too much
 			}
             "attributes"
             {
-			    "pda can remote deploy"
-                {
-                    "attribute_class"	"pda_remote_deploy"										// Note: Bots don't understand how this works, but generally unintentionally build their stuff anyways!
-                    "value"				"1"														// ...except the Teleporters, which almost always remain in the toolbox.
-                }
-				"hand scale"
+				"engy building health penalty"
 				{
 					"attribute_class"	"mult_engy_building_health"								// Sentry and Dispenser have 100 health
-					"value"				"0.67"
+					"value"				"0.5"
 				}
 				"weapon_stattrak_module_scale"																// Note; It's still possible to upgrade the buildings, you just need either the Rescue Ranger or another Engineer
 				{
@@ -10949,7 +10979,7 @@ Weapon by: 'The One Of Wonders'"
                 "longer damage falloff distance"
 				{
 					"attribute_class"	"mult_falloff_distance"
-					"value"				"1.5"
+					"value"				"1.75"
 				}					
 			}
 			"visuals"
@@ -12858,7 +12888,7 @@ Weapon by: 'Vror'"
                 "custom falloff"
                 {
                     "attribute_class"    "mod_custom_falloff"
-                    "value"                "0.85"
+                    "value"                "0.8"
                 }
 				"custom projectile model"
 				{
@@ -15450,15 +15480,15 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-				"provide on active"															
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
 				"critboost on kill"
 				{
 					"attribute_class"	"add_onkill_critboost_time"							
 					"value" 			"3"
+				}
+				"heal on kill on crit"
+				{
+					"attribute_class"	"heal_on_kill_crit"
+					"value"				"50"
 				}
 				"ragdolls become ash"
 				{
@@ -15480,10 +15510,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"1.5"
 				}
-				"move speed penalty"
+				"move speed penalty active"
 				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.9"
+					"attribute_class"	"mult_player_movespeed_active"
+					"value"				"0.95"
 				}
 				"voice pitch scale"
 				{
@@ -15574,10 +15604,20 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_cloak_meter_regen_rate"
 					"value"				"0.3"
 				}
+				"no melee crit from tranq"
+				{
+					"attribute_class"	"no_melee_crit_from_tranq"
+					"value" 			"1"
+				}
+				"No Tranq Crits"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"1"
+				}
 				"mark self on miss"											
 				{
 					"attribute_class"	"self_mark_for_death_on_miss"
-					"value"				"10"
+					"value"				"3"
 				}
 			}
 			"visuals"
@@ -15655,7 +15695,7 @@ Weapon by: 'The One Of Wonders'"
 			    "dmg taken increased"															
 				{
 					"attribute_class"	"mult_dmgtaken"
-					"value"				"1.25"
+					"value"				"1.2"
 				}
 			}
 			"visuals"
@@ -16928,13 +16968,13 @@ Model by: 'Haau'
 Weapon by: 'Majro'"
 			"item_logname"				"Sandmate"
 			"item_iconname"				"Sandmate"
-			"image_inventory"			"backpack/weapons/c_models/c_sandmate/c_sandmate"
+			"image_inventory"			"backpack/weapons/c_models/c_sandmate_v2/c_sandmate"
 			"image_inventory_size_w" "128"
 			"image_inventory_size_h" "82"
 			"item_quality"				"rarity2"
 			
-			"model_world"				"models/weapons/c_models/c_sandmate/c_sandmate.mdl"
-			"model_player"				"models/weapons/v_models/v_sandmate.mdl"
+			"model_world"				"models/weapons/c_models/c_sandmate_v2/c_sandmate_v2_scout.mdl"
+			"model_player"				"models/weapons/v_models/v_sandmate_v2_scout.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -16963,7 +17003,7 @@ Weapon by: 'Majro'"
 				"custom projectile model"
 				{
 					"attribute_class" "custom_projectile_model"
-					"value"			"models/weapons/w_models/w_cricket_ball.mdl"
+					"value"			"models/weapons/w_models/w_sandmate_v2_ball.mdl"
 				}
 				"maxammo primary reduced"
 				{
@@ -18776,6 +18816,139 @@ Weapon by: 'The One Of Wonders'"
 		}
 		"9006"																			
 		{
+		    "name"						"TF_WEAPON_GARAND"									
+			"prefab"                    "weapon_shotgun"
+			"item_class"                "tf_weapon_hunterrifle"
+			"show_in_armory"			"1"
+			"item_slot"                 "secondary"
+			"anim_slot"                 "secondary"
+			"bucket"                    "1"
+			"bucket_position"           "1"
+	
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			"item_name"					"General's Garand"
+			"item_type_name"			"Semi-Automatic Rifle"
+			"item_description"			"
+Pay attention maggot! this rifle is what your ancestors used to win wars with!
+
+Model by:  'Hau'
+Animations by: 'Raptor Dan'
+Weapon by: 'The One Of Wonders'"
+            "item_logname"				"General's Garand"
+			"item_iconname"				"General's Garand"
+			"image_inventory"			"backpack/weapons/c_models/c_garand/c_garand"
+			"model_world"				"models/weapons/c_models/c_garand_shotgun/c_garand_shotgun.mdl"
+			"model_player"				"models/weapons/v_models/v_garand_soldier.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"soldier"               "1"
+			}
+			"static_attrs"
+			{
+				"override projectile type" 				"30"
+			}
+			"attributes"
+			{
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"1.3"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"1.35"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.333333333"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value"				"1.33333333"
+				}
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"3.0"
+				}
+                "longer damage falloff distance"
+				{
+					"attribute_class"	"mult_falloff_distance"
+					"value"				"2.0"
+				}		
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value"				"3.006"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value"				"1"
+				}
+				"Reload time no anim speed mod"
+                {
+                    "attribute_class"    "mult_reload_time_noanimmod"
+                    "value"              "1.1"
+                }	
+				"strange restriction type 1"
+				{
+					"attribute_class"	"unimplemented_mod_sniper_no_charge" // No aiming, maggot!
+					"value"				"1"														
+				}
+				"mod use custom ammo type" // secondary
+				{
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value" 			"2"
+				}
+			}
+			"visuals"
+			{
+			    "sound_single_shot"		"Weapon_Garand.Single"
+				"sound_burst"			"Weapon_Garand.SingleCrit"
+				"trail_effect"			"bullet_distortion_trail"	
+			}		
+			"visuals_red"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_red"
+			}
+			"visuals_blu"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_blue"
+			}
+			"visuals_grn"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_green"
+			}
+			"visuals_ylw"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_yellow"
+			}
+			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
+			"drop_sound"				"#ui/item_pack_drop.wav"
 		}
 //-------------------------
 //-------------------------
@@ -20321,7 +20494,7 @@ Weapon By: 'The One Of Wonders'"
 			"item_iconname"				"Fighter's Fury"
 			"image_inventory"			"backpack/weapons/w_models/w_speed_sweeper"
 			"model_world"				"models/weapons/w_models/w_speed_sweeper.mdl"
-			"model_player"				"models/weapons/v_models/v_speed_sweeper_scout.mdl"
+			"model_player"				"models/weapons/v_models/v_speed_sweeper.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -24246,11 +24419,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_single_wep_deploy_time"
 					"value"				"1.5"
 				}
-				"self mark for death"
-				{
-					"attribute_class"	"self_mark_for_death"
-					"value"				"3"
-				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -24556,7 +24724,7 @@ Weapon by: 'Reagy'"
 			"item_slot"					"secondary"
 			"image_inventory"			"backpack/weapons/c_models/c_elites"
 			"model_world"				"models/weapons/custom/w_models/w_elites.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_elites.mdl"
+			"model_player"				"models/weapons/v_models/v_elites_scout.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -24591,9 +24759,14 @@ Weapon by: 'Reagy'"
 				}
 				"reload time increased"	
 				{
-					"attribute_class"	"mult_reload_time"
-					"value"				"1.75"
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1.67"
 				}
+				"Reload time no anim speed mod"
+                {
+                    "attribute_class"    "mult_reload_time_noanimmod"
+                    "value"              "2.8"
+                }
                 "crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -25320,11 +25493,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"1.1"
-				}
-				"shorter damage falloff distance"
-				{
-					"attribute_class"	"mult_falloff_distance"
-					"value"				"0.75"
 				}		
 			}
 			"visuals"
@@ -25398,15 +25566,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"ragdolls_become_ash"
 					"value"				"1"
 				}
+				"Resistance on Hit"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"3"
+				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmgtaken"
 					"value"				"1.33"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.875"
 				}
 				"Curse of the Shattered Empress"
 				{
@@ -25417,6 +25585,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"add_onkill_addcond_self"
 					"value"				"4 100.0"
+				}
+				"add condition on hit"
+				{
+					"attribute_class"	"add_onhit_addcond_self_weapon"
+					"value"				"111 3"
 				}
 			}
 			"visuals"
@@ -27469,10 +27642,8 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"1"
 			"item_name"					"PDA: Hardware Specialist"
 			"item_type_name"			"#TF_Weapon_PDA_Engineer"
-			"item_description"			"20% Dispenser restock bonus
-50% Dispenser healing bonus
-
-Buildings cost less and take longer to build, having 20% less health
+			"item_description"			"
+Buildings cost less and take longer to build
 
 Well, looks like I'm the real Engineer around here.
 
@@ -27505,23 +27676,23 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_engy_building_health"
-					"value"				"0.8"
-				}
-				"weapon_stattrak_module_scale"
-				{
 					"attribute_class"	"mod_teleporter_cost"
 					"value"				"0.6"
 				}
-				"weapon_stattrak_module_scale"
+				"dispenser rate bonus"
 				{
 					"attribute_class"	"mult_dispenser_rate"
 					"value"				"1.2"
 				}
-				"weapon_stattrak_module_scale"
+				"engy dispenser healing bonus"
 				{
 					"attribute_class"	"custom_dispenser_healrate"
 					"value"				"1.5"
+				}
+				"engy building health penalty"
+				{
+					"attribute_class"	"mult_engy_building_health"
+					"value"				"0.8"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -27567,7 +27738,7 @@ Model by: 'Svdl'
 Weapon by: 'The One Of Wonders'"
             "image_inventory"           "backpack/weapons/c_models/c_pistol_conventional/c_pistol_conventional"
 			"model_world"				"models/weapons/custom/w_models/w_elites.mdl"
-			"model_player"				"models/weapons/v_models/v_pistol_conventional_engineer.mdl"
+			"model_player"				"models/weapons/v_models/v_pistol_conventional_engineer1.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -32077,7 +32248,12 @@ Weapon by: 'The One Of Wonders'"
 				"heal on hit for rapidfire"																
 				{
 					"attribute_class"	"add_onhit_addhealth"
-					"value" 			"10"
+					"value" 			"5"
+				}
+				"heal on kill"																
+				{
+					"attribute_class"	"heal_on_kill"
+					"value" 			"25"
 				}
 				"clip size penalty"																
 				{
@@ -32099,12 +32275,7 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}
-                "weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_projectile_range"
-					"value"				"0.15625"
-				}					
+				}				
 			}
 			"visuals"
 			{
@@ -39073,73 +39244,124 @@ Weapon by: 'The One Of Wonders'"
 		}	
 //-------------------------------------
 //-------------------------------------
-// Placeholder 9 + 10 (my sanity is ending help) -- 9957 // 6.1 REMOVED
+// AIRBURST FOR SOLDIER -- 9957 
 //-------------------------------------
 //-------------------------------------		
 		"9957"
 		{
-			"name"						"TF_WEAPON_MEDIC_FLASK_THROWABLE"
-			"item_class"                "tf_weapon_lunchbox"
-			"show_in_armory"			"0"
-			"item_slot"                 "primary"
-			"anim_slot"                 "melee"
-			"bucket"					"0"														
-			"bucket_position"			"0"
+			"name"						"TF_WEAPON_AIRBURST_SOLDIER"
+			"prefab"					"weapon_rocketlauncher"
+			"item_class"				"tf_weapon_shotgun"
+			"item_quality"              "rarity2"
+			"item_logname"				"Unfortunate Son"
+			"item_iconname"					"Unfortunate Son"
+			"show_in_armory"			"1"
+			
+			"item_slot"                "primary"
+			"anim_slot"                "secondary"
+			"bucket"                   "0"
+			"bucket_position"          "0"
+			
+			"item_type_name"			"Hybrid Launcher"
+			"item_name"					"Unfortunate Son"
+			"item_description"			"
+Alt-Fire: Launch a grenade
+Shoot grenade to detonate
 
-			"item_quality"				"rarity2"
-
-			"propername"				"1"
-			"item_name"					"Reconstruction Syrup"
-			"item_type_name"			"Experimental Healing Serum"
-			"item_description"			"10 second recharge time when dropped
-
-You better pick it up when I give it you, these are very expensive to make you know!
-
-Model by: 'Gadget'
-Weapon by: 'The One Of Wonders'"
-			"image_inventory"			"backpack/weapons/c_models/c_medic_healflask/c_medic_healflask"
-			"model_world"				"models/weapons/c_models/c_medic_healflask/c_medic_healflask.mdl"
-			"model_player"				"models/weapons/v_models/v_medic_healflask.mdl"
-			"attach_to_hands"			"2"			
+Model by: 'Hau, Kibbleknight'
+Animations by: 'Raptor Dan'
+Weapon by: 'Noclue'"
+			"image_inventory"			"backpack/weapons/c_models/c_unfortunate_son/c_unfortunate_son"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"model_player"				"models/weapons/v_models/v_unfortunate_son_soldier_alt.mdl"
+			"model_world"				"models/weapons/c_models/c_unfortunate_son/c_unfortunate_son.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
-				"medic"					"1"
+				"soldier"				"1"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt01"								
+				"min_viewmodel_offset"					"5 0 -10"
 			}
 			"attributes"
 			{
-				"custom lunchbox throwable type"
+				"crit mod disabled"
 				{
-					"attribute_class"	"custom_lunchbox_throwable_type"						
-					"value"				"3"
-				}
-				"custom lunchbox throwable model"
-				{
-					"attribute_class"	"custom_lunchbox_throwable_model"						
-					"value"				"models/items/custom/medic_flask_pickup.mdl"
-				}
-				"Reconstruction Syrup Positive"
-				{
-					"attribute_class"	"DISPLAY_ONLY"						
-					"value"				"1"
-				}
-				"Reconstruction Syrup Negative"
-				{
-					"attribute_class"	"DISPLAY_ONLY"						
-					"value"				"1"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"effectbar_recharge_rate"						
-					"value"				"0.333333333333333333333"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"lunchbox_healing_scale"						
+					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
+			
+				"hidden separator"
+				{
+					"attribute_class"	"hidden_seperator"
+					"value"				"1"
+				}
+				
+				"sticky detonate mode"
+				{
+					"attribute_class"	"set_detonate_mode"
+					"value"				"2"
+				}
+				"mod use custom ammo type"
+				{
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value"				"1"
+				}
+				"always draw tracer" 
+				{
+					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"custom_airdet"
+					"value"				"1"														
+				}
+				"clip size bonus"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" 			"1.33"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"1.2"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.0"
+				}
+				"hand scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"4.0"
+				}
+				"scattergun no reload single"
+				{
+					"attribute_class"	"set_scattergun_no_reload_single"
+					"value"				"1"
+				}
+				"Reload time no anim speed mod"
+                {
+                    "attribute_class"    "mult_reload_time_noanimmod"
+                    "value"              "3.0"
+                }				
 			}
-			"mouse_pressed_sound"		"#ui/item_sandwich_drop.wav"
-			"drop_sound"				"#ui/item_sandwich_pickup.wav"
+			"visuals"
+			{
+			    "sound_single_shot"		"Weapon_AirBurstRifle.Single"
+				"sound_burst"			"Weapon_AirBurstRifle.SingleCrit"
+				"tracer_effect"         "bullet_hunting_revolver_tracer01"
+			}
 		}
 //-------------------------
 //-------------------------
@@ -41277,8 +41499,8 @@ Fan-Fire: Hold fire button for maximum destruction!"
 		}
 		"7607"
 		{
-			"name"					"Markov Special"
-			"description_string"	"Gain 20% damage resistance and health regeneration from bleeding enemies"												
+			"name"					"Resistance on Hit"
+			"description_string"	"On Hit: Gain 20% damage resistance and health regeneration for %s1 seconds"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
 		}
@@ -41582,6 +41804,20 @@ Weapon by: 'The One Of Wonders'"
 			"description_string"	"On Kill: Become invisible and unable to attack for %s1 seconds"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"neutral"
+		}
+		"7650"
+		{
+			"name"					"dispenser rate penalty"
+			"description_string"	"%s1% less ammo and metal generated by dispensers"												
+			"description_format"	"value_is_percentage"
+			"effect_type"			"negative"
+		}
+		"7651"
+		{
+			"name"					"dispenser rate bonus"
+			"description_string"	"+%s1% more ammo and metal generated by dispensers"												
+			"description_format"	"value_is_percentage"
+			"effect_type"			"positive"
 		}
 //clooey zone
 

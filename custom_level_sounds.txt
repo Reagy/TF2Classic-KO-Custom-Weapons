@@ -11099,7 +11099,7 @@
 	"volume"	"1.0"
 	"pitch"		"94, 100"
 	
-	"wave"		")weapons/FAL_ReduxFP.wav"
+	"wave"		")weapons/FAL_RemasterFP.wav"
 }
 
 "Weapon_FAL.SingleCrit"
@@ -11109,7 +11109,7 @@
 	"volume"	"1.0"
 	"pitch"		"94, 100"
 	
-	"wave"		")weapons/FAL_ReduxFPCrit.wav"
+	"wave"		")weapons/FAL_RemasterFP_Crit.wav"
 }
 // ------------------------------------------------------------------------------------ //
 // BRRRT Launcher
@@ -12184,6 +12184,26 @@
 // Garand Slam
 // ------------------------------------------------------------------------------------ //
 
+
+"Weapon_Garand.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"96, 100"
+	
+	"wave"		")weapons/Garand_Fire.wav"
+}
+
+"Weapon_Garand.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"96, 100"
+	
+	"wave"		")weapons/Garand_FireCrit.wav"
+}
 
 "Weapon_ShotgunGarand.Cock_Back"
 {
