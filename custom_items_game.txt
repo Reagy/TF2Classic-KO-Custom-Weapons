@@ -12192,7 +12192,7 @@ Weapon by: 'The One Of Wonders'"
 				"civ boost cond override"													
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value"				"125 2.0"
+					"value"				"125 1.25"
 				}
 				"strange restriction type 1"															
 				{
@@ -12274,7 +12274,7 @@ Weapon by: 'The One Of Wonders'"
 				"civ boost cond override"													
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value"				"115 1"
+					"value"				"115 0.625"
 				}
 				"strange restriction type 1"															
 				{
@@ -18293,7 +18293,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_type_name"			"Money"
 			"show_in_armory"            "1"
 			"item_description"			"
-Manual Boost (Mouse2): Grant an ally 10 seconds of haste! 
+Manual Boost (Mouse2): Grant an ally 6 seconds of haste! 
 
 Get some wonga.
 
@@ -18328,7 +18328,7 @@ Weapon by: 'Reagy'"
                 "civ boost cond override"
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value" 			"121 0.5" 
+					"value" 			"121 0.75" 
 				}
 				"health regen"
 				{
@@ -19677,7 +19677,7 @@ Reworked by: 'The One Of Wonders'"
 				"civ boost cond override"													
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value"				"32 0.5"
+					"value"				"32 0.625"
 				}
 				"crit mod disabled"															
 				{
@@ -32375,7 +32375,7 @@ Weapon by: 'The One Of Wonders'"
 				"civ boost cond override"													
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value"				"125 0.5"
+					"value"				"125 1.25"
 				}
 				"health regen"					 										
 				{
@@ -33823,7 +33823,7 @@ Weapon by: 'The One Of Wonders'"
 				"civ boost cond override"													
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value"				"112 0.5"
+					"value"				"112 0.625"
 				}
 				"damage bonus"
 				{
@@ -36060,7 +36060,7 @@ Weapon by: 'The One Of Wonders'"
 				"civ boost cond override"													
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value"				"111 1"
+					"value"				"111 1.25"
 				}
 				"weapon_stattrak_module_scale"													
 				{
