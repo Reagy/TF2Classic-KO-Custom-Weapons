@@ -1444,7 +1444,7 @@
 				"blast splash damage decreased"
 				{
 					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"0.67"
+					"value"				"0.65"
 				}
 				"limited range DISPLAY ONLY"
 				{
@@ -6227,7 +6227,7 @@ Weapon by: 'The One Of Wonders'"
 			"static_attrs"
 			{
 			    "class select override vcd"				"taunt02"	
-				"override projectile type" 				"30"
+				"override projectile type" 				"32"
 			}
 			"attributes"
 			{
@@ -6264,7 +6264,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.3"
+					"value"				"2.7"
 				}
 				"strange restriction type 1"													
 				{
@@ -6275,7 +6275,12 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_falloff_distance"
 					"value"				"1.75"
-				}		
+				}
+                "custom projectile model"
+				{
+					"attribute_class" 		"custom_projectile_model"
+					"value"					"models/weapons/w_models/w_fatbullet.mdl"
+				}				
 			}
 			"visuals"
 			{
@@ -6699,7 +6704,7 @@ Weapon by: 'The One Of Wonders, Vror'"
 				"cloak consume rate increased"
 				{
 					"attribute_class"	"mult_cloak_meter_consume_rate"
-					"value"				"1.25"
+					"value"				"1.2"
 				}
 				"No Tranq Crits"
 				{
@@ -8240,7 +8245,7 @@ Weapon by: 'The One Of Wonders'"
 
 			"propername"				"1"
 			"item_quality"              "rarity2"
-			"item_name"					"Krälle"											
+			"item_name"					"Kralle"											
 			"item_type_name"			"Experimental Heavy-Duty Medi Gun"
 			"item_description"			"ÜberCharge provides 9 seconds of invulnerability 
 
@@ -8272,7 +8277,7 @@ Weapon by: 'The One Of Wonders'"
 				"heal rate bonus"
 				{
 					"attribute_class"	"mult_medigun_healrate"
-					"value"				"1.6"
+					"value"				"1.3"
 				}
 				"Medi-gun range increased"																
 				{
@@ -10922,7 +10927,7 @@ Weapon by: 'The One Of Wonders'"
 				"hidden primary max ammo bonus"			"0.63"
 				"reload time increased hidden"			"2.5"
 				"min_viewmodel_offset"					"7 -6 -5"	
-                "override projectile type" 				"30"				
+                "override projectile type" 				"32"				
 			}
 			"attributes"
 			{
@@ -10969,7 +10974,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.3"
+					"value"				"2.7"
 				}
 				"strange restriction type 1"													
 				{
@@ -10979,7 +10984,12 @@ Weapon by: 'The One Of Wonders'"
                 "longer damage falloff distance"
 				{
 					"attribute_class"	"mult_falloff_distance"
-					"value"				"1.75"
+					"value"				"2.0"
+				}	
+                "custom projectile model"
+				{
+					"attribute_class" 		"custom_projectile_model"
+					"value"					"models/weapons/w_models/w_fatbullet.mdl"
 				}					
 			}
 			"visuals"
@@ -15338,7 +15348,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value"				"2.5"
+					"value"				"3.75"
 				}
 				"strange restriction type 1"
 				{
@@ -15390,7 +15400,7 @@ Weapon by: 'The One Of Wonders'"
 				"sound_reload"          "Weapon_Null"
 				"sound_special2"        "Weapon_Null"
 				"sound_special3"        "Weapon_Null"
-				"tracer_effect"         "bullet_scattergun_tracer01"
+				"tracer_effect"         "aagun_tracer_PARENT"
 				"animation_replacement" 													
 				{
 					//The Attacking Animations
@@ -18061,7 +18071,7 @@ Edited by: 'Reagy'"
 			"show_in_armory"            "1"
 			"item_description"			"
 Utility Weapon: Cannot give minicrit boosts
-Can repair and speed up building construction, but not add construction
+Can repair and speed up building construction, but not upgrade
 
 Is this what turns it off and on again?
 
@@ -18090,6 +18100,9 @@ Edited by: 'Reagy'"
 			{
 				"class select override vcd"				"taunt01"
 				"min_viewmodel_offset"					"10 0 -11"
+				"repair rate decreased"                 "0.5"
+				"Construction rate decreased"           "0.5"
+				"upgrade rate decrease"                 "0.0"
 				"decrease player capture value"         "-3"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
@@ -18280,7 +18293,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_type_name"			"Money"
 			"show_in_armory"            "1"
 			"item_description"			"
-Manual Boost (Mouse2): Grant an ally 15 seconds of increased move speed! 
+Manual Boost (Mouse2): Grant an ally 10 seconds of haste! 
 
 Get some wonga.
 
@@ -18315,7 +18328,7 @@ Weapon by: 'Reagy'"
                 "civ boost cond override"
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value" 			"32 0.5" 
+					"value" 			"121 0.5" 
 				}
 				"health regen"
 				{
@@ -18734,7 +18747,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-				"override projectile type" 				"30"
+				"override projectile type" 				"32"
 			}
 			"attributes"
 			{
@@ -18771,7 +18784,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.3"
+					"value"				"2.7"
 				}
 				"strange restriction type 1"													
 				{
@@ -18783,10 +18796,20 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_falloff_distance"
 					"value"				"1.75"
 				}		
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"2.0"
+				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"custom projectile model"
+				{
+					"attribute_class" 		"custom_projectile_model"
+					"value"					"models/weapons/w_models/w_fatbullet.mdl"
 				}
 			}
 			"visuals"
@@ -18850,7 +18873,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-				"override projectile type" 				"30"
+				"override projectile type" 				"32"
 			}
 			"attributes"
 			{
@@ -18867,7 +18890,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.3"
+					"value"				"2.7"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -18928,6 +18951,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_use_custom_ammo_type"
 					"value" 			"2"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"2.0"
 				}
 			}
 			"visuals"
@@ -19964,7 +19992,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.33"
+					"value"				"1.23"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -19990,6 +20018,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"energy_weapon_no_ammo"
 					"value"				"1"
+				}
+				"move speed bonus"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value" 			"1.15"
 				}
 				"max health additive penalty"											
 				{
@@ -24782,6 +24815,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mod_use_custom_ammo_type"
 					"value" 			"2"
+				}
+                "strange restriction type 1"
+				{
+					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
 				}				
 			}
 			"visuals"
@@ -25572,10 +25610,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"ragdolls_become_ash"
 					"value"				"1"
 				}
-				"Resistance on Hit"
+				"health regen"
 				{
-					"attribute_class"	"dmmuy"
-					"value"				"3"
+					"attribute_class"	"add_health_regen"
+					"value"				"5"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -25591,11 +25629,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"add_onkill_addcond_self"
 					"value"				"4 100.0"
-				}
-				"add condition on hit"
-				{
-					"attribute_class"	"add_onhit_addcond_self_weapon"
-					"value"				"111 3"
 				}
 			}
 			"visuals"
@@ -26750,17 +26783,17 @@ Weapon by: 'The One Of Wonders'"
 				"fire rate bonus hidden"														
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.65"														
+					"value" 			"0.56"														
 				}
 				"weapon_stattrak_module_scale"																
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.36363636363"
+					"value" 			"0.517241379"
 				}
 				"strange restriction type 1"
                 {
                     "attribute_class"    "mult_spread_scale"
-                    "value"                "0.0375"
+                    "value"                "0.04"
 				}	
 				"crit mod disabled"
 				{
@@ -26796,6 +26829,16 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_maxammo_primary"
 					"value"				"1.5"
+				}	
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"-1.0"
+				}
+                "punch angle is constant"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value" 			"1"
 				}				
 			}
 			"visuals"																			
@@ -39268,7 +39311,7 @@ Weapon by: 'The One Of Wonders'"
 			"bucket"                   "0"
 			"bucket_position"          "0"
 			
-			"item_type_name"			"Hybrid Launcher"
+			"item_type_name"			"Hybrid Shotgun/Grenade Launcher"
 			"item_name"					"Unfortunate Son"
 			"item_description"			"
 Alt-Fire: Launch a grenade
@@ -39276,7 +39319,7 @@ Shoot grenade to detonate
 
 Model by: 'Hau, Kibbleknight'
 Animations by: 'Raptor Dan'
-Weapon by: 'Noclue'"
+Weapon by: 'The One Of Wonders, Noclue'"
 			"image_inventory"			"backpack/weapons/c_models/c_unfortunate_son/c_unfortunate_son"
 			"image_inventory_size_w"	"128"
 			"image_inventory_size_h"	"82"
@@ -39334,22 +39377,22 @@ Weapon by: 'Noclue'"
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"1.2"
+					"value" 			"1.25"
 				}
 				"weapon spread bonus"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.0"
+					"value"				"0.896"
 				}
 				"hand scale"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"0.1"
+					"value"				"0.7"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"4.0"
+					"value" 			"1.66666667"
 				}
 				"scattergun no reload single"
 				{
@@ -39360,12 +39403,17 @@ Weapon by: 'Noclue'"
                 {
                     "attribute_class"    "mult_reload_time_noanimmod"
                     "value"              "3.0"
-                }				
+                }	
+                "mod horizontal spread"													
+				{
+					"attribute_class"	"mod_horizontal_spread"
+					"value"				"1"
+				}				
 			}
 			"visuals"
 			{
-			    "sound_single_shot"		"Weapon_AirBurstRifle.Single"
-				"sound_burst"			"Weapon_AirBurstRifle.SingleCrit"
+			    "sound_single_shot"		"Weapon_KIYKit.Shoot"
+				"sound_burst"			"Weapon_KIYKit.ShootCrit"
 				"tracer_effect"         "bullet_hunting_revolver_tracer01"
 			}
 		}

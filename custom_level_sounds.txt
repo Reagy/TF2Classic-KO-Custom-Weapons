@@ -15032,8 +15032,8 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"pitch"		"100, 103"
-	"wave"		")weapons/KIYKit_Fire.wav"
+	"pitch"		"85, 90"
+	"wave"		")weapons/Scatterbrain_fire.wav"
 }
 
 "Weapon_KIYKit.ShootCrit"
@@ -15041,6 +15041,6 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"pitch"		"100, 103"
-	"wave"		")weapons/KIYKit_FireCrit.wav"
+	"pitch"		"85, 90"
+	"wave"		")weapons/Scatterbrain_fire_crit.wav"
 }
