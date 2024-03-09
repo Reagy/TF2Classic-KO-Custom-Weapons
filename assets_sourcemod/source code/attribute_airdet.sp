@@ -12,19 +12,24 @@ public Plugin myinfo = {
 	name = "Attribute: Airburst",
 	author = "Noclue",
 	description = "Attributes for demoman airburst gun",
-	version = "1.1",
+	version = "1.2",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
-Handle hStickyCreate;
-Handle hSetCollisionGroup;
-Handle hDetonate;
-Handle hAttackIsCritical;
+Handle g_sdkPipebombCreate;
+Handle g_sdkSetCollisionGroup;
+Handle g_sdkDetonate;
+Handle g_sdkAttackIsCritical;
+Handle g_sdkSendWeaponAnim;
 
-DynamicHook hPrimaryFire;
-DynamicHook hSecondaryFire;
-DynamicHook hOnTakeDamage;
-DynamicHook hShouldExplode;
+DynamicHook g_dhPrimaryFire;
+DynamicHook g_dhSecondaryFire;
+DynamicHook g_dhOnTakeDamage;
+DynamicHook g_dhShouldExplode;
+
+static char g_szStickybombModel[] = "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl";
+static char g_szFireSound[] = "weapons/stickybomblauncher_shoot.wav";
+static char g_szColliderModel[] = "models/props_gameplay/ball001.mdl";
 
 #define BOMBHISTORYSIZE 16
 enum struct BombLagComp {
@@ -40,13 +45,13 @@ enum struct BombLagComp {
 }
 ArrayList hLagCompensation;
 
-int iBombUnlag = -1;
+int g_iBombUnlag = -1;
 
 public void OnPluginStart() {
-	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
+	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
-	hPrimaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::PrimaryAttack" );
-	hSecondaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::SecondaryAttack" );
+	g_dhPrimaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::PrimaryAttack" );
+	g_dhSecondaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::SecondaryAttack" );
 
 	StartPrepSDKCall( SDKCall_Static );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGrenadePipebombProjectile::Create" );
@@ -58,23 +63,29 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_SetReturnInfo( SDKType_CBaseEntity, SDKPass_Pointer );
-	hStickyCreate = EndPrepSDKCall();
+	g_sdkPipebombCreate = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseEntity::SetCollisionGroup" );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hSetCollisionGroup = EndPrepSDKCall();
+	g_sdkSetCollisionGroup = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFBaseGrenade::Detonate" );
-	hDetonate = EndPrepSDKCall();
+	g_sdkDetonate = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFWeaponBase::CalcAttackIsCritical" );
-	hAttackIsCritical = EndPrepSDKCall();
+	g_sdkAttackIsCritical = EndPrepSDKCall();
 
-	hShouldExplode = DynamicHook.FromConf( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
-	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CBaseCombatWeapon::SendWeaponAnim" );
+	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkSendWeaponAnim = EndPrepSDKCall();
+
+	g_dhShouldExplode = DynamicHook.FromConf( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
+	g_dhOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
 
 	hLagCompensation = new ArrayList( sizeof( BombLagComp ) );
 
@@ -82,9 +93,9 @@ public void OnPluginStart() {
 }
 
 public void OnMapStart() {
-	PrecacheSound( "weapons/stickybomblauncher_shoot.wav" );
-	PrecacheModel( "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl" );
-	PrecacheModel( "models/props_gameplay/ball001.mdl" );
+	PrecacheSound( g_szFireSound );
+	PrecacheModel( g_szStickybombModel );
+	PrecacheModel( g_szColliderModel );
 
 	hLagCompensation.Clear();
 }
@@ -95,16 +106,17 @@ public void OnEntityCreated( int iEntity, const char[] szClassname ) {
 	if( StrContains( szName, "tf_weapon" ) == -1 )
 		return;
 
-	RequestFrame( Frame_WeaponHook, iEntity );
+	RequestFrame( Frame_WeaponHook, EntIndexToEntRef( iEntity ) );
 }
 
 void Frame_WeaponHook( int iEntity ) {
+	iEntity = EntRefToEntIndex( iEntity );
 	if( AttribHookFloat( 0.0, iEntity, "custom_airdet" ) == 0.0 )
 		return;
 
-	hPrimaryFire.HookEntity( Hook_Pre, iEntity, Hook_PrimaryPre );
-	hPrimaryFire.HookEntity( Hook_Post, iEntity, Hook_PrimaryPost );
-	hSecondaryFire.HookEntity( Hook_Pre, iEntity, Hook_Secondary );
+	g_dhPrimaryFire.HookEntity( Hook_Pre, iEntity, Hook_PrimaryPre );
+	g_dhPrimaryFire.HookEntity( Hook_Post, iEntity, Hook_PrimaryPost );
+	g_dhSecondaryFire.HookEntity( Hook_Pre, iEntity, Hook_Secondary );
 }
 
 public void OnGameFrame() {
@@ -156,36 +168,40 @@ MRESReturn Hook_PrimaryPost( int iEntity ) {
 		return MRES_Ignored;
 
 
-	if( iBombUnlag != -1 )
+	if( g_iBombUnlag != -1 )
 		EndBombUnlag( iOwner );
 
 	return MRES_Handled;
 }
 
-MRESReturn Hook_Secondary( int iEntity ) {
-	if( GetEntPropFloat( iEntity, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() || GetEntPropFloat( iEntity, Prop_Send, "m_flNextSecondaryAttack" ) > GetGameTime() ) {
-		return MRES_Ignored;
-	}
-
-	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwner" );
+MRESReturn Hook_Secondary( int iWeapon ) {
+	int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwner" );
 	if( iOwner == -1 )
 		return MRES_Ignored;
 
-	int iAmmoType = 2;
-	int iAmmo = GetEntProp( iOwner, Prop_Send, "m_iAmmo", 4, iAmmoType );
-	if( iAmmo <= 0 )
+	if( !HasAmmoToFire( iWeapon, iOwner, 1, false ) )
 		return MRES_Ignored;
 
-	SetEntPropFloat( iEntity, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + 0.3 );
-	SetEntPropFloat( iEntity, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() + 0.6 );
+	if( GetEntProp( iWeapon, Prop_Send, "m_iReloadMode" ) != 0 ) {
+		SetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() );
+		SetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() );
+		SetEntProp( iWeapon, Prop_Send, "m_iReloadMode", 0 );
+	}
 
-	int iViewmodel = GetEntPropEnt( iOwner, Prop_Send, "m_hViewModel" );
-	SetEntProp( iViewmodel, Prop_Send, "m_nSequence", 2 );
-	SetEntPropFloat( iEntity, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.5 );
+	if( GetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() || GetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack" ) > GetGameTime() )
+		return MRES_Ignored;
 
-	SetEntProp( iOwner, Prop_Send, "m_iAmmo", iAmmo - 1, 4, iAmmoType );
+	ConsumeAmmo( iWeapon, iOwner, 1, false );
 
-	EmitSoundToAll( "weapons/stickybomblauncher_shoot.wav", iOwner, SNDCHAN_WEAPON );
+	SetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + 0.3 );
+	SetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() + 0.6 );
+
+	SDKCall( g_sdkSendWeaponAnim, iWeapon, 181 ); //ACT_VM_SECONDARYATTACK
+	SetEntProp( iWeapon, Prop_Send, "m_iWeaponMode", 1 );
+	//adding latentcy prevents animation bugs
+	SetEntPropFloat( iWeapon, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.6 - GetClientAvgLatency( iOwner, NetFlow_Both ) );
+	
+	EmitSoundToAll( g_szFireSound, iOwner, SNDCHAN_WEAPON );
 
 	float vecSrc[3], vecEyeAng[3], vecVel[3], vecImpulse[3];
 	GetClientEyePosition( iOwner, vecSrc );
@@ -194,7 +210,7 @@ MRESReturn Hook_Secondary( int iEntity ) {
 	GetClientEyeAngles( iOwner, vecEyeAng );
 	GetAngleVectors( vecEyeAng, vecForward, vecRight, vecUp );
 
-	ScaleVector( vecForward, 1200.0 );
+	ScaleVector( vecForward, 960.0 );
 	ScaleVector( vecUp, 200.0 );
 	AddVectors( vecVel, vecForward, vecVel );
 	AddVectors( vecVel, vecUp, vecVel );
@@ -202,22 +218,24 @@ MRESReturn Hook_Secondary( int iEntity ) {
 
 	vecImpulse[0] = 600.0;
 
-	SDKCall( hAttackIsCritical, iEntity );
+	SDKCall( g_sdkAttackIsCritical, iWeapon );
 
-	int iGrenade = SDKCall( hStickyCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iEntity, 0 );
-	hShouldExplode.HookEntity( Hook_Pre, iGrenade, Hook_ShouldExplode );
-	SetEntityModel( iGrenade, "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl" );
+	int iGrenade = SDKCall( g_sdkPipebombCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iWeapon, 0 );
+	g_dhShouldExplode.HookEntity( Hook_Pre, iGrenade, Hook_ShouldExplode );
+	SetEntityModel( iGrenade, g_szStickybombModel );
 
-	SetEntProp( iGrenade, Prop_Send, "m_bCritical", LoadFromEntity( iEntity, 1566, NumberType_Int8 ) );
+	//todo: move to gamedata
+	SetEntProp( iGrenade, Prop_Send, "m_bCritical", LoadFromEntity( iWeapon, 1566, NumberType_Int8 ) );
 
 	SetEntPropFloat( iGrenade, Prop_Send, "m_flModelScale", 1.5 );
 
+	//todo: move to gamedata
 	StoreToEntity( iGrenade, 1212, 60.0 ); //damage
 	StoreToEntity( iGrenade, 1216, 75.0 ); //radius
 
 	int iCollider = CreateEntityByName( "prop_dynamic_override" );
-	SetEntityModel( iCollider, "models/props_gameplay/ball001.mdl" );
-	hOnTakeDamage.HookEntity( Hook_Pre, iCollider, Hook_DamageCollider );
+	SetEntityModel( iCollider, g_szColliderModel );
+	g_dhOnTakeDamage.HookEntity( Hook_Pre, iCollider, Hook_DamageCollider );
 
 	DispatchSpawn( iCollider );
  
@@ -227,7 +245,7 @@ MRESReturn Hook_Secondary( int iEntity ) {
 
 	SetEntPropEnt( iCollider, Prop_Send, "m_hOwnerEntity", iGrenade );
 
-	SDKCall( hSetCollisionGroup, iCollider, 2 );
+	SDKCall( g_sdkSetCollisionGroup, iCollider, 2 );
 
 	AddNewBomb( EntIndexToEntRef( iGrenade ), EntIndexToEntRef( iCollider ) );
 
@@ -243,11 +261,11 @@ MRESReturn Hook_DamageCollider( int iCollider, DHookReturn hReturn, DHookParam h
 	TFDamageInfo tfInfo = TFDamageInfo( hParams.GetAddress( 1 ) );
 	hReturn.Value = 1;
 
-	int iParent = GetEntPropEnt( iCollider, Prop_Send, "m_hOwnerEntity" );
-	if( iParent == -1 )
+	int iBomb = GetEntPropEnt( iCollider, Prop_Send, "m_hOwnerEntity" );
+	if( iBomb == -1 )
 		return MRES_Supercede;
 
-	int iLauncher = GetEntPropEnt( iParent, Prop_Send, "m_hOriginalLauncher" );
+	int iLauncher = GetEntPropEnt( iBomb, Prop_Send, "m_hOriginalLauncher" );
 	int iWeapon = tfInfo.iWeapon;
 	
 	if( iLauncher != iWeapon )
@@ -259,18 +277,30 @@ MRESReturn Hook_DamageCollider( int iCollider, DHookReturn hReturn, DHookParam h
 	if( !( tfInfo.iFlags & DMG_BULLET ) )
 		return MRES_Supercede;
 
-	RemoveBomb( iParent );
+	int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwnerEntity" );
+	float vecOwnerPos[3];
+	GetEntPropVector( iOwner, Prop_Data, "m_vecAbsOrigin", vecOwnerPos );
+	float vecBombPos[3];
+	GetEntPropVector( iBomb, Prop_Data, "m_vecAbsOrigin", vecBombPos );
+
+	RemoveBomb( iBomb );
 	RemoveEntity( iCollider );
 
-	StoreToEntity( iParent, 1212, 240.0 ); //damage TODO: move to gamedata
-	StoreToEntity( iParent, 1216, 150.0 ); //radius
+	float flDamage = TF2DamageFalloff3( 215.0, vecOwnerPos, vecBombPos, iLauncher, DMG_USEDISTANCEMOD, true );
+	//float flDamage = 240.0;
+
+	PrintToServer("fldamage %f", flDamage);
+
+	//todo: move to gamedata
+	StoreToEntity( iBomb, 1212, flDamage, NumberType_Int32 ); //damage
+	StoreToEntity( iBomb, 1216, 150.0 ); //radius
 
 	float vecColliderCoords[3];
 	GetEntPropVector( iCollider, Prop_Send, "m_vecOrigin", vecColliderCoords );
 
-	TeleportEntity( iParent, vecColliderCoords );
+	TeleportEntity( iBomb, vecColliderCoords );
 
-	SDKCall( hDetonate, iParent );
+	SDKCall( g_sdkDetonate, iBomb );
 	
 	return MRES_Ignored;
 }
@@ -320,7 +350,7 @@ void StartBombUnlag( int iPlayer ) {
 	float flLatency = GetClientLatency( iPlayer, NetFlow_Both );
 	float flTargetTime = GetGameTime() - flLatency;
 
-	iBombUnlag = iPlayer;
+	g_iBombUnlag = iPlayer;
 
 	BombLagComp comp;
 	int iIndex = 0;
@@ -344,9 +374,9 @@ void StartBombUnlag( int iPlayer ) {
 		int iBestIndex = 0;
 		float flBestTime = 100.0; 
 
-		float flNewCoords[ 3 ];
+		float vecNewCoords[ 3 ];
 		if( flLatency < 0.016 ) {
-			GetEntPropVector( iBombIndex, Prop_Send, "m_vecOrigin", flNewCoords );
+			GetEntPropVector( iBombIndex, Prop_Send, "m_vecOrigin", vecNewCoords );
 		}
 		else {
 			for( int i = 0; i < BOMBHISTORYSIZE; i++ ) {
@@ -358,12 +388,12 @@ void StartBombUnlag( int iPlayer ) {
 				}
 			}
 
-			flNewCoords[ 0 ] = comp.flBombHistoryX[ iBestIndex ];
-			flNewCoords[ 1 ] = comp.flBombHistoryY[ iBestIndex ];
-			flNewCoords[ 2 ] = comp.flBombHistoryZ[ iBestIndex ];
+			vecNewCoords[ 0 ] = comp.flBombHistoryX[ iBestIndex ];
+			vecNewCoords[ 1 ] = comp.flBombHistoryY[ iBestIndex ];
+			vecNewCoords[ 2 ] = comp.flBombHistoryZ[ iBestIndex ];
 		}
 
-		TeleportEntity( iColliderIndex, flNewCoords );
+		TeleportEntity( iColliderIndex, vecNewCoords );
 
 		iIndex++;
 	}
@@ -393,5 +423,5 @@ void EndBombUnlag( int iPlayer ) {
 		iIndex++;
 	}
 
-	iBombUnlag = -1;
+	g_iBombUnlag = -1;
 }

@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_assassin_brolly/c_assassin_brolly_large"
+	"$translucent" 1
+	$vertexcolor 1
+}

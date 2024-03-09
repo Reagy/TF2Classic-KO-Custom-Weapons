@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_pyro_cannon/c_pyro_cannon_large"
+	"$translucent" 1
+	$vertexcolor 1
+}

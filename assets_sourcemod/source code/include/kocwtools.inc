@@ -4,6 +4,7 @@
 #define _kocw_included
 
 #include <tf2c>
+#include <dhooks>
 #include <stocksoup/memory>
 #include <sdkhooks>
 
@@ -554,7 +555,8 @@ stock int FindModelString( int iModelIndex, char[] szModelString, int iStringSiz
 }
 
 //shitty copypaste of tf2's falloff algorithm
-stock float TF2DamageFalloff( int iVictim, TFDamageInfo tfInfo ) {
+//todo: respect falloff modifying attributes
+/*stock float TF2DamageFalloff( int iVictim, TFDamageInfo tfInfo ) {
 	float flRandomDamage = tfInfo.flDamage * 0.5;
 	float flCenter = 0.5;
 
@@ -590,4 +592,231 @@ stock float TF2DamageFalloff( int iVictim, TFDamageInfo tfInfo ) {
 
 	float flOut = SimpleSplineRemapValClamped( flCenter, 0.0, 1.0, -flRandomDamage, flRandomDamage );
 	return tfInfo.flDamage + flOut;
+}*/
+
+stock float TF2DamageFalloff( int iVictim, TFDamageInfo tfInfo ) {
+	return TF2DamageFalloff2( iVictim, tfInfo.flDamage, tfInfo.iAttacker, tfInfo.iWeapon, tfInfo.iFlags );
+}
+stock float TF2DamageFalloff2( int iVictim, float flDamage, int iAttacker, int iWeapon, int iFlags, bool bWeakRampup = false ) {
+	float flRandomDamage = flDamage * 0.5;
+	float flCenter = 0.5;
+
+	if ( iFlags & DMG_USEDISTANCEMOD ) {
+		float vecOtherPos[3];
+		float vecPos[3];
+
+		GetEntPropVector( iVictim, Prop_Data, "m_vecAbsOrigin", vecPos );
+		GetEntPropVector( iAttacker, Prop_Data, "m_vecAbsOrigin", vecOtherPos );
+
+		SubtractVectors( vecPos, vecOtherPos, vecOtherPos );
+
+		float flDistance = MaxFloat( 1.0,  SquareRoot( GetVectorLength( vecOtherPos, true ) ) );
+		float flOptimalDistance = 512.0;
+
+		flCenter = RemapValClamped( flDistance / flOptimalDistance, 0.0, 2.0, 1.0, 0.0 );
+		if ( iFlags & DMG_NOCLOSEDISTANCEMOD ) {
+			if ( flCenter > 0.5 )
+				flCenter = RemapVal( flCenter, 0.5, 1.0, 0.5, 0.65 );
+		}
+	}
+
+	if( flCenter > 0.5 && IsValidEntity( iWeapon ) ) {
+		static char szClassname[96];
+		GetEntityClassname( iWeapon, szClassname, sizeof( szClassname ) );
+
+		if( StrEqual( szClassname, "tf_weapon_scattergun" ) )
+			flRandomDamage *= 1.5;
+		else if(StrEqual( szClassname, "tf_weapon_rocketlauncher" ) ||
+			StrEqual( szClassname, "tf_weapon_pipebomblauncher" ) || bWeakRampup )
+			flRandomDamage *= 0.5;
+	}
+
+	float flOut = SimpleSplineRemapValClamped( flCenter, 0.0, 1.0, -flRandomDamage, flRandomDamage );
+	return flDamage + flOut;
+}
+stock float TF2DamageFalloff3( float flDamage, const float vecAttackerPos[3], const float vecVictimPos[3], int iWeapon, int iFlags, bool bWeakRampup = false ) {
+	float flRandomDamage = flDamage * 0.5;
+	float flCenter = 0.5;
+
+	if ( iFlags & DMG_USEDISTANCEMOD ) {
+		float vecOtherPos[3];
+		SubtractVectors( vecAttackerPos, vecVictimPos, vecOtherPos );
+
+		float flDistance = MaxFloat( 1.0, SquareRoot( GetVectorLength( vecOtherPos, true ) ) );
+		float flOptimalDistance = 512.0;
+
+		flCenter = RemapValClamped( flDistance / flOptimalDistance, 0.0, 2.0, 1.0, 0.0 );
+		if ( iFlags & DMG_NOCLOSEDISTANCEMOD ) {
+			if ( flCenter > 0.5 )
+				flCenter = RemapVal( flCenter, 0.5, 1.0, 0.5, 0.65 );
+		}
+	}
+
+	if( flCenter > 0.5 ) {
+		if( bWeakRampup )
+			flRandomDamage *= 0.25;
+		else if( IsValidEntity( iWeapon ) ) {
+			static char szClassname[96];
+			GetEntityClassname( iWeapon, szClassname, sizeof( szClassname ) );
+
+			if( StrEqual( szClassname, "tf_weapon_scattergun" ) )
+				flRandomDamage *= 1.5;
+			else if( StrEqual( szClassname, "tf_weapon_rocketlauncher" ) ||
+				StrEqual( szClassname, "tf_weapon_pipebomblauncher" ) )
+				flRandomDamage *= 0.5;
+		}
+
+		
+	}
+
+	float flOut = SimpleSplineRemapValClamped( flCenter, 0.0, 1.0, -flRandomDamage, flRandomDamage );
+	return flDamage + flOut;
+}
+
+stock bool HasAmmoToFire( int iWeapon, int iOwner, int iAmmoCost, bool bUsesClip ) {
+	if( bUsesClip ) {
+		int iClip = GetEntProp( iWeapon, Prop_Send, "m_iClip1" );
+		if( iClip < iAmmoCost )
+			return false;
+	}
+	else {
+		int iAmmoType = GetEntProp( iWeapon, Prop_Send, "m_iPrimaryAmmoType" );
+		int iAmmo = GetEntProp( iOwner, Prop_Send, "m_iAmmo", 4, iAmmoType );
+		if( iAmmo < iAmmoCost )
+			return false;
+	}
+	return true;
+}
+stock void ConsumeAmmo( int iWeapon, int iOwner, int iAmmoCost, bool bUsesClip ) {
+	if( bUsesClip ) {
+		int iClip = GetEntProp( iWeapon, Prop_Send, "m_iClip1" );
+		SetEntProp( iWeapon, Prop_Send, "m_iClip1", iClip - iAmmoCost );
+	}
+	else {
+		int iAmmoType = GetEntProp( iWeapon, Prop_Send, "m_iPrimaryAmmoType" );
+		int iAmmo = GetEntProp( iOwner, Prop_Send, "m_iAmmo", 4, iAmmoType );
+		SetEntProp( iOwner, Prop_Send, "m_iAmmo", iAmmo - iAmmoCost, 4, iAmmoType );
+	}
+}
+
+
+enum
+{
+	PATTACH_ABSORIGIN = 0,			// Create at absorigin, but don't follow
+	PATTACH_ABSORIGIN_FOLLOW,		// Create at absorigin, and update to follow the entity
+	PATTACH_CUSTOMORIGIN,			// Create at a custom origin, but don't follow
+	PATTACH_POINT,					// Create on attachment point, but don't follow
+	PATTACH_POINT_FOLLOW,			// Create on attachment point, and update to follow the entity
+
+	PATTACH_WORLDORIGIN,			// Used for control points that don't attach to an entity
+
+	PATTACH_ROOTBONE_FOLLOW,		// Create at the root bone of the entity, and update to follow
+
+	MAX_PATTACH_TYPES,
+};
+
+stock int CreateParticle( const char[] szParticleName, float vecPos[3] = NULL_VECTOR, float vecAng[3] = NULL_VECTOR, float flDuration = -1.0 ) {
+	int iParticle = CreateEntityByName( "info_particle_system" );
+
+	DispatchKeyValue( iParticle, "effect_name", szParticleName );
+	DispatchKeyValueInt( iParticle, "start_active", 1 );
+
+	DispatchSpawn( iParticle );
+	TeleportEntity( iParticle, vecPos, vecAng );
+	ActivateEntity( iParticle );
+
+	if( flDuration != -1.0 )
+		CreateTimer( flDuration, Timer_RemoveParticle, EntIndexToEntRef( iParticle ) );
+
+	return iParticle;
+}
+
+stock void ParentParticleToViewmodel( int iParticle, int iWeapon ) {
+	bool bIsCModel = GetEntProp( iWeapon, Prop_Send, "m_iViewModelType" ) == 1;
+
+	int iPlayer = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwnerEntity" );
+	int iViewmodel = GetEntPropEnt( iPlayer, Prop_Send, "m_hViewModel" );
+	ParentModel( iParticle, iViewmodel, bIsCModel ? "weapon_bone_l" : "muzzle" );
+	SetEdictFlags( iParticle, 0 );
+}
+
+Action Timer_RemoveParticle( Handle hTimer, int iParticleRef ) {
+	int iParticle = EntRefToEntIndex( iParticleRef );
+	if( iParticle == -1 )
+		return Plugin_Continue;
+
+	RemoveEntity( iParticle );
+	return Plugin_Continue;
+}
+
+//https://github.com/JoinedSenses/SourceMod-IncludeLibrary
+stock void TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECTOR,
+			const float start[3] = NULL_VECTOR, const float angles[3] = NULL_VECTOR,
+			int entindex = -1, int attachtype = -1, int attachpoint = -1, bool resetParticles = true)
+{
+	// find string table
+	int tblidx = FindStringTable("ParticleEffectNames");
+	if (tblidx == INVALID_STRING_TABLE) 
+	{
+		LogError("Could not find string table: ParticleEffectNames");
+		return;
+	}
+	
+
+	// find particle index
+	char tmp[256];
+	int count = GetStringTableNumStrings(tblidx);
+	int stridx = INVALID_STRING_INDEX;
+	for (int i = 0; i < count; i++)
+	{
+		ReadStringTable(tblidx, i, tmp, sizeof(tmp));
+		if (StrEqual(tmp, Name, false))
+		{
+			stridx = i;
+			break;
+		}
+	}
+	if (stridx == INVALID_STRING_INDEX)
+	{
+		LogError("Could not find particle: %s", Name);
+		return;
+	}
+
+	TE_Start("TFParticleEffect");
+	TE_WriteFloat("m_vecOrigin[0]", origin[0]);
+	TE_WriteFloat("m_vecOrigin[1]", origin[1]);
+	TE_WriteFloat("m_vecOrigin[2]", origin[2]);
+	TE_WriteFloat("m_vecStart[0]", start[0]);
+	TE_WriteFloat("m_vecStart[1]", start[1]);
+	TE_WriteFloat("m_vecStart[2]", start[2]);
+	TE_WriteVector("m_vecAngles", angles);
+	TE_WriteNum("m_iParticleSystemIndex", stridx);
+
+	if (entindex != -1)
+	{
+		TE_WriteNum("entindex", entindex);
+	}
+
+	if (attachtype != -1)
+	{
+		TE_WriteNum("m_iAttachType", attachtype);
+	}
+
+	if (attachpoint != -1)
+	{
+		TE_WriteNum("m_iAttachmentPointIndex", attachpoint);
+	}
+
+	TE_WriteNum("m_bResetParticles", resetParticles);
+}
+
+stock void TE_Particle(const char[] Name, const float origin[3] = NULL_VECTOR,
+		const float start[3] = NULL_VECTOR, const float angles[3] = NULL_VECTOR,
+		int entindex = -1, int attachtype = -1, int attachpoint = -1, bool resetParticles = true,
+		float delay = 0.0)
+{
+	TE_SetupParticle(Name, origin, start, angles, entindex,
+		attachtype, attachpoint, resetParticles);
+
+	TE_SendToAll(delay);
 }

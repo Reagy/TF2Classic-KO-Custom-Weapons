@@ -40,6 +40,15 @@
 					"signature"		"CTFLogicDomination"
 				}
 			}
+			
+			"CBaseObject::CheckUpgradeOnHit_MetalPerHit"
+			{
+				"linux"
+				{
+					"signature"		"CBaseObject::CheckUpgradeOnHit"
+					"offset"		"0x6A"
+				}
+			}
 		}
         "Offsets"
         {
@@ -143,6 +152,19 @@
 			{
 				"linux"		"64"
 			}
+			
+			"CBaseEntity::IsDeflectable"
+			{
+				"linux"		"154"
+			}
+			"CBaseEntity::Deflected"
+			{
+				"linux"		"156"
+			}
+			"CTFWeaponBase::GetWeaponID"
+			{
+				"linux"		"385"
+			}
 		
             //player
         
@@ -153,6 +175,11 @@
 			"CTFPlayer::GiveAmmo"
 			{
 				"linux"		"474"
+			}
+		
+			"CTFPlayer::SetAnimation"
+			{
+				"linux"		"369"
 			}
 		
 			"CTFPlayer::TakeHealth" //good
@@ -182,7 +209,7 @@
 			}
 			"CTFPlayer::m_pCurrentCommand" //changed
 			{
-				"linux"		"3300"
+				"linux"		"3320"
 			}
 			
 			//pointer to player contained in CTFPlayerShared
@@ -209,11 +236,11 @@
             
 			"CTFWeaponBuilder::SetObjectMode"
 			{
-				"linux"		"450"
+				"linux"		"451"
 			}
 			"CTFWeaponBuilder::SetSubType"
 			{
-				"linux"		"232"
+				"linux"		"233"
 			}
 			
             "CBaseObject::StartBuilding" //good
@@ -272,6 +299,14 @@
 			{
 				"linux"		"275"
 			}
+			"CTFWeaponBase::Reload"
+			{
+				"linux"		"285"
+			}
+			"CBaseCombatWeapon::SendWeaponAnim"
+			{
+				"linux"		"250"
+			}
 			"CTFWeaponBase::PrimaryAttack" //changed
 			{
 				"linux"		"289"
@@ -319,10 +354,30 @@
 			{
 				"linux"		"1168"
 			}
+			
+			"CEconEntity::GiveTo" //good
+			{
+				"linux"		"220"
+			}
         }
 		
 		"Functions"
 		{
+			"CAttributeManager::ProvideTo"
+			{
+				"signature"		"CAttributeManager::ProvideTo"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"address"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+		
 			"CTFGameRules::ResetMapTime"
 			{
 				"signature"		"CTFGameRules::ResetMapTime"
@@ -557,17 +612,43 @@
 				"return"		"void"
 				"this"			"entity"
 			}
-			"CTFPlayerShared::StopCharge"
+			"CTFPlayer::ApplyPushFromDamage"
 			{
-				"signature"		"CTFPlayerShared::StopCharge"
+				"signature"		"CTFPlayer::ApplyPushFromDamage"
 				"callconv"		"thiscall"
 				"return"		"void"
 				"this"			"entity"
 				"arguments"
 				{
-					"impact"
+					"damageinfo"
 					{
-						"type"	"bool"
+						"type"	"objectptr"
+					}
+					"force"
+					{
+						"type"	"vectorptr"
+					}
+				}
+			}
+			"CTFPlayerShared::AirblastPlayer"
+			{
+				"signature"		"CTFPlayerShared::AirblastPlayer"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"address"
+				"arguments"
+				{
+					"attacker"
+					{
+						"type"	"cbaseentity"
+					}
+					"dir"
+					{
+						"type"	"vectorptr"
+					}
+					"force"
+					{
+						"type"	"float"
 					}
 				}
 			}
@@ -860,6 +941,44 @@
 				}
 			}
 			
+			"CTFWrench::GetConstructionValue"
+			{
+				"signature"		"CTFWrench::GetConstructionValue"
+				"callconv"		"thiscall"
+				"return"		"float"
+				"this"			"entity"
+			}
+			"CTFWrench::GetRepairValue"
+			{
+				"signature"		"CTFWrench::GetRepairValue"
+				"callconv"		"thiscall"
+				"return"		"float"
+				"this"			"entity"
+			}
+			
+			"CTFWrench::OnFriendlyBuildingHit"
+			{
+				"signature"		"CTFWrench::OnFriendlyBuildingHit"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"object"
+					{
+						"type"	"cbaseentity"
+					}
+					"player"
+					{
+						"type"	"cbaseentity"
+					}
+					"hitpos"
+					{
+						"type"	"vectorptr"
+					}
+				}
+			}
+			
 			"CAttributeManager::ApplyAttributeFloat"
 			{
 				"offset"		"CAttributeManager::ApplyAttributeFloat"
@@ -935,6 +1054,14 @@
 				"hooktype"		"entity"
 				"callconv"		"thiscall"
 				"return"		"float"
+				"this"			"entity"
+			}
+			"CTFWeaponBase::Reload"
+			{
+				"offset"		"CTFWeaponBase::Reload"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"bool"
 				"this"			"entity"
 			}
 			"CTFWeaponBase::PrimaryAttack"
@@ -1162,10 +1289,25 @@
 					}
 				}
 			}
+			
+			"CEconItemAttribute::GetStaticData"
+			{
+				"signature"		"CEconItemAttribute::GetStaticData"
+				"callconv"		"thiscall"
+				"this"			"address"
+				"return"		"int"
+			}
+			
 		}
 		
 		"Signatures"
 		{
+			"CBaseAnimating::ResetSequence"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CBaseAnimating13ResetSequenceEi"
+			}
+		
 			"CTFGameRules::ResetMapTime"
 			{
 				"library"	"server"
@@ -1176,6 +1318,12 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN10CUtlVectorI7CHandleI11CBaseEntityE10CUtlMemoryIS2_iEE12InsertBeforeEiRKS2_"
+			}
+		
+			"CBaseEntity::WorldSpaceCenter"
+			{
+				"library"	"server"
+				"linux"		"@_ZNK11CBaseEntity16WorldSpaceCenterEv"
 			}
 		
 			"CFuncRespawnRoom::RespawnRoomTouch"
@@ -1251,6 +1399,11 @@
 				"library"	"server"
 				"linux"		"@_ZN9CTFPlayer8DropFlagEv"
 			}
+			"CTFPlayer::AddDamagerToHistory"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFPlayer19AddDamagerToHistoryEP11CBaseEntityS1_"
+			}
 			
 			"CTFPlayerShared::Burn" //good
 			{
@@ -1293,7 +1446,12 @@
 				"library"	"server"
 				"linux"		"@_ZN15CTFPlayerShared10StopChargeEb"
 			}
-            
+			"CTFPlayerShared::AirblastPlayer"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared14AirblastPlayerEP9CTFPlayerRK6Vectorf"
+			}
+			
 			"CTFGameMovement::CheckJumpButton" //good
 			{
 				"linux"		"@_ZN15CTFGameMovement15CheckJumpButtonEv"
@@ -1306,6 +1464,11 @@
                 "library"   "server"
                 "linux"     "@_ZN11CBaseObject14DestroyScreensEv"
             }
+			"CBaseObject::CheckUpgradeOnHit"
+			{
+				"library"	"server"
+				"linux"		"@_ZN11CBaseObject17CheckUpgradeOnHitEP9CTFPlayer"
+			}
 			"CObjectDispenser::GetHealRate" //good
 			{
 				"library"	"server"
@@ -1353,6 +1516,22 @@
 				"linux"		"@_ZN14CWeaponMedigun11GetHealRateEb"
 			}
             
+			"CTFWrench::OnFriendlyBuildingHit"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFWrench21OnFriendlyBuildingHitEP11CBaseObjectP9CTFPlayer6Vector"
+			}
+			"CTFWrench::GetConstructionValue"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFWrench20GetConstructionValueEv"
+			}
+			"CTFWrench::GetRepairValue"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFWrench14GetRepairValueEv"
+			}
+			
 			"CTFCoilGun::GetProjectileSpeed" //good
 			{
 				"library"	"server"
@@ -1410,22 +1589,45 @@
 			}
 			
             //econ
-            
+			
 			"CEconItemView::IterateAttributes" //good
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CEconItemView17IterateAttributesE8string_t"
 			}
-			"CEconEntity::GetItem" //good
+			
+			"GetItemSchema"
 			{
 				"library"	"server"
-				"linux"		"@_ZN11CEconEntity7GetItemEv"
+				"linux"		"@_Z13GetItemSchemav"
+			}
+			"CEconItemSchema::GetItemDefinition"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CEconItemSchema17GetItemDefinitionEi"
+			}
+			
+			
+			"CEconItemAttribute::InitFloat"
+			{
+				"library"	"server"
+				"linux"		"@_ZN18CEconItemAttribute4InitEifPKc"
+			}
+			"CEconItemAttribute::InitString"
+			{
+				"library"	"server"
+				"linux"		"@_ZN18CEconItemAttribute4InitEiPKcS1_"
 			}
 			
 			"CAttributeManager::AttribHookValue<string_t>" //good
 			{
 				"library"	"server"
 				"linux"		"@_ZN17CAttributeManager15AttribHookValueI8string_tEET_S2_PKcPK11CBaseEntity"
+			}
+			"CAttributeManager::ProvideTo"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CAttributeManager9ProvideToEP11CBaseEntity"
 			}
 		
             //other
@@ -1434,6 +1636,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN14CBaseAnimating14LookupSequenceEPKc"
+			}
+			"CBaseAnimating::LookupAttachment"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CBaseAnimating16LookupAttachmentEPKc"
 			}
 			
 			"CBaseEntity::SetNextThink" //good
@@ -1544,6 +1751,39 @@
 			{
 				"library"	"server"
 				"linux"		"@g_pDominationLogic"
+			}
+			
+			"CEconItemView::AddToTail"
+			{
+				"library"	"server"
+				"linux"		"@_ZN10CUtlVectorI18CEconItemAttribute10CUtlMemoryIS0_iEE12InsertBeforeEiRKS0_"
+			}
+			
+			"CLagCompensationManager"
+			{
+				"library"	"server"
+				"linux"		"@lagcompensation"
+			}
+			"CLagCompensationManager::StartLagCompensation"
+			{
+				"library"	"server"
+				"linux"		"@_ZN23CLagCompensationManager20StartLagCompensationEP11CBasePlayerP8CUserCmd"
+			}
+			"CLagCompensationManager::FinishLagCompensation"
+			{
+				"library"	"server"
+				"linux"		"@_ZN23CLagCompensationManager21FinishLagCompensationEP11CBasePlayer"
+			}
+			
+			"CEnableLagCompensation::CEnableLagCompensation"
+			{
+				"library"	"server"
+				"linux"		"@_ZN22CEnableLagCompensationC2EP11CBasePlayerP8CUserCmdb"
+			}
+			"CEnableLagCompensation::~CEnableLagCompensation"
+			{
+				"library"	"server"
+				"linux"		"@_ZN22CEnableLagCompensationD2Ev"
 			}
 			
 			"GetGlobalTeam"

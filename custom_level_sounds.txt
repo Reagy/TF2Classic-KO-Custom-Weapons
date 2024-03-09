@@ -6351,50 +6351,43 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// HWG Machine Gun
+// HWG Chaingun
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_MachineGun.ClipEmpty"	
+"Weapon_Chaingun.Spin"	
 {
 	"channel"		"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/machinegun_empty.wav"
+	"volume"		"0.9"
+	"wave"			")weapons/ChainGun_Spin.wav"
 }
-"Weapon_MachineGun.Spin"	
-{
-	"channel"		"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/machinegun_spin.wav"
-}
-"Weapon_MachineGun.Fire"	
+"Weapon_Chaingun.Fire"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
-	"wave"			")weapons/machinegun_shoot_new.wav"
+	"wave"			")weapons/ChainGun_FireLoop.wav"
 }
-"Weapon_MachineGun.FireCrit"	
+"Weapon_Chaingun.FireCrit"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
-	"wave"			")weapons/machinegun_shoot_crit_new.wav"
+	"wave"			")weapons/ChainGun_FireCritLoop.wav"
 }
-"Weapon_MachineGun.WindUp"	
+"Weapon_Chaingun.WindUp"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/machinegun_wind_up.wav"
+	"volume"		"0.9"
+	"wave"			")weapons/ChainGun_SpinUp.wav"
 }
-"Weapon_MachineGun.WindDown"	
+"Weapon_Chaingun.WindDown"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"		"1.0"
-	"wave"			")weapons/machinegun_wind_down.wav"
+	"volume"		"0.9"
+	"wave"			")weapons/ChainGun_SpinDown.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -6798,49 +6791,49 @@
 // CHAINSAW
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_ChainSaw.Draw"
+"Weapon_Chainsaw.Draw"
 {
 	"channel"		"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_draw.wav"
 }
-"Weapon_ChainSaw.ClipEmpty"	
+"Weapon_Chainsaw.ClipEmpty"	
 {
 	"channel"		"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_NORM"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_empty.wav"
 }
-"Weapon_ChainSaw.Rev"	
+"Weapon_Chainsaw.Rev"	
 {
 	"channel"		"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_rev.wav"
 }
-"Weapon_ChainSaw.Fire"	
+"Weapon_Chainsaw.Fire"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_fire.wav"
 }
-"Weapon_ChainSaw.FireCrit"	
+"Weapon_Chainsaw.FireCrit"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_fire_crit.wav"
 }
-"Weapon_ChainSaw.WindUp"	
+"Weapon_Chainsaw.WindUp"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 	"wave"			")weapons/chainsaw_wind_up.wav"
 }
-"Weapon_ChainSaw.WindDown"	
+"Weapon_Chainsaw.WindDown"	
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
@@ -8937,8 +8930,11 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_64dB"
 	"volume"	".6"
-	"wave"		")weapons/knife_sniper_swing.wav"
-	"wave"		")weapons/knife_sniper_swing_02.wav"
+	"rndwave"
+	{
+		"wave"		")weapons/knife_sniper_swing.wav"
+		"wave"		")weapons/knife_sniper_swing_02.wav"
+	}
 }
 
 "Weapon_Sknife.MissCrit"
@@ -8967,10 +8963,7 @@
 	"channel"	"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_NORM"
 	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		")weapons/blade_hitworld.wav"
-	}
+	"wave"		")weapons/blade_hitworld.wav"
 }
 
 "Weapon_Sknife.Draw"
@@ -9384,7 +9377,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"pitch"		"95, 100"
+	"pitch"        "95, 105"
 	
 	"wave"		")weapons/supersyringegun_shoot.wav"
 }
@@ -9394,7 +9387,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"pitch"		"95, 100"
+	"pitch"        "95, 105"
 	
 	"wave"		")weapons/supersyringegun_shoot_crit.wav"
 }
@@ -11106,7 +11099,7 @@
 	"volume"	"1.0"
 	"pitch"		"94, 100"
 	
-	"wave"		")weapons/FAL_ReduxFP.wav"
+	"wave"		")weapons/FAL_RemasterFP.wav"
 }
 
 "Weapon_FAL.SingleCrit"
@@ -11116,7 +11109,7 @@
 	"volume"	"1.0"
 	"pitch"		"94, 100"
 	
-	"wave"		")weapons/FAL_ReduxFPCrit.wav"
+	"wave"		")weapons/FAL_RemasterFP_Crit.wav"
 }
 // ------------------------------------------------------------------------------------ //
 // BRRRT Launcher
@@ -11388,6 +11381,23 @@
 	"volume"	"1.0"
 	"wave"		")weapons/solarflare_shoot_crit.wav"
 }
+
+"Weapon_Solar.Reload"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".75"
+	"wave"		"weapons/solar_pyro_reload.wav"
+}
+
+"Weapon_Solar.WorldReload"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".75"
+	"wave"		"weapons/solar_pyro_reload.wav"
+}
+
 // ------------------------------------------------------------------------------------ //
 // THE FUCKING BUZZSAW
 // ------------------------------------------------------------------------------------ //
@@ -11443,6 +11453,7 @@
 	"volume"	"1.0"
 	"wave"		")weapons/sparkshotgun_shoot_crit.wav"
 }
+
 // ------------------------------------------------------------------------------------ //
 // RECOILLESS TOOB
 // ------------------------------------------------------------------------------------ //
@@ -12174,6 +12185,26 @@
 // ------------------------------------------------------------------------------------ //
 
 
+"Weapon_Garand.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"96, 100"
+	
+	"wave"		")weapons/Garand_Fire.wav"
+}
+
+"Weapon_Garand.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"96, 100"
+	
+	"wave"		")weapons/Garand_FireCrit.wav"
+}
+
 "Weapon_ShotgunGarand.Cock_Back"
 {
 	"channel"	"CHAN_STATIC"
@@ -12330,6 +12361,37 @@
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
 	"wave"		")weapons/explothrower_shoot_crit.wav"
+}
+
+"Weapon_FlameThrower.Reload"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".75"
+	"wave"		"weapons/flamethrower_reload.wav"
+}
+
+"Weapon_FlameThrower.WorldReload"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".75"
+	"wave"		"weapons/flamethrower_reload.wav"
+}
+
+"Weapon_Explothrower.Explosion"
+{
+	"channel"	"CHAN_WEAPON"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_95dB"
+	"pitch"		"PITCH_NORM"
+
+	"rndwave"
+	{
+			"wave"	")weapons/napalm_explode1.wav"
+			"wave"	")weapons/napalm_explode2.wav"
+			"wave"	")weapons/napalm_explode3.wav"
+	}
 }
 // ------------------------------------------------------------------------------------ //
 // M29
@@ -14508,10 +14570,10 @@
 }
 		
 // ------------------------------------------------------------------------------------ //
-// ChainSAW
+// ChainGrinder
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_ChainSAW_Heavy.Shoot"
+"Weapon_ChainGrinder.Shoot"
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
@@ -14520,13 +14582,30 @@
 	"wave"		")weapons/50calChainSAW_Single.wav"
 }
 
-"Weapon_ChainSAW_Heavy.ShootCrit"
+"Weapon_ChainGrinder.ShootCrit"
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
 	"pitch"		"95, 102"
 	"wave"		")weapons/50calChainSAW_SingleCrit.wav"
+}
+
+"Weapon_ChainGrinder.Pull"
+{
+	"channel"		"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".5"
+	"pitch"		"85, 95"
+	"wave"			")weapons/ChainGrinder_PullBolt.wav"
+}
+"Weapon_ChainGrinder.Release" 
+{
+	"channel"		"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".5"
+	"pitch"		"85, 95"
+	"wave"			")weapons/ChainGrinder_ReleaseBolt.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -14597,4 +14676,371 @@
 	"channel"		"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_NORM"
 	"wave"			")weapons/draw_smg_dm.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// WIRE TAP
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_WireTap.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_64dB"	
+	"volume"		"0.85"
+	"wave"			")weapons/WireTap_Shoot.wav"
+}
+"Weapon_WireTap.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_64dB"
+	"volume"		"0.85"
+	"wave"			")weapons/WireTap_ShootCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// EX VERMIN 8R
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_ShotgunScrapRig.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"99, 101"
+	
+	"wave"		")weapons/EXVermin8R_Fire.wav"
+}
+
+"Weapon_ShotgunScrapRig.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"99, 101"
+	
+	"wave"		")weapons/EXVermin8R_FireCrit.wav"
+}
+
+"Weapon_ShotgunScrapRig.Cock_Back"
+{
+	"channel"		"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".7"
+	"wave"			")weapons/EXVermin8R_cock_back.wav"
+}
+"Weapon_ShotgunScrapRig.Cock_Forward"
+{
+	"channel"		"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".7"
+	"wave"			")weapons/EXVermin8R_cock_forward.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// BARRAKADA KS-23
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_BarrakadaShotgun.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"85, 90"
+	"wave"		")weapons/ks23_fire.wav"
+}
+
+"Weapon_BarrakadaShotgun.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"85, 90"
+	"wave"		")weapons/shotgun_shoot_crit.wav"
+}
+
+"Weapon_BarrakadaShotgun.Empty"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"weapons/ks23_button.wav"
+}
+
+"Weapon_BarrakadaShotgun.Reload"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"pitch"			"88, 92"
+	"wave"		"weapons/ks23_insert.wav"
+}
+
+"Weapon_BarrakadaShotgun.WorldReload"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"pitch"			"88, 92"
+	"wave"		"weapons/ks23_insert.wav"
+}
+
+"Weapon_BarrakadaShotgun.Draw"
+{
+	"channel"	"CHAN_AUTO"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".5"
+	"wave"		"weapons/draw_minigun_heavy.wav"
+}
+
+"Weapon_BarrakadaShotgun.Cock_Back"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".5"
+	"pitch"		"80, 82"
+	"wave"		"weapons/ks23_pumpback.wav"
+}
+
+"Weapon_BarrakadaShotgun.Cock_Forward"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".5"
+	"pitch"		"80, 82"
+	"wave"		"weapons/ks23_pumpforward.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// ANGRI BEWM TOOB
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_BoomTube.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/BoomTube_Fire.wav"
+}
+
+"Weapon_BoomTube.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/BoomTube_FireCrit.wav"
+}
+
+"Weapon_BoomTube.Explode"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_98dB"
+	"volume"	"1"
+	"pitch"		"95, 100"
+	"wave"		"weapons/BoomTube_Explode.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// BEYR TRAMP
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_BearTrap.Deploy"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	".9"
+	"rndwave"
+	{
+	    "wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"misc/null.wav"
+		"wave"		"vo/taunts/heavy_taunts01.wav"
+		"wave"		"vo/taunts/heavy_taunts02.wav"
+		"wave"		"vo/taunts/heavy_taunts04.wav"
+		"wave"		"vo/taunts/heavy_taunts05.wav"
+		"wave"		"vo/taunts/heavy_taunts09.wav"
+		"wave"		"vo/taunts/heavy_taunts10.wav"
+		"wave"		"vo/taunts/heavy_taunts11.wav"
+		"wave"		"vo/taunts/heavy_taunts18.wav"
+		"wave"		"vo/taunts/heavy_taunts19.wav"
+		"wave"		"vo/heavy_autocappedintelliggence03.wav"
+		"wave"		"vo/heavy_award03.wav"
+		"wave"		"vo/heavy_domination01.wav"
+		"wave"		"vo/heavy_domination02.wav"
+		"wave"		"vo/heavy_domination05.wav"
+		"wave"		"vo/heavy_domination08.wav"
+		"wave"		"vo/heavy_domination14.wav"
+		"wave"		"vo/heavy_laughevil01.wav"
+		"wave"		"vo/heavy_laughevil02.wav"
+		"wave"		"vo/heavy_laughevil03.wav"
+		"wave"		"vo/heavy_laughevil04.wav"
+		"wave"		"vo/heavy_meleedare08.wav"
+		"wave"		"vo/heavy_meleedare09.wav"
+		"wave"		"vo/heavy_meleedare10.wav"
+		"wave"		"vo/heavy_positivevocalization05.wav"
+		"wave"		"vo/heavy_revenge02.wav"
+		"wave"		"vo/heavy_revenge05.wav"
+		"wave"		"vo/heavy_revenge08.wav"
+		"wave"		"vo/heavy_revenge15.wav"
+	}
+}
+
+"Weapon_BearTrap.Snap"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_95dB"
+	"volume"	"1.0"
+	"pitch"		"PITCH_NORM"
+	"rndwave"
+	{
+		"wave"		")weapons/BearTrap_Snap.wav"
+		"wave"		")weapons/BearTrap_Snap.wav"
+		"wave"		")weapons/BearTrap_Snap.wav"
+		"wave"		")weapons/BearTrap_Snap.wav"
+		"wave"		")weapons/BearTrap_Snap.wav"
+		"wave"		")weapons/BearTrap_Snap.wav"
+		"wave"		")weapons/BearTrap_Snap.wav"
+		"wave"		")weapons/BearTrap_Snap.wav"
+		"wave"		")weapons/BearTrap_SnapRare.wav"
+	}
+}
+
+// ------------------------------------------------------------------------------------ //
+// BURST SMG SCOUT
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_BurstSMG_Scout.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"98, 102"
+	
+	"wave"		")weapons/BurstScoutSMG_Fire.wav"
+}
+
+"Weapon_BurstSMG_Scout.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"98, 102"
+	
+	"wave"		")weapons/BurstScoutSMG_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// COMBAT SHOTGUN SCOUT
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_CombatShotgun_Scout.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"99, 101"
+	
+	"wave"		")weapons/CombatShotGun_Fire.wav"
+}
+
+"Weapon_CombatShotgun_Scout.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"0.9"
+	"pitch"		"99, 101"
+	
+	"wave"		")weapons/CombatShotGun_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Spritzenwerfer
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Spritzenwerfer.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"94, 101"
+	
+	"wave"		")weapons/Spritzenwerfer_Fire.wav"
+}
+
+"Weapon_Spritzenwerfer.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"94, 101"
+	
+	"wave"		")weapons/Spritzenwerfer_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Pyro Cannon
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_PyroCannon.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"100, 103"
+	"wave"		")weapons/PyroCannon_Fire.wav"
+}
+
+"Weapon_PyroCannon.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"100, 103"
+	"wave"		")weapons/PyroCannon_Fire_Crit.wav"
+}
+
+"Weapon_PyroCannon.Reload"
+{
+	"channel"		"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".5"
+	"pitch"		    "97, 100"
+	"wave"			")weapons/PyroCannon_Reload.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// K.I.Y Kit
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_KIYKit.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"85, 90"
+	"wave"		")weapons/Scatterbrain_fire.wav"
+}
+
+"Weapon_KIYKit.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"85, 90"
+	"wave"		")weapons/Scatterbrain_fire_crit.wav"
 }

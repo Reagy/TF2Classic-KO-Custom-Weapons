@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_medic_matsmg/c_medic_matsmg_large"
+	"$translucent" 1
+	$vertexcolor 1
+}
