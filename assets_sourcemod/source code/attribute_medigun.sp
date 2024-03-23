@@ -357,7 +357,7 @@ MRESReturn FireTouchHandle( Address aThis, int iCollide ) {
 	if( RoundToNearest( AttribHookFloat( 0.0, iWeapon, "custom_medigun_type" ) ) != CMEDI_FLAME )
 		return MRES_Ignored;
 
-	if( GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) == TeamSeenBy( iOwner, iCollide ) )
+	if( IsValidPlayer( iCollide ) && GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) == TeamSeenBy( iOwner, iCollide ) )
 		FireTouchHeal( aThis, iCollide, iOwner, iWeapon );
 
 	return MRES_Supercede;
