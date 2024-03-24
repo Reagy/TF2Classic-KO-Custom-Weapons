@@ -21,6 +21,16 @@ public Plugin:myinfo =
 //////////////////////    CODE LOL    ///////////////////////
 /////////////////////////////////////////////////////////////
 
+public OnPluginStart()
+{
+    HookEvent("teamplay_round_start", RoundStart);
+}
+
+public RoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+{
+    CreateTimer(5.0, ChangeCvar);
+}
+
 public void OnMapStart()
 {
     CreateTimer(5.0, ChangeCvar);
