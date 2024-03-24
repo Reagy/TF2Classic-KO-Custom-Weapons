@@ -372,6 +372,10 @@ public any Native_EntityInRadius( Handle hPlugin, int iParams ) {
 //lagcompensation->StartLagCompensation( pOwner, pOwner->GetCurrentCommand() );
 //lagcompensation->FinishLagCompensation( pOwner );
 
+/*could not get lag compensation functions to work, the classic team created a class in which lagcomp is started
+in the class's constructor and lagcomp is ended in the class's destructor so lagcomp would always clean itself up
+when the class went out of scope. just going to allocate some memory and instantiate one because i can't be bothered to
+figure out why this isn't working*/
 MemoryBlock mbFuckThis;
 public any Native_StartLagComp( Handle hPlugin, int iParams ) {
 	int iPlayer = GetNativeCell( 1 );
@@ -658,6 +662,9 @@ static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 
 //forward void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo );
 MRESReturn Hook_OnTakeDamagePre( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	if( !IsValidPlayer( iThis ) )
+		return MRES_Handled;
+
 	Call_StartForward( g_OnTakeDamageTF );
 
 	Call_PushCell( iThis );
@@ -669,6 +676,9 @@ MRESReturn Hook_OnTakeDamagePre( int iThis, DHookReturn hReturn, DHookParam hPar
 }
 //forward void OnTakeDamagePostTF( int iTarget, Address aTakeDamageInfo );
 MRESReturn Hook_OnTakeDamagePost( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	if( !IsValidPlayer( iThis ) )
+		return MRES_Handled;
+
 	Call_StartForward( g_OnTakeDamagePostTF );
 
 	Call_PushCell( iThis );
@@ -680,6 +690,9 @@ MRESReturn Hook_OnTakeDamagePost( int iThis, DHookReturn hReturn, DHookParam hPa
 }
 //forward void OnTakeDamageAliveTF( int iTarget, Address aTakeDamageInfo );
 MRESReturn Hook_OnTakeDamageAlivePre( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	if( !IsValidPlayer( iThis ) )
+		return MRES_Handled;
+
 	Call_StartForward( g_OnTakeDamageAliveTF );
 
 	Call_PushCell( iThis );
@@ -691,6 +704,9 @@ MRESReturn Hook_OnTakeDamageAlivePre( int iThis, DHookReturn hReturn, DHookParam
 }
 //forward void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo );
 MRESReturn Hook_OnTakeDamageAlivePost( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	if( !IsValidPlayer( iThis ) )
+		return MRES_Handled;
+
 	Call_StartForward( g_OnTakeDamageAlivePostTF );
 
 	Call_PushCell( iThis );
@@ -726,6 +742,7 @@ MRESReturn Detour_ApplyOnDamageModifyRulesPost( Address aThis, DHookReturn hRetu
 
 	if( tfInfo.iCritType == CT_MINI ) {
 		tfInfo.iFlags = tfInfo.iFlags & ~( 1 << 20 );
+		//todo: move to gamedata
 		StoreToEntity( iTarget, 6049, 1, NumberType_Int8 ); //6248?
 		StoreToEntity( iTarget, 6502, 1, NumberType_Int32 ); //6252?
 	}
@@ -746,7 +763,6 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 
 	float flMult = 0.5;
 
-	//TODO: pass weapon as parameter instead of getting activeweapon
 	flMult = AttribHookFloat( flMult, iPlayer, "mult_patient_overheal_penalty" );
 	int iWeapon = GetEntPropEnt( iPlayer, Prop_Send, "m_hActiveWeapon" );
 	if( iWeapon != -1 ) {
@@ -758,6 +774,7 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 	}
 	flMult += 1.0;
 
+	//todo: round to multiple of 5
 	int iBuffedMax = RoundFloat( float(iMaxHealth) * flMult );
 
 	if( !( iFlags & HF_NOCRITHEAL ) ) {
