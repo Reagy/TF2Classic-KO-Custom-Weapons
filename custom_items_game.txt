@@ -27160,22 +27160,22 @@ Weapon from: 'The One Of Wonders'"
 			}		
 			"visuals_red"
 			{
-				"trail_effect"			"mega_health_aura_red"		//"kritz_beam_muzzle_uber_red"
+				"trail_effect"			"kritz_beam_muzzle_uber_red"		//"kritz_beam_muzzle_uber_red"
 				"explosion_effect"		"rr_spell_overheal_red"
 			}
 			"visuals_blu"
 			{
-				"trail_effect"			"mega_health_aura_blue"		//"kritz_beam_muzzle_uber_blue"
+				"trail_effect"			"kritz_beam_muzzle_uber_blue"		//"kritz_beam_muzzle_uber_blue"
 				"explosion_effect"		"rr_spell_overheal_blue"
 			}
 			"visuals_grn"
 			{
-				"trail_effect"			"mega_health_aura_green"	//"kritz_beam_muzzle_uber_green"
+				"trail_effect"			"kritz_beam_muzzle_uber_green"	//"kritz_beam_muzzle_uber_green"
 				"explosion_effect"		"rr_spell_overheal_green"
 			}
 			"visuals_ylw"
 			{
-				"trail_effect"			"mega_health_aura_yellow"	//"kritz_beam_muzzle_uber_yellow"
+				"trail_effect"			"kritz_beam_muzzle_uber_yellow"	//"kritz_beam_muzzle_uber_yellow"
 				"explosion_effect"		"rr_spell_overheal_yellow"
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
@@ -36238,22 +36238,22 @@ Weapon by: 'The One Of Wonders'"
 			}		
 			"visuals_red"
 			{
-				"trail_effect"			"mega_health_aura_red"		//"kritz_beam_muzzle_uber_red"
+				"trail_effect"			"kritz_beam_muzzle_uber_red"		//"kritz_beam_muzzle_uber_red"
 				"explosion_effect"		"rr_spell_overheal_red"
 			}
 			"visuals_blu"
 			{
-				"trail_effect"			"mega_health_aura_blue"		//"kritz_beam_muzzle_uber_blue"
+				"trail_effect"			"kritz_beam_muzzle_uber_blue"		//"kritz_beam_muzzle_uber_blue"
 				"explosion_effect"		"rr_spell_overheal_blue"
 			}
 			"visuals_grn"
 			{
-				"trail_effect"			"mega_health_aura_green"	//"kritz_beam_muzzle_uber_green"
+				"trail_effect"			"kritz_beam_muzzle_uber_green"	//"kritz_beam_muzzle_uber_green"
 				"explosion_effect"		"rr_spell_overheal_green"
 			}
 			"visuals_ylw"
 			{
-				"trail_effect"			"mega_health_aura_yellow"	//"kritz_beam_muzzle_uber_yellow"
+				"trail_effect"			"kritz_beam_muzzle_uber_yellow"	//"kritz_beam_muzzle_uber_yellow"
 				"explosion_effect"		"rr_spell_overheal_yellow"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
