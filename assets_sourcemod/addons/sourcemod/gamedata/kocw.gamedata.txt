@@ -183,6 +183,11 @@
 				"linux"		"473"
 			}
 			
+			"CTFPlayer::Event_KilledOther"
+			{
+				"linux"		"69"
+			}
+			
 			"CTFPlayer::m_Shared"
 			{
 				"linux"		"4268"
@@ -548,6 +553,26 @@
 					}
 				}
 			}
+			"CTFPlayer::Event_KilledOther"
+			{
+				"offset"		"CTFPlayer::Event_KilledOther"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"victim"
+					{
+						"type"	"cbaseentity"
+					}
+					"info"
+					{
+						"type"	"objectptr"
+					}
+				}
+			}
+			
 			"CTFPlayerShared::AirblastPlayer"
 			{
 				"signature"		"CTFPlayerShared::AirblastPlayer"
@@ -865,22 +890,6 @@
 						"type"	"cbaseentity"
 					}
 				}
-			}
-			
-			"CTFCoilGun::GetProjectileSpeed"
-			{
-				"signature"		"CTFCoilGun::GetProjectileSpeed"
-				"callconv"		"thiscall"
-				"return"		"float"
-				"this"			"entity"
-			}
-			
-			"CWeaponMedigun::GetHealSound"
-			{
-				"signature"		"CWeaponMedigun::GetHealSound"
-				"callconv"		"thiscall"
-				"return"		"charptr"
-				"this"			"entity"
 			}
 			
             //projectiles
@@ -1219,12 +1228,6 @@
 				"linux"		"@_ZN9CTFWrench14GetRepairValueEv"
 			}
 			
-			"CTFCoilGun::GetProjectileSpeed"
-			{
-				"library"	"server"
-				"linux"		"@_ZN10CTFCoilGun18GetProjectileSpeedEv"
-			}
-			
             //projectiles
             
             "CTFBaseRocket::Spawn"
@@ -1253,11 +1256,6 @@
 				"linux"		"@_ZN15CBaseProjectile25ResetCollideWithTeammatesEv"
 			}
 			
-			"CTFGrenadeStickybombProjectile::Create"
-			{
-				"library"	"server"
-				"linux"		"@_ZN30CTFGrenadeStickybombProjectile6CreateERK6VectorRK6QAngleS2_S2_P11CBaseEntityS7_"
-			}
 			"CTFGrenadePipebombProjectile::Create"
 			{
 				"library"	"server"
