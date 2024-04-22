@@ -9,62 +9,59 @@
 #include <sourcescramble>
 
 //inventory
-Handle hEconGetAttributeManager;
-Handle hPlayerGetAttributeManager;
-Handle hPlayerGetAttributeContainer;
-Handle hApplyAttributeFloat;
-Handle hIterateAttributes;
+Handle g_sdkApplyAttributeFloat;
+Handle g_sdkIterateAttributes;
 
-Handle hGetEntitySlot;
-Handle hGetMedigunCharge;
+Handle g_sdkGetEntitySlot;
+Handle g_sdkGetMedigunCharge;
 
 //think
-Handle hSetNextThink;
+Handle g_sdkSetNextThink;
 
-Handle hFindInRadius;
+Handle g_sdkFindInRadius;
 
 //damage
-DynamicHook hOnTakeDamage;
-DynamicHook hOnTakeDamageAlive;
-DynamicDetour hModifyRules;
+DynamicHook g_dhOnTakeDamage;
+DynamicHook g_dhOnTakeDamageAlive;
+DynamicDetour g_dtModifyRules;
 
-GlobalForward g_OnTakeDamageTF;
-GlobalForward g_OnTakeDamagePostTF;
-GlobalForward g_OnTakeDamageAliveTF;
-GlobalForward g_OnTakeDamageAlivePostTF;
+GlobalForward g_fwdOnTakeDamageTF;
+GlobalForward g_fwdOnTakeDamagePostTF;
+GlobalForward g_fwdOnTakeDamageAliveTF;
+GlobalForward g_fwdOnTakeDamageAlivePostTF;
+GlobalForward g_fwdOnTakeDamageBuilding;
 
-GlobalForward g_OnTakeDamageBuilding;
-
-Handle hApplyPushFromDamage;
+Handle g_sdkApplyPushFromDamage;
 
 Address offs_CTFPlayerShared_pOuter;
 Address offs_CTFPlayer_mShared;
 Address offs_CTFPlayer_pCurrentCommand;
 Address g_iCTFGameStats;
-Address g_aLagCompensation;
 
-Handle hCreateLagCompensation;
-Handle hDestroyLagCompensation;
+Handle g_sdkCreateLagCompensation;
+Handle g_sdkDestroyLagCompensation;
 
-StringMap g_AllocPooledStringCache;
+StringMap g_smAllocPooledStringCache;
 
-Handle hTakeHealth;
-Handle hGetMaxHealth;
-Handle hGetBuffedMaxHealth;
+Handle g_sdkTakeHealth;
+Handle g_sdkGetMaxHealth;
 
-Handle hSetSolid;
-Handle hSetSolidFlags;
-Handle hSetGroup;
-Handle hSetSize;
+Handle g_sdkSetSolid;
+Handle g_sdkSetSolidFlags;
+Handle g_sdkSetGroup;
+Handle g_sdkSetSize;
 
-Handle hPlayerHealedOther;
+Handle g_sdkHeal;
+Handle g_sdkHealTimed;
+Handle g_sdkStopHealing;
+Handle g_sdkPlayerHealedOther;
 
 public Plugin myinfo =
 {
 	name = "KOCW Tools",
 	author = "Noclue",
 	description = "Standard functions for custom weapons.",
-	version = "1.6.1",
+	version = "1.7",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -86,7 +83,6 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 
 	//think functions
 	CreateNative( "SetNextThink", Native_SetNextThink );
-	//CreateNative( "GetNextThink", Native_GetNextThink );
 
 	//memory functions
 	CreateNative( "GetPlayerFromShared", Native_GetPlayerFromShared );
@@ -103,6 +99,9 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 	CreateNative( "SetSize", Native_SetSize );
 
 	CreateNative( "HealPlayer", Native_HealPlayer );
+	CreateNative( "AddPlayerHealer", Native_AddPlayerHealer );
+	CreateNative( "AddPlayerHealerTimed", Native_AddPlayerHealerTimed );
+	CreateNative( "RemovePlayerHealer", Native_RemovePlayerHealer );
 
 	CreateNative( "StartLagCompensation", Native_StartLagComp );
 	CreateNative( "FinishLagCompensation", Native_EndLagComp );
@@ -115,9 +114,9 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 }
 
 public void OnPluginStart() {
-	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
-
 	HookEvent( EVENT_POSTINVENTORY, Event_PostInventory, EventHookMode_Post );
+	
+	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
 	/*
 		OBJECT FUNCTIONS
@@ -126,84 +125,55 @@ public void OnPluginStart() {
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseEntity::SetCollisionGroup" );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hSetGroup = EndPrepSDKCall();
+	g_sdkSetGroup = EndPrepSDKCallSafe( "CBaseEntity::SetCollisionGroup" );
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseEntity::SetSize" );
 	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
 	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
-	hSetSize = EndPrepSDKCall();
+	g_sdkSetSize = EndPrepSDKCallSafe( "CBaseEntity::SetSize" );
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CCollisionProperty::SetSolid" );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hSetSolid = EndPrepSDKCall();
+	g_sdkSetSolid = EndPrepSDKCallSafe( "CCollisionProperty::SetSolid" );
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CCollisionProperty::SetSolidFlags" );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hSetSolidFlags = EndPrepSDKCall();
+	g_sdkSetSolidFlags = EndPrepSDKCallSafe( "CCollisionProperty::SetSolidFlags" );
 
 	/*
 		INVENTORY FUNCTIONS
 	*/
 
-	//CEconEntity::GetAttributeManager(void)
-	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CEconEntity::GetAttributeManager" );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	hEconGetAttributeManager = EndPrepSDKCall();
-	if(!hEconGetAttributeManager)
-		SetFailState("SDKCall setup for CEconEntity::GetAttributeManager failed");
-
-	//CTFPlayer::GetAttributeManager(void)
-	StartPrepSDKCall(SDKCall_Player);
-	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CTFPlayer::GetAttributeManager");
-	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
-	hPlayerGetAttributeManager = EndPrepSDKCall();
-	if(!hPlayerGetAttributeManager)
-		SetFailState("SDKCall setup for CTFPlayer::GetAttributeManager failed");
-
-	StartPrepSDKCall(SDKCall_Player);
-	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CTFPlayer::GetAttributeContainer");
-	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
-	hPlayerGetAttributeContainer = EndPrepSDKCall();
-	if(!hPlayerGetAttributeContainer)
-		SetFailState("SDKCall setup for CTFPlayer::GetAttributeContainer failed");
-
 	//CAttributeManager::ApplyAttributeFloat( float flValue, const CBaseEntity *pEntity, string_t strAttributeClass )
 	StartPrepSDKCall(SDKCall_Raw);
-	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CAttributeManager::ApplyAttributeFloat");
+	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CAttributeManager::ApplyAttributeFloat" );
 	PrepSDKCall_SetReturnInfo(SDKType_Float, SDKPass_Plain);
 	PrepSDKCall_AddParameter(SDKType_Float, SDKPass_Plain); //flvalue
 	PrepSDKCall_AddParameter(SDKType_CBaseEntity, SDKPass_Pointer); //pentity
 	PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain); //strattributeclass
-	hApplyAttributeFloat = EndPrepSDKCall();
-	if(!hApplyAttributeFloat)
-		SetFailState("SDKCall setup for CAttributeManager::ApplyAttributeFloat failed");
+	g_sdkApplyAttributeFloat = EndPrepSDKCallSafe( "CAttributeManager::ApplyAttributeFloat" );
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CEconItemView::IterateAttributes" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	hIterateAttributes = EndPrepSDKCall();
+	g_sdkIterateAttributes = EndPrepSDKCallSafe( "CEconItemView::IterateAttributes" );
 
 	//CEconEntity *CTFPlayer::GetEntityForLoadoutSlot( int iSlot )
 	StartPrepSDKCall( SDKCall_Player );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayer::GetEntityForLoadoutSlot" );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //int
 	PrepSDKCall_SetReturnInfo( SDKType_CBaseEntity, SDKPass_Pointer );
-	hGetEntitySlot = EndPrepSDKCall();
-	if ( !hGetEntitySlot )
-		SetFailState( "SDKCall setup for CTFPlayer::GetEntityForLoadoutSlot failed" );
+	g_sdkGetEntitySlot = EndPrepSDKCallSafe( "CTFPlayer::GetEntityForLoadoutSlot" );
 
 	//float CTFPlayer::GetMedigunCharge( void )
 	StartPrepSDKCall( SDKCall_Player );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayer::GetMedigunCharge" );
 	PrepSDKCall_SetReturnInfo( SDKType_Float, SDKPass_Plain );
-	hGetMedigunCharge = EndPrepSDKCall();
-	if( !hGetMedigunCharge )
-		SetFailState( "SDKCall setup for CTFPlayer::GetMedigunCharge failed" );
+	g_sdkGetMedigunCharge = EndPrepSDKCallSafe( "CTFPlayer::GetMedigunCharge" );
 
 	/*
 		THINK FUNCTIONS
@@ -214,15 +184,13 @@ public void OnPluginStart() {
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseEntity::SetNextThink" );
 	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
-	hSetNextThink = EndPrepSDKCall();
-	if ( !hSetNextThink )
-		SetFailState( "SDKCall setup for CBaseEntity::SetNextThink failed" );
+	g_sdkSetNextThink = EndPrepSDKCallSafe( "CBaseEntity::SetNextThink" );
 
 	/*
 		STRING FUNCTIONS
 	*/
 
-	g_AllocPooledStringCache = new StringMap();
+	g_smAllocPooledStringCache = new StringMap();
 
 	/*
 		MEMORY FUNCTIONS
@@ -234,36 +202,34 @@ public void OnPluginStart() {
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CEnableLagCompensation::CEnableLagCompensation" );
 	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer );
-	hCreateLagCompensation = EndPrepSDKCall();
+	g_sdkCreateLagCompensation = EndPrepSDKCallSafe( "CEnableLagCompensation::CEnableLagCompensation" );
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CEnableLagCompensation::~CEnableLagCompensation" );
-	hDestroyLagCompensation = EndPrepSDKCall();
+	g_sdkDestroyLagCompensation = EndPrepSDKCallSafe( "CEnableLagCompensation::~CEnableLagCompensation" );
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameStats::Event_PlayerHealedOther" );
 	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
-	hPlayerHealedOther = EndPrepSDKCall();
+	g_sdkPlayerHealedOther = EndPrepSDKCallSafe( "CTFGameStats::Event_PlayerHealedOther" );
 
 	/*
 		DAMAGE FUNCTIONS
 	*/
 
-	hOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
-	hOnTakeDamageAlive = DynamicHook.FromConf( hGameConf, "CTFPlayer::OnTakeDamageAlive" );
-	hModifyRules = DynamicDetour.FromConf( hGameConf, "CTFGameRules::ApplyOnDamageModifyRules" );
+	g_dhOnTakeDamage = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::OnTakeDamage" );
+	g_dhOnTakeDamageAlive = DynamicHookFromConfSafe( hGameConf, "CTFPlayer::OnTakeDamageAlive" );
+	g_dtModifyRules = DynamicDetourFromConfSafe( hGameConf, "CTFGameRules::ApplyOnDamageModifyRules" );
 
-	hModifyRules.Enable( Hook_Pre, Detour_ApplyOnDamageModifyRulesPre );
-	hModifyRules.Enable( Hook_Post, Detour_ApplyOnDamageModifyRulesPost );
+	g_dtModifyRules.Enable( Hook_Pre, Detour_ApplyOnDamageModifyRulesPre );
+	g_dtModifyRules.Enable( Hook_Post, Detour_ApplyOnDamageModifyRulesPost );
 
 	StartPrepSDKCall( SDKCall_Player );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayer::ApplyPushFromDamage" );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByValue );
-	hApplyPushFromDamage = EndPrepSDKCall();
-	if ( !hApplyPushFromDamage )
-		SetFailState( "SDKCall setup for CTFPlayer::ApplyPushFromDamage failed" );
+	g_sdkApplyPushFromDamage = EndPrepSDKCallSafe( "CTFPlayer::ApplyPushFromDamage" );
 
 	if( bLateLoad ) {
 		for(int i = 1; i <= MaxClients; i++) {
@@ -274,7 +240,7 @@ public void OnPluginStart() {
 	}
 
 	offs_CTFPlayerShared_pOuter = GameConfGetAddressOffset( hGameConf, "CTFPlayerShared::m_pOuter" );
-	offs_CTFPlayer_mShared = GameConfGetAddressOffset( hGameConf, "CTFPlayer::m_Shared" );
+	offs_CTFPlayer_mShared = view_as<Address>( FindSendPropInfo( "CTFPlayer", "m_Shared" ) ); //GameConfGetAddressOffset( hGameConf, "CTFPlayer::m_Shared" );
 	offs_CTFPlayer_pCurrentCommand = GameConfGetAddressOffset( hGameConf, "CTFPlayer::m_pCurrentCommand" );
 
 	StartPrepSDKCall( SDKCall_EntityList );
@@ -283,7 +249,7 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL | VDECODE_FLAG_ALLOWWORLD );
 	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
 	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
-	hFindInRadius = EndPrepSDKCall();
+	g_sdkFindInRadius = EndPrepSDKCallSafe( "CGlobalEntityList::FindEntityInSphere" );
 
 	/*
 		PLAYER FUNCTIONS
@@ -297,31 +263,51 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
 	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	hTakeHealth = EndPrepSDKCall();
+	g_sdkTakeHealth = EndPrepSDKCallSafe( "CTFPlayer::TakeHealth" );
 
 	StartPrepSDKCall( SDKCall_Player );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::GetMaxHealth" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	hGetMaxHealth = EndPrepSDKCall();
+	g_sdkGetMaxHealth = EndPrepSDKCallSafe( "CTFPlayer::GetMaxHealth" );
 
 	StartPrepSDKCall( SDKCall_Raw );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetBuffedMaxHealth" );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	hGetBuffedMaxHealth = EndPrepSDKCall();
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::Heal" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
+	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
+	g_sdkHeal = EndPrepSDKCallSafe( "CTFPlayerShared::Heal" );
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::StopHealing" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkStopHealing = EndPrepSDKCallSafe( "CTFPlayerShared::StopHealing" );
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::HealTimed" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
+	g_sdkHealTimed = EndPrepSDKCallSafe( "CTFPlayerShared::HealTimed" );
 
 	delete hGameConf;
 
-	g_OnTakeDamageTF = new GlobalForward( "OnTakeDamageTF", ET_Ignore, Param_Cell, Param_Cell );
-	g_OnTakeDamagePostTF = new GlobalForward( "OnTakeDamagePostTF", ET_Ignore, Param_Cell, Param_Cell );
-	g_OnTakeDamageAliveTF = new GlobalForward( "OnTakeDamageAliveTF", ET_Ignore, Param_Cell, Param_Cell );
-	g_OnTakeDamageAlivePostTF = new GlobalForward( "OnTakeDamageAlivePostTF", ET_Ignore, Param_Cell, Param_Cell );
+	g_fwdOnTakeDamageTF = new GlobalForward( "OnTakeDamageTF", ET_Ignore, Param_Cell, Param_Cell );
+	g_fwdOnTakeDamagePostTF = new GlobalForward( "OnTakeDamagePostTF", ET_Ignore, Param_Cell, Param_Cell );
+	g_fwdOnTakeDamageAliveTF = new GlobalForward( "OnTakeDamageAliveTF", ET_Ignore, Param_Cell, Param_Cell );
+	g_fwdOnTakeDamageAlivePostTF = new GlobalForward( "OnTakeDamageAlivePostTF", ET_Ignore, Param_Cell, Param_Cell );
 
-	g_OnTakeDamageBuilding = new GlobalForward( "OnTakeDamageBuilding", ET_Ignore, Param_Cell, Param_Cell );
+	g_fwdOnTakeDamageBuilding = new GlobalForward( "OnTakeDamageBuilding", ET_Ignore, Param_Cell, Param_Cell );
 }
 
 
 public void OnMapEnd() {
-	g_AllocPooledStringCache.Clear();
+	g_smAllocPooledStringCache.Clear();
 }
 
 bool g_bPlayerHooked[MAXPLAYERS+1] = { false, ... };
@@ -341,17 +327,17 @@ public void OnClientConnected( int iClient ) {
 	g_bPlayerHooked[iClient] = false;
 }
 void DoPlayerHooks( int iPlayer ) {
-	hOnTakeDamage.HookEntity( Hook_Pre, iPlayer, Hook_OnTakeDamagePre );
-	hOnTakeDamage.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamagePost );
-	hOnTakeDamageAlive.HookEntity( Hook_Pre, iPlayer, Hook_OnTakeDamageAlivePre );
-	hOnTakeDamageAlive.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamageAlivePost );
+	g_dhOnTakeDamage.HookEntity( Hook_Pre, iPlayer, Hook_OnTakeDamagePre );
+	g_dhOnTakeDamage.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamagePost );
+	g_dhOnTakeDamageAlive.HookEntity( Hook_Pre, iPlayer, Hook_OnTakeDamageAlivePre );
+	g_dhOnTakeDamageAlive.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamageAlivePost );
 }
 
 public void OnEntityCreated( int iEntity ) {
 	static char szEntityName[ 32 ];
 	GetEntityClassname( iEntity, szEntityName, sizeof( szEntityName ) );
 	if( StrContains( szEntityName, "obj_", false ) == 0 )
-		hOnTakeDamage.HookEntity( Hook_Pre, iEntity, Hook_OnTakeDamageBuilding );
+		g_dhOnTakeDamage.HookEntity( Hook_Pre, iEntity, Hook_OnTakeDamageBuilding );
 }
 
 public any Native_EntityInRadius( Handle hPlugin, int iParams ) {
@@ -359,7 +345,7 @@ public any Native_EntityInRadius( Handle hPlugin, int iParams ) {
 	float vecSource[3]; GetNativeArray( 2, vecSource, 3 );
 	float flRadius = GetNativeCell( 3 );	
 
-	return SDKCall( hFindInRadius, iStart, vecSource, flRadius );
+	return SDKCall( g_sdkFindInRadius, iStart, vecSource, flRadius );
 }
 
 /*
@@ -382,10 +368,10 @@ public any Native_StartLagComp( Handle hPlugin, int iParams ) {
 	if( !IsValidPlayer( iPlayer ) )
 		return 0;
 
-	Address aUserCmd = LoadFromEntity( iPlayer, view_as<int>(offs_CTFPlayer_pCurrentCommand) );
+	Address aUserCmd = LoadFromEntity( iPlayer, view_as<int>( offs_CTFPlayer_pCurrentCommand ) );
 
 	mbFuckThis = new MemoryBlock( 3 );
-	SDKCall( hCreateLagCompensation, mbFuckThis.Address, iPlayer, aUserCmd, true );
+	SDKCall( g_sdkCreateLagCompensation, mbFuckThis.Address, iPlayer, aUserCmd, true );
 
 	return 0;
 }
@@ -394,7 +380,7 @@ public any Native_EndLagComp( Handle hPlugin, int iParams ) {
 	if( !IsValidPlayer( iPlayer ) )
 		return 0;
 
-	SDKCall( hDestroyLagCompensation, mbFuckThis.Address );
+	SDKCall( g_sdkDestroyLagCompensation, mbFuckThis.Address );
 	delete mbFuckThis;
 
 	return 0;
@@ -408,7 +394,7 @@ public any Native_SetSolid( Handle hPlugin, int iParams ) {
 	iSolid = GetNativeCell( 2 );
 
 	Address aCollision = GetEntityAddress( iEntity ) + address( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
-	SDKCall( hSetSolid, aCollision, iSolid );
+	SDKCall( g_sdkSetSolid, aCollision, iSolid );
 
 	return 0;
 }
@@ -419,7 +405,7 @@ public any Native_SetSolidFlags( Handle hPlugin, int iParams ) {
 	iFlags = GetNativeCell( 2 );
 
 	Address aCollision = GetEntityAddress( iEntity ) + address( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
-	SDKCall( hSetSolidFlags, aCollision, iFlags );
+	SDKCall( g_sdkSetSolidFlags, aCollision, iFlags );
 
 	return 0;
 }
@@ -429,7 +415,7 @@ public any Native_SetCollisionGroup( Handle hPlugin, int iParams ) {
 	iEntity = GetNativeCell( 1 );
 	iGroup = GetNativeCell( 2 );
 
-	SDKCall( hSetGroup, iEntity, iGroup );
+	SDKCall( g_sdkSetGroup, iEntity, iGroup );
 
 	return 0;
 }
@@ -441,7 +427,7 @@ public any Native_SetSize( Handle hPlugin, int iParams ) {
 	GetNativeArray( 2, vecSizeMin, 3 );
 	GetNativeArray( 3, vecSizeMax, 3 );
 
-	SDKCall( hSetSize, iEntity, vecSizeMin, vecSizeMax );
+	SDKCall( g_sdkSetSize, iEntity, vecSizeMin, vecSizeMax );
 
 	return 0;
 }
@@ -462,7 +448,7 @@ public any Native_AllocPooledString( Handle hPlugin, int iParams ) {
 //thanks tf2attributes, never would have figured this black magic out in a million years
 stock Address AllocPooledString( const char[] sValue ) {
 	Address aValue;
-	if ( g_AllocPooledStringCache.GetValue( sValue, aValue ) ) {
+	if ( g_smAllocPooledStringCache.GetValue( sValue, aValue ) ) {
 		return aValue;
 	}
 	
@@ -479,7 +465,7 @@ stock Address AllocPooledString( const char[] sValue ) {
 	aValue = address( GetEntData( iEntity, iOffset ) );
 	SetEntData( iEntity, iOffset, pOrig );
 	
-	g_AllocPooledStringCache.SetValue( sValue, aValue );
+	g_smAllocPooledStringCache.SetValue( sValue, aValue );
 	return aValue;
 }
 
@@ -491,14 +477,18 @@ stock Address AllocPooledString( const char[] sValue ) {
 	The function is a template function, and every version except the string_t version was inlined by the compiler, so it's behavior has to be recreated manually.
 */
 
+//todo: these appear to no longer be inlined
+
 //native float AttribHookFloat( float flValue, int iEntity, const char[] sAttributeClass );
 public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
 	float flValue = GetNativeCell( 1 );
 	int iEntity = GetNativeCell( 2 );
-
-	if( !( IsValidEdict( iEntity ) && HasEntProp( iEntity, Prop_Send, "m_AttributeManager" ) ) ){
+	if( !IsValidEdict( iEntity ) )
 		return flValue;
-	}
+
+	int iManagerOffset = GetEntSendPropOffs( iEntity, "m_AttributeManager", true );
+	if( iManagerOffset == -1 )
+		return flValue;
 	
 	int iBuffer;
 	GetNativeStringLength( 3, iBuffer );
@@ -506,13 +496,9 @@ public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
 	GetNativeString( 3, sAttributeClass, iBuffer );
 
 	Address aStringAlloc = AllocPooledString( sAttributeClass ); //string needs to be allocated before the function will recognize it
-	Address aManager;
-	if( iEntity <= MaxClients )
-		aManager = SDKCall( hPlayerGetAttributeManager, iEntity );
-	else
-		aManager = SDKCall( hEconGetAttributeManager, iEntity );
+	Address aManager = GetEntityAddress( iEntity ) + view_as<Address>( iManagerOffset );
 		
-	return SDKCall( hApplyAttributeFloat, aManager, flValue, iEntity, aStringAlloc );
+	return SDKCall( g_sdkApplyAttributeFloat, aManager, flValue, iEntity, aStringAlloc );
 }
 
 
@@ -541,7 +527,7 @@ public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 	}
 		
 	Address aStringAlloc = AllocPooledString( szAttributeClass );
-	Address aAttribute = SDKCall( hIterateAttributes, aWeapon + address( iItemOffset ), aStringAlloc );
+	Address aAttribute = SDKCall( g_sdkIterateAttributes, aWeapon + address( iItemOffset ), aStringAlloc );
 
 	if( aAttribute == Address_Null ) {
 		SetNativeString( 1, "", GetNativeCell( 2 ) );
@@ -559,12 +545,12 @@ public any Native_GetEntitySlot( Handle hPlugin, int iParams ) {
 	int iEntity = GetNativeCell( 1 );
 	int iIndex = GetNativeCell( 2 );
 
-	return SDKCall( hGetEntitySlot, iEntity, iIndex );
+	return SDKCall( g_sdkGetEntitySlot, iEntity, iIndex );
 }
 
 public any Native_GetMedigunCharge( Handle hPlugin, int iParams ) {
 	int iEntity = GetNativeCell( 1 );
-	return SDKCall( hGetMedigunCharge, iEntity );
+	return SDKCall( g_sdkGetMedigunCharge, iEntity );
 }
 
 /*
@@ -580,7 +566,7 @@ public any Native_SetNextThink( Handle hPlugin, int iParams ) {
 	char[] sThinkContext = new char[ ++iBuffer ];
 	GetNativeString( 3, sThinkContext, iBuffer );
 
-	SDKCall( hSetNextThink, iEntity, flNextThink, sThinkContext );
+	SDKCall( g_sdkSetNextThink, iEntity, flNextThink, sThinkContext );
 
 	return 1;
 }
@@ -609,7 +595,7 @@ public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
 	float vecDir[3]; 
 	GetNativeArray( 3, vecDir, 3 );
 
-	return SDKCall( hApplyPushFromDamage, iPlayer, aDamageInfo, vecDir );
+	return SDKCall( g_sdkApplyPushFromDamage, iPlayer, aDamageInfo, vecDir );
 } 
 
 static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
@@ -665,7 +651,7 @@ MRESReturn Hook_OnTakeDamagePre( int iThis, DHookReturn hReturn, DHookParam hPar
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
 
-	Call_StartForward( g_OnTakeDamageTF );
+	Call_StartForward( g_fwdOnTakeDamageTF );
 
 	Call_PushCell( iThis );
 	Call_PushCell( hParams.GetAddress( 1 ) );
@@ -679,7 +665,7 @@ MRESReturn Hook_OnTakeDamagePost( int iThis, DHookReturn hReturn, DHookParam hPa
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
 
-	Call_StartForward( g_OnTakeDamagePostTF );
+	Call_StartForward( g_fwdOnTakeDamagePostTF );
 
 	Call_PushCell( iThis );
 	Call_PushCell( hParams.GetAddress( 1 ) );
@@ -693,7 +679,7 @@ MRESReturn Hook_OnTakeDamageAlivePre( int iThis, DHookReturn hReturn, DHookParam
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
 
-	Call_StartForward( g_OnTakeDamageAliveTF );
+	Call_StartForward( g_fwdOnTakeDamageAliveTF );
 
 	Call_PushCell( iThis );
 	Call_PushCell( hParams.GetAddress( 1 ) );
@@ -707,7 +693,7 @@ MRESReturn Hook_OnTakeDamageAlivePost( int iThis, DHookReturn hReturn, DHookPara
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
 
-	Call_StartForward( g_OnTakeDamageAlivePostTF );
+	Call_StartForward( g_fwdOnTakeDamageAlivePostTF );
 
 	Call_PushCell( iThis );
 	Call_PushCell( hParams.GetAddress( 1 ) );
@@ -719,7 +705,7 @@ MRESReturn Hook_OnTakeDamageAlivePost( int iThis, DHookReturn hReturn, DHookPara
 
 //forward void OnTakeDamageBuilding( int iBuilding, Address aTakeDamageInfo );
 MRESReturn Hook_OnTakeDamageBuilding( int iThis, DHookReturn hReturn, DHookParam hParams ) {
-	Call_StartForward( g_OnTakeDamageBuilding );
+	Call_StartForward( g_fwdOnTakeDamageBuilding );
 
 	Call_PushCell( iThis );
 	Call_PushCell( hParams.GetAddress( 1 ) );
@@ -751,6 +737,51 @@ MRESReturn Detour_ApplyOnDamageModifyRulesPost( Address aThis, DHookReturn hRetu
 	
 }
 
+//native void AddPlayerHealer( int iReciever, int iSource, float flRate, bool bAllowCritHeals = true )
+public any Native_AddPlayerHealer( Handle hPlugin, int iParams ) {
+	int iReceiver = GetNativeCell( 1 );
+	int iSource = GetNativeCell( 2 );
+	float flRate = GetNativeCell( 3 );
+	bool bAllowCritHeals = GetNativeCell( 4 );
+
+	if( !IsValidPlayer( iReceiver ) || !IsValidPlayer( iSource ) )
+		return 0;
+
+	SDKCall( g_sdkHeal, GetSharedFromPlayer( iReceiver ), iSource, flRate, Address_Null, false, bAllowCritHeals );
+
+	return 0;
+}
+//native void AddPlayerHealerTimed( int iReciever, int iSource, float flRate, float flDuration, bool bReset, bool bOverheal )
+public any Native_AddPlayerHealerTimed( Handle hPlugin, int iParams ) {
+	int iReceiver = GetNativeCell( 1 );
+	int iSource = GetNativeCell( 2 );
+	float flRate = GetNativeCell( 3 );
+	float flDuration = GetNativeCell( 4 );
+	bool bResetDuration = GetNativeCell( 5 );
+	bool bAllowOverheal = GetNativeCell( 6 );
+
+	if( !IsValidPlayer( iReceiver ) || !IsValidPlayer( iSource ) )
+		return 0;
+
+	SDKCall( g_sdkHealTimed, GetSharedFromPlayer( iReceiver ), iSource, flRate, flDuration, bResetDuration, bAllowOverheal, -1 );
+
+	return 0;
+}
+
+//native void RemovePlayerHealer( int iReceiver, int iSource, int iHealerType )
+public any Native_RemovePlayerHealer( Handle hPlugin, int iParams ) {
+	int iReceiver = GetNativeCell( 1 );
+	int iSource = GetNativeCell( 2 );
+	int iHealerType = GetNativeCell( 3 );
+
+	if( !IsValidPlayer( iReceiver ) || !IsValidPlayer( iSource ) )
+		return 0;
+
+	SDKCall( g_sdkStopHealing, GetSharedFromPlayer( iReceiver ), iSource, iHealerType );
+
+	return 0;
+}
+
 //native void HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
 public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 	int iPlayer = GetNativeCell( 1 );
@@ -758,12 +789,10 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 	int iSource = GetNativeCell( 3 );
 	int iFlags = GetNativeCell( 4 );
 
-	int iMaxHealth = SDKCall( hGetMaxHealth, iPlayer );
+	int iMaxHealth = SDKCall( g_sdkGetMaxHealth, iPlayer );
 	int iHealth = GetClientHealth( iPlayer );
 
-	float flMult = 0.5;
-
-	flMult = AttribHookFloat( flMult, iPlayer, "mult_patient_overheal_penalty" );
+	float flMult = AttribHookFloat( 0.5, iPlayer, "mult_patient_overheal_penalty" );
 	int iWeapon = GetEntPropEnt( iPlayer, Prop_Send, "m_hActiveWeapon" );
 	if( iWeapon != -1 ) {
 		flMult = AttribHookFloat( flMult, iWeapon, "mult_patient_overheal_penalty_active" );
@@ -788,11 +817,11 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 	if( !( iFlags & HF_NOOVERHEAL ) )
 		iNewFlags = 1 << 1;
 
-	int iReturn = SDKCall( hTakeHealth, iPlayer, flAmount, iNewFlags, iSource, false );
+	int iReturn = SDKCall( g_sdkTakeHealth, iPlayer, flAmount, iNewFlags, iSource, false );
 
 	//TODO: account for spy leech event
 	if( iSource != -1 ) {
-		SDKCall( hPlayerHealedOther, g_iCTFGameStats, iSource, float( iReturn ) );
+		SDKCall( g_sdkPlayerHealedOther, g_iCTFGameStats, iSource, float( iReturn ) ); //todo: create native
 	}
 
 	return iReturn;

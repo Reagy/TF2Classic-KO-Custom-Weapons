@@ -13,6 +13,7 @@
 
 native float 	AttribHookFloat( float fValue, int iEntity, const char[] sAttributeClass );
 native int	AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
+native int	AttribHookInt( int iValue, int iEntity, const char[] szAttributeClass )
 
 native float	GetMedigunCharge( int iPlayer );
 native int	GetEntityInSlot( int iPlayer, int iSlot );
@@ -251,6 +252,9 @@ enum {
 }
 
 native int HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
+native void AddPlayerHealer( int iReciever, int iSource, float flRate, bool bAllowCritHeals = true );
+native void AddPlayerHealerTimed( int iReciever, int iSource, float flRate, float flDuration, bool bReset, bool bOverheal );
+native void RemovePlayerHealer( int iReceiver, int iSource, int iHealerType = 0 );
 
 /*
 	MATH FUNCTIONS
@@ -402,7 +406,7 @@ forward void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo );
 forward void OnTakeDamageBuilding( int iBuilding, Address aTakeDamageInfo );
 
 int iOffsetCache[DI_SIZE] = { -1, ... };
-static char szOffsetNames[][] = {
+static char g_szDmgOffsetNames[][] = {
 	"CTakeDamageInfo::m_vecDamageForce.x",
 	"CTakeDamageInfo::m_vecDamageForce.y",
 	"CTakeDamageInfo::m_vecDamageForce.z",
@@ -431,7 +435,7 @@ static char szOffsetNames[][] = {
 int DMGInfoOffset( int iValue ) {
 	if( iOffsetCache[iValue] == -1 ) {
 		Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
-		iOffsetCache[iValue] = GameConfGetOffset( hGameConf, szOffsetNames[iValue] );
+		iOffsetCache[iValue] = GameConfGetOffset( hGameConf, g_szDmgOffsetNames[iValue] );
 		delete hGameConf;
 	}
 
@@ -699,7 +703,6 @@ stock void ConsumeAmmo( int iWeapon, int iOwner, int iAmmoCost, bool bUsesClip )
 	}
 }
 
-
 enum
 {
 	PATTACH_ABSORIGIN = 0,			// Create at absorigin, but don't follow
@@ -819,4 +822,29 @@ stock void TE_Particle(const char[] Name, const float origin[3] = NULL_VECTOR,
 		attachtype, attachpoint, resetParticles);
 
 	TE_SendToAll(delay);
+}
+
+//Wrapper that automatically fails if the SDKCall cannot be created
+stock Handle EndPrepSDKCallSafe( const char[] szName ) {
+	Handle hCall = EndPrepSDKCall();
+	if( !hCall )
+		SetFailState( "SDKCall setup for %s failed", szName );
+
+	return hCall;
+}
+//Wrapper that automatically fails if the detour cannot be created
+stock DynamicDetour DynamicDetourFromConfSafe( Handle hGameConf, const char[] szName ) {
+	DynamicDetour dtDetour = DynamicDetour.FromConf( hGameConf, szName );
+	if( !dtDetour )
+		SetFailState( "Detour setup for %s failed", szName );
+
+	return dtDetour;
+}
+//Wrapper that automatically fails if the hook cannot be created
+stock DynamicHook DynamicHookFromConfSafe( Handle hGameConf, const char[] szName ) {
+	DynamicHook dhHook = DynamicHook.FromConf( hGameConf, szName );
+	if( !dhHook )
+		SetFailState( "Hook setup for %s failed", szName );
+
+	return dhHook;
 }
