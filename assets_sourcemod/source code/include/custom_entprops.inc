@@ -6,5 +6,7 @@
 native void SetCustomProp( int iEntityID, const char[] szPropertyName, any data );
 native void SetCustomPropString( int iEntityID, const char[] szPropertyName, const char[] szValue );
 
-native any GetCustomProp( int iEntityID, const char[] szPropertyName );
+native bool GetCustomProp( int iEntityID, const char[] szPropertyName, any &data = 0 );
 native void GetCustomPropString( int iEntityID, const char[] szPropertyName, char[] szBuffer, int iBufferSize );
+
+native bool HasCustomProp( int iEntityID, const char[] szPropertyName );

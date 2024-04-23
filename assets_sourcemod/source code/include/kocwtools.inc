@@ -848,3 +848,11 @@ stock DynamicHook DynamicHookFromConfSafe( Handle hGameConf, const char[] szName
 
 	return dhHook;
 }
+//Wrapper that automatically fails if the hook cannot be created
+stock int GameConfGetOffsetSafe( Handle hGameConf, const char[] szName )  {
+	int iReturn = GameConfGetOffset( hGameConf, szName );
+	if( iReturn == -1 )
+		SetFailState( "Offset lookup for %s failed", szName );
+
+	return iReturn;
+}
