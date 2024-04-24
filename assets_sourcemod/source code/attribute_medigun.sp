@@ -9,8 +9,10 @@
 #include <condhandler>
 #include <hudframework>
 
-static char g_szHydropumpTrackerName[32] = "Pressure";
+//hydro pump
+static char g_szHydropumpTrackerName[32] = "Ubercharge";
 static char g_szHydropumpHealSound[] = "weapons/HPump_Hit.wav";
+#define HYDRO_PUMP_CHARGE_TIME 40.0
 
 //guardian angel
 #define ANGEL_UBER_COST 0.33 //uber cost to grant bubble
@@ -26,6 +28,7 @@ DynamicHook	g_dhWeaponPostframe;
 DynamicHook	g_dhWeaponHolster;
 
 Handle		g_sdkAddFlameTouchList;
+Handle		g_sdkGetBuffedMaxHealth;
 
 int g_iRefEHandleOffset = -1;
 int g_iFlameBurnedVectorOffset = -1;
@@ -36,6 +39,10 @@ int g_iHealerVecOffset = -1;
 PlayerFlags g_pfPlayingSound;
 float g_flEndHealSoundTime[MAXPLAYERS+1] = { 0.0, ... };
 float g_flHealAccumulator[MAXPLAYERS+1] = { 0.0, ... };
+
+Address g_pCTFGameRules = Address_Null;
+int	g_iSetupOffset = -1;
+int	g_iFourTeamOffset = -1;
 
 enum {
 	CMEDI_ANGEL = 1,
@@ -74,6 +81,11 @@ public void OnPluginStart() {
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	g_sdkAddFlameTouchList = EndPrepSDKCallSafe( "m_hEntitiesBurnt::InsertBefore" );
 
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetBuffedMaxHealth" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkGetBuffedMaxHealth = EndPrepSDKCallSafe( "CTFPlayerShared::GetBuffedMaxHealth" );
+
 	g_dhWeaponSecondary = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::SecondaryAttack" );
 
 	g_dtFireCollide = DynamicDetourFromConfSafe( hGameConf, "CTFFlameEntity::OnCollide" );
@@ -86,6 +98,9 @@ public void OnPluginStart() {
 	g_iFlameBurnedVectorOffset = GameConfGetOffsetSafe( hGameConf, "CTFFlameEntity::m_hEntitiesBurnt" );
 	g_iFlameOwnerOffset = GameConfGetOffsetSafe( hGameConf, "CTFFlameEntity::m_hOwner" );
 	g_iCUtlVectorSizeOffset = GameConfGetOffsetSafe( hGameConf, "CUtlVector::m_Size" );
+	g_pCTFGameRules = GameConfGetAddress( hGameConf, "CTFGameRules" );
+	g_iSetupOffset = FindSendPropInfo( "CTFGameRulesProxy", "m_bInSetup" );
+	g_iFourTeamOffset = FindSendPropInfo( "CTFGameRulesProxy", "m_bFourTeamMode" );
 
 	g_dhWeaponHolster = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Holster" );
 	g_dhWeaponPostframe = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::ItemPostFrame" );
@@ -111,6 +126,10 @@ public void OnMapStart() {
 
 	g_pfPlayingSound.SetDirect( 0, 0 );
 	g_pfPlayingSound.SetDirect( 1, 0 );
+
+	for( int i = 1; i < MAXPLAYERS+1; i++ ) {
+		g_flEndHealSoundTime[ i ] = 0.0;
+	}
 }
 
 public void OnEntityCreated( int iThis, const char[] szClassname ) {
@@ -147,6 +166,7 @@ void Frame_SetupFlamethrower( int iFlamethrower ) {
 	int iAttrib = RoundToFloor( AttribHookFloat( 0.0, iFlamethrower, "custom_medigun_type" ) );
 	if( iAttrib == CMEDI_FLAME ) {
 		g_dhWeaponSecondary.HookEntity( Hook_Pre, iFlamethrower, Hook_HydropumpSecondaryPre );
+		g_dhWeaponPostframe.HookEntity( Hook_Pre, iFlamethrower, Hook_HydroPumpPostFrame );
 	}
 }
 
@@ -285,7 +305,21 @@ void AngelGunUber( int iMedigun ) {
 
 #define FLAMETHROWER_FIRING_INTERVAL 0.04
 #define FLAMETHROWER_HEAL_RATE 36.0
-#define FLAMETHROWER_IMMEDIATE_PERCENTAGE 0.75
+#define FLAMETHROWER_IMMEDIATE_PERCENTAGE 0.85
+
+MRESReturn Hook_HydropumpSecondaryPre( int iThis, DHookParam hParams ) {
+	return MRES_Ignored;
+}
+
+MRESReturn Hook_HydroPumpPostFrame( int iThis ) {
+	int iWeaponMode = GetEntProp( iThis, Prop_Send, "m_iWeaponState" );
+	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
+	if( iWeaponMode == 0 ) {
+		EndHydropumpSound( iOwner );
+	}
+
+	return MRES_Handled;
+}
 
 //apparently tf2c flame particles aren't even derived from cbaseentity so they're passed by address instead
 MRESReturn Detour_FireTouch( Address aThis, DHookParam hParams ) {
@@ -317,14 +351,14 @@ void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
 	
 	//scuffed code to force crit heals on timed healer
 	//todo: move to gamedata
-	const int iHealerStructSize = 48;
+	/*const int iHealerStructSize = 48;
 	const int iCritHealsOffset = 33;
 
 	Address aShared = GetSharedFromPlayer( iCollide );
 	Address aVectorStart = LoadFromAddressOffset( aShared, g_iHealerVecOffset, NumberType_Int32 );
 	int iSize = LoadFromAddressOffset( aShared, g_iHealerVecOffset + g_iCUtlVectorSizeOffset, NumberType_Int32 );
 	Address aHealer = aVectorStart + view_as<Address>( iHealerStructSize * ( iSize - 1 ) );
-	StoreToAddressOffset( aHealer, iCritHealsOffset, true, NumberType_Int8 );
+	StoreToAddressOffset( aHealer, iCritHealsOffset, true, NumberType_Int8 );*/
 	//end scuffed
 
 	float flRate = ( FLAMETHROWER_HEAL_RATE * FLAMETHROWER_IMMEDIATE_PERCENTAGE * FLAMETHROWER_FIRING_INTERVAL ) + g_flHealAccumulator[ iCollide ];
@@ -335,6 +369,7 @@ void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
 	HealPlayer( iCollide, flRateRounded, iOwner );
 
 	SetFlameHealSoundTime( iOwner );
+	HydroPumpBuildUber( iOwner, iCollide, iWeapon );
 
 	if( !HasCustomCond( iCollide, TFCC_HYDROPUMPHEAL ) )
 		AddCustomCond( iCollide, TFCC_HYDROPUMPHEAL, iOwner, iWeapon );
@@ -346,6 +381,43 @@ void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
 		aThis + view_as<Address>( g_iFlameBurnedVectorOffset ),
 		LoadFromAddressOffset( aThis, g_iFlameBurnedVectorOffset + g_iCUtlVectorSizeOffset, NumberType_Int32 ),
 		LoadFromEntity( iCollide, g_iRefEHandleOffset ) );
+}
+
+void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
+	float flChargeAmount = (FLAMETHROWER_FIRING_INTERVAL / HYDRO_PUMP_CHARGE_TIME) * 100.0;
+
+	int iTargetHealth = GetClientHealth( iTarget );
+	if( iTargetHealth >= SDKCall( g_sdkGetBuffedMaxHealth, GetSharedFromPlayer( iTarget ) ) )
+		flChargeAmount *= 0.5;
+
+	Address g_aCTFGameRules = LoadFromAddress( g_pCTFGameRules, NumberType_Int32 );
+
+	bool bIsInSetup, bIsFourTeam;
+
+	if( g_aCTFGameRules != Address_Null ) {
+		bIsInSetup = LoadFromAddressOffset( g_aCTFGameRules, g_iSetupOffset, NumberType_Int8 );
+		if( bIsInSetup )
+			flChargeAmount *= 3.0;
+
+		bIsFourTeam = LoadFromAddressOffset( g_aCTFGameRules, g_iFourTeamOffset, NumberType_Int8 );
+		if( bIsFourTeam )
+			flChargeAmount *= 2.0; //todo: read cvar
+	}
+
+	PrintToServer( "%i %i", bIsInSetup, bIsFourTeam );
+
+	int iHealerCount = GetEntProp( iTarget, Prop_Send, "m_nNumHumanHealers" );
+	if( !bIsInSetup && iHealerCount > 1 ) {
+		flChargeAmount /= float( iHealerCount );
+	}
+
+	float flOldValue = Tracker_GetValue( iOwner, g_szHydropumpTrackerName );
+	float flNewValue = flOldValue + flChargeAmount;
+	if( flOldValue < 100.0 && flNewValue >= 100.0 ) {
+		//do uber things here
+	}
+
+	Tracker_SetValue( iOwner, g_szHydropumpTrackerName, flNewValue );
 }
 
 void SetFlameHealSoundTime( int iOwner ) {
@@ -366,16 +438,15 @@ Action Timer_ManageFlameHealSound( Handle hTimer, int iOwnerRef ) {
 		return Plugin_Stop;
 
 	if( g_flEndHealSoundTime[ iOwner ] != 0.0 && g_flEndHealSoundTime[ iOwner ] <= GetGameTime() ) {
-		g_flEndHealSoundTime[ iOwner ] = 0.0;
-		g_pfPlayingSound.Set( iOwner, false );
-		StopSound( iOwner, 0, g_szHydropumpHealSound );
-
+		EndHydropumpSound( iOwner );
 		return Plugin_Stop;
 	}
 
 	return Plugin_Continue;
 }
 
-MRESReturn Hook_HydropumpSecondaryPre( int iThis, DHookParam hParams ) {
-	return MRES_Ignored;
+void EndHydropumpSound( int iOwner ) {
+	g_flEndHealSoundTime[ iOwner ] = 0.0;
+	g_pfPlayingSound.Set( iOwner, false );
+	StopSound( iOwner, 0, g_szHydropumpHealSound );
 }
