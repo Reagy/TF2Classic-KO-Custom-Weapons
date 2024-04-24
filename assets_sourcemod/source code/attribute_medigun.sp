@@ -146,6 +146,12 @@ public void OnPluginStart() {
 	}
 }
 
+public void OnPluginEnd() {
+	for( int i = 1; i < MAXPLAYERS+1; i++ ) {
+		DestroyPumpChargedMuzzle( i );
+	}
+}
+
 void OnCritMedigunChange( ConVar cvChanged, char[] szOld, char[] szNew ) {
 	int iNew = StringToInt( szNew );
 	g_iMedigunCritBoostVal = iNew;
@@ -344,7 +350,10 @@ MRESReturn Hook_HydropumpSecondaryPre( int iThis ) {
 MRESReturn Hook_HydroPumpPostFrame( int iThis ) {
 	int iWeaponMode = GetEntProp( iThis, Prop_Send, "m_iWeaponState" );
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
-	if( iOwner != -1 && iWeaponMode == 0 ) {
+	if( 
+		( iOwner != -1 && iWeaponMode == 0 ) || 
+		( g_flEndHealSoundTime[ iOwner ] != 0.0 && g_flEndHealSoundTime[ iOwner ] <= GetGameTime() ) 
+	) {
 		EndHydropumpHitSound( iOwner );
 	}
 
@@ -361,8 +370,11 @@ void Frame_Test( int iThis ) {
 }
 MRESReturn Hook_HydroPumpHolster( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
-	if( iOwner != -1 )
+	if( iOwner != -1 ) {
 		DestroyPumpChargedMuzzle( iOwner );
+		EndHydropumpHitSound( iOwner );
+	}
+		
 
 	return MRES_Handled;
 }
@@ -477,41 +489,26 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	GetCustomProp( iOwner, "m_iHydroHealing", iOwnerHealingCount );
 	float flMult = iOwnerHealingCount > 1 ? Pow( 0.9, float( iOwnerHealingCount ) ) : 1.0;
 	flChargeAmount *= flMult;
-	
+
 	float flOldValue = Tracker_GetValue( iOwner, g_szHydropumpTrackerName );
 	float flNewValue = flOldValue + flChargeAmount;
 	if( flOldValue < 100.0 && flNewValue >= 100.0 ) {
 		CreatePumpChargedMuzzle( iWeapon, iOwner );
-		SDKCall( g_sdkSpeakIfAllowed, iOwner, 36, Address_Null, Address_Null, 0, 0, Address_Null );
+		SDKCall( g_sdkSpeakIfAllowed, iOwner, 36, Address_Null, Address_Null, 0, 0, Address_Null ); //36 = MP_CONCEPT_MEDIC_CHARGEREADY
 	}
 
 	Tracker_SetValue( iOwner, g_szHydropumpTrackerName, flNewValue );
 }
 
 void SetFlameHealSoundTime( int iOwner, int iWeapon ) {
-	g_flEndHealSoundTime[ iOwner ] = GetGameTime() + 0.105;
+	g_flEndHealSoundTime[ iOwner ] = GetGameTime() + 0.2;
 
 
 	if( !g_pfPlayingSound.Get( iOwner ) && GetEntProp( iWeapon, Prop_Send, "m_iWeaponState" ) != 0 ) {
 		g_pfPlayingSound.Set( iOwner, true );
-		CreateTimer( 0.1, Timer_ManageFlameHealSound, EntIndexToEntRef( iOwner ), TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
-
 		EmitSoundToAll( g_szHydropumpHealSound, iOwner );
 		//EmitSoundToAll( g_szHydropumpHealSound, iOwner, .flags = SND_CHANGEVOL, .volume = 0.75 );
 	}
-}
-
-Action Timer_ManageFlameHealSound( Handle hTimer, int iOwnerRef ) {
-	int iOwner = EntRefToEntIndex( iOwnerRef );
-	if( iOwner == -1 )
-		return Plugin_Stop;
-
-	if( g_flEndHealSoundTime[ iOwner ] != 0.0 && g_flEndHealSoundTime[ iOwner ] <= GetGameTime() ) {
-		EndHydropumpHitSound( iOwner );
-		return Plugin_Stop;
-	}
-
-	return Plugin_Continue;
 }
 
 void EndHydropumpHitSound( int iOwner ) {
@@ -541,22 +538,12 @@ void CreatePumpChargedMuzzle( int iWeapon, int iOwner ) {
 
 	//third person
 
-	//tricks the server into seeing what the client does, i think?
-	static char szModelName[128];
-	static char szModelNameOld[128];
-	FindModelString( GetEntProp( iWeapon, Prop_Send, "m_iWorldModelIndex" ), szModelName, sizeof( szModelName ) );
-	FindModelString( GetEntProp( iWeapon, Prop_Send, "m_nModelIndex" ), szModelNameOld, sizeof( szModelNameOld ) );
-	SetEntityModel( iWeapon, szModelName );
-
 	iParticle = CreateParticle( g_szHydropumpMuzzleParticles[ iTeam ] );
-	ParentModel( iParticle, iWeapon, "muzzle" );
+	ParentModel( iParticle, iWeapon, "weapon_bone" ); //i have no idea why weapon bone works for this i hate this fucking engine so much
 	SetEntPropEnt( iParticle, Prop_Send, "m_hOwnerEntity", iOwner );
 	SDKHook( iParticle, SDKHook_SetTransmit, Hook_EmitterTransmitTP );
 	SetEdictFlags( iParticle, 0 );
 	g_iHydroPumpBarrelChargedEmitters[iOwner][1] = EntIndexToEntRef( iParticle );
-	
-	//untrick the server
-	SetEntityModel( iWeapon, szModelNameOld );
 }
 
 void DestroyPumpChargedMuzzle( int iOwner ) {
