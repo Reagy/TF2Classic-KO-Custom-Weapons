@@ -149,9 +149,29 @@
 			{
 				"linux"		"156"
 			}
+			
+			"CBaseEntity::m_RefEHandle"
+			{
+				"linux"		"836"
+			}
+			
 			"CTFWeaponBase::GetWeaponID"
 			{
 				"linux"		"385"
+			}
+		
+			"CTFFlameEntity::m_hOwner"
+			{
+				"linux"		"112"
+			}
+			"CTFFlameEntity::m_hEntitiesBurnt"
+			{
+				"linux"		"120"
+			}
+		
+			"CUtlVector::m_Size"
+			{
+				"linux"		"12"
 			}
 		
             //player
@@ -201,6 +221,10 @@
 			"CTFPlayerShared::m_pOuter"
 			{
 				"linux"		"1360"
+			}
+			"CTFPlayerShared::m_vecHealers"
+			{
+				"linux"		"1364"
 			}
 			
 			"CTFGameRules::m_bScrambleTeams"
@@ -258,6 +282,10 @@
             
             //weapons
 			
+			"CTFWeaponBase::Deploy"
+			{
+				"linux"		"263"
+			}
 			"CTFWeaponBase::Holster"
 			{
 				"linux"		"264"
@@ -891,6 +919,14 @@
 					}
 				}
 			}
+			"CTFWeaponBase::Deploy"
+			{
+				"offset"		"CTFWeaponBase::Deploy"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+			}
 			
             //projectiles
             
@@ -1062,7 +1098,7 @@
 				"linux"		"@_ZN12CTFGameRules12ResetMapTimeEv"
 			}
 		
-			"fuckme"
+			"m_hEntitiesBurnt::InsertBefore"
 			{
 				"library"	"server"
 				"linux"		"@_ZN10CUtlVectorI7CHandleI11CBaseEntityE10CUtlMemoryIS2_iEE12InsertBeforeEiRKS2_"
@@ -1147,6 +1183,11 @@
 				"library"	"server"
 				"linux"		"@_ZN9CTFPlayer19AddDamagerToHistoryEP11CBaseEntityS1_"
 			}
+			"CTFPlayer::SpeakConceptIfAllowed"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFPlayer21SpeakConceptIfAllowedEiPKcPcjP16IRecipientFilter"
+			}
 			
 			"CTFPlayerShared::Burn"
 			{
@@ -1168,6 +1209,27 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN15CTFPlayerShared14AirblastPlayerEP9CTFPlayerRK6Vectorf"
+			}
+			
+			"CTFPlayerShared::Heal"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared4HealEP9CTFPlayerfP11CBaseObjectbb"
+			}
+			"CTFPlayerShared::HealNoOverheal"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared14HealNoOverhealEP9CTFPlayerfP11CBaseObjectb"
+			}
+			"CTFPlayerShared::HealTimed"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared9HealTimedEP9CTFPlayerffbbP11CBaseObject"
+			}
+			"CTFPlayerShared::StopHealing"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared11StopHealingEP9CTFPlayer10HealerType"
 			}
 			
 			"CTFGameMovement::CheckJumpButton"

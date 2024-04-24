@@ -9,6 +9,7 @@
 #include <hudframework>
 #include <give_econ>
 #include <condhandler>
+#include <custom_entprops>
 
 public Plugin myinfo =
 {
@@ -279,7 +280,7 @@ bool AddCond( int iPlayer, int iCond, int iSource = -1, int iWeapon = -1 ) {
 		bGaveCond = true;
 	}
 	case TFCC_HYDROPUMPHEAL: {
-		bGaveCond = AddHydroPumpHeal( iPlayer );
+		bGaveCond = AddHydroPumpHeal( iPlayer, iSource );
 	}
 	case TFCC_ANGELSHIELD: {
 		AddAngelShield( iPlayer );
@@ -1129,7 +1130,7 @@ void RemoveQuickUber( int iPlayer ) {
 }
 
 //hydro pump
-bool AddHydroPumpHeal( int iPlayer ) {
+bool AddHydroPumpHeal( int iPlayer, int iSource ) {
 	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	int iEmitter = CreateEntityByName( "info_particle_system" );
 	DispatchKeyValue( iEmitter, "effect_name", g_szHydroPumpHealParticles[ iTeam ] );
@@ -1148,6 +1149,10 @@ bool AddHydroPumpHeal( int iPlayer ) {
 	g_iHydroPumpEmitters[iPlayer] = EntIndexToEntRef( iEmitter );
 
 	CreateTimer( 0.1, Timer_HydroPumpKillMe, EntRefToEntIndex( iPlayer ), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
+
+	int iOldHydroHealer = 0;
+	GetCustomProp( iSource, "m_iHydroHealing", iOldHydroHealer );
+	SetCustomProp( iSource, "m_iHydroHealing", MaxInt( iOldHydroHealer + 1, 0 ) );
 
 	return true;
 }
@@ -1169,6 +1174,11 @@ Action Timer_HydroPumpKillMe( Handle hTimer, int iOwnerRef ) {
 }
 
 void RemoveHydroPumpHeal( int iPlayer ) {
+	int iOldHydroHealer = 0;
+	int iSource = GetCustomCondSourcePlayer( iPlayer, TFCC_HYDROPUMPHEAL );
+	GetCustomProp( iSource, "m_iHydroHealing", iOldHydroHealer );
+	SetCustomProp( iSource, "m_iHydroHealing", MaxInt( iOldHydroHealer - 1, 0 ) );
+
 	int iEmitter = EntRefToEntIndex( g_iHydroPumpEmitters[ iPlayer ] );
 	g_iHydroPumpEmitters[ iPlayer ] = INVALID_ENT_REFERENCE;
 	if( iEmitter == -1 )

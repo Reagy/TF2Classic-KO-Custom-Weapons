@@ -742,6 +742,15 @@ stock void ParentParticleToViewmodel( int iParticle, int iWeapon ) {
 	ParentModel( iParticle, iViewmodel, bIsCModel ? "weapon_bone_l" : "muzzle" );
 	SetEdictFlags( iParticle, 0 );
 }
+//idk how the bone works just try random bones on the weapon until it works
+stock void ParentParticleToViewmodelEX( int iParticle, int iWeapon, const char[] szBoneName ) {
+	bool bIsCModel = GetEntProp( iWeapon, Prop_Send, "m_iViewModelType" ) == 1;
+
+	int iPlayer = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwnerEntity" );
+	int iViewmodel = GetEntPropEnt( iPlayer, Prop_Send, "m_hViewModel" );
+	ParentModel( iParticle, iViewmodel, bIsCModel ? szBoneName : "muzzle" );
+	SetEdictFlags( iParticle, 0 );
+}
 
 Action Timer_RemoveParticle( Handle hTimer, int iParticleRef ) {
 	int iParticle = EntRefToEntIndex( iParticleRef );
