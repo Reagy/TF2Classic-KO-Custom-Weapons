@@ -1044,6 +1044,12 @@
 		
 		"Signatures"
 		{
+			"CGlobalEntityList::FindEntityInSphere"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CGlobalEntityList18FindEntityInSphereEP11CBaseEntityRK6Vectorf"
+			}
+		
 			"CBaseAnimating::ResetSequence"
 			{
 				"library"	"server"
