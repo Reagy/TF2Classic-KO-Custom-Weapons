@@ -180,7 +180,7 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	if( RoundToFloor( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) == CMEDI_FLAME ) {
 		Tracker_Create( iPlayer, g_szHydropumpTrackerName, false );
 		Tracker_SetMax( iPlayer, g_szHydropumpTrackerName, 100.0 );
-		Tracker_SetFlags( iPlayer, g_szHydropumpTrackerName, RTF_CLEARONSPAWN );
+		Tracker_SetFlags( iPlayer, g_szHydropumpTrackerName, RTF_CLEARONSPAWN | RTF_PERCENTAGE );
 	}
 	else {
 		Tracker_Remove( iPlayer, g_szHydropumpTrackerName );
@@ -408,7 +408,22 @@ void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
 	//end scuffed
 
 	float flRate = ( FLAMETHROWER_HEAL_RATE * FLAMETHROWER_IMMEDIATE_PERCENTAGE * FLAMETHROWER_FIRING_INTERVAL ) + g_flHealAccumulator[ iCollide ];
+	
 	flRate = AttribHookFloat( flRate, iOwner, "mult_medigun_healrate" );
+
+	if( g_iMedigunCritBoostVal ) {
+		if( g_iMedigunCritBoostVal == 2 && IsPlayerCritBoosted( iOwner ) ) {
+			flRate *= 3.0;
+		}
+		else if( IsPlayerMiniCritBoosted( iOwner ) ) {
+			flRate *= 1.35;
+		}
+	}
+	
+	if( TF2_IsPlayerInCondition( iOwner, view_as<TFCond>( 142 ) ) ) { //TF_COND_CIV_SPEEDBUFF
+		flRate *= 1.35;
+	}
+
 	float flRateRounded = float( RoundToFloor( flRate ) );
 	g_flHealAccumulator[ iCollide ] = flRate - flRateRounded;
 
@@ -417,9 +432,7 @@ void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
 	SetFlameHealSoundTime( iOwner, iWeapon );
 	HydroPumpBuildUber( iOwner, iCollide, iWeapon );
 
-	if( !HasCustomCond( iCollide, TFCC_HYDROPUMPHEAL ) )
-		AddCustomCond( iCollide, TFCC_HYDROPUMPHEAL, iOwner, iWeapon );
-
+	AddCustomCond( iCollide, TFCC_HYDROPUMPHEAL, iOwner, iWeapon );
 	SetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL, 0.2, false );
 
 	//this appends to the flame's internal list that keeps track of who it has hit
@@ -431,7 +444,8 @@ void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
 
 void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	//float flChargeAmount = (FLAMETHROWER_FIRING_INTERVAL / HYDRO_PUMP_CHARGE_TIME) * 100.0;
-	float flChargeAmount = 10.0; //precalculated version of above in case SP is dumb, currently (0.04/40.0) * 100.0
+	//float flChargeAmount = 0.1; //precalculated version of above in case SP is dumb, currently (0.04/40.0) * 100.0
+	float flChargeAmount = 100.0; //for testing
 
 	int iTargetHealth = GetClientHealth( iTarget );
 	if( iTargetHealth >= SDKCall( g_sdkGetBuffedMaxHealth, GetSharedFromPlayer( iTarget ) ) )
@@ -445,6 +459,15 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 			flChargeAmount *= 3.0;
 	}
 
+	if( g_iMedigunCritBoostVal ) {
+		if( g_iMedigunCritBoostVal == 2 && IsPlayerCritBoosted( iOwner ) ) {
+			flChargeAmount *= 3.0;
+		}
+		else if( IsPlayerMiniCritBoosted( iOwner ) ) {
+			flChargeAmount *= 1.35;
+		}
+	}
+
 	int iHealerCount = GetEntProp( iTarget, Prop_Send, "m_nNumHumanHealers" );
 	if( !bIsInSetup && iHealerCount > 1 ) {
 		flChargeAmount /= float( iHealerCount );
@@ -454,9 +477,7 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	GetCustomProp( iOwner, "m_iHydroHealing", iOwnerHealingCount );
 	float flMult = iOwnerHealingCount > 1 ? Pow( 0.9, float( iOwnerHealingCount ) ) : 1.0;
 	flChargeAmount *= flMult;
-
-	PrintToServer("%f %f %i", flChargeAmount, flMult, iOwnerHealingCount );
-
+	
 	float flOldValue = Tracker_GetValue( iOwner, g_szHydropumpTrackerName );
 	float flNewValue = flOldValue + flChargeAmount;
 	if( flOldValue < 100.0 && flNewValue >= 100.0 ) {
