@@ -11,9 +11,15 @@
 #include <custom_entprops>
 
 //hydro pump
+#define HYDRO_PUMP_HEAL_RATE 36.0
+#define HYDRO_PUMP_AFTERHEAL_RATE 5.0
+#define HYDRO_PUMP_AFTERHEAL_MAX_LENGTH 4.0
+#define HYDRO_PUMP_CHARGE_TIME 40.0
+#define HYDRO_PUMP_UBER_LENGTH 8.0
 static char g_szHydropumpTrackerName[32] = "Ubercharge";
 static char g_szHydropumpHealSound[] = "weapons/HPump_Hit.wav";
-#define HYDRO_PUMP_CHARGE_TIME 40.0
+
+#define FLAMETHROWER_FIRING_INTERVAL 0.04
 
 //guardian angel
 #define ANGEL_UBER_COST 0.33 //uber cost to grant bubble
@@ -41,14 +47,12 @@ int g_iHealerVecOffset = -1;
 
 PlayerFlags g_pfPlayingSound;
 float g_flEndHealSoundTime[MAXPLAYERS+1] = { 0.0, ... };
-float g_flHealAccumulator[MAXPLAYERS+1] = { 0.0, ... };
 int g_iHydroPumpBarrelChargedEmitters[MAXPLAYERS+1][2];
 
 Address g_pCTFGameRules = Address_Null;
 int	g_iSetupOffset = -1;
 
-ConVar g_cvMedigunCritBoost;
-int g_iMedigunCritBoostVal;
+ConVar g_cvMedigunCritBoost; int g_iMedigunCritBoostVal;
 
 enum {
 	CMEDI_ANGEL = 1,
@@ -203,7 +207,6 @@ void Frame_SetupFlamethrower( int iFlamethrower ) {
 
 	int iAttrib = RoundToFloor( AttribHookFloat( 0.0, iFlamethrower, "custom_medigun_type" ) );
 	if( iAttrib == CMEDI_FLAME ) {
-		g_dhWeaponSecondary.HookEntity( Hook_Pre, iFlamethrower, Hook_HydropumpSecondaryPre );
 		g_dhWeaponPostframe.HookEntity( Hook_Pre, iFlamethrower, Hook_HydroPumpPostFrame );
 		g_dhWeaponDeploy.HookEntity( Hook_Pre, iFlamethrower, Hook_HydroPumpDeploy );
 		g_dhWeaponHolster.HookEntity( Hook_Pre, iFlamethrower, Hook_HydroPumpHolster );
@@ -341,22 +344,30 @@ void AngelGunUber( int iMedigun ) {
 	HYDRO PUMP
 */
 
-#define FLAMETHROWER_FIRING_INTERVAL 0.04
-#define FLAMETHROWER_HEAL_RATE 36.0
-#define FLAMETHROWER_IMMEDIATE_PERCENTAGE 0.85
-
-MRESReturn Hook_HydropumpSecondaryPre( int iThis ) {
-	return MRES_Ignored;
-}
+int g_iOldButtons[MAXPLAYERS+1];
 MRESReturn Hook_HydroPumpPostFrame( int iThis ) {
-	int iWeaponMode = GetEntProp( iThis, Prop_Send, "m_iWeaponState" );
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
-	if( 
-		( iOwner != -1 && iWeaponMode == 0 ) || 
-		( g_flEndHealSoundTime[ iOwner ] != 0.0 && g_flEndHealSoundTime[ iOwner ] <= GetGameTime() ) 
-	) {
+	if( iOwner == -1 )
+		return MRES_Ignored;
+
+	int iWeaponMode = GetEntProp( iThis, Prop_Send, "m_iWeaponState" );
+
+	bool bNotFiring = iWeaponMode == 0;
+	bool bTimeToEnd = g_flEndHealSoundTime[ iOwner ] != 0.0 && g_flEndHealSoundTime[ iOwner ] <= GetGameTime();
+	if( bNotFiring || bTimeToEnd ) {
 		EndHydropumpHitSound( iOwner );
 	}
+
+	int iButtons = GetClientButtons( iOwner );
+	if( iButtons & IN_ATTACK2 && !( g_iOldButtons[ iOwner ] & IN_ATTACK2 ) ) {
+		if( Tracker_GetValue( iOwner, g_szHydropumpTrackerName ) >= 100.0 && !HasCustomCond( iOwner, TFCC_HYDROUBER ) ) {
+			AddCustomCond( iOwner, TFCC_HYDROUBER, iOwner, iThis );
+			SetCustomCondDuration( iOwner, TFCC_HYDROUBER, HYDRO_PUMP_UBER_LENGTH, false );
+
+			SpeakConceptIfAllowed( iOwner, 38 ); //38 = MP_CONCEPT_MEDIC_CHARGEDEPLOYED
+		}
+	}
+	g_iOldButtons[ iOwner ] = iButtons;
 
 	return MRES_Handled;
 }
@@ -375,7 +386,6 @@ MRESReturn Hook_HydroPumpHolster( int iThis, DHookReturn hReturn, DHookParam hPa
 		DestroyPumpChargedMuzzle( iOwner );
 		EndHydropumpHitSound( iOwner );
 	}
-		
 
 	return MRES_Handled;
 }
@@ -385,7 +395,6 @@ MRESReturn Detour_FireTouch( Address aThis, DHookParam hParams ) {
 	int iCollide = hParams.Get( 1 );
 	return FireTouchHandle( aThis, iCollide );
 }
-
 MRESReturn Detour_FireTouchTeam( Address aThis, DHookParam hParams ) {
 	int iCollide = hParams.Get( 1 );
 	return FireTouchHandle( aThis, iCollide );
@@ -406,7 +415,7 @@ MRESReturn FireTouchHandle( Address aThis, int iCollide ) {
 	return MRES_Supercede;
 }
 void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
-	AddPlayerHealerTimed( iCollide, iOwner, FLAMETHROWER_HEAL_RATE * ( 1.0 - FLAMETHROWER_IMMEDIATE_PERCENTAGE ), 5.0, true, true );
+	//AddPlayerHealerTimed( iCollide, iOwner, FLAMETHROWER_HEAL_RATE * ( 1.0 - FLAMETHROWER_IMMEDIATE_PERCENTAGE ), 5.0, true, true );
 	
 	//scuffed code to force crit heals on timed healer
 	//todo: move to gamedata
@@ -420,7 +429,7 @@ void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
 	StoreToAddressOffset( aHealer, iCritHealsOffset, true, NumberType_Int8 );*/
 	//end scuffed
 
-	float flRate = ( FLAMETHROWER_HEAL_RATE * FLAMETHROWER_IMMEDIATE_PERCENTAGE * FLAMETHROWER_FIRING_INTERVAL ) + g_flHealAccumulator[ iCollide ];
+	float flRate = ( HYDRO_PUMP_HEAL_RATE * FLAMETHROWER_FIRING_INTERVAL );
 	
 	flRate = AttribHookFloat( flRate, iOwner, "mult_medigun_healrate" );
 
@@ -432,21 +441,19 @@ void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
 			flRate *= 1.35;
 		}
 	}
-	
-	if( TF2_IsPlayerInCondition( iOwner, view_as<TFCond>( 142 ) ) ) { //TF_COND_CIV_SPEEDBUFF
-		flRate *= 1.35;
-	}
 
-	float flRateRounded = float( RoundToFloor( flRate ) );
-	g_flHealAccumulator[ iCollide ] = flRate - flRateRounded;
-
-	HealPlayer( iCollide, flRateRounded, iOwner );
+	HealPlayer( iCollide, flRate, iOwner );
 
 	SetFlameHealSoundTime( iOwner, iWeapon );
 	HydroPumpBuildUber( iOwner, iCollide, iWeapon );
 
 	AddCustomCond( iCollide, TFCC_HYDROPUMPHEAL, iOwner, iWeapon );
-	SetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL, 0.2, false );
+	
+	float flNewDuration = FloatClamp( GetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL ) + ( FLAMETHROWER_FIRING_INTERVAL * 2.5 ), 0.5, HYDRO_PUMP_AFTERHEAL_MAX_LENGTH );
+	float flNewLevel = MaxFloat( HYDRO_PUMP_AFTERHEAL_RATE, GetCustomCondLevel( iCollide, TFCC_HYDROPUMPHEAL ) );
+
+	SetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL, flNewDuration, false );
+	SetCustomCondLevel( iCollide, TFCC_HYDROPUMPHEAL, flNewLevel );
 
 	//this appends to the flame's internal list that keeps track of who it has hit
 	SDKCall( g_sdkAddFlameTouchList, 
@@ -457,8 +464,8 @@ void FireTouchHeal( Address aThis, int iCollide, int iOwner, int iWeapon ) {
 
 void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	//float flChargeAmount = (FLAMETHROWER_FIRING_INTERVAL / HYDRO_PUMP_CHARGE_TIME) * 100.0;
-	//float flChargeAmount = 0.1; //precalculated version of above in case SP is dumb, currently (0.04/40.0) * 100.0
-	float flChargeAmount = 100.0; //for testing
+	float flChargeAmount = 0.1; //precalculated version of above in case SP is dumb, currently (0.04/40.0) * 100.0
+	//float flChargeAmount = 100.0; //for testing
 
 	int iTargetHealth = GetClientHealth( iTarget );
 	int iTargetBuffedHealth = SDKCall( g_sdkGetBuffedMaxHealth, GetSharedFromPlayer( iTarget ) );
@@ -496,7 +503,7 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	float flNewValue = flOldValue + flChargeAmount;
 	if( flOldValue < 100.0 && flNewValue >= 100.0 ) {
 		CreatePumpChargedMuzzle( iWeapon, iOwner );
-		SDKCall( g_sdkSpeakIfAllowed, iOwner, 36, Address_Null, Address_Null, 0, 0, Address_Null ); //36 = MP_CONCEPT_MEDIC_CHARGEREADY
+		SpeakConceptIfAllowed( iOwner, 36 ); //36 = MP_CONCEPT_MEDIC_CHARGEREADY
 	}
 
 	Tracker_SetValue( iOwner, g_szHydropumpTrackerName, flNewValue );
@@ -504,7 +511,6 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 
 void SetFlameHealSoundTime( int iOwner, int iWeapon ) {
 	g_flEndHealSoundTime[ iOwner ] = GetGameTime() + 0.2;
-
 
 	if( !g_pfPlayingSound.Get( iOwner ) && GetEntProp( iWeapon, Prop_Send, "m_iWeaponState" ) != 0 ) {
 		g_pfPlayingSound.Set( iOwner, true );
@@ -588,9 +594,9 @@ Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast
 	//if( RoundToFloor( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) == CMEDI_FLAME && Tracker_GetValue( iPlayer, g_szHydropumpTrackerName ) >= 100.0 ) {
 	if( true ) {
 		float vecPos[3]; GetEntPropVector( iPlayer, Prop_Data, "m_vecAbsOrigin", vecPos );
-		PrintToServer("%f %f %f", vecPos[0], vecPos[1], vecPos[2] );
 		vecPos[2] += 40.0;
 
+		//todo: use tempent dispatch for this
 		int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 		CreateParticle( g_szHydropumpDropChargeParticles[ iTeam ], vecPos, .flDuration = 1.0 );
 
@@ -598,4 +604,9 @@ Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast
 	}
 
 	return Plugin_Continue;
+}
+
+//todo: move to kocwtools
+void SpeakConceptIfAllowed( int iPlayer, int iConcept ) {
+	SDKCall( g_sdkSpeakIfAllowed, iPlayer, iConcept, Address_Null, Address_Null, 0, 0, Address_Null );
 }

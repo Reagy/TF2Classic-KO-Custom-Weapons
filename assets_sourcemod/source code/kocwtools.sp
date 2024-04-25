@@ -272,7 +272,7 @@ public void OnPluginStart() {
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::Heal" );
-	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
 	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
 	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
@@ -747,7 +747,7 @@ public any Native_AddPlayerHealer( Handle hPlugin, int iParams ) {
 	if( !IsValidPlayer( iReceiver ) || !IsValidPlayer( iSource ) )
 		return 0;
 
-	SDKCall( g_sdkHeal, GetSharedFromPlayer( iReceiver ), iSource, flRate, Address_Null, false, bAllowCritHeals );
+	SDKCall( g_sdkHeal, GetSharedFromPlayer( iReceiver ), iSource, flRate, -1, false, bAllowCritHeals );
 
 	return 0;
 }
@@ -783,41 +783,52 @@ public any Native_RemovePlayerHealer( Handle hPlugin, int iParams ) {
 }
 
 //native void HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
+float g_flHealAccumulator[MAXPLAYERS+1] = { 0.0, ... };
 public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	float flAmount = GetNativeCell( 2 );
+	float flHealAmount = GetNativeCell( 2 );
 	int iSource = GetNativeCell( 3 );
 	int iFlags = GetNativeCell( 4 );
 
 	int iMaxHealth = SDKCall( g_sdkGetMaxHealth, iPlayer );
 	int iHealth = GetClientHealth( iPlayer );
 
-	float flMult = AttribHookFloat( 0.5, iPlayer, "mult_patient_overheal_penalty" );
+	float flOverhealMult = AttribHookFloat( 0.5, iPlayer, "mult_patient_overheal_penalty" );
 	int iWeapon = GetEntPropEnt( iPlayer, Prop_Send, "m_hActiveWeapon" );
 	if( iWeapon != -1 ) {
-		flMult = AttribHookFloat( flMult, iWeapon, "mult_patient_overheal_penalty_active" );
+		flOverhealMult = AttribHookFloat( flOverhealMult, iWeapon, "mult_patient_overheal_penalty_active" );
 	}
 
 	if( iSource != -1 ) {
-		flMult = AttribHookFloat( flMult, iSource, "mult_medigun_overheal_amount" );
+		flOverhealMult = AttribHookFloat( flOverhealMult, iSource, "mult_medigun_overheal_amount" );
 	}
-	flMult += 1.0;
+	flOverhealMult += 1.0;
+
+	if( TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 146 ) ) ) { //TF_COND_TAKEBONUSHEALING
+		flHealAmount *= 1.5;
+	}
 
 	//todo: round to multiple of 5
-	int iBuffedMax = RoundFloat( float(iMaxHealth) * flMult );
+	float flBuffedMax = float( iMaxHealth ) * flOverhealMult;
+	int iBuffedMax = RoundToFloor( flBuffedMax  / 5.0 ) * 5;
 
 	if( !( iFlags & HF_NOCRITHEAL ) ) {
 		float flTimeSinceDamage = GetGameTime() - GetEntPropFloat( iPlayer, Prop_Send, "m_flLastDamageTime" );
-		flAmount *= RemapValClamped( flTimeSinceDamage, 10.0, 15.0, 1.0, 3.0 );
+		flHealAmount *= RemapValClamped( flTimeSinceDamage, 10.0, 15.0, 1.0, 3.0 );
 	}
-	
-	flAmount = MinFloat( float( iBuffedMax - iHealth ), flAmount );
+
+	flHealAmount += g_flHealAccumulator[ iPlayer ];
+	float flHealRounded = float( RoundToFloor( flHealAmount ) );
+	g_flHealAccumulator[ iPlayer ] = flHealAmount - flHealRounded;
+	//PrintToServer("%f %f %f", flHealAmount, flHealRounded, g_flHealAccumulator[ iPlayer ] );
+
+	flHealRounded = MinFloat( float( iBuffedMax - iHealth ), flHealAmount );
 
 	int iNewFlags = 0;
 	if( !( iFlags & HF_NOOVERHEAL ) )
 		iNewFlags = 1 << 1;
 
-	int iReturn = SDKCall( g_sdkTakeHealth, iPlayer, flAmount, iNewFlags, iSource, false );
+	int iReturn = SDKCall( g_sdkTakeHealth, iPlayer, flHealRounded, iNewFlags, iSource, false );
 
 	//TODO: account for spy leech event
 	if( iSource != -1 ) {

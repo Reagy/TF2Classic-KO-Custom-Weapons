@@ -238,7 +238,7 @@ stock bool PlayerInRadius( float vecStart[3], float flRadius, int iPlayer ) {
 
 	float vecTargetPos[3];
 	GetEntPropVector( iPlayer, Prop_Data, "m_vecAbsOrigin", vecTargetPos );
-	return GetVectorDistance( vecStart, vecTargetPos, true ) < flRadius;
+	return GetVectorDistance( vecStart, vecTargetPos ) < flRadius;
 }
 stock void PlayersInRadius( float vecStart[3], float flRadius, bool bOutput[ MAXPLAYERS+1 ] ) {
 	for( int i = 0; i < MaxClients; i++ ) {
@@ -536,6 +536,25 @@ stock int TeamSeenBy( int iViewer, int iViewed ) {
 	//return the disguise
 	return iViewedDisguiseTeam;	
 }
+stock bool IsPlayerMiniCritBoosted( int iPlayer ) {
+	return TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 133 ) ); //TF_COND_DAMAGE_BOOST
+}
+//thank you grand and wise IDA pro
+//pro tip: tf2c.fgd has a list of all the conds with more up to date names than tf2ctools
+stock bool IsPlayerCritBoosted( int iPlayer ) {
+	return (
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 11 ) ) ||	//TF_COND_CRITBOOSTED
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 33 ) ) ||	//TF_COND_CRITBOOSTED_PUMPKIN
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 34 ) ) ||	//TF_COND_CRITBOOSTED_USER_BUFF
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 35 ) ) ||	//TF_COND_CRITBOOSTED_DEMO_CHARGE
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 37 ) ) ||	//TF_COND_CRITBOOSTED_FIRST_BLOOD
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 38 ) ) ||	//TF_COND_CRITBOOSTED_BONUS_TIME
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 39 ) ) ||	//TF_COND_CRITBOOSTED_CTF_CAPTURE
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 40 ) ) ||	//TF_COND_CRITBOOSTED_ON_KILL
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 56 ) ) ||	//TF_COND_CRITBOOSTED_CARD_EFFECT
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 105 ) )	//TF_COND_CRITBOOSTED_RUNE_TEMP
+	);  
+}
 
 stock bool IsValidPlayer( int iPlayer ) {
 	return iPlayer > 0 && iPlayer <= MaxClients;
@@ -546,7 +565,7 @@ stock void ParentModel( int iChild, int iParent, const char[] szAttach = "" ) {
 	AcceptEntityInput( iChild, "SetParent", iParent, iParent, 0 );
 	if( !StrEqual( "", szAttach ) ) {
 		SetVariantString( szAttach );
-		AcceptEntityInput( iChild, "SetParentAttachment", iChild, iChild, 0 );
+		AcceptEntityInput( iChild, "SetParentAttachment", iParent, iParent, 0 );
 	}
 }
 
