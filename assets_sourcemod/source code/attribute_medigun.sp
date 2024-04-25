@@ -82,6 +82,7 @@ public void OnPluginStart() {
 	}
 
 	HookEvent( "post_inventory_application", Event_PostInventory );
+	HookEvent( "player_death", Event_PlayerDeath );
 
 	g_cvMedigunCritBoost = FindConVar( "tf2c_medigun_critboostable" );
 	g_cvMedigunCritBoost.AddChangeHook( OnCritMedigunChange );
@@ -460,7 +461,8 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	float flChargeAmount = 100.0; //for testing
 
 	int iTargetHealth = GetClientHealth( iTarget );
-	if( iTargetHealth >= SDKCall( g_sdkGetBuffedMaxHealth, GetSharedFromPlayer( iTarget ) ) )
+	int iTargetBuffedHealth = SDKCall( g_sdkGetBuffedMaxHealth, GetSharedFromPlayer( iTarget ) );
+	if( iTargetHealth >= RoundToFloor( float( iTargetBuffedHealth ) * 0.95 ) )
 		flChargeAmount *= 0.5;
 
 	bool bIsInSetup;
@@ -544,6 +546,8 @@ void CreatePumpChargedMuzzle( int iWeapon, int iOwner ) {
 	SDKHook( iParticle, SDKHook_SetTransmit, Hook_EmitterTransmitTP );
 	SetEdictFlags( iParticle, 0 );
 	g_iHydroPumpBarrelChargedEmitters[iOwner][1] = EntIndexToEntRef( iParticle );
+
+	//EmitSound( iOwner, "" );
 }
 
 void DestroyPumpChargedMuzzle( int iOwner ) {
@@ -554,6 +558,8 @@ void DestroyPumpChargedMuzzle( int iOwner ) {
 
 		RemoveEntity( iEntity );
 		g_iHydroPumpBarrelChargedEmitters[iOwner][i] = INVALID_ENT_REFERENCE;
+
+		//EmitSound( iOwner, "" );
 	}
 }
 
@@ -564,4 +570,32 @@ Action Hook_EmitterTransmitFP( int iEntity, int iClient ) {
 Action Hook_EmitterTransmitTP( int iEntity, int iClient ) {
 	SetEdictFlags( iEntity, 0 );
 	return iClient != GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
+}
+
+static char g_szHydropumpDropChargeParticles[][] = {
+	"mediflame_charged_death_red",
+	"mediflame_charged_death_blue",
+	"mediflame_charged_death_green",
+	"mediflame_charged_death_yellow"
+};
+Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast ) {
+	int iPlayer = hEvent.GetInt( "userid" );
+	iPlayer = GetClientOfUserId( iPlayer );
+
+	if( !IsValidPlayer( iPlayer ) )
+		return Plugin_Continue;
+	
+	//if( RoundToFloor( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) == CMEDI_FLAME && Tracker_GetValue( iPlayer, g_szHydropumpTrackerName ) >= 100.0 ) {
+	if( true ) {
+		float vecPos[3]; GetEntPropVector( iPlayer, Prop_Data, "m_vecAbsOrigin", vecPos );
+		PrintToServer("%f %f %f", vecPos[0], vecPos[1], vecPos[2] );
+		vecPos[2] += 40.0;
+
+		int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
+		CreateParticle( g_szHydropumpDropChargeParticles[ iTeam ], vecPos, .flDuration = 1.0 );
+
+		//EmitSound( iPlayer, "" );
+	}
+
+	return Plugin_Continue;
 }
