@@ -270,6 +270,10 @@ stock float FloatClamp( float flValue, float flMin, float flMax ) {
 	return MinFloat( MaxFloat( flValue, flMin ), flMax );
 }
 
+stock float FRoundToFloor( float flVal ) {
+	return flVal - FloatFraction( flVal );
+}
+
 stock int MinInt( int v1, int v2 ) {
 	return ( v1 < v2 ) ? v1 : v2;
 }
@@ -279,7 +283,7 @@ stock int MaxInt( int v1, int v2 ) {
 stock int IntClamp( int iValue, int iMin, int iMax ) {
 	return MinInt( MaxInt( iValue, iMin ), iMax );
 }
-//mask out the most significant bit
+//mask out the most significant bit (test if this works)
 stock int IntAbs( int iValue ) {
 	return iValue & 0x7FFFFFFF;
 }
@@ -323,10 +327,10 @@ stock float SimpleSplineRemapValClamped( float flVal, float flA, float flB, floa
 	MEMORY FUNCTIONS
 */
 
-stock any LoadFromAddressOffset( Address aAddress, int iOffset, NumberType eNumberType ) {
+stock any LoadFromAddressOffset( Address aAddress, int iOffset, NumberType eNumberType = NumberType_Int32 ) {
 	return LoadFromAddress( aAddress + address( iOffset ), eNumberType );
 }
-stock void StoreToAddressOffset( Address aAddress, int iOffset, any aValue, NumberType eNumberType ) {
+stock void StoreToAddressOffset( Address aAddress, int iOffset, any aValue, NumberType eNumberType = NumberType_Int32 ) {
 	StoreToAddress( aAddress + address( iOffset ), aValue, eNumberType );
 }
 
@@ -351,15 +355,6 @@ stock void StoreToEntity( int iEntity, int iOffset, any anValue, NumberType iSiz
 
 #define EVENT_POSTINVENTORY		"post_inventory_application"
 #define EVENT_PLAYERDEATH		"player_death"
-
-/*
-	CUSTOM ATTRIBUTE DEFINES
-*/
-
-#define ATR_MEDIGUN_TYPE	"custom_medigun_type"		//(ADDITIVE) 0: Default Behavior, 1: Guardian Angel, 2: Bio Waste Pump, 3: Totenwerfer
-#define ATR_MEDIGUN_BEAM	"custom_medibeamtype"		//(ADDITIVE) 0: Stock Medigun, 1: Kritzkrieg, 2: Overhealer, 3: Bio Waste Pump
-#define ATR_MEDIGUN_OVERHEAL	"custom_maximum_overheal"	//(MULTI) Scales maximum overheal from medigun
-#define ATR_SELF_OVERHEAL	"custom_maximum_overheal_self"	//(MULTI) Scales maximum overheal on self
 
 /*
 	Custom Damage Handling
