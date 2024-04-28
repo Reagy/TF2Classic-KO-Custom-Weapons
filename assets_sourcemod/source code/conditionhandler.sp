@@ -39,6 +39,7 @@ const float	g_iAngShieldDuration	= 8.0;	//angel shield duration
 const float	g_iAngInvulnDuration	= 0.25;	//invulnerability period after a shield breaks
 int 		g_iAngelShields[MAXPLAYERS+1][2]; //0 contains the index of the shield, 1 contains the material manager used for the damage effect
 
+
 static char	g_szHydroPumpHealParticles[][] = {
 	"mediflame_heal_red",
 	"mediflame_heal_blue",
@@ -145,7 +146,7 @@ public void OnPluginStart() {
 	g_dtHealConds.Enable( Hook_Post, Detour_HealNegativeConds );
 
 	g_dtApplyOnHit = DynamicDetourFromConfSafe( hGameConf, "CTFWeaponBase::ApplyOnHitAttributes" );
-	g_dtApplyOnHit.Enable( Hook_Post, Detour_OnHit );
+	g_dtApplyOnHit.Enable( Hook_Post, Detour_ApplyOnHitAttributes );
 
 	g_dhOnKill = DynamicHookFromConfSafe( hGameConf, "CTFPlayer::Event_KilledOther" );
 
@@ -504,29 +505,19 @@ MRESReturn Detour_HealNegativeConds( Address aThis, DHookReturn hReturn ) {
 	return MRES_ChangedOverride;
 }
 
-MRESReturn Detour_OnHit( int iWeapon, DHookParam hParams ) {
-	//int iAttacker = hParams.Get( 1 );
-	int iVictim = hParams.Get( 2 );
-
+MRESReturn Detour_ApplyOnHitAttributes( int iWeapon, DHookParam hParams ) {
 	if( hParams.IsNull( 1 ) )
 		return MRES_Ignored;
+
+	int iAttacker = hParams.Get( 1 );
+	int iVictim = hParams.Get( 2 );
 
 	TFDamageInfo tfInfo =  TFDamageInfo( hParams.GetAddress( 3 ) );
 
 	CheckOnHitCustomCond( iVictim, iWeapon, tfInfo );
 
-	int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwnerEntity" );
-	if( iOwner != -1 ) {
-		float flUberOnHit = AttribHookFloat( 0.0, iWeapon, "add_onhit_ubercharge" );
-		if( flUberOnHit && RoundToFloor( AttribHookFloat( 0.0, iOwner, "custom_medigun_type" ) ) == 6 ) {
-			float flOld = Tracker_GetValue( iOwner, "Ubercharge" );
-			Tracker_SetValue( iOwner, "Ubercharge", flOld + (flUberOnHit * 100.0) );
-		}
-	}
-
 	return MRES_Handled;
 }
-
 
 public void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aTakeDamageInfo );

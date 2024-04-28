@@ -25,12 +25,12 @@ static char g_szHydropumpHealSound[] = "weapons/HPump_Hit.wav";
 #define ANGEL_SELF_BUBBLE false //whether medic receives a bubble when using uber
 static char g_szAngelShieldSound[] = "weapons/angel_shield_on.wav";
 
-DynamicHook	g_dhWeaponSecondary;
-
 DynamicDetour	g_dtFireCollide;
 DynamicDetour	g_dtFireCollideTeam;
+DynamicDetour	g_dtApplyOnHitAttributes;
 
 DynamicHook	g_dhWeaponPostframe;
+DynamicHook	g_dhWeaponSecondary;
 DynamicHook	g_dhWeaponHolster;
 DynamicHook	g_dhWeaponDeploy;
 
@@ -48,10 +48,17 @@ PlayerFlags g_pfPlayingSound;
 float g_flEndHealSoundTime[MAXPLAYERS+1] = { 0.0, ... };
 int g_iHydroPumpBarrelChargedEmitters[MAXPLAYERS+1][2];
 
+//uber_build_rate_on_hit is a part of the medigun so i emulated it for the hydro pump
+int g_iUberStacks[MAXPLAYERS+1] = { 0, ... };
+float g_flUberBonusRate[MAXPLAYERS+1] = { 0.0, ... };
+float g_flUberBonusExpireTime[MAXPLAYERS+1] = { 0.0, ... };
+
 Address g_pCTFGameRules = Address_Null;
 int	g_iSetupOffset = -1;
 
 ConVar g_cvMedigunCritBoost; int g_iMedigunCritBoostVal;
+ConVar g_cvUberStackMax; int g_iUberStackMax = -1;
+ConVar g_cvUberStackExpireTime; float g_flUberStackExpireTime = -1.0;
 
 enum {
 	CMEDI_ANGEL = 1,
@@ -89,6 +96,10 @@ public void OnPluginStart() {
 
 	g_cvMedigunCritBoost = FindConVar( "tf2c_medigun_critboostable" );
 	g_cvMedigunCritBoost.AddChangeHook( OnCritMedigunChange );
+	g_cvUberStackMax = FindConVar( "tf2c_uberratestacks_max" );
+	g_cvUberStackMax.AddChangeHook( OnUberStackMaxChange );
+	g_cvUberStackExpireTime = FindConVar( "tf2c_uberratestacks_removetime" );
+	g_cvUberStackExpireTime.AddChangeHook( OnUberStackExpireChange );
 
 	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
@@ -116,12 +127,13 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
 	g_sdkSpeakIfAllowed = EndPrepSDKCallSafe( "CTFPlayer::SpeakConceptIfAllowed" );
 
-	g_dhWeaponSecondary = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::SecondaryAttack" );
-
 	g_dtFireCollide = DynamicDetourFromConfSafe( hGameConf, "CTFFlameEntity::OnCollide" );
 	g_dtFireCollide.Enable( Hook_Pre, Detour_FireTouch );
 	g_dtFireCollideTeam = DynamicDetourFromConfSafe( hGameConf, "CTFFlameEntity::OnCollideWithTeammate" );
 	g_dtFireCollideTeam.Enable( Hook_Pre, Detour_FireTouchTeam );
+
+	g_dtApplyOnHitAttributes = DynamicDetourFromConfSafe( hGameConf, "CTFWeaponBase::ApplyOnHitAttributes" );
+	g_dtApplyOnHitAttributes.Enable( Hook_Post, Detour_ApplyOnHitAttributes );
 
 	g_iRefEHandleOffset = GameConfGetOffsetSafe( hGameConf, "CBaseEntity::m_RefEHandle" );
 	g_iHealerVecOffset = GameConfGetOffsetSafe( hGameConf, "CTFPlayerShared::m_vecHealers" );
@@ -131,6 +143,7 @@ public void OnPluginStart() {
 	g_pCTFGameRules = GameConfGetAddress( hGameConf, "CTFGameRules" );
 	g_iSetupOffset = FindSendPropInfo( "CTFGameRulesProxy", "m_bInSetup" );
 
+	g_dhWeaponSecondary = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::SecondaryAttack" );
 	g_dhWeaponDeploy = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Deploy" );
 	g_dhWeaponHolster = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Holster" );
 	g_dhWeaponPostframe = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::ItemPostFrame" );
@@ -159,6 +172,53 @@ public void OnPluginEnd() {
 void OnCritMedigunChange( ConVar cvChanged, char[] szOld, char[] szNew ) {
 	int iNew = StringToInt( szNew );
 	g_iMedigunCritBoostVal = iNew;
+}
+void OnUberStackMaxChange( ConVar cvChanged, char[] szOld, char[] szNew ) {
+	int iNew = StringToInt( szNew );
+	g_iUberStackMax = iNew;
+}
+void OnUberStackExpireChange( ConVar cvChanged, char[] szOld, char[] szNew ) {
+	float flNew = StringToFloat( szNew );
+	g_flUberStackExpireTime = flNew;
+}
+
+MRESReturn Detour_ApplyOnHitAttributes( int iWeapon, DHookParam hParams ) {
+	int iAttacker = hParams.Get( 1 );
+	//int iVictim = hParams.Get( 2 );
+
+	if( hParams.IsNull( 1 ) )
+		return MRES_Ignored;
+
+	if( RoundToFloor( AttribHookFloat( 0.0, iAttacker, "custom_medigun_type" ) ) == CMEDI_FLAME ) {
+		float flUberOnHit = AttribHookFloat( 0.0, iWeapon, "add_onhit_ubercharge" );
+		if( flUberOnHit ) {
+			float flOld = Tracker_GetValue( iAttacker, "Ubercharge" );
+			Tracker_SetValue( iAttacker, "Ubercharge", flOld + ( flUberOnHit * 100.0 ) );
+		}
+		
+		float flBuildUberOnHit = AttribHookFloat( 0.0, iWeapon, "uber_build_rate_on_hit" );
+		if( flBuildUberOnHit ) {
+			AddUberStacks( iAttacker, flBuildUberOnHit );
+		}
+	}
+
+	return MRES_Handled;	
+}
+
+void AddUberStacks( int iOwner, float flRate ) {
+	HandleUberStacks( iOwner );
+
+	if( g_iUberStacks[iOwner] < g_iUberStackMax )
+		g_iUberStacks[iOwner] += 1;
+
+	g_flUberBonusExpireTime[iOwner] = GetGameTime() + g_flUberStackExpireTime;
+	g_flUberBonusRate[iOwner] = flRate * g_iUberStacks[iOwner];
+}
+void HandleUberStacks( int iOwner ) {
+	if( g_flUberBonusExpireTime[iOwner] < GetGameTime() ) {
+		g_iUberStacks[iOwner] = 0;
+		g_flUberBonusRate[iOwner] = 0.0;
+	}
 }
 
 public void OnMapStart() {
@@ -357,6 +417,8 @@ MRESReturn Hook_HydroPumpPostFrame( int iThis ) {
 		EndHydropumpHitSound( iOwner );
 	}
 
+	HandleUberStacks( iOwner );
+
 	int iButtons = GetClientButtons( iOwner );
 	if( iButtons & IN_ATTACK2 && !( g_iOldButtons[ iOwner ] & IN_ATTACK2 ) ) {
 		if( !HasCustomCond( iOwner, TFCC_HYDROUBER ) )
@@ -495,6 +557,12 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 		}
 	}
 
+	HandleUberStacks( iOwner );
+	flChargeAmount *= 1.0 + g_flUberBonusRate[iOwner];
+
+	flChargeAmount = AttribHookFloat( flChargeAmount, iWeapon, "mult_medigun_uberchargerate" );
+	flChargeAmount = AttribHookFloat( flChargeAmount, iOwner, "mult_medigun_uberchargerate_wearer" );
+
 	int iHealerCount = GetEntProp( iTarget, Prop_Send, "m_nNumHumanHealers" );
 	if( !bIsInSetup && iHealerCount > 1 ) {
 		flChargeAmount /= iHealerCount;
@@ -544,7 +612,7 @@ void CreatePumpChargedMuzzle( int iWeapon, int iOwner ) {
 
 	//first person
 	int iParticle = CreateParticle( g_szHydropumpMuzzleParticles[ iTeam ] );
-	ParentParticleToViewmodelEX( iParticle, iWeapon, "weapon_bone" );
+	ParentParticleToViewmodelEX( iParticle, iWeapon, "weapon_bone" ); //i have no idea why weapon bone works for this i hate this fucking engine so much
 	SetEntPropEnt( iParticle, Prop_Send, "m_hOwnerEntity", iOwner );
 	SDKHook( iParticle, SDKHook_SetTransmit, Hook_EmitterTransmitFP );
 	SetEdictFlags( iParticle, 0 );
@@ -615,9 +683,9 @@ Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast
 		float vecPos[3]; GetEntPropVector( iPlayer, Prop_Data, "m_vecAbsOrigin", vecPos );
 		vecPos[2] += 40.0;
 
-		//todo: use tempent dispatch for this
 		int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
-		CreateParticle( g_szHydropumpDropChargeParticles[ iTeam ], vecPos, .flDuration = 1.0 );
+		//CreateParticle( g_szHydropumpDropChargeParticles[ iTeam ], vecPos, .flDuration = 1.0 );
+		TE_Particle( g_szHydropumpDropChargeParticles[ iTeam ], vecPos );
 
 		//EmitSound( iPlayer, "" );
 	}
