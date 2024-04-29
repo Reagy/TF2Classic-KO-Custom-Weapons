@@ -15,7 +15,7 @@
 #define MP_CONCEPT_HEALTARGET_CHARGEDEPLOYED 55
 
 //hydro pump
-#define HYDRO_PUMP_HEAL_RATE 36.0
+#define HYDRO_PUMP_HEAL_RATE 30.0
 #define HYDRO_PUMP_AFTERHEAL_RATE 5.0
 #define HYDRO_PUMP_AFTERHEAL_MAX_LENGTH 4.0
 #define HYDRO_PUMP_CHARGE_TIME 40.0
@@ -612,7 +612,7 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 }
 
 void SetFlameHealSoundTime( int iOwner, int iWeapon ) {
-	g_flEndHealSoundTime[ iOwner ] = GetGameTime() + 0.2;
+	g_flEndHealSoundTime[ iOwner ] = GetGameTime() + 0.1;
 
 	if( !g_pfPlayingSound.Get( iOwner ) && GetEntProp( iWeapon, Prop_Send, "m_iWeaponState" ) != 0 ) {
 		g_pfPlayingSound.Set( iOwner, true );
