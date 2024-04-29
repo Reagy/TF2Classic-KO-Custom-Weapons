@@ -10,6 +10,10 @@
 #include <hudframework>
 #include <custom_entprops>
 
+#define MP_CONCEPT_MEDIC_CHARGEREADY 36
+#define MP_CONCEPT_MEDIC_CHARGEDEPLOYED 38
+#define MP_CONCEPT_HEALTARGET_CHARGEDEPLOYED 55
+
 //hydro pump
 #define HYDRO_PUMP_HEAL_RATE 36.0
 #define HYDRO_PUMP_AFTERHEAL_RATE 5.0
@@ -21,9 +25,10 @@ static char g_szHydropumpHealSound[] = "weapons/HPump_Hit.wav";
 #define FLAMETHROWER_FIRING_INTERVAL 0.04
 
 //guardian angel
-#define ANGEL_UBER_COST 0.33 //uber cost to grant bubble
+#define ANGEL_UBER_COST 0.3333 //uber cost to grant bubble
 #define ANGEL_SELF_BUBBLE false //whether medic receives a bubble when using uber
 static char g_szAngelShieldSound[] = "weapons/angel_shield_on.wav";
+static char g_szAngelShieldChargedSound[] = "weapons/healing/medigun_overheal_max.wav";
 
 DynamicDetour	g_dtFireCollide;
 DynamicDetour	g_dtFireCollideTeam;
@@ -42,7 +47,7 @@ int g_iRefEHandleOffset = -1;
 int g_iFlameBurnedVectorOffset = -1;
 int g_iFlameOwnerOffset = -1;
 int g_iCUtlVectorSizeOffset = -1;
-int g_iHealerVecOffset = -1;
+//int g_iHealerVecOffset = -1;
 
 PlayerFlags g_pfPlayingSound;
 float g_flEndHealSoundTime[MAXPLAYERS+1] = { 0.0, ... };
@@ -53,7 +58,7 @@ int g_iUberStacks[MAXPLAYERS+1] = { 0, ... };
 float g_flUberBonusRate[MAXPLAYERS+1] = { 0.0, ... };
 float g_flUberBonusExpireTime[MAXPLAYERS+1] = { 0.0, ... };
 
-Address g_pCTFGameRules = Address_Null;
+Address g_pCTFGameRules;
 int	g_iSetupOffset = -1;
 
 ConVar g_cvMedigunCritBoost; int g_iMedigunCritBoostVal;
@@ -136,7 +141,7 @@ public void OnPluginStart() {
 	g_dtApplyOnHitAttributes.Enable( Hook_Post, Detour_ApplyOnHitAttributes );
 
 	g_iRefEHandleOffset = GameConfGetOffsetSafe( hGameConf, "CBaseEntity::m_RefEHandle" );
-	g_iHealerVecOffset = GameConfGetOffsetSafe( hGameConf, "CTFPlayerShared::m_vecHealers" );
+	//g_iHealerVecOffset = GameConfGetOffsetSafe( hGameConf, "CTFPlayerShared::m_vecHealers" );
 	g_iFlameBurnedVectorOffset = GameConfGetOffsetSafe( hGameConf, "CTFFlameEntity::m_hEntitiesBurnt" );
 	g_iFlameOwnerOffset = GameConfGetOffsetSafe( hGameConf, "CTFFlameEntity::m_hOwner" );
 	g_iCUtlVectorSizeOffset = GameConfGetOffsetSafe( hGameConf, "CUtlVector::m_Size" );
@@ -153,9 +158,8 @@ public void OnPluginStart() {
 	if( bLateLoad ) {
 		int iIndex = MaxClients + 1;
 		while( ( iIndex = FindEntityByClassname( iIndex, "tf_weapon_medigun" ) ) != -1 ) {
-			HookMedigun( iIndex );
+			Frame_SetupMedigun( iIndex );
 		}
-
 		iIndex = MaxClients + 1;
 		while( ( iIndex = FindEntityByClassname( iIndex, "tf_weapon_flamethrower" ) ) != -1 ) {
 			Frame_SetupFlamethrower( iIndex );
@@ -189,7 +193,7 @@ MRESReturn Detour_ApplyOnHitAttributes( int iWeapon, DHookParam hParams ) {
 	if( hParams.IsNull( 1 ) )
 		return MRES_Ignored;
 
-	if( RoundToFloor( AttribHookFloat( 0.0, iAttacker, "custom_medigun_type" ) ) == CMEDI_FLAME ) {
+	if( GetCustomMedigunType( iAttacker ) == CMEDI_FLAME ) {
 		float flUberOnHit = AttribHookFloat( 0.0, iWeapon, "add_onhit_ubercharge" );
 		if( flUberOnHit ) {
 			float flOld = Tracker_GetValue( iAttacker, "Ubercharge" );
@@ -221,8 +225,13 @@ void HandleUberStacks( int iOwner ) {
 	}
 }
 
+int GetCustomMedigunType( int iTarget ) {
+	return RoundToFloor( AttribHookFloat( 0.0, iTarget, "custom_medigun_type" ) );
+}
+
 public void OnMapStart() {
 	PrecacheSound( g_szAngelShieldSound );
+	PrecacheSound( g_szAngelShieldChargedSound );
 	PrecacheSound( g_szHydropumpHealSound );
 
 	g_pfPlayingSound.SetDirect( 0, 0 );
@@ -235,7 +244,7 @@ public void OnMapStart() {
 
 public void OnEntityCreated( int iThis, const char[] szClassname ) {
 	if( strcmp( szClassname, "tf_weapon_medigun", false ) == 0 )
-		HookMedigun( iThis );
+		RequestFrame( Frame_SetupMedigun, EntIndexToEntRef( iThis ) );
 	else if( strcmp( szClassname, "tf_weapon_flamethrower", false ) == 0 )
 		RequestFrame( Frame_SetupFlamethrower, EntIndexToEntRef( iThis ) ); //attributes don't seem to be setup yet
 }
@@ -247,7 +256,7 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	if( !IsValidPlayer( iPlayer ) )
 		return Plugin_Continue;
 
-	if( RoundToFloor( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) == CMEDI_FLAME ) {
+	if( GetCustomMedigunType( iPlayer ) == CMEDI_FLAME ) {
 		Tracker_Create( iPlayer, g_szHydropumpTrackerName, false );
 		Tracker_SetMax( iPlayer, g_szHydropumpTrackerName, 100.0 );
 		Tracker_SetFlags( iPlayer, g_szHydropumpTrackerName, RTF_CLEARONSPAWN | RTF_PERCENTAGE );
@@ -259,23 +268,26 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	return Plugin_Continue;
 }
 
+void Frame_SetupMedigun( int iMedigun ) {
+	iMedigun = EntRefToEntIndex( iMedigun );
+	if( iMedigun == -1 )
+		return;
+
+	g_dhWeaponSecondary.HookEntity( Hook_Pre, iMedigun, Hook_MedigunSecondaryPre );
+	g_dhWeaponPostframe.HookEntity( Hook_Post, iMedigun, Hook_MedigunItemPostFrame );
+	g_dhWeaponHolster.HookEntity( Hook_Post, iMedigun, Hook_MedigunHolster );
+}
+
 void Frame_SetupFlamethrower( int iFlamethrower ) {
 	iFlamethrower = EntRefToEntIndex( iFlamethrower );
 	if( iFlamethrower == -1 )
 		return;
 
-	int iAttrib = RoundToFloor( AttribHookFloat( 0.0, iFlamethrower, "custom_medigun_type" ) );
-	if( iAttrib == CMEDI_FLAME ) {
+	if( GetCustomMedigunType( iFlamethrower ) == CMEDI_FLAME ) {
 		g_dhWeaponPostframe.HookEntity( Hook_Pre, iFlamethrower, Hook_HydroPumpPostFrame );
 		g_dhWeaponDeploy.HookEntity( Hook_Pre, iFlamethrower, Hook_HydroPumpDeploy );
 		g_dhWeaponHolster.HookEntity( Hook_Pre, iFlamethrower, Hook_HydroPumpHolster );
 	}
-}
-
-void HookMedigun( int iMedigun ) {
-	g_dhWeaponSecondary.HookEntity( Hook_Pre, iMedigun, Hook_MedigunSecondaryPre );
-	g_dhWeaponPostframe.HookEntity( Hook_Post, iMedigun, Hook_ItemPostFrame );
-	g_dhWeaponHolster.HookEntity( Hook_Post, iMedigun, Hook_MedigunHolster );
 }
 
 MRESReturn Hook_MedigunHolster( int iThis ) {
@@ -303,15 +315,28 @@ MRESReturn Hook_MedigunSecondaryPre( int iThis ) {
 	return MRES_Ignored;
 }
 
-MRESReturn Hook_ItemPostFrame( int iMedigun ) {
+float g_flOldChargeLevel[MAXPLAYERS+1] = { 0.0, ... };
+MRESReturn Hook_MedigunItemPostFrame( int iMedigun ) {
 	int iTarget = GetEntPropEnt( iMedigun, Prop_Send, "m_hHealingTarget" );
 	int iOwner = GetEntPropEnt( iMedigun, Prop_Send, "m_hOwnerEntity" );
+
+	int iMediType = GetCustomMedigunType( iMedigun );
+	float flChargeLevel = GetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel" );
+	if( iMediType == CMEDI_ANGEL ) {
+		float flNextTarget = 0.01 * ( RoundToFloor( ( g_flOldChargeLevel[iOwner] + 0.33 ) * 100.0 ) / 33 ) * 33;
+		if( flNextTarget > 0.98 && flNextTarget < 1.0 )
+			flNextTarget = 1.0;
+
+		if( g_flOldChargeLevel[iOwner] < flNextTarget && flChargeLevel >= flNextTarget ) {
+			EmitSoundToAll( g_szAngelShieldChargedSound, iOwner, .level = SNDLEVEL_NORMAL, .flags = SND_CHANGEPITCH, .pitch = 100 + RoundToFloor( flChargeLevel * 15.0 ) );
+		}
+	}
+	g_flOldChargeLevel[iOwner] = flChargeLevel;
 
 	if( !GetEntProp( iMedigun, Prop_Send, "m_bChargeRelease" ) )
 		return MRES_Handled;
 
 	//uber handling
-	int iMediType = RoundToFloor( AttribHookFloat( 0.0, iMedigun, "custom_medigun_type" ) );
 	switch( iMediType ) {
 		case CMEDI_QFIX: {
 			PulseCustomUber( iMedigun, TFCC_QUICKUBER, iTarget, iOwner );
@@ -393,6 +418,9 @@ void AngelGunUber( int iMedigun ) {
 	SetCustomCondSourcePlayer( iTarget, TFCC_ANGELSHIELD, iOwner );
 	SetCustomCondSourceWeapon( iTarget, TFCC_ANGELSHIELD, iMedigun );
 
+	SpeakConceptIfAllowed( iOwner, MP_CONCEPT_MEDIC_CHARGEDEPLOYED );
+	SpeakConceptIfAllowed( iTarget, MP_CONCEPT_HEALTARGET_CHARGEDEPLOYED );
+
 	EmitSoundToAll( g_szAngelShieldSound, iOwner, SNDCHAN_WEAPON, 85 );
 	SetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel", flChargeLevel - ANGEL_UBER_COST );
 	return;
@@ -427,7 +455,7 @@ MRESReturn Hook_HydroPumpPostFrame( int iThis ) {
 		if( Tracker_GetValue( iOwner, g_szHydropumpTrackerName ) >= 100.0 && !HasCustomCond( iOwner, TFCC_HYDROUBER ) ) {
 			AddCustomCond( iOwner, TFCC_HYDROUBER, iOwner, iThis );
 
-			SpeakConceptIfAllowed( iOwner, 38 ); //38 = MP_CONCEPT_MEDIC_CHARGEDEPLOYED
+			SpeakConceptIfAllowed( iOwner, MP_CONCEPT_MEDIC_CHARGEDEPLOYED );
 		}
 	}
 	g_iOldButtons[ iOwner ] = iButtons;
@@ -577,7 +605,7 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	float flNewValue = flOldValue + flChargeAmount;
 	if( flOldValue < 100.0 && flNewValue >= 100.0 ) {
 		CreatePumpChargedMuzzle( iWeapon, iOwner );
-		SpeakConceptIfAllowed( iOwner, 36 ); //36 = MP_CONCEPT_MEDIC_CHARGEREADY
+		SpeakConceptIfAllowed( iOwner, MP_CONCEPT_MEDIC_CHARGEREADY );
 	}
 
 	Tracker_SetValue( iOwner, g_szHydropumpTrackerName, flNewValue );
@@ -678,7 +706,7 @@ Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast
 	int iPlayer = hEvent.GetInt( "userid" );
 	iPlayer = GetClientOfUserId( iPlayer );
 	
-	//if( RoundToFloor( AttribHookFloat( 0.0, iPlayer, "custom_medigun_type" ) ) == CMEDI_FLAME && Tracker_GetValue( iPlayer, g_szHydropumpTrackerName ) >= 100.0 ) {
+	//if( GetCustomMedigunType( iPlayer ) == CMEDI_FLAME && Tracker_GetValue( iPlayer, g_szHydropumpTrackerName ) >= 100.0 ) {
 	if( true ) {
 		float vecPos[3]; GetEntPropVector( iPlayer, Prop_Data, "m_vecAbsOrigin", vecPos );
 		vecPos[2] += 40.0;

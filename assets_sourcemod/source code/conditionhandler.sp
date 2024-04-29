@@ -95,6 +95,11 @@ DynamicHook g_dhOnKill;
 Handle g_sdkGetMaxHealth;
 Handle g_sdkGetBuffedMaxHealth;
 
+Handle g_sdkPlayerBlockedDamage;
+Handle g_sdkPlayerDamage;
+
+Address g_iCTFGameStats;
+
 bool g_bLateLoad;
 public APLRes AskPluginLoad2( Handle myself, bool bLate, char[] error, int err_max ) {
 	CreateNative( "AddCustomCond", Native_AddCond );
@@ -155,6 +160,19 @@ public void OnPluginStart() {
 	g_dtAirblastPlayer = DynamicDetourFromConfSafe( hGameConf, "CTFPlayerShared::AirblastPlayer" );
 	g_dtAirblastPlayer.Enable( Hook_Pre, Detour_AirblastPlayer );
 
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameStats::Event_PlayerDamage" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkPlayerDamage = EndPrepSDKCallSafe( "CTFGameStats::Event_PlayerDamage" );
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameStats::Event_PlayerBlockedDamage" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkPlayerBlockedDamage = EndPrepSDKCallSafe( "CTFGameStats::Event_PlayerBlockedDamage" );
+
 	StartPrepSDKCall( SDKCall_Player );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::GetMaxHealth" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
@@ -164,6 +182,8 @@ public void OnPluginStart() {
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetBuffedMaxHealth" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	g_sdkGetBuffedMaxHealth = EndPrepSDKCallSafe( "CTFPlayerShared::GetBuffedMaxHealth" );
+
+	g_iCTFGameStats = GameConfGetAddress( hGameConf, "CTFGameStats" );
 
 	for( int i = 0; i < MAXPLAYERS+1; i++ ) {
 		g_iAngelShields[i][0] = INVALID_ENT_REFERENCE;
@@ -946,8 +966,8 @@ void RemoveAngelShield( int iPlayer ) {
 		g_hShieldExpireTimers[ iPlayer ] = INVALID_HANDLE;
 	}
 
-	g_iAngelShields[iPlayer][0] = -1;
-	g_iAngelShields[iPlayer][1] = -1;
+	g_iAngelShields[iPlayer][0] = INVALID_ENT_REFERENCE;
+	g_iAngelShields[iPlayer][1] = INVALID_ENT_REFERENCE;
 }
 
 static char g_szShieldKillParticle[][] = {
@@ -961,6 +981,8 @@ static char g_szShieldKillParticle[][] = {
 void RemoveAngelShield2( int iPlayer ) {
 	EmitSoundToAll( "weapons/teleporter_explode.wav", iPlayer );
 	ClientCommand( iPlayer, "r_screenoverlay off"); 
+
+	//todo: change to a te dispatch
 
 	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	int iEmitter = CreateEntityByName( "info_particle_system" );
@@ -985,8 +1007,8 @@ void RemoveAngelShield2( int iPlayer ) {
 		RemoveEntity( GetAngelShield( iPlayer, 1 ) );
 	}
 
-	g_iAngelShields[iPlayer][0] = -1;
-	g_iAngelShields[iPlayer][1] = -1;
+	g_iAngelShields[iPlayer][0] = INVALID_ENT_REFERENCE;
+	g_iAngelShields[iPlayer][1] = INVALID_ENT_REFERENCE;
 
 	//return Plugin_Continue;
 }
@@ -1007,22 +1029,25 @@ void AngelShieldTakeDamage( int iTarget, TFDamageInfo tfInfo ) {
 
 	TF2_AddCondition( iTarget, TFCond_UberchargedOnTakeDamage, 0.1 ); //todo: hook some sort of function to replace this
 
+	int iBubbleSource = GetCondSourcePlayer( iTarget, TFCC_ANGELSHIELD );
+	int iNewDamage = RoundToFloor( flNewDamage );
+
 	Event eFakeDamage = CreateEvent( "player_hurt", true );
 	eFakeDamage.SetInt( "userid", GetClientUserId( iTarget ) );
 	eFakeDamage.SetInt( "health", 300 );
 	eFakeDamage.SetInt( "attacker", GetClientUserId( tfInfo.iAttacker ) );
-	eFakeDamage.SetInt( "damageamount", RoundToFloor( flNewDamage ) );
+	eFakeDamage.SetInt( "damageamount", iNewDamage );
 	eFakeDamage.SetInt( "bonuseffect", 2 );
 	eFakeDamage.Fire();
+	SDKCall( g_sdkPlayerDamage, g_iCTFGameStats, iTarget, tfInfo, iNewDamage );
 
 	Event eBlockedDamage = CreateEvent( "damage_blocked", true );
-	eBlockedDamage.SetInt( "provider", GetCondSourcePlayer( iTarget, TFCC_ANGELSHIELD ) );
+	eBlockedDamage.SetInt( "provider", GetClientUserId( iBubbleSource ) );
 	eBlockedDamage.SetInt( "victim", GetClientUserId( iTarget ) );
 	eBlockedDamage.SetInt( "attacker", GetClientUserId( tfInfo.iAttacker ) );
-	eBlockedDamage.SetInt( "amount", RoundToFloor( flNewDamage ) );
+	eBlockedDamage.SetInt( "amount", iNewDamage );
 	eBlockedDamage.Fire();
-
-	//todo: give damage score to attacker
+	SDKCall( g_sdkPlayerBlockedDamage, g_iCTFGameStats, iBubbleSource, iNewDamage );
 
 	EmitGameSoundToAll( "Player.ResistanceHeavy", iTarget );
 
