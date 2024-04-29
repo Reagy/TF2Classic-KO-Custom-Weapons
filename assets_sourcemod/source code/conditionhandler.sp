@@ -939,14 +939,6 @@ Action ExpireAngelShield( Handle hTimer, int iPlayer ) {
 	return Plugin_Stop;
 }
 void RemoveAngelShield( int iPlayer ) {
-	/*bool bBroken = ePlayerConds[iPlayer][TFCC_ANGELSHIELD].iLevel <= 0;
-
-	if( bBroken ) {
-		AddCond( iPlayer, TFCC_ANGELINVULN );
-		CreateTimer( ANGINVULN_DURATION, RemoveAngelShield2, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
-		return;
-	}*/
-
 	RemoveAngelShield2( iPlayer );
 
 	if( IsClientInGame( iPlayer ) ) {
@@ -977,7 +969,6 @@ static char g_szShieldKillParticle[][] = {
 	"angel_shieldbreak_yellow"
 }; 
 
-//Action RemoveAngelShield2( Handle hTimer, int iPlayer ) {
 void RemoveAngelShield2( int iPlayer ) {
 	EmitSoundToAll( "weapons/teleporter_explode.wav", iPlayer );
 	ClientCommand( iPlayer, "r_screenoverlay off"); 
@@ -986,7 +977,7 @@ void RemoveAngelShield2( int iPlayer ) {
 
 	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	int iEmitter = CreateEntityByName( "info_particle_system" );
-	DispatchKeyValue( iEmitter, "effect_name", g_szShieldKillParticle[iTeam] );
+	DispatchKeyValue( iEmitter, "effect_name", g_szShieldKillParticle[iTeam] ); //todo: tempent dispatch
 
 	float vecPos[3]; GetClientAbsOrigin( iPlayer, vecPos );
 	TeleportEntity( iEmitter, vecPos );
@@ -1009,8 +1000,6 @@ void RemoveAngelShield2( int iPlayer ) {
 
 	g_iAngelShields[iPlayer][0] = INVALID_ENT_REFERENCE;
 	g_iAngelShields[iPlayer][1] = INVALID_ENT_REFERENCE;
-
-	//return Plugin_Continue;
 }
 Action RemoveEmitter( Handle hTimer, int iEmitter ) {
 	iEmitter = EntRefToEntIndex( iEmitter );
@@ -1204,8 +1193,8 @@ bool AddHydroPumpHeal( int iPlayer, int iSource ) {
 	CreateTimer( 0.2, Timer_HydroPumpKillMe, EntRefToEntIndex( iPlayer ), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
 
 	//reusing shield transmit function because it already does what we need
-	//SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwner );
-	//SetEdictFlags( iEmitter, 0 );
+	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwner );
+	SetEdictFlags( iEmitter, 0 );
 
 	int iOldHydroHealer = 0;
 	GetCustomProp( iSource, "m_iHydroHealing", iOldHydroHealer );

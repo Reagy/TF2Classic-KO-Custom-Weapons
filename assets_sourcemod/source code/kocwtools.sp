@@ -44,6 +44,7 @@ Handle g_sdkDestroyLagCompensation;
 StringMap g_smAllocPooledStringCache;
 
 Handle g_sdkTakeHealth;
+Handle g_sdkTakeDisguiseHealth;
 Handle g_sdkGetMaxHealth;
 
 Handle g_sdkSetSolid;
@@ -55,6 +56,7 @@ Handle g_sdkHeal;
 Handle g_sdkHealTimed;
 Handle g_sdkStopHealing;
 Handle g_sdkPlayerHealedOther;
+Handle g_sdkPlayerLeachedHealth;
 
 public Plugin myinfo =
 {
@@ -148,7 +150,7 @@ public void OnPluginStart() {
 	*/
 
 	//CAttributeManager::ApplyAttributeFloat( float flValue, const CBaseEntity *pEntity, string_t strAttributeClass )
-	StartPrepSDKCall(SDKCall_Raw);
+	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CAttributeManager::ApplyAttributeFloat" );
 	PrepSDKCall_SetReturnInfo(SDKType_Float, SDKPass_Plain);
 	PrepSDKCall_AddParameter(SDKType_Float, SDKPass_Plain); //flvalue
@@ -214,6 +216,13 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
 	g_sdkPlayerHealedOther = EndPrepSDKCallSafe( "CTFGameStats::Event_PlayerHealedOther" );
 
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameStats::Event_PlayerLeachedHealth" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	g_sdkPlayerLeachedHealth = EndPrepSDKCallSafe( "CTFGameStats::Event_PlayerHealedOther" );
+
 	/*
 		DAMAGE FUNCTIONS
 	*/
@@ -258,12 +267,19 @@ public void OnPluginStart() {
 	//float int player bool
 	StartPrepSDKCall( SDKCall_Player );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::TakeHealth" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
 	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	g_sdkTakeHealth = EndPrepSDKCallSafe( "CTFPlayer::TakeHealth" );
+
+	StartPrepSDKCall( SDKCall_Player );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayer::TakeDisguiseHealth" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkTakeDisguiseHealth = EndPrepSDKCallSafe( "CTFPlayer::TakeDisguiseHealth" );
 
 	StartPrepSDKCall( SDKCall_Player );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::GetMaxHealth" );
@@ -798,24 +814,10 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 	if( iWeapon != -1 ) {
 		flOverhealMult = AttribHookFloat( flOverhealMult, iWeapon, "mult_patient_overheal_penalty_active" );
 	}
-
-	if( iSource != -1 ) {
-		flOverhealMult = AttribHookFloat( flOverhealMult, iSource, "mult_medigun_overheal_amount" );
-	}
 	flOverhealMult += 1.0;
 
-	if( TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 146 ) ) ) { //TF_COND_TAKEBONUSHEALING
-		flHealAmount *= 1.5;
-	}
-
-	//todo: round to multiple of 5
-	float flBuffedMax = float( iMaxHealth ) * flOverhealMult;
-	int iBuffedMax = RoundToFloor( flBuffedMax  / 5.0 ) * 5;
-
-	if( !( iFlags & HF_NOCRITHEAL ) ) {
-		float flTimeSinceDamage = GetGameTime() - GetEntPropFloat( iPlayer, Prop_Send, "m_flLastDamageTime" );
-		flHealAmount *= RemapValClamped( flTimeSinceDamage, 10.0, 15.0, 1.0, 3.0 );
-	}
+	float flBuffedMax = flOverhealMult * iMaxHealth;
+	int iBuffedMax = RoundToFloor( flBuffedMax / 5.0 ) * 5;
 
 	flHealAmount += g_flHealAccumulator[ iPlayer ];
 	float flHealRounded = float( RoundToFloor( flHealAmount ) );
@@ -824,15 +826,16 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 
 	flHealRounded = MinFloat( float( iBuffedMax - iHealth ), flHealAmount );
 
-	int iNewFlags = 0;
-	if( !( iFlags & HF_NOOVERHEAL ) )
-		iNewFlags = 1 << 1;
-
-	int iReturn = SDKCall( g_sdkTakeHealth, iPlayer, flHealRounded, iNewFlags, iSource, false );
+	int iReturn = SDKCall( g_sdkTakeHealth, iPlayer, flHealRounded, 0, iSource, !(iFlags & HF_NOCRITHEAL) );
 
 	//TODO: account for spy leech event
 	if( iSource != -1 ) {
-		SDKCall( g_sdkPlayerHealedOther, g_iCTFGameStats, iSource, float( iReturn ) ); //todo: create native
+		SDKCall( g_sdkPlayerHealedOther, g_iCTFGameStats, iSource, float( iReturn ) );
+
+		if( GetEntProp( iSource, Prop_Send, "m_iTeamNum" ) != GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) ) {
+			SDKCall( g_sdkTakeDisguiseHealth, iPlayer, flHealRounded, !(iFlags & HF_NOCRITHEAL) );
+			SDKCall( g_sdkPlayerLeachedHealth, g_iCTFGameStats, iPlayer, false, float( iReturn ) );
+		}
 	}
 
 	return iReturn;

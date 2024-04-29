@@ -1188,6 +1188,11 @@
 				"library"	"server"
 				"linux"		"@_ZN9CTFPlayer21SpeakConceptIfAllowedEiPKcPcjP16IRecipientFilter"
 			}
+			"CTFPlayer::TakeDisguiseHealth"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTFPlayer18TakeDisguiseHealthEfi"
+			}
 			
 			"CTFPlayerShared::Burn"
 			{
@@ -1480,6 +1485,21 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN12CTFGameStats23Event_PlayerHealedOtherEP9CTFPlayerf"
+			}
+			"CTFGameStats::Event_PlayerLeachedHealth"
+			{
+				"library"	"server"
+				"linux"		"@_ZN12CTFGameStats25Event_PlayerLeachedHealthEP9CTFPlayerbf"
+			}
+			"CTFGameStats::Event_PlayerBlockedDamage"
+			{
+				"library"	"server"
+				"linux"		"@_ZN12CTFGameStats25Event_PlayerBlockedDamageEP9CTFPlayeri"
+			}
+			"CTFGameStats::Event_PlayerDamage"
+			{
+				"library"	"server"
+				"linux"		"@_ZN12CTFGameStats18Event_PlayerDamageEP11CBasePlayerRK15CTakeDamageInfoi"
 			}
 			
 			"CEnableLagCompensation::CEnableLagCompensation"
