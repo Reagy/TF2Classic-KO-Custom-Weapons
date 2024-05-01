@@ -18,6 +18,10 @@ public Plugin myinfo =
 }
 
 DynamicHook g_dhPrimaryFire;
+DynamicHook g_dhItemPostFrame;
+DynamicHook g_dhWeaponHolster;
+DynamicHook g_dhWeaponDeploy;
+
 DynamicDetour g_dtGetMedigun;
 DynamicDetour g_dtRestart;
 
@@ -31,11 +35,22 @@ DynamicDetour g_dtRestart;
 int g_iScrambleOffset = -1;
 int g_iRestartTimeOffset = -1;
 //int g_iPhysEventEntityOffset = -1;
+int g_iSniperDotOffset = -1;
+
+bool g_bLateLoad;
+public APLRes AskPluginLoad2( Handle myself, bool bLate, char[] error, int err_max ) {
+	g_bLateLoad = bLate;
+
+	return APLRes_Success;
+}
 
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
 	g_dhPrimaryFire = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::PrimaryAttack" );
+	g_dhItemPostFrame = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::ItemPostFrame" );
+	g_dhWeaponDeploy = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Deploy" );
+	g_dhWeaponHolster = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Holster" );
 
 	g_dtGetMedigun = DynamicDetourFromConfSafe( hGameConf, "CTFPlayer::GetMedigun" );
 	g_dtGetMedigun.Enable( Hook_Pre, Hook_GetMedigun );
@@ -61,9 +76,17 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
 	EndPrepSDKCallSafe( "IPhysicsObject::EnableMotion" );*/
 
-	g_iScrambleOffset = GameConfGetOffset( hGameConf, "CTFGameRules::m_bScrambleTeams" );
-	g_iRestartTimeOffset = GameConfGetOffset( hGameConf, "CTFGameRules::m_flMapResetTime" );
+	g_iScrambleOffset = GameConfGetOffsetSafe( hGameConf, "CTFGameRules::m_bScrambleTeams" );
+	g_iRestartTimeOffset = GameConfGetOffsetSafe( hGameConf, "CTFGameRules::m_flMapResetTime" );
+	g_iSniperDotOffset = GameConfGetOffsetSafe( hGameConf, "CTFSniperRifle::m_hSniperDot" );
 	//g_iPhysEventEntityOffset = GameConfGetOffset( hGameConf, "gamevcollisionevent_t.pEntities" );
+
+	if( g_bLateLoad ) {
+		int iIndex = MaxClients + 1;
+		while( ( iIndex = FindEntityByClassname( iIndex, "tf_weapon_sniperrifle" ) ) != -1 ) {
+			Frame_CheckSniper( iIndex );
+		}
+	}
 
 	delete hGameConf;
 }
@@ -71,8 +94,23 @@ public void OnPluginStart() {
 public void OnEntityCreated( int iEntity ) {
 	static char szEntityName[ 32 ];
 	GetEntityClassname( iEntity, szEntityName, sizeof( szEntityName ) );
-	if( StrContains( szEntityName, "tf_weapon_shotgun", false ) == 0 )
-		g_dhPrimaryFire.HookEntity( Hook_Pre, iEntity, Hook_PrimaryFire );
+	if( strcmp( szEntityName, "tf_weapon_shotgun" ) == 0 )
+		RequestFrame( Frame_CheckShotgun, EntIndexToEntRef( iEntity ) );
+	else if( strcmp( szEntityName, "tf_weapon_sniperrifle" ) == 0 )
+		RequestFrame( Frame_CheckSniper, EntIndexToEntRef( iEntity ) );
+}
+
+void Frame_CheckShotgun( int iWeaponRef ) {
+	int iWeapon = EntRefToEntIndex( iWeaponRef );
+	if( iWeaponRef != -1 )
+		g_dhPrimaryFire.HookEntity( Hook_Pre, iWeapon, Hook_CursedPrimaryFire );
+}
+void Frame_CheckSniper( int iWeaponRef ) {
+	int iWeapon = EntRefToEntIndex( iWeaponRef );
+	if( iWeaponRef != -1 ) {
+		g_dhItemPostFrame.HookEntity( Hook_Post, iWeapon, Hook_SniperPostFrame );
+		g_dhWeaponHolster.HookEntity( Hook_Post, iWeapon, Hook_SniperHolster );
+	}
 }
 
 public void OnTakeDamageAlivePostTF( int iTarget, Address aDamageInfo ) {
@@ -133,7 +171,7 @@ MRESReturn Hook_GetMedigun( int iPlayer, DHookReturn hReturn ) {
 
 float g_flHurtMe[ MAXPLAYERS+1 ];
 
-MRESReturn Hook_PrimaryFire( int iEntity ) {
+MRESReturn Hook_CursedPrimaryFire( int iEntity ) {
 	if( GetEntPropFloat( iEntity, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() ) {
 		return MRES_Ignored;
 	}
@@ -213,6 +251,95 @@ void DoUberScale( TFDamageInfo tfInfo ) {
 		flUbercharge = GetMedigunCharge( tfInfo.iAttacker );
 
 	tfInfo.flDamage *= MaxFloat( flUbercharge, 0.1 );
+}
+
+/*
+	Sniper laser
+*/
+int g_iSniperLaserEmitters[MAXPLAYERS+1] = { INVALID_ENT_REFERENCE, ... };
+int g_iSniperLaserControlPoints[MAXPLAYERS+1] = { INVALID_ENT_REFERENCE, ... };
+MRESReturn Hook_SniperPostFrame( int iThis ) {
+	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
+	if( iOwner == -1 )
+		return MRES_Ignored;
+	
+	int iDot = LoadEntityHandleFromAddress( GetEntityAddress( iThis ) + view_as<Address>( g_iSniperDotOffset ) );
+	int iEmitter = EntRefToEntIndex( g_iSniperLaserEmitters[iOwner] );
+	if( iDot != -1 ) {
+		if( iEmitter == -1 )
+			CreateSniperLaser( iOwner, iDot );
+
+		UpdateSniperControlPoint( iOwner, iThis );
+	} else if( iEmitter != -1 && iDot == -1 ) {
+		DeleteSniperLaser( iOwner );
+	} 
+
+	return MRES_Handled;
+}
+MRESReturn Hook_SniperHolster( int iThis ) {
+	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
+	if( iOwner == -1 )
+		return MRES_Ignored;
+
+	DeleteSniperLaser( iOwner );
+	
+	return MRES_Handled;
+}
+
+void UpdateSniperControlPoint( int iOwner, int iWeapon ) {
+	int iPoint = EntRefToEntIndex( g_iSniperLaserControlPoints[iOwner] );
+	if( iPoint == -1 )
+		return;
+
+	float vecPos[3] = { 1.0, 1.0, 1.0 };
+	float flChargeLevel = GetEntPropFloat( iWeapon, Prop_Send, "m_flChargedDamage" );
+	vecPos[0] = RemapValClamped( flChargeLevel, 0.0, 150.0, 0.0, 1.0 );
+	//PrintToServer("%f", flChargeLevel);
+
+	TeleportEntity( iPoint, vecPos );
+}
+
+static char g_szSniperLaserParticles[][] = {
+	"sniper_laser_red",
+	"sniper_laser_blue",
+	"sniper_laser_green",
+	"sniper_laser_yellow"
+};
+
+void CreateSniperLaser( int iOwner, int iDot ) {
+	int iPoint = CreateEntityByName( "info_target" );
+	DispatchSpawn( iPoint );
+	ActivateEntity( iPoint );
+	SetEdictFlags( iPoint, FL_EDICT_ALWAYS );
+	
+	int iTeam = GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) - 2;
+	int iEmitter = CreateParticle( g_szSniperLaserParticles[iTeam] );
+	ParentModel( iEmitter, iOwner, "eyes" );
+
+	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iOwner );
+	SetEntPropEnt( iEmitter, Prop_Send, "m_hControlPointEnts", iDot, 0 );
+	SetEntPropEnt( iEmitter, Prop_Send, "m_hControlPointEnts", iPoint, 1 );
+	//SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwner );
+	//SetEdictFlags( iEmitter, 0 );
+
+	g_iSniperLaserEmitters[iOwner] = EntIndexToEntRef( iEmitter );
+	g_iSniperLaserControlPoints[iOwner] = EntIndexToEntRef( iPoint );
+}
+void DeleteSniperLaser( int iOwner ) {
+	int iEmitter = EntRefToEntIndex( g_iSniperLaserEmitters[iOwner] );
+	int iPoint = EntRefToEntIndex( g_iSniperLaserControlPoints[iOwner] );
+	g_iSniperLaserEmitters[iOwner] = INVALID_ENT_REFERENCE;
+	g_iSniperLaserControlPoints[iOwner] = INVALID_ENT_REFERENCE;
+	
+	if( iEmitter != -1 )
+		RemoveEntity( iEmitter );
+	if( iPoint != -1 )
+		RemoveEntity( iPoint );
+}
+
+Action Hook_TransmitIfNotOwner( int iEntity, int iClient ) {
+	SetEdictFlags( iEntity, 0 );
+	return iClient != GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
 }
 
 /*

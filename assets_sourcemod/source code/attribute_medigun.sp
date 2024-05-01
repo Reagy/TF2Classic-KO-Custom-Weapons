@@ -16,11 +16,13 @@
 
 //hydro pump
 #define HYDRO_PUMP_HEAL_RATE 30.0
-#define HYDRO_PUMP_AFTERHEAL_RATE 5.0
+#define HYDRO_PUMP_AFTERHEAL_RATE 6.0
 #define HYDRO_PUMP_AFTERHEAL_MAX_LENGTH 4.0
 #define HYDRO_PUMP_CHARGE_TIME 40.0
 static char g_szHydropumpTrackerName[32] = "Ubercharge";
 static char g_szHydropumpHealSound[] = "weapons/HPump_Hit.wav";
+static char g_szHydropumpChargedSound[] = "";
+static char g_szHydropumpDropChargeSound[] = "";
 
 #define FLAMETHROWER_FIRING_INTERVAL 0.04
 
@@ -127,8 +129,11 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
 	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
-	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //size_t is 64 bit so we need to do this
+
+	//size_t is 64 bit so we need to do this, frankly i'm surprised it was this easy
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); 
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
 	g_sdkSpeakIfAllowed = EndPrepSDKCallSafe( "CTFPlayer::SpeakConceptIfAllowed" );
 
@@ -232,7 +237,10 @@ int GetCustomMedigunType( int iTarget ) {
 public void OnMapStart() {
 	PrecacheSound( g_szAngelShieldSound );
 	PrecacheSound( g_szAngelShieldChargedSound );
+	
 	PrecacheSound( g_szHydropumpHealSound );
+	PrecacheSound( g_szHydropumpChargedSound );
+	PrecacheSound( g_szHydropumpDropChargeSound );
 
 	g_pfPlayingSound.SetDirect( 0, 0 );
 	g_pfPlayingSound.SetDirect( 1, 0 );
@@ -617,7 +625,6 @@ void SetFlameHealSoundTime( int iOwner, int iWeapon ) {
 	if( !g_pfPlayingSound.Get( iOwner ) && GetEntProp( iWeapon, Prop_Send, "m_iWeaponState" ) != 0 ) {
 		g_pfPlayingSound.Set( iOwner, true );
 		EmitSoundToAll( g_szHydropumpHealSound, iOwner );
-		//EmitSoundToAll( g_szHydropumpHealSound, iOwner, .flags = SND_CHANGEVOL, .volume = 0.75 );
 	}
 }
 
@@ -657,7 +664,7 @@ void CreatePumpChargedMuzzle( int iWeapon, int iOwner ) {
 
 	CreateTimer( 0.2, Timer_RemoveChargedMuzzle, EntRefToEntIndex( iOwner ), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
 
-	//EmitSound( iOwner, "" );
+	//EmitSound( iOwner, g_szHydropumpChargedSound );
 }
 
 Action Timer_RemoveChargedMuzzle( Handle hTimer, int iOwnerRef ) {
@@ -683,7 +690,7 @@ void DestroyPumpChargedMuzzle( int iOwner ) {
 		RemoveEntity( iEntity );
 		g_iHydroPumpBarrelChargedEmitters[iOwner][i] = INVALID_ENT_REFERENCE;
 
-		//EmitSound( iOwner, "" );
+		//StopSound( iOwner, g_szHydropumpChargedSound );
 	}
 }
 
@@ -715,7 +722,7 @@ Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast
 		//CreateParticle( g_szHydropumpDropChargeParticles[ iTeam ], vecPos, .flDuration = 1.0 );
 		TE_Particle( g_szHydropumpDropChargeParticles[ iTeam ], vecPos );
 
-		//EmitSound( iPlayer, "" );
+		//EmitSound( iPlayer, g_szHydropumpDropChargeSound );
 	}
 
 	return Plugin_Continue;
