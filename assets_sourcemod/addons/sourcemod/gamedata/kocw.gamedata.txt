@@ -159,6 +159,11 @@
 			{
 				"linux"		"385"
 			}
+			
+			"CTFSniperRifle::m_hSniperDot"
+			{
+				"linux"		"1876"
+			}
 		
 			"CTFFlameEntity::m_hOwner"
 			{
