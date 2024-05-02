@@ -52,6 +52,7 @@ const float	g_flHydroUberHealRate	= 24.0;
 const float	g_flHydroUberDuration	= 10.0;
 const float	g_flHydroUberRange	= 500.0;
 const float	g_flHydroUberFrequency	= 0.2;
+static char	g_szHydroUberSound[]	= "weapons/HPump_Uber.wav";
 static char	g_szHydroUberParticles[][] = {
 	"mediflame_uber_red",
 	"mediflame_uber_blue",
@@ -65,6 +66,7 @@ static char	g_szHydroUberParticlesFP[][] = {
 	"mediflame_uber_yellow_fp"
 };
 int		g_iHydroPumpUberEmitters[MAXPLAYERS+1][2];
+
 
 #define DEBUG
 
@@ -262,6 +264,9 @@ MRESReturn Hook_OnPlayerKill( int iThis, DHookParam hParams ) {
 
 public void OnMapStart() {
 	PrecacheSound( g_szToxinLoopSound );
+	PrecacheSound( g_szHydroUberSound );
+
+	//todo: move to static strings
 	PrecacheSound( "weapons/buffed_off.wav" );
 	PrecacheModel( "models/effects/resist_shield/resist_shield.mdl" );
 }
@@ -1289,6 +1294,8 @@ bool AddHydroUber( int iPlayer ) {
 
 	g_iHydroPumpUberEmitters[iPlayer][1] = EntIndexToEntRef( iEmitter );
 
+	EmitSoundToAll( g_szHydroUberSound, iPlayer );
+
 	return true;
 }
 
@@ -1338,6 +1345,7 @@ Action Timer_HydroUberPulse( Handle hTimer, int iOwnerRef ) {
 }
 
 void RemoveHydroUber( int iPlayer ) {
+	StopSound( iPlayer, SNDCHAN_AUTO, g_szHydroUberSound );
 	for( int i = 0; i <= 1; i++ ) {
 		int iEmitter = EntRefToEntIndex( g_iHydroPumpUberEmitters[iPlayer][i] );
 		g_iHydroPumpUberEmitters[iPlayer][i] = INVALID_ENT_REFERENCE;

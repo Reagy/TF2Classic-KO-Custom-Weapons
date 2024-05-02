@@ -96,7 +96,7 @@ public void OnEntityCreated( int iEntity ) {
 	GetEntityClassname( iEntity, szEntityName, sizeof( szEntityName ) );
 	if( strcmp( szEntityName, "tf_weapon_shotgun" ) == 0 )
 		RequestFrame( Frame_CheckShotgun, EntIndexToEntRef( iEntity ) );
-	else if( strcmp( szEntityName, "tf_weapon_sniperrifle" ) == 0 )
+	else if( HasEntProp( iEntity, Prop_Send, "m_flChargedDamage" ) )
 		RequestFrame( Frame_CheckSniper, EntIndexToEntRef( iEntity ) );
 }
 
@@ -107,10 +107,14 @@ void Frame_CheckShotgun( int iWeaponRef ) {
 }
 void Frame_CheckSniper( int iWeaponRef ) {
 	int iWeapon = EntRefToEntIndex( iWeaponRef );
-	if( iWeaponRef != -1 ) {
-		g_dhItemPostFrame.HookEntity( Hook_Post, iWeapon, Hook_SniperPostFrame );
-		g_dhWeaponHolster.HookEntity( Hook_Post, iWeapon, Hook_SniperHolster );
-	}
+	if( iWeaponRef == -1 )
+		return;
+	
+	if( !AttribHookFloat( 0.0, iWeaponRef, "custom_sniper_laser" ) )
+		return;
+
+	g_dhItemPostFrame.HookEntity( Hook_Post, iWeapon, Hook_SniperPostFrame );
+	g_dhWeaponHolster.HookEntity( Hook_Post, iWeapon, Hook_SniperHolster );
 }
 
 public void OnTakeDamageAlivePostTF( int iTarget, Address aDamageInfo ) {
@@ -135,14 +139,14 @@ float g_flRestartTime = 0.0;
 MRESReturn Detour_ResetMapTimePre( Address aThis ) {
 	bool bScramble = LoadFromAddressOffset( aThis, g_iScrambleOffset, NumberType_Int8 );
 	if( bScramble ) {
-		g_flRestartTime = LoadFromAddressOffset( aThis, g_iRestartTimeOffset, NumberType_Int32 );
+		g_flRestartTime = LoadFromAddressOffset( aThis, g_iRestartTimeOffset );
 	}
 	return MRES_Handled;
 }
 
 MRESReturn Detour_ResetMapTimePost( Address aThis ) {
 	if( g_flRestartTime != -1.0 ) {
-		StoreToAddressOffset( aThis, g_iRestartTimeOffset, g_flRestartTime, NumberType_Int32 );
+		StoreToAddressOffset( aThis, g_iRestartTimeOffset, g_flRestartTime );
 		g_flRestartTime = -1.0;
 	}
 	return MRES_Handled;
@@ -197,17 +201,15 @@ void CheckLifesteal( TFDamageInfo tfInfo ) {
 	if( !IsValidPlayer( iAttacker ) )
 		return;
 
-	int iWeapon = tfInfo.iWeapon;
-	float flMult = AttribHookFloat( 0.0, iWeapon, "custom_lifesteal" );
+	float flMult = AttribHookFloat( 0.0, tfInfo.iWeapon, "custom_lifesteal" );
 	if( flMult == 0.0 )
 		return;
 
-	float flAmount = tfInfo.flDamage * flMult;
-	g_flHurtMe[ iAttacker ] -= flAmount;
+	g_flHurtMe[ iAttacker ] -= tfInfo.flDamage * flMult;
 }
 
 void Frame_HurtPlayer( int iPlayer ) {
-	if( !IsPlayerAlive( iPlayer ) )
+	if( !IsClientInGame( iPlayer ) || !IsPlayerAlive( iPlayer ) )
 		return;
 
 	float flAmount = g_flHurtMe[ iPlayer ];
@@ -237,7 +239,7 @@ void DoUberScale( TFDamageInfo tfInfo ) {
 	if( iWeapon == -1 )
 		return;
 
-	if( AttribHookFloat( 0.0, tfInfo.iWeapon, "custom_uber_scales_damage" ) == 0.0 ) 
+	if( AttribHookFloat( 0.0, iWeapon, "custom_uber_scales_damage" ) == 0.0 ) 
 		return;
 
 	int iAttacker = tfInfo.iAttacker;
@@ -245,10 +247,10 @@ void DoUberScale( TFDamageInfo tfInfo ) {
 		return;
 
 	float flUbercharge = 0.0;
-	if( RoundToFloor( AttribHookFloat( 0.0, tfInfo.iAttacker, "custom_medigun_type" ) ) == 6 )
-		flUbercharge = Tracker_GetValue( tfInfo.iAttacker, "Ubercharge" ) * 0.01;
+	if( RoundToFloor( AttribHookFloat( 0.0, iAttacker, "custom_medigun_type" ) ) == 6 )
+		flUbercharge = Tracker_GetValue( iAttacker, "Ubercharge" ) * 0.01;
 	else
-		flUbercharge = GetMedigunCharge( tfInfo.iAttacker );
+		flUbercharge = GetMedigunCharge( iAttacker );
 
 	tfInfo.flDamage *= MaxFloat( flUbercharge, 0.1 );
 }
@@ -257,7 +259,7 @@ void DoUberScale( TFDamageInfo tfInfo ) {
 	Sniper laser
 */
 int g_iSniperLaserEmitters[MAXPLAYERS+1] = { INVALID_ENT_REFERENCE, ... };
-int g_iSniperLaserControlPoints[MAXPLAYERS+1] = { INVALID_ENT_REFERENCE, ... };
+int g_iSniperLaserControlPoints[MAXPLAYERS+1] = { INVALID_ENT_REFERENCE, ... }; //position is used as a control point in the laser particle
 MRESReturn Hook_SniperPostFrame( int iThis ) {
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
 	if( iOwner == -1 )
@@ -282,7 +284,7 @@ MRESReturn Hook_SniperHolster( int iThis ) {
 		return MRES_Ignored;
 
 	DeleteSniperLaser( iOwner );
-	
+
 	return MRES_Handled;
 }
 
@@ -291,10 +293,8 @@ void UpdateSniperControlPoint( int iOwner, int iWeapon ) {
 	if( iPoint == -1 )
 		return;
 
-	float vecPos[3] = { 1.0, 1.0, 1.0 };
-	float flChargeLevel = GetEntPropFloat( iWeapon, Prop_Send, "m_flChargedDamage" );
-	vecPos[0] = RemapValClamped( flChargeLevel, 0.0, 150.0, 0.0, 1.0 );
-	//PrintToServer("%f", flChargeLevel);
+	float vecPos[3];
+	vecPos[0] = RemapVal( GetEntPropFloat( iWeapon, Prop_Send, "m_flChargedDamage" ), 0.0, 150.0, 0.0, 1.0 );
 
 	TeleportEntity( iPoint, vecPos );
 }
@@ -311,19 +311,20 @@ void CreateSniperLaser( int iOwner, int iDot ) {
 	DispatchSpawn( iPoint );
 	ActivateEntity( iPoint );
 	SetEdictFlags( iPoint, FL_EDICT_ALWAYS );
+	g_iSniperLaserControlPoints[iOwner] = EntIndexToEntRef( iPoint );
 	
 	int iTeam = GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) - 2;
 	int iEmitter = CreateParticle( g_szSniperLaserParticles[iTeam] );
 	ParentModel( iEmitter, iOwner, "eyes" );
+	g_iSniperLaserEmitters[iOwner] = EntIndexToEntRef( iEmitter );
 
 	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iOwner );
 	SetEntPropEnt( iEmitter, Prop_Send, "m_hControlPointEnts", iDot, 0 );
 	SetEntPropEnt( iEmitter, Prop_Send, "m_hControlPointEnts", iPoint, 1 );
+
+	//don't need this anymore because of "control point to disable rendering if it is the camera" on the particle
 	//SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwner );
 	//SetEdictFlags( iEmitter, 0 );
-
-	g_iSniperLaserEmitters[iOwner] = EntIndexToEntRef( iEmitter );
-	g_iSniperLaserControlPoints[iOwner] = EntIndexToEntRef( iPoint );
 }
 void DeleteSniperLaser( int iOwner ) {
 	int iEmitter = EntRefToEntIndex( g_iSniperLaserEmitters[iOwner] );
@@ -331,10 +332,14 @@ void DeleteSniperLaser( int iOwner ) {
 	g_iSniperLaserEmitters[iOwner] = INVALID_ENT_REFERENCE;
 	g_iSniperLaserControlPoints[iOwner] = INVALID_ENT_REFERENCE;
 	
-	if( iEmitter != -1 )
-		RemoveEntity( iEmitter );
+	if( iEmitter != -1 ) {
+		AcceptEntityInput( iEmitter, "Stop" );
+		CreateTimer( 1.0, Timer_RemoveParticle, EntIndexToEntRef( iEmitter ) );
+		//RemoveEntity( iEmitter );
+	}
 	if( iPoint != -1 )
-		RemoveEntity( iPoint );
+		CreateTimer( 1.0, Timer_RemoveParticle, EntIndexToEntRef( iPoint ) );
+		//RemoveEntity( iPoint );
 }
 
 Action Hook_TransmitIfNotOwner( int iEntity, int iClient ) {

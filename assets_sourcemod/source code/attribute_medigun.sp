@@ -19,10 +19,16 @@
 #define HYDRO_PUMP_AFTERHEAL_RATE 6.0
 #define HYDRO_PUMP_AFTERHEAL_MAX_LENGTH 4.0
 #define HYDRO_PUMP_CHARGE_TIME 40.0
-static char g_szHydropumpTrackerName[32] = "Ubercharge";
-static char g_szHydropumpHealSound[] = "weapons/HPump_Hit.wav";
-static char g_szHydropumpChargedSound[] = "";
-static char g_szHydropumpDropChargeSound[] = "";
+static char g_szHydropumpTrackerName[32]	= "Ubercharge";
+static char g_szHydropumpHealSound[]		= "weapons/HPump_Hit.wav";
+static char g_szHydropumpChargedSound[]		= "ambient/gas/steam2.wav";
+static char g_szHydropumpDropChargeSound[]	= "";
+static char g_szHydropumpDropChargeParticles[][] = {
+	"mediflame_charged_death_red",
+	"mediflame_charged_death_blue",
+	"mediflame_charged_death_green",
+	"mediflame_charged_death_yellow"
+};
 
 #define FLAMETHROWER_FIRING_INTERVAL 0.04
 
@@ -240,7 +246,11 @@ public void OnMapStart() {
 	
 	PrecacheSound( g_szHydropumpHealSound );
 	PrecacheSound( g_szHydropumpChargedSound );
-	PrecacheSound( g_szHydropumpDropChargeSound );
+	//PrecacheSound( g_szHydropumpDropChargeSound );
+
+	for( int i = 0; i < 4; i++ ) {
+		PrecacheParticleSystem( g_szHydropumpDropChargeParticles[i] );
+	}
 
 	g_pfPlayingSound.SetDirect( 0, 0 );
 	g_pfPlayingSound.SetDirect( 1, 0 );
@@ -303,7 +313,6 @@ MRESReturn Hook_MedigunHolster( int iThis ) {
 
 	if( IsValidPlayer( iOwner ) ) {
 		if( HasCustomCond( iOwner, TFCC_ANGELSHIELD ) && GetCustomCondSourcePlayer( iOwner, TFCC_ANGELSHIELD ) == iOwner ) {
-			SetCustomCondLevel( iOwner, TFCC_ANGELSHIELD, 0 );
 			RemoveCustomCond( iOwner, TFCC_ANGELSHIELD );
 		}
 
@@ -401,9 +410,7 @@ void AngelGunUber( int iMedigun ) {
 		if( HasCustomCond( iGive, TFCC_ANGELSHIELD ) || HasCustomCond( iGive, TFCC_ANGELINVULN ) )
 			continue;
 
-		AddCustomCond( iGive, TFCC_ANGELSHIELD );
-		SetCustomCondSourcePlayer( iGive, TFCC_ANGELSHIELD, iOwner );
-		SetCustomCondSourceWeapon( iGive, TFCC_ANGELSHIELD, iMedigun );
+		AddCustomCond( iGive, TFCC_ANGELSHIELD, iOwner, iMedigun );
 		
 		bApplied = true;
 	}
@@ -422,9 +429,7 @@ void AngelGunUber( int iMedigun ) {
 	if( HasCustomCond( iTarget, TFCC_ANGELSHIELD ) || HasCustomCond( iTarget, TFCC_ANGELINVULN ) )
 		return;
 
-	AddCustomCond( iTarget, TFCC_ANGELSHIELD );
-	SetCustomCondSourcePlayer( iTarget, TFCC_ANGELSHIELD, iOwner );
-	SetCustomCondSourceWeapon( iTarget, TFCC_ANGELSHIELD, iMedigun );
+	AddCustomCond( iTarget, TFCC_ANGELSHIELD, iOwner, iMedigun );
 
 	SpeakConceptIfAllowed( iOwner, MP_CONCEPT_MEDIC_CHARGEDEPLOYED );
 	SpeakConceptIfAllowed( iTarget, MP_CONCEPT_HEALTARGET_CHARGEDEPLOYED );
@@ -445,9 +450,7 @@ MRESReturn Hook_HydroPumpPostFrame( int iThis ) {
 	if( iOwner == -1 )
 		return MRES_Ignored;
 
-	int iWeaponMode = GetEntProp( iThis, Prop_Send, "m_iWeaponState" );
-
-	bool bNotFiring = iWeaponMode == 0;
+	bool bNotFiring = GetEntProp( iThis, Prop_Send, "m_iWeaponState" ) == 0;
 	bool bTimeToEnd = g_flEndHealSoundTime[ iOwner ] != 0.0 && g_flEndHealSoundTime[ iOwner ] <= GetGameTime();
 	if( bNotFiring || bTimeToEnd ) {
 		EndHydropumpHitSound( iOwner );
@@ -457,6 +460,7 @@ MRESReturn Hook_HydroPumpPostFrame( int iThis ) {
 
 	int iButtons = GetClientButtons( iOwner );
 	if( iButtons & IN_ATTACK2 && !( g_iOldButtons[ iOwner ] & IN_ATTACK2 ) ) {
+		//debug
 		if( !HasCustomCond( iOwner, TFCC_HYDROUBER ) )
 			Tracker_SetValue( iOwner, g_szHydropumpTrackerName, 100.0 );
 
@@ -471,12 +475,16 @@ MRESReturn Hook_HydroPumpPostFrame( int iThis ) {
 	return MRES_Handled;
 }
 MRESReturn Hook_HydroPumpDeploy( int iThis, DHookReturn hReturn ) {
-	RequestFrame( Frame_Test, iThis );
+	RequestFrame( Frame_HydroPumpDeploy, EntIndexToEntRef( iThis ) );
 	return MRES_Handled;
 }
-void Frame_Test( int iThis ) {
+void Frame_HydroPumpDeploy( int iThis ) {
+	iThis = EntRefToEntIndex( iThis );
+	if( iThis == -1 )
+		return;
+
 	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
-	if( iOwner != -1 && Tracker_GetValue( iOwner, g_szHydropumpTrackerName ) >= 100.0 )
+	if( iOwner != -1 && GetEntPropEnt( iOwner, Prop_Send, "m_hActiveWeapon" ) == iThis && Tracker_GetValue( iOwner, g_szHydropumpTrackerName ) >= 100.0 )
 		CreatePumpChargedMuzzle( iThis, iOwner );
 }
 MRESReturn Hook_HydroPumpHolster( int iThis, DHookReturn hReturn, DHookParam hParams ) {
@@ -664,7 +672,7 @@ void CreatePumpChargedMuzzle( int iWeapon, int iOwner ) {
 
 	CreateTimer( 0.2, Timer_RemoveChargedMuzzle, EntRefToEntIndex( iOwner ), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
 
-	//EmitSound( iOwner, g_szHydropumpChargedSound );
+	EmitSoundToAll( g_szHydropumpChargedSound, iOwner, .flags = SND_CHANGEVOL, .volume = 0.25 );
 }
 
 Action Timer_RemoveChargedMuzzle( Handle hTimer, int iOwnerRef ) {
@@ -690,8 +698,8 @@ void DestroyPumpChargedMuzzle( int iOwner ) {
 		RemoveEntity( iEntity );
 		g_iHydroPumpBarrelChargedEmitters[iOwner][i] = INVALID_ENT_REFERENCE;
 
-		//StopSound( iOwner, g_szHydropumpChargedSound );
 	}
+	StopSound( iOwner, SNDCHAN_AUTO,  g_szHydropumpChargedSound );
 }
 
 Action Hook_EmitterTransmitFP( int iEntity, int iClient ) {
@@ -703,12 +711,6 @@ Action Hook_EmitterTransmitTP( int iEntity, int iClient ) {
 	return iClient != GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
 }
 
-static char g_szHydropumpDropChargeParticles[][] = {
-	"mediflame_charged_death_red",
-	"mediflame_charged_death_blue",
-	"mediflame_charged_death_green",
-	"mediflame_charged_death_yellow"
-};
 Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast ) {
 	int iPlayer = hEvent.GetInt( "userid" );
 	iPlayer = GetClientOfUserId( iPlayer );
