@@ -32,8 +32,10 @@ int g_iMaterialManager[ MAXPLAYERS+1 ] = { INVALID_ENT_REFERENCE, ... };
 float g_flShieldCooler[ MAXPLAYERS+1 ];
 float g_flLastDamagedShield[ MAXPLAYERS+1 ];
 
-#define SHIELD_MODEL "models/props_mvm/kocw_player_shield.mdl"
-#define SHIELDKEYNAME "Shield"
+static char g_szShieldModel[] = "models/props_mvm/kocw_player_shield.mdl";
+static char g_szShieldDeploySnd[] = "weapons/medi_shield_deploy.wav";
+static char g_szShieldRetractSnd[] = "weapons/medi_shield_retract.wav";
+static char g_szShieldKeyName[32] = "Shield";
 
 //max shield energy
 #define SHIELD_MAX 800.0
@@ -70,30 +72,30 @@ public void OnPluginStart() {
 
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
-	hSimpleTrace = DynamicDetour.FromConf( hGameConf, "CTraceFilterSimple::ShouldHitEntity" );
+	hSimpleTrace = DynamicDetourFromConfSafe( hGameConf, "CTraceFilterSimple::ShouldHitEntity" );
 	hSimpleTrace.Enable( Hook_Post, Detour_ShouldHitEntitySimple );
 
-	hSentryTrace = DynamicDetour.FromConf( hGameConf, "CTraceFilterIgnoreTeammatesExceptEntity::ShouldHitEntity" );
+	hSentryTrace = DynamicDetourFromConfSafe( hGameConf, "CTraceFilterIgnoreTeammatesExceptEntity::ShouldHitEntity" );
 	hSentryTrace.Enable( Hook_Post, Detour_ShouldHitEntitySentry );
 
-	hShouldCollide = DynamicHook.FromConf( hGameConf, "CBaseEntity::ShouldCollide" );
-	hTouch = DynamicHook.FromConf( hGameConf, "CBaseEntity::Touch" );
+	hShouldCollide = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::ShouldCollide" );
+	hTouch = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::Touch" );
 
-	hPostFrame = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::ItemPostFrame" );
-	hTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
+	hPostFrame = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::ItemPostFrame" );
+	hTakeDamage = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::OnTakeDamage" );
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CBaseEntity::Touch" );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
-	hTouchCall = EndPrepSDKCall();
+	hTouchCall = EndPrepSDKCallSafe( "CBaseEntity::Touch" );
 
 	delete hGameConf;
 }
 
 public void OnMapStart() {
-	PrecacheModel( SHIELD_MODEL );
-	PrecacheSound( "weapons/medi_shield_deploy.wav" );
-	PrecacheSound( "weapons/medi_shield_retract.wav" );
+	PrecacheModel( g_szShieldModel );
+	PrecacheSound( g_szShieldDeploySnd );
+	PrecacheSound( g_szShieldRetractSnd );
 
 	for( int i = 0; i < sizeof(szSoundNames); i++ ) {
 		PrecacheSound( szSoundNames[i] );
@@ -122,7 +124,7 @@ MRESReturn Hook_PostFrame( int iThis ) {
 		return MRES_Ignored;
 
 	int iWeaponState = GetEntProp( iThis, Prop_Send, "m_iWeaponState" );
-	float flTrackerValue = Tracker_GetValue( iWeaponOwner, SHIELDKEYNAME );
+	float flTrackerValue = Tracker_GetValue( iWeaponOwner, g_szShieldKeyName );
 	if( !( iWeaponState == 3 ) || flTrackerValue <= 0.0 ) { //spinning
 		RemoveShield( iWeaponOwner );
 		return MRES_Handled;
@@ -145,17 +147,17 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 		if( AttribHookFloat( 0.0, iPlayer, "custom_sphere" ) != 0.0 ) {
 			g_flShieldCooler[iPlayer] = GetGameTime();
 
-			Tracker_Create( iPlayer, SHIELDKEYNAME, false );
-			Tracker_SetMax( iPlayer, SHIELDKEYNAME, SHIELD_MAX );
-			Tracker_SetFlags( iPlayer, SHIELDKEYNAME, RTF_RECHARGES | RTF_CLEARONSPAWN );
+			Tracker_Create( iPlayer, g_szShieldKeyName, false );
+			Tracker_SetMax( iPlayer, g_szShieldKeyName, SHIELD_MAX );
+			Tracker_SetFlags( iPlayer, g_szShieldKeyName, RTF_RECHARGES | RTF_CLEARONSPAWN );
 
 			if( !g_HasSphere.Get( iPlayer ) ) {
-				Tracker_SetValue( iPlayer, SHIELDKEYNAME, 0.0 );
+				Tracker_SetValue( iPlayer, g_szShieldKeyName, 0.0 );
 			}
 			g_HasSphere.Set( iPlayer, true );
 		}
 		else {
-			Tracker_Remove( iPlayer, SHIELDKEYNAME );
+			Tracker_Remove( iPlayer, g_szShieldKeyName );
 			g_HasSphere.Set( iPlayer, false );
 		}
 	}
@@ -169,11 +171,11 @@ public void OnGameFrame() {
 		if( !IsClientInGame( i ) )
 			continue;
 
-		float flValue = Tracker_GetValue( i, SHIELDKEYNAME );
+		float flValue = Tracker_GetValue( i, g_szShieldKeyName );
 		if( EntRefToEntIndex( g_iSphereShields[ i ] ) == -1 ) {
 			flValue += ( SHIELD_MAX / ( SHIELD_REGEN_PASSIVE / GetGameFrameTime() ) );
 			flValue = MinFloat( SHIELD_MAX, flValue );
-			Tracker_SetValue( i, SHIELDKEYNAME, flValue );
+			Tracker_SetValue( i, g_szShieldKeyName, flValue );
 		}
 
 		if( !IsPlayerAlive( i ) || !g_HasSphere.Get( i ) || flValue <= 0.0 ) {
@@ -194,7 +196,7 @@ void SpawnShield( int iOwner ) {
 	if( !IsValidEntity( iShield ) )
 		return;
 
-	SetEntityModel( iShield, SHIELD_MODEL );
+	SetEntityModel( iShield, g_szShieldModel );
 	SetEntPropEnt( iShield, Prop_Send, "m_hOwnerEntity", iOwner );
 
 	int iOwnerTeam = GetEntProp( iOwner, Prop_Send, "m_iTeamNum" );
@@ -215,7 +217,7 @@ void SpawnShield( int iOwner ) {
 	hTouch.HookEntity( Hook_Post, iShield, Hook_ShieldTouch );
 	hTakeDamage.HookEntity( Hook_Pre, iShield, Hook_ShieldTakeDamage );
 
-	EmitSoundToAll( "weapons/medi_shield_deploy.wav", iShield, SNDCHAN_AUTO, 95 );
+	EmitSoundToAll( g_szShieldDeploySnd, iShield, SNDCHAN_AUTO, 95 );
 
 	g_iSphereShields[ iOwner ] = EntIndexToEntRef( iShield );
 
@@ -235,7 +237,7 @@ void RemoveShield( int iOwner ) {
 	int iManager = EntRefToEntIndex( g_iMaterialManager[ iOwner ] );
 
 	if( iShield != -1 ) {
-		EmitSoundToAll( "weapons/medi_shield_retract.wav", iShield, SNDCHAN_AUTO, 95, 0, 0.8 );
+		EmitSoundToAll( g_szShieldRetractSnd, iShield, SNDCHAN_AUTO, 95, 0, 0.8 );
 		RemoveEntity( iShield );
 		g_iSphereShields[ iOwner ] = INVALID_ENT_REFERENCE;
 		g_flShieldCooler[ iOwner ] = GetGameTime() + 2.0;
@@ -349,12 +351,20 @@ MRESReturn Hook_ShieldTakeDamage( int iThis, DHookReturn hReturn, DHookParam hPa
 	
 	EmitSoundToAll( szSoundNames[ GetRandomInt(0, 3) ], iThis, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEPITCH, 1.0, GetRandomInt( 90, 110 ) );
 
-	float flFalloff = TF2DamageFalloff( iThis, tfInfo );
+	float flFalloff = TF2DamageFalloff( iThis, tfInfo ) * SHIELD_DAMAGE_DRAIN_SCALE;
 
-	float flTrackerValue = Tracker_GetValue( iOwner, SHIELDKEYNAME );
-	flTrackerValue = MaxFloat( 0.0, flTrackerValue - ( flFalloff * SHIELD_DAMAGE_DRAIN_SCALE ) );
-	Tracker_SetValue( iOwner, SHIELDKEYNAME, flTrackerValue );
+	float flTrackerValue = Tracker_GetValue( iOwner, g_szShieldKeyName );
+	flTrackerValue = MaxFloat( 0.0, flTrackerValue - flFalloff );
+	Tracker_SetValue( iOwner, g_szShieldKeyName, flTrackerValue );
 	
+	//todo: test this
+	Event eResistEvent = CreateEvent( "damage_blocked", true );
+	eResistEvent.SetInt( "provider", GetClientUserId( iOwner ) );
+	eResistEvent.SetInt( "victim", GetClientUserId( iOwner ) );
+	eResistEvent.SetInt( "attacker", GetClientUserId( iAttacker ) );
+	eResistEvent.SetInt( "amount", RoundToFloor( flFalloff ) );
+	eResistEvent.Fire();
+
 	g_flLastDamagedShield[ iOwner ] = GetGameTime();
 
 	return MRES_Handled;
@@ -378,14 +388,16 @@ void BuildShieldCharge( TFDamageInfo tfInfo ) {
 	if( !g_HasSphere.Get( iOwner ) )
 		return;
 
-	float flNewValue = MinFloat( SHIELD_MAX, Tracker_GetValue( iOwner, SHIELDKEYNAME ) + ( tfInfo.flDamage * SHIELD_DAMAGE_TO_CHARGE_SCALE ) );
-	Tracker_SetValue( iOwner, SHIELDKEYNAME, flNewValue );
+	float flNewValue = MinFloat( SHIELD_MAX, Tracker_GetValue( iOwner, g_szShieldKeyName ) + ( tfInfo.flDamage * SHIELD_DAMAGE_TO_CHARGE_SCALE ) );
+	Tracker_SetValue( iOwner, g_szShieldKeyName, flNewValue );
 }
 
 //offset 4: pass entity
 //offset 16: pass team
 //offset 20: except entity
 
+
+//todo: offsets will probably never change but should move to gamedata anyway
 
 //todo: flame particle collision?
 MRESReturn Detour_ShouldHitEntitySimple( Address aTrace, DHookReturn hReturn, DHookParam hParams ) {

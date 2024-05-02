@@ -775,8 +775,43 @@ Action Timer_RemoveParticle( Handle hTimer, int iParticleRef ) {
 	return Plugin_Continue;
 }
 
+stock int PrecacheParticleSystem( const char[] szParticleSystem ) {
+	static int iParticleEffectNames = INVALID_STRING_TABLE;
+	if ( iParticleEffectNames == INVALID_STRING_TABLE ) {
+		if ( ( iParticleEffectNames = FindStringTable( "ParticleEffectNames" ) ) == INVALID_STRING_TABLE ) {
+			return INVALID_STRING_INDEX;
+		}
+	}
+
+	int iIndex = FindStringIndex2( iParticleEffectNames, szParticleSystem );
+	if ( iIndex == INVALID_STRING_INDEX ) {
+		int iNumStrings = GetStringTableNumStrings( iParticleEffectNames );
+		if ( iNumStrings >= GetStringTableMaxStrings( iParticleEffectNames ) )
+			return INVALID_STRING_INDEX;
+
+		AddToStringTable( iParticleEffectNames, szParticleSystem );
+		iIndex = iNumStrings;
+	}
+
+	return iIndex;
+}
+
+stock int FindStringIndex2( int iTableIndex, const char[] szName ) {
+	static char szBuffer[256];
+
+	int iNumStrings = GetStringTableNumStrings( iTableIndex );
+	for ( int i = 0; i < iNumStrings; i++ ) {
+		ReadStringTable( iTableIndex, i, szBuffer, sizeof( szBuffer ) );
+
+		if( strcmp( szBuffer, szName ) == 0 )
+			return i;
+	}
+
+	return INVALID_STRING_INDEX;
+}
+
 //https://github.com/JoinedSenses/SourceMod-IncludeLibrary
-stock void TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECTOR,
+stock bool TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECTOR,
 			const float start[3] = NULL_VECTOR, const float angles[3] = NULL_VECTOR,
 			int entindex = -1, int attachtype = -1, int attachpoint = -1, bool resetParticles = true)
 {
@@ -785,7 +820,7 @@ stock void TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECT
 	if (tblidx == INVALID_STRING_TABLE) 
 	{
 		LogError("Could not find string table: ParticleEffectNames");
-		return;
+		return false;
 	}
 	
 
@@ -805,7 +840,7 @@ stock void TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECT
 	if (stridx == INVALID_STRING_INDEX)
 	{
 		LogError("Could not find particle: %s", Name);
-		return;
+		return false;
 	}
 
 	TE_Start("TFParticleEffect");
@@ -834,6 +869,8 @@ stock void TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECT
 	}
 
 	TE_WriteNum("m_bResetParticles", resetParticles);
+
+	return true;
 }
 
 stock void TE_Particle(const char[] Name, const float origin[3] = NULL_VECTOR,
@@ -841,10 +878,8 @@ stock void TE_Particle(const char[] Name, const float origin[3] = NULL_VECTOR,
 		int entindex = -1, int attachtype = -1, int attachpoint = -1, bool resetParticles = true,
 		float delay = 0.0)
 {
-	TE_SetupParticle(Name, origin, start, angles, entindex,
-		attachtype, attachpoint, resetParticles);
-
-	TE_SendToAll(delay);
+	if( TE_SetupParticle( Name, origin, start, angles, entindex, attachtype, attachpoint, resetParticles) )
+		TE_SendToAll(delay);
 }
 
 //Wrapper that automatically fails if the SDKCall cannot be created

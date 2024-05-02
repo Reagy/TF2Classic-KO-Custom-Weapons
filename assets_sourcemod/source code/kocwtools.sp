@@ -819,6 +819,11 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 	float flBuffedMax = flOverhealMult * iMaxHealth;
 	int iBuffedMax = RoundToFloor( flBuffedMax / 5.0 ) * 5;
 
+	if( !( iFlags & HF_NOCRITHEAL ) ) {
+		float flTimeSinceDamage = GetGameTime() - GetEntPropFloat( iPlayer, Prop_Send, "m_flLastDamageTime" );
+		flHealAmount *= RemapValClamped( flTimeSinceDamage, 10.0, 15.0, 1.0, 3.0 );
+	}
+
 	flHealAmount += g_flHealAccumulator[ iPlayer ];
 	float flHealRounded = float( RoundToFloor( flHealAmount ) );
 	g_flHealAccumulator[ iPlayer ] = flHealAmount - flHealRounded;
@@ -826,14 +831,17 @@ public any Native_HealPlayer( Handle hPlugin, int iParams ) {
 
 	flHealRounded = MinFloat( float( iBuffedMax - iHealth ), flHealAmount );
 
-	int iReturn = SDKCall( g_sdkTakeHealth, iPlayer, flHealRounded, 0, iSource, !(iFlags & HF_NOCRITHEAL) );
+	int iNewFlags = 0;
+	if( !( iFlags & HF_NOOVERHEAL ) )
+		iNewFlags = 1 << 1;
 
-	//TODO: account for spy leech event
+	int iReturn = SDKCall( g_sdkTakeHealth, iPlayer, flHealRounded, iNewFlags, iSource, false );
+
 	if( iSource != -1 ) {
 		SDKCall( g_sdkPlayerHealedOther, g_iCTFGameStats, iSource, float( iReturn ) );
 
 		if( GetEntProp( iSource, Prop_Send, "m_iTeamNum" ) != GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) ) {
-			SDKCall( g_sdkTakeDisguiseHealth, iPlayer, flHealRounded, !(iFlags & HF_NOCRITHEAL) );
+			SDKCall( g_sdkTakeDisguiseHealth, iPlayer, flHealRounded, false );
 			SDKCall( g_sdkPlayerLeachedHealth, g_iCTFGameStats, iPlayer, false, float( iReturn ) );
 		}
 	}

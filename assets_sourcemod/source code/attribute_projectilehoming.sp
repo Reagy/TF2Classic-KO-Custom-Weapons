@@ -17,37 +17,37 @@ public Plugin myinfo =
 }
 
 // storing data
-bool		bActiveHoming[MAXPLAYERS + 1] = { false, ... };	// convert to bitfield?
-float		fLookPosCache[MAXPLAYERS + 1][3];	//current look position for all players, updated every frame they are holding a homing compatible weapon
+bool		g_bActiveHoming[MAXPLAYERS + 1] = { false, ... };	// convert to bitfield?
+float		g_flLookPosCache[MAXPLAYERS + 1][3];	//current look position for all players, updated every frame they are holding a homing compatible weapon
 
 // glow model ID's
-int iGlows[4] = { -1, ... };
+int g_iGlows[4] = { -1, ... };
 
 public void OnMapStart() {
-	iGlows[0] = PrecacheModel("sprites/redglow1.vmt");
-	iGlows[1] = PrecacheModel("sprites/blueglow1.vmt");
-	iGlows[2] = PrecacheModel("sprites/greenglow1.vmt");
-	iGlows[3] = PrecacheModel("sprites/yellowglow1.vmt");
+	g_iGlows[0] = PrecacheModel( "sprites/redglow1.vmt" );
+	g_iGlows[1] = PrecacheModel( "sprites/blueglow1.vmt" );
+	g_iGlows[2] = PrecacheModel( "sprites/greenglow1.vmt" );
+	g_iGlows[3] = PrecacheModel( "sprites/yellowglow1.vmt" );
 }
 
 public void OnEntityCreated(int iEntity, const char[] sClassname) {
-	if (strcmp(sClassname, "tf_projectile_rocket") == 0) {
+	if ( strcmp(sClassname, "tf_projectile_rocket") == 0 ) {
 		RequestFrame( Frame_OnRocketSpawn, EntIndexToEntRef( iEntity ) ); //just being sure that all properties have been initialized first
 		return;
 	}
 }
 
-int oldButtons[MAXPLAYERS+1] = { 0, ... };
-public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3], int& weapon, int& subtype, int& cmdnum, int& tickcount, int& seed, int mouse[2]) {
-	if( !IsPlayerAlive( client ) )
+int g_iOldButtons[MAXPLAYERS+1] = { 0, ... };
+public Action OnPlayerRunCmd(int iClient, int& iButtons, int& impulse, float vel[3], float angles[3], int& weapon, int& subtype, int& cmdnum, int& tickcount, int& seed, int mouse[2]) {
+	if( !IsPlayerAlive( iClient ) )
 		return Plugin_Continue;
 
-	int iWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
-	if( !( IsValidEntity( iWeapon ) && CanThisWeaponHome( iWeapon ) ) )
+	int iWeapon = GetEntPropEnt( iClient, Prop_Send, "m_hActiveWeapon" );
+	if( !( iWeapon != -1 && CanThisWeaponHome( iWeapon ) ) )
 		return Plugin_Continue;
 
-	if( buttons & IN_ATTACK2 && !( oldButtons[client] & IN_ATTACK2) ) {
-		bActiveHoming[client] = !bActiveHoming[client];
+	if( iButtons & IN_ATTACK2 && !( g_iOldButtons[iClient] & IN_ATTACK2 ) ) {
+		g_bActiveHoming[iClient] = !g_bActiveHoming[iClient];
 		/*todo: find sound effects
 		if( bActiveHoming[client] )
 			EmitGameSoundToClient( client, "BaseCombatWeapon.WeaponMaterialize" );
@@ -56,22 +56,14 @@ public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3
 		*/	
 	}
 
-	if( bActiveHoming[client] && !TF2_IsPlayerInCondition(client, TFCond_Taunting) ) {
-		GetPlayerEye( client , fLookPosCache[client] );
-		switch( TF2_GetClientTeam(client) ) {
-			case TFTeam_Red:
-				TE_SetupGlowSprite( fLookPosCache[client], iGlows[0], 0.1, 0.17, 75 );
-			case TFTeam_Blue:
-				TE_SetupGlowSprite( fLookPosCache[client], iGlows[1], 0.1, 0.17, 75 );
-			case TFTeam_Green:
-				TE_SetupGlowSprite( fLookPosCache[client], iGlows[2], 0.1, 0.17, 75 );
-			case TFTeam_Yellow:
-				TE_SetupGlowSprite( fLookPosCache[client], iGlows[3], 0.1, 0.17, 75 );
-		}
+	if( g_bActiveHoming[iClient] && !TF2_IsPlayerInCondition( iClient, TFCond_Taunting ) ) {
+		GetPlayerEye( iClient, g_flLookPosCache[iClient] );
+		int iTeam = GetEntProp( iClient, Prop_Send, "m_iTeamNum" ) - 2;
+		TE_SetupGlowSprite( g_flLookPosCache[iClient], g_iGlows[iTeam], 0.1, 0.17, 75 );
 		TE_SendToAll();
 	}
 
-	oldButtons[client] = buttons;
+	g_iOldButtons[iClient] = iButtons;
 	return Plugin_Continue;
 }
 
@@ -82,32 +74,32 @@ bool DoProjectileTracking( int iEntity ) {
 
 	if( iLauncher != iOriginal || !IsPlayerAlive( iOwnerIndex ) ) return false;
 
-	if( bActiveHoming[ iOwnerIndex ] ) {
-		float RocketPos[3]; //position of rocket
-		float RocketAng[3]; //angle of rocket
-		float RocketVec[3]; //velocity of rocket
-		float TargetVec[3]; //target velocity
+	if( g_bActiveHoming[ iOwnerIndex ] ) {
+		float vecRocketPos[3]; //position of rocket
+		float vecRocketAng[3]; //angle of rocket
+		float vecRocketVec[3]; //velocity of rocket
+		float vecTargetVec[3]; //target velocity
 
-		GetEntPropVector( iEntity, Prop_Data, "m_vecAbsOrigin", RocketPos );
-		GetEntPropVector( iEntity, Prop_Data, "m_vecAbsVelocity", RocketVec );
+		GetEntPropVector( iEntity, Prop_Data, "m_vecAbsOrigin", vecRocketPos );
+		GetEntPropVector( iEntity, Prop_Data, "m_vecAbsVelocity", vecRocketVec );
 
-		float RocketSpeed = GetVectorLength( RocketVec );
-		SubtractVectors( fLookPosCache[ iOwnerIndex ] , RocketPos, TargetVec );
+		float RocketSpeed = GetVectorLength( vecRocketVec );
+		SubtractVectors( g_flLookPosCache[ iOwnerIndex ] , vecRocketPos, vecTargetVec );
 
 		float flAccuracy = GetProjectileAccuracy( iEntity );
 		flAccuracy = FloatClamp( flAccuracy, 0.0, 1.0 );
 
-		SubtractVectors( TargetVec, RocketVec, TargetVec ); //get the difference between desired and current angle
-		ScaleVector( TargetVec, flAccuracy ); //scale difference by accuracy
-		AddVectors( TargetVec, RocketVec, RocketVec ); //subtract difference into result
+		SubtractVectors( vecTargetVec, vecRocketVec, vecTargetVec ); //get the difference between desired and current angle
+		ScaleVector( vecTargetVec, flAccuracy ); //scale difference by accuracy
+		AddVectors( vecTargetVec, vecRocketVec, vecRocketVec ); //subtract difference into result
 
-		NormalizeVector( RocketVec, RocketVec );
+		NormalizeVector( vecRocketVec, vecRocketVec );
 
-		GetVectorAngles( RocketVec, RocketAng );
-		SetEntPropVector( iEntity, Prop_Data, "m_angRotation", RocketAng );
+		GetVectorAngles( vecRocketVec, vecRocketAng );
+		SetEntPropVector( iEntity, Prop_Data, "m_angRotation", vecRocketAng );
 
-		ScaleVector( RocketVec, RocketSpeed );
-		SetEntPropVector( iEntity, Prop_Data, "m_vecAbsVelocity", RocketVec );
+		ScaleVector( vecRocketVec, RocketSpeed );
+		SetEntPropVector( iEntity, Prop_Data, "m_vecAbsVelocity", vecRocketVec );
 		
 		ChangeEdictState( iEntity );
 	}
