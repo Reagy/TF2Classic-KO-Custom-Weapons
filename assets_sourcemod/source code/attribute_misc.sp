@@ -20,7 +20,6 @@ public Plugin myinfo =
 DynamicHook g_dhPrimaryFire;
 DynamicHook g_dhItemPostFrame;
 DynamicHook g_dhWeaponHolster;
-DynamicHook g_dhWeaponDeploy;
 
 DynamicDetour g_dtGetMedigun;
 DynamicDetour g_dtRestart;
@@ -49,7 +48,6 @@ public void OnPluginStart() {
 
 	g_dhPrimaryFire = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::PrimaryAttack" );
 	g_dhItemPostFrame = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::ItemPostFrame" );
-	g_dhWeaponDeploy = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Deploy" );
 	g_dhWeaponHolster = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Holster" );
 
 	g_dtGetMedigun = DynamicDetourFromConfSafe( hGameConf, "CTFPlayer::GetMedigun" );
@@ -110,7 +108,7 @@ void Frame_CheckSniper( int iWeaponRef ) {
 	if( iWeaponRef == -1 )
 		return;
 	
-	if( !AttribHookFloat( 0.0, iWeaponRef, "custom_sniper_laser" ) )
+	if( AttribHookFloat( 0.0, iWeaponRef, "custom_sniper_laser" ) == 0.0 )
 		return;
 
 	g_dhItemPostFrame.HookEntity( Hook_Post, iWeapon, Hook_SniperPostFrame );
@@ -122,7 +120,6 @@ public void OnTakeDamageAlivePostTF( int iTarget, Address aDamageInfo ) {
 	CheckLifesteal( tfInfo );
 	DoUberScale( tfInfo );
 }
-
 public void OnTakeDamageBuilding( int iTarget, Address aDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
 	CheckLifesteal( tfInfo );
@@ -386,7 +383,7 @@ MRESReturn Hook_PipebombVPhysCollide( int iThis, DHookParam hParams ) {
 	SDKCall( g_sdkCBaseEntityVPhysCollide, iGrenadeIndex, iIndex, pCollisionEventPtr );
 
 	int iOtherIndex = iThis == 0;
-	Address pHitEntPtr = LoadFromAddressOffset( aCollisionEvent, g_iPhysEventEntityOffset + ( iOtherIndex * 4 ), NumberType_Int32 );
+	Address pHitEntPtr = LoadFromAddressOffset( aCollisionEvent, g_iPhysEventEntityOffset + ( iOtherIndex * 4 ) );
 	if( pHitEntPtr == Address_Null )
 		return MRES_Supercede;
 

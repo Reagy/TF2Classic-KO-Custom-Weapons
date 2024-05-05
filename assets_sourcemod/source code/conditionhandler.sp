@@ -37,7 +37,7 @@ static char	g_szToxinLoopSound[]	= "items/powerup_pickup_plague_infected_loop.wa
 const int	g_iAngShieldHealth	= 80;	//angel shield health
 const float	g_iAngShieldDuration	= 8.0;	//angel shield duration
 const float	g_iAngInvulnDuration	= 0.25;	//invulnerability period after a shield breaks
-int 		g_iAngelShields[MAXPLAYERS+1][2]; //0 contains the index of the shield, 1 contains the material manager used for the damage effect
+int 		g_iAngelShields[MAXPLAYERS+1][2]; //0 contains the refid of the shield, 1 contains the refid of the material manager used for the damage effect
 
 
 static char	g_szHydroPumpHealParticles[][] = {
@@ -1060,9 +1060,9 @@ void ManageAngelShield( int iPlayer ) {
 	if(  iAngelShield == -1 )
 		return;
 
-	float flVecPos[3];
-	GetEntPropVector( iPlayer, Prop_Send, "m_vecOrigin", flVecPos );
-	TeleportEntity( GetAngelShield( iPlayer, 0 ), flVecPos );
+	float vecPos[3];
+	GetEntPropVector( iPlayer, Prop_Send, "m_vecOrigin", vecPos );
+	TeleportEntity( GetAngelShield( iPlayer, 0 ), vecPos );
 
 	int iAngelManager = GetAngelShield( iPlayer, 1 );
 	if( iAngelManager == -1 )
@@ -1072,21 +1072,11 @@ void ManageAngelShield( int iPlayer ) {
 
 	float flShieldFalloff = RemapValClamped( flLastDamaged, 0.0, 0.5, 5.0, -5.0 );
 
-	static char szFalloff[8];
-	FloatToString(flShieldFalloff, szFalloff, 8);
+	char szFalloff[8];
+	FloatToString( flShieldFalloff, szFalloff, sizeof( szFalloff ) );
 
 	SetVariantString( szFalloff );
 	AcceptEntityInput( iAngelManager, "SetMaterialVar" );
-}
-
-
-Action Hook_TransmitIfOwner( int iEntity, int iClient ) {
-	SetEdictFlags( iEntity, 0 );
-	return iClient == GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
-}
-Action Hook_TransmitIfNotOwner( int iEntity, int iClient ) {
-	SetEdictFlags( iEntity, 0 );
-	return iClient != GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
 }
 
 /*
@@ -1197,13 +1187,9 @@ bool AddHydroPumpHeal( int iPlayer, int iSource ) {
 	AddPlayerHealer( iPlayer, iSource, 0.1, true );
 	CreateTimer( 0.2, Timer_HydroPumpKillMe, EntRefToEntIndex( iPlayer ), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
 
-	//reusing shield transmit function because it already does what we need
-	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwner );
-	SetEdictFlags( iEmitter, 0 );
-
-	int iOldHydroHealer = 0;
-	GetCustomProp( iSource, "m_iHydroHealing", iOldHydroHealer );
-	SetCustomProp( iSource, "m_iHydroHealing", MaxInt( iOldHydroHealer + 1, 0 ) );
+	//todo: use don't display to client particle modifier
+	//SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwner );
+	//SetEdictFlags( iEmitter, 0 );
 
 	return true;
 }
@@ -1239,9 +1225,6 @@ Action Timer_HydroPumpKillMe( Handle hTimer, int iOwnerRef ) {
 
 void RemoveHydroPumpHeal( int iPlayer ) {
 	int iSource = GetCondSourcePlayer( iPlayer, TFCC_HYDROPUMPHEAL );
-	int iOldHydroHealer = 0;
-	GetCustomProp( iSource, "m_iHydroHealing", iOldHydroHealer );
-	SetCustomProp( iSource, "m_iHydroHealing", MaxInt( iOldHydroHealer - 1, 0 ) );
 
 	RemovePlayerHealer( iPlayer, iSource );
 
@@ -1273,7 +1256,7 @@ bool AddHydroUber( int iPlayer ) {
 	AcceptEntityInput( iEmitter, "Start" );
 
 	SetEdictFlags( iEmitter, 0 );
-	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwner );
+	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwnerParticle );
 
 	g_iHydroPumpUberEmitters[iPlayer][0] = EntIndexToEntRef( iEmitter );
 
@@ -1290,7 +1273,7 @@ bool AddHydroUber( int iPlayer ) {
 	AcceptEntityInput( iEmitter, "Start" );
 
 	SetEdictFlags( iEmitter, 0 );
-	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfOwner );
+	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfOwnerParticle );
 
 	g_iHydroPumpUberEmitters[iPlayer][1] = EntIndexToEntRef( iEmitter );
 
