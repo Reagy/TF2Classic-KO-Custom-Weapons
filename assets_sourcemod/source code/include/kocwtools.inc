@@ -456,57 +456,57 @@ methodmap TFDamageInfo {
 	}
 
 	property float flDamage {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ), NumberType_Int32 ); }
-		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ), iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ) ); }
+		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ), iValue); }
 	}
 	property float flBaseDamage {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE ), NumberType_Int32 ); }
-		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE ), iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE )); }
+		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE ), iValue ); }
 	}
 
 	property int iFlags {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ), NumberType_Int32 ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ), iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ) ); }
+		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ), iValue ); }
 	}
 	property int iCustom {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ), NumberType_Int32 ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ), iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ) ); }
+		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ), iValue ); }
 	}
 
 	property int iCritType {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ), NumberType_Int32 ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ), iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ) ); }
+		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ), iValue ); }
 	}
 
 	public void GetDamageForce( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ), NumberType_Int32 );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ), NumberType_Int32 );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ), NumberType_Int32 );
+		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ) );
+		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ) );
+		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ) );
 	}
 	public void SetDamageForce( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ), flX, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ), flY, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ), flZ, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ), flX );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ), flY );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ), flZ );
 	}
 	public void GetDamageSource( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ), NumberType_Int32 );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ), NumberType_Int32 );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ), NumberType_Int32 );
+		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ) );
+		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ) );
+		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ) );
 	}
 	public void SetDamageSource( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ), flX, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ), flY, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ), flZ, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ), flX );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ), flY );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ), flZ );
 	}
 	public void GetDamageReported( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ), NumberType_Int32 );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ), NumberType_Int32 );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ), NumberType_Int32 );
+		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ) );
+		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ) );
+		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ) );
 	}
 	public void SetDamageReported( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ), flX, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ), flY, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ), flZ, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ), flX );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ), flY );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ), flZ );
 	}
 }
 
@@ -810,6 +810,22 @@ stock int FindStringIndex2( int iTableIndex, const char[] szName ) {
 	return INVALID_STRING_INDEX;
 }
 
+stock Action Hook_TransmitIfOwner( int iEntity, int iClient ) {
+	return iClient == GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
+}
+stock Action Hook_TransmitIfNotOwner( int iEntity, int iClient ) {
+	return iClient != GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
+}
+
+stock Action Hook_TransmitIfOwnerParticle( int iEntity, int iClient ) {
+	SetEdictFlags( iEntity, 0 );
+	return iClient == GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
+}
+stock Action Hook_TransmitIfNotOwnerParticle( int iEntity, int iClient ) {
+	SetEdictFlags( iEntity, 0 );
+	return iClient != GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
+}
+
 //https://github.com/JoinedSenses/SourceMod-IncludeLibrary
 stock bool TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECTOR,
 			const float start[3] = NULL_VECTOR, const float angles[3] = NULL_VECTOR,
@@ -825,7 +841,7 @@ stock bool TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECT
 	
 
 	// find particle index
-	char tmp[256];
+	static char tmp[256];
 	int count = GetStringTableNumStrings(tblidx);
 	int stridx = INVALID_STRING_INDEX;
 	for (int i = 0; i < count; i++)

@@ -693,7 +693,7 @@ void CreatePumpChargedMuzzle( int iWeapon, int iOwner ) {
 	int iParticle = CreateParticle( g_szHydropumpMuzzleParticles[ iTeam ] );
 	ParentParticleToViewmodelEX( iParticle, iWeapon, "weapon_bone" ); //i have no idea why weapon bone works for this i hate this fucking engine so much
 	SetEntPropEnt( iParticle, Prop_Send, "m_hOwnerEntity", iOwner );
-	SDKHook( iParticle, SDKHook_SetTransmit, Hook_EmitterTransmitFP );
+	SDKHook( iParticle, SDKHook_SetTransmit, Hook_TransmitIfOwnerParticle );
 	SetEdictFlags( iParticle, 0 );
 	g_iHydroPumpBarrelChargedEmitters[iOwner][0] = EntIndexToEntRef( iParticle );
 
@@ -701,11 +701,9 @@ void CreatePumpChargedMuzzle( int iWeapon, int iOwner ) {
 	iParticle = CreateParticle( g_szHydropumpMuzzleParticles[ iTeam ] );
 	ParentModel( iParticle, iWeapon, "weapon_bone" ); //i have no idea why weapon bone works for this i hate this fucking engine so much
 	SetEntPropEnt( iParticle, Prop_Send, "m_hOwnerEntity", iOwner );
-	SDKHook( iParticle, SDKHook_SetTransmit, Hook_EmitterTransmitTP );
+	SDKHook( iParticle, SDKHook_SetTransmit, Hook_TransmitIfNotOwnerParticle );
 	SetEdictFlags( iParticle, 0 );
 	g_iHydroPumpBarrelChargedEmitters[iOwner][1] = EntIndexToEntRef( iParticle );
-
-	CreateTimer( 0.2, Timer_RemoveChargedMuzzle, EntIndexToEntRef( iOwner ), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
 
 	EmitSoundToAll( g_szHydropumpChargedSound, iOwner, .flags = SND_CHANGEVOL, .volume = 1.0 );
 }
@@ -720,27 +718,6 @@ void DestroyPumpChargedMuzzle( int iOwner ) {
 
 	}
 	StopSound( iOwner, SNDCHAN_AUTO, g_szHydropumpChargedSound );
-}
-Action Timer_RemoveChargedMuzzle( Handle hTimer, int iOwnerRef ) {
-	int iOwner = EntRefToEntIndex( iOwnerRef );
-	if( iOwner == -1 )
-		return Plugin_Stop;
-
-	if( Tracker_GetValue( iOwner, g_szHydropumpTrackerName ) <= 0.0 ) {
-		DestroyPumpChargedMuzzle( iOwner );
-		return Plugin_Stop;
-	}
-
-	return Plugin_Continue;
-}
-
-Action Hook_EmitterTransmitFP( int iEntity, int iClient ) {
-	SetEdictFlags( iEntity, 0 );
-	return iClient == GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
-}
-Action Hook_EmitterTransmitTP( int iEntity, int iClient ) {
-	SetEdictFlags( iEntity, 0 );
-	return iClient != GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
 }
 
 Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast ) {

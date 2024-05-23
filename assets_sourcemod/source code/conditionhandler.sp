@@ -534,7 +534,7 @@ MRESReturn Detour_ApplyOnHitAttributes( int iWeapon, DHookParam hParams ) {
 	if( hParams.IsNull( 1 ) )
 		return MRES_Ignored;
 
-	int iAttacker = hParams.Get( 1 );
+	//int iAttacker = hParams.Get( 1 );
 	int iVictim = hParams.Get( 2 );
 
 	TFDamageInfo tfInfo =  TFDamageInfo( hParams.GetAddress( 3 ) );
@@ -1185,7 +1185,7 @@ bool AddHydroPumpHeal( int iPlayer, int iSource ) {
 
 	//rate of 0.1 to block overheal decay
 	AddPlayerHealer( iPlayer, iSource, 0.1, true );
-	CreateTimer( 0.2, Timer_HydroPumpKillMe, EntRefToEntIndex( iPlayer ), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( 0.2, Timer_HydroPumpHealRemoveTimer, EntRefToEntIndex( iPlayer ), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
 
 	//todo: use don't display to client particle modifier
 	//SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwner );
@@ -1208,7 +1208,7 @@ void TickHydroPumpHeal( int iPlayer ) {
 	}
 }
 
-Action Timer_HydroPumpKillMe( Handle hTimer, int iOwnerRef ) {
+Action Timer_HydroPumpHealRemoveTimer( Handle hTimer, int iOwnerRef ) {
 	int iOwner = EntRefToEntIndex( iOwnerRef );
 	if( iOwner == -1 ) {
 		RemoveCond( iOwner, TFCC_HYDROPUMPHEAL );
