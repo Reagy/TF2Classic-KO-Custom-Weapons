@@ -45,6 +45,8 @@ static char g_szShieldKeyName[32] = "Shield";
 #define SHIELD_DAMAGE_DRAIN_SCALE 1.0
 //time to fully build a charge passively
 #define SHIELD_REGEN_PASSIVE 120.0
+//distance to project shield
+#define SHIELD_DISTANCE 180.0
 
 static char szShieldMats[][] = {
 	"models/effects/resist_shield/resist_shield",
@@ -264,7 +266,7 @@ void UpdateShield( int iClient ) {
 
 	float vecEndPos[3];
 	GetAngleVectors( vecEyeAngles, vecEndPos, NULL_VECTOR, NULL_VECTOR );
-	ScaleVector( vecEndPos, 150.0 );
+	ScaleVector( vecEndPos, SHIELD_DISTANCE );
 	AddVectors( vecOrigin, vecEndPos, vecEndPos );
 
 	vecEyeAngles[0] = 0.0;
@@ -405,7 +407,7 @@ MRESReturn Detour_ShouldHitEntitySimple( Address aTrace, DHookReturn hReturn, DH
 	if( hReturn.Value == false )
 		return MRES_Ignored;
 	
-	Address aLoad = LoadFromAddressOffset( aTrace, 4, NumberType_Int32 ); //offset of m_pPassEnt
+	Address aLoad = LoadFromAddressOffset( aTrace, 4 ); //offset of m_pPassEnt
 	if( aLoad == Address_Null )
 		return MRES_Ignored;
 
@@ -432,7 +434,7 @@ MRESReturn Detour_ShouldHitEntitySentry( Address aTrace, DHookReturn hReturn, DH
 	if( hReturn.Value == false )
 		return MRES_Ignored;
 
-	Address aLoad = LoadFromAddressOffset( aTrace, 20, NumberType_Int32 ); //offset of m_pExceptionEntity
+	Address aLoad = LoadFromAddressOffset( aTrace, 20 ); //offset of m_pExceptionEntity
 	if( aLoad == Address_Null )
 		return MRES_Ignored;
 
