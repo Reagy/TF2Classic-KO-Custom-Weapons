@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name = "Attribute: Sphere",
 	author = "Noclue",
 	description = "Attributes for The Sphere.",
-	version = "1.1",
+	version = "1.2",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
