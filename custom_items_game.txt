@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V6.1
+// Knockout Custom Weapons V6.9
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 + Tangerine Paint & Grunt's Weapon Addons V2
 // Adoptions taken from Renaissance Revival V1 by Yakibomb
@@ -1937,6 +1937,11 @@ Weapon by: 'The One Of Wonders'"
 					"ACT_MP_ATTACK_CROUCH_SECONDARYFIRE"		"ACT_MP_GESTURE_VC_FINGERPOINT_MELEE"
 					"ACT_MP_ATTACK_SWIM_SECONDARYFIRE"			"ACT_MP_GESTURE_VC_FINGERPOINT_MELEE"
 				}
+				
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_metal_pot_pickup.wav"
 			"drop_sound"				"#ui/item_metal_pot_drop.wav"
@@ -5478,7 +5483,12 @@ Weapon by: 'Reagy'"
 				}
 				"sound_reload"			"Weapon_Pistol.WorldReload"
 				"muzzle_flash"			"muzzle_scattergun"								
-				"tracer_effect"			"bullet_scattergun_tracer01"					
+				"tracer_effect"			"bullet_scattergun_tracer01"	
+
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -14592,6 +14602,11 @@ Weapon by: 'The One Of Wonders'"
 				"sound_burst"			"Weapon_Jury.SingleCrit"
 				"sound_reload"			"Weapon_Revolver.WorldReload"
 				"tracer_effect"			"bullet_scattergun_tracer01"
+				
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -15323,6 +15338,11 @@ Weapon by: 'Reagy'"
 				"sound_melee_hit_world"		"WallHealth.Recharge"
 				"sound_burst"				"HealthKit.Touch"
 				"sound_taunt"				"Taunt.MedicViolinUber"
+				
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
 			}
 			"mouse_pressed_sound"		"#items/smallmedkit1.wav"
 			"drop_sound"				"#ui/item_taser_drop.wav"
@@ -18433,6 +18453,11 @@ Item by: 'Majro'"
 			"sound_burst"		"Weapon_Null"
 			"sound_empty"		"Weapon_Null"
 			"sound_double_shot"	 "Weapon_Trombone.AirBurstAttack"	//Look ma, extreme sound paranoia!
+			
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}			
 			}
 
 		"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
@@ -18775,6 +18800,11 @@ Edited by: 'Reagy'"
 				}
 				"sound_single_shot"		"Weapon_Jury.Single"
 				"sound_burst"			"Weapon_Jury.SingleCrit"
+				
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -18845,6 +18875,11 @@ Edited by: 'Reagy'"
 					"ACT_MP_ATTACK_CROUCH_MELEE"				"ACT_MP_GESTURE_FLINCH_CHEST"
 					"ACT_MP_ATTACK_SWIM_MELEE"					"ACT_MP_GESTURE_FLINCH_CHEST"
 				}
+				
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}		
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -18905,6 +18940,10 @@ Edited by: 'Reagy'"
 			}
 			"visuals"
 			{
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}						
 			"mouse_pressed_sound"		"#ui/item_sandwich_drop.wav"
 			"drop_sound"				"#ui/item_sandwich_pickup.wav"
 			}
@@ -18937,7 +18976,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"               "models/weapons/v_models/v_fist_heavy.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_berserk_fists.mdl"
-			"extra_wearable"			"models/player/items/buff_civ_arms.mdl"
+			"extra_wearable"			"models/player/items/buff_civ_arms_edit.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -18969,6 +19008,7 @@ Edited by: 'Reagy'"
 					"value"				"0.9"
 				}
 			}
+		
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
@@ -19001,7 +19041,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"               "models/weapons/custom/w_models/w_civwrench.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_civwrench.mdl"
-			"extra_wearable"			"models/player/items/civilian_engineer.mdl"
+			"extra_wearable"			"models/player/items/civilian_engineer_edit.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -19015,7 +19055,14 @@ Edited by: 'Reagy'"
 				"Construction rate decreased"           "0.5"
 				"upgrade rate decrease"                 "0.0"
 				"decrease player capture value"         "-3"
-			}
+			}			
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}
+			}			
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
@@ -19084,6 +19131,10 @@ Edited by: 'Reagy'"
 				"sound_melee_hit"		"Weapon_Whip.HitFlesh"
 				"sound_melee_hit_world"	"Weapon_Whip.HitWorld"
 				"sound_burst"			"Weapon_Whip.MissCrit"
+			"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -19184,6 +19235,11 @@ Weapon by: 'The One Of Wonders'"
 				"sound_burst"			"Weapon_JudgeDeath.ShootCrit"
 				"sound_reload"			"Weapon_Revolver.WorldReload"
 				"tracer_effect"			"bullet_scattergun_tracer01"
+				
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -19386,6 +19442,11 @@ Weapon by: 'Reagy'"
 				"sound_melee_hit"		"Weapon_BoxingGloves.HitFlesh"
 				"sound_melee_hit_world"	"Weapon_BoxingGloves.HitWorld"
 				"sound_burst"			"Weapon_BoxingGloves.MissCrit"
+				
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -20917,7 +20978,11 @@ Edited by: 'The One Of Wonders'"
 				"sound_single_shot"		"Weapon_1911.Shoot"
 				"sound_burst"			"Weapon_1911.ShootCrit"
 				"muzzle_flash"			"muzzle_scattergun"								
-				"tracer_effect"			"bullet_scattergun_tracer01"					
+				"tracer_effect"			"bullet_scattergun_tracer01"
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -20933,7 +20998,7 @@ Edited by: 'The One Of Wonders'"
 			{
 				"bots_cant_use"			"1"														
 			}
-		    "name"						"TF_WEAPON_CIV_WIZARD"							
+		    "name"						"TF_WEAPON_civ_wizard"							
 			"item_class"				"tf_weapon_paintballrifle"
 			"show_in_armory"			"1"
 			
@@ -20959,7 +21024,7 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/weapons/c_models/c_civwizard/c_civwizard"
 			"model_world"				"models/weapons/c_models/c_civilian_staff/c_civilian_staff.mdl"
 			"model_player"				"models/weapons/v_models/v_civilian_wizard_staff.mdl"
-			"extra_wearable"			"models/player/items/civ_wizard.mdl"
+			"extra_wearable"			"models/player/items/civ_wizard_edit.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -21074,7 +21139,11 @@ Weapon by: 'The One Of Wonders'"
 				"sound_reload"			"Weapon_Pistol.WorldReload"
 				"sound_single_shot"		"Weapon_CivWizard.Cast"
 				"sound_burst"			"Weapon_CivWizard.CastCrit"
-                "explosion_effect"		"medic_explosion_wisps_green"	
+                "explosion_effect"		"medic_explosion_wisps_green"
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
 			}
 			"visuals_red"
 			{
@@ -33234,7 +33303,12 @@ Weapon by: 'Reagy'"
 				"sound_single_shot"		"Weapon_1911.Shoot"
 				"sound_burst"			"Weapon_1911.ShootCrit"
 				"muzzle_flash"			"muzzle_scattergun"								
-				"tracer_effect"			"bullet_scattergun_tracer01"					
+				"tracer_effect"			"bullet_scattergun_tracer01"
+
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -43650,6 +43724,11 @@ Weapon by: 'Reagy'"
 				"sound_melee_miss"		"Weapon_postalpet.swing"
 				"sound_melee_hit"		"Weapon_postalpet.hit"
 				"sound_melee_hit_world"	"Weapon_postalpet.hitworld"
+				"player_bodygroups"
+				{
+					"hat"		"1"
+				}				
+				
 			}
 			"mouse_pressed_sound"		"#ui/postal/postal.wav"
 			"drop_sound"				"#ui/postal/postal.wav"
