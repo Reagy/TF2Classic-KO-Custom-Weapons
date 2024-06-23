@@ -12067,7 +12067,7 @@
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 
-	"wave"		")weapons\manncannon_fire.wav"
+	"wave"		")weapons\MannCannon_FireRedux.wav"
 
 }
 "Weapon_BigFifty.SingleCrit"
@@ -12076,8 +12076,27 @@
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 
-	"wave"			")weapons/manncannon_fire_crit.wav"
+	"wave"			")weapons/MannCannon_FireRedux_Crit.wav"
 }
+
+"Weapon_BigFifty.BoltBack"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".67"
+	"pitch"		"98, 102"
+	"wave"		"weapons/MannCannon_BoltPull.wav"
+}
+
+"Weapon_BigFifty.BoltForward"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".67"
+	"pitch"		"98, 102"
+	"wave"		"weapons/MannCannon_BoltReturn.wav"
+}
+
 // ------------------------------------------------------------------------------------ //
 // SNIPER TOMMY
 // ------------------------------------------------------------------------------------ //
@@ -13631,25 +13650,25 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// Misbrand
+// Deed
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_FMisbrand.Single"
+"Weapon_DDeed.Single"
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
    "pitch"		"96, 102"
-	"wave"		")weapons\nightrevolver_shoot.wav"
+	"wave"		")weapons\DirtyDeed_Fire.wav"
 
 }
-"Weapon_FMisbrand.SingleCrit"
+"Weapon_DDeed.SingleCrit"
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
     "pitch"		"96, 102"
-	"wave"			")weapons/nightrevolver_shoot_crit.wav"
+	"wave"			")weapons/DirtyDeed_FireCrit.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -16153,4 +16172,255 @@
 	"volume"	"0.5"
 	"pitch"		"99, 101"
 	"wave"		")weapons/Chicken_Pat.wav"
+}
+
+
+// ------------------------------------------------------------------------------------ //
+// Vetteri
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Vetteran.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/Vetteran_Fire.wav"
+}
+
+"Weapon_Vetteran.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/Vetteran_FireCrit.wav"
+}
+
+"Weapon_Vetteran.BoltLift"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".45"
+	"pitch"		"98, 102"
+	"wave"		"weapons/Vetteran_BoltLift.wav"
+}
+
+"Weapon_Vetteran.BoltPull"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".67"
+	"pitch"		"98, 102"
+	"wave"		"weapons/Vetteran_BoltPull.wav"
+}
+
+"Weapon_Vetteran.BoltReturn"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".67"
+	"pitch"		"98, 102"
+	"wave"		"weapons/Vetteran_BoltReturn.wav"
+}
+
+"Weapon_Vetteran.BoltDrop"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".45"
+	"pitch"		"98, 102"
+	"wave"		"weapons/Vetteran_BoltDrop.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// CUSTOM MEDIGUNS
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_GuardianAngel.Healing"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	"1"
+	"wave"		")weapons/GuardianAngel_Heal.wav"
+}
+
+"Weapon_TotenWerfer.Healing"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	"1"
+	"wave"		")weapons/TotenWerfer_Heal.wav"
+}
+
+"Weapon_BoosterShot.Healing"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	"1"
+	"wave"		")weapons/BoosterShot_Heal.wav"
+}
+
+"Weapon_Kralle.Healing"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	"1"
+	"wave"		")weapons/Kralle_Heal.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// BulkHead Shotgun
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_BulkHead.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"98, 102"
+	"wave"		")weapons/Vetteran_Fire.wav"
+}
+
+"Weapon_BulkHead.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"98, 102"
+	"wave"		")weapons/Vetteran_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Fuming Snek
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_HotchkissHeavyMG.Fire"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/FumingSnake_Fire.wav"
+}
+
+"Weapon_HotchkissHeavyMG.FireCrit"	
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/FumingSnake_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// CARBONIZER
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Carbonizer.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"90, 96"
+	"wave"		")weapons/Carbonizer_Fire.wav"
+}
+
+"Weapon_Carbonizer.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"90, 96"
+	"wave"		")weapons/Carbonizer_FireCrit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// THE FUCKING MEDICAL SAW
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_MedicalSAW.Draw"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"		".6"
+	"wave"			")weapons/MedicalSAW_Draw.wav"
+}
+
+"Weapon_MedicalSAW.Miss"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_64dB"
+	"volume"	".6"
+	"rndwave"
+	{
+	    "wave"		")weapons/MedicalSAW_SwingA.wav"
+		"wave"		")weapons/MedicalSAW_SwingB.wav"
+		"wave"		")weapons/MedicalSAW_SwingC.wav"
+		"wave"		")weapons/MedicalSAW_SwingD.wav"
+		"wave"		")weapons/MedicalSAW_SwingE.wav"
+	}
+}
+
+"Weapon_MedicalSAW.MissCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_64dB"
+	"volume"	".6"
+	"rndwave"
+	{
+	    "wave"		")weapons/MedicalSAW_SwingA.wav"
+		"wave"		")weapons/MedicalSAW_SwingB.wav"
+		"wave"		")weapons/MedicalSAW_SwingC.wav"
+		"wave"		")weapons/MedicalSAW_SwingD.wav"
+		"wave"		")weapons/MedicalSAW_SwingE.wav"
+	}
+}
+
+"Weapon_MedicalSAW.HitFlesh"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"rndwave"
+	{
+	    "wave"		")weapons/MedicalSAW_HitPlayer_A.wav"
+		"wave"		")weapons/MedicalSAW_Hitplayer_B.wav"
+		"wave"		")weapons/MedicalSAW_Hitplayer_C.wav"
+		"wave"		")weapons/MedicalSAW_Hitplayer_D.wav"
+		"wave"		")weapons/MedicalSAW_Hitplayer_F.wav"
+	}
+}
+
+"Weapon_MedicalSAW.HitWorld"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"rndwave"
+	{
+	    "wave"		")weapons/MedicalSAW_HitWorld_A.wav"
+		"wave"		")weapons/MedicalSAW_HitWorld_B.wav"
+		"wave"		")weapons/MedicalSAW_HitWorld_C.wav"
+		"wave"		")weapons/MedicalSAW_HitWorld_D.wav"
+		"wave"		")weapons/MedicalSAW_HitWorld_E.wav"
+	}
+}
+
+// ------------------------------------------------------------------------------------ //
+// QUAD-OFF
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_QuadShotgun.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"98, 100"
+	"wave"		")weapons/QuadShotgun_Fire.wav"
+}
+
+"Weapon_QuadShotgun.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"98, 100"
+	"wave"		")weapons/QuadShotgun_FireCrit.wav"
 }

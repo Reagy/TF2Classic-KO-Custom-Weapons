@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V6.9
+// Knockout Custom Weapons V6.1
 // ------------------------------------------------------------------------------------ //
 // Combo pack of New Old Weapons Pack V2.1.5 + Tangerine Paint & Grunt's Weapon Addons V2
 // Adoptions taken from Renaissance Revival V1 by Yakibomb
@@ -1937,11 +1937,6 @@ Weapon by: 'The One Of Wonders'"
 					"ACT_MP_ATTACK_CROUCH_SECONDARYFIRE"		"ACT_MP_GESTURE_VC_FINGERPOINT_MELEE"
 					"ACT_MP_ATTACK_SWIM_SECONDARYFIRE"			"ACT_MP_GESTURE_VC_FINGERPOINT_MELEE"
 				}
-				
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_metal_pot_pickup.wav"
 			"drop_sound"				"#ui/item_metal_pot_drop.wav"
@@ -4964,17 +4959,18 @@ Weapon by: 'The One Of Wonders'"
 			"show_in_armory"			"1"
 
 			"propername"				"0"
-			"item_name"					"Freehand's Misbrand"
+			"item_name"					"Great Divider"
 			"item_type_name"			"Burst-Fire SMG"
 			"item_description"			"
 A quality piece, this one is, let's see how much blood she'll make ya lose.
 
-Model by: 'Weaponized Noob'
+Model by: 'Hau'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"Freehand's Misbrand"
-			"item_iconname"				"Freehand's Misbrand"
-			"image_inventory"			"backpack/weapons/c_models/c_fm_smg/c_fm_smg"
-			"model_player"				"models/weapons/c_models/c_fm_smg/c_fm_smg.mdl"
+			"item_logname"				"Great Divider"
+			"item_iconname"				"Great Divider"
+			"image_inventory"			"backpack/weapons/c_models/c_austen_smg/c_austen_smg"
+			"model_player"				"models/weapons/c_models/c_austen_smg/c_austen_smg.mdl"
+			"model_world"               "models/weapons/c_models/c_austen_smg/c_austen_smg.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -4990,7 +4986,7 @@ Weapon by: 'The One Of Wonders'"
 			    "weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.75"
+					"value"				"1.5"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -5020,7 +5016,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_burstfiredelay"
-					"value"				"0.8"
+					"value"				"0.7"
 				}
 				"crit mod disabled"
 				{
@@ -5030,7 +5026,7 @@ Weapon by: 'The One Of Wonders'"
 				"punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
-					"value" 			"0.762"
+					"value" 			"0.380"
 				}
                 "punch angle mod add hidden"
 				{
@@ -5045,8 +5041,8 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"
 			{
-				"sound_single_shot"		"Weapon_FMisbrand.Single"
-				"sound_burst"			"Weapon_FMisbrand.SingleCrit"
+				"sound_single_shot"		"Weapon_DDeed.Single"
+				"sound_burst"			"Weapon_DDeed.SingleCrit"
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -5483,12 +5479,7 @@ Weapon by: 'Reagy'"
 				}
 				"sound_reload"			"Weapon_Pistol.WorldReload"
 				"muzzle_flash"			"muzzle_scattergun"								
-				"tracer_effect"			"bullet_scattergun_tracer01"	
-
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
+				"tracer_effect"			"bullet_scattergun_tracer01"					
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -8418,8 +8409,6 @@ Weapon by: 'The One Of Wonders'"
 					"backpack"			"1"
 				}
 				"sound_single_shot"		"Weapon_Kralle.Healing"									
-				"sound_special2"		"TFPlayer.InvulnerableOn"
-				"sound_special3"		"TFPlayer.InvulnerableOff"
 			}
 			"visuals_red"
 			{
@@ -10889,47 +10878,49 @@ Weapon by: 'Reagy'"
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
-			"item_name"					"Texas Two Step"
+			"item_name"					"Westerner's Wild-card"
 			"item_type_name"			"Double Barrel Break-Action Shotgun"
 			"item_description"			"
 Lock, stock and two smoking barrels
 Better start praying boy
 
-Model edit by: 'DereBobblet'
-Animations from: Open Fortress - openfortress.fun
+Model by: 'Stev, Hectaes'
+Animations by: 'Raptor Dan'
 Cosmetics by: 'CyanPlastic' 'Colteh' 'BE NICE 2 ME'
-Weapon by: 'Reagy'"
-			"item_logname"				"Texas Two Step"
-			"item_iconname"				"Texas Two Step"
-			"image_inventory"			"backpack/weapons/w_models/w_supershot"
-			"model_world"				"models/weapons/custom/w_models/w_supershot_engineer.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_supershot_engineer_new.mdl"
+Weapon by: 'Reagy'
+Reworked by: 'The One Of Wonders'"
+			"item_logname"				"Westerner's Wild-card"
+			"item_iconname"				"Westerner's Wild-card"
+			"image_inventory"			"backpack/weapons/c_models/c_ttwotap_new/c_ttwotap_new"
+			"model_world"				"models/weapons/w_models/w_dbl_hammer_engineer.mdl"
+			"model_player"				"models/weapons/v_models/v_double_hammer_shotgun.mdl"
 			"extra_wearable"			"models/workshop/player/items/engineer/texmex_combined.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
 				"engineer"					"1"
 			}
-			"static_attrs"
-			{
-				"reload time increased hidden"			"2.2666"					
-			}
 			"attributes"
 			{
+			    "heal on hit for rapidfire"
+				{
+					"attribute_class"	"add_onhit_addhealth"
+					"value"				"5"
+				}
+			    "heal on kill"													
+				{
+					"attribute_class"	"heal_on_kill"
+					"value"				"25"
+				}
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.67"
+					"value" 			"0.5"
 				}
 				"bullets per shot bonus"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
 					"value" 			"1.2"
-				}
-				"weapon spread bonus"
-				{
-					"attribute_class"	"display_only"
-					"value"				"0.85"
 				}
 				"clip size penalty"
 				{
@@ -10939,7 +10930,7 @@ Weapon by: 'Reagy'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.75"
+					"value"				"0.8"
 				}
 				"scattergun no reload single"													// This one is -half- functional. It'll reload your entire clip at once, yes, but it's also based on the Scattergun's reload times.
 				{
@@ -10949,7 +10940,7 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value" 			"1.5"
+					"value" 			"1.15"
 				}
 				"crit mod disabled"
 				{
@@ -10959,7 +10950,7 @@ Weapon by: 'Reagy'"
                 "punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
-					"value"				"2.0"
+					"value"				"3.0"
 				}
 				"punch angle mod add hidden"
 				{
@@ -10969,8 +10960,18 @@ Weapon by: 'Reagy'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value" 			"0.68544"
+					"value" 			"0.85"
+				}	
+                "apply self knockback hidden"
+				{
+					"attribute_class"	"apply_self_knockback"
+					"value"				"200"
 				}				
+                "Reload time no anim speed mod"
+                {
+                    "attribute_class"    "mult_reload_time_noanimmod"
+                    "value"              "3.0"
+                }					
 			}
 			"visuals"
 			{
@@ -12299,11 +12300,178 @@ Item by: 'The One Of Wonders'"
         }
 //--------------------------
 //--------------------------
-// AUTOMATIC FUSION RIFLE - 7032
+// HEAVY MACHINE GUN BRAZIL EDITION - 7032
 //--------------------------
 //--------------------------
 		"7032"																			
         {
+		    "name"						"TF_WEAPON_MACHINEGUN_HOTCHKISS"
+			"prefab"					"weapon_minigun"
+			"show_in_armory"			"1"
+
+			"item_quality"				"rarity2"
+
+			"propername"				"1"
+			"item_name"					"Fuming Snake"
+			"item_type_name"			"Heav Machine Gun"
+			"item_description"			"This weapon fires single bullets with high damage
+
+Killing babies is simple when you fire lots of explosive bullets! 
+
+Model by: 'Hau, Kibbleknight'
+Weapon by: 'The One Of Wonders'"
+			"item_logname" 				"Fuming Snake"
+			"item_iconname"				"Fuming Snake"
+			"image_inventory"			"backpack/weapons/c_models/c_hotchkiss_heavymg/c_hotchkiss_heavymg"
+			"model_world"				"models/weapons/c_models/c_hotchkiss_heavymg/c_hotchkiss_heavymg.mdl"
+			"model_player"				"models/weapons/c_models/c_hotchkiss_heavymg/c_hotchkiss_heavymg.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"heavy"					"1"
+			}
+			"attributes"
+			{		
+				"Silent Killer No Rev"
+				{
+					"attribute_class"	"dummy"
+					"value"				"1"
+				}
+			    "explosive bullets"																
+				{
+					"attribute_class"	"explosive_bullets"
+					"value"				"1"
+				}
+				"aiming movespeed increased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"				"1.15"
+				}
+				"minigun spindown time decreased HIDDEN"
+				{
+					"attribute_class"	"mult_minigun_spindown_time"
+					"value"				"1.2"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.5" 
+				}
+				"damage bonus hidden"	
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"2.22222222222"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.25"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"0.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.75"
+				}
+				"minigun spinup time increased"
+				{
+					"attribute_class"	"mult_minigun_spinup_time"
+					"value"				"1.2"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_explosion_splash_damage"
+					"value"				"1.0"
+				}
+				"no primary ammo from dispensers fixed"	 
+				{
+					"attribute_class"	"no_primary_ammo_from_dispensers_always"
+					"value"				"1"
+				}
+				"crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				"custom bullet impact collision mode"
+				{
+					"attribute_class"	"mod_bullet_impact_collision_mode"
+					"value"				"1"
+				}
+				"custom falloff"
+				{
+					"attribute_class"	"mod_custom_falloff"
+					"value"				"0.48"
+				}
+				"custom rampup"
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.25"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"0.50"
+				}
+                "punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value"				"1"
+				}
+				"apply z velocity on damage"
+				{
+					"attribute_class"		"apply_z_velocity_on_damage"
+					"value"					"50"
+				}
+			}
+			"visuals"
+			{
+				"sound_empty"			"Weapon_Null"
+				"sound_double_shot"		"Weapon_HotchkissHeavyMG.Fire"	
+				"sound_burst"			"Weapon_HotchkissHeavyMG.FireCrit"
+				"sound_single_shot"		"Weapon_Tomislav.WindUp"
+				"sound_special1"		"Weapon_Airstrike.Explosion"
+				"sound_special2"		"Weapon_Null"
+				"sound_special3"		"Weapon_Null"
+				"tracer_effect"         "d3_tracer"
+                "explosion_effect"		"coilgun_boom_red"
+			}
+			"visuals_red"
+			{
+				"trail_effect_crit"		"critical_rocket_red"
+				"explosion_effect_crit"	"coilgun_boom_red"
+			}
+			"visuals_blu"
+			{
+				"trail_effect_crit"		"critical_rocket_blue"
+				"explosion_effect_crit"	"coilgun_boom_blue"
+			}
+			"visuals_grn"
+			{
+				"trail_effect_crit"		"critical_rocket_green"
+				"explosion_effect_crit"	"coilgun_boom_green"
+			}
+			"visuals_ylw"
+			{
+				"trail_effect_crit"		"critical_rocket_yellow"
+				"explosion_effect_crit"	"coilgun_boom_yellow"
+			}				
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //--------------------------
 //--------------------------
@@ -13998,12 +14166,145 @@ Weapon by: 'The One Of Wonders'"
 		}		
 //-------------------------------------
 //-------------------------------------
-// Sticket Launcher
-// V5.3.4 New weapon
+// QUAD-OFF
 //-------------------------------------
 //-------------------------------------			
 		"7061"
 		{
+		    "name"						"TF_WEAPON_SSG_QUAD_SCOUT"
+			"prefab"                    "weapon_scattergun"
+			"item_class"				"tf_weapon_grenadelauncher"								
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"					"primary"
+			
+			"item_quality"				"rarity2"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+
+			"propername"				"1"
+			"item_name"					"Quad-Off"
+			"item_type_name"			"Quadruple-Barrel Shotgun"
+			"item_description"			"-25% reduced ramp-up damage (compared to Scattergun)
+
+When 2 barrels ain't enough, just add 2 more and double the size of each shot! 
+
+Model by: 'Hau, Kibbleknight'
+Weapon by: 'The One Of Wonders'"
+			"item_logname"				"Quad-Off"
+			"item_iconname"				"Quad-Off"
+			"image_inventory"			"backpack/weapons/c_models/c_quadbarrel_scout/c_quadbarrel_scout"
+			"model_world"				"models/weapons/w_models/w_quadshotgun_scout.mdl"
+			"model_player"				"models/weapons/v_models/v_quadshotgun_scout.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"scout"				"1"
+			}
+			"static_attrs"
+			{				
+				"min_viewmodel_offset"					"10 0 -11"		
+                "override projectile type"  "1"				
+			}
+			"attributes"
+			{
+			    "scattergun has knockback"
+				{
+					"attribute_class"	"set_scattergun_has_knockback"
+					"value"				"1"
+				}
+				"apply self knockback hidden"
+				{
+					"attribute_class"	"apply_self_knockback"
+					"value"				"180"
+				}
+				"weapon enemy knockback mod mult hidden"
+				{
+					"attribute_class"	"weapon_enemy_knockback_mod"
+					"value"				"0.2"
+				}
+			    "bullets per shot bonus"
+				{
+					"attribute_class"	"dmuy"
+					"value"				"2.0"
+				}
+				"spread penalty"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"1.8"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"0.6666666666666666666667"
+				}
+				"deploy time increased"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"1.15"
+				}
+				"maxammo primary reduced"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"0.5"
+				}
+				"scattergun no reload single"
+				{
+					"attribute_class"	"set_scattergun_no_reload_single"
+					"value"				"1"
+				}
+				"reload time increased hidden"	
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"1.2"
+				}
+				"crit mod disabled"													
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value"				"5.0"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value"				"1"
+				}
+				"Reload time no anim speed mod"
+                {
+                    "attribute_class"    "mult_reload_time_noanimmod"
+                    "value"              "3.0"
+                }	
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.06"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.12"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"19"
+				}
+			}
+			"visuals"
+			{
+				"sound_empty"			"Weapon_Null"										
+				"sound_single_shot"		"Weapon_QuadShotgun.Shoot"
+				"sound_burst"			"Weapon_QuadShotgun.ShootCrit"
+				"sound_reload"			"Weapon_SuperShotGun.WorldReload"
+                "tracer_effect"         "d3_tracer"	
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //-------------------------------------
 //-------------------------------------
@@ -14602,11 +14903,6 @@ Weapon by: 'The One Of Wonders'"
 				"sound_burst"			"Weapon_Jury.SingleCrit"
 				"sound_reload"			"Weapon_Revolver.WorldReload"
 				"tracer_effect"			"bullet_scattergun_tracer01"
-				
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -15338,11 +15634,6 @@ Weapon by: 'Reagy'"
 				"sound_melee_hit_world"		"WallHealth.Recharge"
 				"sound_burst"				"HealthKit.Touch"
 				"sound_taunt"				"Taunt.MedicViolinUber"
-				
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
 			}
 			"mouse_pressed_sound"		"#items/smallmedkit1.wav"
 			"drop_sound"				"#ui/item_taser_drop.wav"
@@ -16650,6 +16941,155 @@ Weapon by: 'The One Of Wonders'"
 //------------------------		
 		"7100"																			
         {
+		    "name"						"TF_WEAPON_PLASMA_RIFLE_HL2"
+			"prefab"					"weapon_flamethrower"
+			"item_class"				"tf_weapon_pistol"
+			
+			"item_quality"				"rarity2"
+
+			"item_slot"                 "secondary"
+			"anim_slot"                 "item1"
+			"bucket"                    "1"
+			"bucket_position"           "1"
+			
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			
+			"show_in_armory"			"1"
+			
+			"item_name"					"Solar Carbonizer"
+			"item_type_name"			"Plasma-Ion Projection Rifle"
+			"item_logname"				"Solar Carbonizer"
+			"item_iconname"				"Solar Carbonizer"
+			"item_description"			"
+For when your shotgun won't cut it.
+  
+Model by: 'svdl'
+Animations by: 'Kylul'
+Weapon by: 'The One Of Wonders'"
+			"propername"				"1"
+			"image_inventory"			"backpack/weapons/c_models/c_auto_fusionrifle/c_auto_fusionrifle"
+			"model_world"				"models/weapons/c_models/c_auto_fusionrifle/c_auto_fusionrifle.mdl"
+			"model_player"				"models/weapons/v_models/v_auto_fusionrifle.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"pyro"                "1"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt07"
+				"mod max primary clip override"			"-1"
+				"damage bonus hidden"					"0.5"
+				"ragdolls become ash"					"1"	
+				"override projectile type"              "32"
+				"min_viewmodel_offset"					"10 0 -6"
+			}
+			"attributes"
+			{
+			    "dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"2.0"
+				}
+			    "strange restriction type 1"												
+				{
+					"attribute_class"	"set_dmgtype_ignite"
+					"value" 			"1"
+				}	
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"		"mult_wpn_burntime"
+					"value"					"0.3"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"		"mult_spread_scale"
+					"value"					"0.25"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"		"mult_projectile_speed"
+					"value"					"1.25"
+				}
+	            "hidden primary max ammo bonus"
+				{
+					"attribute_class"		"mult_maxammo_secondary"
+					"value"					"0.25"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"		"mult_postfiredelay"
+					"value"					"0.666"
+				}
+                "crit mod disabled"
+				{
+					"attribute_class"		"mult_crit_chance"
+					"value"					"0"
+				}		
+                "custom projectile model"
+				{
+					"attribute_class" 		"custom_projectile_model"
+					"value"					"models/weapons/w_models/w_fatbullet.mdl"
+				}	
+                "punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"0.25"
+				}
+				"punch angle is constant"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value" 			"1"
+				}
+                "custom projectile origin offset"
+				{
+					"attribute_class"	"custom_projectile_origin_offset"
+					"value"				"3 -3 -4"
+				}
+                "strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"3.0"
+				}
+                "mult dmg crit multiplier"
+				{
+					"attribute_class"	"mult_dmg_crit_multiplier"
+					"value"				"2.66666667"
+				}			
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_Carbonizer.Shoot"
+				"sound_double_shot"		"Weapon_Carbonizer.ShootCrit"
+				"sound_special2"		"Weapon_Tau.Discharge"		
+				"sound_empty"			"Weapon_Pistol.ClipEmpty"
+				"sound_burst"			"Weapon_Carbonizer.ShootCrit"
+				"muzzle_flash"          "muzzle_scattergun"
+			    "explosion_effect"		"coilgun_boom_red"
+			}
+			"visuals_red"
+			{
+			    "trail_effect"	        "critgun_weaponmodel_ylw"
+				"trail_effect_crit"		"fuse_sparks_crit_red"
+			}
+			"visuals_blu"
+			{
+			    "trail_effect"	        "critgun_weaponmodel_ylw"
+				"trail_effect_crit"		"fuse_sparks_crit_blue"
+			}
+			"visuals_grn"
+			{
+			    "trail_effect"	        "critgun_weaponmodel_grn"
+				"trail_effect_crit"		"fuse_sparks_crit_green"
+			}
+			"visuals_ylw"
+			{
+			    "trail_effect"	        "critgun_weaponmodel_ylw"
+				"trail_effect_crit"		"fuse_sparks_crit_yellow"
+			}			
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //--------------------------
 //--------------------------
@@ -17227,76 +17667,134 @@ Weapon by: 'Reagy'"
 		}
 //-------------------------
 //-------------------------
-//--NEST BREAKER GL - 7107--
-// DISABLED (for removal)
-//--V5.4 Cut back on building damage for player damage 
+//--ITALIAN TRENCH RIFLE - 7107--
 //-------------------------
 //-------------------------
 		"7107"
 		{
-			"name"						"TF_WEAPON_BUILDING_BREAKER"							
-			"prefab"					"weapon_grenade_launcher"
-			"show_in_armory"			"0"
+			"name"						"TF_WEAPON_VETTERI_TRENCHRIFLE"						
+			"prefab"					"weapon_shotgun"
+            "item_class"                "tf_weapon_pistol_scout"			
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"                 "primary"
+            "bucket"                    "0"
+			"bucket_position"           "0"
 
 			"item_quality"				"rarity2"
 
 			"propername"				"1"
-			"item_name"					"Trench Breaker"
-			"item_type_name"			"Grenade Launcher"
-			"item_description"			"Fires grenades that immediately detonate into a spread of flechettes
+			"item_name"					"Vetteran"
+			"item_type_name"			"Bolt-Action Infantry Rifle"
+			"item_description"			"
+This is how they used to do sniping back before scopes were invented, risks of being shot at and everything!
 
-Just you try and bloody set up your toy factory now!
-
-Model by: 'cobalt'
+Original model by: 'Hau'
+Model edit by: 'Raptor Dan'
+Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"Trench Breaker"
-			"item_iconname"				"Trench Breaker"
-			"image_inventory"			"backpack/workshop/weapons/c_models/c_trenchlauncher/c_trenchlauncher"
-			"model_world"				"models/workshop/weapons/c_models/c_trenchlauncher/c_trenchlauncher.mdl"
-			"model_player"				"models/workshop/weapons/c_models/c_trenchlauncher/c_trenchlauncher.mdl"
-			"attach_to_hands"			"1"
+			"item_logname"				"Vetteran"
+			"item_iconname"				"Vetteran"
+			"image_inventory"			"backpack/weapons/c_models/c_vetterli/c_vetterli"
+			"model_world"				"models/weapons/w_models/w_vetterli_scopeless.mdl"					
+			"model_player"				"models/weapons/v_models/v_vetterli_scopeless.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
-				"demoman"				"1"
+				"sniper"			"1"
 			}
-			"attributes"																	
+			"static_attrs"
 			{
-				"dmg bonus vs buildings"
+				"set reload single"    "1"				
+			}
+			"attributes"
+			{	
+			    "revolver use hit locations"
 				{
-					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"				"1.33"
+					"attribute_class"	"can_headshot"
+					"value"				"1"
+				}	
+				"fire rate bonus with reduced health"													
+				{
+					"attribute_class"	"mult_postfiredelay_with_reduced_health"
+					"value"				"0.95"
 				}
+                "strange restriction type 2"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value"				"25"
+				}	
+                "strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_falloff"
+					"value"				"0.5"
+				}	
+                "longer damage falloff distance"
+				{
+					"attribute_class"	"mult_falloff_distance"
+					"value"				"2.0"
+				}		
+                "strange restriction type 2"
+				{
+					"attribute_class"	"crit_dmg_falloff"
+					"value"				"1"
+				}	
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.02"
+					"value" 			"3"
 				}
-				"crit mod disabled"															
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"1.0"
+				}	
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" 			"0.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"8.5"
+				}
+				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
-				"override projectile type"				
+				"punch angle is constant"
 				{
-					"attribute_class"	"override_projectile_type"
+					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
-				}	
-				"weapon_stattrak_module_scale"				
-				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"40"
 				}
 				"strange restriction type 1"
 				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.066"
+					"attribute_class"	"punch_angle_mod"
+					"value"				"4.0"
 				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
+				}
+                "strange restriction type 1"													
+				{
+					"attribute_class"	"mult_reload_time_start"
+					"value"				"0.35"
+				}	
+                "Reload time no anim speed mod"
+                {
+                    "attribute_class"    "mult_reload_time_noanimmod"
+                    "value"              "0.35"
+                }					
 			}
 			"visuals"
 			{
-				"sound_single_shot"		"Weapon_TrenchLauncher.Fire"
-				"sound_burst"			"Weapon_TrenchLauncher.FireCrit"
-				"tracer_effect"         "bullet_scattergun_tracer01"
+				"sound_single_shot"		 "Weapon_Vetteran.Fire"	
+				"sound_burst"			 "Weapon_Vetteran.FireCrit"	
+				"tracer_effect"          "tracer_sniper_rifle_PARENT"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -17670,9 +18168,9 @@ Model by: 'Hau, Kibbleknight'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Practitioner's Pride"
 			"item_iconname"				"Practitioner's Pride"
-			"image_inventory"			"backpack/workshop/weapons/c_models/c_syringe_shotgun/c_syringe_shotgun"
-			"model_world"				"models/workshop/weapons/c_models/c_syringe_shotgun/c_syringe_shotgun.mdl"
-			"model_player"				"models/workshop/weapons/c_models/c_syringe_shotgun/c_syringe_shotgun.mdl"
+			"image_inventory"			"backpack/weapons/c_models/c_pancorsyringe/c_pancorsyringe"
+			"model_world"				"models/weapons/c_models/c_pancorsyringe/c_pancorsyringe.mdl"
+			"model_player"				"models/weapons/c_models/c_pancorsyringe/c_pancorsyringe.mdl"
 			"attach_to_hands"			"1"
 			"used_by_classes"
 			{
@@ -17691,10 +18189,10 @@ Weapon by: 'The One Of Wonders'"
                     "value"              "0.00001"
                 }
                 "weapon_stattrak_module_scale"
-                {
-                    "attribute_class"    "mult_projectile_speed"
-                   "value"                "1.1"
-                }
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"1.33"
+				}
                 "weapon_stattrak_module_scale"
                 {
                     "attribute_class"      "mult_dmg"
@@ -18453,11 +18951,6 @@ Item by: 'Majro'"
 			"sound_burst"		"Weapon_Null"
 			"sound_empty"		"Weapon_Null"
 			"sound_double_shot"	 "Weapon_Trombone.AirBurstAttack"	//Look ma, extreme sound paranoia!
-			
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}			
 			}
 
 		"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
@@ -18800,11 +19293,6 @@ Edited by: 'Reagy'"
 				}
 				"sound_single_shot"		"Weapon_Jury.Single"
 				"sound_burst"			"Weapon_Jury.SingleCrit"
-				
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -18875,11 +19363,6 @@ Edited by: 'Reagy'"
 					"ACT_MP_ATTACK_CROUCH_MELEE"				"ACT_MP_GESTURE_FLINCH_CHEST"
 					"ACT_MP_ATTACK_SWIM_MELEE"					"ACT_MP_GESTURE_FLINCH_CHEST"
 				}
-				
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}		
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -18940,10 +19423,6 @@ Edited by: 'Reagy'"
 			}
 			"visuals"
 			{
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}						
 			"mouse_pressed_sound"		"#ui/item_sandwich_drop.wav"
 			"drop_sound"				"#ui/item_sandwich_pickup.wav"
 			}
@@ -18976,7 +19455,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"               "models/weapons/v_models/v_fist_heavy.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_berserk_fists.mdl"
-			"extra_wearable"			"models/player/items/buff_civ_arms_edit.mdl"
+			"extra_wearable"			"models/player/items/buff_civ_arms.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -19008,7 +19487,6 @@ Edited by: 'Reagy'"
 					"value"				"0.9"
 				}
 			}
-		
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
@@ -19041,7 +19519,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"               "models/weapons/custom/w_models/w_civwrench.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_civwrench.mdl"
-			"extra_wearable"			"models/player/items/civilian_engineer_edit.mdl"
+			"extra_wearable"			"models/player/items/civilian_engineer.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -19055,14 +19533,7 @@ Edited by: 'Reagy'"
 				"Construction rate decreased"           "0.5"
 				"upgrade rate decrease"                 "0.0"
 				"decrease player capture value"         "-3"
-			}			
-			"visuals"
-			{
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}
-			}			
+			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
@@ -19131,10 +19602,6 @@ Edited by: 'Reagy'"
 				"sound_melee_hit"		"Weapon_Whip.HitFlesh"
 				"sound_melee_hit_world"	"Weapon_Whip.HitWorld"
 				"sound_burst"			"Weapon_Whip.MissCrit"
-			"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -19235,11 +19702,6 @@ Weapon by: 'The One Of Wonders'"
 				"sound_burst"			"Weapon_JudgeDeath.ShootCrit"
 				"sound_reload"			"Weapon_Revolver.WorldReload"
 				"tracer_effect"			"bullet_scattergun_tracer01"
-				
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -19442,11 +19904,6 @@ Weapon by: 'Reagy'"
 				"sound_melee_hit"		"Weapon_BoxingGloves.HitFlesh"
 				"sound_melee_hit_world"	"Weapon_BoxingGloves.HitWorld"
 				"sound_burst"			"Weapon_BoxingGloves.MissCrit"
-				
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -20829,10 +21286,10 @@ Weapon by: 'Vror'"
                     "value"                "0.0001"
                 }
                 "weapon_stattrak_module_scale"
-                {
-                    "attribute_class"    "mult_projectile_speed"
-                    "value"                "1.1"
-                }
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"1.33"
+				}
                 "weapon_stattrak_module_scale"
                 {
                     "attribute_class"    "mult_dmg"
@@ -20978,11 +21435,7 @@ Edited by: 'The One Of Wonders'"
 				"sound_single_shot"		"Weapon_1911.Shoot"
 				"sound_burst"			"Weapon_1911.ShootCrit"
 				"muzzle_flash"			"muzzle_scattergun"								
-				"tracer_effect"			"bullet_scattergun_tracer01"
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
+				"tracer_effect"			"bullet_scattergun_tracer01"					
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -20998,7 +21451,7 @@ Edited by: 'The One Of Wonders'"
 			{
 				"bots_cant_use"			"1"														
 			}
-		    "name"						"TF_WEAPON_civ_wizard"							
+		    "name"						"TF_WEAPON_CIV_WIZARD"							
 			"item_class"				"tf_weapon_paintballrifle"
 			"show_in_armory"			"1"
 			
@@ -21024,7 +21477,7 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/weapons/c_models/c_civwizard/c_civwizard"
 			"model_world"				"models/weapons/c_models/c_civilian_staff/c_civilian_staff.mdl"
 			"model_player"				"models/weapons/v_models/v_civilian_wizard_staff.mdl"
-			"extra_wearable"			"models/player/items/civ_wizard_edit.mdl"
+			"extra_wearable"			"models/player/items/civ_wizard.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -21139,11 +21592,7 @@ Weapon by: 'The One Of Wonders'"
 				"sound_reload"			"Weapon_Pistol.WorldReload"
 				"sound_single_shot"		"Weapon_CivWizard.Cast"
 				"sound_burst"			"Weapon_CivWizard.CastCrit"
-                "explosion_effect"		"medic_explosion_wisps_green"
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
+                "explosion_effect"		"medic_explosion_wisps_green"	
 			}
 			"visuals_red"
 			{
@@ -22836,12 +23285,11 @@ Weapon by: 'Noclue'"
 			}
 			"visuals"
 			{
+			    "sound_single_shot"		"Weapon_TotenWerfer.Healing"
 				"player_bodygroups"
 				{
 					"medic_backpack"	"1"
 				}
-				"sound_single_shot"		"Weapon_Quick_Fix.Healing"								// Neither of these sounds work. I'm not sure why.
-				"sound_special2"		"TFPlayer.QuickFixInvulnerableOn"						// On closer inspection, even live TF2 doesn't use any sounds down here in this section. How they get their sounds working is a complete mystery...
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -23655,11 +24103,129 @@ Weapon by: 'The One Of Wonders'"
 		}
 //-----------------------------------
 //-----------------------------------
-//--F-BOMB MORTAR - 9086-- -- REMOVED
+//--BULK-HEAD SHOTGUN - 9086-- 
 //-----------------------------------
 //-----------------------------------
 		"9086"
 		{
+		    "name"						"TF_WEAPON_SHOTGUN_BULKHEAD"
+			"prefab"					"weapon_shotgun"
+			"item_class"                "tf_weapon_shotgun_primary"
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"                 "secondary"
+			"item_class"				"tf_weapon_shotgun_soldier"
+			"item_quality"				"rarity2"
+
+			"propername"				"1"
+			"item_name"					"Sodger's Six-Hole"
+			"item_type_name"			"Rapid-Fire Shotgun"
+			"item_description"			"
+How many holes can you fit into the human body? as many bullet as this gun can shoot!
+
+Model by: 'Ertz'
+Animations by: 'Kylul'
+Cosmetics by: 'Sparkwire, svdl, SediSocks, NeoDement'
+Weapon by: 'The One Of Wonders'"											
+			"item_logname"				"Sodger's Six-Hole"
+			"item_iconname"				"Sodger's Six-Hole"
+			"image_inventory"			"backpack/weapons/c_models/c_bulkhead_shotgun/c_bulkhead_shotgun"
+			"model_world"				"models/weapons/c_models/c_bulkhead_shotgun/c_bulkhead_shotgun.mdl"
+			"model_player"				"models/weapons/v_models/v_bulkhead_shotgun_soldier.mdl"
+			"extra_wearable"			"models/player/items/soldier/shotgunner_kit.mdl" 
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"soldier"				"1"
+			}
+			"static_attrs"
+			{
+			    "class select override vcd"			"taunt04"	
+			}
+			"attributes"
+			{
+			    "scattergun has knockback"
+				{
+					"attribute_class"	"set_scattergun_has_knockback"
+					"value"				"1"
+				}
+				"bleeding duration"												
+				{
+					"attribute_class"	"bleeding_duration"
+					"value"				"1"
+				}
+				"health regen"
+				{
+					"attribute_class"	"add_health_regen"
+					"value"				"5"
+				}	
+				"apply self knockback hidden"
+				{
+					"attribute_class"	"apply_self_knockback"
+					"value"				"100"
+				}
+				"weapon enemy knockback mod mult hidden"
+				{
+					"attribute_class"	"weapon_enemy_knockback_mod"
+					"value"				"0.2"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				// shotty stoof
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.666666667"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.7"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"1.40625"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.7"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"0.9"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"1.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"1.44"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
+				}
+			}
+			"visuals"
+			{
+			    "player_bodygroups"
+				{
+					"hat"				"1"														
+				}
+			    "sound_single_shot"		"Weapon_BulkHead.Fire"	
+				"sound_burst"			"Weapon_BulkHead.FireCrit"	
+				"tracer_effect"         "d3_tracer"
+			}
 		}
 //-------------------------
 //-------------------------
@@ -24236,7 +24802,7 @@ Weapon by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/w_models/w_grenade_frag"
 			
 			"model_world"				"models/weapons/w_models/w_grenade_frag.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_grenade_frag_new.mdl"
+			"model_player"				"models/weapons/v_models/v_grenade_frag_new.mdl"
 
 			"static_attrs"
 			{
@@ -24276,6 +24842,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"DISPLAY_ONLY"
 					"value"				"1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"stickybomb_charge_rate"
+					"value" 			"1.65"
 				}
 			}
 			"visuals"
@@ -25094,6 +25665,16 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_reload_time"
 					"value"				"0.8"
 				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.85"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.33333333333"
+				}
 				"spread penalty"
 				{
 					"attribute_class"	"display_only"
@@ -25103,11 +25684,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_horizontal_spread"
 					"value"				"1"
-				}
-				"clip size penalty"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"0.33333333333"
 				}
 				"scattergun no reload single"
 				{
@@ -27731,11 +28307,124 @@ Weapon by: 'The One Of Wonders'"
 		}	
 //-----------------------------------
 //-----------------------------------
-//--SHOCK CANNON- 9125-- --REMOVED
+//--SAW BRUMMMBRUMMBRUMMBRUBMRUBRMRRRR- 9125--
 //-----------------------------------
 //-----------------------------------
 		"9125"
 		{
+		    "name"						"TF_WEAPON_MEDIC_SAW"
+			"prefab"					"weapon_bonesaw"
+			"show_in_armory"			"1"
+
+			"propername"				"1"
+			"item_quality"				"rarity2"
+			"item_name"					"S.A.W"
+			"item_type_name"			"Medical-Grade Power Saw"
+			"item_description"			"
+Don't worry, this thing is designed for cutting humans... surgically!
+
+Model by 'Neodos, Extra Ram'
+Animations by: 'Kylul'
+Weapon by 'The One Of Wonders'"
+			"item_logname"				"S.A.W"
+			"item_iconname"				"S.A.W"
+			"image_inventory"			"backpack/weapons/c_models/c_medicalSAW/c_medicalSAW"
+			"model_world"				"models/weapons/c_models/c_medicalSAW/c_medicalSAW.mdl"				
+			"model_player"				"models/weapons/v_models/v_medicalsaw_medic.mdl"
+			"extra_wearable" 			"models/player/items/set_doctor.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"medic"					"1"
+			}
+			"static_attrs"
+			{						
+				"fire rate burst"					"0.125"
+			}
+			"attributes"
+			{
+			    "S.A.W Shredder"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"1"
+				}
+			    "critboost on kill"
+				{
+					"attribute_class"	"add_onkill_critboost_time"
+					"value"				"5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.15"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"1.5"
+				}
+				"Demoknight Melee Negative"
+				{
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1" 
+				}
+				"weapon_stattrak_module_scale"												
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"				"2.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"1.33"
+				}
+			    "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"100.0"
+				}	
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value"				"1"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"set_burstfire"
+					"value"				"9"
+				}
+				"mod melee crit swing custom damage" //GLORIOUS EXPLOSION! on crits
+				{
+					"attribute_class"	"mod_melee_crit_swing_custom_damage"
+					"value"				"29"
+				}
+				"mult dmg crit multiplier"
+				{
+					"attribute_class"	"mult_dmg_crit_multiplier"
+					"value"				"0.6666666666667"
+				}
+				"mult melee smack delay"
+				{
+					"attribute_class"	"mult_melee_smack_delay"
+					"value" 			"0.05"														
+				}
+				"override mult deploy weapon time animation"
+                {
+                    "attribute_class"    "override_mult_deploy_time_anim"
+                    "value"              "1.1"
+                }			
+			}
+			"visuals"
+			{		
+                "sound_melee_miss"		"Weapon_MedicalSAW.Miss"
+				"sound_melee_hit"		"Weapon_MedicalSAW.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_MedicalSAW.HitWorld"
+				"sound_burst"			"Weapon_MedicalSAW.MissCrit"
+				"sound_special1"		"Weapon_MedicalSAW.HitWorld"								
+				"sound_special2"		"Weapon_MedicalSAW.HitWorld"		
+			}
+			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
 		}
 //----------------------------
 //----------------------------
@@ -28564,6 +29253,7 @@ Weapon by: 'Noclue'"
 			}
 			"visuals"
 			{
+			    "sound_single_shot"		"Weapon_GuardianAngel.Healing"
 				"player_bodygroups"
 				{
 					"medic_backpack"	"1"
@@ -29298,6 +29988,8 @@ Sometimes a gun can be a tool.. if you know how to use it right.
 
 Model by: 'Svdl'
 Weapon by: 'The One Of Wonders'"
+            "item_logname"				"Conventional Classic"
+			"item_iconname"				"Conventional Classic"
             "image_inventory"           "backpack/weapons/c_models/c_pistol_conventional/c_pistol_conventional"
 			"model_world"				"models/weapons/custom/w_models/w_elites.mdl"
 			"model_player"				"models/weapons/v_models/v_pistol_conventional_engineer1.mdl"
@@ -29313,6 +30005,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg"
 					"value"				"1.25"
 				}	
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.85"
+				}
 				"clip size bonus"
 				{
 					"attribute_class"	"mult_clipsize"
@@ -29629,7 +30326,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"																
 				{
 					"attribute_class"	"mult_maxammo_secondary"
-					"value" 			"9.375"
+					"value" 			"0.75"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -29649,7 +30346,12 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"2.5"
+					"value"				"1.1"
+				}
+				"mod ammo per reload"
+				{
+					"attribute_class"	"mod_ammo_per_reload"						
+					"value"				"1"
 				}
 				"crit mod disabled hidden"																
 				{
@@ -29660,11 +30362,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_projectile_range"
 					"value"				"0.1"
-				}
-				"scattergun no reload single"
-				{
-					"attribute_class"	"set_scattergun_no_reload_single"
-					"value"				"1"
 				}
 				"strange restriction type 1"
 				{
@@ -30765,6 +31462,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"visuals"
 			{
+			    "sound_single_shot"		"Weapon_BoosterShot.Healing"
 				"player_bodygroups"
 				{
 					"medic_backpack"	"1"
@@ -31140,12 +31838,195 @@ Weapon by: 'The One Of Wonders'"
 		}
 //---------------------
 //--------------------- 
-//--LAHTI AT  - 9160--
+//-- AT RIFLE - 9160--
 //--------------------- 
 //---------------------
 		"9160"
 		{
-			
+			"name"						"TF_WEAPON_BIGFIFTY_RIFLE" // it's back~
+			"prefab"					"weapon_sniperrifle"
+			"show_in_armory"			"1"
+
+			"item_name_color"           "133 175 190 255"
+
+			"propername"				"0"
+			"item_name"					"Rebuilt Mann-Cannon"
+			"item_type_name"			"Anti-Material Rifle"
+			"item_description"			"
+If you hear this big beauty thunder, let it be known, I wasn't pointing it at you.
+  
+Model by: 'rook, SediSocks'
+Animations by: 'N-Cognito'
+Weapon by: 'The One Of Wonders'"
+			"item_logname"				"big50_rifle"
+			"item_iconname"				"big50_rifle"
+			"image_inventory"			"backpack/weapons/c_models/c_manncannon_redux/c_manncannon_redux"
+			"model_world"				"models/weapons/c_models/c_manncannon_redux/c_manncannon_redux.mdl"
+			"model_player"				"models/weapons/v_models/v_manncannon_rifle/v_manncannon_rifle.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"sniper"				"1"
+			}
+			"static_attrs"
+			{
+				"override projectile type"   "2"
+				"override projectile type scoped" "2"
+			}
+			"attributes"
+			{
+                "explosive bullets"
+				{
+					"attribute_class"	"ddmmuy"
+					"value"				"1"
+				}
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"1.5"
+				}
+				"max health additive penalty"										
+				{
+					"attribute_class"	"display_only"
+					"value" 			"-25"
+				}
+				"sniper no headshots"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value" 			"1"
+				}
+				"Heavy Weapon Downside"
+				{
+					"attribute_class"	"dmmuy"
+					"value" 			"1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.25"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value" 			"0.85"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value" 			"0.7"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"blast_dmg_to_self"
+					"value" 			"20.0"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmgself_push_force" // No knockback for you!
+					"value" 			"0.01"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"1.7"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay_scoped"
+					"value" 			"1.7"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value" 			"1.33"
+				}
+				"override mult deploy weapon time animation"
+				{
+					"attribute_class"	"override_mult_deploy_time_anim"
+					"value"				"1.15"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value" 			"1.67"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mod_jump_height"
+					"value" 			"0.85"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value" 			"2.0"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"gravity_mod_wearer"
+					"value" 			"1.15"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"12.7"
+				}
+				"punch angle is constant"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value" 			"1"
+				}
+				"apply self knockback hidden"
+				{
+					"attribute_class"	"apply_self_knockback"
+					"value"				"254"
+				}
+				"custom projectile model"
+				{
+					"attribute_class" 		"custom_projectile_model"
+					"value"					"models/weapons/w_models/w_drg_ball.mdl"
+				}	
+                "custom projectile origin offset"
+				{
+					"attribute_class"	"custom_projectile_origin_offset"
+					"value"				"-6 -3 0"
+				}
+				"custom falloff"
+				{
+					"attribute_class"	"mod_custom_falloff"
+					"value"				"1.0"
+				}
+				"custom rampup"
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.0"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_BigFifty.Single"
+				"sound_burst"			"Weapon_BigFifty.SingleCrit"
+				"tracer_effect"         "aagun_tracer_PARENT"
+				"explosion_effect"		"explosion_shrapnel_PARENT"
+				"trail_effect"			"fuse_sparks"	
+			}		
+			"visuals_red"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_red"
+			}
+			"visuals_blu"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_blue"
+			}
+			"visuals_grn"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_green"
+			}
+			"visuals_ylw"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_yellow"
+			}		
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //-------------------------------
 //-------------------------------
@@ -33303,12 +34184,7 @@ Weapon by: 'Reagy'"
 				"sound_single_shot"		"Weapon_1911.Shoot"
 				"sound_burst"			"Weapon_1911.ShootCrit"
 				"muzzle_flash"			"muzzle_scattergun"								
-				"tracer_effect"			"bullet_scattergun_tracer01"
-
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
+				"tracer_effect"			"bullet_scattergun_tracer01"					
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -36148,147 +37024,108 @@ Weapon by: 'The One Of Wonders'"
 		}
 //--------------------------------
 //--------------------------------
-//--PORTABLE DEATH RAY - 9209-- 
+//--SHORT!?! - 9209-- 
 //--------------------------------
 //--------------------------------
 		"9209"
 		{
-		    "name"						"TF_WEAPON_DEATHRAY"	// scrapped once again smh...						
-			"prefab"					"weapon_rocketlauncher"
-			"item_class"                "tf_weapon_hunterrifle"
-			"show_in_armory"			"0"  
-			"item_slot"					"primary"
+		    "name"						"TF_WEAPON_ENGI_DOUBLEBARREL_STUMP"
+			"item_class"                "tf_weapon_pistol"
+			"show_in_armory"			"0"
+			"item_slot"                 "secondary"
 			"anim_slot"                 "primary"
 
-			"item_quality"				"rarity2"
-
 			"propername"				"1"
-			"item_name"					"Portable Death Ray"
-			"item_type_name"			"Gamma Radiation Pulse Cannon"
-			"item_description"			"Alt-fire: Charge the weapon to fire an explosive shot!
+			"item_quality"				"rarity2"
+			"item_name"					"Scrapper's Shorty"
+			"item_type_name"			"Double-Barrel Sawed-Off Shotgun"
+			"item_description"			"
+I ain't got time to be cussin' you out, boy.
 
-I joined this team just to kill maggots like you!
-
-Model by: 'svdl'
+Model by: 'Stev, Hectaes'
+Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
-			"item_logname"				"Portable Death Ray"
-			"item_iconname"				"Portable Death Ray"
-			"image_inventory"			"backpack/weapons/c_models/c_gammarad_pulsecannon/c_gammarad_pulsecannon"
-			"model_world"				"models/weapons/c_models/c_gammarad_pulsecannon/c_gammarad_pulsecannon.mdl"
-			"model_player"				"models/weapons/c_models/c_gammarad_pulsecannon/c_gammarad_pulsecannon.mdl"
-			"attach_to_hands"			"1"
+			"item_logname"				"Texas Two Step"
+			"item_iconname"				"Texas Two Step"
+			"image_inventory"			"backpack/weapons/c_models/c_ttwotap_new/c_ttwotap_new"
+			"model_world"				"models/weapons/w_models/w_dbl_hammer_shorty_engineer.mdl"
+			"model_player"				"models/weapons/v_models/v_dbl_hammer_shorty.mdl"
+			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
-				"soldier"                "1"
-			}
-			"static_attrs"
-			{
-				"hidden primary max ammo bonus"			"5"
-				"min_viewmodel_offset"					"5 0 -10"
-				"override projectile type scoped"       "2"
+				"engineer"					"1"
 			}
 			"attributes"
 			{
+				"fire rate bonus"
+				{
+					"attribute_class"	"dmmuy"
+					"value" 			"0.2"
+				}
+				"bullets per shot bonus"
+				{
+					"attribute_class"	"dmmuy"
+					"value" 			"1.2"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"ddmuy"
+					"value" 			"0.2"
+				}
+				"scattergun no reload single"													// This one is -half- functional. It'll reload your entire clip at once, yes, but it's also based on the Scattergun's reload times.
+				{
+					"attribute_class"	"set_scattergun_no_reload_single"
+					"value"				"1"
+				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.1666666666666667"
+					"attribute_class"	"mult_bullets_per_shot"
+					"value" 			"12.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.4"
+					"value" 			"0.4"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"3.33333333333"
+					"value" 			"0.1"
 				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"2.0"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"1.333333333333"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.33333333333"
-				}
-                "crit mod disabled"															
+				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
-                "custom rampup"
+                "punch angle mod add hidden"
 				{
-					"attribute_class"	"mod_custom_rampup"
-					"value"				"1.0"
-				}	
-                "custom projectile model"														
-				{
-					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/w_drg_ball.mdl"
-				}
-                "no damage falloff over distance"
-				{
-					"attribute_class"	"mod_no_dmg_falloff"
-					"value"				"1"
-				}	
-                "mod sniper zoom fov override"
-				{
-					"attribute_class"	"mod_sniper_zoom_fov_override"
-					"value"				"20"
+					"attribute_class"	"punch_angle_mod"
+					"value"				"4.0"
 				}
 				"punch angle mod add hidden"
 				{
-					"attribute_class"	"punch_angle_mod"
-					"value" 			"0.762"
-				}
-				"punch angle is constant"
-				{
 					"attribute_class"	"punch_angle_is_constant"
-					"value" 			"1"
-				}
+					"value"				"1"
+				}	
                 "weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"0.5"
-				}	
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_sniper_charge_per_sec"
-					"value"				"2.0"
-				}	
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_postfiredelay_scoped"
-					"value"				"2.0"
-				}							
+					"attribute_class"	"mult_spread_scale"
+					"value" 			"3.0"
+				}		
+                "Reload time no anim speed mod"
+                {
+                    "attribute_class"    "mult_reload_time_noanimmod"
+                    "value"              "1.33"
+                }					
 			}
 			"visuals"
 			{
-				"sound_single_shot"		"Weapon_GammaRadCannon.Shoot"							
-				"sound_burst"			"Weapon_GammaRadCannon.ShootCrit"
-				"tracer_effect"         "railgun_tracer01"
-				"trail_effect"          "flamesentry"
-				"animation_replacement" 													
-				{
-					"ACT_MP_DEPLOYED_IDLE"						"ACT_MP_STAND_PRIMARY"
-					"ACT_MP_DEPLOYED_PRIMARY"					"ACT_MP_RUN_PRIMARY"
-					"ACT_MP_DEPLOYED"							"ACT_MP_RUN_PRIMARY"
-					"ACT_MP_CROUCH_DEPLOYED_IDLE"			"ACT_MP_CROUCH_PRIMARY"
-					"ACT_MP_CROUCHWALK_DEPLOYED"			"ACT_MP_CROUCHWALK_PRIMARY"
-					
-					"ACT_VM_RELOAD_START"     "ACT_PRIMARY_RELOAD_START_3"
-					"ACT_VM_RELOAD"           "ACT_PRIMARY_VM_RELOAD_3"
-					"ACT_VM_RELOAD_FINISH"    "ACT_PRIMARY_RELOAD_FINISH_3"
-				}
+				"sound_single_shot"		"Weapon_SuperShotGun.Single"
+				"sound_burst"			"Weapon_SuperShotGun.SingleCrit"
+				"sound_reload"			"Weapon_SuperShotGun.WorldReload"
 			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //-----------------------------------
 //-----------------------------------
@@ -41096,7 +41933,17 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class" 		"custom_projectile_model"
 					"value"					"models/weapons/w_models/w_fatbullet.mdl"
-				}				
+				}
+                "strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.666666666667"
+				}	
+                "longer damage falloff distance"
+				{
+					"attribute_class"	"mult_falloff_distance"
+					"value"				"2.0"
+				}					
 			}
 			"visuals"
 			{
@@ -41105,24 +41952,27 @@ Weapon by: 'The One Of Wonders'"
 				"sound_special3"		"Weapon_UltraKSharpShooter.ChargeLoop"		
 				"sound_empty"			"Weapon_Pistol.ClipEmpty"
 				"sound_burst"			"Weapon_UltraKSharpShooter.SingleCrit"
-			    "trail_effect"          "bullet_distortion_trail"
 			}
 			"visuals_red"
 			{
+			    "trail_effect"	        "critgun_weaponmodel_red"
 				"trail_effect_crit"		"critical_rocket_red"
 			}
 			"visuals_blu"
 			{
+			     "trail_effect"	        "critgun_weaponmodel_blu"
 				"trail_effect_crit"		"critical_rocket_blue"
 			}
 			"visuals_grn"
 			{
+			    "trail_effect"	        "critgun_weaponmodel_grn"
 				"trail_effect_crit"		"critical_rocket_green"
 			}
 			"visuals_ylw"
 			{
+			    "trail_effect"	        "critgun_weaponmodel_ylw"
 				"trail_effect_crit"		"critical_rocket_yellow"
-			}				
+			}			
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
@@ -43724,11 +44574,6 @@ Weapon by: 'Reagy'"
 				"sound_melee_miss"		"Weapon_postalpet.swing"
 				"sound_melee_hit"		"Weapon_postalpet.hit"
 				"sound_melee_hit_world"	"Weapon_postalpet.hitworld"
-				"player_bodygroups"
-				{
-					"hat"		"1"
-				}				
-				
 			}
 			"mouse_pressed_sound"		"#ui/postal/postal.wav"
 			"drop_sound"				"#ui/postal/postal.wav"
@@ -45130,6 +45975,22 @@ Reserve Energy: 3 seconds of auto-reload"
 		{
 			"name"					"Chicken jank"
 			"description_string"	"Thrown Chickens have a very silly flight path"
+			"description_format"	"value_is_additive"
+			"hidden"				"0"
+			"effect_type"			"negative"
+		}
+		"7672"
+		{
+			"name"					"S.A.W Shredder"
+			"description_string"	"Attacks shred victims and always crit"
+			"description_format"	"value_is_additive"
+			"hidden"				"0"
+			"effect_type"			"positive"
+		}
+		"7673"
+		{
+			"name"					"Heavy Weapon Downside"
+			"description_string"	"Heavy Weapon: slower handling and mobility on wearer"
 			"description_format"	"value_is_additive"
 			"hidden"				"0"
 			"effect_type"			"negative"
