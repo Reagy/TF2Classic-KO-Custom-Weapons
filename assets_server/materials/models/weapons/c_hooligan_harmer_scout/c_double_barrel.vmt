@@ -1,0 +1,43 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\weapons\c_hooligan_harmer_scout\c_hooligan_harmer_scout"
+	"$phong" "1"
+	"$phongexponent" "70"
+	"$phongboost" "0.2"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.1 .3 2]"
+	"$halflambert" "1"
+
+	"$basemapalphaphongmask" "1"
+
+	// Rim lighting parameters
+	"$rimlight" "1"			
+	"$rimlightexponent" "20"	
+	"$rimlightboost" ".25"
+
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

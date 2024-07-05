@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_zip_throwable\c_zip_throwable_large"
+	$translucent 1
+}

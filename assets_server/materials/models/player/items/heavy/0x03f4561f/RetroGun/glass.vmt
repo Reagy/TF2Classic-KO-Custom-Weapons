@@ -1,0 +1,36 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/player/items/heavy/0x03f4561f/RetroGun/glass"
+	"$additive"	1
+                "$translucent" 1
+                "$envmap" "cubemaps/cubemap_specular001"
+
+	"$rimlight" "1"						
+	"$rimlightexponent" "20"				
+	"$rimlightboost" "5"
+
+
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

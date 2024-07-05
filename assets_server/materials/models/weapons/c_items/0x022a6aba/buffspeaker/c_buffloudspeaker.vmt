@@ -1,0 +1,41 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/0x022a6aba/buffspeaker/c_buffloudspeaker"
+	
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "4"	
+	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+	"$phongfresnelranges"	"[.3 1 8]"
+	"$halflambert" "0"
+	"$basemapalphaphongmask" "1"
+	
+	"$rimlight" "1"
+	"$rimlightexponent" "4"
+	"$rimlightboost" "3"
+	
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

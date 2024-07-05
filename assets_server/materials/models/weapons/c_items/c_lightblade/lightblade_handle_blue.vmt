@@ -1,0 +1,21 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_lightblade/lightblade_handle_blue"
+	"$bumpmap" "models/weapons/c_items/c_lightblade/lightblade_handle_normal"
+//	"$lightwarptexture" "models/lightwarps/rainblower_lightwarp"
+
+	"$bumpmapalphaphongmask" 	"1"
+
+	"$phong" "1"
+	"$phongexponent" "5"
+	"$phongboost" "2"	
+	"$phongfresnelranges"	"[.5 .5 .5]"
+
+	"$selfillum" "1"
+	"$selfillumtint"		"[3 3 3]"
+    	"$selfillummask" "models/weapons/c_items/c_lightblade/lightblade_handle_illum"
+	
+	"$rimlight" "1"						
+	"$rimlightexponent" "4"				
+	"$rimlightboost" "2"
+}

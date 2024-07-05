@@ -1,0 +1,65 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/player/items/heavy/0x03f4561f/RetroGun/light"
+	"$detail" "models/player/items/heavy/0x03f4561f/RetroGun/light"
+	"$detailscale" "1"
+	"$detailblendfactor" 1
+	"$detailblendmode" 5
+
+	"$phong" "1"
+	"$phongexponent" "6"
+	"$phongboost" "9"
+	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+	"$phongfresnelranges"	"[.25 1 4]"
+
+                "$selfillum" "1"
+                "$selfillumtint" "[3 3 3]"
+                "$selfillummask" "models/player/items/heavy/0x03f4561f/RetroGun/light_illum.vtf"
+                 
+                "$glowcolor" "1"
+
+
+	"$rimlight" "1"
+	"$rimlightexponent" "2"
+	"$rimlightboost" "2"
+	// Cloaking
+	"$cloakPassEnabled" "1"
+
+	"Proxies"
+	{
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$detail"
+			"animatedtextureframenumvar" "$detailframe"
+			"animatedtextureframerate" 30
+		}
+                                "invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+
+ 	}
+}

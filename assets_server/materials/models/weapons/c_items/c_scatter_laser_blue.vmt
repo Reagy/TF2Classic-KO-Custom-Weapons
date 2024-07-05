@@ -1,0 +1,77 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\weapons\c_items\c_scatter_laser_color_blue"
+	"$normalmapalphaenvmapmask" 1
+	
+	//"$basealphaenvmapmask" 1
+	//"$envmap" "env_cubemap"
+	//"$envmaptint" "[.01 .01 .3]"
+
+	"$phong" "1"
+	"$phongexponenttexture" "models\weapons\c_items\c_scatter_laser_exponent"
+	//"$phongexponent" "1"
+	"$phongboost" "1"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongwarptexture"  "models\weapons\v_bat\v_bat_phongwarp"
+	"$phongfresnelranges"	"[.25 .5 1]"
+
+	"$basemapalphaphongmask" "1"
+	
+	">=DX90"
+	{
+		"$selfillum" 1
+		$selfillummask "models\weapons\c_items\c_scatter_laser_selfillum"
+	}
+	
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"	
+	"$rimlightboost" "0.5"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"$sheenPassEnabled" "1"
+
+
+
+	"$yellow" "0"
+
+	"Proxies"
+	{
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}
