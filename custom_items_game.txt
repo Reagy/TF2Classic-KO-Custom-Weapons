@@ -11536,7 +11536,7 @@ Weapon by: 'The One Of Wonders'"
 				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/w_grenade_cannonball_thrown_fix.mdl" 
+					"value"				"models/weapons/w_models/w_grenade_cannonball_thrown.mdl" 
 				}
 				"weapon_stattrak_module_scale"															
 				{
