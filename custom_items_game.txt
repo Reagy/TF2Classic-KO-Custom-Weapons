@@ -1834,7 +1834,6 @@ Weapon from: New Old Weapons Pack"
 			"item_description"			"
 You Peppino'd your last Spaghetti: Swing your melee to charge forward to deal impact damage!
 No manual boost.
-No aura.
 
 Now which one of your simpletons put pineapples on my pizza!?!
 
@@ -1911,12 +1910,7 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_shield_bash_damage"
 					"value"				"0.8"				
-				}	
-                "civ boost aura override"
-				{
-					"attribute_class"	"add_civ_aura_override"
-					"value"				"-1"				
-				}				
+				}					
 			}
 			"visuals"
 			{
