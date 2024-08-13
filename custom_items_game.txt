@@ -114,6 +114,29 @@
 	
 	"items"
 	{
+	    "2"
+		{
+			"name"						"TF_WEAPON_FIREAXE"
+			"prefab"					"weapon_fireaxe"
+			"baseitem"					"1"
+			"item_description"			"#TF_Weapon_FireAxe_Desc"
+			"model_world"				"models/weapons/w_models/w_fireaxe.mdl"
+			"model_player"				"models/weapons/v_models/v_fireaxe_pyro.mdl"
+			"attach_to_hands"			"2"
+			"attributes"
+			{
+				"single wep deploy time decreased"	
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"				"0.7"
+				}
+				"bleeding duration"	
+				{
+					"attribute_class"	"bleeding_duration"
+					"value"				"3"
+				}
+			}
+		}
 	    "3"
 		{
 			"name"						"TF_WEAPON_CLUB"
@@ -1803,7 +1826,6 @@ Weapon from: New Old Weapons Pack"
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_umbrella"
-			"item_class"                "tf_weapon_bat"
 			"show_in_armory"			"1"
 
 			"item_name_color"           "190 200 233 255"
@@ -1812,6 +1834,7 @@ Weapon from: New Old Weapons Pack"
 			"item_description"			"
 You Peppino'd your last Spaghetti: Swing your melee to charge forward to deal impact damage!
 No manual boost.
+No aura.
 
 Now which one of your simpletons put pineapples on my pizza!?!
 
@@ -1857,22 +1880,27 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"2.75"
+					"value"				"2.5"
 				}
 				"max health additive penalty"											
 				{
 					"attribute_class"	"add_maxhealth"
-					"value"				"-25"
+					"value"				"-50"
 				}
 				"move speed penalty"											
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.6"
+					"value"				"0.7"
 				}
 				"decrease player capture value"
 				{
 					"attribute_class"		"add_player_capturevalue"
 					"value" 				"-3"
+				}
+				"cannot pick up intelligence"
+				{
+					"attribute_class"		"cannot_pick_up_intelligence"
+					"value"					"1"
 				}
 				"crit mod disabled"
 				{
@@ -1883,6 +1911,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_shield_bash_damage"
 					"value"				"0.8"				
+				}	
+                "civ boost aura override"
+				{
+					"attribute_class"	"add_civ_aura_override"
+					"value"				"-1"				
 				}				
 			}
 			"visuals"
@@ -2147,12 +2180,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"2.5"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.8"
+					"value"				"2.7"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -2163,6 +2191,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"2.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"0.85"
 				}
                 "Reload time no anim speed mod"
                 {
@@ -2184,6 +2217,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"add_maxhealth"
 					"value"				"25"
 				}	
+				"custom rampup"
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.2"
+				}
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_falloff"
@@ -2803,7 +2841,12 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_custom_falloff"
 					"value"				"0.5"
-				}			
+				}
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"sniper_full_charge_damage_bonus"
+					"value"				"1.764705882352941"
+				}				
 			}
 			"visuals"
 			{
@@ -8393,7 +8436,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"name"						"TF_WEAPON_JETPACK_PYRO"								// This weapon was largely inspired by OCSonic & Azzy, creators / co-creators of the TF2 Un-Classic pack - which includes some funky techniques!
 			"item_class"				"tf_weapon_grenade_mirv"								// Un-Classic includes an interesting take on the Thermal Thruster - it inspired me to try to make a similar variant with some recent attribute magic I learned!
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"secondary"
 			"anim_slot"					"melee"
 			"equip_region"				"back"
@@ -10490,7 +10533,7 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_MACHINEGUN762"
 			"prefab"					"weapon_minigun"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_name_color"           "190 200 233 255"
 
@@ -15407,7 +15450,12 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_deploy_time"
 					"value"				"1.2"
-				}	
+				}
+                "mult dmg crit multiplier"
+				{
+					"attribute_class"	"mult_dmg_crit_multiplier"
+					"value"				"0.66666666666666667"
+				}				
 			}
 			"visuals"																		
 			{
@@ -17440,7 +17488,7 @@ Item by: 'Majro'"
 				"fire rate penalty"				//Imagine Civ being able to spam as hard as Pyro, bleh.
 				{
 					"attribute_class"	"mult_airblast_refire_time"
-					"value"				"2"
+					"value"				"1.75"
 				}
 				
 				"hidden separator"
@@ -18031,7 +18079,7 @@ Edited by: 'Reagy'"
 			"prefab"                    "weapon_umbrella"
 			"item_class"                "tf_weapon_fists"
 			"item_type_name"			"#TF_Weapon_Fists"
-			"show_in_armory"            "1"
+			"show_in_armory"            "0"
 			"item_description"			"
 Utility weapon: Cannot give minicrit boosts
 Deals 'normal' melee damage
@@ -18399,7 +18447,7 @@ Weapon by: 'Reagy'"
 		{
 		    "name"						"TF_WEAPON_HEAVY_BALLISTA"
 			"prefab"					"weapon_aagun"											
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 
 			"propername"				"0"
 			"item_name_color"           "190 200 233 255"
@@ -19995,7 +20043,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.23"
+					"value"				"1.15"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -20030,7 +20078,7 @@ Weapon by: 'The One Of Wonders'"
 				"max health additive penalty"											
 				{
 					"attribute_class"	"add_maxhealth"
-					"value"				"-50"
+					"value"				"-25"
 				}
 				"health drain"
 				{
@@ -20093,7 +20141,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 		    "name"						"TF_WEAPON_MINIGUN_POKERNIGHT"
 			"prefab"					"weapon_minigun"
-			"show_in_armory"			"1"	
+			"show_in_armory"			"0"	
 			
 			"item_quality"				"rarity1"
 		
@@ -22889,7 +22937,7 @@ Weapon by: 'Reagy'"
 		{
 			"name"						"TF_WEAPON_FLAKCANNON"							
 			"prefab"					"weapon_minigun"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"item_name_color"           "190 200 233 255"
 
@@ -23860,7 +23908,7 @@ Weapon by: 'The One Of Wonders'"
 			    "deploy time decreased"
 				{
 					"attribute_class"	"mult_deploy_time"
-					"value"				"0.67"
+					"value"				"0.7"
 				}	
 				"Airblast Size Multiplier"
 				{
@@ -23870,22 +23918,22 @@ Weapon by: 'The One Of Wonders'"
 				"bleeding duration"												
 				{
 					"attribute_class"	"bleeding_duration"
-					"value"				"3"
+					"value"				"2"
 				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.45"
+					"value" 			"0.33"
 				}
 				"weapon burn time reduced"
 				{
 					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.5"
+					"value"				"0.3"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"1.35"
+					"value"				"1.30"
 				}
                 "crit mod disabled"
 				{
@@ -25117,6 +25165,26 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "Haste killer"
+				{
+					"attribute_class"	"dummy"							
+					"value" 			"3"
+				}
+				"add condition on kill"
+				{
+					"attribute_class"	"add_onkill_addcond_self"							
+					"value" 			"121 3"
+				}
+				"add ammo on kill"
+				{
+					"attribute_class"	"add_ammo_on_kill"
+					"value" 			"20"
+				}
+				"instant reload on kill"
+				{
+					"attribute_class"	"instant_reload_on_kill"
+					"value" 			"20"
+				}
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
@@ -25125,32 +25193,37 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"18.3333333333"
+					"value"				"13.333333333"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.0666666666"
+					"value" 			"0.06"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value" 			"18.3333333333"
+					"value" 			"10.0"
 				}
 				"Reload time no anim speed mod"
                 {
                     "attribute_class"    "mult_reload_time_noanimmod"
-                    "value"               "2.25"
+                    "value"              "2.25"
                 }
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.04"
+					"value"				"0.08"
 				}
 				"strange restriction type 1"
 				{
 					"attribute_class"	"unimplemented_mod_sniper_no_charge" // No aiming with a machine gun, maggot!
 					"value"				"1"														
+				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value"				"-100"
 				}
 				"crit mod disabled"
 				{
@@ -26070,7 +26143,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 		    "name"						"TF_WEAPON_MINIGUN_UNUSUAL"
 			"prefab"					"weapon_minigun"
-			"show_in_armory"			"1"	
+			"show_in_armory"			"0"	
 			
 			"item_name_color"           "255 140 0 255"
 			
@@ -30341,25 +30414,30 @@ Weapon by: 'The One Of Wonders' 'Reagy'"
 			}
 			"static_attrs"
 			{																		
-				"override projectile type"				 "32"
 				"mod max primary clip override"			"-1"
+				"override projectile type"              "32"
 			}
 			"attributes"
 			{
-			    "Oppressive Force"																
+			    "tranq on hit"
 				{
-					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"1"
+					"attribute_class"	"mod_tranq_onhit"
+					"value"				"3.0"
 				}
 				"return metal on sentry kill"														
 				{
 					"attribute_class"	"metal_on_sentry_kill"
 					"value"				"10"
 				}
-			    "add condition on hit"															
+				"Targets Outlined on Hit"																
 				{
-					"attribute_class"	"add_onhit_addcond_weapon"
-					"value"				"128 3.0"
+					"attribute_class"	"outline_on_hit"
+					"value"				"5"
+				}
+				"deploy time decreased"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"0.67"
 				}
                 "maxammo primary increased"
 				{
@@ -30398,7 +30476,7 @@ Weapon by: 'The One Of Wonders' 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value" 			"1.33"
+					"value" 			"1.5"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -30408,7 +30486,7 @@ Weapon by: 'The One Of Wonders' 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"1.5"
+					"value" 			"0.001"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -30424,12 +30502,18 @@ Weapon by: 'The One Of Wonders' 'Reagy'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value" 			"0"
+				}	
+                 "strange restriction type 1"
+				{
+					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
 				}				
 			}
 			"visuals"
 			{
 				"muzzle_flash"			"ExplosionCore_sapperdestroyed"	
 				"trail_effect"			"critgun_weaponmodel_ylw"
+				"tracer_effect"         "railgun_tracer01"
 				"sound_single_shot"		"Weapon_SpyHunter.Shoot"							
 				"sound_burst"			"Weapon_SpyHunter.ShootCrit"
 			}
@@ -32196,7 +32280,7 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"set_burstfire"
-					"value"				"20"
+					"value"				"8"
 				}
 				"Bone Buster Negative"
 				{
@@ -32206,7 +32290,7 @@ Weapon by: 'The One Of Wonders'"
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"2.0"
+					"value"				"1.5"
 				}
 				"health from packs decreased"													
 				{
@@ -34363,7 +34447,7 @@ Repurposed by: 'Majro'"
 		{
 			"name"						"TF_WEAPON_CLEAN_SWEEP"
 			"prefab"					"weapon_fireaxe"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"melee"
 			"item_name_color"           "190 200 233 255"
 
@@ -36096,12 +36180,12 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"												
 				{
 					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"1.33"
+					"value"				"1.2"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_deploy_time"
-					"value"				"1.33"
+					"value"				"1.2"
 				}
 				"dmg taken increased"
 				{
@@ -39056,7 +39140,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_SPY_DYNAMITE"
 			"item_class"				"tf_weapon_grenade_mirv"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			
 			"item_slot"					"primary"
 			"anim_slot"					"building"
@@ -39508,7 +39592,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 			"name"						"TF_WEAPON_AUTOCANNON_BURST"
 			"prefab"					"weapon_aagun"											
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 
 			"propername"				"0"
 			"item_name_color"           "190 200 233 255"
