@@ -1826,13 +1826,14 @@ Weapon from: New Old Weapons Pack"
 		{
 			"name"						"TF_WEAPON_FRYING_PAN"
 			"prefab"					"weapon_umbrella"
+			"item_class"                "tf_weapon_bat"
 			"show_in_armory"			"1"
 
 			"item_name_color"           "190 200 233 255"
 			"item_name"					"Chef Jenkins"
 			"item_type_name"			"Special Equipment"
 			"item_description"			"
-You Peppino'd your last Spaghetti: Swing your melee to charge forward to deal impact damage!
+You Peppino'd your last Spaghetti: Swing your melee to launch yourself forward!
 No manual boost.
 
 Now which one of your simpletons put pineapples on my pizza!?!
@@ -1856,40 +1857,51 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "heal on kill"													
+		
+				"Charge on Kill"
 				{
-					"attribute_class"	"heal_on_kill"
-					"value"				"50"
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1" 
+				}
+				"apply self knockback on swing"														
+				{
+					"attribute_class"	"apply_self_knockback_swing"
+					"value" 			"-200"
+				}
+				"add condition on kill"													
+				{
+					"attribute_class"	"add_onkill_addcond_self"
+					"value"				"17 3"
 				}
 				"mod rage on hit bonus"															// Display-only joke! Same deal as Scout and Engi.
 				{
 					"attribute_class"	"strange_restriction_type_1"
 					"value"				"100"
 				}
+				"Move Speed Bonus Active"															
+				{
+					"attribute_class"	"mult_player_movespeed_active"
+					"value" 			"1.33"
+				}
 				"add condition on swing"													
 				{
 					"attribute_class"	"add_onswing_addcond"
-					"value"				"17 2"
+					"value"				"121 3"
 				}
-				"weapon_stattrak_module_scale"															
+				"add condition on swing"													
 				{
-					"attribute_class"	"mult_dmg"
-					"value"				"1.15"
+					"attribute_class"	"add_onhit_addcond_self_weapon"
+					"value"				"112 1"
 				}
 				"weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"2.5"
+					"value"				"3.0"
 				}
 				"max health additive penalty"											
 				{
 					"attribute_class"	"add_maxhealth"
 					"value"				"-50"
-				}
-				"move speed penalty"											
-				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"0.7"
 				}
 				"decrease player capture value"
 				{
@@ -1909,15 +1921,15 @@ Weapon by: 'The One Of Wonders'"
                 "mult shield bash damage"
 				{
 					"attribute_class"	"mult_shield_bash_damage"
-					"value"				"0.8"				
+					"value"				"0.7"				
 				}					
 			}
 			"visuals"
 			{
-				"sound_melee_miss"		"CivCharge.Charging"
+				"sound_melee_miss"		"Weapon_Bat.Miss"
 				"sound_melee_hit"		"FryingPan.HitFlesh"
 				"sound_melee_hit_world"	"FryingPan.HitWorld"
-				"sound_burst"			"CivCharge.Charging"
+				"sound_burst"			"Weapon_Bat.Miss"
 				"animation_replacement"
 				{
 					"ACT_MP_ATTACK_STAND_SECONDARYFIRE"			"ACT_MP_GESTURE_VC_FINGERPOINT_MELEE"
@@ -2794,7 +2806,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.1333333333333333333"
+					"value" 			"0.1"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -2816,10 +2828,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"punch_angle_is_constant"
 					"value" 			"1"
 				}
-			    "weapon_stattrak_module_scale"
+				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"headshot_damage_modify"
-					"value"				"0.85"
+					"value"				"1.66666666666666"
 				}
                 "strange restriction type 2"
 				{
@@ -2836,17 +2848,22 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_custom_falloff"
 					"value"				"0.5"
 				}
+				"mod sniper crit after zoom time"
+				{
+					"attribute_class"	"mod_sniper_crit_after_zoom_time"
+					"value"				"1"
+				}	
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"sniper_full_charge_damage_bonus"
-					"value"				"1.764705882352941"
+					"value"				"1.2"
 				}				
 			}
 			"visuals"
 			{
 				"sound_single_shot"		"Weapon_VintorezSR.Shoot"
 				"sound_burst"			"Weapon_VintorezSR.ShootCrit"
-				"tracer_effect"			"bullet_pistol_tracer01"
+				"tracer_effect"			"tracer_sniper_rifle_PARENT"
 			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 		    "drop_sound"				"#ui/item_light_gun_drop.wav"
@@ -6309,6 +6326,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg"
 					"value"				"1.33333333"
 				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"DMMY"
+					"value"				"0.9"
+				}
 				"Danger Close n' Far"
 				{
 					"attribute_class"	"DMMY"
@@ -6319,11 +6341,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_bullets_per_shot"
 					"value"				"0.6"
 				}
-				"spread penalty"
-				{
-					"attribute_class"	"display_dummy"
-					"value"				"1.5"
-				}
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
@@ -6332,7 +6349,7 @@ Weapon by: 'The One Of Wonders'"
 				"maxammo secondary reduced"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
-					"value" 			"0.375"
+					"value" 			"0.75"
 				}
 				"crit mod disabled"
 				{
@@ -6367,7 +6384,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.125"
+					"value"				"0.765"
 				}
 			}
 			"visuals"
@@ -12376,11 +12393,11 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"provide_on_active"
 					"value" 			"1"
 				}
-				"dmg taken from burning target reduced on active"
+				"Fresh for Frying"
 				{
-					"attribute_class"	"mult_dmgtaken_from_burning_target_active"
-					"value" 			"0.9"
-				}
+                    "attribute_class"      "display_only"
+                    "value"                "1"
+                }
 				"Bazooka Payload"
 				{
                     "attribute_class"      "display_only"
@@ -12401,15 +12418,20 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mult_wpn_burntime"
 					"value"				"0.5"
 				}
-				"damage penalty"
+				"Dmg V Burning Display Penalty"
 				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.8"
+					"attribute_class"	"mult_dmg_vs_burning"
+					"value" 			"0.65"
 				}
 				"flame ammopersec increased"
 				{
 					"attribute_class"	"mult_flame_ammopersec"
-					"value" 			"6.0"
+					"value" 			"4.0"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"1.2"
 				}
 				"crit mod disabled"
 				{
@@ -25172,17 +25194,17 @@ Weapon by: 'The One Of Wonders'"
 				"add ammo on kill"
 				{
 					"attribute_class"	"add_ammo_on_kill"
-					"value" 			"20"
+					"value" 			"4"
 				}
 				"instant reload on kill"
 				{
 					"attribute_class"	"instant_reload_on_kill"
-					"value" 			"20"
+					"value" 			"4"
 				}
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.24"
+					"value" 			"0.2666666666666667"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -25207,7 +25229,7 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.08"
+					"value"				"0.055"
 				}
 				"strange restriction type 1"
 				{
@@ -41916,6 +41938,14 @@ Weapon by: 'The One Of Wonders'"
 			"name"					"sentry hit chance when shield charging text"
 			"description_string"	"%s1% chance to dodge sentry gun bullets while charging"
 			"description_format"	"value_is_inverted_percentage"
+			"hidden"				"0"
+			"effect_type"			"positive"
+		}
+		"7674"
+		{
+			"name"					"Fresh for Frying"
+			"description_string"	"Fresh for Frying: 20% Bonus damage against enemies that aren't on fire or can't be set on fire"
+			"description_format"	"value_is_additive"
 			"hidden"				"0"
 			"effect_type"			"positive"
 		}
