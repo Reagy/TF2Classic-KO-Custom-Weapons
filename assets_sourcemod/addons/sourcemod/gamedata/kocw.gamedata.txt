@@ -215,7 +215,7 @@
 			//pointer to player contained in CTFPlayerShared
 			"CTFPlayerShared::m_pOuter" //changed
 			{
-				"linux"		"1360"
+				"linux"		"1368"
 			}
             
             "CTFGameRules::GetCaptureValueForPlayer" //good
