@@ -23347,7 +23347,7 @@ Weapon from: Renaissance Revival"
 			"bucket_position"           "0"
 			"item_quality"              "rarity3"
 			"item_logname"				"Whiff of Olde Brimstone"
-			"item_iconname"				"pumpkindeath"
+			"item_iconname"				"Whiff O Brimstone"
 			"image_inventory"			"backpack/weapons/w_grenade_bombs_demoman/bombs"
 			
 			"model_world"				"models/weapons/w_models/w_grenade_cannonball_demoman/w_grenade_cannonball.mdl"
