@@ -225,7 +225,7 @@
 			//pointer to player contained in CTFPlayerShared
 			"CTFPlayerShared::m_pOuter"
 			{
-				"linux"		"1360"
+				"linux"		"1368"
 			}
 			"CTFPlayerShared::m_vecHealers"
 			{
