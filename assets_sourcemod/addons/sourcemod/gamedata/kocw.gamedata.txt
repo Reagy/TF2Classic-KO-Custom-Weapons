@@ -933,6 +933,14 @@
 				"this"			"entity"
 			}
 			
+			"CTFWeaponBonesaw::UpdateChargeLevel"
+			{
+				"signature"		"CTFWeaponBonesaw::UpdateChargeLevel"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+			}
+			
             //projectiles
             
 			"CTFBaseRocket::Spawn"
@@ -1290,6 +1298,12 @@
 				"linux"		"@_ZN16CTFWeaponBaseGun25GetProjectileReflectSetupEP9CTFPlayerRK6VectorRS2_bb"
 			}
             
+			"CTFWeaponBonesaw::UpdateChargeLevel"
+			{
+				"library"	"server"
+				"linux"		"@_ZN10CTFBonesaw17UpdateChargeLevelEv"
+			}
+			
 			"CTFWrench::OnFriendlyBuildingHit"
 			{
 				"library"	"server"
