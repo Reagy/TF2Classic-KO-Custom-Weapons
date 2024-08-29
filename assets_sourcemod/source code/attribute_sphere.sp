@@ -73,9 +73,9 @@ static char szSoundNames[][] = {
 };
 
 public void OnPluginStart() {
-	HookEvent( EVENT_POSTINVENTORY,	Event_PostInventory );
+	HookEvent( "post_inventory_application", Event_PostInventory );
 
-	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
+	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
 	hSimpleTrace = DynamicDetourFromConfSafe( hGameConf, "CTraceFilterSimple::ShouldHitEntity" );
 	hSimpleTrace.Enable( Hook_Post, Detour_ShouldHitEntitySimple );
