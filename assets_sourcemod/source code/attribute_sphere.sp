@@ -43,13 +43,8 @@ static char g_szShieldKeyName[32] = "Shield";
 #define SHIELD_DAMAGE_TO_CHARGE_SCALE 1.0
 //multiplier for shield energy to be lost when it is damaged
 #define SHIELD_DAMAGE_DRAIN_SCALE 1.0
-<<<<<<< Updated upstream
-//time to fully build a charge passively
-#define SHIELD_REGEN_PASSIVE 120.0
-//distance to project shield
+
 #define SHIELD_DISTANCE 180.0
-=======
->>>>>>> Stashed changes
 
 static char szShieldMats[][] = {
 	"models/effects/resist_shield/resist_shield",
@@ -176,17 +171,7 @@ public void OnGameFrame() {
 		if( !IsClientInGame( i ) )
 			continue;
 
-<<<<<<< Updated upstream
 		float flValue = Tracker_GetValue( i, g_szShieldKeyName );
-		if( EntRefToEntIndex( g_iSphereShields[ i ] ) == -1 ) {
-			flValue += ( SHIELD_MAX / ( SHIELD_REGEN_PASSIVE / GetGameFrameTime() ) );
-			flValue = MinFloat( SHIELD_MAX, flValue );
-			Tracker_SetValue( i, g_szShieldKeyName, flValue );
-		}
-
-=======
-		float flValue = Tracker_GetValue( i, SHIELDKEYNAME );
->>>>>>> Stashed changes
 		if( !IsPlayerAlive( i ) || !g_HasSphere.Get( i ) || flValue <= 0.0 ) {
 			RemoveShield( i );
 			continue;
