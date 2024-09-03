@@ -8,6 +8,8 @@
 #include <kocwtools>
 #include <sourcescramble>
 
+DynamicHook g_dhWantsLagCompensation;
+
 //inventory
 Handle g_sdkApplyAttributeFloat;
 Handle g_sdkIterateAttributes;
@@ -63,7 +65,7 @@ public Plugin myinfo =
 	name = "KOCW Tools",
 	author = "Noclue",
 	description = "Standard functions for custom weapons.",
-	version = "1.7",
+	version = "1.8",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -105,6 +107,7 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 	CreateNative( "AddPlayerHealerTimed", Native_AddPlayerHealerTimed );
 	CreateNative( "RemovePlayerHealer", Native_RemovePlayerHealer );
 
+	CreateNative( "SetForceLagCompensation", Native_SetForceLagComp );
 	CreateNative( "StartLagCompensation", Native_StartLagComp );
 	CreateNative( "FinishLagCompensation", Native_EndLagComp );
 
@@ -240,6 +243,8 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByValue );
 	g_sdkApplyPushFromDamage = EndPrepSDKCallSafe( "CTFPlayer::ApplyPushFromDamage" );
 
+	g_dhWantsLagCompensation = DynamicHookFromConfSafe( hGameConf, "CTFPlayer::WantsLagCompensationOnEntity" );
+
 	if( bLateLoad ) {
 		for(int i = 1; i <= MaxClients; i++) {
 			if( IsValidEntity( i ) && IsClientInGame( i ) ) {
@@ -347,6 +352,8 @@ void DoPlayerHooks( int iPlayer ) {
 	g_dhOnTakeDamage.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamagePost );
 	g_dhOnTakeDamageAlive.HookEntity( Hook_Pre, iPlayer, Hook_OnTakeDamageAlivePre );
 	g_dhOnTakeDamageAlive.HookEntity( Hook_Post, iPlayer, Hook_OnTakeDamageAlivePost );
+
+	g_dhWantsLagCompensation.HookEntity( Hook_Pre, iPlayer, Hook_ForceLagCompForPlayer );
 }
 
 public void OnEntityCreated( int iEntity ) {
@@ -378,6 +385,8 @@ public any Native_EntityInRadius( Handle hPlugin, int iParams ) {
 in the class's constructor and lagcomp is ended in the class's destructor so lagcomp would always clean itself up
 when the class went out of scope. just going to allocate some memory and instantiate one because i can't be bothered to
 figure out why this isn't working*/
+bool g_bForceLagComp = false;
+
 MemoryBlock mbFuckThis;
 public any Native_StartLagComp( Handle hPlugin, int iParams ) {
 	int iPlayer = GetNativeCell( 1 );
@@ -385,12 +394,27 @@ public any Native_StartLagComp( Handle hPlugin, int iParams ) {
 		return 0;
 
 	Address aUserCmd = LoadFromEntity( iPlayer, view_as<int>( offs_CTFPlayer_pCurrentCommand ) );
-
 	mbFuckThis = new MemoryBlock( 3 );
+
 	SDKCall( g_sdkCreateLagCompensation, mbFuckThis.Address, iPlayer, aUserCmd, true );
 
 	return 0;
 }
+
+public any Native_SetForceLagComp( Handle hPlugin, int iParams ) {
+	g_bForceLagComp = GetNativeCell( 1 );
+	return 0;
+}
+
+MRESReturn Hook_ForceLagCompForPlayer( int iPlayer, DHookReturn hReturn, DHookParam hParams ) {
+	if( !g_bForceLagComp )
+		return MRES_Ignored;
+
+	hReturn.Value = true;
+	return MRES_Supercede;
+}
+
+
 public any Native_EndLagComp( Handle hPlugin, int iParams ) {
 	int iPlayer = GetNativeCell( 1 );
 	if( !IsValidPlayer( iPlayer ) )

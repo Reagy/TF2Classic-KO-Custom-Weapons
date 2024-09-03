@@ -42,6 +42,23 @@
 					"offset"		"0x6A"
 				}
 			}
+			
+			"CTFPaintballRifle::TertiaryAttack_StartLagCompensation"
+			{
+				"linux"
+				{
+					"signature"			"CTFPaintballRifle::TertiaryAttack"
+					"offset"			"0x282"
+				}
+			}
+			"CTFPaintballRifle::TertiaryAttack_EndLagCompensation"
+			{
+				"linux"
+				{
+					"signature"			"CTFPaintballRifle::TertiaryAttack"
+					"offset"			"0x244"
+				}
+			}
 		}
         "Offsets"
         {
@@ -193,6 +210,11 @@
 			"CTFPlayer::SetAnimation"
 			{
 				"linux"		"369"
+			}
+			
+			"CTFPlayer::WantsLagCompensationOnEntity"
+			{
+				"linux"		"327"
 			}
 		
 			"CTFPlayer::TakeHealth"
@@ -561,6 +583,29 @@
 				}
 				
 			}
+			"CTFPlayer::WantsLagCompensationOnEntity"
+			{
+				"offset"		"CTFPlayer::WantsLagCompensationOnEntity"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"cbaseentity"
+					}
+					"dontcare"
+					{
+						"type"	"objectptr"
+					}
+					"dontcare2"
+					{
+						"type"	"objectptr"
+					}
+				}
+			}
 			"CTFPlayer::DropFlag"
 			{
 				"signature"		"CTFPlayer::DropFlag"
@@ -665,6 +710,33 @@
 					{
 						"type"	"bool"
 					}
+				}
+			}
+			"CTFPlayerShared::AddBurstHealer"
+			{
+				"signature"		"CTFPlayerShared::AddBurstHealer"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"address"
+				"arguments"
+				{
+					"source"
+					{
+						"type"	"cbaseentity"
+					}
+					"amount"
+					{
+						"type"	"float"
+					}
+					"dontcare"
+					{
+						"type"	"int"
+					}
+					"dontcare2"
+					{
+						"type"	"int"
+					}
+
 				}
 			}
             
@@ -933,12 +1005,19 @@
 				"this"			"entity"
 			}
 			
-			"CTFWeaponBonesaw::UpdateChargeLevel"
+			"CTFPaintballRifle::HitAlly"
 			{
-				"signature"		"CTFWeaponBonesaw::UpdateChargeLevel"
+				"signature"		"CTFPaintballRifle::HitAlly"
 				"callconv"		"thiscall"
 				"return"		"void"
 				"this"			"entity"
+				"arguments"
+				{
+					"target"
+					{
+						"type"	"cbaseentity"
+					}
+				}
 			}
 			
             //projectiles
@@ -1249,7 +1328,13 @@
 				"library"	"server"
 				"linux"		"@_ZN15CTFPlayerShared11StopHealingEP9CTFPlayer10HealerType"
 			}
+			"CTFPlayerShared::AddBurstHealer"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFPlayerShared14AddBurstHealerEP9CTFPlayerf7ETFCondf"
+			}
 			
+				
 			"CTFGameMovement::CheckJumpButton"
 			{
 				"linux"		"@_ZN15CTFGameMovement15CheckJumpButtonEv"
@@ -1284,6 +1369,17 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTFWeaponBase20ApplyOnHitAttributesEP11CBaseEntityS1_RK15CTakeDamageInfo"
+			}
+			
+			"CTFPaintballRifle::HitAlly"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CTFPaintballRifle7HitAllyEP11CBaseEntity"
+			}
+			"CTFPaintballRifle::TertiaryAttack"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CTFPaintballRifle14TertiaryAttackEv"
 			}
 			
 			"CTFWeaponBase::CalcAttackIsCritical"

@@ -26,6 +26,7 @@ native void	SetSolidFlags( int iEntity, int iFlags );
 native void	SetCollisionGroup( int iEntity, int iGroup );
 native void	SetSize( int iEntity, const float vecSizeMin[3], const float vecSizeMax[3] );
 
+native void	SetForceLagCompensation( bool bForce );
 native void	StartLagCompensation( int iPlayer );
 native void	FinishLagCompensation( int iPlayer );
 

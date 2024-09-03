@@ -93,8 +93,8 @@ void ResetActiveMapList() {
 	g_alActiveMapList.Clear();
 	
 	static char szBuffer[PLATFORM_MAX_PATH];
-	static char szPrefixBuffer[16];
-	static char szLastPrefix[16];
+	static char szPrefixBuffer[64];
+	static char szLastPrefix[64];
 	int iTries = 0;
 	while( g_alTempList.Length > 0 ) {
 		int iIndex = GetRandomInt( 0, g_alTempList.Length - 1 );
@@ -102,9 +102,14 @@ void ResetActiveMapList() {
 
 		//try again if the prefix is the same as the last map, as long as there are more maps to check
 		GetMapPrefix( szBuffer, szPrefixBuffer, sizeof( szPrefixBuffer ) );
-		if( iTries < g_alTempList.Length && strcmp( szPrefixBuffer, szLastPrefix ) == 0 ) {
-			iTries++;
-			continue;
+		if( strcmp( szPrefixBuffer, szLastPrefix ) == 0 ) {
+			if( iTries < g_alTempList.Length ) {
+				iTries++;
+				continue;
+			} else { //if we run out of options just give up
+				PrintToServer( "breaking" );
+				break;
+			}
 		}
 
 		g_alTempList.Erase( iIndex );

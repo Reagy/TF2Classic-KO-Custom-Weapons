@@ -8,6 +8,7 @@
 #include <kocwtools>
 #include <condhandler>
 #include <hudframework>
+#include <midhook>
 
 #define MP_CONCEPT_MEDIC_CHARGEREADY 36
 #define MP_CONCEPT_MEDIC_CHARGEDEPLOYED 38
@@ -35,6 +36,14 @@ static char g_szHydropumpDropChargeParticles[][] = {
 	"mediflame_charged_death_yellow"
 };
 
+static char g_szPaintballHitSound[] = "weapons/Paintball_Hit.wav";
+static char g_szPaintballHealEffect[][] = {
+	"paintball_hit_red",
+	"paintball_hit_blue",
+	"paintball_hit_green",
+	"paintball_hit_yellow"
+};
+
 #define FLAMETHROWER_FIRING_INTERVAL 0.04
 
 //guardian angel
@@ -46,12 +55,16 @@ static char g_szAngelShieldChargedSound[] = "weapons/healing/medigun_overheal_ma
 DynamicDetour	g_dtFireCollide;
 DynamicDetour	g_dtFireCollideTeam;
 DynamicDetour	g_dtApplyOnHitAttributes;
-//DynamicDetour	g_dtUpdateChargeLevel;
+DynamicDetour	g_dtPaintballRifleHitAlly;
+DynamicDetour	g_dtAddBurstHealer;
 
 DynamicHook	g_dhWeaponPostframe;
+DynamicHook	g_dhWeaponPrimary;
 DynamicHook	g_dhWeaponSecondary;
 DynamicHook	g_dhWeaponHolster;
 DynamicHook	g_dhWeaponDeploy;
+
+MidHook		g_mhPaintballUberFix;
 
 Handle		g_sdkAddFlameTouchList;
 Handle		g_sdkGetBuffedMaxHealth;
@@ -99,7 +112,7 @@ public Plugin myinfo =
 	name = "Attribute: Mediguns",
 	author = "Noclue",
 	description = "Atributes for Mediguns.",
-	version = "1.4",
+	version = "1.5",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -173,6 +186,9 @@ public void OnPluginStart() {
 	g_dtApplyOnHitAttributes = DynamicDetourFromConfSafe( hGameConf, "CTFWeaponBase::ApplyOnHitAttributes" );
 	g_dtApplyOnHitAttributes.Enable( Hook_Post, Detour_ApplyOnHitAttributes );
 
+	g_dtPaintballRifleHitAlly = DynamicDetourFromConfSafe( hGameConf, "CTFPaintballRifle::HitAlly" );
+	g_dtPaintballRifleHitAlly.Enable( Hook_Post, Detour_PaintballRifleHitAlly );
+
 	g_iRefEHandleOffset = GameConfGetOffsetSafe( hGameConf, "CBaseEntity::m_RefEHandle" );
 	//g_iHealerVecOffset = GameConfGetOffsetSafe( hGameConf, "CTFPlayerShared::m_vecHealers" );
 	g_iFlameBurnedVectorOffset = GameConfGetOffsetSafe( hGameConf, "CTFFlameEntity::m_hEntitiesBurnt" );
@@ -181,13 +197,17 @@ public void OnPluginStart() {
 	g_pCTFGameRules = GameConfGetAddress( hGameConf, "CTFGameRules" );
 	g_iSetupOffset = FindSendPropInfo( "CTFGameRulesProxy", "m_bInSetup" );
 
+	g_dhWeaponPrimary = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::PrimaryAttack" );
 	g_dhWeaponSecondary = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::SecondaryAttack" );
 	g_dhWeaponDeploy = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Deploy" );
 	g_dhWeaponHolster = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Holster" );
 	g_dhWeaponPostframe = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::ItemPostFrame" );
 
-	//g_dtUpdateChargeLevel = DynamicDetourFromConfSafe( hGameConf, "CTFWeaponBonesaw::UpdateChargeLevel" );
-	//g_dtUpdateChargeLevel.Enable( Hook_Pre, Detour_UpdateChargeLevel );
+	g_mhPaintballUberFix = new MidHook( GameConfGetAddress( hGameConf, "CTFPaintballRifle::TertiaryAttack_StartLagCompensation" ), MidHook_PaintballRifleUber, false );
+	g_mhPaintballUberFix.Enable();
+	
+	g_dtAddBurstHealer = DynamicDetourFromConfSafe( hGameConf, "CTFPlayerShared::AddBurstHealer" );
+	g_dtAddBurstHealer.Enable( Hook_Pre, Detour_AddBurstHealer );
 
 	delete hGameConf;
 
@@ -199,6 +219,10 @@ public void OnPluginStart() {
 		iIndex = MaxClients + 1;
 		while( ( iIndex = FindEntityByClassname( iIndex, "tf_weapon_flamethrower" ) ) != -1 ) {
 			Frame_SetupFlamethrower( iIndex );
+		}
+		iIndex = MaxClients + 1;
+		while( ( iIndex = FindEntityByClassname( iIndex, "tf_weapon_paintballrifle" ) ) != -1 ) {
+			Frame_SetupPaintball( iIndex );
 		}
 	}
 }
@@ -215,6 +239,8 @@ public void OnMapStart() {
 	PrecacheSound( g_szHydropumpHealSound );
 	PrecacheSound( g_szHydropumpChargedSound );
 	PrecacheSound( g_szHydropumpDropChargeSound );
+
+	PrecacheSound( g_szPaintballHitSound );
 
 	for( int i = 0; i < 4; i++ ) {
 		PrecacheParticleSystem( g_szHydropumpDropChargeParticles[i] );
@@ -293,6 +319,8 @@ public void OnEntityCreated( int iThis, const char[] szClassname ) {
 		RequestFrame( Frame_SetupMedigun, EntIndexToEntRef( iThis ) );
 	else if( strcmp( szClassname, "tf_weapon_flamethrower", false ) == 0 )
 		RequestFrame( Frame_SetupFlamethrower, EntIndexToEntRef( iThis ) ); //attributes don't seem to be setup yet
+	else if( strcmp( szClassname, "tf_weapon_paintballrifle", false ) == 0 )
+		RequestFrame( Frame_SetupPaintball, EntIndexToEntRef( iThis ) ); //attributes don't seem to be setup yet
 }
 
 Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadcast ) {
@@ -334,6 +362,15 @@ void Frame_SetupFlamethrower( int iFlamethrower ) {
 		g_dhWeaponDeploy.HookEntity( Hook_Pre, iFlamethrower, Hook_HydroPumpDeploy );
 		g_dhWeaponHolster.HookEntity( Hook_Pre, iFlamethrower, Hook_HydroPumpHolster );
 	}
+}
+
+void Frame_SetupPaintball( int iPaintball ) {
+	iPaintball = EntRefToEntIndex( iPaintball );
+	if( iPaintball == -1 )
+		return;
+
+	g_dhWeaponPrimary.HookEntity( Hook_Pre, iPaintball, Hook_PaintballPrimaryAttackPre );
+	g_dhWeaponPrimary.HookEntity( Hook_Post, iPaintball, Hook_PaintballPrimaryAttackPost );
 }
 
 MRESReturn Hook_MedigunHolster( int iMedigun ) {
@@ -735,6 +772,158 @@ Action Event_PlayerDeath( Event hEvent, const char[] szName, bool bDontBroadcast
 	}
 
 	return Plugin_Continue;
+}
+
+//allow paintball rifle uber with m2 when scope is unavailable
+public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3], float angles[3], int& weapon, int& subtype, int& cmdnum, int& tickcount, int& seed, int mouse[2]) {
+	if( buttons & IN_ATTACK2 ) {
+		int iWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
+		if( iWeapon == -1 )
+			return Plugin_Continue;
+
+		static char szWeaponName[256];
+		GetEntityClassname( iWeapon, szWeaponName, sizeof( szWeaponName ) );
+		if( StrEqual( szWeaponName, "tf_weapon_paintballrifle" ) && AttribHookFloat( 0.0, client, "unimplemented_mod_sniper_no_charge" ) != 0.0 )
+			buttons = ( buttons | IN_ATTACK3 ) & ~IN_ATTACK2;
+	}
+
+	return Plugin_Continue;
+}
+
+MRESReturn Detour_AddBurstHealer( Address aShared, DHookParam hParams ) {
+	int iPlayer = GetPlayerFromShared( aShared );
+	int iSource = hParams.Get( 1 );
+
+	if( !( IsValidPlayer(iSource) && TF2_GetPlayerClass(iSource) == TFClass_Medic ) )
+		return MRES_Ignored;
+
+	float flRate = hParams.Get( 2 );
+	float flNewRate = AttribHookFloat( flRate, iPlayer, "mult_healing_from_medics" );
+	if( flRate != flNewRate ) {
+		hParams.Set( 2, flNewRate );
+		return MRES_ChangedHandled;
+	}
+
+	return MRES_Ignored;
+}
+
+MRESReturn Hook_PaintballPrimaryAttackPre( int iWeapon, DHookParam hParams ) {
+	SetForceLagCompensation( true );
+	return MRES_Handled;
+}
+MRESReturn Hook_PaintballPrimaryAttackPost( int iWeapon, DHookParam hParams ) {
+	SetForceLagCompensation( false );
+	return MRES_Handled;
+}
+
+MRESReturn Detour_PaintballRifleHitAlly( int iWeapon, DHookParam hParams ) {
+	int iTarget = hParams.Get( 1 );
+	int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwnerEntity" );
+
+	if( !IsValidPlayer( iOwner ) || !IsValidPlayer( iTarget ) )
+		return MRES_Ignored;
+
+	//creating the effect while still in lag compensation seems to cause issues at high ping where the particle detaches from the player
+	DataPack pack = new DataPack();
+	pack.WriteCell( EntIndexToEntRef( iOwner ) );
+	pack.WriteCell( EntIndexToEntRef( iTarget ) );
+	pack.Reset();
+	RequestFrame( Frame_CreatePaintballFx, pack );
+
+	//emit sound to owner from their pov
+	EmitSoundToClient( iOwner, g_szPaintballHitSound, .volume=0.7 );
+
+	//emit sound to everyone else from the receiver
+	int iPlayers[MAXPLAYERS+1];
+	int iSize = 0;
+	for( int i = 1; i <= MaxClients; i++ ) {
+		if( i == iOwner || !IsClientInGame(i) )
+			continue;
+		
+		iPlayers[iSize] = i;
+		iSize++;
+	}
+	EmitSound( iPlayers, iSize, g_szPaintballHitSound, iTarget );
+
+	return MRES_Ignored;
+}
+
+void Frame_CreatePaintballFx( DataPack pack ) {
+	int iOwner = EntRefToEntIndex( pack.ReadCell() );
+	int iTarget = EntRefToEntIndex( pack.ReadCell() );
+	delete pack;
+
+	if( iOwner == -1 || iTarget == -1 )
+		return;
+
+	int iTeam = GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) - 2;
+
+	int iEmitter = CreateEntityByName( "info_particle_system" );
+	DispatchKeyValue( iEmitter, "effect_name", g_szPaintballHealEffect[ iTeam ] );
+
+	float vecCoords[3];
+	GetClientAbsOrigin( iTarget, vecCoords );
+
+	TeleportEntity( iEmitter, vecCoords );
+	ParentModel( iEmitter, iTarget );
+	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iTarget );
+	SetEntPropEnt( iEmitter, Prop_Send, "m_hControlPointEnts", iTarget );
+
+	DispatchSpawn( iEmitter );
+	ActivateEntity( iEmitter );
+	AcceptEntityInput( iEmitter, "Start" );
+
+	CreateTimer( 1.0, Timer_RemovePaintballHealFX, EntRefToEntIndex( iEmitter ), TIMER_FLAG_NO_MAPCHANGE );
+}
+
+Action Timer_RemovePaintballHealFX( Handle hTimer, int iParticle ) {
+	iParticle = EntRefToEntIndex( iParticle );
+	if( iParticle == -1 ) {
+		return Plugin_Stop;
+	}
+
+	RemoveEntity( iParticle );
+	return Plugin_Stop;
+}
+
+public void MidHook_PaintballRifleUber( MidHookRegisters hRegs ) {
+	//probably don't need to null check the this pointer
+	int iThis = GetEntityFromAddress( hRegs.Load( DHookRegister_EBP, 8, NumberType_Int32 ) );
+	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
+	if( !IsValidPlayer( iOwner ) )
+		return;
+
+	SetForceLagCompensation( true );
+	StartLagCompensation( iOwner );
+	SetForceLagCompensation( false );
+
+	float vecEyeAngles[3];
+	float vecShootPos[3];
+	GetClientEyePosition( iOwner, vecShootPos );
+	GetClientEyeAngles( iOwner, vecEyeAngles );
+
+	Handle hTrace = TR_TraceRayFilterEx( vecShootPos, vecEyeAngles, MASK_SHOT, RayType_Infinite, TraceEntityFilterPlayer, iOwner );
+
+	FinishLagCompensation( iOwner );
+
+	int iTarget = TR_GetEntityIndex( hTrace );
+	if( !IsValidPlayer( iTarget ) ) {
+		StoreToAddress( hRegs.Get(DHookRegister_EBP)-32, 0, NumberType_Int32 );
+		return;
+	}
+	StoreToAddress( hRegs.Get(DHookRegister_EBP)-32, GetEntityAddress(iTarget), NumberType_Int32 );
+	CloseHandle( hTrace );
+}
+
+bool TraceEntityFilterPlayer( int iEntity, int iContentsMask, any data )
+{
+	if ( iEntity == data ) return false;
+	if( IsValidPlayer( iEntity ) && TF2_GetClientTeam( data ) != TF2_GetClientTeam( iEntity ) )
+			return false;
+
+	static char sClassname[128];
+	GetEdictClassname( iEntity, sClassname, sizeof(sClassname) );
+	return strcmp( sClassname, "func_respawnroomvisualizer", false ) != 0;
 }
 
 //todo: move to kocwtools
