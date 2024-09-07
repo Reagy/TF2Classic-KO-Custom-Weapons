@@ -1,0 +1,10 @@
+"UnlitGeneric"
+{
+	$basetexture	"effects/wispy_smoke2"
+	$nocull		1
+	$vertexcolor 	1
+	$vertexalpha	1
+	
+	$depthblend 	16
+	$depthblendscale	1
+}

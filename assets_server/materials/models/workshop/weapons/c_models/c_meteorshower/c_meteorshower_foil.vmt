@@ -1,0 +1,106 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\workshop\weapons\c_models\c_meteorshower\c_meteorshower"
+
+	"$bumpmap" "models\workshop\weapons\c_models\c_meteorshower\c_meteorshower_normal"
+
+	"$PhongExponentTexture" "models\workshop\weapons\c_models\c_meteorshower\c_meteorshower_exponent"
+
+
+
+
+	"$phongalbedotint" 1
+
+
+	"$phong" "1"
+//	"$phongexponent" "4"
+//	"$phongboost" "15.5"	
+
+
+
+
+	"$phongexponent" "10"
+	"$phongboost" "45"	
+
+
+
+	"$lightwarptexture"		"models\workshop\weapons\c_models\c_meteorshower\foil_lightwarp"
+	"$phongfresnelranges"	"[1 1 115]"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "10"	
+	"$rimlightboost" "3"
+
+
+
+	"$envmap" "models\workshop\weapons\c_models\c_meteorshower\foil_cubemap"
+
+
+
+	"$envmaptint"		"[0.002 0.00078 0.0003921569]"    // INGAME NEW CUBEMAP
+
+
+
+
+
+
+
+
+
+
+
+//	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+
+
+	"$halflambert" "1"
+
+//	"$basemapalphaphongmask" "1"
+
+
+
+	"360?$color2" "[ 0.5 0.5 0.5 ]"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+
+	"$yellow" "0"
+
+	"Proxies"
+	{
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}

@@ -1,0 +1,19 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/player/items/heavy/0x03f4561f/RetroGun/retrogun"
+	"$detail" "effects/tiledfire/fireLayeredSlowTiled512.vtf"	
+	"$detailscale" "5"
+	"$detailblendfactor" .01
+	"$detailblendmode" 6
+	"$yellow" "0"
+	
+	
+	"$phong" "1"
+	"$phongexponent" "34"
+	"$phongboost" "1"
+	"$phongfresnelranges"	"[.25 1 4]"
+	"$basemapalphaphongmask" "1"
+	"$rimlight" "1"		
+	"$rimlightexponent" "4"				
+	"$rimlightboost" "1.5"
+	

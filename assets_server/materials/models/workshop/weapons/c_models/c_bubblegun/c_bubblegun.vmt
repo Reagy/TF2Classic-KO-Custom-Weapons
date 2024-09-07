@@ -1,0 +1,77 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models/workshop/weapons/c_models/c_bubblegun/c_bubblegun.vtf"
+	"$phongexponenttexture"	"models/workshop/weapons/c_models/c_bubblegun/c_bubblegun_exponent.vtf"
+
+	"$phong" "1"
+	//commented out to use the exponent mask
+	//"$phongexponent" "20"
+	"$phongboost" "100"	
+
+	"$phongexponentfactor"  "30"
+	"$phongalbedotint" "1"
+	
+	"$lightwarptexture" "models/lightwarps/softened_weapon_lightwarp"
+			
+	"$phongfresnelranges"	"[.3 .5 3]"
+	"$halflambert" "1"
+	"$glowcolor" "1"
+
+	"$tempvar" "0"
+
+	"$BASEMAPALPHAPHONGMASK" "1"
+	
+	"$rimlight" "1"						
+	"$rimlightexponent" "1"				
+	"$rimlightboost" "2"
+	"$rimmask" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"$sheenPassEnabled" "1"
+
+	"$sheenmap" 		"cubemaps/cubemap_sheen001"
+	"$sheenmapmask" 		"Effects/AnimatedSheen/animatedsheen0"
+	"$sheenmaptint" 		"[ 1 1 1 ]"
+	"$sheenmapmaskframe" 	"0"
+	"$sheenindex" 		"0"
+
+	"$yellow" "0"
+
+	"Proxies"
+	{
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}

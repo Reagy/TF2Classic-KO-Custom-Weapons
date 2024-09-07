@@ -1,0 +1,76 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"models\workshop\weapons\c_models\c_pyro_armcannon\c_pyro_armcannon"
+
+		//(jarate lightwarp is fully black)
+	"$phong"		"1"
+	"$phongexponent"		"15.000000"
+	"$phongboost" 2.6
+	"$lightwarptexture"		"models/lightwarps/softened_weapon_lightwarp"
+	"$phongfresnelranges"	"[0.7 .5 1]"
+	
+	"$basemapalphaphongmask"		"1"
+	"$basealphaenvmapmask"		"1"
+
+	"$rimlight"		"1"
+	"$rimlightexponent"		"42.000000"
+	"$rimlightboost"		"0.3"
+
+	"$envmap"		"env_cubemap"
+	"$envmaptint"		"[0.04 0.07 0.1]"
+	"$phongtint"		"[0.9 1 1]"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"$sheenPassEnabled" "1"
+
+	"$sheenmap" 		"cubemaps/cubemap_sheen001"
+	"$sheenmapmask" 		"Effects/AnimatedSheen/animatedsheen0"
+	"$sheenmaptint" 		"[ 1 1 1 ]"
+	"$sheenmapmaskframe" 	"0"
+	"$sheenindex" 		"0"
+
+	"$yellow" "0"
+	
+
+	"Proxies"
+	{
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+
+
+}

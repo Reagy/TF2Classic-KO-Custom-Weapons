@@ -1,0 +1,56 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/workshop/player/items/all_class/shotgun/glass"
+
+	"$basemapalphaphongmask"		"0"
+
+	"$nocull" "1"
+
+	"$phong"		"1"
+	"$phongexponent"		"20"
+	"$phongboost"		"1"
+	"$phongfresnelranges"		"[.25 .5 1]"
+	"$rimlight"		"0"
+	"$rimlightexponent"		"4"
+	"$rimlightboost"		"2"
+
+	"$yellow" "0"
+
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	
+	"$selfillum" "0"
+
+	"$translucent" "1"
+	"$additive" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"vm_invis"
+		{
+		}
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$detail"
+			"animatedtextureframenumvar" "$detailframe"
+			"animatedtextureframerate" 30
+		}
+
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
+
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+
+		"Equals"
+		{
+			"srcVar1" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}

@@ -1,0 +1,39 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models\workshop\weapons\c_models\c_engie_crossbow\c_engie_crossbow_screen"
+	"$glowcolor" "1"
+	"$cloakPassEnabled" "1"
+	"$txScale" "1"
+	"$selfillum" "1"
+	"$yellow" "0"
+	"startframe" "1"
+	"endframe" "4"
+	"Proxies"
+	{	
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+		"AnimatedTexture"
+		{
+		"animatedTextureVar" "$baseTexture"
+		"animatedTextureFrameNumVar" "$frame"
+		"animatedTextureFrameRate" "5"
+		}
+	}
+}

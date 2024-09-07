@@ -2,23 +2,24 @@
 {
 	"$basetexture" "models/workshop/weapons/c_models/c_garand_shotgun/c_garand_shotgun"
 	"$basemapalphaphongmask" "1"
-
+	"$basealphaenvmapmask" "1"
 	"$phong" "1"
-	"$phongexponent" "35"
-	"$phongboost" "3"	
+	"$phongexponent" "11"
+	"$phongboost" "1.75"
 	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
-	"$phongfresnelranges"	"[.25 .5 1]"
+	"$phongfresnelranges"	"[.5 .5 3]"
 	"$halflambert" "1"
-	
-	"$rimlight" "1"
-	"$rimlightexponent" "4"	
-	"$rimlightboost" "2"
-	"$basephongexponent" "25"
-	"$basephongboost" "5"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.09 .06 0]"
 
+
+
+	// Rim lighting parameters
+	"$rimlight" "1"			
+	"$rimlightexponent" "6"	
+	"$rimlightboost" ".5"
 
 	"$glowcolor" "1"
-
 
 	// Cloaking
 	"$cloakPassEnabled" "1"
@@ -67,8 +68,35 @@
 			"srcVar2" "$yellow"
 			"resultVar" "$color2"
 		}
+	
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,43 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/0x022a6aba/buffspeaker/c_buffmic"
+	
+	"$phong" "1"
+	"$phongexponent" "5"
+	"$phongboost" "3"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.3 1 8]"
+	"$halflambert" "0"
+	"$basemapalphaphongmask" "1"
+	
+	"$rimlight" "1"
+	"$rimlightexponent" "4"
+	"$rimlightboost" ".5"
+	
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$detail"
+			"animatedtextureframenumvar" "$detailframe"
+			"animatedtextureframerate" 30
+		}
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$yellow"
+			"resultVar" "$color2"
+		}
+
+	}
+}

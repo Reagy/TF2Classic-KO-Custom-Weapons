@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_spacepaste\c_spacepaste_large"
+	$translucent 1
+}

@@ -1,6 +1,6 @@
 "VertexlitGeneric"
 {
-	"$baseTexture" "models/player/items/sniper/0x00c373a8/c_rflxbow/c_rflxbow_color"
+	"$baseTexture" "models/player/items/sniper/0x00c373a8/c_rflxbow/c_rflxbow"
 
 	"$detail" "effects/tiledfire/fireLayeredSlowTiled512"
 	"$detailscale" "5"

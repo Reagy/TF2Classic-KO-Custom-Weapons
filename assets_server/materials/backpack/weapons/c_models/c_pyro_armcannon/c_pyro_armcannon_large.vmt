@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_pyro_armcannon\c_pyro_armcannon_large"
+	$translucent 1
+}

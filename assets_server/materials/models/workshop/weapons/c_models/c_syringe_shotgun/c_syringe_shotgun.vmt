@@ -2,21 +2,22 @@
 {
 	"$basetexture" "models/workshop/weapons/c_models/c_syringe_shotgun/c_syringe_shotgun"
 	"$basemapalphaphongmask" "1"
-
 	"$phong" "1"
-	"$phongexponent" "15"
-	"$phongboost" "5"
+	"$phongexponent" "25"
+	"$phongboost" "3"
 	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
 	"$phongfresnelranges"	"[.5 .5 3]"
 	"$halflambert" "1"
-	
-	"$rimlight" "1"
-	"$rimlightexponent" "10"	
-	"$rimlightboost" ".175"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.09 .06 0]"
 
+
+	// Rim lighting parameters
+	"$rimlight" "1"			
+	"$rimlightexponent" "6"	
+	"$rimlightboost" ".5"
 
 	"$glowcolor" "1"
-
 
 	// Cloaking
 	"$cloakPassEnabled" "1"
@@ -65,6 +66,25 @@
 			"srcVar2" "$yellow"
 			"resultVar" "$color2"
 		}
+	
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

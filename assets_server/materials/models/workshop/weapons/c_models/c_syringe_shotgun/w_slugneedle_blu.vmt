@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials/models/workshop/weapons/c_models/c_syringe_shotgun/w_slugNeedle.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/workshop/weapons/c_models/c_syringe_shotgun/w_slugNeedle_blu"
+	}
+}

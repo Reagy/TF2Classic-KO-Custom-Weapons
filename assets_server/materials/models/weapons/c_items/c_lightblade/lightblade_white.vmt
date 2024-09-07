@@ -1,0 +1,22 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_lightblade/lightblade"
+	"$lightwarptexture" "models/buildables/sentry1/Sentry1_lightwarp"
+
+	"$basemapalphaphongmask" "1" 
+	"$selfillum" "1"
+	"$selfillumtint"		"[10 10 10]"
+
+	"$glowcolor" "1"
+
+                "$nocull" "1"
+
+ 	"$blendtintcoloroverbase" "1"  
+
+	"$color2" "{218 70 64}"
+	"$colortint_base" "{218 70 64}"
+	"$colortint_tmp" "[0 0 0]"   
+
+
+	"$additive" "1"
+}

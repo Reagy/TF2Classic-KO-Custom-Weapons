@@ -1,0 +1,40 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_white_knight/c_white_knight"
+	"$bumpmap" "models/weapons/c_items/c_white_knight/c_white_knight_normal" 
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "2"	
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	"$phongfresnelranges"	"[1 1 1]"
+	"$halflambert" "1"
+	"$normalmapalphaphongmask" "1"
+
+	"$rimlight" "1"						
+	"$rimlightexponent" "40"				
+	"$rimlightboost" "1"
+	"$selfillum" 1
+	"$glowcolor" "1"
+
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

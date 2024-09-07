@@ -1,0 +1,60 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/player/items/heavy/0x03f4561f/RetroGun/chrome"
+	"$bumpmap" "models/player/items/heavy/0x03f4561f/RetroGun/chrome_mask"
+	"$detail" "effects/tiledfire/fireLayeredSlowTiled512"
+	"$detailscale" "5"
+	"$detailblendfactor" .01
+	"$detailblendmode" 6
+
+	"$yellow" "0"
+                "$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "3.7"
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	"$phongfresnelranges"	"[.5 .5 3]"
+	"$halflambert" "1"
+
+	"$envmap" "env_cubemap"
+                "$normalmapalphaenvmapmask" "1"
+	//"$envmaptint" "[0.2 0.2 0.2]"	
+
+//
+// TODO: Paintable
+//
+	"$rimlight" "1"			
+	"$rimlightexponent" "6"	
+	"$rimlightboost" ".5"
+
+	"$cloakPassEnabled" "1"
+
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$detail"
+			"animatedtextureframenumvar" "$detailframe"
+			"animatedtextureframerate" 30
+		}
+
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
+
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+
+		"Equals"
+		{
+			"srcVar1" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}
