@@ -1,0 +1,54 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" "models/workshop/player/items/spy/rhino/rhino"
+
+	"$basemapalphaphongmask" "1"
+
+	"$phong"		"1"
+	"$phongexponent"		"25"
+	"$phongboost"		"10"
+	"$phongfresnelranges"		"[.25 .5 1]"
+	"$rimlight"		"1"
+	"$rimlightexponent"		"4"
+	"$rimlightboost"		".1"
+
+	"$nocull" "1"
+
+	"$yellow" "0"
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	"$rimlight" "1"
+	"$rimlightexponent" "4"
+	"$rimlightboost" "2"
+
+	"$cloakPassEnabled" "1"
+
+	"Proxies"
+	{
+		"vm_invis"
+		{
+		}
+
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$detail"
+			"animatedtextureframenumvar" "$detailframe"
+			"animatedtextureframerate" 30
+		}
+
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
+
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+
+		"Equals"
+		{
+			"srcVar1" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}
