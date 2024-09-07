@@ -1954,6 +1954,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_falloff_distance"
 					"value"				"1.5"
+				}	
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"0.5"
 				}					
 			}
 			"visuals"
@@ -6543,7 +6548,7 @@ Weapon by: 'The One Of Wonders, Vror'"
 				"add cloak on kill"
 				{
 					"attribute_class"	"add_cloak_on_kill"
-					"value"				"100"
+					"value"				"20"
 				}
 				"cloak blink time percentage penalty"
 				{
@@ -13926,7 +13931,7 @@ Remastered by: 'The One Of Wonders'"
 			    "Move Speed Penalty Active"
 				{
 					"attribute_class"	"mult_player_movespeed_active"
-					"value"				"0.85"
+					"value"				"0.9"
 				}
 			    "strange restriction type 1"
 				{
@@ -13956,7 +13961,7 @@ Remastered by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"3.0" 
+					"value"				"1.5" 
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -16712,6 +16717,7 @@ Wearable by: 'Reagy'"
 Ha! now this is a weapon made for Heavy!
   
 Model by: 'Snood'
+Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Oppressive Force"
 			"item_iconname"				"Oppressive Force"
@@ -16730,20 +16736,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_pierce_resists_absorbs"
 					"value"				"1"
 				}
-				"Hunter Killer Special"														
-				{
-					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"1"
-				}
 			    "minigun spinup time increased"
 				{
 					"attribute_class"	"mult_minigun_spinup_time"
-					"value"				"1.33" 
+					"value"				"1.4" 
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_minigun_spindown_time"
-					"value"				"1.33" 
+					"value"				"1.4" 
 				}
 				"aiming movespeed decreased"
 				{
@@ -16758,12 +16759,12 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.431034483"
+					"value"				"0.67"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.2725"
+					"value"				"0.2875"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -16773,7 +16774,17 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.06"
+					"value"				"0.03"
+				}
+				"dmg taken from crit increased"											
+				{
+					"attribute_class"	"mult_dmgtaken_from_crit"
+					"value"				"1.5"
+				}
+				"max health additive penalty"										
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" 			"-50"
 				}
 				"crit mod disabled"															
 				{
@@ -16783,17 +16794,17 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_falloff"
-					"value"				"2.0"
+					"value"				"0.5"
 				}	
 				"strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
-					"value"				"0.75"
+					"value"				"1.25"
 				}
 				"longer damage falloff distance"
 				{
 					"attribute_class"	"mult_falloff_distance"
-					"value"				"2.127"
+					"value"				"1.5"
 				}
 				"weapon_stattrak_module_scale"																
 				{
@@ -21679,6 +21690,10 @@ Weapon by: 'The One Of Wonders'"
 			"used_by_classes"
 			{
 				"civilian"				"1"
+			}
+			"static_attrs"																		
+            {																
+				"class select override vcd"				"taunt01"
 			}
 			"attributes"
 			{
@@ -28211,7 +28226,7 @@ Weapon by: 'The One Of Wonders'"
 			    "smoke bomb on full cloak"
 				{
 					"attribute_class"	"smoke_bomb_on_full_cloak"
-					"value"				"2"
+					"value"				"1"
 				}
 				"mod min cloak to activate" // requires full cloak to use, period.
 				{
@@ -28222,6 +28237,16 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_cloak_meter_consume_rate"
 					"value"				"3.0"
+				}
+				"lose cloak on decloak"
+				{
+					"attribute_class"	"lose_cloak_on_decloak"
+					"value"				"100"
+				}
+				"cloak regen rate decreased"
+				{
+					"attribute_class"	"mult_cloak_meter_regen_rate"
+					"value"				"0"
 				}
 				"strange restriction type 1"
 				{
@@ -34641,6 +34666,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
 				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"0.7"
+				}
 			}
 			"visuals"
 			{
@@ -37605,7 +37635,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"												
 				{
 					"attribute_class"	"blast_dmg_to_self"
-					"value" 			"1.5"
+					"value" 			"100.0"
 				}		
                 "weapon_stattrak_module_scale"															
 				{
@@ -37621,6 +37651,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"effectbar_recharge_rate"
 					"value"				"2.0"
+				} 
+				"strange restriction type 1"															
+				{
+					"attribute_class"	"mod_self_damage_penetrates_uber"
+					"value"				"1"
 				} 
             }				
 			"visuals"														
@@ -39503,6 +39538,16 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_maxammo_primary"
 					"value"				"0.5"
+				}
+				"move speed penalty"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"0.95" 
+				}
+				"max health additive penalty"										
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" 			"-100"
 				}
 				"crit mod disabled"
 				{
@@ -43126,7 +43171,8 @@ Weapon by: 'Reagy, The One Of Wonders'"
 				"min_viewmodel_offset"					"10 0 -10"
 				"damage bonus hidden"                   "0.23"
 				"custom projectile model"				"models/weapons/w_models/w_cock_projecticle.mdl"
-				"mod max primary clip override"			"-1"	
+				"mod max primary clip override"			"-1"
+                "class select override vcd"				"taunt01"				
 			}
 			"attributes"
 			{
@@ -43786,7 +43832,6 @@ Weapon by: 'The One Of Wonders'"
 			"item_name"					"Hardhat's Solution"
 			"item_type_name"			"Modified Teleporter Cannon"
 			"item_description"			"Alt-Fire: Hold to charge up a higher-power shot
-Overcharging causes immense self damage 
 
 Took this bad mother hubbard from one of those long-defunct telemax facilities... this'll be fun.
 
@@ -43908,6 +43953,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"no_primary_ammo_from_dispensers_always"
 					"value"				"1"
 				}
+				"Instant Death Overcharge"
+				{
+				    "attribute_class"	"ddmuy"
+					"value"				"1"
+				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -43917,7 +43967,17 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_use_custom_ammo_type"
 					"value" 			"1"
-				}					
+				}	
+                "weapon_stattrak_module_scale"															
+				{
+					"attribute_class"	"mult_dmgself_push_force"
+					"value"				"0.1"
+				}
+				"weapon_stattrak_module_scale"															
+				{
+					"attribute_class"	"blast_dmg_to_self"
+					"value" 			"3.5"
+				}				
 			}
 			"visuals"
 			{
