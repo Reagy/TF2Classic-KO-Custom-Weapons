@@ -51,14 +51,6 @@
 					"offset"			"0x282"
 				}
 			}
-			"CTFPaintballRifle::TertiaryAttack_EndLagCompensation"
-			{
-				"linux"
-				{
-					"signature"			"CTFPaintballRifle::TertiaryAttack"
-					"offset"			"0x244"
-				}
-			}
 		}
         "Offsets"
         {
@@ -165,6 +157,10 @@
 			"CBaseEntity::Deflected"
 			{
 				"linux"		"156"
+			}
+			"CBaseEntity::VPhysicsCollision"
+			{
+				"linux"		"164"
 			}
 			
 			"CBaseEntity::m_RefEHandle"
@@ -342,6 +338,10 @@
 			{
 				"linux"		"243"
 			}
+			"CTFGrenadePipebombProjectile::m_bTouched"
+			{
+				"linux"		"1260"
+			}
 			
 			"CAttributeManager::ApplyAttributeFloat"
 			{
@@ -450,6 +450,26 @@
 					"outputid"
 					{
 						"type"	"int"
+					}
+				}
+			}
+			
+			"CBaseEntity::VPhysicsCollision"
+			{
+				"offset"		"CBaseEntity::VPhysicsCollision"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"void"
+				"this"			"entity"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"int"
+					}
+					"event"
+					{
+						"type"	"objectptr"
 					}
 				}
 			}
@@ -1102,6 +1122,44 @@
 				}
 			}
 			
+			"CTFGrenadePipebombProjectile::Create"
+			{
+				"signature"		"CTFGrenadePipebombProjectile::Create"
+				"callconv"		"cdecl"
+				"return"		"cbaseentity"
+				"this"			"ignore"
+				"arguments"
+				{
+					"position"
+					{
+						"type"	"vectorptr"
+					}
+					"angles"
+					{
+						"type"	"vectorptr"
+					}
+					"velocity"
+					{
+						"type"	"vectorptr"
+					}
+					"angVelocity"
+					{
+						"type"	"vectorptr"
+					}
+					"owner"
+					{
+						"type"	"cbaseentity"
+					}
+					"weapon"
+					{
+						"type"	"cbaseentity"
+					}
+					"type"
+					{
+						"type" "int"
+					}
+				}
+			}
 			"CTFGrenadePipebombProjectile::ShouldExplodeOnEntity"
 			{
 				"offset"		"CTFGrenadePipebombProjectile::ShouldExplodeOnEntity"

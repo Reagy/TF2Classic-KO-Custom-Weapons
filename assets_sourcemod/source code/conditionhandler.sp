@@ -277,7 +277,7 @@ Action Command_Test( int iClient, int iArgs ) {
 
 	int iCondIndex = GetCmdArgInt( 1 );
 	for( int i = 1; i <= MaxClients; i++ ) {
-		if( IsClientInGame( i ) ) {
+		if( IsValidEntity(i) ) {
 			AddCond( i, iCondIndex );
 			SetCondDuration( i, iCondIndex, 10.0, false );
 			SetCondSourcePlayer( i, iCondIndex, iClient );

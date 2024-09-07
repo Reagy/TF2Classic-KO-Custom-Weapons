@@ -919,7 +919,7 @@ bool TraceEntityFilterPlayer( int iEntity, int iContentsMask, any data )
 {
 	if ( iEntity == data ) return false;
 	if( IsValidPlayer( iEntity ) && TF2_GetClientTeam( data ) != TF2_GetClientTeam( iEntity ) )
-			return false;
+		return false;
 
 	static char sClassname[128];
 	GetEdictClassname( iEntity, sClassname, sizeof(sClassname) );

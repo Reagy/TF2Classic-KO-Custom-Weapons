@@ -7,6 +7,7 @@
 #include <dhooks>
 #include <kocwtools>
 #include <hudframework>
+#include <custom_entprops>
 
 public Plugin myinfo =
 {
@@ -24,8 +25,9 @@ DynamicHook g_dhWeaponHolster;
 DynamicDetour g_dtGetMedigun;
 DynamicDetour g_dtRestart;
 
-//DynamicDetour g_dtGrenadeCreate;
-//DynamicHook g_dhGrenadeVPhysCollide;
+DynamicDetour g_dtGrenadeCreate;
+DynamicHook g_dhVPhysCollide;
+//DynamicHook g_dhShouldExplode;
 //DynamicHook g_dhOnTakeDamage;
 
 //Handle g_sdkCBaseEntityVPhysCollide;
@@ -57,11 +59,12 @@ public void OnPluginStart() {
 	g_dtRestart.Enable( Hook_Pre, Detour_ResetMapTimePre );
 	g_dtRestart.Enable( Hook_Post, Detour_ResetMapTimePost );
 
-	/*g_dtGrenadeCreate = DynamicDetourFromConfSafe( hGameConf, "FILL THIS" );
-	g_dtGrenadeCreate.Enable( Hook_Pre, Detour_CreatePipebomb );
+	g_dtGrenadeCreate = DynamicDetourFromConfSafe( hGameConf, "CTFGrenadePipebombProjectile::Create" );
+	g_dtGrenadeCreate.Enable( Hook_Post, Detour_CreatePipebomb );
 
-	g_dhGrenadeVPhysCollide = DynamicHookFromConfSafe( hGameConf, "CTFGrenadePipebombProjectile::VPhysicsCollision" );
-	g_dhOnTakeDamage = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::OnTakeDamage" );
+	g_dhVPhysCollide = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::VPhysicsCollision" );
+	//g_dhShouldExplode = DynamicHook.FromConf( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
+	/*g_dhOnTakeDamage = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::OnTakeDamage" );
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseEntity::VPhysicsCollision" );
@@ -339,9 +342,43 @@ void DeleteSniperLaser( int iOwner ) {
 		//RemoveEntity( iPoint );
 }
 
-Action Hook_TransmitIfNotOwner( int iEntity, int iClient ) {
-	SetEdictFlags( iEntity, 0 );
-	return iClient != GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
+/*
+	Junkrat pipes
+*/
+
+MRESReturn Detour_CreatePipebomb( DHookReturn hReturn, DHookParam hParams ) {
+	int iBomb = hReturn.Value;
+	if( !IsValidEntity( iBomb ) )
+		return MRES_Ignored;
+
+	int iWeapon = GetEntPropEnt( iBomb, Prop_Send, "m_hLauncher" );
+	if( iWeapon == -1 )
+		return MRES_Ignored;
+
+	float flAttrib = AttribHookFloat( 0.0, iWeapon, "custom_junkrat_pipes" );
+	if( flAttrib == 0.0 )
+		return MRES_Ignored;
+
+	g_dhVPhysCollide.HookEntity( Hook_Post, iBomb, Hook_PipebombVPhysCollide );
+	//g_dhShouldExplode.HookEntity( Hook_Pre, iBomb, Hook_PipebombShouldExplode );
+
+	return MRES_Handled;
+}
+
+MRESReturn Hook_PipebombVPhysCollide( int iThis, DHookParam hParams ) {
+	//load from gamedata
+	bool bTouched = LoadFromEntity( iThis, 1260 );
+	bool bOldTouched = GetCustomProp( iThis, "m_bTouched" );
+
+	if( bTouched && !bOldTouched ) {
+		float flDamage = LoadFromEntity( iThis, 1212 );
+		StoreToEntity( iThis, 1212, flDamage * 0.5 );
+		SetCustomProp( iThis, "m_bTouched", true );
+	}
+	//load from gamedata
+	StoreToEntity( iThis, 1260, 0 );
+
+	return MRES_Handled;
 }
 
 /*
