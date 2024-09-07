@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_ww2tommy_medic/c_ww2tommy_medic_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}
