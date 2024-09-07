@@ -12530,7 +12530,7 @@ Reworked by: 'The One Of Wonders'"
 			"item_logname"				"Arbalest's Bolter"
 			"item_iconname"				"Arbalest's Bolter"
 			"image_inventory"			"backpack/weapons/c_models/c_arbalest_xbow/c_arbalest_xbow"
-			"model_world"				"models/weapons/custom/c_models/c_rflxbow.mdl"
+			"model_world"				"models/weapons/c_models/c_arbalest_bolter_redux/c_arbalest_bolter_redux.mdl"
 			"model_player"				"models/weapons/v_models/v_arbalest_bolter_redux.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -28502,6 +28502,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
+				}
+                "strange restriction type 1"
+				{
+					"attribute_class"	"unimplemented_mod_sniper_no_charge" // No aiming with machine gun!
+					"value"				"1"														
 				}				
 			}
 			"visuals"
@@ -34719,7 +34724,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"16.6666667"
+					"value" 			"13.3333333"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -34759,7 +34764,7 @@ Weapon by: 'The One Of Wonders'"
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
-					"value"				"0.5"
+					"value"				"0.7"
 				}	
                 "punch angle mod add hidden"
 				{
