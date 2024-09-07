@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_brandspuit\c_brandspuit_v2_large"
+	$translucent 1
+}
