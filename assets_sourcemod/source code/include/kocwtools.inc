@@ -13,6 +13,7 @@
 
 native float 	AttribHookFloat( float fValue, int iEntity, const char[] sAttributeClass );
 native int	AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
+native int	AttribHookInt( int iValue, int iEntity, const char[] szAttributeClass )
 
 native float	GetMedigunCharge( int iPlayer );
 native int	GetEntityInSlot( int iPlayer, int iSlot );
@@ -25,6 +26,7 @@ native void	SetSolidFlags( int iEntity, int iFlags );
 native void	SetCollisionGroup( int iEntity, int iGroup );
 native void	SetSize( int iEntity, const float vecSizeMin[3], const float vecSizeMax[3] );
 
+native void	SetForceLagCompensation( bool bForce );
 native void	StartLagCompensation( int iPlayer );
 native void	FinishLagCompensation( int iPlayer );
 
@@ -237,7 +239,7 @@ stock bool PlayerInRadius( float vecStart[3], float flRadius, int iPlayer ) {
 
 	float vecTargetPos[3];
 	GetEntPropVector( iPlayer, Prop_Data, "m_vecAbsOrigin", vecTargetPos );
-	return GetVectorDistance( vecStart, vecTargetPos, true ) < flRadius;
+	return GetVectorDistance( vecStart, vecTargetPos ) < flRadius;
 }
 stock void PlayersInRadius( float vecStart[3], float flRadius, bool bOutput[ MAXPLAYERS+1 ] ) {
 	for( int i = 0; i < MaxClients; i++ ) {
@@ -251,6 +253,9 @@ enum {
 }
 
 native int HealPlayer( int iPlayer, float flAmount, int iSource = -1, int iFlags = 0 );
+native void AddPlayerHealer( int iReciever, int iSource, float flRate, bool bAllowCritHeals = true );
+native void AddPlayerHealerTimed( int iReciever, int iSource, float flRate, float flDuration, bool bReset, bool bOverheal );
+native void RemovePlayerHealer( int iReceiver, int iSource, int iHealerType = 0 );
 
 /*
 	MATH FUNCTIONS
@@ -266,6 +271,10 @@ stock float FloatClamp( float flValue, float flMin, float flMax ) {
 	return MinFloat( MaxFloat( flValue, flMin ), flMax );
 }
 
+stock float FRoundToFloor( float flVal ) {
+	return flVal - FloatFraction( flVal );
+}
+
 stock int MinInt( int v1, int v2 ) {
 	return ( v1 < v2 ) ? v1 : v2;
 }
@@ -275,7 +284,7 @@ stock int MaxInt( int v1, int v2 ) {
 stock int IntClamp( int iValue, int iMin, int iMax ) {
 	return MinInt( MaxInt( iValue, iMin ), iMax );
 }
-//mask out the most significant bit
+//mask out the most significant bit (test if this works)
 stock int IntAbs( int iValue ) {
 	return iValue & 0x7FFFFFFF;
 }
@@ -319,10 +328,10 @@ stock float SimpleSplineRemapValClamped( float flVal, float flA, float flB, floa
 	MEMORY FUNCTIONS
 */
 
-stock any LoadFromAddressOffset( Address aAddress, int iOffset, NumberType eNumberType ) {
+stock any LoadFromAddressOffset( Address aAddress, int iOffset, NumberType eNumberType = NumberType_Int32 ) {
 	return LoadFromAddress( aAddress + address( iOffset ), eNumberType );
 }
-stock void StoreToAddressOffset( Address aAddress, int iOffset, any aValue, NumberType eNumberType ) {
+stock void StoreToAddressOffset( Address aAddress, int iOffset, any aValue, NumberType eNumberType = NumberType_Int32 ) {
 	StoreToAddress( aAddress + address( iOffset ), aValue, eNumberType );
 }
 
@@ -347,15 +356,6 @@ stock void StoreToEntity( int iEntity, int iOffset, any anValue, NumberType iSiz
 
 #define EVENT_POSTINVENTORY		"post_inventory_application"
 #define EVENT_PLAYERDEATH		"player_death"
-
-/*
-	CUSTOM ATTRIBUTE DEFINES
-*/
-
-#define ATR_MEDIGUN_TYPE	"custom_medigun_type"		//(ADDITIVE) 0: Default Behavior, 1: Guardian Angel, 2: Bio Waste Pump, 3: Totenwerfer
-#define ATR_MEDIGUN_BEAM	"custom_medibeamtype"		//(ADDITIVE) 0: Stock Medigun, 1: Kritzkrieg, 2: Overhealer, 3: Bio Waste Pump
-#define ATR_MEDIGUN_OVERHEAL	"custom_maximum_overheal"	//(MULTI) Scales maximum overheal from medigun
-#define ATR_SELF_OVERHEAL	"custom_maximum_overheal_self"	//(MULTI) Scales maximum overheal on self
 
 /*
 	Custom Damage Handling
@@ -402,7 +402,7 @@ forward void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo );
 forward void OnTakeDamageBuilding( int iBuilding, Address aTakeDamageInfo );
 
 int iOffsetCache[DI_SIZE] = { -1, ... };
-static char szOffsetNames[][] = {
+static char g_szDmgOffsetNames[][] = {
 	"CTakeDamageInfo::m_vecDamageForce.x",
 	"CTakeDamageInfo::m_vecDamageForce.y",
 	"CTakeDamageInfo::m_vecDamageForce.z",
@@ -431,7 +431,7 @@ static char szOffsetNames[][] = {
 int DMGInfoOffset( int iValue ) {
 	if( iOffsetCache[iValue] == -1 ) {
 		Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
-		iOffsetCache[iValue] = GameConfGetOffset( hGameConf, szOffsetNames[iValue] );
+		iOffsetCache[iValue] = GameConfGetOffset( hGameConf, g_szDmgOffsetNames[iValue] );
 		delete hGameConf;
 	}
 
@@ -457,57 +457,57 @@ methodmap TFDamageInfo {
 	}
 
 	property float flDamage {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ), NumberType_Int32 ); }
-		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ), iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ) ); }
+		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ), iValue); }
 	}
 	property float flBaseDamage {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE ), NumberType_Int32 ); }
-		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE ), iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE )); }
+		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE ), iValue ); }
 	}
 
 	property int iFlags {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ), NumberType_Int32 ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ), iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ) ); }
+		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ), iValue ); }
 	}
 	property int iCustom {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ), NumberType_Int32 ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ), iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ) ); }
+		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ), iValue ); }
 	}
 
 	property int iCritType {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ), NumberType_Int32 ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ), iValue, NumberType_Int32 ); }
+		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ) ); }
+		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ), iValue ); }
 	}
 
 	public void GetDamageForce( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ), NumberType_Int32 );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ), NumberType_Int32 );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ), NumberType_Int32 );
+		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ) );
+		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ) );
+		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ) );
 	}
 	public void SetDamageForce( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ), flX, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ), flY, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ), flZ, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ), flX );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ), flY );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ), flZ );
 	}
 	public void GetDamageSource( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ), NumberType_Int32 );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ), NumberType_Int32 );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ), NumberType_Int32 );
+		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ) );
+		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ) );
+		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ) );
 	}
 	public void SetDamageSource( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ), flX, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ), flY, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ), flZ, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ), flX );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ), flY );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ), flZ );
 	}
 	public void GetDamageReported( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ), NumberType_Int32 );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ), NumberType_Int32 );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ), NumberType_Int32 );
+		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ) );
+		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ) );
+		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ) );
 	}
 	public void SetDamageReported( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ), flX, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ), flY, NumberType_Int32 );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ), flZ, NumberType_Int32 );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ), flX );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ), flY );
+		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ), flZ );
 	}
 }
 
@@ -532,6 +532,25 @@ stock int TeamSeenBy( int iViewer, int iViewed ) {
 	//return the disguise
 	return iViewedDisguiseTeam;	
 }
+stock bool IsPlayerMiniCritBoosted( int iPlayer ) {
+	return TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 133 ) ); //TF_COND_DAMAGE_BOOST
+}
+//thank you grand and wise IDA pro
+//pro tip: tf2c.fgd has a list of all the conds with more up to date names than tf2ctools
+stock bool IsPlayerCritBoosted( int iPlayer ) {
+	return (
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 11 ) ) ||	//TF_COND_CRITBOOSTED
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 33 ) ) ||	//TF_COND_CRITBOOSTED_PUMPKIN
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 34 ) ) ||	//TF_COND_CRITBOOSTED_USER_BUFF
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 35 ) ) ||	//TF_COND_CRITBOOSTED_DEMO_CHARGE
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 37 ) ) ||	//TF_COND_CRITBOOSTED_FIRST_BLOOD
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 38 ) ) ||	//TF_COND_CRITBOOSTED_BONUS_TIME
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 39 ) ) ||	//TF_COND_CRITBOOSTED_CTF_CAPTURE
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 40 ) ) ||	//TF_COND_CRITBOOSTED_ON_KILL
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 56 ) ) ||	//TF_COND_CRITBOOSTED_CARD_EFFECT
+		TF2_IsPlayerInCondition( iPlayer, view_as<TFCond>( 105 ) )	//TF_COND_CRITBOOSTED_RUNE_TEMP
+	);  
+}
 
 stock bool IsValidPlayer( int iPlayer ) {
 	return iPlayer > 0 && iPlayer <= MaxClients;
@@ -542,7 +561,7 @@ stock void ParentModel( int iChild, int iParent, const char[] szAttach = "" ) {
 	AcceptEntityInput( iChild, "SetParent", iParent, iParent, 0 );
 	if( !StrEqual( "", szAttach ) ) {
 		SetVariantString( szAttach );
-		AcceptEntityInput( iChild, "SetParentAttachment", iChild, iChild, 0 );
+		AcceptEntityInput( iChild, "SetParentAttachment", iParent, iParent, 0 );
 	}
 }
 
@@ -699,7 +718,6 @@ stock void ConsumeAmmo( int iWeapon, int iOwner, int iAmmoCost, bool bUsesClip )
 	}
 }
 
-
 enum
 {
 	PATTACH_ABSORIGIN = 0,			// Create at absorigin, but don't follow
@@ -739,6 +757,15 @@ stock void ParentParticleToViewmodel( int iParticle, int iWeapon ) {
 	ParentModel( iParticle, iViewmodel, bIsCModel ? "weapon_bone_l" : "muzzle" );
 	SetEdictFlags( iParticle, 0 );
 }
+//idk how the bone works just try random bones on the weapon until it works
+stock void ParentParticleToViewmodelEX( int iParticle, int iWeapon, const char[] szBoneName ) {
+	bool bIsCModel = GetEntProp( iWeapon, Prop_Send, "m_iViewModelType" ) == 1;
+
+	int iPlayer = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwnerEntity" );
+	int iViewmodel = GetEntPropEnt( iPlayer, Prop_Send, "m_hViewModel" );
+	ParentModel( iParticle, iViewmodel, bIsCModel ? szBoneName : "muzzle" );
+	SetEdictFlags( iParticle, 0 );
+}
 
 Action Timer_RemoveParticle( Handle hTimer, int iParticleRef ) {
 	int iParticle = EntRefToEntIndex( iParticleRef );
@@ -749,8 +776,59 @@ Action Timer_RemoveParticle( Handle hTimer, int iParticleRef ) {
 	return Plugin_Continue;
 }
 
+stock int PrecacheParticleSystem( const char[] szParticleSystem ) {
+	static int iParticleEffectNames = INVALID_STRING_TABLE;
+	if ( iParticleEffectNames == INVALID_STRING_TABLE ) {
+		if ( ( iParticleEffectNames = FindStringTable( "ParticleEffectNames" ) ) == INVALID_STRING_TABLE ) {
+			return INVALID_STRING_INDEX;
+		}
+	}
+
+	int iIndex = FindStringIndex2( iParticleEffectNames, szParticleSystem );
+	if ( iIndex == INVALID_STRING_INDEX ) {
+		int iNumStrings = GetStringTableNumStrings( iParticleEffectNames );
+		if ( iNumStrings >= GetStringTableMaxStrings( iParticleEffectNames ) )
+			return INVALID_STRING_INDEX;
+
+		AddToStringTable( iParticleEffectNames, szParticleSystem );
+		iIndex = iNumStrings;
+	}
+
+	return iIndex;
+}
+
+stock int FindStringIndex2( int iTableIndex, const char[] szName ) {
+	static char szBuffer[256];
+
+	int iNumStrings = GetStringTableNumStrings( iTableIndex );
+	for ( int i = 0; i < iNumStrings; i++ ) {
+		ReadStringTable( iTableIndex, i, szBuffer, sizeof( szBuffer ) );
+
+		if( strcmp( szBuffer, szName ) == 0 )
+			return i;
+	}
+
+	return INVALID_STRING_INDEX;
+}
+
+stock Action Hook_TransmitIfOwner( int iEntity, int iClient ) {
+	return iClient == GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
+}
+stock Action Hook_TransmitIfNotOwner( int iEntity, int iClient ) {
+	return iClient != GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
+}
+
+stock Action Hook_TransmitIfOwnerParticle( int iEntity, int iClient ) {
+	SetEdictFlags( iEntity, 0 );
+	return iClient == GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
+}
+stock Action Hook_TransmitIfNotOwnerParticle( int iEntity, int iClient ) {
+	SetEdictFlags( iEntity, 0 );
+	return iClient != GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) ? Plugin_Continue : Plugin_Handled;
+}
+
 //https://github.com/JoinedSenses/SourceMod-IncludeLibrary
-stock void TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECTOR,
+stock bool TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECTOR,
 			const float start[3] = NULL_VECTOR, const float angles[3] = NULL_VECTOR,
 			int entindex = -1, int attachtype = -1, int attachpoint = -1, bool resetParticles = true)
 {
@@ -759,12 +837,12 @@ stock void TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECT
 	if (tblidx == INVALID_STRING_TABLE) 
 	{
 		LogError("Could not find string table: ParticleEffectNames");
-		return;
+		return false;
 	}
 	
 
 	// find particle index
-	char tmp[256];
+	static char tmp[256];
 	int count = GetStringTableNumStrings(tblidx);
 	int stridx = INVALID_STRING_INDEX;
 	for (int i = 0; i < count; i++)
@@ -779,7 +857,7 @@ stock void TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECT
 	if (stridx == INVALID_STRING_INDEX)
 	{
 		LogError("Could not find particle: %s", Name);
-		return;
+		return false;
 	}
 
 	TE_Start("TFParticleEffect");
@@ -808,6 +886,8 @@ stock void TE_SetupParticle(const char[] Name, const float origin[3] = NULL_VECT
 	}
 
 	TE_WriteNum("m_bResetParticles", resetParticles);
+
+	return true;
 }
 
 stock void TE_Particle(const char[] Name, const float origin[3] = NULL_VECTOR,
@@ -815,8 +895,39 @@ stock void TE_Particle(const char[] Name, const float origin[3] = NULL_VECTOR,
 		int entindex = -1, int attachtype = -1, int attachpoint = -1, bool resetParticles = true,
 		float delay = 0.0)
 {
-	TE_SetupParticle(Name, origin, start, angles, entindex,
-		attachtype, attachpoint, resetParticles);
+	if( TE_SetupParticle( Name, origin, start, angles, entindex, attachtype, attachpoint, resetParticles) )
+		TE_SendToAll(delay);
+}
 
-	TE_SendToAll(delay);
+//Wrapper that automatically fails if the SDKCall cannot be created
+stock Handle EndPrepSDKCallSafe( const char[] szName ) {
+	Handle hCall = EndPrepSDKCall();
+	if( !hCall )
+		SetFailState( "SDKCall setup for %s failed", szName );
+
+	return hCall;
+}
+//Wrapper that automatically fails if the detour cannot be created
+stock DynamicDetour DynamicDetourFromConfSafe( Handle hGameConf, const char[] szName ) {
+	DynamicDetour dtDetour = DynamicDetour.FromConf( hGameConf, szName );
+	if( !dtDetour )
+		SetFailState( "Detour setup for %s failed", szName );
+
+	return dtDetour;
+}
+//Wrapper that automatically fails if the hook cannot be created
+stock DynamicHook DynamicHookFromConfSafe( Handle hGameConf, const char[] szName ) {
+	DynamicHook dhHook = DynamicHook.FromConf( hGameConf, szName );
+	if( !dhHook )
+		SetFailState( "Hook setup for %s failed", szName );
+
+	return dhHook;
+}
+//Wrapper that automatically fails if the hook cannot be created
+stock int GameConfGetOffsetSafe( Handle hGameConf, const char[] szName )  {
+	int iReturn = GameConfGetOffset( hGameConf, szName );
+	if( iReturn == -1 )
+		SetFailState( "Offset lookup for %s failed", szName );
+
+	return iReturn;
 }

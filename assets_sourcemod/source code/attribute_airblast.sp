@@ -16,10 +16,8 @@ public Plugin myinfo = {
 }
 
 DynamicHook g_dhSecondaryFire;
-DynamicHook g_dhReload;
 DynamicHook g_dhItemPostFrame;
 
-Handle g_sdkLookupSequence;
 Handle g_sdkGetProjectileSetup;
 Handle g_sdkIsDeflectable;
 Handle g_sdkDeflected;
@@ -29,22 +27,23 @@ Handle g_sdkAddDamagerToHistory;
 Handle g_sdkWorldSpaceCenter;
 Handle g_sdkSendWeaponAnim;
 
+//todo: implement unused attribs
 static char g_szAttribAirblastEnable[] = 	"custom_airblast";
 static char g_szAttribAirblastParticle[] =	"custom_airblast_particle";
 static char g_szAttribAirblastSound[] =		"custom_airblast_sound";
 static char g_szAttribAirblastRefire[] = 	"mult_airblast_refire_time";
-static char g_szAttribAirblastScale[] = 	"deflection_size_multiplier";
 static char g_szAttribAirblastCost[] = 		"mult_airblast_cost";
+static char g_szAttribAirblastScale[] = 	"deflection_size_multiplier";
 static char g_szAttribAirblastSelfPush[] = 	"apply_self_knockback_airblast";
 static char g_szAttribAirblastFlags[] = 	"airblast_functionality_flags";
 static char g_szAttribAirblastNoPush[] = 	"disable_airblasting_players";
 static char g_szAttribAirblastDestroy[] = 	"airblast_destroy_projectile";
 
 static char g_szAirblastSound[] = 		"Weapon_FlameThrower.AirBurstAttack";
-static char g_szDeleteAirblastSound[] = 	"Fire.Engulf";
-static char g_szExtinguishSound[] = 		"TFPlayer.FlameOut";
 static char g_szDeflectSound[] = 		"Weapon_FlameThrower.AirBurstAttackDeflect";
+static char g_szExtinguishSound[] = 		"TFPlayer.FlameOut";
 static char g_szAirblastPlayerSound[] = 	"TFPlayer.AirBlastImpact";
+static char g_szDeleteAirblastSound[] = 	"Fire.Engulf";
 
 static char g_szAirblastParticle[] =		"pyro_blast";
 static char g_szDeflectParticle[] = 		"deflect_fx";
@@ -52,19 +51,13 @@ static char g_szDeleteParticle[] = 		"explosioncore_sapperdestroyed";
 
 ArrayList g_alAirblasted[MAXPLAYERS+1]; //list of players hit by airblast to prevent pushing multiple times
 ArrayList g_alEntList; //temporary entity list for airblast enumeration
-float g_flAirblastEndTime[MAXPLAYERS+1];
+float g_flAirblastEndTime[MAXPLAYERS+1]; //timestamp for the end of the current airblast
 
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
 	g_dhSecondaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::SecondaryAttack" );
 	g_dhItemPostFrame = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::ItemPostFrame" );
-
-	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseAnimating::LookupSequence" );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
-	g_sdkLookupSequence = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFWeaponBaseGun::GetProjectileReflectSetup" );
@@ -87,6 +80,7 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
 	g_sdkDeflected = EndPrepSDKCall();
 
+	//todo: move to kocwtools
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFWeaponBase::GetWeaponID" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
@@ -161,6 +155,7 @@ void Frame_CheckAttrib( int iWeapon ) {
 	}	
 }
 
+//todo: generalize alt fire code
 MRESReturn Hook_SecondaryFire( int iWeapon ) {
 	int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwner" );
 	if( iOwner == -1 )

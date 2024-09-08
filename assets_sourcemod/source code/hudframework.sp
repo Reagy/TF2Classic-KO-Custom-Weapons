@@ -298,7 +298,7 @@ void Tracker_Display( int iPlayer ) {
 		StrCat( sFinal, sizeof(sFinal), "\n");
 	}
 
-	SetHudTextParamsEx( 0.88, 0.85 - ( 0.038 * ( g_rtResources[iPlayer].Length - 1 ) ), 20.0, {255, 255, 255, 1}, {255,255,255,0}, 0, 6.0, 0.0, 0.0 );
+	SetHudTextParamsEx( 0.86, 0.85 - ( 0.038 * ( g_rtResources[iPlayer].Length - 1 ) ), 20.0, {255, 255, 255, 1}, {255,255,255,0}, 0, 6.0, 0.0, 0.0 );
 	ShowSyncHudText( iPlayer, hHudSync, sFinal );
 }
 

@@ -370,6 +370,7 @@ Action Hook_BuildingSounds( int iClients[MAXPLAYERS], int& iNumClients, char sSa
 	return Plugin_Continue;
 }
 
+//todo: this is one of the slowest functions on the server atm
 Action SentrySoundHook( int iBuilding, char sSample[PLATFORM_MAX_PATH], int &iPitch, int &iLevel ) {
 	switch( GetBuildingOverride( iBuilding ) ) {
 	case SENTRY_MINI: {

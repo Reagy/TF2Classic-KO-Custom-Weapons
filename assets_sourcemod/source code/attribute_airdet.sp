@@ -43,7 +43,7 @@ enum struct BombLagComp {
 
 	int iLast;
 }
-ArrayList hLagCompensation;
+ArrayList g_hLagCompensation;
 
 int g_iBombUnlag = -1;
 
@@ -87,7 +87,7 @@ public void OnPluginStart() {
 	g_dhShouldExplode = DynamicHook.FromConf( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
 	g_dhOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
 
-	hLagCompensation = new ArrayList( sizeof( BombLagComp ) );
+	g_hLagCompensation = new ArrayList( sizeof( BombLagComp ) );
 
 	delete hGameConf;
 }
@@ -97,7 +97,7 @@ public void OnMapStart() {
 	PrecacheModel( g_szStickybombModel );
 	PrecacheModel( g_szColliderModel );
 
-	hLagCompensation.Clear();
+	g_hLagCompensation.Clear();
 }
 
 public void OnEntityCreated( int iEntity, const char[] szClassname ) {
@@ -122,8 +122,8 @@ void Frame_WeaponHook( int iEntity ) {
 public void OnGameFrame() {
 	BombLagComp comp;
 	int iIndex = 0;
-	while( iIndex < hLagCompensation.Length ) {
-		hLagCompensation.GetArray( iIndex, comp );
+	while( iIndex < g_hLagCompensation.Length ) {
+		g_hLagCompensation.GetArray( iIndex, comp );
 		int iBombIndex = EntRefToEntIndex( comp.iBombRef );
 		if( iBombIndex == -1 ) {
 			RemoveBombIndex( iIndex );
@@ -140,7 +140,7 @@ public void OnGameFrame() {
 		comp.flHistoryTime[iNewIndex] = GetGameTime();
 		comp.iLast += 1;
 
-		hLagCompensation.SetArray( iIndex, comp );
+		g_hLagCompensation.SetArray( iIndex, comp );
 
 		iIndex++;
 	}
@@ -156,6 +156,10 @@ MRESReturn Hook_PrimaryPre( int iEntity ) {
 
 	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwner" );
 	if( iOwner == -1 )
+		return MRES_Ignored;
+
+	//todo: sdkcall canattack
+	if( !IsPlayerAlive( iOwner ) )
 		return MRES_Ignored;
 
 	StartBombUnlag( iOwner );
@@ -289,7 +293,7 @@ MRESReturn Hook_DamageCollider( int iCollider, DHookReturn hReturn, DHookParam h
 	float flDamage = TF2DamageFalloff3( 215.0, vecOwnerPos, vecBombPos, iLauncher, DMG_USEDISTANCEMOD, true );
 	//float flDamage = 240.0;
 
-	PrintToServer("fldamage %f", flDamage);
+	//PrintToServer("fldamage %f", flDamage);
 
 	//todo: move to gamedata
 	StoreToEntity( iBomb, 1212, flDamage, NumberType_Int32 ); //damage
@@ -314,13 +318,13 @@ int AddNewBomb( int iBomb, int iCollider ) {
 	for( int i = 0; i < BOMBHISTORYSIZE; i++ )
 		comp.flHistoryTime[i] = view_as< float >( 0xFFFFFFFE );
 
-	return hLagCompensation.PushArray( comp );
+	return g_hLagCompensation.PushArray( comp );
 }
 
 int FindBomb( int iBomb ) {
 	BombLagComp comp;
-	for( int i = 0; i < hLagCompensation.Length; i++ ) {
-		hLagCompensation.GetArray( i, comp );
+	for( int i = 0; i < g_hLagCompensation.Length; i++ ) {
+		g_hLagCompensation.GetArray( i, comp );
 		int iIndex = EntRefToEntIndex( comp.iBombRef );
 		if( iBomb == iIndex )
 			return i;
@@ -335,13 +339,13 @@ void RemoveBomb( int iBomb ) {
 }
 void RemoveBombIndex( int iIndex ) {
 	BombLagComp comp;
-	if( iIndex > -1 && iIndex < hLagCompensation.Length ) {
-		hLagCompensation.GetArray( iIndex, comp );
+	if( iIndex > -1 && iIndex < g_hLagCompensation.Length ) {
+		g_hLagCompensation.GetArray( iIndex, comp );
 		int iCollider = EntRefToEntIndex( comp.iColliderRef );
 		if( iCollider != -1 )
 			RemoveEntity( iCollider );
 
-		hLagCompensation.Erase( iIndex );
+		g_hLagCompensation.Erase( iIndex );
 	}
 		
 }
@@ -354,20 +358,20 @@ void StartBombUnlag( int iPlayer ) {
 
 	BombLagComp comp;
 	int iIndex = 0;
-	while( iIndex < hLagCompensation.Length ) {
-		hLagCompensation.GetArray( iIndex, comp );
+	while( iIndex < g_hLagCompensation.Length ) {
+		g_hLagCompensation.GetArray( iIndex, comp );
+
 		int iBombIndex = EntRefToEntIndex( comp.iBombRef );
 		int iColliderIndex = EntRefToEntIndex( comp.iColliderRef );
-		int iWeapon = GetEntPropEnt( iBombIndex, Prop_Send, "m_hOriginalLauncher" );
-		int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwner" );
-
-		if( iOwner != iPlayer ) {
-			iIndex++;
+		if( iBombIndex == -1 || iColliderIndex == -1 ) {
+			RemoveBombIndex( iIndex );
 			continue;
 		}
 
-		if( iBombIndex == -1 || iColliderIndex == -1 ) {
-			RemoveBombIndex( iIndex );
+		int iWeapon = GetEntPropEnt( iBombIndex, Prop_Send, "m_hOriginalLauncher" );
+		int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwner" );
+		if( iOwner != iPlayer ) {
+			iIndex++;
 			continue;
 		}
 
@@ -401,20 +405,20 @@ void StartBombUnlag( int iPlayer ) {
 void EndBombUnlag( int iPlayer ) {
 	BombLagComp comp;
 	int iIndex = 0;
-	while( iIndex < hLagCompensation.Length ) {
-		hLagCompensation.GetArray( iIndex, comp );
+	while( iIndex < g_hLagCompensation.Length ) {
+		g_hLagCompensation.GetArray( iIndex, comp );
+
 		int iBombIndex = EntRefToEntIndex( comp.iBombRef );
 		int iColliderIndex = EntRefToEntIndex( comp.iColliderRef );
-		int iWeapon = GetEntPropEnt( iBombIndex, Prop_Send, "m_hOriginalLauncher" );
-		int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwner" );
-
-		if( iOwner != iPlayer ) {
-			iIndex++;
+		if( iBombIndex == -1 || iColliderIndex == -1 ) {
+			RemoveBombIndex( iIndex );
 			continue;
 		}
 
-		if( iBombIndex == -1 || iColliderIndex == -1 ) {
-			RemoveBombIndex( iIndex );
+		int iWeapon = GetEntPropEnt( iBombIndex, Prop_Send, "m_hOriginalLauncher" );
+		int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwner" );
+		if( iOwner != iPlayer ) {
+			iIndex++;
 			continue;
 		}
 

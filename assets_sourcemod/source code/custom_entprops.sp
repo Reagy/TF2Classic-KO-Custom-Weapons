@@ -21,6 +21,7 @@ public void OnPluginStart() {
 public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_max ) {
 	CreateNative( "SetCustomProp", Native_SetCustomProp );
 	CreateNative( "GetCustomProp", Native_GetCustomProp );
+	CreateNative( "HasCustomProp", Native_HasCustomProp );
 
 	return APLRes_Success;
 }
@@ -52,9 +53,9 @@ public int Native_SetCustomProp( Handle hPlugin, int iParams ) {
 }
 
 void SetCustomProp( int iEntityRef, const char[] szPropertyName, any data ) {
-	StringMap smProps;
-	if( g_amEntities.GetValue( iEntityRef, smProps ) ) {
-		smProps.SetValue( szPropertyName, data, true );
+	StringMap smTemp;
+	if( g_amEntities.GetValue( iEntityRef, smTemp ) ) {
+		smTemp.SetValue( szPropertyName, data, true );
 		return;
 	}
 
@@ -74,17 +75,40 @@ public any Native_GetCustomProp( Handle hPlugin, int iParams ) {
 	char[] szPropertyName = new char[ ++iBufferLen ];
 	GetNativeString( 1, szPropertyName, iBufferLen );
 
-	return GetCustomProp( iEntityRef, szPropertyName );
-}
-any GetCustomProp( int iEntityRef, const char[] szPropertyName ) {
-	StringMap smProps;
-	if( g_amEntities.GetValue( iEntityRef, smProps ) ) {
-		any returnVal;
-		smProps.GetValue( szPropertyName, returnVal );
-		return returnVal;
-	}
+	any data;
+	bool bReturn = GetCustomProp( iEntityRef, szPropertyName, data );
+	if( bReturn )
+		SetNativeCellRef( 3, data );
 
-	return 0;
+	return bReturn;
+}
+bool GetCustomProp( int iEntityRef, const char[] szPropertyName, any &data ) {
+	StringMap smTemp;
+	if( g_amEntities.GetValue( iEntityRef, smTemp ) ) {
+		return smTemp.GetValue( szPropertyName, data );
+	}
+	return false;
+}
+
+public any Native_HasCustomProp( Handle hPlugin, int iParams ) {
+	int iEntityID = GetNativeCell( 1 );
+	int iEntityRef = EntIndexToEntRef( iEntityID );
+	if( iEntityRef == -1 )
+		ThrowNativeError( 0, "Invalid Entity ID %i for custom propery lookup", iEntityID );
+
+	int iBufferLen;
+	GetNativeStringLength( 2, iBufferLen );
+	char[] szPropertyName = new char[ ++iBufferLen ];
+	GetNativeString( 1, szPropertyName, iBufferLen );
+
+	return HasCustomProp( iEntityRef, szPropertyName );
+}
+bool HasCustomProp( int iEntityRef, const char[] szPropertyName ) {
+	StringMap smTemp;
+	if( g_amEntities.GetValue( iEntityRef, smTemp ) ) {
+		return smTemp.ContainsKey( szPropertyName );
+	}
+	return false;
 }
 
 void RegisterEntity( int iEntityRef ) {
