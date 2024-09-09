@@ -19410,24 +19410,16 @@ Reworked by:'Unconventional Healing Tactics'"
 					"attribute_class"	"lunchbox_addcond"
 					"value"				"32 10.0"
 				}
-				"health kits can overheal on wearer"
-				{
-				    "attribute_class"   "health_kits_can_overheal_wearer"
-					"value"             "1"
-				}
-				
 				"lunchbox healing decreased" //No attribute for increasing it, go figure.
 				{
 					"attribute_class"	"lunchbox_healing_scale"
 					"value"				"0.5417"
 				}
-				
 				"special taunt"		//Imagine this being interrupted on Halloween. Yeesh.
 				{
 					"attribute_class"	"special_taunt"
 					"value"				"1"
 				}
-				
 				"custom lunchbox throwable model" //The bottle standing upright was Reagy's idea!
 				{
 					"attribute_class"	"custom_lunchbox_throwable_model"
