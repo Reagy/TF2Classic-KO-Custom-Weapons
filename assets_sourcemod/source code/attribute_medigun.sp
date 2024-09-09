@@ -685,7 +685,7 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	float flMult = alList.Length > 1 ? Pow( 0.9, float( alList.Length ) ) : 1.0;
 	flChargeAmount *= flMult;
 
-	PrintToServer("%f %i", flChargeAmount, alList.Length);
+	//PrintToServer("%f %i", flChargeAmount, alList.Length);
 
 	float flOldCharge = Tracker_GetValue( iOwner, g_szHydropumpTrackerName );
 	float flNewCharge = flOldCharge + flChargeAmount;

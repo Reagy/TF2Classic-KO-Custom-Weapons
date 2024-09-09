@@ -2743,7 +2743,13 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"sniper_full_charge_damage_bonus"
 					"value"				"1.2"
-				}				
+				}
+
+				"kill eater score type"
+				{
+					"attribute_class"	"custom_sniper_laser"
+					"value"				"1"
+				}
 			}
 			"visuals"
 			{
@@ -19798,6 +19804,12 @@ Plugin by: 'Noclue'"
                     "attribute_class"    "mult_crit_chance"
                     "value"                "0"
                 }
+				
+				"grenade no spin"
+				{
+					"attribute_class"	"custom_junkrat_pipes"
+					"value" "1"
+				}
 				
                 "custom projectile model" //With a custom trail to boot!
                 {
@@ -45386,28 +45398,22 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------------------	
 		"9962"
 		{
-		    "tags"
-			{
-				"bots_cant_use"			"1"
-			}
 			"name"						"TF_WEAPON_HYDROPUMP"
 			"prefab"					"weapon_medigun"
 			"item_class"				"tf_weapon_flamethrower"
+			"equip_region"				"grenades"
+			
 			"show_in_armory"			"1"
 			"item_name_color"           "190 200 233 255"
 			"item_name"					"Hydro Pump"
 			"item_logname" 				"Hydro Pump"
 			"item_iconname"				"Hydro Pump"
 			"item_type_name"			"Pressurized Healing Dispenser"
-			"item_description"			"Spray allies with a stream of healing liquid that builds up pressure
-Pressure Gauge: Alt-Fire to consume 20% pressure to destroy nearby enemy projectiles
-
-Model by: 'GoLDeN'
-Weapon by: 'Noclue'"
-			"propername"				"0"
-			"image_inventory"			"backpack/weapons/c_models/c_brandspuit/c_brandspuit"
-			"model_player"				"models/workshop/weapons/c_models/c_brandspuit/c_brandspuit_v2.mdl"
-			"extra_wearable"			"models/weapons/c_models/c_biomed_backpack/c_biomed_backpack.mdl"
+			"item_description"			"Spray allies with a stream of healing liquid"
+			
+			"propername"				"1"
+			"image_inventory"			"backpack/weapons/c_models/c_brandspuit/c_brandspuit_v2"
+			"model_player"				"models/workshop/weapons/c_models/c_brandspuit/c_brandspuit_v3.mdl"
 			"attach_to_hands"			"1"
 			"min_ilevel"				"8"
 			"max_ilevel"				"8"
@@ -45415,12 +45421,12 @@ Weapon by: 'Noclue'"
 			"anim_slot"					"secondary"
 			"item_slot"					"secondary"
 			
-			"bucket"			"1"
-			"bucket_position"		"0"
+			"bucket"					"1"
+			"bucket_position"			"0"
 			
 			"used_by_classes"
 			{
-				"medic"				"1"
+				"medic"					"1"
 			}
 			
 			"attributes"
@@ -45437,10 +45443,32 @@ Weapon by: 'Noclue'"
 					"value"				"1"
 				}
 				
+				"strange restriction type 1"
+				{
+					"attribute_class"	"airblast_disabled"
+					"value"				"1"
+				}
+				"airblast cost increased"
+				{
+					"attribute_class"	"mult_airblast_cost"
+					"value"				"100.0"
+				}
+				
 				"flame ammopersec decreased"
 				{
 					"attribute_class"	"mult_flame_ammopersec"
 					"value"				"0.0"
+				}
+				
+				"mult flame velocity"
+				{
+					"attribute_class"	"mult_flame_velocity"
+					"value"				"1.35"
+				}
+				"mult flame size"
+				{
+					"attribute_class"	"mult_flame_size"
+					"value"				"1.5"
 				}
 				
 				"hide ammo hud"
@@ -45455,21 +45483,11 @@ Weapon by: 'Noclue'"
 					"value"				"6"
 				}
 				
-				"airblast_destroy_projectile"
-				{
-					"attribute_class"	"airblast_destroy_projectile"
-					"value"				"1"
-				}
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}
-                "weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"0.001"
-				}				
+				}	
 			}
 			"visuals"
 			{
@@ -45477,11 +45495,10 @@ Weapon by: 'Noclue'"
 				"sound_reload"	        "Weapon_HydroPump.Loop"
 				"sound_burst"			"Weapon_HydroPump.Loop"
 				"sound_special3"		"Weapon_HydroPump.End"	
-				"sound_double_shot"     "Weapon_HydroPump.AirBurstAttack"
 			
 				"player_bodygroups"
 				{
-					"medic_backpack"			"1"
+					//"medic_backpack"	"1"
 				}
 			}
 			"visuals_red"

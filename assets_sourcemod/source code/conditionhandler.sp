@@ -68,7 +68,7 @@ static char	g_szHydroUberParticlesFP[][] = {
 int		g_iHydroPumpUberEmitters[MAXPLAYERS+1][2];
 
 
-#define DEBUG
+//#define DEBUG
 
 #define SetCondNextTick(%1,%2,%3) g_ePlayerConds[%1][%2].flNextTick = %3
 
