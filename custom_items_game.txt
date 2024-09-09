@@ -19347,21 +19347,20 @@ Weapon by: 'Majro'"
 		{
 			"name"						"TF_WEAPON_BEER_BOTTLE"
 			"item_class"				"tf_weapon_lunchbox"							
-			"show_in_armory"			"0"
-			"item_slot"					"primary"
+			"show_in_armory"			"1"
+			"item_slot"					"secondary"
 			"anim_slot"					"pda"
 			"item_name"					"Mann Beer"
 			"item_type_name"			"Beer Bottle"
 			"item_name_color"           "190 200 233 255"
-			"bucket"					"0"														
-			"bucket_position"			"0"
 			
-			"item_description"			"Drink up to gain Haste, speeding up you and your attacks for 10 seconds, and heal up to 64 health.
-Alt-Fire: Share a cold one with a Friend (Medium Health Kit)
+			"item_description"			"Drink up to gain a speedboost for 10 seconds, and heal up to 64 health.
+Alt-Fire: Share a cold one with a Friend to Give em a speed boost for 7 seconds (Small Health Kit)
 
 
 Model by: 'Evil Knevil' 'Anyar'
-Item by: 'Majro'"
+Item by: 'Majro'
+Reworked by:'Unconventional Healing Tactics'"
 //Evil Knevil made the actual model and Anyar made the clean plate
 
 			"image_inventory_size_w"	"128"
@@ -19378,29 +19377,43 @@ Item by: 'Majro'"
 			"static_attrs"
 			{
 				"item_meter_charge_type"				"1"		//What's this do? No idea.					
-				"meter_label"							"BEER"
+				"meter_label"							"Beer"
 				"min_viewmodel_offset"					"10 -2 -9"
 				"allowed in medieval mode"				"1"		//Hee hee.	
+				"apply cond on pickup wearer"			"3 32 7.0"
+				"custom lunchbox throwable type"		"1"
 			}
 			"attributes"
 			{
-
+			    "maxammo grenades1 increased"
+				{
+				    "attribute_class"   "mult_maxammo_grenades1"
+					"value"             "2"
+				}
+				"effect bar recharge rate increased" //Should this be in the description? Dalokohs doesn't show it, so...
+				{
+					"attribute_class"	"effectbar_recharge_rate"
+					"value"				"0.5"
+				}
+                "health from packs decreased"
+				{
+				    "attribute_class"   "mult_health_frompacks"
+					"value"             "0"
+				}
 				"hidden separator"
 				{
 					"attribute_class"	"hidden_separator"
 					"value"				"1"
 				}
-
 				"lunchbox add condition on eat" 
 				{
 					"attribute_class"	"lunchbox_addcond"
-					"value"				"121 10"
+					"value"				"32 10.0"
 				}
-				
-				"effect bar recharge rate increased" //Should this be in the description? Dalokohs doesn't show it, so...
+				"health kits can overheal on wearer"
 				{
-					"attribute_class"	"effectbar_recharge_rate"
-					"value"				"0.5"
+				    "attribute_class"   "health_kits_can_overheal_wearer"
+					"value"             "1"
 				}
 				
 				"lunchbox healing decreased" //No attribute for increasing it, go figure.
