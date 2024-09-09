@@ -33308,6 +33308,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"1.0"
 				}
+				"kill eater score type"
+				{
+					"attribute_class"	"custom_sniper_laser"
+					"value"				"1"
+				}
 			}
 			"visuals"
 			{
@@ -45409,7 +45414,8 @@ Weapon by: 'The One Of Wonders'"
 			"item_logname" 				"Hydro Pump"
 			"item_iconname"				"Hydro Pump"
 			"item_type_name"			"Pressurized Healing Dispenser"
-			"item_description"			"Spray allies with a stream of healing liquid"
+			"item_description"			"Spray allies with a stream of healing liquid
+ÜberCharge provides a healing area that constantly heals nearby allies"
 			
 			"propername"				"1"
 			"image_inventory"			"backpack/weapons/c_models/c_brandspuit/c_brandspuit_v2"
@@ -47089,7 +47095,7 @@ Fan-Fire: Hold fire button for maximum destruction!"
 		"7591"
 		{
 			"name"					"Sphere Charge Passive"
-			"description_string"	"Shield energy builds up passively and by dealing damage"												
+			"description_string"	"Dealing damage builds up shield energy"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"neutral"
 		}
