@@ -21424,6 +21424,8 @@ Weapon by: 'The One Of Wonders'"
 		}
 //-------------------------------------
 // HEALING LAUNCHER -- 9009
+// Bugged when on server, causes debugger to display due to 2 errors
+// Related to backpack attribute, will be back if ever fixed
 //-------------------------------------	
 		"9009"
 		{
@@ -21433,7 +21435,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"name"						"TF_WEAPON_GRENADE_MEDIGUN"
 			"item_class"                "tf_weapon_paintballrifle"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			"item_slot"					"secondary"
 			"anim_slot"					"primary"
             "bucket"					"1"														
