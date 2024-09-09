@@ -372,7 +372,7 @@ MRESReturn Hook_PipebombVPhysCollide( int iThis, DHookParam hParams ) {
 
 	if( bTouched && !bOldTouched ) {
 		float flDamage = LoadFromEntity( iThis, 1212 );
-		StoreToEntity( iThis, 1212, flDamage * 0.5 );
+		StoreToEntity( iThis, 1212, flDamage * 0.7 );
 		SetCustomProp( iThis, "m_bTouched", true );
 	}
 	//load from gamedata
