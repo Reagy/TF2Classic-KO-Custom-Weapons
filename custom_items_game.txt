@@ -21113,6 +21113,11 @@ Weapon by: 'Panáček'"
 					"attribute_class"	"mult_dmgself_push_force"
 					"value"				"0"
 				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
 			}
 			"visuals"
 			{
@@ -41375,6 +41380,11 @@ Sound by: 'Sevan'"
 				{
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"1.0"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
 				}
 			}
 			"visuals"
