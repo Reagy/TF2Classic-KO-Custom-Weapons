@@ -1176,6 +1176,13 @@
 				}
 			}
 			
+			"CTFFlameThrower::SimulateFlames"
+			{
+				"signature"		"CTFFlameThrower::SimulateFlames"
+				"callconv"		"thiscall"
+				"this"			"address"
+				"return"		"void"
+			}
 			"CTFFlameEntity::OnCollide"
 			{
 				"signature"		"CTFFlameEntity::OnCollide"
@@ -1506,6 +1513,12 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN28CTFGrenadePipebombProjectile6CreateERK6VectorRK6QAngleS2_S2_P11CBaseEntityS7_i"
+			}
+			
+			"CTFFlameThrower::SimulateFlames"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15CTFFlameThrower14SimulateFlamesEv"
 			}
 			
 			"CTFFlameEntity::OnCollide"
