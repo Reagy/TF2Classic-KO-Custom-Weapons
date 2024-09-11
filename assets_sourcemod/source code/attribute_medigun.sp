@@ -18,7 +18,7 @@
 #define HYDRO_PUMP_HEAL_RATE 30.0
 #define HYDRO_PUMP_AFTERHEAL_RATE 6.0
 #define HYDRO_PUMP_AFTERHEAL_MAX_LENGTH 4.0
-#define HYDRO_PUMP_CHARGE_TIME 50.0
+#define HYDRO_PUMP_CHARGE_TIME 35.0
 static char g_szHydropumpTrackerName[32]	= "Ubercharge";
 static char g_szHydropumpHealSound[]		= "weapons/HPump_Hit.wav";
 static char g_szHydropumpChargedSound[]		= "weapons/HPump_Charged.wav";
@@ -57,6 +57,7 @@ DynamicDetour	g_dtFireCollideTeam;
 DynamicDetour	g_dtApplyOnHitAttributes;
 DynamicDetour	g_dtPaintballRifleHitAlly;
 DynamicDetour	g_dtAddBurstHealer;
+DynamicDetour	g_dtSimulateFlames;
 
 DynamicHook	g_dhWeaponPostframe;
 DynamicHook	g_dhWeaponPrimary;
@@ -208,6 +209,10 @@ public void OnPluginStart() {
 	
 	g_dtAddBurstHealer = DynamicDetourFromConfSafe( hGameConf, "CTFPlayerShared::AddBurstHealer" );
 	g_dtAddBurstHealer.Enable( Hook_Pre, Detour_AddBurstHealer );
+
+	g_dtSimulateFlames = DynamicDetourFromConfSafe( hGameConf, "CTFWeaponFlamethrower::SimulateFlames" );
+	g_dtSimulateFlames.Enable( Hook_Pre, Detour_SimulateFlamesPre );
+	g_dtSimulateFlames.Enable( Hook_Post, Detour_SimulateFlamesPost );
 
 	delete hGameConf;
 
@@ -561,6 +566,25 @@ MRESReturn Hook_HydroPumpHolster( int iWeapon, DHookReturn hReturn, DHookParam h
 	return MRES_Handled;
 }
 
+MRESReturn Detour_SimulateFlamesPre( int iFlamethrower ) {
+	int iOwner = GetEntPropEnt( iFlamethrower, Prop_Send, "m_hOwnerEntity" );
+	if( !IsValidPlayer(iOwner) )
+		return MRES_Ignored;
+
+	SetForceLagCompensation(true);
+
+	return MRES_Handled;
+}
+MRESReturn Detour_SimulateFlamesPost( int iFlamethrower ) {
+	int iOwner = GetEntPropEnt( iFlamethrower, Prop_Send, "m_hOwnerEntity" );
+	if( !IsValidPlayer(iOwner) )
+		return MRES_Ignored;
+
+	SetForceLagCompensation(false);
+
+	return MRES_Handled;
+}
+
 //apparently tf2c flame particles aren't even derived from cbaseentity so they're passed by address instead
 MRESReturn Detour_FireTouch( Address aFlame, DHookParam hParams ) {
 	int iTarget = hParams.Get( 1 );
@@ -641,7 +665,7 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	}
 
 	HandleUberStacks( iOwner );
-	flChargeAmount *= 1.0 + g_flUberBonusRate[iOwner];
+	flChargeAmount *= 1.0 + ( g_flUberBonusRate[iOwner] * 0.01 );
 
 	flChargeAmount = AttribHookFloat( flChargeAmount, iWeapon, "mult_medigun_uberchargerate" );
 	flChargeAmount = AttribHookFloat( flChargeAmount, iOwner, "mult_medigun_uberchargerate_wearer" );

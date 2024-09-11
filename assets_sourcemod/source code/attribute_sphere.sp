@@ -38,9 +38,9 @@ static char g_szShieldRetractSnd[] = "weapons/medi_shield_retract.wav";
 static char g_szShieldKeyName[32] = "Shield";
 
 //max shield energy
-#define SHIELD_MAX 800.0
+#define SHIELD_MAX 1000.0
 //multiplier for shield energy to be gained when dealing damage
-#define SHIELD_DAMAGE_TO_CHARGE_SCALE 1.0
+#define SHIELD_DAMAGE_TO_CHARGE_SCALE 2.0
 //multiplier for shield energy to be lost when it is damaged
 #define SHIELD_DAMAGE_DRAIN_SCALE 1.0
 
