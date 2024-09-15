@@ -45561,12 +45561,12 @@ Weapon by: 'The One Of Wonders'"
 				"mult flame velocity"
 				{
 					"attribute_class"	"mult_flame_velocity"
-					"value"				"1.35"
+					"value"				"1.75"
 				}
 				"mult flame size"
 				{
 					"attribute_class"	"mult_flame_size"
-					"value"				"1.5"
+					"value"				"2.0"
 				}
 				
 				"hide ammo hud"
