@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_invasion_sniperrifle\c_invasion_sniperrifle_large"
+	$translucent 1
+}

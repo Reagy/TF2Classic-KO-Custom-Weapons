@@ -1,0 +1,25 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models/weapons/ag_sp/silenced_pistol"
+
+	"$phong" "1"
+	"$basemapalphaphongmask" "1"
+	"$phongexponent" "10"
+//	"$phongexponenttexture" "models/weapons/ag_sp/silenced_pistol_exp"
+	"$phongboost" ".1"	
+	"$phongfresnelranges"	"[.3 .5 3]"
+//	"$PhongAlbedoTint" "1"
+
+//	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+//	"$lightwarptexture"	"models/lightwarps/robot_lightwarp"
+	"$lightwarptexture"		"models/player/pyro/pyro_lightwarp"
+
+//	"$envmap"	"env_cubemap"
+//	"$basemapalphaenvmapmask" "1"
+//	"$envmaptint" "[.2 .2 .2]"
+
+//	"$rimlight" "1"
+//	"$rimlightexponent" "4"	
+//	"$rimlightboost" "0.5"
+//	"$rimmask" "1"
+}

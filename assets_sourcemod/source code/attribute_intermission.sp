@@ -449,7 +449,7 @@ void SapBuilding( int iOwner, int iObjectIndex ) {
 	AttachParticle( iObjectIndex, EFFECT_SENTRY_SPARKS1, 0.5, vecEffectPos );
 	AttachParticle( iObjectIndex, EFFECT_SENTRY_SPARKS2, 0.5, vecEffectPos );
 
-	int iSapCount = GetCustomProp( iObjectIndex, "m_iSapCount" );
+	int iSapCount = 0; GetCustomProp( iObjectIndex, "m_iSapCount", iSapCount );
 
 #if defined DEBUG
 	PrintToServer( "building %i added sapper, count %i", iObjectIndex, iSapCount+1 );
@@ -469,7 +469,7 @@ void UnsapBuilding( int iOwner, int iObjectIndex ) {
 	if( !IsValidEntity( iObjectIndex ) )
 		return;
 
-	int iSapCount = GetCustomProp( iObjectIndex, "m_iSapCount" );
+	int iSapCount = 0; GetCustomProp( iObjectIndex, "m_iSapCount", iSapCount );
 
 #if defined DEBUG
 	PrintToServer( "building %i removed sapper, count %i", iObjectIndex, iSapCount-1 );
@@ -524,7 +524,8 @@ public void OnTakeDamageBuilding( int iBuilding, Address aDamageInfo ) {
 	if( !IsValidPlayer( iAttacker ) )
 		return;
 
-	if( GetCustomProp( iBuilding, "m_iSapCount" ) <= 0 )
+	int iSapCount = 0; GetCustomProp( iBuilding, "m_iSapCount", iSapCount );
+	if( iSapCount <= 0 )
 		return;
 
 	//if building is in attacker's sap list return

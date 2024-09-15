@@ -8,13 +8,15 @@
 #include <kocwtools>
 #include <hudframework>
 #include <give_econ>
+#include <condhandler>
+#include <custom_entprops>
 
 public Plugin myinfo =
 {
 	name = "Condition Handler",
 	author = "Noclue",
 	description = "Core plugin for custom conditions.",
-	version = "1.1.4",
+	version = "2.0",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -24,40 +26,58 @@ public Plugin myinfo =
 	PROPERTIES
 */
 
-const float	TOXIN_FREQUENCY		= 0.5;	//tick interval in seconds
-const float	TOXIN_DAMAGE		= 2.0;	//damage per tick
-const float	TOXIN_HEALING_MULT	= 0.25;	//multiplier for healing while under toxin
+bool		g_bHasCond[MAXPLAYERS+1][TFCC_LAST];
+EffectProps	g_ePlayerConds[MAXPLAYERS+1][TFCC_LAST];
 
-const int	ANGSHIELD_HEALTH	= 80;	//angel shield health
-const float	ANGSHIELD_DURATION	= 8.0;	//angel shield duration
-const float	ANGINVULN_DURATION	= 0.25;	//invulnerability period after a shield breaks
-
-const float	FLAME_HEALRATE		= 30.0;	//health per second restored by the hydro pump
-
+const float	g_flToxinFrequency	= 0.5;	//tick interval in seconds
+const float	g_flToxinDamage		= 2.0;	//damage per tick
+const float	g_flToxinHealingMult	= 0.25;	//multiplier for healing while under toxin
 static char	g_szToxinLoopSound[]	= "items/powerup_pickup_plague_infected_loop.wav";
+
+const int	g_iAngShieldHealth	= 80;	//angel shield health
+const float	g_iAngShieldDuration	= 8.0;	//angel shield duration
+const float	g_iAngInvulnDuration	= 0.25;	//invulnerability period after a shield breaks
+int 		g_iAngelShields[MAXPLAYERS+1][2]; //0 contains the refid of the shield, 1 contains the refid of the material manager used for the damage effect
+
+
+static char	g_szHydroPumpHealParticles[][] = {
+	"mediflame_heal_red",
+	"mediflame_heal_blue",
+	"mediflame_heal_green",
+	"mediflame_heal_yellow"
+};
+int		g_iHydroPumpEmitters[MAXPLAYERS+1] = { INVALID_ENT_REFERENCE, ... };
+
+const float	g_flHydroUberHealRate	= 24.0;
+const float	g_flHydroUberDuration	= 10.0;
+const float	g_flHydroUberRange	= 500.0;
+const float	g_flHydroUberFrequency	= 0.2;
+static char	g_szHydroUberSound[]	= "weapons/HPump_Uber.wav";
+static char	g_szHydroUberParticles[][] = {
+	"mediflame_uber_red",
+	"mediflame_uber_blue",
+	"mediflame_uber_green",
+	"mediflame_uber_yellow"
+};
+static char	g_szHydroUberParticlesFP[][] = {
+	"mediflame_uber_red_fp",
+	"mediflame_uber_blue_fp",
+	"mediflame_uber_green_fp",
+	"mediflame_uber_yellow_fp"
+};
+int		g_iHydroPumpUberEmitters[MAXPLAYERS+1][2];
+
 
 //#define DEBUG
 
-enum {
-	TFCC_TOXIN = 0,
-	TFCC_TOXINUBER, //unused
-	TFCC_UNUSED1, //unused
+#define SetCondNextTick(%1,%2,%3) g_ePlayerConds[%1][%2].flNextTick = %3
 
-	TFCC_ANGELSHIELD,
-	TFCC_ANGELINVULN,
-
-	TFCC_QUICKUBER,
-
-	TFCC_UNUSED2, //unused
-
-	TFCC_FLAMEHEAL,
-
-	TFCC_LAST
-}
-const int COND_BITFIELDS = (TFCC_LAST / 32) + 1;
+#define GetCondTime(%1,%2) g_ePlayerConds[%1][%2].flExpireTime
+#define GetCondSrcPlr(%1,%2) EntRefToEntIndex( g_ePlayerConds[%1][%2].iEffectSource )
+#define GetCondSrcWpn(%1,%2) EntRefToEntIndex( g_ePlayerConds[%1][%2].iEffectWeapon )
 
 enum struct EffectProps {
-	int	iLevel;		//condition strength
+	any	condLevel;	//condition strength
 
 	float	flExpireTime;	//time when effect expires
 	float	flNextTick;	//time when effect should tick next
@@ -65,12 +85,6 @@ enum struct EffectProps {
 	int	iEffectSource; 	//player that caused effect
 	int	iEffectWeapon; 	//weapon that caused effect
 }
-
-bool		g_bHasCond[MAXPLAYERS+1][TFCC_LAST];
-EffectProps	g_ePlayerConds[MAXPLAYERS+1][TFCC_LAST];
-
-//0 contains the index of the shield, 1 contains the material manager used for the damage effect
-int 		g_iAngelShields[MAXPLAYERS+1][2];
 
 DynamicHook g_dhTakeHealth;
 DynamicDetour g_dtHealConds;
@@ -80,8 +94,13 @@ DynamicDetour g_dtAirblastPlayer;
 
 DynamicHook g_dhOnKill;
 
-Handle g_hGetMaxHealth;
-Handle g_hGetBuffedMaxHealth;
+Handle g_sdkGetMaxHealth;
+Handle g_sdkGetBuffedMaxHealth;
+
+Handle g_sdkPlayerBlockedDamage;
+Handle g_sdkPlayerDamage;
+
+Address g_iCTFGameStats;
 
 bool g_bLateLoad;
 public APLRes AskPluginLoad2( Handle myself, bool bLate, char[] error, int err_max ) {
@@ -121,44 +140,67 @@ public void OnGameFrame() {
 		if( HasCond( i, TFCC_QUICKUBER ) )
 			TickQuickUber( i );
 
-		if( HasCond( i, TFCC_FLAMEHEAL ) )
-			TickFlameHeal( i );
+		if( HasCond( i, TFCC_HYDROPUMPHEAL ) )
+			TickHydroPumpHeal( i );
 	}
 }
 
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
-	g_dhTakeHealth = DynamicHook.FromConf( hGameConf, "CTFPlayer::TakeHealth" );
-	g_dtHealConds = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::HealNegativeConds" );
+	g_dhTakeHealth = DynamicHookFromConfSafe( hGameConf, "CTFPlayer::TakeHealth" );
+	g_dtHealConds = DynamicDetourFromConfSafe( hGameConf, "CTFPlayerShared::HealNegativeConds" );
 	g_dtHealConds.Enable( Hook_Post, Detour_HealNegativeConds );
 
-	g_dtApplyOnHit = DynamicDetour.FromConf( hGameConf, "CTFWeaponBase::ApplyOnHitAttributes" );
-	g_dtApplyOnHit.Enable( Hook_Post, Detour_OnHit );
+	g_dtApplyOnHit = DynamicDetourFromConfSafe( hGameConf, "CTFWeaponBase::ApplyOnHitAttributes" );
+	g_dtApplyOnHit.Enable( Hook_Post, Detour_ApplyOnHitAttributes );
 
-	//todo: add to gamedata
-	g_dhOnKill = new DynamicHook( 69, HookType_Entity, ReturnType_Void, ThisPointer_CBaseEntity );
-	g_dhOnKill.AddParam( HookParamType_CBaseEntity );
-	g_dhOnKill.AddParam( HookParamType_ObjectPtr );
+	g_dhOnKill = DynamicHookFromConfSafe( hGameConf, "CTFPlayer::Event_KilledOther" );
 
-	g_dtApplyPushForce = DynamicDetour.FromConf( hGameConf, "CTFPlayer::ApplyPushFromDamage" );
+	g_dtApplyPushForce = DynamicDetourFromConfSafe( hGameConf, "CTFPlayer::ApplyPushFromDamage" );
 	g_dtApplyPushForce.Enable( Hook_Pre, Detour_ApplyPushFromDamage );
-	g_dtAirblastPlayer = DynamicDetour.FromConf( hGameConf, "CTFPlayerShared::AirblastPlayer" );
+	g_dtAirblastPlayer = DynamicDetourFromConfSafe( hGameConf, "CTFPlayerShared::AirblastPlayer" );
 	g_dtAirblastPlayer.Enable( Hook_Pre, Detour_AirblastPlayer );
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameStats::Event_PlayerDamage" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkPlayerDamage = EndPrepSDKCallSafe( "CTFGameStats::Event_PlayerDamage" );
+
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGameStats::Event_PlayerBlockedDamage" );
+	PrepSDKCall_AddParameter( SDKType_CBasePlayer, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkPlayerBlockedDamage = EndPrepSDKCallSafe( "CTFGameStats::Event_PlayerBlockedDamage" );
 
 	StartPrepSDKCall( SDKCall_Player );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFPlayer::GetMaxHealth" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	g_hGetMaxHealth = EndPrepSDKCall();
+	g_sdkGetMaxHealth = EndPrepSDKCallSafe( "CTFPlayer::GetMaxHealth" );
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetBuffedMaxHealth" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	g_hGetBuffedMaxHealth = EndPrepSDKCall();
+	g_sdkGetBuffedMaxHealth = EndPrepSDKCallSafe( "CTFPlayerShared::GetBuffedMaxHealth" );
+
+	g_iCTFGameStats = GameConfGetAddress( hGameConf, "CTFGameStats" );
 
 	for( int i = 0; i < MAXPLAYERS+1; i++ ) {
-		g_iAngelShields[i][0] = -1;
-		g_iAngelShields[i][1] = -1;
+		g_iAngelShields[i][0] = INVALID_ENT_REFERENCE;
+		g_iAngelShields[i][1] = INVALID_ENT_REFERENCE;
+
+		g_iHydroPumpUberEmitters[i][0] = INVALID_ENT_REFERENCE;
+		g_iHydroPumpUberEmitters[i][1] = INVALID_ENT_REFERENCE;
+
+		for( int j = 0; j < TFCC_LAST; j++ ) {
+			SetCondLevel( i, j, 0 );
+			SetCondDuration( i, j, 0.0, false );
+			SetCondNextTick( i, j, 0.0 );
+			g_ePlayerConds[i][j].iEffectSource = INVALID_ENT_REFERENCE;
+			g_ePlayerConds[i][j].iEffectWeapon = INVALID_ENT_REFERENCE;
+		}
 	}
 
 	HookEvent( "player_death", Event_PlayerDeath, EventHookMode_Post );
@@ -177,7 +219,7 @@ public void OnPluginStart() {
 	delete hGameConf;
 
 #if defined DEBUG
-	RegConsoleCmd( "sm_cond_test", Command_Test, "test");
+	RegConsoleCmd( "sm_cond_test", Command_Test );
 #endif
 }
 
@@ -222,6 +264,9 @@ MRESReturn Hook_OnPlayerKill( int iThis, DHookParam hParams ) {
 
 public void OnMapStart() {
 	PrecacheSound( g_szToxinLoopSound );
+	PrecacheSound( g_szHydroUberSound );
+
+	//todo: move to static strings
 	PrecacheSound( "weapons/buffed_off.wav" );
 	PrecacheModel( "models/effects/resist_shield/resist_shield.mdl" );
 }
@@ -232,7 +277,7 @@ Action Command_Test( int iClient, int iArgs ) {
 
 	int iCondIndex = GetCmdArgInt( 1 );
 	for( int i = 1; i <= MaxClients; i++ ) {
-		if( IsClientInGame( i ) ) {
+		if( IsValidEntity(i) ) {
 			AddCond( i, iCondIndex );
 			SetCondDuration( i, iCondIndex, 10.0, false );
 			SetCondSourcePlayer( i, iCondIndex, iClient );
@@ -256,9 +301,11 @@ bool IsNegativeCond( int iCond ) {
 public any Native_AddCond( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell(1);
 	int iEffect = GetNativeCell(2);
-	return AddCond( iPlayer, iEffect );
+	int iSource = GetNativeCell(3);
+	int iWeapon = GetNativeCell(4);
+	return AddCond( iPlayer, iEffect, iSource, iWeapon );
 }
-bool AddCond( int iPlayer, int iCond ) {
+bool AddCond( int iPlayer, int iCond, int iSource = -1, int iWeapon = -1 ) {
 	if( iCond < 0 || iCond >= TFCC_LAST || !IsValidPlayer( iPlayer ) )
 		return false;
 
@@ -267,11 +314,20 @@ bool AddCond( int iPlayer, int iCond ) {
 	if( IsNegativeCond( iCond ) && ( HasCond( iPlayer, TFCC_ANGELSHIELD ) || HasCond( iPlayer, TFCC_ANGELINVULN ) ) )
 		return false;
 
+	SetCondSourcePlayer( iPlayer, iCond, iSource );
+	SetCondSourceWeapon( iPlayer, iCond, iWeapon );
+
 	bool bGaveCond = false;
 	switch( iCond ) {
 	case TFCC_TOXIN: {
 		AddToxin( iPlayer );
 		bGaveCond = true;
+	}
+	case TFCC_HYDROPUMPHEAL: {
+		bGaveCond = AddHydroPumpHeal( iPlayer, iSource );
+	}
+	case TFCC_HYDROUBER: {
+		bGaveCond = AddHydroUber( iPlayer );
 	}
 	case TFCC_ANGELSHIELD: {
 		AddAngelShield( iPlayer );
@@ -286,9 +342,6 @@ bool AddCond( int iPlayer, int iCond ) {
 	}
 	case TFCC_TOXINUBER: {
 		bGaveCond = AddToxinUber( iPlayer );
-	}
-	case TFCC_FLAMEHEAL: {
-		bGaveCond = AddFlameHeal( iPlayer );
 	}
 	}
 
@@ -326,6 +379,12 @@ bool RemoveCond( int iPlayer, int iCond ) {
 	case TFCC_TOXIN: {
 		RemoveToxin( iPlayer );
 	}
+	case TFCC_HYDROPUMPHEAL: {
+		RemoveHydroPumpHeal( iPlayer );
+	}
+	case TFCC_HYDROUBER: {
+		RemoveHydroUber( iPlayer );
+	}
 	case TFCC_ANGELSHIELD: {
 		RemoveAngelShield( iPlayer );
 	}
@@ -337,8 +396,8 @@ bool RemoveCond( int iPlayer, int iCond ) {
 	}
 	}
 
-	g_ePlayerConds[iPlayer][iCond].iLevel =		0;
-	g_ePlayerConds[iPlayer][iCond].flExpireTime =	0.0;
+	g_ePlayerConds[iPlayer][iCond].condLevel =		0;
+	g_ePlayerConds[iPlayer][iCond].flExpireTime =		0.0;
 	g_ePlayerConds[iPlayer][iCond].flNextTick	=	0.0;
 	g_ePlayerConds[iPlayer][iCond].iEffectSource =	INVALID_ENT_REFERENCE;
 	g_ePlayerConds[iPlayer][iCond].iEffectWeapon =	INVALID_ENT_REFERENCE;
@@ -361,19 +420,19 @@ public any Native_GetCondLevel( Handle hPlugin, int iNumParams ) {
 
 	return GetCondLevel( iPlayer, iEffect );
 }
-int GetCondLevel( int iPlayer, int iCond ) {
-	return g_ePlayerConds[iPlayer][iCond].iLevel;
+any GetCondLevel( int iPlayer, int iCond ) {
+	return g_ePlayerConds[iPlayer][iCond].condLevel;
 }
 public any Native_SetCondLevel( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell(1);
 	int iEffect = GetNativeCell(2);
-	int iLevel =  GetNativeCell(3);
+	any level =  GetNativeCell(3);
 
-	SetCondLevel( iPlayer, iEffect, iLevel);
+	SetCondLevel( iPlayer, iEffect, level );
 	return 0;
 }
-void SetCondLevel( int iPlayer, int iCond, int iNewLevel ) {
-	g_ePlayerConds[iPlayer][iCond].iLevel = iNewLevel;
+void SetCondLevel( int iPlayer, int iCond, any newLevel ) {
+	g_ePlayerConds[iPlayer][iCond].condLevel = newLevel;
 }
 
 //cond duration
@@ -423,8 +482,11 @@ public any Native_SetCondSourcePlayer( Handle hPlugin, int iNumParams ) {
 	SetCondSourcePlayer( iPlayer, iEffect, iSource );
 	return 0;
 }
-void SetCondSourcePlayer( int iPlayer, int iCond, int iSource ) {
-	g_ePlayerConds[iPlayer][iCond].iEffectSource = EntIndexToEntRef( iSource );
+void SetCondSourcePlayer( int iPlayer, int iCond, int iSourceIndex ) {
+	if( iSourceIndex == -1 )
+		return;
+
+	g_ePlayerConds[iPlayer][iCond].iEffectSource = EntIndexToEntRef( iSourceIndex );
 }
 
 //cond weapon source
@@ -445,8 +507,11 @@ public any Native_SetCondSourceWeapon( Handle hPlugin, int iNumParams ) {
 	SetCondSourceWeapon( iPlayer, iEffect, iWeapon );
 	return 0;
 }
-void SetCondSourceWeapon( int iPlayer, int iCond, int iWeapon ) {
-	g_ePlayerConds[iPlayer][iCond].iEffectWeapon = EntIndexToEntRef( iWeapon );
+void SetCondSourceWeapon( int iPlayer, int iCond, int iWeaponIndex ) {
+	if( iWeaponIndex == -1 )
+		return;
+
+	g_ePlayerConds[iPlayer][iCond].iEffectWeapon = EntIndexToEntRef( iWeaponIndex );
 }
 
 /*
@@ -465,15 +530,12 @@ MRESReturn Detour_HealNegativeConds( Address aThis, DHookReturn hReturn ) {
 	return MRES_ChangedOverride;
 }
 
-MRESReturn Detour_OnHit( int iWeapon, DHookParam hParams ) {
-	//int iOwner = GetEntPropEnt( iWeapon, Prop_Send, "m_hOwnerEntity" );
-	//int iSomething = hParams.Get( 1 );
-	//PrintToServer("test");
-
-	int iVictim = hParams.Get( 2 );
-
+MRESReturn Detour_ApplyOnHitAttributes( int iWeapon, DHookParam hParams ) {
 	if( hParams.IsNull( 1 ) )
 		return MRES_Ignored;
+
+	//int iAttacker = hParams.Get( 1 );
+	int iVictim = hParams.Get( 2 );
 
 	TFDamageInfo tfInfo =  TFDamageInfo( hParams.GetAddress( 3 ) );
 
@@ -481,7 +543,6 @@ MRESReturn Detour_OnHit( int iWeapon, DHookParam hParams ) {
 
 	return MRES_Handled;
 }
-
 
 public void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aTakeDamageInfo );
@@ -645,8 +706,8 @@ void TickToxin( int iPlayer ) {
 		iDamageWeapon = 0;
 	
 	//todo: prevent this from applying more toxin
-	SDKHooks_TakeDamage( iPlayer, iDamagePlayer, iDamagePlayer, TOXIN_DAMAGE, DMG_GENERIC | DMG_PHYSGUN, iDamageWeapon, NULL_VECTOR, NULL_VECTOR, false );
-	g_ePlayerConds[iPlayer][TFCC_TOXIN].flNextTick = GetGameTime() + TOXIN_FREQUENCY;
+	SDKHooks_TakeDamage( iPlayer, iDamagePlayer, iDamagePlayer, g_flToxinDamage, DMG_GENERIC | DMG_PHYSGUN, iDamageWeapon, NULL_VECTOR, NULL_VECTOR, false );
+	g_ePlayerConds[iPlayer][TFCC_TOXIN].flNextTick = GetGameTime() + g_flToxinFrequency;
 }
 
 void RemoveToxin( int iPlayer ) {
@@ -686,12 +747,12 @@ MRESReturn Hook_TakeHealth( int iThis, DHookReturn hReturn, DHookParam hParams )
 	float	flAddHealth = hParams.Get( 1 );
 	//int	iDamageFlags = hParams.Get( 1 ); //don't need these for anything yet
 
-	flAddHealth *= TOXIN_HEALING_MULT;
+	flAddHealth *= g_flToxinHealingMult;
 
 	//need to buffer values below 1 since otherwise they get rounded out
 	flAddHealth += g_flHealthBuffer[ iThis ];
 	int iRoundedHealth = RoundToFloor( flAddHealth );
-	g_flHealthBuffer[ iThis ] = flAddHealth - float( iRoundedHealth );
+	g_flHealthBuffer[ iThis ] = flAddHealth - iRoundedHealth;
 
 	hParams.Set( 1, float( iRoundedHealth ) );
 
@@ -820,8 +881,8 @@ bool AddAngelShield( int iPlayer ) {
 	if( g_hShieldExpireTimers[ iPlayer ] != INVALID_HANDLE ) {
 		KillTimer( g_hShieldExpireTimers[ iPlayer ] );
 	}
-	g_hShieldExpireTimers[ iPlayer ] = CreateTimer( ANGSHIELD_DURATION, ExpireAngelShield, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
-	g_ePlayerConds[iPlayer][TFCC_ANGELSHIELD].iLevel = ANGSHIELD_HEALTH;
+	g_hShieldExpireTimers[ iPlayer ] = CreateTimer( g_iAngShieldDuration, ExpireAngelShield, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
+	g_ePlayerConds[iPlayer][TFCC_ANGELSHIELD].condLevel = g_iAngShieldHealth;
 
 	g_flLastDamagedShield[iPlayer] = GetGameTime();
 
@@ -847,7 +908,8 @@ bool AddAngelShield( int iPlayer ) {
 	SetEntPropEnt( iNewShield, Prop_Send, "m_hOwnerEntity", iPlayer );
 	SetEntityCollisionGroup( iNewShield, 0 );
 
-	SDKHook( iNewShield, SDKHook_SetTransmit, Hook_ShieldTransmit );
+	SDKHook( iNewShield, SDKHook_SetTransmit, Hook_TransmitIfNotOwner );
+	SetEdictFlags( iNewShield, 0 );
 
 	int iNewManager = CreateEntityByName( "material_modify_control" );
 
@@ -859,6 +921,7 @@ bool AddAngelShield( int iPlayer ) {
 	DispatchSpawn( iNewManager );
 	g_iAngelShields[iPlayer][1] = EntIndexToEntRef( iNewManager );
 
+	//todo: replace with call to healnegativeconds
 	TF2_RemoveCondition( iPlayer, TFCond_Bleeding );
 	TF2_RemoveCondition( iPlayer, TFCond_OnFire );
 	TF2_RemoveCondition( iPlayer, TFCond_KingRune ); //tranq
@@ -881,14 +944,6 @@ Action ExpireAngelShield( Handle hTimer, int iPlayer ) {
 	return Plugin_Stop;
 }
 void RemoveAngelShield( int iPlayer ) {
-	/*bool bBroken = ePlayerConds[iPlayer][TFCC_ANGELSHIELD].iLevel <= 0;
-
-	if( bBroken ) {
-		AddCond( iPlayer, TFCC_ANGELINVULN );
-		CreateTimer( ANGINVULN_DURATION, RemoveAngelShield2, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
-		return;
-	}*/
-
 	RemoveAngelShield2( iPlayer );
 
 	if( IsClientInGame( iPlayer ) ) {
@@ -908,8 +963,8 @@ void RemoveAngelShield( int iPlayer ) {
 		g_hShieldExpireTimers[ iPlayer ] = INVALID_HANDLE;
 	}
 
-	g_iAngelShields[iPlayer][0] = -1;
-	g_iAngelShields[iPlayer][1] = -1;
+	g_iAngelShields[iPlayer][0] = INVALID_ENT_REFERENCE;
+	g_iAngelShields[iPlayer][1] = INVALID_ENT_REFERENCE;
 }
 
 static char g_szShieldKillParticle[][] = {
@@ -919,14 +974,15 @@ static char g_szShieldKillParticle[][] = {
 	"angel_shieldbreak_yellow"
 }; 
 
-//Action RemoveAngelShield2( Handle hTimer, int iPlayer ) {
 void RemoveAngelShield2( int iPlayer ) {
 	EmitSoundToAll( "weapons/teleporter_explode.wav", iPlayer );
 	ClientCommand( iPlayer, "r_screenoverlay off"); 
 
+	//todo: change to a te dispatch
+
 	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
 	int iEmitter = CreateEntityByName( "info_particle_system" );
-	DispatchKeyValue( iEmitter, "effect_name", g_szShieldKillParticle[iTeam] );
+	DispatchKeyValue( iEmitter, "effect_name", g_szShieldKillParticle[iTeam] ); //todo: tempent dispatch
 
 	float vecPos[3]; GetClientAbsOrigin( iPlayer, vecPos );
 	TeleportEntity( iEmitter, vecPos );
@@ -947,10 +1003,8 @@ void RemoveAngelShield2( int iPlayer ) {
 		RemoveEntity( GetAngelShield( iPlayer, 1 ) );
 	}
 
-	g_iAngelShields[iPlayer][0] = -1;
-	g_iAngelShields[iPlayer][1] = -1;
-
-	//return Plugin_Continue;
+	g_iAngelShields[iPlayer][0] = INVALID_ENT_REFERENCE;
+	g_iAngelShields[iPlayer][1] = INVALID_ENT_REFERENCE;
 }
 Action RemoveEmitter( Handle hTimer, int iEmitter ) {
 	iEmitter = EntRefToEntIndex( iEmitter );
@@ -962,28 +1016,39 @@ Action RemoveEmitter( Handle hTimer, int iEmitter ) {
 
 void AngelShieldTakeDamage( int iTarget, TFDamageInfo tfInfo ) {
 	float flNewDamage = TF2DamageFalloff( iTarget, tfInfo );
-	g_ePlayerConds[iTarget][TFCC_ANGELSHIELD].iLevel -= RoundToFloor( flNewDamage );
+	g_ePlayerConds[iTarget][TFCC_ANGELSHIELD].condLevel -= RoundToFloor( flNewDamage );
 
 	float vecTarget[3];
 	GetEntPropVector( iTarget, Prop_Send, "m_vecOrigin", vecTarget );
 
 	TF2_AddCondition( iTarget, TFCond_UberchargedOnTakeDamage, 0.1 ); //todo: hook some sort of function to replace this
 
+	int iBubbleSource = GetCondSourcePlayer( iTarget, TFCC_ANGELSHIELD );
+	int iNewDamage = RoundToFloor( flNewDamage );
+
 	Event eFakeDamage = CreateEvent( "player_hurt", true );
 	eFakeDamage.SetInt( "userid", GetClientUserId( iTarget ) );
 	eFakeDamage.SetInt( "health", 300 );
 	eFakeDamage.SetInt( "attacker", GetClientUserId( tfInfo.iAttacker ) );
-	eFakeDamage.SetInt( "damageamount", RoundToFloor( flNewDamage ) );
+	eFakeDamage.SetInt( "damageamount", iNewDamage );
 	eFakeDamage.SetInt( "bonuseffect", 2 );
-
 	eFakeDamage.Fire();
+	SDKCall( g_sdkPlayerDamage, g_iCTFGameStats, iTarget, tfInfo, iNewDamage );
+
+	Event eBlockedDamage = CreateEvent( "damage_blocked", true );
+	eBlockedDamage.SetInt( "provider", GetClientUserId( iBubbleSource ) );
+	eBlockedDamage.SetInt( "victim", GetClientUserId( iTarget ) );
+	eBlockedDamage.SetInt( "attacker", GetClientUserId( tfInfo.iAttacker ) );
+	eBlockedDamage.SetInt( "amount", iNewDamage );
+	eBlockedDamage.Fire();
+	SDKCall( g_sdkPlayerBlockedDamage, g_iCTFGameStats, iBubbleSource, iNewDamage );
 
 	EmitGameSoundToAll( "Player.ResistanceHeavy", iTarget );
 
-	if( g_ePlayerConds[iTarget][TFCC_ANGELSHIELD].iLevel <= 0 ) {
+	if( g_ePlayerConds[iTarget][TFCC_ANGELSHIELD].condLevel <= 0 ) {
 		RemoveCond( iTarget, TFCC_ANGELSHIELD );
 	}
-	g_flLastDamagedShield[ iTarget ] = GetGameTime();
+	g_flLastDamagedShield[ iTarget ] = GetGameTime(); //todo: use last damaged entprop for this
 }
 void AngelShieldTakeDamagePost( int iTarget ) {
 	TF2_RemoveCondition( iTarget, TFCond_UberchargedOnTakeDamage );
@@ -995,9 +1060,9 @@ void ManageAngelShield( int iPlayer ) {
 	if(  iAngelShield == -1 )
 		return;
 
-	float flVecPos[3];
-	GetEntPropVector( iPlayer, Prop_Send, "m_vecOrigin", flVecPos );
-	TeleportEntity( GetAngelShield( iPlayer, 0 ), flVecPos );
+	float vecPos[3];
+	GetEntPropVector( iPlayer, Prop_Send, "m_vecOrigin", vecPos );
+	TeleportEntity( GetAngelShield( iPlayer, 0 ), vecPos );
 
 	int iAngelManager = GetAngelShield( iPlayer, 1 );
 	if( iAngelManager == -1 )
@@ -1007,19 +1072,11 @@ void ManageAngelShield( int iPlayer ) {
 
 	float flShieldFalloff = RemapValClamped( flLastDamaged, 0.0, 0.5, 5.0, -5.0 );
 
-	static char szFalloff[8];
-	FloatToString(flShieldFalloff, szFalloff, 8);
+	char szFalloff[8];
+	FloatToString( flShieldFalloff, szFalloff, sizeof( szFalloff ) );
 
 	SetVariantString( szFalloff );
 	AcceptEntityInput( iAngelManager, "SetMaterialVar" );
-}
-
-Action Hook_ShieldTransmit( int iEntity, int iClient ) {
-	if( GetEntPropEnt( iEntity, Prop_Send, "m_hOwnerEntity" ) == iClient ) {
-		return Plugin_Handled;
-	}
-
-	return Plugin_Continue;
 }
 
 /*
@@ -1027,7 +1084,7 @@ Action Hook_ShieldTransmit( int iEntity, int iClient ) {
 */
 
 bool AddAngelInvuln( int iPlayer ) {
-	CreateTimer( ANGINVULN_DURATION, ExpireAngelInvuln, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( g_iAngInvulnDuration, ExpireAngelInvuln, iPlayer, TIMER_FLAG_NO_MAPCHANGE );
 	return true;
 }
 Action ExpireAngelInvuln( Handle hTimer, int iPlayer ) {
@@ -1091,11 +1148,11 @@ void TickQuickUber( int iPlayer ) {
 		return;
 	}
 
-	//todo: unhardcode this
+	//todo: unhardcode this/fix this
 	//heal medic for 3x medigun heal rate, patient for 2x since they are already receiving the health from the medigun
 	float flRate;
-	if( iPlayer == GetCondSourcePlayer( iPlayer, TFCC_QUICKUBER ) ) flRate = 36.0 * 3.0 * GetGameFrameTime();
-	else flRate = 36.0 * 2.0 * GetGameFrameTime();
+	if( iPlayer == GetCondSourcePlayer( iPlayer, TFCC_QUICKUBER ) ) flRate = 108.0 * GetGameFrameTime();
+	else flRate = 72.0 * GetGameFrameTime();
 
 	HealPlayer( iPlayer, flRate, GetCondSourcePlayer( iPlayer, TFCC_QUICKUBER ) );
 }
@@ -1106,73 +1163,178 @@ void RemoveQuickUber( int iPlayer ) {
 		ClientCommand( iPlayer, "r_screenoverlay off");
 }
 
-/*
-	FLAME HEAL
-*/
+//hydro pump
+bool AddHydroPumpHeal( int iPlayer, int iSource ) {
+	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
+	int iEmitter = CreateEntityByName( "info_particle_system" );
+	DispatchKeyValue( iEmitter, "effect_name", g_szHydroPumpHealParticles[ iTeam ] );
 
-bool AddFlameHeal( int iPlayer ) {
-	CreateTimer( 0.2, TickBatchHeal, iPlayer, TIMER_FLAG_NO_MAPCHANGE | TIMER_REPEAT );
+	float vecPos[3]; GetClientAbsOrigin( iPlayer, vecPos );
+	TeleportEntity( iEmitter, vecPos );
+
+	ParentModel( iEmitter, iPlayer );
+	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iPlayer );
+
+	DispatchSpawn( iEmitter );
+	ActivateEntity( iEmitter );
+	AcceptEntityInput( iEmitter, "Start" );
+
+	SetEntPropEnt( iEmitter, Prop_Send, "m_hControlPointEnts", iPlayer );
+
+	g_iHydroPumpEmitters[iPlayer] = EntIndexToEntRef( iEmitter );
+
+	//rate of 0.1 to block overheal decay
+	AddPlayerHealer( iPlayer, iSource, 0.1, true );
+	CreateTimer( 0.2, Timer_HydroPumpHealRemoveTimer, EntRefToEntIndex( iPlayer ), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
+
+	//todo: use don't display to client particle modifier
+	//SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwner );
+	//SetEdictFlags( iEmitter, 0 );
+
 	return true;
 }
 
-float g_flFlameHealDebt[ MAXPLAYERS+1 ];
-int g_iFlameHealBatch[ MAXPLAYERS+1 ];
-void TickFlameHeal( int iPlayer ) {
-	float g_flFlameHealTick = GetGameFrameTime();
+void TickHydroPumpHeal( int iPlayer ) {
+	//view as is necessary to trick the compiler into not fucking this up somehow
+	//best guess is the "any" return of getcondlevel is being automatically treated as an int and using int multiplication
+	float flFrameTime = GetGameFrameTime();
+	float flLevel = view_as<float>( GetCondLevel( iPlayer, TFCC_HYDROPUMPHEAL ) ) * flFrameTime;
+	HealPlayer( iPlayer, flLevel, GetCondSourcePlayer( iPlayer, TFCC_QUICKUBER ) );
 
-	int iSource = GetCondSourcePlayer( iPlayer, TFCC_FLAMEHEAL );
-
-	if( !IsValidPlayer( iSource ) )
-		return;
-
-	float flRate = AttribHookFloat( FLAME_HEALRATE * g_flFlameHealTick, iSource, "mult_medigun_healrate" );
-	int iLevel = MinInt( GetCondLevel( iPlayer, TFCC_FLAMEHEAL ), 275 );
-
-	//turning off overheal decay is a pain so i'll just add more health to counteract it
-	float flRateLoss = 0.0;
-	int iMaxHealth = SDKCall( g_hGetMaxHealth, iPlayer );
-	if( GetEntProp( iPlayer, Prop_Send, "m_iHealth" ) > iMaxHealth ) {
-		Address aShared = GetSharedFromPlayer( iPlayer );
-		flRateLoss = float( SDKCall( g_hGetBuffedMaxHealth, aShared ) - iMaxHealth ) / 15.0;
-		flRateLoss *= g_flFlameHealTick;
+	//extinguish burning players
+	if( TF2_IsPlayerInCondition( iPlayer, TFCond_OnFire ) ) {
+		float flRemoveTime = GetEntPropFloat( iPlayer, Prop_Send, "m_flFlameRemoveTime" );
+		SetEntPropFloat( iPlayer, Prop_Send, "m_flFlameRemoveTime", MaxFloat( GetGameTime(), flRemoveTime - flFrameTime ) );
 	}
-
-	float flAmount = MinFloat( flRate, float( iLevel ) * 0.1 ) + g_flFlameHealDebt[ iPlayer ];
-
-	int iHealed = HealPlayer( iPlayer, flAmount + flRateLoss, iSource );
-	int iNewLevel = iLevel - ( RoundToNearest( flAmount ) * 10 );
-
-	g_iFlameHealBatch[ iPlayer ] += iHealed;
-
-	Tracker_SetValue( iSource, "Pressure", Tracker_GetValue( iSource, "Pressure" ) + ( float( iHealed ) * 0.2 ) );
-
-	g_flFlameHealDebt[ iPlayer ] = flAmount - RoundToFloor( flAmount );
-
-	SetCondLevel( iPlayer, TFCC_FLAMEHEAL, iNewLevel );
-
-	if( iNewLevel > 0 )
-		return;
-		
-	RemoveCond( iPlayer, TFCC_FLAMEHEAL );
-	g_flFlameHealDebt[ iPlayer ] = 0.0;
-	g_iFlameHealBatch[ iPlayer ] = 0;
-
-	return;
 }
 
-Action TickBatchHeal( Handle hTimer, int iPlayer ) {
-	if( !HasCond( iPlayer, TFCC_FLAMEHEAL ) )
+Action Timer_HydroPumpHealRemoveTimer( Handle hTimer, int iOwnerRef ) {
+	int iOwner = EntRefToEntIndex( iOwnerRef );
+	if( iOwner == -1 ) {
+		RemoveCond( iOwner, TFCC_HYDROPUMPHEAL );
 		return Plugin_Stop;
+	}
 
-	int iSource = GetCondSourcePlayer( iPlayer, TFCC_FLAMEHEAL );
-
-	Event eHealEvent = CreateEvent( "player_healed" );
-	eHealEvent.SetInt( "patient", GetClientUserId( iPlayer ) );
-	eHealEvent.SetInt( "healer", GetClientUserId( iSource ) );
-	eHealEvent.SetInt( "amount", g_iFlameHealBatch[ iPlayer ] );
-	eHealEvent.Fire();
-
-	g_iFlameHealBatch[ iPlayer ] = 0;
+	if( GetGameTime() > g_ePlayerConds[ iOwner ][ TFCC_HYDROPUMPHEAL ].flExpireTime ) {
+		RemoveCond( iOwner, TFCC_HYDROPUMPHEAL );
+		return Plugin_Stop;
+	}
 
 	return Plugin_Continue;
+}
+
+void RemoveHydroPumpHeal( int iPlayer ) {
+	int iSource = GetCondSourcePlayer( iPlayer, TFCC_HYDROPUMPHEAL );
+
+	RemovePlayerHealer( iPlayer, iSource );
+
+	int iEmitter = EntRefToEntIndex( g_iHydroPumpEmitters[ iPlayer ] );
+	g_iHydroPumpEmitters[ iPlayer ] = INVALID_ENT_REFERENCE;
+	if( iEmitter == -1 )
+		return;
+
+	RemoveEntity( iEmitter );
+}
+
+//hydro uber
+bool AddHydroUber( int iPlayer ) {
+	CreateTimer( g_flHydroUberFrequency, Timer_HydroUberPulse, EntRefToEntIndex( iPlayer ), TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
+
+	int iTeam = GetEntProp( iPlayer, Prop_Send, "m_iTeamNum" ) - 2;
+	float vecPos[3]; GetClientAbsOrigin( iPlayer, vecPos );
+
+	//third person
+	int iEmitter = CreateEntityByName( "info_particle_system" );
+	DispatchKeyValue( iEmitter, "effect_name", g_szHydroUberParticles[ iTeam ] );
+	
+	TeleportEntity( iEmitter, vecPos );
+	ParentModel( iEmitter, iPlayer );
+	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iPlayer );
+
+	DispatchSpawn( iEmitter );
+	ActivateEntity( iEmitter );
+	AcceptEntityInput( iEmitter, "Start" );
+
+	SetEdictFlags( iEmitter, 0 );
+	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwnerParticle );
+
+	g_iHydroPumpUberEmitters[iPlayer][0] = EntIndexToEntRef( iEmitter );
+
+	//first person
+	iEmitter = CreateEntityByName( "info_particle_system" );
+	DispatchKeyValue( iEmitter, "effect_name", g_szHydroUberParticlesFP[ iTeam ] );
+	
+	TeleportEntity( iEmitter, vecPos );
+	ParentModel( iEmitter, iPlayer );
+	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iPlayer );
+
+	DispatchSpawn( iEmitter );
+	ActivateEntity( iEmitter );
+	AcceptEntityInput( iEmitter, "Start" );
+
+	SetEdictFlags( iEmitter, 0 );
+	SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfOwnerParticle );
+
+	g_iHydroPumpUberEmitters[iPlayer][1] = EntIndexToEntRef( iEmitter );
+
+	EmitSoundToAll( g_szHydroUberSound, iPlayer );
+
+	return true;
+}
+
+Action Timer_HydroUberPulse( Handle hTimer, int iOwnerRef ) {
+	int iOwner = EntRefToEntIndex( iOwnerRef );
+	if( iOwner == -1 ) {
+		RemoveCond( iOwner, TFCC_HYDROUBER );
+		return Plugin_Stop;
+	}
+
+	float flOldValue = Tracker_GetValue( iOwner, "Ubercharge" );
+	if( flOldValue <= 0.0 ) {
+		RemoveCond( iOwner, TFCC_HYDROUBER );
+		return Plugin_Stop;
+	}
+
+	//precalculated
+	//float flDrainRate = 100.0 / ( g_flHydroUberDuration * ( 1.0 / g_flHydroUberFrequency ) );
+	float flDrainRate = 2.0;
+	int iWeapon = GetEntPropEnt( iOwner, Prop_Send, "m_hActiveWeapon" );
+	if( iWeapon != -1 && RoundToFloor( AttribHookFloat( 0.0, iWeapon, "custom_medigun_type" ) ) != 6 ) {
+		flDrainRate *= 1.5;
+	}
+
+	Tracker_SetValue( iOwner, "Ubercharge", flOldValue - flDrainRate );
+
+	int iSourceWeapon = GetCondSourceWeapon( iOwner, TFCC_HYDROUBER );
+	int iOwnerTeam = GetEntProp( iOwner, Prop_Send, "m_iTeamNum" );
+
+	float vecOwnerPos[3];
+	GetEntPropVector( iOwner, Prop_Data, "m_vecAbsOrigin", vecOwnerPos );
+	for( int i = 1; i <= MaxClients; i++ ) {
+		if( !PlayerInRadius( vecOwnerPos, g_flHydroUberRange, i ) )
+			continue;
+
+		if( TeamSeenBy( iOwner, i ) != iOwnerTeam )
+			continue;
+
+		//todo: do los check here
+
+		AddCond( i, TFCC_HYDROPUMPHEAL, iOwner, iSourceWeapon );
+		SetCondDuration( i, TFCC_HYDROPUMPHEAL, 0.5, false );
+		SetCondLevel( i, TFCC_HYDROPUMPHEAL, g_flHydroUberHealRate );
+	}
+
+	return Plugin_Continue;
+}
+
+void RemoveHydroUber( int iPlayer ) {
+	StopSound( iPlayer, SNDCHAN_AUTO, g_szHydroUberSound );
+	for( int i = 0; i <= 1; i++ ) {
+		int iEmitter = EntRefToEntIndex( g_iHydroPumpUberEmitters[iPlayer][i] );
+		g_iHydroPumpUberEmitters[iPlayer][i] = INVALID_ENT_REFERENCE;
+		if( iEmitter == -1 )
+			continue;
+
+		RemoveEntity( iEmitter );
+	}
 }

@@ -1,0 +1,64 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\c_items\megalaser"
+	
+	"$selfillum" "1"
+	"$nodecal" "1"
+	"$phongtint" "[1 .7 .1]"
+	"$phong" "1"
+	"$phongexponent" "6"
+	"$phongboost" "4"
+
+	
+	"$lightwarptexture" "models\weapons\c_items\c_ambassador_lightwarp"
+	"$phongfresnelranges"	"[.3 .5 3]"
+	"$glowcolor" "1"
+
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"StickybombGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"Sine"
+		{
+			"resultVar" $selfillumtint
+			"sinemin" .1
+			"sinemax" 2
+			"sineperiod" 4
+		}
+		"Sine"
+		{
+			"resultVar" $phongboost
+			"sinemin" 5
+			"sinemax" 2
+			"sineperiod" 4
+		}
+		"Sine"
+		{
+			"resultVar" $phongexponent
+			"sinemin" 6
+			"sinemax" 2
+			"sineperiod" 4
+		}
+	}
+	
+
+
+}

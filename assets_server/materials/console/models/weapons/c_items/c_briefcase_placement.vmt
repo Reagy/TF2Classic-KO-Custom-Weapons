@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "console/models/weapons/c_items/c_briefcase_placement"
+	"$surfaceprop"	"no_decal"
+	"$translucent"	1
+	"$model"		1
+	"$nocull"		1
+}

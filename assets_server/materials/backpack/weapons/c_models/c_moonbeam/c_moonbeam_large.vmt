@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_moonbeam\c_moonbeam_large"
+	$translucent 1
+}

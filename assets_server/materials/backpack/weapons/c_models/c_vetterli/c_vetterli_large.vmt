@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_vetterli\c_vetterli_large"
+	$translucent 1
+}

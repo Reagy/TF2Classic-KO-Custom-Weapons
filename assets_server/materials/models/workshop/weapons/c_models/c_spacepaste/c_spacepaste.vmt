@@ -1,0 +1,80 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\workshop\weapons\c_models\c_spacepaste\c_spacepaste"
+	"$bumpmap" "models\workshop\weapons\c_models\c_spacepaste\c_spacepaste_normal"
+
+	"$PhongExponentTexture" "models\workshop\weapons\c_models\c_spacepaste\c_spacepaste_exponent"
+
+
+
+
+	"$phongalbedotint" 1
+
+
+	"$phong" "1"
+//	"$phongexponent" "4"
+//	"$phongboost" "15.5"	
+
+
+
+
+	"$phongexponent" "10"
+	"$phongboost" "45"	
+
+
+
+	"$lightwarptexture"		"models/player/pyro/pyro_lightwarp"
+
+	"$phongfresnelranges"	"[1 .5 .5]"
+	"$halflambert" "1"
+
+//	"$basemapalphaphongmask" "1"
+
+
+
+	"360?$color2" "[ 0.5 0.5 0.5 ]"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+
+	"$yellow" "0"
+
+	"Proxies"
+	{
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}

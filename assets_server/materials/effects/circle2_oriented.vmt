@@ -1,0 +1,10 @@
+UnlitGeneric
+{
+	$basetexture	"effects/circle2"
+	$nocull		1
+	$additive		1
+	$depthblendscale	4
+	$vertexcolor	1
+	$vertexalpha	1
+	$orientation	3
+}
