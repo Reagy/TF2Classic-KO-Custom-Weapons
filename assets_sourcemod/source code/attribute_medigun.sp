@@ -210,7 +210,7 @@ public void OnPluginStart() {
 	g_dtAddBurstHealer = DynamicDetourFromConfSafe( hGameConf, "CTFPlayerShared::AddBurstHealer" );
 	g_dtAddBurstHealer.Enable( Hook_Pre, Detour_AddBurstHealer );
 
-	g_dtSimulateFlames = DynamicDetourFromConfSafe( hGameConf, "CTFWeaponFlamethrower::SimulateFlames" );
+	g_dtSimulateFlames = DynamicDetourFromConfSafe( hGameConf, "CTFFlameThrower::SimulateFlames" );
 	g_dtSimulateFlames.Enable( Hook_Pre, Detour_SimulateFlamesPre );
 	g_dtSimulateFlames.Enable( Hook_Post, Detour_SimulateFlamesPost );
 
