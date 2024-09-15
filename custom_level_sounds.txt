@@ -9718,7 +9718,7 @@
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"0.75"
+	"volume"	"0.6"
 	"pitch"		"99, 105"
 	"wave"		")weapons/CarbineSniper_Fire.wav"
 }
@@ -9727,7 +9727,7 @@
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"0.75"
+	"volume"	"0.6"
 	"pitch"		"99, 105"
 	"wave"		")weapons/CarbineSniper_FireCrit.wav"
 }
