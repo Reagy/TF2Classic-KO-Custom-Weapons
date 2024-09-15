@@ -1180,7 +1180,7 @@
 			{
 				"signature"		"CTFFlameThrower::SimulateFlames"
 				"callconv"		"thiscall"
-				"this"			"address"
+				"this"			"entity"
 				"return"		"void"
 			}
 			"CTFFlameEntity::OnCollide"
