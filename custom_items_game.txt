@@ -14891,6 +14891,7 @@ Weapon by: 'The One Of Wonders'"
 When 2 barrels ain't enough, just add 2 more and double the size of each shot! 
 
 Model by: 'Hau, Kibbleknight'
+Animations by: 'Fence'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Quad-Off"
 			"item_iconname"				"Quad-Off"
@@ -16408,7 +16409,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"		"mult_wpn_burntime"
-					"value"					"0.3"
+					"value"					"0.1"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -16423,12 +16424,12 @@ Weapon by: 'The One Of Wonders'"
 	            "hidden primary max ammo bonus"
 				{
 					"attribute_class"		"mult_maxammo_primary"
-					"value"					"18.75"
+					"value"					"6.25"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"		"mult_postfiredelay"
-					"value"					"0.214285714"
+					"value"					"0.22"
 				}
                 "crit mod disabled"
 				{
@@ -16474,18 +16475,44 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"blast_dmg_to_self"
 					"value"				"2.5"
+				}
+                "strange restriction type 1"	 
+				{
+					"attribute_class"	"no_primary_ammo_from_dispensers_always"
+					"value"				"1"
+				}	
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_primary_ammo_from_ammo_packs"
+					"value"				"0.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_primary_ammo_from_dropped_weapons"
+					"value"				"0.5"
+				}
+                "rocket limited lifetime"														
+				{
+					"attribute_class"	"rocket_lifetime"
+					"value"				"0.5"
+				}
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"0.01"
 				}				
 			}
 			"visuals"
 			{
 				"sound_single_shot"		"Weapon_PlasmaRifle.Shoot"
 				"sound_double_shot"		"Weapon_PlasmaRifle.ShootCrit"
+				"sound_special1"        "Weapon_Null"
 				"sound_special2"		"Weapon_Tau.Discharge"
 				"sound_special3"		"Weapon_PlasmaRifle.ChargeLoop"			
 				"sound_empty"			"Weapon_Pistol.ClipEmpty"
 				"sound_burst"			"Weapon_PlasmaRifle.ShootCrit"
 				"muzzle_flash"          "muzzle_scattergun"
-			    "explosion_effect"		"coilgun_boom_red"
+			    "explosion_effect"		"flaregun_destroyed"
 			}
 			"visuals_red"
 			{
@@ -17749,7 +17776,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"		"mult_wpn_burntime"
-					"value"					"0.3"
+					"value"					"0.1"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -17805,17 +17832,38 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_dmg_crit_multiplier"
 					"value"				"2.66666667"
-				}			
+				}	
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_secondary_ammo_from_ammo_packs"
+					"value"				"0.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_secondary_ammo_from_dropped_weapons"
+					"value"				"0.5"
+				}
+                "rocket limited lifetime"														
+				{
+					"attribute_class"	"rocket_lifetime"
+					"value"				"0.6"
+				}
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"0.01"
+				}						
 			}
 			"visuals"
 			{
 				"sound_single_shot"		"Weapon_Carbonizer.Shoot"
 				"sound_double_shot"		"Weapon_Carbonizer.ShootCrit"
+				"sound_special1"         "Weapon_Null"
 				"sound_special2"		"Weapon_Tau.Discharge"		
 				"sound_empty"			"Weapon_Pistol.ClipEmpty"
 				"sound_burst"			"Weapon_Carbonizer.ShootCrit"
 				"muzzle_flash"          "muzzle_scattergun"
-			    "explosion_effect"		"coilgun_boom_red"
+			    "explosion_effect"		"flaregun_destroyed"
 			}
 			"visuals_red"
 			{
@@ -19786,7 +19834,7 @@ Plugin by: 'Noclue'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"fuse_mult"
-					"value"				"0.45"
+					"value"				"0.7"
 				}
                 
                 // "blast splash damage decreased"
@@ -20299,7 +20347,7 @@ Edited by: 'Reagy'"
 			"image_inventory_size_h"	"82"
 			"model_world"               "models/weapons/custom/w_models/w_civwrench.mdl"
 			"model_player"				"models/weapons/custom/v_models/v_civwrench.mdl"
-			"extra_wearable"			"models/player/items/civilian_engineer.mdl"
+			"extra_wearable"			"models/player/items/civilian_engineer_edit.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -20986,7 +21034,7 @@ Weapon by: 'Panáček'"
 				"bleeding duration"
 				{
 					"attribute_class"	"bleeding_duration"
-					"value"				"4"
+					"value"				"2"
 				}
 				"crits become minicrits"															
 				{
@@ -21010,7 +21058,7 @@ Weapon by: 'Panáček'"
 					"attribute_class"	"override_projectile_type"
 					"value" 			"32"
 				}
-				"custom projectile model"   // one day when you can change arrow model
+				"custom projectile model"
 				{
 					"attribute_class"	"custom_projectile_model"
 					"value"				"models/weapons\w_models\w_sawblade.mdl"
@@ -21018,46 +21066,56 @@ Weapon by: 'Panáček'"
 				"rocket gravity"
 				{
 					"attribute_class"	"mod_rocket_gravity"
-					"value"				"0.7"
+					"value"				"0.8"
 				}
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.5"
+					"value"				"1.2"
 				}
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"4.5"
+					"value"				"4.3"
 				}
 				"mod coil max bounces"
 				{
 					"attribute_class"	"mod_coil_max_bounces"
-					"value" 			"1"
-				}	
+					"value" 			"2"
+				}
 				"mod use custom ammo type"
 				{
 					"attribute_class"	"mod_use_custom_ammo_type"
 					"value"				"1"
 				}
+				"weapon enemy knockback mod mult hidden"
+				{
+					"attribute_class"	"weapon_enemy_knockback_mod"
+					"value"				"0.2"
+				}
+                "mod coilgun explode time"													
+				{
+					"attribute_class"	"mod_coilgun_explode_time"
+					"value"				"-1.25"
+				}
                 "strange restriction type 2"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.035"
+					"value"				"0.03"
 				}
 				"punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
-					"value"				"10"
+					"value"				"15"
 				}
                 "self dmg push force hidden"													
 				{
 					"attribute_class"	"mult_dmgself_push_force"
 					"value"				"0"
 				}
-                "blast dmg to self increased hidden"									 // so you dont kill yourself with alt fire				
+				"crit mod disabled"
 				{
-					"attribute_class"	"blast_dmg_to_self"
+					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
 			}
@@ -22727,7 +22785,7 @@ Weapon by: 'The One Of Wonders'"
 			"image_inventory"			"backpack/weapons/c_models/c_civwizard/c_civwizard"
 			"model_world"				"models/weapons/c_models/c_civilian_staff/c_civilian_staff.mdl"
 			"model_player"				"models/weapons/v_models/v_civilian_wizard_staff.mdl"
-			"extra_wearable"			"models/player/items/civ_wizard.mdl"
+			"extra_wearable"			"models/player/items/civ_wizard_edit.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -24631,7 +24689,7 @@ Weapon by: 'Reagy'"
 				"dmg taken from blast direct increased"
 				{
 					"attribute_class"	"mult_dmgtaken_from_explosions_direct"
-					"value"				"1.15"
+					"value"				"1.25"
 				}
 				"crit mod disabled"
 				{
@@ -28196,7 +28254,7 @@ Weapon by: 'Reagy'"
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.8"
+					"value"				"0.9"
 				}
 				"clip size bonus"
 				{
@@ -28206,7 +28264,7 @@ Weapon by: 'Reagy'"
 				"spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.66"
+					"value"				"1.7"
 				}
 				"reload time increased"	
 				{
@@ -41092,7 +41150,7 @@ Weapon by: 'The One Of Wonders'"
 			    "apply heal on explosion"
 				{
 					"attribute_class"	"apply_heal_explosion"
-					"value"				"8"
+					"value"				"6"
 				}
 				"add uber charge on hit"
 				{
@@ -41112,7 +41170,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.0888888888888888"
+					"value" 			"0.096"
 				}
 				"strange restriction type 1"
 				{
@@ -41322,6 +41380,11 @@ Sound by: 'Sevan'"
 				{
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"1.0"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
 				}
 			}
 			"visuals"
