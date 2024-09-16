@@ -15,6 +15,7 @@
 #define MP_CONCEPT_HEALTARGET_CHARGEDEPLOYED 55
 
 //hydro pump
+//REMEMBER TO CHANGE THE PRECALCS (FUCK SOURCEPAWN)
 #define HYDRO_PUMP_HEAL_RATE 30.0
 #define HYDRO_PUMP_AFTERHEAL_RATE 6.0
 #define HYDRO_PUMP_AFTERHEAL_MAX_LENGTH 4.0
@@ -642,7 +643,7 @@ void FireTouchHeal( Address aFlame, int iCollide, int iOwner, int iWeapon ) {
 #define UBER_REDUCTION_TIME 0.2
 void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	//float flChargeAmount = (FLAMETHROWER_FIRING_INTERVAL / HYDRO_PUMP_CHARGE_TIME) * 100.0;
-	float flChargeAmount = 0.1; //precalculated version of above because the compiler does not precalculate float constants (not a constant expression?)
+	float flChargeAmount = 0.1142857143; //precalculated version of above because the compiler does not precalculate float constants (not a constant expression?)
 	//float flChargeAmount = 100.0; //for testing
 
 	int iTargetMaxBuffedHealth = SDKCall( g_sdkGetBuffedMaxHealth, GetSharedFromPlayer( iTarget ) );
