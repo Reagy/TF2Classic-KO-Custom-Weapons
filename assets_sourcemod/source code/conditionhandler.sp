@@ -1211,6 +1211,10 @@ void TickHydroPumpHeal( int iPlayer ) {
 Action Timer_HydroPumpHealRemoveTimer( Handle hTimer, int iOwnerRef ) {
 	int iOwner = EntRefToEntIndex( iOwnerRef );
 	if( iOwner == -1 ) {
+		return Plugin_Stop;
+	}
+
+	if( !HasCond( iOwner, TFCC_HYDROPUMPHEAL ) || !IsPlayerAlive( iOwner ) ) {
 		RemoveCond( iOwner, TFCC_HYDROPUMPHEAL );
 		return Plugin_Stop;
 	}
@@ -1285,6 +1289,10 @@ bool AddHydroUber( int iPlayer ) {
 Action Timer_HydroUberPulse( Handle hTimer, int iOwnerRef ) {
 	int iOwner = EntRefToEntIndex( iOwnerRef );
 	if( iOwner == -1 ) {
+		return Plugin_Stop;
+	}
+
+	if( !HasCond( iOwner, TFCC_HYDROUBER ) || !IsPlayerAlive( iOwner ) ) {
 		RemoveCond( iOwner, TFCC_HYDROUBER );
 		return Plugin_Stop;
 	}
