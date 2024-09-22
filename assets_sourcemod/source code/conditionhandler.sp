@@ -1199,7 +1199,7 @@ void TickHydroPumpHeal( int iPlayer ) {
 	//best guess is the "any" return of getcondlevel is being automatically treated as an int and using int multiplication
 	float flFrameTime = GetGameFrameTime();
 	float flLevel = view_as<float>( GetCondLevel( iPlayer, TFCC_HYDROPUMPHEAL ) ) * flFrameTime;
-	HealPlayer( iPlayer, flLevel, GetCondSourcePlayer( iPlayer, TFCC_QUICKUBER ) );
+	HealPlayer( iPlayer, flLevel, GetCondSourcePlayer( iPlayer, TFCC_HYDROPUMPHEAL ) );
 
 	//extinguish burning players
 	if( TF2_IsPlayerInCondition( iPlayer, TFCond_OnFire ) ) {
