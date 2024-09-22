@@ -2743,18 +2743,12 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_custom_falloff"
 					"value"				"0.5"
-				}	
-                "mod sniper crit after zoom time"
-				{
-					"attribute_class"	"mod_sniper_crit_after_zoom_time"
-					"value"				"0.5"
 				}				
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"sniper_full_charge_damage_bonus"
 					"value"				"1.2"
 				}
-
 				"kill eater score type"
 				{
 					"attribute_class"	"custom_sniper_laser"
@@ -4909,7 +4903,7 @@ Weapon by: 'The One Of Wonders'"
 			    "weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.5"
+					"value"				"1.775"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -6487,7 +6481,7 @@ Weapon edited by: 'Reagy'"
 				"move speed bonus"
                 {
                     "attribute_class"    "mult_player_movespeed"
-                    "value"                "1.1"
+                    "value"                "1.2"
                 }
 				"dmg bonus vs buildings"
 				{
@@ -6517,12 +6511,7 @@ Weapon edited by: 'Reagy'"
 				"reload time increased hidden"	
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"1.33"
-				}
-				"mod horizontal spread"
-				{
-					"attribute_class"	"mod_horizontal_spread"
-					"value"				"1"
+					"value"				"1.25"
 				}
 				"crit mod disabled"													
 				{
@@ -6849,8 +6838,8 @@ Naturally, the greatest thing a man could ever want is a laser gadget to murder 
 
 Model by: 'Coolchou Zhao'
 Edited by: 'The One Of Wonders'"
-			"item_logname"				"Makeshift Mutilator"
-			"item_iconname"				"Makeshift Mutilator"
+			"item_logname"				"Backsaber"
+			"item_iconname"				"Backsaber"
 			"image_inventory"			"backpack/weapons/c_models/c_lightblade/c_lightblade"
 			"model_world"				"models/weapons/w_models/w_lightblade/w_lightblade.mdl"
 			"model_player"				"models/weapons/v_models/v_lightblade/v_lightblade.mdl"
@@ -6898,7 +6887,7 @@ Edited by: 'The One Of Wonders'"
 				"damage penalty"
 				{
 					"attribute_class"	"dmmuy"
-					"value" 			"0.25"
+					"value" 			"0.5"
 				}
 				"No Fatal Backstab"
 				{
@@ -6928,7 +6917,7 @@ Edited by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.153846154"
+					"value"				"0.307692308"
 				}	
 				"weapon_stattrak_module_scale"
 				{
@@ -8475,7 +8464,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"3.33"
+					"value"				"3.66666666666666667"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -8510,7 +8499,7 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
-					"value"				"1.75"
+					"value"				"2.25"
 				}
 				"strange restriction type 1"
 				{
@@ -18667,6 +18656,11 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"
 				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.5"
+				}	
+				"weapon_stattrak_module_scale"
+				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"8.5"
 				}
@@ -18699,7 +18693,12 @@ Weapon by: 'The One Of Wonders'"
                 {
                     "attribute_class"    "mult_reload_time_noanimmod"
                     "value"              "0.35"
-                }					
+                }	
+                "mod use custom ammo type" // primary
+				{
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value" 			"1"
+				}					
 			}
 			"visuals"
 			{
@@ -19926,25 +19925,20 @@ Plugin by: 'Noclue'"
 					"attribute_class"	"VISUALONLY"
 					"value" 			"1"
 				}
-                "Projectile speed increased" 
-                {
-                    "attribute_class"    "mult_projectile_speed"
-                    "value"                "1.25"
-                }
 				"grenade no spin"
 				{
 					"attribute_class"	"grenade_no_spin"
 					"value"				"1"
 				}
-				"fire rate bonus"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.85"
-				} 
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_reload_time"
-					"value"				"0.85"
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"0.91"
+				}	
+				"Blast radius decreased"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"0.75"
 				}	
 				"weapon_stattrak_module_scale"
 				{
@@ -19960,7 +19954,7 @@ Plugin by: 'Noclue'"
                 "clip size penalty"
                 {
                     "attribute_class"    "mult_clipsize"
-                    "value"             "0.5"
+                    "value"             "0.75"
                 }            
                 "crit mod disabled"
                 {
@@ -21112,10 +21106,8 @@ Throwable Squeaky Toy thing by:
 			"show_in_armory"			"1"
 			"item_name_color"           "190 200 233 255"
 			
-			"item_slot"					"primary"
 			"anim_slot"					"secondary"
-            "bucket"					"0"														
-			"bucket_position"			"0"
+			"item_slot"                 "secondary"
 			"item_name"					"Sawblade Ballista"
 			"item_type_name"			"Saw Ballista"
 			"item_description"			"This weapon will reload when not active
@@ -23543,7 +23535,7 @@ Weapon By: 'The One Of Wonders'"
 			    "weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"2.1"
+					"value"				"1.666666666667"
 				}
 				"weapon_stattrak_module_scale"															
 				{
@@ -25766,11 +25758,6 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"0.1"
-				}
-				"weapon_stattrak_module_scale"
-				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"5.0"
 				}
@@ -25887,20 +25874,30 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
 			    "no damage falloff over distance"
 				{
 					"attribute_class"	"mod_no_dmg_falloff"
 					"value"				"1"
 				}
-				"minigun jump while revved"
+				"Astronaut Mastery"
 				{
-					"attribute_class"	"minigun_jump_while_revved"
+					"attribute_class"	"dmmuy"
+			    	"value"				"1"
+				}
+				"Astronaut Mastery Ascend"
+				{
+					"attribute_class"	"dmmuy"
 			    	"value"				"1"
 				}
 				"gravity mod active reduced"
 				{
 					"attribute_class"	"gravity_mod_active"
-			    	"value"				"0.17"
+			    	"value"				"0.67"
 				}
 				"fire rate bonus"
 				{
@@ -25912,6 +25909,16 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.8"
 				} 
+				"minigun spinup time decreased"
+				{
+					"attribute_class"	"mult_minigun_spinup_time"
+					"value"				"0.8"
+				}
+				"minigun spindown time decreased HIDDEN"
+				{
+					"attribute_class"	"mult_minigun_spindown_time"
+					"value"				"0.75"
+				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
@@ -25932,6 +25939,21 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_always_draw_tracer_effect"
 					"value"				"1"
 				}	
+				"strange restriction type 1"
+				{
+					"attribute_class"	"anti_gravity_boots"
+					"value"				"1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mod_jump_height"
+			    	"value"				"1.33"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmgtaken_from_fall"
+			    	"value"				"0.001"
+				}
 			}
 			"visuals"
 			{
@@ -30135,7 +30157,17 @@ Weapon by: 'Reagy'"
 				"hidden secondary max ammo penalty"		"1.33333333333"
 			}
            	"attributes"
-            {				
+            {		 
+                "Haste killer"
+				{
+					"attribute_class"	"dummy"							
+					"value" 			"2"
+				}
+				"add condition on kill"
+				{
+					"attribute_class"	"add_onkill_addcond_self"							
+					"value" 			"121 2"
+				}			
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
@@ -30963,7 +30995,7 @@ Weapon from: 'The One Of Wonders'"
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
-					"value"				"2.0"
+					"value"				"2.2"
 				}
 				"strange restriction type 1"
 				{
@@ -30988,7 +31020,7 @@ Weapon from: 'The One Of Wonders'"
                 "longer damage falloff distance"
 				{
 					"attribute_class"	"mult_falloff_distance"
-					"value"				"2.0"
+					"value"				"2.5"
 				}				
 			}
 			"visuals"
@@ -36245,6 +36277,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "Minicrit vs Bleeding"
+				{
+					"attribute_class"	"single_minicrit_vs_playercond_no_dot"
+					"value"				"26"
+				}
 			    "strange restriction type 1"
 				{
 					"attribute_class"	"set_burstfire"
@@ -36295,6 +36332,11 @@ Weapon by: 'The One Of Wonders'"
                     "attribute_class"    "mult_reload_time_noanimmod"
                     "value"              "3.0"
                 }		
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"-3.75"
+				}
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
@@ -37751,7 +37793,12 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.66"
+					"value"				"0.9"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_explosion_splash_damage"
+					"value"				"1.2"
 				}
 				"crit mod disabled"															
 				{
@@ -38216,7 +38263,7 @@ Weapon by: 'The One Of Wonders"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"1.2"
+					"value" 			"1.3333333333333333"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -38246,7 +38293,7 @@ Weapon by: 'The One Of Wonders"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value" 			"0.75"
+					"value" 			"0.25"
 				}
 				"strange restriction type 1"
 				{
@@ -38267,6 +38314,11 @@ Weapon by: 'The One Of Wonders"
 				{
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"1.2"
+				}	
+                "weapon enemy knockback mod mult hidden"
+				{
+					"attribute_class"	"weapon_enemy_knockback_mod"
+					"value"				"0.5"
 				}				
 			}
 			"visuals"
@@ -40082,7 +40134,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	  "mult_dmg"
-					"value" 			  "0.75"
+					"value" 			  "0.6666666666666667"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -40092,7 +40144,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	  "effectbar_recharge_rate"
-					"value" 			  "0.25"
+					"value" 			  "0.3"
 				}
 				"weapon_stattrak_module_scale"
                 {
@@ -41172,12 +41224,12 @@ Weapon by: 'The One Of Wonders'"
 				"apply self knockback on swing"														
 				{
 					"attribute_class"	"apply_self_knockback_swing"
-					"value" 			"-100"
+					"value" 			"-400"
 				}
 				"gravity mod active reduced"
 				{
 					"attribute_class"	"gravity_mod_active"
-			    	"value"				"0.17"
+			    	"value"				"0.67"
 				}
 				"max health additive penalty"
 				{
@@ -41197,7 +41249,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"											
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"4.33"
+					"value" 			"4.00"
 				}
 				"weapon_stattrak_module_scale"											
 				{
@@ -41297,7 +41349,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value" 			"20.0"
+					"value" 			"13.3333333"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -41327,7 +41379,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
-					"value"				"2.4"
+					"value"				"2.13333333"
 				}
 				"strange restriction type 1"
 				{
@@ -43480,7 +43532,7 @@ Weapon by: 'Reagy, The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"		"mult_postfiredelay"
-					"value" 				"2.0"
+					"value" 				"1.8"
 				}		
                 "weapon_stattrak_module_scale"
 				{
@@ -43501,7 +43553,12 @@ Weapon by: 'Reagy, The One Of Wonders'"
 				{
 					"attribute_class"	"mod_use_custom_ammo_type"
 					"value" 			"4"
-				}	
+				}
+				"weapon_stattrak_module_scale"
+                {
+					"attribute_class"	"blast_dmg_to_self"
+					"value"				"0.01"
+				}				
 			}
 			"visuals"
 			{
@@ -43741,7 +43798,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mod_coil_bounce_damage_penalty"
-					"value" 			"0.5"
+					"value" 			"0.1"
 				}	
                 "custom projectile model"
 				{
@@ -43751,7 +43808,7 @@ Weapon by: 'The One Of Wonders'"
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
-					"value"				"3.0"
+					"value"				"3.6"
 				}	
                 "longer damage falloff distance"
 				{
@@ -48225,6 +48282,41 @@ Reserve Energy: 3 seconds of auto-reload"
 			"custom_color"			"225 215 0 255"	
 			"effect_type"			"neutral"
 		}	
+		"7713"
+		{
+			"name"					"Astronaut Mastery"
+			"description_string"	"Astronaut Mastery: while airborne:"
+			"description_format"	"value_is_additive"
+			"hidden"				"0"
+			"custom_color"			"225 215 0 255"	
+			"effect_type"			"neutral"
+		}
+		"7714"
+		{
+			"name"					"Astronaut Mastery Ascend"
+			"description_string"	"Press jump to invert your current momentum"
+			"description_format"	"value_is_additive"
+			"hidden"				"0"
+			"custom_color"			"225 215 0 255"	
+			"effect_type"			"neutral"
+		}
+		"7715"
+		{
+			"name"					"Astronaut Mastery Descend"
+			"description_string"	"Press jump while falling to perform a double jump"
+			"description_format"	"value_is_additive"
+			"hidden"				"0"
+			"custom_color"			"225 215 0 255"	
+			"effect_type"			"neutral"
+		}
+		"7716"
+		{
+			"name"					"Minicrit vs Bleeding"
+			"description_string"	"100% mini-crits vs bleeding enemies"
+			"description_format"	"value_is_additive"
+			"hidden"				"0"
+			"effect_type"			"positive"
+		}
 //clooey zone
 
 		"12000"
