@@ -1,0 +1,10 @@
+"Patch"
+{
+	include "materials\models\player\shared\red_invun.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models/player/HazmatCiv/mercenary_all_two"
+	"$frame" "0"
+	}
+}

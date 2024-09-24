@@ -1,0 +1,60 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/player/HazmatCiv/mercenary_all_two"
+	"$frame" "0"
+	"$lightwarptexture"		"models/player/pyro/pyro_lightwarp"
+	"$phongexponenttexture" "models/player/HazmatCiv/mercenary_exponent_all"
+	"$phong"		"1"
+	"$phongexponent"		"23.000000"
+	"$phongboost"		"2.100000"
+	"$phongfresnelranges"		"[.25 .5 1]"
+	"$rimlight"		"1"
+	"$rimlightexponent"		"4"
+	"$rimlightboost"		"2"
+	"$rimmask"		"1"
+	"$blendtintbybasealpha"		"0"
+	"$blendtintcoloroverbase"		"0.000000"
+//	"$colortint_base"		"{ 195 108 45 }"
+//	"$color2"		"{ 228 125 14 }"
+	"$colortint_tmp"		"[0 0 0]"
+	"$bumpmapalphaphongmask"		"1"
+	"$envmap"		"env_cubemap"
+	"$basealphaenvmapmask"		"0"
+	"$normalmapalphaenvmapmask"		"1"
+	"$envmaptint"		"[0.258824 0.258824 0.258824]"
+	"$cloakPassEnabled"		"1"
+	"$detail"		"effects/tiledfire/fireLayeredSlowTiled512"
+	"$detailscale"		"5"
+	"$detailblendfactor"		"0"
+	"$detailblendmode"		"6"
+	"$yellow"		"0"
+	">=DX90"
+	{
+		"$selfillum"		"0"
+	}
+	"Proxies"
+	{
+		"spy_invis"
+		{
+		}
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$detail"
+			"animatedtextureframenumvar" "$detailframe"
+			"animatedtextureframerate" 30
+		}
+		"BurnLevel"
+		{
+			"resultVar" "$detailblendfactor"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Equals"
+		{
+			"srcVar1" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}

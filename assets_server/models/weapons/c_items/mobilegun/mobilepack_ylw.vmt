@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials/models/weapons/c_items/mobilegun/mobilepack.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models/weapons/c_items/mobilegun/mobilepack_ylw"
-	}
-}

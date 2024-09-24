@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models\player\shared\green_invun.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models\nekky\civilian_margaret\skirt_tex"
-	}
-}

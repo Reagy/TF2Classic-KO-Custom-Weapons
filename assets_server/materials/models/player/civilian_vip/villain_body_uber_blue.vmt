@@ -1,0 +1,10 @@
+"Patch"
+{
+	include "materials\models\player\shared\blue_invun.vmt"
+	
+	insert
+	{
+	"$baseTexture" "models\player\villain\villain_body_both"
+	"$frame" "1"
+	}
+}

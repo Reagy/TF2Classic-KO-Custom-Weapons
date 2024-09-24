@@ -1,8 +1,0 @@
-"Unlitgeneric"
-{
-	"$basetexture"	"Effects/d3_tracer_green_crit"
-	"$surfaceprop"	"no_decal"
-	"$additive"	1
-	"$vertexcolor"	1
-	"$vertexalpha"	1
-}
