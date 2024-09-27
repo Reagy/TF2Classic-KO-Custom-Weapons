@@ -85,7 +85,7 @@ public void OnPluginStart() {
 	if( g_bLateLoad ) {
 		int iIndex = MaxClients + 1;
 		while( ( iIndex = FindEntityByClassname( iIndex, "tf_weapon_sniperrifle" ) ) != -1 ) {
-			Frame_CheckSniper( iIndex );
+			Frame_CheckSniper( EntIndexToEntRef( iIndex ) );
 		}
 	}
 
@@ -95,23 +95,28 @@ public void OnPluginStart() {
 public void OnEntityCreated( int iEntity ) {
 	static char szEntityName[ 32 ];
 	GetEntityClassname( iEntity, szEntityName, sizeof( szEntityName ) );
-	if( strcmp( szEntityName, "tf_weapon_shotgun" ) == 0 )
+
+	if( StrContains( szEntityName, "tf_weapon_" ) == 0 )
 		RequestFrame( Frame_CheckShotgun, EntIndexToEntRef( iEntity ) );
-	else if( HasEntProp( iEntity, Prop_Send, "m_flChargedDamage" ) )
+
+	if( HasEntProp( iEntity, Prop_Send, "m_flChargedDamage" ) )
 		RequestFrame( Frame_CheckSniper, EntIndexToEntRef( iEntity ) );
 }
 
 void Frame_CheckShotgun( int iWeaponRef ) {
 	int iWeapon = EntRefToEntIndex( iWeaponRef );
-	if( iWeaponRef != -1 )
+	if( iWeapon == -1 )
+		return;
+
+	if( AttribHookFloat( 0.0, iWeapon, "custom_hurt_on_fire" ) != 0.0 )
 		g_dhPrimaryFire.HookEntity( Hook_Pre, iWeapon, Hook_CursedPrimaryFire );
 }
 void Frame_CheckSniper( int iWeaponRef ) {
 	int iWeapon = EntRefToEntIndex( iWeaponRef );
-	if( iWeaponRef == -1 )
+	if( iWeapon == -1 )
 		return;
 	
-	if( AttribHookFloat( 0.0, iWeaponRef, "custom_sniper_laser" ) == 0.0 )
+	if( AttribHookFloat( 0.0, iWeapon, "custom_sniper_laser" ) == 0.0 )
 		return;
 
 	g_dhItemPostFrame.HookEntity( Hook_Post, iWeapon, Hook_SniperPostFrame );
@@ -176,20 +181,15 @@ MRESReturn Hook_GetMedigun( int iPlayer, DHookReturn hReturn ) {
 float g_flHurtMe[ MAXPLAYERS+1 ];
 
 MRESReturn Hook_CursedPrimaryFire( int iEntity ) {
-	if( GetEntPropFloat( iEntity, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() ) {
+	if( GetEntPropFloat( iEntity, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() )
 		return MRES_Ignored;
-	}
 
 	int iOwner = GetEntPropEnt( iEntity, Prop_Send, "m_hOwner" );
 	if( iOwner == -1 )
 		return MRES_Ignored;
 
-	float flValue = AttribHookFloat( 0.0, iEntity, "custom_hurt_on_fire" );
-	if( flValue == 0.0 )
-		return MRES_Ignored;
-
 	//hack for lifesteal
-	g_flHurtMe[ iOwner ] = flValue;
+	g_flHurtMe[ iOwner ] = AttribHookFloat( 0.0, iEntity, "custom_hurt_on_fire" );
 	RequestFrame( Frame_HurtPlayer, iOwner );
 
 	return MRES_Handled;
@@ -201,11 +201,7 @@ void CheckLifesteal( TFDamageInfo tfInfo ) {
 	if( !IsValidPlayer( iAttacker ) )
 		return;
 
-	float flMult = AttribHookFloat( 0.0, tfInfo.iWeapon, "custom_lifesteal" );
-	if( flMult == 0.0 )
-		return;
-
-	g_flHurtMe[ iAttacker ] -= tfInfo.flDamage * flMult;
+	g_flHurtMe[ iAttacker ] -= tfInfo.flDamage * AttribHookFloat( 0.0, tfInfo.iWeapon, "custom_lifesteal" );
 }
 
 void Frame_HurtPlayer( int iPlayer ) {
@@ -213,11 +209,14 @@ void Frame_HurtPlayer( int iPlayer ) {
 		return;
 
 	float flAmount = g_flHurtMe[ iPlayer ];
+	if( flAmount == 0.0 )
+		return;
+
 	int iDiff = 0;
 	if( flAmount > 0.0 ) {
 		SDKHooks_TakeDamage( iPlayer, iPlayer, iPlayer, flAmount );
 		iDiff = -RoundToFloor( flAmount );
-	} else if( flAmount < 0.0 ) {
+	} else {
 		iDiff = HealPlayer( iPlayer, -flAmount, iPlayer, HF_NOCRITHEAL | HF_NOOVERHEAL );
 	}
 
@@ -225,7 +224,7 @@ void Frame_HurtPlayer( int iPlayer ) {
 	eHealEvent.SetInt( "entindex", iPlayer );
 	eHealEvent.SetInt( "amount", iDiff );
 	eHealEvent.FireToClient( iPlayer );
-	eHealEvent.Cancel();
+	CancelCreatedEvent( eHealEvent );
 
 	g_flHurtMe[ iPlayer ] = 0.0;
 }
