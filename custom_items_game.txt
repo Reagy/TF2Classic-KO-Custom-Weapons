@@ -36417,6 +36417,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_maxammo_primary"
 					"value" 			"0.75"
 				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value" 			"1.33"
+				}
 				"strange restriction type 1"												
 				{
 					"attribute_class"	"mod_rocket_gravity"
@@ -36430,7 +36435,7 @@ Weapon by: 'The One Of Wonders'"
 				"mod coilgun explode time"
 				{
 					"attribute_class"	"mod_coilgun_explode_time"
-					"value" 			"-2"
+					"value" 			"-1.0"
 				}
 				"custom rampup"
 				{
