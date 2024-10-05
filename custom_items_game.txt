@@ -10280,10 +10280,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"explosive_bullets"
 					"value"				"1"
 				}
+				"minigun spinup time decreased"
+				{
+					"attribute_class"	"mult_minigun_spinup_time"
+					"value"				"0.8"
+				}
 				"minigun spindown time decreased HIDDEN"
 				{
 					"attribute_class"	"mult_minigun_spindown_time"
-					"value"				"1.2"
+					"value"				"0.8"
 				}
 				"damage bonus hidden"	
 				{
@@ -10309,11 +10314,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_maxammo_primary"
 					"value"				"0.75"
-				}
-				"minigun spinup time increased"
-				{
-					"attribute_class"	"mult_minigun_spinup_time"
-					"value"				"1.2"
 				}
 				"weapon_stattrak_module_scale"
 				{
