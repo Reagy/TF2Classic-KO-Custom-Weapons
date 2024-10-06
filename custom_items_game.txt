@@ -114,29 +114,6 @@
 	
 	"items"
 	{
-	    "2"
-		{
-			"name"						"TF_WEAPON_FIREAXE"
-			"prefab"					"weapon_fireaxe"
-			"baseitem"					"1"
-			"item_description"			"#TF_Weapon_FireAxe_Desc"
-			"model_world"				"models/weapons/w_models/w_fireaxe.mdl"
-			"model_player"				"models/weapons/v_models/v_fireaxe_pyro.mdl"
-			"attach_to_hands"			"2"
-			"attributes"
-			{
-				"single wep deploy time decreased"	
-				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"0.7"
-				}
-				"bleeding duration"	
-				{
-					"attribute_class"	"bleeding_duration"
-					"value"				"3"
-				}
-			}
-		}
 	    "3"
 		{
 			"name"						"TF_WEAPON_CLUB"
@@ -2575,6 +2552,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"headshot_damage_modify"
 					"value"				"1.6666666666666666"
 				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"1.04166667"
+				}
                 "strange restriction type 2"
 				{
 					"attribute_class"	"crit_dmg_falloff"
@@ -2583,7 +2565,7 @@ Weapon by: 'The One Of Wonders'"
 				"longer damage falloff distance"
 				{
 					"attribute_class"	"mult_falloff_distance"
-					"value"				"3.0"
+					"value"				"5.0"
 				}	
 				"strange restriction type 1"													
 				{
@@ -8882,7 +8864,7 @@ Reworked by: 'The One Of Wonders'"
                 "Reload time no anim speed mod"
                 {
                     "attribute_class"    "mult_reload_time_noanimmod"
-                    "value"              "3.0"
+                    "value"              "2.8"
                 }					
 			}
 			"visuals"
@@ -10293,7 +10275,7 @@ Weapon by: 'The One Of Wonders'"
 				"damage bonus hidden"	
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"2.22222222222"
+					"value" 			"2.66666667"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -10308,7 +10290,12 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.5"
+					"value"				"0.75"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				"0.75"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -10318,7 +10305,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"1.25"
+					"value"				"1.5"
 				}
 				"no primary ammo from dispensers fixed"	 
 				{
@@ -10340,11 +10327,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_custom_falloff"
 					"value"				"0.75"
 				}
-				"custom rampup"
-				{
-					"attribute_class"	"mod_custom_rampup"
-					"value"				"1.5"
-				}
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mod_always_draw_tracer_effect"
@@ -10360,9 +10342,9 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
 				}
-				"apply z velocity on damage"
+				"apply look velocity on damage"
 				{
-					"attribute_class"		"apply_z_velocity_on_damage"
+					"attribute_class"		"apply_look_velocity_on_damage"
 					"value"					"50"
 				}
 			}
@@ -15551,20 +15533,15 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "provide on active"
+			    "single wep deploy time decreased"	
 				{
-					"attribute_class"	"provide_on_active"
-					"value"				"1"
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"				"0.7"
 				}
-			    "dmg bonus vs buildings"
+				"bleeding duration"	
 				{
-					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"				"1.5"
-				}
-				"SET BONUS: dmg from sentry reduced"
-				{
-					"attribute_class"	"dmg_from_sentry_reduced"
-					"value"				"0.67"
+					"attribute_class"	"bleeding_duration"
+					"value"				"3"
 				}
 				"heal on hit vs burning"
 				{
@@ -15590,6 +15567,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_player_movespeed_active"
 					"value"				"0.9"
+				}
+				"mod melee crit swing custom damage"
+				{
+					"attribute_class"	"mod_melee_crit_swing_custom_damage"
+					"value"				"27"
 				}
 			}
 			"mouse_pressed_sound"		"#ui/item_wood_weapon_pickup.wav"
@@ -21746,7 +21728,6 @@ Weapon from: Renaissance Revival"
 				"override projectile type"				"3"
 				"effect bar recharge rate increased"	"0.5"
 				"no damage falloff over distance"		"1"
-				"maxammo grenades2 increased"			"3"
 				"centerfire projectile"					"1"
 				"class select override vcd"				"taunt03"	
 				"meter_label"                           "BOMBS"
@@ -21782,6 +21763,11 @@ Weapon from: Renaissance Revival"
 				{
 					"attribute_class"	"stickybomb_charge_rate"
 					"value" 			"1.65"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_maxammo_grenades2"
+					"value" 			"3.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -25395,6 +25381,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_wpn_burntime"
 					"value"				"0.5"
 				}
+				"move speed penalty"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value"				"0.85"
+				} 
 				"strange restriction type 1"
 				{
 					"attribute_class"	"airblast_destroy_projectile"
@@ -26362,7 +26353,7 @@ Weapon by: 'The One Of Wonders'"
 				"Construction rate increased"
 				{
 					"attribute_class"	"mult_construction_value"
-					"value"				"1.35"
+					"value"				"1.4"
 				}
 				"Repair rate increased"															
 				{
@@ -26377,7 +26368,7 @@ Weapon by: 'The One Of Wonders'"
 				"damage penalty"
 				{
 					"attribute_class"	    "mult_dmg"
-					"value" 				"0.6"
+					"value" 				"0.75"
 				}
 				"weapon_stattrak_module_scale"															
 				{
@@ -29149,7 +29140,7 @@ Weapon by: 'The One Of Wonders'"
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
-					"value"				"0.7"
+					"value"				"0.75"
 				}	
                 "punch angle mod add hidden"
 				{
@@ -29876,7 +29867,7 @@ Weapon By: 'Colrot'"
 			"propername"				"0"
 			"item_name"					"Menshevik's Mann-Trap"
 			"item_type_name"			"Bear Traps"
-			"item_description"			"Can only place 6 traps at a time
+			"item_description"			"Can only place 4 traps at a time
 Enemies tagged by the trap will give you a speed boost that wears off if the victim stops bleeding
 
 Hunting is easy for heavy! baby men walk into trap, lose their leg and then I go for kill!
@@ -29984,7 +29975,7 @@ Weapon by: 'The One Of Wonders, Majro'"
 				"strange restriction type 1"											
 				{
 					"attribute_class"	"add_max_pipebombs"
-					"value" 			"-2"
+					"value" 			"-4"
 				}
                 "add condition on hit"															
 				{
@@ -31061,6 +31052,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"set_dmgtype_ignite"
 					"value" 			"1"
 				}
+				"Hunter Killer Special"														
+				{
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1"
+				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
@@ -31069,7 +31065,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.6"
+					"value"				"1.9"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -31146,15 +31142,20 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_falloff_distance"
 					"value"				"1.75"
 				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"blast_dmg_to_self"
+					"value"				"21.0"
+				}
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
-					"value"				"1.2"
+					"value"				"0.8"
 				}	
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_falloff"
-					"value"				"1.0"
+					"value"				"1.2"
 				}					
 			}
 			"visuals"
@@ -35540,7 +35541,7 @@ Weapon by 'The One Of Wonders'"
 			"item_name"					"Gadget: Recaller"
 			"item_type_name"			"Gadget"
 			"item_description"			"Press 5 to deploy the gadget and the fire button to activate!
-On Activation: become invisible for 6 seconds (10 sec cooldown)
+On Activation: become invisible for 6 seconds (16 sec cooldown)
 
 I can now go backstab you and your mother in the past, present and future!
 
@@ -35567,10 +35568,10 @@ Weapon by 'The One Of Wonders'"
 					"attribute_class"	"everything_can_overheal_wearer"
 					"value"				"1"
 				}
-				"Instant disguise bonus"											
+				"mult disguise speed bonus"											
 				{
-					"attribute_class"	"dmmuy"
-					"value"				"1"
+					"attribute_class"	"mult_disguise_speed"
+					"value"				"0.5"
 				}
 				"No cloak ability until activated"	
 				{
@@ -35593,15 +35594,10 @@ Weapon by 'The One Of Wonders'"
 					"attribute_class"	"apply_self_knockback_swing"  
 					"value" 			"-512"                   
  				}
-				"weapon_stattrak_module_scale"											
-				{
-					"attribute_class"	"mult_disguise_speed"
-					"value"				"0.01"
-				}
 				"weapon_stattrak_module_scale"													
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"12.5"
+					"value"				"21.0"
 				}
 				"weapon_stattrak_module_scale"													
 				{
@@ -35619,7 +35615,20 @@ Weapon by 'The One Of Wonders'"
                 "sound_melee_miss"		"Weapon_Recaller.Activate"	
 				"sound_melee_hit"		"Weapon_Recaller.Activate"	
 				"sound_melee_hit_world"	"Weapon_Recaller.Activate"	
-				"sound_burst"			"Weapon_Recaller.Activate"					
+				"sound_burst"			"Weapon_Recaller.Activate"	
+                "animation_replacement"
+                {
+                    "ACT_MP_STAND_MELEE"    "ACT_MP_STAND_PDA"
+                    "ACT_MP_CROUCH_MELEE"   "ACT_MP_CROUCH_PDA"
+					"ACT_MP_RUN_MELEE"      "ACT_MP_RUN_PDA"
+					"ACT_MP_CROUCHWALK_MELEE" "ACT_MP_CROUCHWALK_PDA" 
+					
+					"ACT_MP_JUMP_MELEE"      "ACT_MP_JUMP_PDA"
+					"ACT_MP_JUMP_START_MELEE"      "ACT_MP_JUMP_START_PDA"
+	                "ACT_MP_JUMP_FLOAT_MELEE"      "ACT_MP_JUMP_FLOAT_PDA"
+	                "ACT_MP_JUMP_LAND_MELEE"      "ACT_MP_JUMP_LAND_PDA"
+	                "ACT_MP_SWIM_MELEE"      "ACT_MP_SWIM_PDA"
+                }				
 			}
 			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
 			"drop_sound"				"#ui/item_pack_drop.wav"
@@ -36301,7 +36310,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.5" 
+					"value"				"1.25" 
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -36468,7 +36477,12 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_airblast_cost"
 					"value"				"0.95"
-				}					
+				}
+                "bullet is a hull"
+				{
+					"attribute_class"	"bullet_is_a_hull"
+					"value"				"0.1"
+				}				
 			}
 			"visuals"
 			{
@@ -37268,17 +37282,12 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.5"
+					"value"				"0.75"
 				}
 				"weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.5"
-				}
-				"weapon_stattrak_module_scale"															
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.2"
 				}
 				"punch angle mod add hidden"
 				{
