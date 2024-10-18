@@ -14,11 +14,12 @@ public Plugin myinfo =
 	name = "Attribute: Misc",
 	author = "Noclue",
 	description = "Miscellaneous attributes.",
-	version = "1.3",
+	version = "1.4",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
 DynamicHook g_dhPrimaryFire;
+DynamicHook g_dhSecondaryFire;
 DynamicHook g_dhItemPostFrame;
 DynamicHook g_dhWeaponHolster;
 
@@ -33,10 +34,16 @@ DynamicHook g_dhVPhysCollide;
 //Handle g_sdkCBaseEntityVPhysCollide;
 //Handle g_sdkPhysEnableMotion;
 
+Handle g_sdkSendWeaponAnim;
+Handle g_sdkAttackIsCritical;
+Handle g_sdkPipebombCreate;
+
 int g_iScrambleOffset = -1;
 int g_iRestartTimeOffset = -1;
 //int g_iPhysEventEntityOffset = -1;
 int g_iSniperDotOffset = -1;
+
+static char g_szUnderbarrelFireSound[] = "weapons/grenade_launcher_shoot.wav";
 
 bool g_bLateLoad;
 public APLRes AskPluginLoad2( Handle myself, bool bLate, char[] error, int err_max ) {
@@ -49,6 +56,7 @@ public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
 	g_dhPrimaryFire = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::PrimaryAttack" );
+	g_dhSecondaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::SecondaryAttack" );
 	g_dhItemPostFrame = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::ItemPostFrame" );
 	g_dhWeaponHolster = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Holster" );
 
@@ -61,6 +69,28 @@ public void OnPluginStart() {
 
 	g_dtGrenadeCreate = DynamicDetourFromConfSafe( hGameConf, "CTFGrenadePipebombProjectile::Create" );
 	g_dtGrenadeCreate.Enable( Hook_Post, Detour_CreatePipebomb );
+
+	StartPrepSDKCall( SDKCall_Static );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGrenadePipebombProjectile::Create" );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	PrepSDKCall_AddParameter( SDKType_QAngle, SDKPass_ByRef );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_SetReturnInfo( SDKType_CBaseEntity, SDKPass_Pointer );
+	g_sdkPipebombCreate = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CBaseCombatWeapon::SendWeaponAnim" );
+	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	g_sdkSendWeaponAnim = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFWeaponBase::CalcAttackIsCritical" );
+	g_sdkAttackIsCritical = EndPrepSDKCall();
 
 	g_dhVPhysCollide = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::VPhysicsCollision" );
 	//g_dhShouldExplode = DynamicHook.FromConf( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
@@ -92,24 +122,31 @@ public void OnPluginStart() {
 	delete hGameConf;
 }
 
+public void OnMapStart() {
+	PrecacheSound( g_szUnderbarrelFireSound );
+}
+
 public void OnEntityCreated( int iEntity ) {
 	static char szEntityName[ 32 ];
 	GetEntityClassname( iEntity, szEntityName, sizeof( szEntityName ) );
 
 	if( StrContains( szEntityName, "tf_weapon_" ) == 0 )
-		RequestFrame( Frame_CheckShotgun, EntIndexToEntRef( iEntity ) );
+		RequestFrame( Frame_CheckWeapon, EntIndexToEntRef( iEntity ) );
 
 	if( HasEntProp( iEntity, Prop_Send, "m_flChargedDamage" ) )
 		RequestFrame( Frame_CheckSniper, EntIndexToEntRef( iEntity ) );
 }
 
-void Frame_CheckShotgun( int iWeaponRef ) {
+void Frame_CheckWeapon( int iWeaponRef ) {
 	int iWeapon = EntRefToEntIndex( iWeaponRef );
 	if( iWeapon == -1 )
 		return;
 
 	if( AttribHookFloat( 0.0, iWeapon, "custom_hurt_on_fire" ) != 0.0 )
 		g_dhPrimaryFire.HookEntity( Hook_Pre, iWeapon, Hook_CursedPrimaryFire );
+
+	if( AttribHookFloat( 0.0, iWeapon, "custom_unfortunate_son" ) != 0.0 )
+		g_dhSecondaryFire.HookEntity( Hook_Pre, iWeapon, Hook_UnfortunateSonAltFire );
 }
 void Frame_CheckSniper( int iWeaponRef ) {
 	int iWeapon = EntRefToEntIndex( iWeaponRef );
@@ -132,6 +169,72 @@ public void OnTakeDamageBuilding( int iTarget, Address aDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
 	CheckLifesteal( tfInfo );
 	DoUberScale( tfInfo );
+}
+
+/*
+	Unfortunate Son
+*/
+
+MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
+	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwner" );
+	if( iOwner == -1 )
+		return MRES_Ignored;
+
+	int iCost = RoundToFloor( AttribHookFloat( 10.0, iThis, "custom_unfortunate_son_cost" ) );
+	if( !HasAmmoToFire( iThis, iOwner, iCost, true ) )
+		return MRES_Ignored;
+
+	if( GetEntProp( iThis, Prop_Send, "m_iRoundsLeftInBurst" ) > 0 )
+		return MRES_Ignored;
+
+	if( GetEntProp( iThis, Prop_Send, "m_iReloadMode" ) != 0 ) {
+		SetEntPropFloat( iThis, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() );
+		SetEntPropFloat( iThis, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() );
+		SetEntProp( iThis, Prop_Send, "m_iReloadMode", 0 );
+	}
+
+	if( GetEntPropFloat( iThis, Prop_Send, "m_flNextPrimaryAttack" ) > GetGameTime() || GetEntPropFloat( iThis, Prop_Send, "m_flNextSecondaryAttack" ) > GetGameTime() )
+		return MRES_Ignored;
+
+	ConsumeAmmo( iThis, iOwner, iCost, true );
+
+	SetEntPropFloat( iThis, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + 0.7 );
+	SetEntPropFloat( iThis, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() + 0.7 );
+
+	SDKCall( g_sdkSendWeaponAnim, iThis, 181 ); //ACT_VM_SECONDARYATTACK
+	SetEntProp( iThis, Prop_Send, "m_iWeaponMode", 1 );
+	//adding latentcy prevents animation bugs
+	SetEntPropFloat( iThis, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.6 - GetClientAvgLatency( iOwner, NetFlow_Both ) );
+	
+	EmitSoundToAll( g_szUnderbarrelFireSound, iOwner, SNDCHAN_WEAPON );
+
+	float vecSrc[3], vecEyeAng[3], vecVel[3], vecImpulse[3];
+	GetClientEyePosition( iOwner, vecSrc );
+
+	float vecForward[3], vecRight[3], vecUp[3];
+	GetClientEyeAngles( iOwner, vecEyeAng );
+	GetAngleVectors( vecEyeAng, vecForward, vecRight, vecUp );
+
+	ScaleVector( vecForward, 960.0 );
+	ScaleVector( vecUp, 200.0 );
+	AddVectors( vecVel, vecForward, vecVel );
+	AddVectors( vecVel, vecUp, vecVel );
+	AddVectors( vecVel, vecRight, vecVel );
+
+	vecImpulse[0] = 600.0;
+
+	SDKCall( g_sdkAttackIsCritical, iThis );
+
+	int iGrenade = SDKCall( g_sdkPipebombCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
+
+	//todo: move to gamedata
+	SetEntProp( iGrenade, Prop_Send, "m_bCritical", LoadFromEntity( iThis, 1566, NumberType_Int8 ) );
+
+	//todo: move to gamedata
+	StoreToEntity( iGrenade, 1212, AttribHookFloat( 80.0, iThis, "custom_unfortunate_son_damage" ) ); //damage
+	StoreToEntity( iGrenade, 1216, AttribHookFloat( 120.0, iThis, "custom_unfortunate_son_radius" ) ); //radius
+
+	return MRES_Supercede;
 }
 
 /*
@@ -334,11 +437,9 @@ void DeleteSniperLaser( int iOwner ) {
 	if( iEmitter != -1 ) {
 		AcceptEntityInput( iEmitter, "Stop" );
 		CreateTimer( 1.0, Timer_RemoveParticle, EntIndexToEntRef( iEmitter ) );
-		//RemoveEntity( iEmitter );
 	}
 	if( iPoint != -1 )
 		CreateTimer( 1.0, Timer_RemoveParticle, EntIndexToEntRef( iPoint ) );
-		//RemoveEntity( iPoint );
 }
 
 /*
