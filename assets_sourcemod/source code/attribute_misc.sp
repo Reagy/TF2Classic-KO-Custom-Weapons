@@ -22,6 +22,7 @@ DynamicHook g_dhPrimaryFire;
 DynamicHook g_dhSecondaryFire;
 DynamicHook g_dhItemPostFrame;
 DynamicHook g_dhWeaponHolster;
+DynamicHook g_dhFireProjectile;
 
 DynamicDetour g_dtGetMedigun;
 DynamicDetour g_dtRestart;
@@ -37,6 +38,7 @@ DynamicHook g_dhVPhysCollide;
 Handle g_sdkSendWeaponAnim;
 Handle g_sdkAttackIsCritical;
 Handle g_sdkPipebombCreate;
+Handle g_sdkBrickCreate;
 
 int g_iScrambleOffset = -1;
 int g_iRestartTimeOffset = -1;
@@ -56,9 +58,10 @@ public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
 	g_dhPrimaryFire = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::PrimaryAttack" );
-	g_dhSecondaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::SecondaryAttack" );
+	g_dhSecondaryFire = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::SecondaryAttack" );
 	g_dhItemPostFrame = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::ItemPostFrame" );
 	g_dhWeaponHolster = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Holster" );
+	g_dhFireProjectile = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBaseGun::FireProjectile" );
 
 	g_dtGetMedigun = DynamicDetourFromConfSafe( hGameConf, "CTFPlayer::GetMedigun" );
 	g_dtGetMedigun.Enable( Hook_Pre, Hook_GetMedigun );
@@ -81,6 +84,18 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_SetReturnInfo( SDKType_CBaseEntity, SDKPass_Pointer );
 	g_sdkPipebombCreate = EndPrepSDKCall();
+
+	StartPrepSDKCall( SDKCall_Static );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFBrickProjectile::Create" );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	PrepSDKCall_AddParameter( SDKType_QAngle, SDKPass_ByRef );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_SetReturnInfo( SDKType_CBaseEntity, SDKPass_Pointer );
+	g_sdkBrickCreate = EndPrepSDKCall();
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CBaseCombatWeapon::SendWeaponAnim" );
@@ -147,6 +162,10 @@ void Frame_CheckWeapon( int iWeaponRef ) {
 
 	if( AttribHookFloat( 0.0, iWeapon, "custom_unfortunate_son" ) != 0.0 )
 		g_dhSecondaryFire.HookEntity( Hook_Pre, iWeapon, Hook_UnfortunateSonAltFire );
+
+	static char szBuffer[256];
+	if( AttribHookString( szBuffer, sizeof(szBuffer), iWeapon, "custom_accuracy_scales_damage" ) )
+		g_dhFireProjectile.HookEntity( Hook_Pre, iWeapon, Hook_FireProjectile );
 }
 void Frame_CheckSniper( int iWeaponRef ) {
 	int iWeapon = EntRefToEntIndex( iWeaponRef );
@@ -160,15 +179,83 @@ void Frame_CheckSniper( int iWeaponRef ) {
 	g_dhWeaponHolster.HookEntity( Hook_Post, iWeapon, Hook_SniperHolster );
 }
 
+public void OnTakeDamageAliveTF( int iTarget, Address aDamageInfo ) {
+	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
+	
+	CheckAccuracyScalesDamage( tfInfo );
+}
 public void OnTakeDamageAlivePostTF( int iTarget, Address aDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
+
 	CheckLifesteal( tfInfo );
 	DoUberScale( tfInfo );
 }
 public void OnTakeDamageBuilding( int iTarget, Address aDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
+
 	CheckLifesteal( tfInfo );
 	DoUberScale( tfInfo );
+	CheckAccuracyScalesDamage( tfInfo );
+}
+
+/*
+	Accuracy scales damage
+*/
+
+float g_flLastShot[MAXPLAYERS+1];
+int g_iShotsHit[MAXPLAYERS+1] = { 0, ... };
+int g_iShotsFired[MAXPLAYERS+1] = { 0, ... };
+
+MRESReturn Hook_FireProjectile( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	int iOwner = hParams.Get(1);
+	if( !IsValidPlayer(iOwner) )
+		return MRES_Ignored;
+
+	static char szBuffer[256];
+	if( !AttribHookString( szBuffer, sizeof(szBuffer), iThis, "custom_accuracy_scales_damage" ) )
+		return MRES_Ignored;
+
+	static char szSplit[3][256];
+	ExplodeString( szBuffer, " ", szSplit, 4, 256 );
+	
+	float flInterval = StringToFloat( szSplit[2] );
+	if( GetGameTime() < g_flLastShot[iOwner] + flInterval )
+		g_iShotsFired[iOwner]++;
+	else {
+		g_iShotsFired[iOwner] = 1;
+		g_iShotsHit[iOwner] = 0;
+	}
+		
+	g_flLastShot[iOwner] = GetGameTime();
+
+	return MRES_Handled;
+}
+
+void CheckAccuracyScalesDamage( TFDamageInfo tfInfo ) {
+	int iAttacker = tfInfo.iAttacker;
+	if( !IsValidPlayer( iAttacker ) )
+		return;
+
+	int iWeapon = tfInfo.iWeapon;
+	if( iWeapon == -1 )
+		return;
+
+	static char szBuffer[256];
+	if( !AttribHookString( szBuffer, sizeof(szBuffer), iWeapon, "custom_accuracy_scales_damage" ) )
+		return;
+
+	static char szSplit[3][256];
+	ExplodeString( szBuffer, " ", szSplit, 3, 256 );
+	
+	float flMin = StringToFloat( szSplit[0] );
+	float flMax = StringToFloat( szSplit[1] );
+
+	g_iShotsHit[iAttacker]++;
+
+	float flRatio = float( g_iShotsHit[iAttacker] ) / float( g_iShotsFired[iAttacker] );
+	float flBoost = RemapValClamped( flRatio, 0.0, 1.0, flMin, flMax );
+	PrintToServer("%f %i %i", flRatio,  g_iShotsHit[iAttacker],  g_iShotsFired[iAttacker]);
+	tfInfo.flDamage = tfInfo.flDamage * flBoost;
 }
 
 /*
@@ -204,7 +291,7 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 	SDKCall( g_sdkSendWeaponAnim, iThis, 181 ); //ACT_VM_SECONDARYATTACK
 	SetEntProp( iThis, Prop_Send, "m_iWeaponMode", 1 );
 	//adding latentcy prevents animation bugs
-	SetEntPropFloat( iThis, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.6 - GetClientAvgLatency( iOwner, NetFlow_Both ) );
+	SetEntPropFloat( iThis, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.7 - GetClientAvgLatency( iOwner, NetFlow_Both ) );
 	
 	EmitSoundToAll( g_szUnderbarrelFireSound, iOwner, SNDCHAN_WEAPON );
 
@@ -215,8 +302,11 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 	GetClientEyeAngles( iOwner, vecEyeAng );
 	GetAngleVectors( vecEyeAng, vecForward, vecRight, vecUp );
 
-	ScaleVector( vecForward, 960.0 );
-	ScaleVector( vecUp, 200.0 );
+	float flVelScaleHorz = AttribHookFloat( 1.0, iThis, "custom_unfortunate_son_vel_horz" );
+	float flVelScaleVert = AttribHookFloat( 1.0, iThis, "custom_unfortunate_son_vel_vert" );
+
+	ScaleVector( vecForward, 960.0 * flVelScaleHorz );
+	ScaleVector( vecUp, 200.0 * flVelScaleVert );
 	AddVectors( vecVel, vecForward, vecVel );
 	AddVectors( vecVel, vecUp, vecVel );
 	AddVectors( vecVel, vecRight, vecVel );
@@ -225,8 +315,19 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 
 	SDKCall( g_sdkAttackIsCritical, iThis );
 
-	int iGrenade = SDKCall( g_sdkPipebombCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
+	int iGrenade = -1;
+	switch( RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_unfortunate_son" ) ) ) {
+		case 1:
+			iGrenade = SDKCall( g_sdkPipebombCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
+		case 2:
+			iGrenade = SDKCall( g_sdkBrickCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
+	}
 
+	if( iGrenade == -1 ) {
+		PrintToServer("fuck");
+		return MRES_Ignored;
+	}
+		
 	//todo: move to gamedata
 	SetEntProp( iGrenade, Prop_Send, "m_bCritical", LoadFromEntity( iThis, 1566, NumberType_Int8 ) );
 
@@ -263,6 +364,7 @@ MRESReturn Detour_ResetMapTimePost( Address aThis ) {
 /*
 	BUGFIX:
 	todo: check if 2.1.4 fixed this
+	todo: there seems to be a similar issue with CTFPaintballRifle::WeaponReset()
 	Fix segmentation fault when a player disconnects while healing someone with a paintball rifle.
 */
 
