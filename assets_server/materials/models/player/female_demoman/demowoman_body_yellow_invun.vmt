@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models\player\shared\yellow_invun.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models\player\female_demoman\demowoman_body_yellow"
-	}
-}
