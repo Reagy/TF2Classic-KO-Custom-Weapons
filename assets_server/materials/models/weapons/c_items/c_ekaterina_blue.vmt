@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture"	"models/weapons/c_items/c_ekaterina"
+	"$basetexture"	"models/weapons/c_items/c_ekaterina_blue"
 	//"$bumpmap"	"models/weapons/v_minigun/v_minigun_phongmask"
 	
 	"$phong" "1"

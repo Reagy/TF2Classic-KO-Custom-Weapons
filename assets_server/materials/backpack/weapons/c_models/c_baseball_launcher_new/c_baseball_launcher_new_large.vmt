@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_baseball_launcher_new/c_baseball_launcher_new_large"
+	"$translucent" 1
+	$vertexcolor 1
+}

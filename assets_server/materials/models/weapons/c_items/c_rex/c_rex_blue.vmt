@@ -1,0 +1,72 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\c_items\c_rex\c_rex_blue"
+	"$bumpmap" "models\weapons\c_items\c_rex\c_rex_normal"
+	"$PhongExponentTexture" "models\weapons\c_items\c_rex\c_rex_exponent"
+	"$phong" "1"
+	"$phongexponent" "0"
+	"$phongboost" "2"	
+	"$lightwarptexture" "models/lightwarps/softened_weapon_lightwarp"
+
+	"$phongfresnelranges"	"[.25 .5 1]"
+	"$tempvar" "0"
+	"$yellow" "0"
+	"$glowcolor" "1"
+	"$halflambert"		"1"
+	"$rimlight" "1"
+	"$rimmask" "1"						
+	"$rimlightexponent" "25"				
+	"$rimlightboost" "2"								// Boost for ambient cube component of rim lighting
+	
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"CommunityWeapon"
+		{
+			"resultVar" "$commweapon"
+		}
+		"Multiply"
+		{
+			"srcVar1"  "$commweapon"
+			"srcVar2"  "$commadd_phongexponent" 
+			"resultVar" "$tempvar" 
+		}
+		"Add"
+		{
+			"srcVar1"  "$tempvar" 
+			"srcVar2"  "$basephongexponent" 
+			"resultVar" "$phongexponent" 
+		}
+		"Multiply"
+		{
+			"srcVar1"  "$commweapon"
+			"srcVar2"  "$commadd_phongboost" 
+			"resultVar" "$tempvar" 
+		}
+		"Add"
+		{
+			"srcVar1"  "$tempvar" 
+			"srcVar2"  "$basephongboost"
+			"resultVar" "$phongboost" 
+		}
+
+	}
+}
