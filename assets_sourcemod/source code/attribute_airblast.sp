@@ -165,6 +165,9 @@ MRESReturn Hook_SecondaryFire( int iWeapon ) {
 	if( !HasAmmoToFire( iWeapon, iOwner, iAmmoCost, true ) )
 		return MRES_Ignored;
 
+	if( GetEntProp( iWeapon, Prop_Send, "m_iRoundsLeftInBurst" ) > 0 )
+		return MRES_Ignored;
+
 	if( GetEntProp( iWeapon, Prop_Send, "m_iReloadMode" ) != 0 ) {
 		SetEntPropFloat( iWeapon, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() );
 		SetEntPropFloat( iWeapon, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() );

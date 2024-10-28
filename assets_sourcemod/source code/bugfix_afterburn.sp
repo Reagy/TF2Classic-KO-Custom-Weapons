@@ -33,6 +33,8 @@ public void OnPluginStart() {
 	}
 }
 
+//todo: move to misc plugin
+
 //more unthreaded shenanigans
 float flOldBurn;
 MRESReturn Detour_BurnPre( Address pThis, DHookParam hParams ) {

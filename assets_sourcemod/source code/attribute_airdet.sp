@@ -27,9 +27,9 @@ DynamicHook g_dhSecondaryFire;
 DynamicHook g_dhOnTakeDamage;
 DynamicHook g_dhShouldExplode;
 
-static char g_szStickybombModel[] = "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl";
-static char g_szFireSound[] = "weapons/stickybomblauncher_shoot.wav";
-static char g_szColliderModel[] = "models/props_gameplay/ball001.mdl";
+static char g_szStickybombModel[]	= "models/weapons/w_models/w_stickyrifle/c_stickybomb_rifle.mdl";
+static char g_szFireSound[]		= "weapons/stickybomblauncher_shoot.wav";
+static char g_szColliderModel[]		= "models/props_gameplay/ball001.mdl";
 
 #define BOMBHISTORYSIZE 16
 enum struct BombLagComp {
@@ -184,6 +184,9 @@ MRESReturn Hook_Secondary( int iWeapon ) {
 		return MRES_Ignored;
 
 	if( !HasAmmoToFire( iWeapon, iOwner, 1, false ) )
+		return MRES_Ignored;
+
+	if( GetEntProp( iWeapon, Prop_Send, "m_iRoundsLeftInBurst" ) > 0 )
 		return MRES_Ignored;
 
 	if( GetEntProp( iWeapon, Prop_Send, "m_iReloadMode" ) != 0 ) {
