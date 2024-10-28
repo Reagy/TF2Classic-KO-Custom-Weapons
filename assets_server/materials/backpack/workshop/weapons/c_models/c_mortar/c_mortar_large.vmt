@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\workshop\weapons\c_models\c_mortar\c_mortar_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+	"$ignorez" 1
+}

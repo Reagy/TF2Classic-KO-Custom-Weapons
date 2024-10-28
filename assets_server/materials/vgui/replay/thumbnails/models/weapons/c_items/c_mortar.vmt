@@ -1,18 +1,19 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/workshop/weapons/c_models/c_viking_rocketlauncher/c_viking_rocketlauncher"
-
+	"$basetexture"	"vgui\replay\thumbnails\models\weapons\c_items\c_mortar"
+	
 	"$phong" "1"
-	"$phongexponent" "10"
-	"$phongboost" "3"	
+	"$phongexponent" "25"
+	"$phongboost" "5"	
 	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
- // "$lightwarptexture" "models/weapons/c_items/c_ambassador_lightwarp"
-	"$phongfresnelranges"	"[.5 .75 1]"
-	"$basemapalphaphongmask" "1"
+	"$phongfresnelranges"	"[.3 .5 3]"
+	"$halflambert" "1"
 
-	"$rimlight" "1"
-	"$rimlightexponent" "4"	
-	"$rimlightboost" "1"
+	"$basemapalphaphongmask" "1"
+	
+	"$rimlight" "1"						
+	"$rimlightexponent" "2"				
+	"$rimlightboost" ".25"
 
 	"$glowcolor" "1"
 
@@ -25,8 +26,6 @@
 	"$sheenmaptint" 		"[ 1 1 1 ]"
 	"$sheenmapmaskframe" 	"0"
 	"$sheenindex" 		"0"
-
-	"$yellow" "0"
 
 	"Proxies"
 	{
