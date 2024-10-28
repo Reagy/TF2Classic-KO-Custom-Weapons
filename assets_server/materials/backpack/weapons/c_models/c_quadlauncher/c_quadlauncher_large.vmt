@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_quadlauncher/c_quadlauncher_large"
+	"$translucent" 1
+	$vertexcolor 1
+}

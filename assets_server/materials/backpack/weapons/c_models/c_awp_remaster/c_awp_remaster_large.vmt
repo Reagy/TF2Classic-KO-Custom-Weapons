@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_awp_remaster/c_awp_remaster_large"
+	"$translucent" 1
+	$vertexcolor 1
+}
