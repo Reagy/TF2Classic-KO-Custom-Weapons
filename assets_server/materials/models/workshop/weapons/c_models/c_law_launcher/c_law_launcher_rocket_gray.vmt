@@ -1,0 +1,44 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/workshop/weapons/c_models/c_law_launcher/c_law_launcher_rocket_gray"
+
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "3"	
+	"$lightwarptexture" "models\lightwarps\softened_weapon_lightwarp"
+  //"$lightwarptexture" "models/weapons/c_items/c_ambassador_lightwarp"
+  //"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+  "$phongfresnelranges"	"[.5 .75 1]"
+
+	"$basemapalphaphongmask" "1"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "10"	
+	"$rimlightboost" ".5"
+	
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}		
+	}
+}
