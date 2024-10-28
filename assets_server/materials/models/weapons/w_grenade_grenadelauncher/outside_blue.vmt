@@ -1,0 +1,60 @@
+
+"VertexLitGeneric"
+{
+
+	"$basetexture" "models/effects/black"
+	"$bumpmap" "water/tfwater001_normal"
+	"$detail" "models/player/shared/blue_uber"
+	"$detailblendfactor" "0.33"
+	$detailblendmode 1
+	"$envmap" "effects/invun_blue"
+	"$surfaceprop" "metal"
+	"$halflambert" "1"
+
+	"$selfillum" "1"
+	"$selfIllumFresnel" "1"
+	"$selfIllumFresnelMinMaxExp" "[0 18 13]" // 0.0 1.0 1.0 is the default
+
+	"$phong" "1"
+	"$phongexponent"  "155"
+	"$phongboost" "1"	
+	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+	"$phongfresnelranges"	"[5 1 8]"
+	
+	// Rim lighting parameters
+	"$rimlight" "1"		
+	"$rimlightexponent" "155"
+	"$rimlightboost" "1"	
+	
+	
+	"$glowcolor" "1"
+	"$cloakPassEnabled" "1"
+	
+	"Proxies"
+	{
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$bumpmap"
+			"animatedtextureframenumvar" "$bumpframe"
+			"animatedtextureframerate" 45
+		}
+				"invis"
+		{
+		}
+				"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+
+	}
+}
