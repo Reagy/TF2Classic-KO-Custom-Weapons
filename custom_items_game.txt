@@ -9516,25 +9516,8 @@ Weapon by: 'The One Of Wonders'"
 				"sound_burst"			"Weapon_SuperShotGun_Remaster.SingleCrit"
 				"sound_reload"			"Weapon_SuperShotGun.WorldReload"
 				"sound_special1"		"Weapon_Null"	
-			}		
-			"visuals_red"
-			{
-			    "trail_effect"			"nailtrails_scout_red"	
-				"trail_effect_crit"		"fuse_sparks_crit_red"
-			}
-			"visuals_blu"
-			{
-			    "trail_effect"			"nailtrails_scout_blue"	
-				"trail_effect_crit"		"fuse_sparks_crit_blue"
-			}
-			"visuals_grn"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_green"
-			}
-			"visuals_ylw"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_yellow"
-			}				
+			    "trail_effect"          "fatbullet_small_trail"
+			}					
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
@@ -16123,24 +16106,8 @@ Weapon by: 'The One Of Wonders'"
 				"sound_single_shot"		"Weapon_DemoRiotGun.Fire"
 				"sound_burst"			"Weapon_DemoRiotGun.FireCrit"
 				"muzzle_flash"			"muzzle_grenadelauncher"	
-                "trail_effect"			"bullet_distortion_trail"	
-			}		
-			"visuals_red"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_red"
-			}
-			"visuals_blu"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_blue"
-			}
-			"visuals_grn"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_green"
-			}
-			"visuals_ylw"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_yellow"
-			}				
+                "trail_effect"          "fatbullet_small_trail"
+			}					
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}		
@@ -16252,6 +16219,8 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"sound_single_shot"		"Weapon_BiggerStick.Fire"
 				"sound_burst"			"Weapon_BiggerStick.FireCrit"
+				"trail_effect"			"fatbullet_large_trail"	
+				"explosion_effect"      "fatbullet_impact"
 			}
 		}	
 //-------------------------
@@ -18844,25 +18813,8 @@ Weapon by: 'The One Of Wonders'"
 			{
 			    "sound_single_shot"		"Weapon_JungleShotgun.Shoot"
 				"sound_burst"			"Weapon_JungleShotgun.ShootCrit"
+				"trail_effect"          "fatbullet_small_trail"
 			}		
-			"visuals_red"
-			{
-			    "trail_effect"			"nailtrails_scout_red"	
-				"trail_effect_crit"		"fuse_sparks_crit_red"
-			}
-			"visuals_blu"
-			{
-			    "trail_effect"			"nailtrails_scout_blue"	
-				"trail_effect_crit"		"fuse_sparks_crit_blue"
-			}
-			"visuals_grn"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_green"
-			}
-			"visuals_ylw"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_yellow"
-			}
 			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
 			"drop_sound"				"#ui/item_pack_drop.wav"
 		}
@@ -22878,7 +22830,6 @@ Weapon by: 'The One Of Wonders'"
 				"sound_reload"		"Weapon_Solar.Reload"
 				"sound_burst"			"Weapon_SFlare.ShootCrit"
 				"sound_special1"		"Weapon_Airstrike.Explosion"
-				"trail_effect"		"fire_debris_test"
 				"muzzle_flash"			"muzzle_aagun_PARENT"
 				"explosion_effect"		"Explosion_Beta_Sprite"
 				"animation_replacement"
@@ -22887,6 +22838,24 @@ Weapon by: 'The One Of Wonders'"
 					"ACT_MP_ATTACK_CROUCH_PRIMARY"				"ACT_MP_ATTACK_CROUCH_SECONDARYFIRE"
 					"ACT_MP_ATTACK_SWIM_PRIMARY"				"ACT_MP_ATTACK_SWIM_SECONDARYFIRE"
 				}
+			}
+			"visuals_red"
+			{
+			    "trail_effect"			"SolarFlareFire_red"	
+				"trail_effect_crit"		"SolarFlareFire_crit_red"
+			}
+			"visuals_blu"
+			{
+			    "trail_effect"			"SolarFlareFire_blue"	
+				"trail_effect_crit"		"SolarFlareFire_crit_blue"
+			}
+			"visuals_grn"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_green"
+			}
+			"visuals_ylw"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_yellow"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -24419,7 +24388,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"Vintage Second Amendment"
 			"image_inventory"			"backpack/weapons/c_models/c_muricamusket/c_muricamusket"
 			"model_world"				"models/weapons/c_models/c_murica_musket/c_murica_musket.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_musket_v2.mdl"
+			"model_player"				"models/weapons/v_models/v_musketv3.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -24553,8 +24522,8 @@ Weapon by: 'The One Of Wonders'"
 				"sound_burst"			"Weapon_Musket.SingleCrit"
 				"tracer_effect"			"bullet_scattergun_tracer01"
 				"muzzle_flash"			"muzzle_grenadelauncher"
-                "trail_effect"			"bullet_distortion_trail"	
-				"explosion_effect"      "coilgun_boom_red"
+                "trail_effect"          "fatbullet_medium_trail"	
+				"explosion_effect"      "fatbullet_impact"
 			}		
 			"mouse_pressed_sound"		"#weapons/musket_horn1.wav"
 		}
@@ -25004,7 +24973,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"Vintage Second Amendment"
 			"image_inventory"			"backpack/weapons/c_models/c_muricamusket/c_muricamusket"
 			"model_world"				"models/weapons/c_models/c_murica_musket/c_murica_musket.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_musket_v2.mdl"
+			"model_player"				"models/weapons/v_models/v_musketv3.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -26837,26 +26806,8 @@ Weapon by: 'The One Of Wonders'"
 				"sound_empty"           "Weapon_BarrakadaShotgun.Empty"
 				"sound_reload"          "Weapon_BarrakadaShotgun.WorldReload"
 				"sound_special1"		"Weapon_Airstrike.Explosion"
-				"explosion_effect"      bullet_scattergun_impact01
-				"explosion_effect_crit" bullet_scattergun_impact01
-			}
-			"visuals_red"
-			{
-			    "trail_effect"			"nailtrails_scout_red"	
-				"trail_effect_crit"		"fuse_sparks_crit_red"
-			}
-			"visuals_blu"
-			{
-			    "trail_effect"			"nailtrails_scout_blue"	
-				"trail_effect_crit"		"fuse_sparks_crit_blue"
-			}
-			"visuals_grn"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_green"
-			}
-			"visuals_ylw"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_yellow"
+                "trail_effect"          "fatbullet_large_trail"
+				"explosion_effect"      "fatbullet_impact"
 			}				
 			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
 			"drop_sound"				"#ui/item_pack_drop.wav"
@@ -29057,35 +29008,18 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"1.0"
 				}
-				"kill eater score type"
+				"strange restriction type 1"												
 				{
-					"attribute_class"	"custom_sniper_laser"
-					"value"				"1"
+					"attribute_class"	"mod_rocket_gravity"
+					"value"				"0.2"
 				}
 			}
 			"visuals"
 			{
 				"sound_single_shot"		"Weapon_BigFifty.Single"
 				"sound_burst"			"Weapon_BigFifty.SingleCrit"
-				"tracer_effect"         "aagun_tracer_PARENT"
 				"explosion_effect"		"explosion_shrapnel_PARENT"
-				"trail_effect"			"fuse_sparks"	
-			}		
-			"visuals_red"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_red"
-			}
-			"visuals_blu"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_blue"
-			}
-			"visuals_grn"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_green"
-			}
-			"visuals_ylw"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_yellow"
+				"trail_effect"			"fatbullet_large_trail"	
 			}		
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -30571,29 +30505,9 @@ Weapon by: 'The One Of Wonders'"
 				"sound_single_shot"		"Weapon_MegaRevolver.Shoot"						
 				"sound_burst"			"Weapon_MegaRevolver.ShootCrit"
 				"sound_special1"         "Weapon_Airstrike.Explosion"
-				"trail_effect"          "fuse_sparks"
-				"explosion_effect"		"coilgun_boom_red"
-			}
-			"visuals_red"
-			{
-				"trail_effect_crit"		"critical_rocket_red"
-				"explosion_effect_crit"	"coilgun_boom_red"
-			}
-			"visuals_blu"
-			{
-				"trail_effect_crit"		"critical_rocket_blue"
-				"explosion_effect_crit"	"coilgun_boom_blue"
-			}
-			"visuals_grn"
-			{
-				"trail_effect_crit"		"critical_rocket_green"
-				"explosion_effect_crit"	"coilgun_boom_green"
-			}
-			"visuals_ylw"
-			{
-				"trail_effect_crit"		"critical_rocket_yellow"
-				"explosion_effect_crit"	"coilgun_boom_yellow"
-			}				
+				"trail_effect"          "fatbullet_medium_trail"
+				"explosion_effect"      "fatbullet_impact"
+			}			
 			"mouse_pressed_sound"		"#ui/item_pack_pickup.wav"
 			"drop_sound"				"#ui/item_pack_drop.wav"
 		}
@@ -31624,25 +31538,8 @@ Weapon by: 'The One Of Wonders'"
 			"visuals"
 			{										
 				"sound_single_shot"		"Weapon_Terrorizer.Shoot"
-				"sound_burst"			"Weapon_Terrorize.ShootCrit"									
-			}
-			"visuals_red"
-			{
-			    "trail_effect"			"nailtrails_scout_red"	
-				"trail_effect_crit"		"fuse_sparks_crit_red"
-			}
-			"visuals_blu"
-			{
-			    "trail_effect"			"nailtrails_scout_blue"	
-				"trail_effect_crit"		"fuse_sparks_crit_blue"
-			}
-			"visuals_grn"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_green"
-			}
-			"visuals_ylw"
-			{
-				"trail_effect_crit"		"fuse_sparks_crit_yellow"
+				"sound_burst"			"Weapon_Terrorize.ShootCrit"
+                "trail_effect"          "fatbullet_small_trail"				
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
@@ -32222,13 +32119,31 @@ Weapon by: 'The One Of Wonders'"
 				"sound_reload"			"Weapon_FlameThrower.Reload"
 				"trail_effect"			"fire_hoodoo_test"
 				"tracer_effect"			"bullet_scattergun_tracer01"
-				"explosion_effect"		"Explosion_Beta_Sprite_BACKUP1"
+				"explosion_effect"		"Explosion_Beta_Sprite"
 				"animation_replacement"
 				{	
 					"ACT_MP_ATTACK_STAND_PRIMARY"				"ACT_MP_ATTACK_STAND_SECONDARYFIRE"  // Third Person
 					"ACT_MP_ATTACK_CROUCH_PRIMARY"				"ACT_MP_ATTACK_CROUCH_SECONDARYFIRE"
 					"ACT_MP_ATTACK_SWIM_PRIMARY"				"ACT_MP_ATTACK_SWIM_SECONDARYFIRE"
 				}
+			}
+			"visuals_red"
+			{
+			    "trail_effect"			"napalm_fire"	
+				"trail_effect_crit"		"napalm_fire_crit_red"
+			}
+			"visuals_blu"
+			{
+			    "trail_effect"			"napalm_fire_blue"	
+				"trail_effect_crit"		"napalm_fire_crit_blue"
+			}
+			"visuals_grn"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_green"
+			}
+			"visuals_ylw"
+			{
+				"trail_effect_crit"		"fuse_sparks_crit_yellow"
 			}
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
