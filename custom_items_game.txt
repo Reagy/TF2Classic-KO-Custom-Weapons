@@ -1699,6 +1699,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"		"add_player_capturevalue"
 					"value" 				"-3"
 				}		
+				"crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
                 "civ boost aura override"
 				{
 					"attribute_class"		"add_civ_aura_override"
@@ -4427,7 +4432,7 @@ Weapon by: 'Reagy'"
 			"item_iconname"				"Backup Plan"
 			"image_inventory"			"backpack/weapons/w_models/w_snubnose_melee"
 			"model_world"				"models/weapons/custom/w_models/w_backup_plan_new.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_backup_plan_v2.mdl"
+			"model_player"				"models/weapons/v_models/v_backup_plan_v3.mdl"
 			"extra_wearable"			"models/player/items/civ_bill.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -10966,77 +10971,6 @@ Weapon by: 'The One Of Wonders'"
 //--------------------------
 		"7037"																			
 		{
-			"name"						"TF_WEAPON_DIYTHROWER"									
-			"prefab"					"weapon_flamethrower"
-			"show_in_armory"			"1"
-
-			"item_name_color"           "190 200 233 255"
-
-			"propername"				"0"
-			"item_name"					"Household Blazer"
-			"item_type_name"			"Improvised Flamethrower"
-			"item_description"			"
-Model by: 'heinousbanana'
-Weapon by: 'Reagy'"					
-			"item_logname"				"Household Blazer"
-			"item_iconname"				"Household Blazer"
-			"image_inventory"			"backpack/weapons/c_models/c_improvised_imblazer"
-			"model_world"				"models/weapons/custom/c_models/c_improvised_imblazer.mdl"
-			"model_player"				"models/weapons/custom/c_models/c_improvised_imblazer.mdl"		
-			"attach_to_hands"			"1"
-			"used_by_classes"
-			{
-				"pyro"					"1"
-			}
-			"attributes"
-			{
-			    "provide on active"
-				{
-					"attribute_class"	"provide_on_active"
-					"value" 			"1"
-				}
-				"Bazooka Payload"
-				{
-                    "attribute_class"      "display_only"
-                    "value"                "1"
-                }
-				"instant reload all weapons on kill"
-				{
-					"attribute_class"	"instant_reload_all_weapons_on_kill"							
-					"value" 			"1"
-				}
-				"add condition on kill"
-				{
-					"attribute_class"	"add_onkill_addcond_self"							
-					"value" 			"111 5"
-				}
-				"weapon burn time reduced"
-				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.5"
-				}
-				"flame ammopersec increased"
-				{
-					"attribute_class"	"mult_flame_ammopersec"
-					"value" 			"2.0"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"1.2"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0" // Why was this set to 1?
-				}
-			}	
-			"visuals"
-			{
-				"sound_reload"			"Weapon_FireHose.FireLoop"
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //--------------------------
 //--------------------------
@@ -17315,7 +17249,11 @@ Weapon by: 'Majro'"
 			}
 			"attributes"
 			{
-					
+			    "provide on active"    
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
 				"fire rate bonus with reduced health"
 				{
 					"attribute_class"	"mult_postfiredelay_with_reduced_health"
@@ -20516,6 +20454,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"headshot_is_minicrit"
 					"value"				"1"
 				}	
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"bodyshot_damage_modify"
+					"value" 			"0.66666666666667"
+				}
                 "strange restriction type 1"
 				{
 					"attribute_class"	"mod_always_draw_tracer_effect"
@@ -22886,7 +22829,17 @@ Weapon by: 'The One Of Wonders'"
 				"sound_single_shot"		"Weapon_Recoilless.Shoot"
 				"sound_burst"			"Weapon_Recoilless.ShootCrit"
 				"sound_special1"		"Weapon_Recoilless.Explode"
+				"trail_effect"			"fatbullet_large_trail"	
+				"explosion_effect"      "fatbullet_impact"
 			}
+			"visuals_red"
+			{
+				"trail_effect_crit"		"fatbullet_large_trail_crit_red"
+			}
+			"visuals_blu"
+			{
+				"trail_effect_crit"		"fatbullet_large_trail_crit_blue"
+			}	
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
@@ -28537,11 +28490,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"1.0"
 				}
-				"strange restriction type 1"												
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"				"0.03"
-				}
 			}
 			"visuals"
 			{
@@ -30783,17 +30731,17 @@ Weapon by: 'The One Of Wonders, Majro'"
 				"weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.66666666667"
+					"value"				"0.25"
 				}
 				"weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"0.2"
+					"value"				"0.25"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"2.0"
+					"value" 			"3.0"
 				}	
 				"crit mod disabled"															
 				{
@@ -30833,7 +30781,7 @@ Weapon by: 'The One Of Wonders, Majro'"
 				"strange restriction type 1"											
 				{
 					"attribute_class"	"mod_sticky_no_detonation"
-					"value" 			"1e"
+					"value" 			"1"
 				}
 				"strange restriction type 1"											
 				{
@@ -30848,8 +30796,13 @@ Weapon by: 'The One Of Wonders, Majro'"
                 "weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"stickybomb_charge_rate"
-					"value"				"0.5"
+					"value"				"0.0"
 				}		
+				"strange restriction type 1"
+				{
+					"attribute_class"	"chargeweapon_no_extra_speed"
+					"value"				"1"
+				}
                 "weapon_stattrak_module_scale"															
 				{
 					"attribute_class"	"blast_dmg_to_self"
