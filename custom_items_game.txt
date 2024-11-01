@@ -8522,7 +8522,7 @@ Howdy, pardner.
 
 Model by: 'svdl'
 Animations by: 'Raptor Dan'
-Weapon by: 'Raptop Dan'"														
+Weapon by: 'Raptor Dan'"														
 			"item_logname"				"Peacemaker"
 			"item_iconname"				"Peacemaker"													
 			"image_inventory"			"backpack/weapons/c_models/c_colt_engineer/c_colt_engineer" 						
@@ -8671,7 +8671,7 @@ Weapon by: 'The One Of Wonders'"
 				"add condition on kill"													
 				{
 					"attribute_class"	"add_onkill_addcond_self"
-					"value"				"122 5"
+					"value"				"4 5"
 				}
 				"damage bonus"
 				{
@@ -8951,7 +8951,7 @@ Weapon by: 'The One Of Wonders'"
 Only human...
 
 Original model by: 'The_Fanciest_Of_Pants'
-Model edit by: 'Raptop Dan'
+Model edit by: 'Raptor Dan'
 Animations by: 'Raptor Dan'
 Cosmetics by: 'Greg' 'Colteh'
 Weapon by: 'Reagy'"
