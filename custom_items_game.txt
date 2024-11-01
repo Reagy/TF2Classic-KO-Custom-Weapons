@@ -12735,7 +12735,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"1.33"
+					"value" 			"1.44"
 				}
 				"weapon_stattrak_module_scale"
 				{
