@@ -216,7 +216,7 @@ MRESReturn Hook_FireProjectile( int iThis, DHookReturn hReturn, DHookParam hPara
 		return MRES_Ignored;
 
 	static char szSplit[3][256];
-	ExplodeString( szBuffer, " ", szSplit, 4, 256 );
+	ExplodeString( szBuffer, " ", szSplit, 3, 256 );
 	
 	float flInterval = StringToFloat( szSplit[2] );
 	if( GetGameTime() < g_flLastShot[iOwner] + flInterval )
@@ -254,7 +254,7 @@ void CheckAccuracyScalesDamage( TFDamageInfo tfInfo ) {
 
 	float flRatio = float( g_iShotsHit[iAttacker] ) / float( g_iShotsFired[iAttacker] );
 	float flBoost = RemapValClamped( flRatio, 0.0, 1.0, flMin, flMax );
-	PrintToServer("%f %i %i", flRatio,  g_iShotsHit[iAttacker],  g_iShotsFired[iAttacker]);
+	//PrintToServer("%f %i %i", flRatio,  g_iShotsHit[iAttacker],  g_iShotsFired[iAttacker]);
 	tfInfo.flDamage = tfInfo.flDamage * flBoost;
 }
 
@@ -315,25 +315,38 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 
 	SDKCall( g_sdkAttackIsCritical, iThis );
 
-	int iGrenade = -1;
+	int iProjectile = -1;
 	switch( RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_unfortunate_son" ) ) ) {
 		case 1:
-			iGrenade = SDKCall( g_sdkPipebombCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
+			iProjectile = SDKCall( g_sdkPipebombCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
 		case 2:
-			iGrenade = SDKCall( g_sdkBrickCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
+			iProjectile = SDKCall( g_sdkBrickCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
+			
 	}
 
-	if( iGrenade == -1 ) {
-		PrintToServer("fuck");
+	if( iProjectile == -1 ) {
+		PrintToServer("invalid projectile type for custom alt fire");
 		return MRES_Ignored;
 	}
 		
-	//todo: move to gamedata
-	SetEntProp( iGrenade, Prop_Send, "m_bCritical", LoadFromEntity( iThis, 1566, NumberType_Int8 ) );
+	static char szModelString[128];
+	if( AttribHookString( szModelString, sizeof(szModelString), iThis, "custom_unfortunate_son_model_override" ) ) {
+		int result = 0;
+		if( !IsModelPrecached( szModelString ) )
+			result = PrecacheModel( szModelString );
+
+		if( result != 0 )
+			SetEntityModel( iProjectile, szModelString );
+		else
+			PrintToServer( "invalid model string for alt fire projectile %s", szModelString );
+	}
 
 	//todo: move to gamedata
-	StoreToEntity( iGrenade, 1212, AttribHookFloat( 80.0, iThis, "custom_unfortunate_son_damage" ) ); //damage
-	StoreToEntity( iGrenade, 1216, AttribHookFloat( 120.0, iThis, "custom_unfortunate_son_radius" ) ); //radius
+	SetEntProp( iProjectile, Prop_Send, "m_bCritical", LoadFromEntity( iThis, 1566, NumberType_Int8 ) );
+
+	//todo: move to gamedata
+	StoreToEntity( iProjectile, 1212, AttribHookFloat( 80.0, iThis, "custom_unfortunate_son_damage" ) ); //damage
+	StoreToEntity( iProjectile, 1216, AttribHookFloat( 120.0, iThis, "custom_unfortunate_son_radius" ) ); //radius
 
 	return MRES_Supercede;
 }
