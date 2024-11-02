@@ -33514,6 +33514,11 @@ Weapon by: 'The One Of Wonders, Vror'"
                     "value"              "3.6"
                 }	
 				"strange restriction type 1"
+				{
+					"attribute_class"	"custom_rocket_homing"
+					"value" 			"1"
+				}
+				"strange restriction type 1"
                 {
                     "attribute_class"    "custom_rocket_homing_rate"
                     "value"             "0.6"
