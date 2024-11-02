@@ -16,5 +16,6 @@ particles_manifest
         file    "!particles/plasma_balls.pcf"
         file    "!particles/energy_ball.pcf"
         file    "!particles/kocw_sniper.pcf"
+        file    "!particles/sniper_laser.pcf"
         file    "!particles/healbomb.pcf"
 }
