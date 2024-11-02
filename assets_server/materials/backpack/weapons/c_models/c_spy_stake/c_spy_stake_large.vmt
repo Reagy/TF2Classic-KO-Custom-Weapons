@@ -1,6 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" "backpack/weapons/c_models/c_spy_stake/c_spy_stake_large"
-	"$translucent" 1
-	$vertexcolor 1
-}

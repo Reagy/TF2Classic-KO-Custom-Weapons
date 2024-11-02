@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models\weapons\Gauntlotsheild\Gauntletshield.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models\weapons\Gauntlotsheild\Gauntletshield_ylw"
-	}
-}

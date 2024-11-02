@@ -1,0 +1,35 @@
+"unLitGeneric"
+{
+	"$baseTexture" "models\weapons\w_quad\w_quadlauncherlight"
+	"$selfillum" "1"
+	"$selfillumtint_base" "{ 255 255 255 }"
+	"$selfillumtint" "{ 255 255 255 }"
+	"$BASEMAPALPHAPHONGMASK"  "1"
+	"$phong" "1"
+	"$phongexponent" "35"
+	"$phongboost" "5"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges" "[0.25 0.5 1]"
+	//"$colortint_base"		"{ 184 56 59 }"
+	//"$color2"		"{ 184 56 59 }"
+	
+	"$sineval" "1"
+
+	"Proxies"
+	{
+		"Sine"
+		{
+			"sinemin" ".1"
+			"sinemax" "2.00"
+			"sineperiod" "0.30"
+			"resultVar" "$sineval"
+		}
+		
+		"Multiply"
+		{
+			"srcVar1" "$selfillumtint_base"
+			"srcVar2" "$sineval"
+			"resultVar" "$selfillumtint"
+		}
+	}
+}

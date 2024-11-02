@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models\player\shared\green_invun.vmt"
-	
-	insert
-	{
-	"$basetexture" "models/player/administrator/admin_head"
-	}
-}

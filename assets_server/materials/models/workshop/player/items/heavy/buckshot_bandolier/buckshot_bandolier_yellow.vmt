@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials/models/workshop/player/items/heavy/buckshot_bandolier/buckshot_bandolier.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models/workshop/player/items/heavy/buckshot_bandolier/buckshot_bandolier_yellow_color"
-	}
-}

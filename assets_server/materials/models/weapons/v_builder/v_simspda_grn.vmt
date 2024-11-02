@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models\weapons\v_builder\v_simspda.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models\weapons\v_builder\v_simspda_grn"
-	}
-}

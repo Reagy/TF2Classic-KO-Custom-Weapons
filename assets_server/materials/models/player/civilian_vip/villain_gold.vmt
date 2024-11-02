@@ -1,0 +1,94 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/player/villain/villain_body_both"
+//	"$bumpmap" "models/player/villain/villain_body_normal"		//no effect on this
+
+	"$detail" "effects/tiledfire/fireLayeredSlowTiled512.vtf"	
+	"$detailscale" "5"
+	"$detailblendfactor" .0
+	"$detailblendmode" 6
+	"$bbqamount" "1"	
+	"$two" "2.35"
+	"$one" "1"
+	"$absburnminusone" "1"
+	"$burnminusone" "1"
+	"$finalburnlevel" "1"
+	"$burnlevel" "0"
+
+	"$phong" "1"
+//	"$phongexponenttexture" "models/player/villain/villain_body_expo"
+	"$phongexponent" "4"
+	"$phongboost" "3"	
+	"$phongalbedotint" "1"	
+//	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"			//no extra shine, softer shading
+//	"$lightwarptexture" "models\lightwarps\robot_lightwarp"			//gives more extra shine when shaded, sharp
+	"$lightwarptexture" "models/player/demo/hwn_demo_lightwarp"		//gives some extra shine when shaded, smooth
+	"$phongwarptexture"  "models\weapons\c_items/c_pocket_watch_phongwarp"	
+	"$basemapalphaphongmask" "1"
+
+//	"$envmap" "env_cubemap"			//tinted default shine, if baked
+//	"$envmaptint" "[.47 .62 .30]"
+
+	"$envmap" "cubemaps/cubemap_gold001"	//saxxy shine, no bake needed
+	"$envmaptint" "[.5 .45 .1]"
+
+	"$basemapenvmapmask" "1"
+
+	"$phongfresnelranges"	"[.3 1 8]"
+	"$halflambert" "0"
+
+	// Rim lighting parameters
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "4"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "3"										// Boost for ambient cube component of rim lighting
+	
+	"$cloakColorTint" "[1 0.5 0.4]"
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"spy_invis"
+		{
+		}
+
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$detail"
+			"animatedtextureframenumvar" "$detailframe"
+			"animatedtextureframerate" 30
+		}
+
+		"BurnLevel"
+		{
+			"resultVar" "$burnlevel"
+		}
+		"Subtract"
+		{
+			"srcVar1" "$burnlevel"
+			"srcVar2" "$one"
+			"resultVar" "$burnminusone"
+		}
+		"Abs"
+		{
+			"srcVar1" "$burnminusone" 
+			"resultVar" "$absburnminusone"
+		}
+
+		"Subtract"
+		{
+			"srcVar1" "$one"
+			"srcVar2" "$absburnminusone"
+			"resultVar" "$finalburnlevel"
+		}
+
+
+		"Equals"
+		{
+			"srcVar1" "$finalburnlevel"
+			"resultVar" "$detailblendfactor"
+		}
+	
+
+	}
+
+}

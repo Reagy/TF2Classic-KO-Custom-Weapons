@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models\buildables\sentry1\mini_sentry_light_red.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models\buildables\sentry1\mini_sentry_light_yellow"
-	}
-}

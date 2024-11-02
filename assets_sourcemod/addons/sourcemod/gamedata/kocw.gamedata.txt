@@ -329,6 +329,11 @@
 			{
 				"linux"		"290"
 			}
+			
+			"CTFWeaponBaseGun::FireProjectile"
+			{
+				"linux"		"452"
+			}
 
 			"CTFBaseGrenade::Detonate"
 			{
@@ -1025,6 +1030,22 @@
 				"this"			"entity"
 			}
 			
+			"CTFWeaponBaseGun::FireProjectile"
+			{
+				"offset"		"CTFWeaponBaseGun::FireProjectile"
+				"hooktype"		"entity"
+				"callconv"		"thiscall"
+				"return"		"cbaseentity"
+				"this"			"entity"
+				"arguments"
+				{
+					"player"
+					{
+						"type"	"cbaseentity"
+					}
+				}
+			}
+			
 			"CTFPaintballRifle::HitAlly"
 			{
 				"signature"		"CTFPaintballRifle::HitAlly"
@@ -1513,6 +1534,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN28CTFGrenadePipebombProjectile6CreateERK6VectorRK6QAngleS2_S2_P11CBaseEntityS7_i"
+			}
+			"CTFBrickProjectile::Create"
+			{
+				"library"	"server"
+				"linux"		"@_ZN18CTFBrickProjectile6CreateERK6VectorRK6QAngleS2_S2_P11CBaseEntityS7_i"
 			}
 			
 			"CTFFlameThrower::SimulateFlames"

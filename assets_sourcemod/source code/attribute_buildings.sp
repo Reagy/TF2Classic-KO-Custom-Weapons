@@ -93,8 +93,10 @@ enum {
 	SAPPER_INTERMISSION,
 }
 
+#define MAX_BUILDING_OVERRIDES 4
+
 //building models, stored as type, override, level, is upgrading
-int g_iBuildingModels[3][4][3][2];
+int g_iBuildingModels[3][MAX_BUILDING_OVERRIDES][3][2];
 //sapper models, stored as override
 int g_iSapperModels[2];
 //blueprint models, stored as type, override, mode
@@ -510,7 +512,11 @@ void UpdateBuildingHealth( int iPlayer, int iBuilding, bool bHeal = false ) {
 		BuildingTargetLevel( iBuilding ) - 1 :
 		GetEntProp( iBuilding, Prop_Send, "m_iUpgradeLevel" ) - 1;
 
-	int iBaseHealth = g_iBaseHealth[ iBuildingType ][ g_iBuildingTypes[ iPlayer ][ iBuildingType ] ][ iBuildingLevel ];
+	int iOverride = g_iBuildingTypes[ iPlayer ][ iBuildingType ];
+	if( iOverride >= MAX_BUILDING_OVERRIDES )
+		return;
+
+	int iBaseHealth = g_iBaseHealth[ iBuildingType ][ iOverride ][ iBuildingLevel ];
 
 	float flMultiplier = AttribHookFloat( 1.0, iPlayer, "mult_engy_building_health" );
 	flMultiplier = AttribHookFloat( flMultiplier, iPlayer, g_szBuildingHealthAttribs[ iBuildingType ] );
@@ -525,8 +531,12 @@ void UpdateBuildingHealth( int iPlayer, int iBuilding, bool bHeal = false ) {
 }
 
 void UpdateBuildingCost( int iPlayer, int iBuilding, int iType ) {
+	int iOverride = g_iBuildingTypes[ iPlayer ][ iType ];
+	if( iOverride >= MAX_BUILDING_OVERRIDES )
+		return;
+
 	int iBuildingLevel = GetEntProp( iBuilding, Prop_Send, "m_iUpgradeLevel" );
-	int iNewCost = g_iLevelCost[ iType ][ g_iBuildingTypes[ iPlayer ][ iType ] ][ IntClamp( iBuildingLevel - 1, 0, 1 ) ];
+	int iNewCost = g_iLevelCost[ iType ][ iOverride ][ IntClamp( iBuildingLevel - 1, 0, 1 ) ];
 
 	SetEntProp( iBuilding, Prop_Send, "m_iUpgradeMetalRequired", iNewCost );
 }
@@ -537,6 +547,9 @@ void SetBuildingModel( int iBuilding, bool bIsUpgrading ) {
 	int iLevel =	GetEntProp( iBuilding, Prop_Send, "m_iUpgradeLevel" );
 
 	int iOverride = g_iBuildingTypes[ iBuilder ][ iType ];
+	if( iOverride >= MAX_BUILDING_OVERRIDES )
+		return;
+
 	int iModel = g_iBuildingModels[ iType ][ iOverride ][ iLevel - 1 ][ view_as<int>( bIsUpgrading ) ];
 	SetEntProp( iBuilding, Prop_Send, "m_nModelIndexOverrides", iModel, 4, 0 );
 }

@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\models\player\shared\green_invun.vmt"
-	
-	insert
-	{
-	"$baseTexture" "models\player\pyro_female_tip/pyro_female_green"
-	}
-}

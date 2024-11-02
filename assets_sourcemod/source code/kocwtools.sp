@@ -560,6 +560,7 @@ public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 	
 	Address aWeapon = GetEntityAddress( iEntity );
 
+	//todo: get offset from netprops
 	int iItemOffset = 1168; //offset of m_Item
 	if( !HasEntProp( iEntity, Prop_Send, "m_Item") ) {
 		SetNativeString( 1, "", GetNativeCell( 2 ) );
