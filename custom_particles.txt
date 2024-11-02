@@ -14,7 +14,7 @@ particles_manifest
 	file    "!particles/medicflames_v2.pcf"
 	file    "!particles/medic_darts.pcf"    
 	file    "!particles/kocw_sniper.pcf"
-	file    "!particles/kocw_beams_v2.pcf"
+	file    "!particles/kocw_beams_v3.pcf"
 	file    "!particles/healbomb.pcf"
 	file    "!particles/energy_ball.pcf"
 	file	"!particles/db_tracers.pcf"
