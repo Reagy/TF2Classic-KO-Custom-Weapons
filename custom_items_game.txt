@@ -3033,7 +3033,7 @@ Weapon by: 'Azzy'"
 		"3364"																					// This is a wearable backpack for Engi that gives him more metal - in exchange for an item slot. Hmm. Better think about it, yeah?
 		{
 			"name"						"TF_WEARABLE_BACKPACK"
-			"item_class"				"tf_weapon_grenade_mirv2"											// Yes! This is a wearable item - like the Gunboats, or the Cozy Camper from live.
+			"item_class"	            "tf_wearable"                      //"item_class"				"tf_weapon_grenade_mirv2"											// Yes! This is a wearable item - like the Gunboats, or the Cozy Camper from live.
 			"show_in_armory"			"1"
 			"item_slot"					"secondary" 			                                   // I debated for a while whether to replace Primary or Secondary, still up in the air about it. It's Primary, for now.
 
@@ -3072,27 +3072,27 @@ Viewmodel hack by: 'Reagy'"
 			}
 			"attributes"
 			{
-			     "Backpack Positive"
+			    "maxammo primary increased"
 				{
-					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"1"
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"1.5"
 				}
 			    "health regen"
 				{
 					"attribute_class"	"add_health_regen"
 					"value"				"5"
 				}
+				"add ammo on kill"
+				{
+					"attribute_class"	"add_ammo_on_kill"
+					"value" 			"20"
+				}	
 				"medigun healing received penalty"
 				{
-					"attribute_class"	"mult_medigun_healing_received"
+					"attribute_class"	"mult_healing_received"
 					"value"				"0.8"
 				}
 				"Wearable Secondary Replacer"
-				{
-					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"1"
-				}
-				"Backpack Negative"
 				{
 					"attribute_class"	"DISPLAY_ONLY"
 					"value"				"1"
@@ -3451,6 +3451,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "Chainsaw Massacre"
+				{
+					"attribute_class"	"dmmuy"
+					"value" 			"1"
+				}
 			    "move speed bonus active"
 				{
 					"attribute_class"	"mult_player_movespeed_active"
@@ -3460,17 +3465,17 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"add_maxhealth"
 					"value" 			"25"
-				}	
-                "heal on kill"
-				{
-					"attribute_class"	"heal_on_kill"
-					"value" 			"25"
 				}
                 "health regen"
 				{
 					"attribute_class"	"add_health_regen"
 					"value" 			"5"
-				}				
+				}		
+                "damage force reduction"
+				{
+					"attribute_class"	"damage_force_reduction"
+					"value" 			"0.75"
+				}					
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
@@ -3489,7 +3494,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"				"2.275"
+					"value"				"2.4"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -3506,11 +3511,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"dmmuy"
 					"value" 			"1"
 				}	
-				"Chainsaw no ammo packs"
-				{
-					"attribute_class"	"dmmuy"
-					"value" 			"1"
-				}	
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -3520,17 +3520,17 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_projectile_range"
 					"value"				"0.01171875"
-				}		
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_primary_ammo_from_ammo_packs"
-					"value"				"0.0"
 				}	
-				"weapon_stattrak_module_scale"
+				"strange restriction type 1"
 				{
-					"attribute_class"	"mult_primary_ammo_from_dropped_weapons"
-					"value"				"0.2"
-				}	
+					"attribute_class"	"heal_on_kill"
+					"value" 			"200"
+				}
+                "weapon_stattrak_module_scale"		
+				{
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.0001"
+				}				
 				"punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
@@ -3550,11 +3550,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"bullet_is_a_hull"
 					"value"				"0.5"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_health_regen_hurt_delay"
-					"value"				"-5"
 				}
 			}
 			"visuals"
@@ -7480,8 +7475,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_name_color"           "190 200 233 255"
 			"item_name"					"Krälle"											
 			"item_type_name"			"Experimental Heavy-Duty Medi Gun"
-			"item_description"			"ÜberCharge provides 9 seconds of invulnerability 
-
+			"item_description"			"
 Ohohohohoho! I vill show zhem the power of a real GOD!
 
 Model by: 'randomteddybear'
@@ -7497,6 +7491,11 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "Increased uber duration texted"																
+				{
+					"attribute_class"	"mult_weapon_range"
+					"value" 			"1.3"
+				}
 				"heal rate bonus"
 				{
 					"attribute_class"	"mult_medigun_healrate"
@@ -7512,25 +7511,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_medigun_overheal_amount"
 					"value"				"0.001"
 				}
-				"Move Speed Penalty Active"
-				{
-					"attribute_class"	"mult_dmmuy"
-					"value"				"0.95"
-				}
 				"ubercharge rate penalty on wearer"																
 				{
 					"attribute_class"	"mult_medigun_uberchargerate_wearer"
-					"value" 			"0.65"
+					"value" 			"0.7"
 				}
 				"strange restriction type 1"																
 				{
 					"attribute_class"	"add_uber_time"
 					"value" 			"1"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_player_movespeed_active"
-					"value"				"0.94"
 				}
 			}
 			"visuals"
@@ -8686,7 +8675,7 @@ Weapon by: 'The One Of Wonders'"
 				"max health additive penalty"
 				{
 					"attribute_class"	"dmmuy"
-					"value"				"-75"
+					"value"				"-50"
 				}
 				"decrease player capture value"
 				{
@@ -8707,11 +8696,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"add_civ_boost_override"
 					"value"				"122 1.25"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"		"add_maxhealth"
-					"value" 				"-25"
 				}
 			    "strange restriction type 1"
 				{
@@ -8800,7 +8784,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.25"
+					"value"				"1.2"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -8811,6 +8795,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_reload_time"
 					"value"				"0.9"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"-50"
 				}
 				"decrease player capture value"
 				{
@@ -8827,11 +8816,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_use_custom_ammo_type"
 					"value" 			"1"
 				}	
-				"strange restriction type 1"													
-				{
-					"attribute_class"	"mod_custom_rampup"
-					"value"				"1.75"
-				}
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mult_player_movespeed"
@@ -10433,7 +10417,7 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"static_attrs"																		
 			{
-				"apply z velocity on damage"			"-150"				
+				"apply z velocity on damage"			"-275"				
 			}
 			"attributes"																	
 			{
@@ -10485,7 +10469,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"																
 				{
 					"attribute_class"	"weapon_enemy_knockback_mod"
-					"value" 			"6"
+					"value" 			"4"
 				}
 				"strange restriction type 1"
                 {
@@ -10623,7 +10607,7 @@ Weapon by: 'The One Of Wonders'"
 				"max health additive bonus"
 				{
 					"attribute_class"	"add_maxhealth"
-					"value" 			"300"
+					"value" 			"200"
 				}	
                 "health regen"
 				{
@@ -10642,7 +10626,12 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"mult_healing_from_medics"
+					"attribute_class"	"mult_healing_received"
+					"value"				"0.2"
+				}
+				"weapon_stattrak_module_scale"		
+				{
+					"attribute_class"	"mult_health_frompacks"
 					"value"				"0.2"
 				}
 				"SuperSoldat High Mass"
@@ -10683,7 +10672,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value"				"1.5"
+					"value"				"2.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -11406,7 +11395,7 @@ Weapon by: 'The One Of Wonders'"
 				"strange restriction type 1"													
 				{
 					"attribute_class"	"mult_reload_time_start"
-					"value"				"0.2"
+					"value"				"0.12"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -11443,6 +11432,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_horizontal_spread"
 					"value"				"1"
 				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"-50"
+				}
 				"decrease player capture value"
 				{
 					"attribute_class"		"add_player_capturevalue"
@@ -11467,7 +11461,12 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_always_draw_tracer_effect"
 					"value"				"1"
-				}						
+				}	
+                "longer damage falloff distance"
+				{
+					"attribute_class"	"mult_falloff_distance"
+					"value"				"1.993"
+				}					
 			}
 			"visuals"
 			{
@@ -11935,7 +11934,7 @@ Remastered by: 'The One Of Wonders'"
 			"name"						"TF_WEAPON_HEAVY_SHEILD"
 			"prefab"				    "weapon_riot_shield"
 			"item_class"				"tf_weapon_riot"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			
 			"item_name_color"           "190 200 233 255"
 
@@ -12730,7 +12729,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value" 			"1.44"
+					"value" 			"1.33"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -12745,7 +12744,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.8"
+					"value"				"0.918"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -12761,6 +12760,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"-50"
 				}
 				"decrease player capture value"
 				{
@@ -17244,30 +17248,20 @@ Weapon by: 'Majro'"
 			}
 			"attributes"
 			{
-			    "provide on active"    
-				{
-					"attribute_class"	"provide_on_active"
-					"value"				"1"
-				}
 				"fire rate bonus with reduced health"
 				{
 					"attribute_class"	"mult_postfiredelay_with_reduced_health"
 					"value"				"0.3"
-				}
-				"rocket jump damage reduction"
-				{
-					"attribute_class"		"rocket_jump_dmg_reduction"
-					"value"					"0.5"
-				}
-				"add ammo on kill"
-				{
-					"attribute_class"	"add_ammo_on_kill"
-					"value"				"2"
-				}				
-				"blast splash damage decreased"
+				}	
+                "clip size penalty"
                 {
-                    "attribute_class"    "mult_explosion_splash_damage"
-                    "value"                "0.8"
+                    "attribute_class"      "mult_clipsize"
+                    "value"                "0.75"
+                }				
+				"reload time increased"
+                {
+                    "attribute_class"    "mult_reload_time"
+                    "value"                "1.2"
                 }
 				"fire rate penalty"
 				{
@@ -17442,6 +17436,11 @@ Edited by: 'Reagy'"
 				{
 					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"-50"
 				}
 				"decrease player capture value"
 				{
@@ -18966,7 +18965,7 @@ Weapon by: 'The One Of Wonders'"
 			    "damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.2"
+					"value"				"1.4275"
 				}	
 				"weapon spread bonus"
 				{
@@ -19032,7 +19031,12 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_falloff_distance"
 					"value"				"1.25"
-				}					
+				}	
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"bodyshot_damage_modify"
+					"value"				"0.945945946"
+				}				
 			}
 			"visuals"
 			{
@@ -25123,7 +25127,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.66666667"
+					"value"				"1.5"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -25134,6 +25138,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_reload_time"
 					"value"				"1.2"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"-50"
 				}
 				"decrease player capture value"
 				{
@@ -25687,17 +25696,7 @@ Weapon from: 'The One Of Wonders'"
 			    "apply heal on explosion"
 				{
 					"attribute_class"	"apply_heal_explosion"
-					"value"				"20"
-				}
-				"add uber charge on hit"
-				{
-					"attribute_class"	"add_onhit_ubercharge"
-					"value"				"0.04"
-				}	
-				"heal on hit for rapidfire"
-				{
-					"attribute_class"	"add_onhit_addhealth"
-					"value" 			"5"
+					"value"				"15"
 				}
 				"deploy time decreased"
 				{
@@ -25707,7 +25706,7 @@ Weapon from: 'The One Of Wonders'"
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"4.0"
+					"value" 			"2.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -25752,7 +25751,7 @@ Weapon from: 'The One Of Wonders'"
 				"strange restriction type 1"
 				{
 					"attribute_class"	"mod_custom_rampup"
-					"value"				"2.25"
+					"value"				"2.5"
 				}	
 				"custom projectile origin offset"
 				{
@@ -25831,11 +25830,6 @@ Weapon from: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-				"add uber charge on hit"
-				{
-					"attribute_class"	"add_onhit_ubercharge"
-					"value"				"0.1"
-				}	
 				"strange restriction type 1"
 				{
 					"attribute_class"	"set_charge_type"
@@ -25846,11 +25840,11 @@ Weapon from: 'The One Of Wonders'"
 					"attribute_class"	"apply_heal_explosion"
 					"value"				"75"
 				}	
-				"heal on hit for rapidfire"
+				"add uber charge on hit"
 				{
-					"attribute_class"	"add_onhit_addhealth"
-					"value" 			"25"
-				}
+					"attribute_class"	"add_onhit_ubercharge"
+					"value"				"0.1"
+				}	
 				"mod no reload DISPLAY ONLY"										
 				{
 					"attribute_class"	"mod_max_primary_clip_override"
@@ -25861,6 +25855,11 @@ Weapon from: 'The One Of Wonders'"
 					"attribute_class"	"mult_medigun_uberchargerate_wearer"
 					"value"				"1.45"
 				}
+				"deploy time increased"
+                {
+                    "attribute_class"    "mult_deploy_time"
+                    "value"              "1.25"
+                }
 				"crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -25910,7 +25909,7 @@ Weapon from: 'The One Of Wonders'"
 				{
 					"attribute_class"	  "effectbar_recharge_rate"
 					"value" 			  "1.5"
-				}				
+				}			
 			}
 			"visuals"
 			{
@@ -27462,11 +27461,6 @@ Weapon from: 'The One Of Wonders'"
 					"attribute_class"	"apply_heal_explosion"
 					"value"				"3.0"
 				}	
-				"heal on hit for rapidfire"
-				{
-					"attribute_class"	"add_onhit_addhealth"
-					"value" 			"2"
-				}
 				"ubercharge rate bonus"
 				{
 					"attribute_class"	"mult_medigun_uberchargerate"
@@ -27481,11 +27475,6 @@ Weapon from: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"0.08"
-				}	
-				"weapon_stattrak_module_scale"													
-				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"2.0"
 				}	
 				"weapon_stattrak_module_scale"													
 				{
@@ -28931,7 +28920,7 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"mult_healing_from_medics"
+					"attribute_class"	"mult_healing_received"
 					"value"				"0.5"
 				}
 				"move speed penalty active"
@@ -30481,105 +30470,6 @@ Weapon by: 'The One Of Wonders'"
 //------------------------
 		"9182"
 		{
-			"name"						"TF_WEAPON_LIBERATOR_CIVILIAN"
-			"prefab"					"weapon_umbrella"
-			"item_class"				"tf_weapon_pistol"
-			"show_in_armory"			"1"
-			"item_name_color"           "190 200 233 255"
-
-			"propername"				"0"
-			
-			"item_slot"					"melee"	
-			"anim_slot"                 "secondary"			
-			
-			"item_name"					"Lamplighter"
-			"item_type_name"			"Single Shot Disposable Pistol"
-			"item_description"			"
-Lucky Roll: Increased crit chance
-
-Maybe if I use enough of them
-I might be able to sell them off
-for some actual money!
-
-Model by: 'ColonelBD'
-Animations by: 'deskpacito'
-Weapon by: 'Reagy'"
-			"item_logname"				"Lamplighter"
-			"item_iconname"				"Lamplighter"
-			"image_inventory"			"backpack/weapons/w_models/w_lamplighter"
-			"model_world"				"models/weapons/custom/w_models/w_lamplighter_new1.mdl"
-			"model_player"				"models/weapons/custom/v_models/v_lamplighter_new.mdl"
-			"extra_wearable"			"models/player/items/civ_bill.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"civilian"				"1"
-			}
-			"static_attrs"
-            {
-                "class select override vcd"                "taunt01"                                // So he isn't posing strangely
-                "clip size penalty hidden"                "0.1"                                    // 1 shot
-                "hidden secondary max ammo penalty"        "0.2"                                    // 40 ammo in secondary!
-                "crit mod disabled hidden"                "100000.0"
-                "fire rate penalty hidden"                "0.8"
-                "damage bonus hidden"                    "1.533333333"
-                "reload time increased hidden"            "0.9"
-                "min_viewmodel_offset"                    "10 0 -11"
-                "custom magazine model"                    "models/weapons/custom/w_models/w_lamplighter_new1.mdl"
-            }
-			"attributes"
-            {
-				"custom rampup"
-				{
-					"attribute_class"	"mod_custom_rampup"
-					"value"				"3.03"
-				}
-				"max health additive penalty"										
-				{
-					"attribute_class"	"display_only"
-					"value" 			"-50"
-				}
-				"decrease player capture value"
-				{
-					"attribute_class"		"add_player_capturevalue"
-					"value" 				"-3"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mult_player_movespeed"
-					"value"				"20"
-				}
-				"civ boost aura override"
-				{
-					"attribute_class"		"add_civ_aura_override"
-					"value" 				"50"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"		"mult_dmg_crit_multiplier"
-					"value" 				"1.93768116"
-				}
-			}
-			"visuals"
-			{
-				"animation_replacement"
-				{
-					"ACT_MP_ATTACK_STAND_MELEE"					"ACT_MP_GESTURE_FLINCH_CHEST"
-					"ACT_MP_ATTACK_CROUCH_MELEE"				"ACT_MP_GESTURE_FLINCH_CHEST"
-					"ACT_MP_ATTACK_SWIM_MELEE"					"ACT_MP_GESTURE_FLINCH_CHEST"
-				}
-				"sound_reload"			"Weapon_Pistol.WorldReload"
-				"sound_single_shot"		"Weapon_1911.Shoot"
-				"sound_burst"			"Weapon_1911.ShootCrit"
-				"muzzle_flash"			"muzzle_scattergun"								
-				"tracer_effect"			"bullet_scattergun_tracer01"
-                "player_bodygroups"
-				{
-					"hat"		"1"
-				}				
-			}
-			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
-			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
 //------------------------------
 //------------------------------
@@ -32481,122 +32371,6 @@ Weapon by: 'The One Of Wonders'"
 //--------------------------
 		"9202"																					
 		{
-		    "name"						"TF_WEAPON_SHOTGUN_SPAS_PRIMARY"
-			"prefab"					"weapon_shotgun"
-			"show_in_armory"			"1"
-			"item_slot"					"primary"
-			"anim_slot"                 "primary"
-			"item_class"				"tf_weapon_shotgun_primary"
-			
-			"image_inventory_size_w"	"128"
-			"image_inventory_size_h"	"82"
-
-			"item_name_color"           "190 200 233 255"
-
-			"propername"				"0"
-			"item_name"					"Hunter Killer"
-			"item_type_name"			"Semi-Automatic Shotgun"
-			"item_description"			"
-Heh, now aren't you a clever wanker?
-
-Model by: 'Svdl, Sparkwire'
-Animations by: 'Raptor Dan'
-Weapon by: 'The One Of Wonders'"
-			"item_logname" 				"Hunter Killer"
-			"item_iconname"				"Hunter Killer"
-			"image_inventory"			"backpack/weapons/c_models/c_hunter_killer/c_hunter_killer"
-			"model_world"				"models/weapons/custom/w_models/w_hunter_killer.mdl"
-			"model_player"				"models/weapons/v_models/v_hunter_killer_semi_drawv2.mdl"
-			"attach_to_hands"			"2"
-			"used_by_classes"
-			{
-				"sniper"			    "1"
-			}
-			"static_attrs"
-			{
-				"class select override vcd"				"taunt02"				
-			}
-			"attributes"
-			{			
-			    "Shotgun Slugs Hitscan"
-				{
-					"attribute_class"	"dmmuy"
-					"value"				"1" 
-				}
-				"revolver use hit locations"													
-				{
-					"attribute_class"	"can_headshot"
-					"value"				"1"
-				}
-			    "max health additive bonus"	
-				{
-					"attribute_class"	"add_maxhealth"
-					"value"				"25"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_bullets_per_shot"
-					"value" 			"1.0"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" 			"0.66666666666666667"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"0.85"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"1.4"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"0.01"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"				"0"
-				}	
-                "apply self knockback hidden"
-				{
-					"attribute_class"	"apply_self_knockback"
-					"value"				"50"
-				}
-				"punch angle mod add hidden"
-				{
-					"attribute_class"	"punch_angle_mod"
-					"value" 			"-0.5"
-				}
-				"punch angle is constant"
-				{
-					"attribute_class"	"punch_angle_is_constant"
-					"value" 			"1"
-				}
-                "strange restriction type 2"
-				{
-					"attribute_class"	"crit_dmg_falloff"
-					"value"				"1"
-				}	
-                "mult dmg crit multiplier"
-				{
-					"attribute_class"	"mult_dmg_crit_multiplier"
-					"value"				"0.8"
-				}				
-			}
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_SPAS_Primary.Single"
-				"sound_burst"			"Weapon_SPAS_Primary.SingleCrit"
-				"tracer_effect"         "bullet_hunting_revolver_tracer01"
-			}
-			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
-			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
 //----------------------
 //----------------------
@@ -33489,7 +33263,7 @@ Weapon by: 'The One Of Wonders, Vror'"
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.5"
+					"value"				"0.55"
 				}
 				"projectile spread angle penalty"
 				{
@@ -33549,7 +33323,7 @@ Weapon by: 'The One Of Wonders, Vror'"
 				"strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_falloff"
-					"value"				"0.75"
+					"value"				"0.7"
 				}
 			}
 			"visuals"
@@ -34759,17 +34533,7 @@ Weapon by: 'The One Of Wonders'"
 			    "apply heal on explosion"
 				{
 					"attribute_class"	"apply_heal_explosion"
-					"value"				"4"
-				}
-				"add uber charge on hit"
-				{
-					"attribute_class"	"add_onhit_ubercharge"
-					"value"				"0.01"
-				}	
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"1.2"
+					"value"				"3"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -41153,9 +40917,10 @@ Reserve Energy: 3 seconds of auto-reload"
 		}	
 		"7736"
 		{
-			"name"	                "Chainsaw no ammo packs"
-			"description_string"	"Cannot pick up ammo packs"
+			"name"	                "Chainsaw Massacre"
+			"description_string"	"Thirst for Blood: Gain all of your health back on kill but you cannot overheal"
 			"description_format"	"value_is_additive"
+			"custom_color"	        "225 215 0 255"
 			"effect_type"			"negative"
 		}	
 		"7737"
@@ -41211,6 +40976,13 @@ Reserve Energy: 3 seconds of auto-reload"
 			"description_string"	"Extreme Weight: reduced move speed, jump height, switch speed and you fall faster"
 			"description_format"	"value_is_additive"
 			"effect_type"			"negative"
+		}
+		"7744"
+		{
+			"name"	                "Increased uber duration texted"
+			"description_string"	"ÜberCharge duration increased by %s1 second"
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
 		}
 //clooey zone
 
