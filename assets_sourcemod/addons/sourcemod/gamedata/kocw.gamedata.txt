@@ -334,6 +334,10 @@
 			{
 				"linux"		"452"
 			}
+			"CTFWeaponBaseGun::GetProjectileFireSetup"
+			{
+				"linux"		"453"
+			}
 
 			"CTFBaseGrenade::Detonate"
 			{

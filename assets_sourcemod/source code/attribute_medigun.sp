@@ -37,7 +37,7 @@ static char g_szHydropumpDropChargeParticles[][] = {
 	"mediflame_charged_death_yellow"
 };
 
-static char g_szPaintballHitSound[] = "weapons/Paintball_Hit.wav";
+static char g_szPaintballHitSound[] = "weapons/paintball_hit_v2.wav";
 static char g_szPaintballHealEffect[][] = {
 	"paintball_hit_red",
 	"paintball_hit_blue",
