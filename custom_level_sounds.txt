@@ -9712,9 +9712,7 @@
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"0.75"
 	"pitch"		"95, 100"
-	
-	"wave"		")weapons/combat_ar_01.wav"
-	"wave"		")weapons/combat_ar_02.wav"
+	"wave"		")weapons/EM2_Fire.wav"
 }
 
 "Weapon_Combat_AR.SingleCrit"
@@ -9723,9 +9721,39 @@
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"0.75"
 	"pitch"		"95, 100"
-	
-	"wave"		")weapons/combat_ar_crit_01.wav"
-	"wave"		")weapons/combat_ar_crit_02.wav"
+	"wave"		")weapons/EM2_FireCrit.wav"
+}
+
+"Weapon_Combat_AR.ClipOut"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".6"
+	"wave"		"weapons/EM2_Magout.wav"
+}
+
+"Weapon_Combat_AR.ClipIn"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".6"
+	"wave"		"weapons/EM2_MagIn.wav"
+}
+
+"Weapon_Combat_AR.BoltBack"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".6"
+	"wave"		"weapons/EM2_BoltBack.wav"
+}
+
+"Weapon_Combat_AR.BoltForward"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".6"
+	"wave"		"weapons/EM2_BoltForward.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
