@@ -1,0 +1,89 @@
+"VertexlitGeneric"
+
+{
+
+	"$baseTexture" "models/weapons/v_poacherspride/v_poacherspride"
+	"$Bumpmap" "models/weapons/v_poacherspride/v_poacherspride_n"
+	"$basemapalphaphongmask" "1"
+
+	// Why is this here?
+	// "$detail" "effects/tiledfire/fireLayeredSlowTiled512"
+	// "$detailscale" "5"
+	// "$detailblendfactor" .01
+	// "$detailblendmode" 6
+
+	"$yellow" "0"
+
+	"$phong" "1"
+	"$phongexponent" "20"
+	"$phongboost" "1"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.5 .5 3]"
+	"$halflambert" "1"
+
+	"$bumpmapalphaphongmask" "1"
+
+	// Rim lighting parameters
+
+	"$rimlight" "1"			
+	"$rimlightexponent" "20"	
+	"$rimlightboost" ".25"
+
+	"$glowcolor" "1"
+
+	"$cloakPassEnabled" "1"
+
+	"Proxies"
+
+	{
+
+		"invis"
+		{
+		}
+
+		// "AnimatedTexture"
+		// {
+			// "animatedtexturevar" "$detail"
+			// "animatedtextureframenumvar" "$detailframe"
+			// "animatedtextureframerate" 30
+		// }
+
+		// "BurnLevel"
+		// {
+			// "resultVar" "$detailblendfactor"
+		// }
+
+		"YellowLevel"
+
+		{
+			"resultVar" "$yellow"
+		}
+
+		"Equals"
+
+		{
+			"srcVar1" "$yellow"
+			"resultVar" "$color2"
+		}
+
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+
+	}
+
+}
+
