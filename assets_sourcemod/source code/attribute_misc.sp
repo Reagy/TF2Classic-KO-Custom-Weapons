@@ -23,6 +23,7 @@ DynamicHook g_dhSecondaryFire;
 DynamicHook g_dhItemPostFrame;
 DynamicHook g_dhWeaponHolster;
 DynamicHook g_dhFireProjectile;
+DynamicHook g_dhGrenadeGetDamageType;
 
 DynamicDetour g_dtGetMedigun;
 DynamicDetour g_dtRestart;
@@ -40,6 +41,7 @@ Handle g_sdkAttackIsCritical;
 Handle g_sdkPipebombCreate;
 Handle g_sdkBrickCreate;
 Handle g_sdkGetProjectileFireSetup;
+
 
 int g_iScrambleOffset = -1;
 int g_iRestartTimeOffset = -1;
@@ -85,6 +87,8 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_SetReturnInfo( SDKType_CBaseEntity, SDKPass_Pointer );
 	g_sdkPipebombCreate = EndPrepSDKCall();
+
+	g_dhGrenadeGetDamageType = DynamicHookFromConfSafe( hGameConf, "CTFBaseGrenade::GetDamageType" );
 
 	StartPrepSDKCall( SDKCall_Static );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFBrickProjectile::Create" );
@@ -377,7 +381,6 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 		if( result != 0 ) {
 			SetEntityModel( iProjectile, szModelString );
 		}
-			
 		else
 			PrintToServer( "invalid model string for alt fire projectile %s", szModelString );
 	}
@@ -389,6 +392,14 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 	StoreToEntity( iProjectile, 1212, AttribHookFloat( 80.0, iThis, "custom_unfortunate_son_damage" ) ); //damage
 	StoreToEntity( iProjectile, 1216, AttribHookFloat( 120.0, iThis, "custom_unfortunate_son_radius" ) ); //radius
 
+	if( RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_unfortunate_son_no_ramp" ) ) )
+		g_dhGrenadeGetDamageType.HookEntity( Hook_Pre, iProjectile, Hook_GrenadeGetDamageType );
+
+	return MRES_Supercede;
+}
+
+MRESReturn Hook_GrenadeGetDamageType( int iThis, DHookReturn hReturn ) {
+	hReturn.Value = hReturn.Value & DMG_NOCLOSEDISTANCEMOD;
 	return MRES_Supercede;
 }
 
