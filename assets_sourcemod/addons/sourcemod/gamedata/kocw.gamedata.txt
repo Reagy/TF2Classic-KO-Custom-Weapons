@@ -334,7 +334,15 @@
 			{
 				"linux"		"452"
 			}
+			"CTFWeaponBaseGun::GetProjectileFireSetup"
+			{
+				"linux"		"453"
+			}
 
+			"CTFBaseGrenade::GetDamageType"
+			{
+				"linux"		"129"
+			}
 			"CTFBaseGrenade::Detonate"
 			{
 				"linux"		"233"
@@ -1143,6 +1151,13 @@
 				}
 			}
 			
+			"CTFBaseGrenade::GetDamageType"
+			{
+				"offset"	"CTFBaseGrenade::GetDamageType"
+				"hooktype"	"entity"
+				"return"	"int"
+				"this"		"entity"
+			}
 			"CTFGrenadePipebombProjectile::Create"
 			{
 				"signature"		"CTFGrenadePipebombProjectile::Create"
