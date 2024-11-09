@@ -7002,7 +7002,7 @@ Weapon by: 'The One Of Wonders'"
 				"ubercharge rate penalty on wearer"																
 				{
 					"attribute_class"	"mult_medigun_uberchargerate_wearer"
-					"value" 			"0.7"
+					"value" 			"0.85"
 				}
 				"strange restriction type 1"																
 				{
@@ -9612,15 +9612,10 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"																	
 			{
-			    "max health additive bonus"		
-				{
-					"attribute_class"	"add_maxhealth"
-					"value"				"50"
-				}
 				"heal on hit for rapidfire"
 				{
 					"attribute_class"	"add_onhit_addhealth"
-					"value"				"10"
+					"value"				"3"
 				}
 				"damage force reduction"
 				{
@@ -9798,7 +9793,7 @@ Weapon by: 'The One Of Wonders'"
 				"max health additive bonus"
 				{
 					"attribute_class"	"add_maxhealth"
-					"value" 			"200"
+					"value" 			"150"
 				}	
                 "health regen"
 				{
@@ -37296,7 +37291,6 @@ Weapon from: Colrot"
 				"damage bonus hidden"					"0.1"
                 "bomblets count mod mult hidden"		"0"				
 				"allowed in medieval mode"				"1"
-				"grenade cook"							"1"
 				"min_viewmodel_offset"					"10 0 -10"								// Same deal as the gas can.
 				"custom projectile model"				"models/weapons/w_models/w_locator_nade_projectile.mdl"
 				"meter_label"                           "GRENADE"
@@ -37306,7 +37300,7 @@ Weapon from: Colrot"
 			    "Blast radius increased"																
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"2.25"
+					"value"				"1.5"
 				}
 				"add condition on hit"															
 				{
@@ -37323,15 +37317,15 @@ Weapon from: Colrot"
 					"attribute_class"	"outline_on_hit"
 					"value"				"5"
 				}
+				"Longer recharge time"												
+				{
+					"attribute_class"	"effectbar_recharge_rate"
+					"value" 			"1.5"
+				}	
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
-				}	
-				"grenade cook detonation time mult"
-				{
-					"attribute_class"	"grenade_cook_detonation_time_mult"
-					"value"				"1.5"
 				}	
 				//Backend 
 				
@@ -37344,11 +37338,6 @@ Weapon from: Colrot"
 				{
 					"attribute_class"	"mult_dmgself_push_force"
 					"value" 			"0.2"
-				}
-				"add condition on hit weapon"												
-				{
-					"attribute_class"	"add_onhit_addcond_weapon"
-					"value"				"122 5"
 				}
 			}
 			"mouse_pressed_sound"		"#ui/item_default_pickup.wav"
