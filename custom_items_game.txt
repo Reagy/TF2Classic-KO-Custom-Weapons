@@ -3071,11 +3071,6 @@ Tool by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "maxammo primary increased"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"1.5"
-				}
 			    "health regen"
 				{
 					"attribute_class"	"add_health_regen"
