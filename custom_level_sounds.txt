@@ -10951,7 +10951,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"wave"		")weapons/biggerstick_shoot.wav"
+	"wave"		")weapons/BiggerStick_NewFire.wav"
 }
 
 "Weapon_BiggerStick.FireCrit"	
@@ -10959,7 +10959,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"wave"		")weapons/biggerstick_shootcrit.wav"
+	"wave"		")weapons/BiggerStick_NewFire_Crit.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
