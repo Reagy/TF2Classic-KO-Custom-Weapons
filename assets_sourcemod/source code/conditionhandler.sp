@@ -1029,7 +1029,7 @@ void AngelShieldTakeDamage( int iTarget, TFDamageInfo tfInfo ) {
 	Event eFakeDamage = CreateEvent( "player_hurt", true );
 	eFakeDamage.SetInt( "userid", GetClientUserId( iTarget ) );
 	eFakeDamage.SetInt( "health", 300 );
-	eFakeDamage.SetInt( "attacker", GetClientUserId( tfInfo.iAttacker ) );
+	eFakeDamage.SetInt( "attacker", tfInfo.iAttacker != -1 ? 0 : GetClientUserId( tfInfo.iAttacker ) );
 	eFakeDamage.SetInt( "damageamount", iNewDamage );
 	eFakeDamage.SetInt( "bonuseffect", 2 );
 	eFakeDamage.Fire();

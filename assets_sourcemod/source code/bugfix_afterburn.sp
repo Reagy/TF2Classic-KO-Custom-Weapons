@@ -44,6 +44,9 @@ MRESReturn Detour_BurnPre( Address pThis, DHookParam hParams ) {
 }
 MRESReturn Detour_BurnPost( Address pThis, DHookParam hParams ) {
 	int iPlayer = GetPlayerFromShared( pThis );
+	if( hParams.IsNull( 2 ) )
+		return MRES_Ignored;
+		
 	int iWeapon = hParams.Get( 2 );
 
 	float flFlameLife = TF_BURNING_FLAME_LIFE;
