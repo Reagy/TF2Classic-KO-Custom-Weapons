@@ -12980,18 +12980,18 @@
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"0.85"
-	"pitch"		"105, 112"
-	"wave"		")weapons/1911_shoot.wav"
+	"volume"	"0.9"
+	"pitch"		"95, 100"
+	"wave"		")weapons/PDWEliminator_Fire.wav"
 }
 
 "Weapon_SMG_Modified.ShootCrit"
 {
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"0.85"
-	"pitch"		"105, 112"
-	"wave"		")weapons/1911_shoot_crit.wav"
+	"volume"	"0.9"
+	"pitch"		"95, 100"
+	"wave"		")weapons/PDWEliminator_FireCrit.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
