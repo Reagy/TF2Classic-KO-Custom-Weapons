@@ -598,7 +598,7 @@
 				"civ boost cond override"													
 				{
 					"attribute_class"	"add_civ_boost_override"
-					"value"				"112 1.875"
+					"value"				"112 1.25"
 				}
 			    "civ boost aura override"
 				{
@@ -18542,17 +18542,12 @@ Weapon by: 'The One Of Wonders'"
 			    "Bazooka Payload"
 				{
                     "attribute_class"      "display_only"
-                    "value"                "1"
+                    "value"                "3"
                 }
 				"heal on kill" 
 				{
 					"attribute_class"	"heal_on_kill"
-					"value"				"25"
-				}
-				"heal on hit for rapidfire" 
-				{
-					"attribute_class"	"add_onhit_addhealth"
-					"value"				"1"
+					"value"				"20"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -18607,7 +18602,7 @@ Weapon by: 'The One Of Wonders'"
 				"add condition on kill"
 				{
 					"attribute_class"	"add_onkill_addcond_self"							
-					"value" 			"111 5"
+					"value" 			"111 3"
 				}
 				"strange restriction type 1"									
 				{
@@ -19293,6 +19288,11 @@ Weapon by: 'The One Of Wonders'"
 			}
             "attributes"
             {
+			    "Artillery Cannon"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"1"
+				}	
 				"strange restriction type 1"
 				{
 					"attribute_class"	"set_detonate_mode"
@@ -19303,10 +19303,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"grenade_no_spin"
 					"value"				"1"
 				}
-				"clip size penalty"
+				"Hunter Killer Special"														
 				{
-					"attribute_class"	"mult_clipsize"
-					"value" 			"0.25"
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1"
 				}
 				// Backend stuff
 				"strange restriction type 1"
@@ -19326,18 +19326,18 @@ Weapon by: 'The One Of Wonders'"
                 }
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.5"
+					"attribute_class"	"mult_clipsize"
+					"value" 			"0.25"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"1.1"
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"1.5"
 				}		
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"1.25"
+					"value"				"1.2"
 				}	
 				"weapon_stattrak_module_scale"		
 				{
@@ -19381,9 +19381,29 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"strange restriction type 1"													
 				{
-					"attribute_class"	"mult_reload_time_start"
-					"value"				"0.13"
+					"attribute_class"	"mult_reload_time_refill"
+					"value"				"3.0"
 				}
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mult_reload_time_start"
+					"value"				"0.2"
+				}
+				"Reload time no anim speed mod"
+                {
+                    "attribute_class"    "mult_reload_time_noanimmod"
+                    "value"              "0.6"
+                }
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"5.0"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value"				"1"
+				}	
 				"mod use custom ammo type" // secondary
 				{
 					"attribute_class"	"mod_use_custom_ammo_type"
@@ -34988,7 +35008,7 @@ Weapon by: 'The One Of Wonders'"
 				"Bazooka Payload"
 				{
                     "attribute_class"      "display_only"
-                    "value"                "1"
+                    "value"                "5"
                 }
 				"max health additive bonus"										
 				{
@@ -37632,8 +37652,7 @@ Edited by: 'Reagy'"
 		"7533"
 		{
 			"name"					"Bazooka Payload"
-			"description_string"	"On Kill: Gain damage resistance and health regeneration for 5 seconds"
-			"attribute_type"		"string"													
+			"description_string"	"On Kill: Gain damage resistance and health regeneration for %s1 seconds"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
 		}
@@ -39254,6 +39273,14 @@ Reserve Energy: 3 seconds of auto-reload"
 			"description_string"	"ÜberCharge duration increased by %s1 second"
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
+		}
+		"7745"
+		{
+			"name"	                "Artillery Cannon"
+			"description_string"	"This weapon fires artillery shells that have steep projectile arcs"
+			"description_format"	"value_is_additive"
+			"custom_color"	        "225 215 0 255"
+			"effect_type"			"negative"
 		}
 //clooey zone
 
