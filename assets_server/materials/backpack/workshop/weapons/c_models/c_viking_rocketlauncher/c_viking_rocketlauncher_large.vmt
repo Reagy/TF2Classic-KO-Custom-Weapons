@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" "backpack\workshop\weapons\c_models\c_viking_rocketlauncher\c_viking_rocketlauncher_large"
-	"$translucent" 1
-	"$vertexcolor" 1
-	"$ignorez" 1
-}
