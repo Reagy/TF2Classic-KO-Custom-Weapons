@@ -83,16 +83,17 @@ public void Midhook_MetalPerHit( MidHookRegisters hRegs ) {
 int g_iBuilding = -1;
 MRESReturn Detour_OnFriendlyBuildingHitPre( int iWrench, DHookParam hParams ) {
 	int iBuilding = hParams.Get( 1 );
-	g_iBuilding = !hParams.IsNull( 1 ) && GetEntProp( iBuilding, Prop_Send, "m_iObjectType" ) == 2 ? iBuilding : -1;
+	g_iBuilding = !hParams.IsNull( 1 ) && GetEntProp( iBuilding, Prop_Send, "m_iObjectType" ) == 2 ? EntIndexToEntRef(iBuilding) : INVALID_ENT_REFERENCE;
 
 	return MRES_Ignored;
 }
 
 MRESReturn Detour_GetConstructionValue( int iWrench, DHookReturn hReturn, DHookParam hParam ) {
-	if( g_iBuilding == -1 )
+	int iBuilding = EntRefToEntIndex( g_iBuilding );
+	if( iBuilding == -1 )
 		return MRES_Ignored;
 
-	if( GetEntPropEnt( iWrench, Prop_Send, "m_hOwner" ) != GetEntPropEnt( g_iBuilding, Prop_Send, "m_hBuilder" ) ) {
+	if( GetEntPropEnt( iWrench, Prop_Send, "m_hOwner" ) != GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" ) ) {
 		float flReturnVal = hReturn.Value;
 		hReturn.Value = flReturnVal * g_flConstructionPenaltyValue;
 		return MRES_Override;
@@ -101,10 +102,11 @@ MRESReturn Detour_GetConstructionValue( int iWrench, DHookReturn hReturn, DHookP
 	return MRES_Ignored;
 }
 MRESReturn Detour_GetRepairValue( int iWrench, DHookReturn hReturn, DHookParam hParam ) {
-	if( g_iBuilding == -1 )
+	int iBuilding = EntRefToEntIndex( g_iBuilding );
+	if( iBuilding == -1 )
 		return MRES_Ignored;
 
-	if( GetEntPropEnt( iWrench, Prop_Send, "m_hOwner" ) != GetEntPropEnt( g_iBuilding, Prop_Send, "m_hBuilder" ) ) {
+	if( GetEntPropEnt( iWrench, Prop_Send, "m_hOwner" ) != GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" ) ) {
 		float flReturnVal = hReturn.Value;
 		hReturn.Value = flReturnVal * g_flRepairPenaltyValue;
 		return MRES_Override;
