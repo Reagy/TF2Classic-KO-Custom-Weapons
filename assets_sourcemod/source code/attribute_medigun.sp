@@ -113,7 +113,7 @@ public Plugin myinfo =
 	name = "Attribute: Mediguns",
 	author = "Noclue",
 	description = "Atributes for Mediguns.",
-	version = "1.5",
+	version = "1.5.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -892,7 +892,7 @@ void Frame_CreatePaintballFx( DataPack pack ) {
 	ActivateEntity( iEmitter );
 	AcceptEntityInput( iEmitter, "Start" );
 
-	CreateTimer( 1.0, Timer_RemovePaintballHealFX, EntRefToEntIndex( iEmitter ), TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( 1.0, Timer_RemovePaintballHealFX, EntIndexToEntRef( iEmitter ), TIMER_FLAG_NO_MAPCHANGE );
 }
 
 Action Timer_RemovePaintballHealFX( Handle hTimer, int iParticle ) {

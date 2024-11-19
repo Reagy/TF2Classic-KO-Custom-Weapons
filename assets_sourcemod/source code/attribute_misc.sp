@@ -14,7 +14,7 @@ public Plugin myinfo =
 	name = "Attribute: Misc",
 	author = "Noclue",
 	description = "Miscellaneous attributes.",
-	version = "1.5",
+	version = "1.5.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -306,13 +306,15 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 
 	ConsumeAmmo( iThis, iOwner, iCost, true );
 
-	SetEntPropFloat( iThis, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + 0.7 );
-	SetEntPropFloat( iThis, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() + 0.7 );
+	float flInterval = AttribHookFloat( 0.7, iThis, "custom_unfortunate_son_speed_mult" );
+
+	SetEntPropFloat( iThis, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + flInterval );
+	SetEntPropFloat( iThis, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() + flInterval );
 
 	SDKCall( g_sdkSendWeaponAnim, iThis, 181 ); //ACT_VM_SECONDARYATTACK
 	SetEntProp( iThis, Prop_Send, "m_iWeaponMode", 1 );
 	//adding latentcy prevents animation bugs
-	SetEntPropFloat( iThis, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.7 - GetClientAvgLatency( iOwner, NetFlow_Both ) );
+	SetEntPropFloat( iThis, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + flInterval - GetClientAvgLatency( iOwner, NetFlow_Both ) );
 	
 	EmitSoundToAll( g_szUnderbarrelFireSound, iOwner, SNDCHAN_WEAPON );
 
@@ -356,7 +358,7 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 
 	SDKCall( g_sdkAttackIsCritical, iThis );
 
-	PrintToServer("%i %i %i", vecSrc[0], vecSrc[1], vecSrc[2]);
+	//PrintToServer("%i %i %i", vecSrc[0], vecSrc[1], vecSrc[2]);
 
 	int iProjectile = -1;
 	switch( RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_unfortunate_son" ) ) ) {
@@ -364,14 +366,12 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 			iProjectile = SDKCall( g_sdkPipebombCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
 		case 2:
 			iProjectile = SDKCall( g_sdkBrickCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
-			
+		default: {
+			PrintToServer("invalid projectile type for custom alt fire");
+			return MRES_Ignored;
+		}		
 	}
 
-	if( iProjectile == -1 ) {
-		PrintToServer("invalid projectile type for custom alt fire");
-		return MRES_Ignored;
-	}
-		
 	static char szModelString[256];
 	if( AttribHookString( szModelString, sizeof(szModelString), iThis, "custom_unfortunate_son_model_override" ) ) {
 		static int result = 0;
@@ -494,7 +494,7 @@ void Frame_HurtPlayer( int iPlayer ) {
 	eHealEvent.SetInt( "entindex", iPlayer );
 	eHealEvent.SetInt( "amount", iDiff );
 	eHealEvent.FireToClient( iPlayer );
-	CancelCreatedEvent( eHealEvent );
+	eHealEvent.Cancel();
 
 	g_flHurtMe[ iPlayer ] = 0.0;
 }
@@ -638,6 +638,7 @@ MRESReturn Hook_PipebombVPhysCollide( int iThis, DHookParam hParams ) {
 	bool bOldTouched = GetCustomProp( iThis, "m_bTouched" );
 
 	if( bTouched && !bOldTouched ) {
+		//load from gamedata
 		float flDamage = LoadFromEntity( iThis, 1212 );
 		StoreToEntity( iThis, 1212, flDamage * 0.7 );
 		SetCustomProp( iThis, "m_bTouched", true );
