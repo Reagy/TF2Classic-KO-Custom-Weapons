@@ -2301,11 +2301,113 @@ Weapon by: 'The One Of Wonders'"
 		}
 //-----------------------------
 //-----------------------------
-//--TOXIC GRENADE - 3344-- // V6.9.9r4 REMOVED
+//--TOXIC GRENADE - 3344-- 
 //-----------------------------
 //-----------------------------
 		"3344"
 		{
+		    "name"						"TF_WEAPON_GRENADE_TOXIC"
+			"prefab"					"weapon_smg"										
+			"item_class"				"tf_weapon_grenade_mirv"							
+			"show_in_armory"			"1"
+			"anim_slot"					"item1"												
+
+			"item_name_color"           "190 200 233 255"
+
+			"propername"				"0"
+			"item_name"					"Corrosive Canister"
+			"item_type_name"			"Toxin Grenade"
+			"item_description"			"On hit: Apply 5 seconds of Toxin to target 
+Enemies affected by Toxin receive less healing from medi-guns
+
+Ammo pickups do not give ammo
+Recharges over time
+
+The chemists' lab brings new toys to Sniper...
+  
+Model by: 'Hau'
+Weapon by: 'The One Of Wonders'"																	
+			"item_logname"				"Corrosive Canister"
+			"item_iconname"				"Corrosive Canister"													
+			"image_inventory"			"backpack/weapons/c_models/c_toxingrenade/c_toxingrenade"
+			"model_world"				"models/weapons/c_models/c_toxingrenade/c_toxingrenade.mdl"
+			"model_player"				"models/weapons/c_models/c_toxingrenade/c_toxingrenade.mdl"
+			"attach_to_hands"			"1"		
+			"used_by_classes"
+			{
+				"sniper"				"1"
+			}
+			"static_attrs"																	
+			{
+				"override projectile type" 				"3"									
+				"damage bonus hidden"					"0.1"																					
+				"allowed in medieval mode"				"1"
+				"meter_label"                           "TOXIN JAR"
+			}
+			"attributes"
+			{
+			    "Cloak on Hit"
+				{
+					"attribute_class"	"AYAYA"
+					"value"				"5"
+				}
+			    "Regen on Hit"
+				{
+					"attribute_class"	"DORO AGAIN"
+					"value"				"4"
+				}	
+			    "min_viewmodel_offset"
+				{
+					"attribute_class"	"custom_inflictcustom_onhit"
+					"value"				"0 5.0"
+				}	
+				"custom projectile model"												
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/c_models/c_toxingrenade/c_toxingrenade.mdl"
+				}
+				"strange restriction type 1"												
+				{
+					"attribute_class"	"mod_rocket_gravity"
+					"value"				"1.05"
+				}
+				"weapon_stattrak_module_scale"															
+				{
+					"attribute_class"	"blast_dmg_to_self"
+					"value" 			"0"
+				}
+				"damage force increase hidden"												
+				{
+					"attribute_class"	"mult_dmgself_push_force"
+					"value" 			"0.0"
+				}
+				"grenades explode on impact"
+				{
+					"attribute_class"	"set_detonate_mode"
+					"value"				"3"
+				}	
+				"strange restriction type 1"												
+				{
+					"attribute_class"	"add_onhit_addhealth"
+					"value"				"2"
+				}
+				"add condition on hit"															
+				{
+					"attribute_class"	"add_onhit_addcond_self_weapon"
+					"value"				"4 3"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_Jarate.Single"
+				"sound_burst"			"Weapon_Jarate.Single"
+				"sound_special1"		"Jar.Explode"
+				"sound_special2"		"Jar.Explode"
+				"sound_special3"		"Weapon_Jarate.Single"
+				"explosion_effect"		"toxin_explosion"
+			}	
+			"mouse_pressed_sound"		"#ui/item_bottle_pickup.wav"
+			"drop_sound"				"#ui/item_bottle_drop.wav"
 		}
 //--------------------------
 //--------------------------
