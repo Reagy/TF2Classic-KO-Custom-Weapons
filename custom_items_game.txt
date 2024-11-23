@@ -36193,6 +36193,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"4.0"
 				}	
+				"mult dmg crit multiplier"
+				{
+					"attribute_class"	"mult_dmg_crit_multiplier"
+					"value"				"2.0"
+				}
 				"crit mod disabled"															
 				{
 					"attribute_class"	"mult_crit_chance"
