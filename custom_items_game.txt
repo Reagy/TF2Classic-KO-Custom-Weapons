@@ -20770,16 +20770,6 @@ Weapon by: 'Reagy'"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_projectile_speed"
-					"value" 			"1.48026316"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"chargeweapon_no_extra_speed"
-					"value"				"1"
-				}
-				"weapon_stattrak_module_scale"
-				{
 					"attribute_class"	"stickybomb_charge_rate"
 					"value" 			"1.6"
 				}
