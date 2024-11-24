@@ -15782,9 +15782,14 @@ Weapon by: 'Majro'"
 		        }
 				"weapon_stattrak_module_scale"
 		        {
-			        "attribute_class"	"custom_unfortunate_son_vel_horz"
-			        "value"				"1.65"
+			        "attribute_class"	"custom_unfortunate_son_cost"
+			        "value"				"0.1"
 		        }
+				"weapon_stattrak_module_scale"
+                {
+                    "attribute_class"   "custom_unfortunate_son_damage"
+                    "value"             "1.125"
+                }
 				"custom projectile model"
 				{
 					"attribute_class"   "custom_unfortunate_son_model_override"
