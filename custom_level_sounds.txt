@@ -14900,12 +14900,8 @@
 	"soundlevel"	"SNDLVL_95dB"
 	"volume"	"1.0"
 	"pitch"		"PITCH_NORM"
-	"rndwave"
-	{
-		"wave"		")weapons/SonarShot_explode.wav"
-		"wave"		")weapons/SonarShot_explode.wav"
-		"wave"		")weapons/SonarShot_explode_player.wav"
-	}
+	"wave"		")weapons/SonarShot_explode_player.wav"
+	
 }
 
 "Weapon_SonarShot.WorldReload"
