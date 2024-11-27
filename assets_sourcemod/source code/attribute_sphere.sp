@@ -366,20 +366,17 @@ MRESReturn Hook_ShieldTakeDamage( int iThis, DHookReturn hReturn, DHookParam hPa
 
 public void OnTakeDamagePostTF( int iTarget, Address aDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
-	BuildShieldCharge( tfInfo );
+	BuildShieldCharge( iTarget, tfInfo );
 }
 
 public void OnTakeDamageBuilding( int iTarget, Address aDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
-	BuildShieldCharge( tfInfo );
+	BuildShieldCharge( iTarget, tfInfo );
 }
 
-void BuildShieldCharge( TFDamageInfo tfInfo ) {
+void BuildShieldCharge( int iTarget, TFDamageInfo tfInfo ) {
 	int iOwner = tfInfo.iAttacker;
-	if( !IsValidPlayer( iOwner ) )
-		return;
-
-	if( !g_HasSphere.Get( iOwner ) )
+	if( iOwner == iTarget || !IsValidPlayer( iOwner ) || !g_HasSphere.Get( iOwner ) )
 		return;
 
 	float flNewValue = MinFloat( SHIELD_MAX, Tracker_GetValue( iOwner, g_szShieldKeyName ) + ( tfInfo.flDamage * SHIELD_DAMAGE_TO_CHARGE_SCALE ) );
