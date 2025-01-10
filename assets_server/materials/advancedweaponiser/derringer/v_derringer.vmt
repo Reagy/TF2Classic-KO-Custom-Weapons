@@ -1,0 +1,57 @@
+"SDK_VertexlitGeneric"
+{
+	"$baseTexture" "advancedweaponiser\derringer\v_derringer"
+
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "5"	
+	"$lightwarptexture" "models\weapons\c_items/c_ambassador_lightwarp"
+	"$phongfresnelranges"	"[.25 .5 1]"
+	"$phongwarptexture"  "models\weapons\c_items/c_ambassador_phongwarp"
+	"$basemapalphaphongmask" "1"
+
+
+	"$rimlight" "1"
+	"$rimlightexponent" "10"	
+	"$rimlightboost" "1"
+
+	"360?$color2" "[ 0.9 0.8 0.8 ]"
+
+	//---------------
+	// Visual Effects
+	//---------------
+	"$glowcolor" 		"1"
+	"$cloakPassEnabled" 	"1"
+	"$yellow" 		"0"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

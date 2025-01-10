@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_throwing_axe\c_throwing_axe_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}
+
