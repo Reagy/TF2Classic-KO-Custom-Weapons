@@ -28965,6 +28965,11 @@ Weapon by: 'The One Of Wonders, Panáček'"
 					"attribute_class"	"mult_reload_time"
 					"value"				"1.2"
 				}
+				"self dmg push force hidden"
+		        {
+			        "attribute_class"	"mult_dmgself_push_force"
+			        "value"				"0.4"
+		        }
 				"weapon_stattrak_module_scale"													
 				{
 					"attribute_class"	"blast_dmg_to_self"	
