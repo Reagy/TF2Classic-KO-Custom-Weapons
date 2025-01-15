@@ -179,23 +179,17 @@ void Frame_CheckSniper( int iWeaponRef ) {
 	g_dhWeaponHolster.HookEntity( Hook_Post, iWeapon, Hook_SniperHolster );
 }
 
-public void OnTakeDamageAliveTF( int iTarget, Address aDamageInfo ) {
-	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
-	
-	CheckAccuracyScalesDamage( tfInfo );
+public void OnTakeDamageAliveTF( int iTarget, TFDamageInfo tfDamageInfo ) {
+	CheckAccuracyScalesDamage( tfDamageInfo );
 }
-public void OnTakeDamageAlivePostTF( int iTarget, Address aDamageInfo ) {
-	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
-
-	CheckLifesteal( tfInfo );
-	DoUberScale( tfInfo );
+public void OnTakeDamageAlivePostTF( int iTarget, TFDamageInfo tfDamageInfo ) {
+	CheckLifesteal( tfDamageInfo );
+	DoUberScale( tfDamageInfo );
 }
-public void OnTakeDamageBuilding( int iTarget, Address aDamageInfo ) {
-	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
-
-	CheckLifesteal( tfInfo );
-	DoUberScale( tfInfo );
-	CheckAccuracyScalesDamage( tfInfo );
+public void OnTakeDamageBuilding( int iTarget, TFDamageInfo tfDamageInfo ) {
+	CheckLifesteal( tfDamageInfo );
+	DoUberScale( tfDamageInfo );
+	CheckAccuracyScalesDamage( tfDamageInfo );
 }
 
 /*
@@ -317,8 +311,11 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 
 	int iProjectile = -1;
 	switch( RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_unfortunate_son" ) ) ) {
-		case 1:
+		case 1: {
 			iProjectile = SDKCall( g_sdkPipebombCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
+			if( RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_unfortunate_son_no_ramp" ) ) )
+				g_dhGrenadeGetDamageType.HookEntity( Hook_Pre, iProjectile, Hook_GrenadeGetDamageType );
+		}
 		case 2:
 			iProjectile = SDKCall( g_sdkBrickCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
 			
@@ -348,6 +345,16 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 	StoreToEntity( iProjectile, 1212, AttribHookFloat( 80.0, iThis, "custom_unfortunate_son_damage" ) ); //damage
 	StoreToEntity( iProjectile, 1216, AttribHookFloat( 120.0, iThis, "custom_unfortunate_son_radius" ) ); //radius
 
+<<<<<<< Updated upstream
+=======
+	
+
+	return MRES_Supercede;
+}
+
+MRESReturn Hook_GrenadeGetDamageType( int iThis, DHookReturn hReturn ) {
+	hReturn.Value = hReturn.Value & DMG_NOCLOSEDISTANCEMOD;
+>>>>>>> Stashed changes
 	return MRES_Supercede;
 }
 

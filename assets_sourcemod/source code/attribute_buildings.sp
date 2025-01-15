@@ -543,6 +543,12 @@ void UpdateBuildingCost( int iPlayer, int iBuilding, int iType ) {
 
 void SetBuildingModel( int iBuilding, bool bIsUpgrading ) {
 	int iBuilder =	GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" );
+<<<<<<< Updated upstream
+=======
+	if( !IsValidPlayer(iBuilder) )
+		return;
+
+>>>>>>> Stashed changes
 	int iType = 	GetEntProp( iBuilding, Prop_Send, "m_iObjectType");
 	int iLevel =	GetEntProp( iBuilding, Prop_Send, "m_iUpgradeLevel" );
 

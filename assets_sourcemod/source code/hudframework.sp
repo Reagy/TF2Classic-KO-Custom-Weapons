@@ -318,17 +318,6 @@ void Tracker_CreateString( ResourceTracker hTracker, char sBuffer[64] ) {
 	if( hTracker.HasFlags(RTF_PERCENTAGE) ) StrCat( sBuffer, sizeof( sBuffer ), "%%");
 }
 
-
-/*
-Call_StartForward( g_OnTakeDamageTF );
-
-	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
-
-	Call_Finish();
-*/
-
-
 #if defined DEBUG
 Action Command_Test(int client, int args)
 {

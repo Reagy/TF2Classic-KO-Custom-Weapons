@@ -364,6 +364,7 @@ MRESReturn Hook_ShieldTakeDamage( int iThis, DHookReturn hReturn, DHookParam hPa
 	return MRES_Handled;
 }
 
+<<<<<<< Updated upstream
 public void OnTakeDamagePostTF( int iTarget, Address aDamageInfo ) {
 	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
 	BuildShieldCharge( tfInfo );
@@ -380,9 +381,22 @@ void BuildShieldCharge( TFDamageInfo tfInfo ) {
 		return;
 
 	if( !g_HasSphere.Get( iOwner ) )
+=======
+public void OnTakeDamagePostTF( int iTarget, TFDamageInfo tfDamageInfo ) {
+	BuildShieldCharge( iTarget, tfDamageInfo );
+}
+
+public void OnTakeDamageBuilding( int iTarget, TFDamageInfo tfDamageInfo ) {
+	BuildShieldCharge( iTarget, tfDamageInfo );
+}
+
+void BuildShieldCharge( int iTarget, TFDamageInfo tfDamageInfo ) {
+	int iOwner = tfDamageInfo.iAttacker;
+	if( iOwner == iTarget || !IsValidPlayer( iOwner ) || !g_HasSphere.Get( iOwner ) )
+>>>>>>> Stashed changes
 		return;
 
-	float flNewValue = MinFloat( SHIELD_MAX, Tracker_GetValue( iOwner, g_szShieldKeyName ) + ( tfInfo.flDamage * SHIELD_DAMAGE_TO_CHARGE_SCALE ) );
+	float flNewValue = MinFloat( SHIELD_MAX, Tracker_GetValue( iOwner, g_szShieldKeyName ) + ( tfDamageInfo.flDamage * SHIELD_DAMAGE_TO_CHARGE_SCALE ) );
 	Tracker_SetValue( iOwner, g_szShieldKeyName, flNewValue );
 }
 
