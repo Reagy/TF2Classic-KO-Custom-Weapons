@@ -544,21 +544,19 @@ MRESReturn Detour_ApplyOnHitAttributes( int iWeapon, DHookParam hParams ) {
 	return MRES_Handled;
 }
 
-public void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo ) {
-	TFDamageInfo tfInfo = TFDamageInfo( aTakeDamageInfo );
-
+public void OnTakeDamageTF( int iTarget, TFDamageInfo tfDamageInfo ) {
 	//CheckMultDamageAttrib( iTarget, tfInfo );
-	CheckMultDamageAttribCustom( iTarget, tfInfo );
+	CheckMultDamageAttribCustom( iTarget, tfDamageInfo );
 
 	if( HasCond( iTarget, TFCC_ANGELSHIELD ) )
-		AngelShieldTakeDamage( iTarget, tfInfo );
+		AngelShieldTakeDamage( iTarget, tfDamageInfo );
 }
-public void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo ) {
+public void OnTakeDamageAlivePostTF( int iTarget, TFDamageInfo tfDamageInfo ) {
 	AngelShieldTakeDamagePost( iTarget );
 }
 
-void CheckMultDamageAttribCustom( int iTarget, TFDamageInfo tfInfo ) {
-	int iAttacker = tfInfo.iAttacker;
+void CheckMultDamageAttribCustom( int iTarget, TFDamageInfo tfDamageInfo ) {
+	int iAttacker = tfDamageInfo.iAttacker;
 
 	if( !HasEntProp( iTarget, Prop_Send, "m_hActiveWeapon" ) )
 		return;
@@ -579,8 +577,10 @@ void CheckMultDamageAttribCustom( int iTarget, TFDamageInfo tfInfo ) {
 	float flMult = StringToFloat( szExplode[1] );
 
 	if( HasCond( iAttacker, iCond ) ) {
-		tfInfo.flDamage *= flMult;
-		EmitGameSoundToAll( "Player.ResistanceMedium", iTarget );
+		tfDamageInfo.flDamage *= flMult;
+
+		if( flMult < 1.0 )
+			EmitGameSoundToAll( "Player.ResistanceMedium", iTarget );
 	}
 }
 

@@ -514,13 +514,11 @@ MRESReturn Hook_IntermissionTakeDamage( int iEntity, DHookReturn hReturn, DHookP
 	return MRES_Supercede;
 }
 
-public void OnTakeDamageBuilding( int iBuilding, Address aDamageInfo ) {
-	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
-
+public void OnTakeDamageBuilding( int iBuilding, TFDamageInfo tfDamageInfo ) {
 	if( GetEntProp( iBuilding, Prop_Send, "m_iObjectType" ) != 2 ) //sentry gun
 		return;
 	
-	int iAttacker = tfInfo.iAttacker;
+	int iAttacker = tfDamageInfo.iAttacker;
 	if( !IsValidPlayer( iAttacker ) )
 		return;
 
@@ -533,7 +531,7 @@ public void OnTakeDamageBuilding( int iBuilding, Address aDamageInfo ) {
 	if( g_esPlayerSappers[iAttacker].alSapping.FindValue( iBuildingRef ) == -1 )
 		return;
 
-	tfInfo.flDamage *= INTERMISSION_SELF_DAMAGE_MULT;
+	tfDamageInfo.flDamage *= INTERMISSION_SELF_DAMAGE_MULT;
 }
 static int g_iRingColors[6][4] = {
 	{ 0, 0, 0, 0 }, //spectator

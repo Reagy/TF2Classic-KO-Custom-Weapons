@@ -395,11 +395,11 @@ enum {
 	CT_FULL = 2
 }
 
-forward void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo );
-forward void OnTakeDamagePostTF( int iTarget, Address aTakeDamageInfo );
-forward void OnTakeDamageAliveTF( int iTarget, Address aTakeDamageInfo );
-forward void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo );
-forward void OnTakeDamageBuilding( int iBuilding, Address aTakeDamageInfo );
+forward void OnTakeDamageTF( int iTarget, TFDamageInfo tfDamageInfo );
+forward void OnTakeDamagePostTF( int iTarget, TFDamageInfo tfDamageInfo );
+forward void OnTakeDamageAliveTF( int iTarget, TFDamageInfo tfDamageInfo );
+forward void OnTakeDamageAlivePostTF( int iTarget, TFDamageInfo tfDamageInfo );
+forward void OnTakeDamageBuilding( int iBuilding, TFDamageInfo tfDamageInfo );
 
 int iOffsetCache[DI_SIZE] = { -1, ... };
 static char g_szDmgOffsetNames[][] = {

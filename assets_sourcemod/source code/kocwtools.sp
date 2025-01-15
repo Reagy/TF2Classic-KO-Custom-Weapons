@@ -627,7 +627,7 @@ int GetPlayerFromSharedAddress( Address pShared ) {
 
 public any Native_GetSharedFromPlayer( Handle hPlugin, int iParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	return GetEntityAddress( iPlayer ) + address( offs_CTFPlayer_mShared );
+	return GetEntityAddress( iPlayer ) + view_as<Address>( offs_CTFPlayer_mShared );
 }
 
 public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
@@ -640,7 +640,7 @@ public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
 } 
 
 static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
-	Address aOffs = address( GameConfGetOffset( hGamedata, sKey ) );
+	Address aOffs = view_as<Address>( GameConfGetOffset( hGamedata, sKey ) );
 	if ( aOffs == address( -1 ) ) {
 		SetFailState( "Failed to get member offset %s", sKey );
 	}
@@ -658,23 +658,7 @@ static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 //48: damage
 //52: some kind of "base damage"
 
-//72: appears to be unused
-//76: appears to be unused
-//80: appears to be unused
-//84: appears to be unused
 //88: m_flDamageBonus
-//92: some sort of consecutive hit detection
-//96: 0 always
-
-//104: null
-//108: ???
-
-//252/256/260: damage vectors
-//264/268/272: damage source?
-//276/280/284: damage vectors
-
-//288 ???
-//292/296/300: appears to be more coordinate data
 
 //player
 //6048:	bSeeCrit
@@ -683,11 +667,7 @@ static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 
 //6502: effect types
 
-//TakeDamageInfo offsets
-
-#define DMB_CRITICAL 20
-
-//forward void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo );
+//forward void OnTakeDamageTF( int iTarget, TFDamageInfo tfDamageInfo );
 MRESReturn Hook_OnTakeDamagePre( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
@@ -695,13 +675,13 @@ MRESReturn Hook_OnTakeDamagePre( int iThis, DHookReturn hReturn, DHookParam hPar
 	Call_StartForward( g_fwdOnTakeDamageTF );
 
 	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
+	Call_PushCell( TFDamageInfo( hParams.GetAddress( 1 ) ) );
 
 	Call_Finish();
 
 	return MRES_Handled;
 }
-//forward void OnTakeDamagePostTF( int iTarget, Address aTakeDamageInfo );
+//forward void OnTakeDamagePostTF( int iTarget, TFDamageInfo tfDamageInfo );
 MRESReturn Hook_OnTakeDamagePost( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
@@ -709,13 +689,13 @@ MRESReturn Hook_OnTakeDamagePost( int iThis, DHookReturn hReturn, DHookParam hPa
 	Call_StartForward( g_fwdOnTakeDamagePostTF );
 
 	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
+	Call_PushCell( TFDamageInfo( hParams.GetAddress( 1 ) ) );
 
 	Call_Finish();
 
 	return MRES_Handled;
 }
-//forward void OnTakeDamageAliveTF( int iTarget, Address aTakeDamageInfo );
+//forward void OnTakeDamageAliveTF( int iTarget, TFDamageInfo tfDamageInfo );
 MRESReturn Hook_OnTakeDamageAlivePre( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
@@ -723,13 +703,13 @@ MRESReturn Hook_OnTakeDamageAlivePre( int iThis, DHookReturn hReturn, DHookParam
 	Call_StartForward( g_fwdOnTakeDamageAliveTF );
 
 	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
+	Call_PushCell( TFDamageInfo( hParams.GetAddress( 1 ) ) );
 
 	Call_Finish();
 
 	return MRES_Handled;
 }
-//forward void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo );
+//forward void OnTakeDamageAlivePostTF( int iTarget, TFDamageInfo tfDamageInfo );
 MRESReturn Hook_OnTakeDamageAlivePost( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
@@ -737,19 +717,19 @@ MRESReturn Hook_OnTakeDamageAlivePost( int iThis, DHookReturn hReturn, DHookPara
 	Call_StartForward( g_fwdOnTakeDamageAlivePostTF );
 
 	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
+	Call_PushCell( TFDamageInfo( hParams.GetAddress( 1 ) ) );
 
 	Call_Finish();
 
 	return MRES_Handled;
 }
 
-//forward void OnTakeDamageBuilding( int iBuilding, Address aTakeDamageInfo );
+//forward void OnTakeDamageBuilding( int iBuilding, TFDamageInfo tfDamageInfo );
 MRESReturn Hook_OnTakeDamageBuilding( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	Call_StartForward( g_fwdOnTakeDamageBuilding );
 
 	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
+	Call_PushCell( TFDamageInfo( hParams.GetAddress( 1 ) ) );
 
 	Call_Finish();
 

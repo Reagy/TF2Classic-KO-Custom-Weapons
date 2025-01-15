@@ -95,10 +95,8 @@ MRESReturn Detour_CheckJumpButton( Address aThis, DHookReturn hReturn ) {
 	return MRES_Handled;
 }
 
-public void OnTakeDamageTF( int iTarget, Address aDamageInfo ) {
-	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
-
-	int iAttacker = tfInfo.iAttacker;
+public void OnTakeDamageTF( int iTarget, TFDamageInfo tfDamageInfo ) {
+	int iAttacker = tfDamageInfo.iAttacker;
 
 	if( !IsValidPlayer( iAttacker ) )
 		return;
@@ -106,7 +104,7 @@ public void OnTakeDamageTF( int iTarget, Address aDamageInfo ) {
 	if( !g_pfJumpaction.Get( iAttacker ) )
 		return;
 
-	g_flDamageBuffer[ iAttacker ] += tfInfo.flDamage;
+	g_flDamageBuffer[ iAttacker ] += tfDamageInfo.flDamage;
 
 	float flJumps = float( RoundToFloor( g_flDamageBuffer[ iAttacker ] / DAMAGE_TO_JUMP ) );
 	if( flJumps > 0.0 ) {
