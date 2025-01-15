@@ -345,16 +345,11 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 	StoreToEntity( iProjectile, 1212, AttribHookFloat( 80.0, iThis, "custom_unfortunate_son_damage" ) ); //damage
 	StoreToEntity( iProjectile, 1216, AttribHookFloat( 120.0, iThis, "custom_unfortunate_son_radius" ) ); //radius
 
-<<<<<<< Updated upstream
-=======
-	
-
 	return MRES_Supercede;
 }
 
 MRESReturn Hook_GrenadeGetDamageType( int iThis, DHookReturn hReturn ) {
 	hReturn.Value = hReturn.Value & DMG_NOCLOSEDISTANCEMOD;
->>>>>>> Stashed changes
 	return MRES_Supercede;
 }
 
