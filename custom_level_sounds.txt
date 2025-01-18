@@ -17706,3 +17706,74 @@
 	"wave"		")weapons/WHMinigun_SpinDown.wav"
 }
 
+// ------------------------------------------------------------------------------------ //
+// TRICKSHOT
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_BigFifty.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"		")weapons\MannCannon_FireRedux.wav"
+
+}
+"Weapon_BigFifty.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"			")weapons/MannCannon_FireRedux_Crit.wav"
+}
+
+"Weapon_BigFifty.BoltBack"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".67"
+	"pitch"		"98, 102"
+	"wave"		"weapons/MannCannon_BoltPull.wav"
+}
+
+"Weapon_BigFifty.BoltForward"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".67"
+	"pitch"		"98, 102"
+	"wave"		"weapons/MannCannon_BoltReturn.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// DAVIE CROCKET
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Nuke.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"pitch"		"98, 100"
+
+	"wave"		")weapons\davie_crocket_shoot.wav"
+
+}
+"Weapon_Nuke.SingleCrit"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+	"pitch"		"98, 100"
+
+	"wave"			")weapons/davie_crocket_shoot_crit.wav"
+}
+"Weapon_Nuke.Explode"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"pitch"		"92, 98"
+	"wave"		")weapons/nuke_explode.wav"
+}

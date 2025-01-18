@@ -37412,12 +37412,416 @@ Edited by: 'Reagy'"
 		}	
 //-------------------------------------
 //-------------------------------------
-// PETITION -- 9969
+// NUKE LAUNCHER -- 9969
 //-------------------------------------
 //-------------------------------------	
 		"9969"
 		{
+			"name"						"TF_WEAPON_CROCKETLAUNCHER"
+			"prefab"					"weapon_rocketlauncher"
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+			"anim_slot"					"primary"
+
+			"propername"				"1"
+			"item_name"					"Davie's Crocket"
+			"item_type_name"			"Tactical Nuclear Recoilless Smoothbore Gun"
+			"item_description"			"
+I'm nuclear, I'm wild...
+I'm breaking up inside...
+
+Model by: 'CaptainMalk' 
+Particles by: 'Nonhuman'
+Base stats by: 'Panáček'
+Modified by: 'Reagy'"
+			"item_logname"				"crocket_launcher"
+			"item_iconname"				"crocket_launcher"
+			"image_inventory"			"backpack/weapons/w_models/w_crocketlauncher"
+			"model_world"				"models/weapons/custom/c_models/c_crocketlauncher.mdl"			
+			"model_player"				"models/weapons/custom/c_models/c_crocketlauncher.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"soldier"				"1"
+			}
+			"static_attrs"
+			{
+				"class select override vcd"				"taunt01_v2"
+			}
+			"attributes"
+			{
+				"davie crocket unique"
+				{
+					"attribute_class"	"display_only"
+					"value"				"1"
+				}
+				"rocket gravity"
+				{
+					"attribute_class"	"mod_rocket_gravity"
+					"value"				"0.05"
+				}
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.2" 
+				}
+				"Blast radius increased"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"2.5" 
+				}
+				"davie crocket negative"
+				{
+					"attribute_class"	"display_only"
+					"value"             "1"
+				}
+				"blast dmg to self increased"
+				{
+					"attribute_class"	"blast_dmg_to_self"
+					"value"				"6" 
+				}
+				"Projectile speed decreased"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"0.2" 
+				}
+				"Reload time increased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"2" 
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.2" 
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+
+				"hidden separator"		"1"
+
+				"rocket limited lifetime"
+				{
+					"attribute_class"	"rocket_lifetime"
+					"value"             "5"
+				}
+
+				"rocket whistle"
+				{
+					"attribute_class"	"rocket_whistle"
+					"value"				"1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"2" 
+				}
+				"dmg push force to stickies increased hidden"
+				{
+					"attribute_class"	"mult_dmg_push_force_to_stickies"
+					"value"				"10" 
+				}
+				"weapon enemy knockback mod mult increased"
+				{
+					"attribute_class"	"weapon_enemy_knockback_mod"
+					"value"				"2" 
+				}
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_falloff"
+					"value"				"1.5"
+				}		
+                "strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"0.05"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.1" 
+				}
+				"custom projectile model"
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/custom/w_models/w_crocket_new.mdl"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_Nuke.Single"
+				"sound_burst"			"Weapon_Nuke.SingleCrit"
+				"sound_reload"			"Weapon_QuakeRPG.Reload"
+				"sound_special1"		"Weapon_Nuke.Explode"
+				"explosion_effect"		"1_CRAPSPLOSION_MAIN"
+			}
+			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
+			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
+		
+//-------------------------------------
+//-------------------------------------
+// TRICKSHOT -- 9970
+//-------------------------------------
+//-------------------------------------	
+		"9970"
+		{
+			"name"						"TF_WEAPON_TRICKSHOT"
+			"item_class"				"tf_weapon_sniperrifle"
+			"show_in_armory"			"1"
+			"item_slot"					"primary"
+
+			"propername"				"1"
+			"item_name"					"Trickshot"
+			"item_type_name"			"Heavy Sniper Rifle"
+			"item_description"			"
+'Simple geometry.'
+
+Model by: 'Roninsmastermix'
+Base stats by: 'Panáček'
+Modified by: 'Reagy'"
+			"item_logname"				"trickshot"
+//			"item_iconname"				"trickshot"
+			"image_inventory"			"backpack/weapons/w_models/w_trickshot"
+			"model_world"				"models/weapons\c_models\c_trickshot.mdl"
+			"model_player"				"models/weapons\v_models\v_trickshot.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"sniper"					"1"
+			}	
+			"attributes"
+			{
+				"trickshot unique"
+				{
+					"attribute_class"	"display_only"
+					"value"             "1"
+				}
+				"trickshot positive"
+				{
+					"attribute_class"	"display_only"
+					"value"             "1"
+				}
+				"mod mini-crit airborne"
+				{
+					"attribute_class"	"mini_crit_airborne"
+					"value"				"1"
+				}
+				"trickshot negative"
+				{
+					"attribute_class"	"display_only"
+					"value"             "1"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.5"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.75"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				"hidden separator"		"1"
+
+				"scoped firerate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay_scoped"
+					"value"				"1.75"
+				}
+				"override projectile type"
+				{
+					"attribute_class"	"override_projectile_type"
+					"value"				"32"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" 			"0.8"
+				}
+				"Projectile speed increased"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value"             "2.75"
+				}
+				"rocket limited lifetime"
+				{
+					"attribute_class"	"rocket_lifetime"
+					"value"             "2"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value"				"1"
+				}
+				"punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"15"
+				}
+				"hand scale"															
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"0.01"
+				}
+				"mod coil bounce damage percentage"
+				{
+					"attribute_class"	"mod_coil_bounce_damage_penalty"
+					"value"	            "-0.5"
+				}
+				"mod coil max bounces"
+				{
+					"attribute_class"	"mod_coil_max_bounces"
+					"value"             "10000"
+				}
+				"custom projectile model"
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/w_models/w_fatbullet.mdl"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_BigFifty.Single"
+				"sound_burst"			"Weapon_BigFifty.SingleCrit"
+				"sound_special1"		"Weapon_Null.Explode"	
+				"sound_special2"		"Weapon_Null.Explode"	
+				"explosion_effect"		"impact_glass"
+				"trail_effect"			"fatbullet_large_trail"	
+			}
+			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
+		}
+
+//-----------------------
+//-----------------------
+//--NUCLEAR FOOTBALL - 9971--
+//-----------------------
+//-----------------------
+		"9971"
+		{
+			"name"						"TF_WEAPON_FOOTBALL"
+			"item_class"				"tf_weapon_grenade_mirv"
+			"prefab"					"medieval_base use_heavy"
+			"show_in_armory"			"1"
+			"tags"
+			{
+				"can_deal_gib_damage"					"1"
+				"can_deal_damage"						"1"
+				"can_deal_critical_damage"				"1"
+				"can_deal_long_distance_damage"			"1"
+			}
+			
+			"item_type_name"			"Presidential Emergency Satchel"
+			"propername"				"0"
+			"item_name_color"           "190 200 233 255"
+			"item_name"					"Football"
+			"item_description"			"Ammo pickups do not give ammo
+Recharges over time
+
+Model by: 'CaptainMalk' 
+Particles by: 'Nonhuman'
+Weapon by: 'Reagy'"
+			"item_slot"					"melee"
+			"anim_slot"					"item1"
+            "bucket"					"2"														
+			"bucket_position"			"1"		
+			"item_logname"				"Nuclear Football"
+			"item_iconname"				"Nuclear Football"
+			"image_inventory"			"backpack/weapons/w_models/w_nuclearfootball"
+			
+			"model_world"				"models/weapons/custom/w_models/w_nuclearfootball.mdl"
+			"model_player"				"models/weapons/custom/v_models/v_nuclearfootball.mdl"
+
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -10"
+				"custom projectile model"				"models/weapons/custom/w_models/w_nuclearfootball_projectile.mdl"
+				"centerfire projectile"					"1"
+				"bomblets count mod mult hidden"		"0"
+				"meter_label"                           "FOOTBALL"
+			}
+			"attributes"
+			{
+				"Caber Toss Positive"
+				{
+					"attribute_class"	"DISPLAY_ONLY"
+					"value"				"1"
+				}
+				"grenade cook"
+				{
+					"attribute_class"	"grenade_cook"
+					"value"				"1"
+				}
+				"blast splash damage increased"
+				{
+					"attribute_class"	"mult_explosion_splash_damage"
+					"value"				"1.5"													
+				}
+				"blast dmg to self increased"
+				{
+					"attribute_class"	"blast_dmg_to_self"
+					"value"				"1.5" 
+				}
+				"health drain"
+				{
+					"attribute_class"	"add_health_regen"
+					"value"				"-1" 
+				}
+				"self damage penetrates uber"
+				{
+					"attribute_class"	"mod_self_damage_penetrates_uber"
+					"value"				"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				
+				"hidden separator"		"1"
+
+				"dmg push force to stickies increased hidden"
+				{
+					"attribute_class"	"mult_dmg_push_force_to_stickies"
+					"value"				"10" 
+				}
+				"weapon enemy knockback mod mult increased"
+				{
+					"attribute_class"	"weapon_enemy_knockback_mod"
+					"value"				"2" 
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_Grenade_Mirv.Throw"
+				"sound_double_shot"		"Weapon_Grenade_Mirv.ChargeUp"
+				"sound_reload"			"Weapon_StickyBombLauncher.WorldReload"
+				"sound_special1"		"Weapon_Nuke.Explode"
+				"sound_special2"		"Player.UseDeny"
+				"sound_special3"		"Weapon_StickyBombLauncher.ModeSwitch"
+				"sound_burst"			"Weapon_Grenade_Mirv.ThrowCrit"
+				"explosion_effect"		"1_CRAPSPLOSION_MAIN"
+			    "animation_replacement"
+				{
+					"ACT_MP_ATTACK_STAND_ITEM1"				"ACT_MP_ATTACK_STAND_MELEE"
+					"ACT_MP_ATTACK_CROUCH_ITEM1"			"ACT_MP_ATTACK_CROUCH_MELEE"
+					"ACT_MP_ATTACK_SWIM_ITEM1"				"ACT_MP_ATTACK_SWIM_MELEE"
+					"ACT_MP_ATTACK_AIRWALK_ITEM1"			"ACT_MP_ATTACK_AIRWALK_MELEE"
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
+		}
+
 //--------------------------------
 //--------------------------------
 //-- Secret Joke Weapons :)	 --
@@ -39335,6 +39739,60 @@ Reserve Energy: 3 seconds of auto-reload"
 			"custom_color"	        "225 215 0 255"
 			"effect_type"			"negative"
 		}
+		
+// Here comes "the funny"
+
+		"7746"
+		{
+			"name"					"davie crocket unique" 
+			"description_string"	"Shoots miniature Nuclear Bombs that deal more damage the further you are"												
+			"custom_color"	        "225 215 0 255"
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
+		}
+		
+		"7747"
+		{
+			"name"					"trickshot unique" 
+			"description_string"	"While Scoped in: Shoot normal hitscan bullet
+While Hipfiring: Shoot a projectile bullet that ricochets off walls"												
+			"custom_color"	        "225 215 0 255"
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
+		}
+		
+		"7748"
+		{
+			"name"					"trickshot positive" 
+			"description_string"	"Bullet gains +7.5 damage for each ricochet"										
+			"description_format"	"value_is_additive"
+			"effect_type"			"positive"
+		}
+		
+		"7749"
+		{
+			"name"					"trickshot negative" 
+			"description_string"	"Bullet shatters after 2 seconds if no enemy is hit"												
+			"description_format"	"value_is_additive"
+			"effect_type"			"negative"
+		}
+		
+		"7750"
+		{
+			"name"					"mod coil bounce damage percentage"
+			"attribute_class"		"mod_coil_bounce_damage_penalty"
+			"description_format"	"value_is_percentage"
+			"hidden"				"0"
+		}
+		
+		"7751"
+		{
+			"name"					"davie crocket negative" 
+			"description_string"	"Bomb detonates automatically after 5 seconds"												
+			"description_format"	"value_is_additive"
+			"effect_type"			"negative"
+		}
+
 //clooey zone
 
 		"12000"
