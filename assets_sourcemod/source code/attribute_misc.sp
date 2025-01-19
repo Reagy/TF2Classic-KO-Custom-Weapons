@@ -14,7 +14,7 @@ public Plugin myinfo =
 	name = "Attribute: Misc",
 	author = "Noclue",
 	description = "Miscellaneous attributes.",
-	version = "1.4",
+	version = "1.5.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -23,6 +23,7 @@ DynamicHook g_dhSecondaryFire;
 DynamicHook g_dhItemPostFrame;
 DynamicHook g_dhWeaponHolster;
 DynamicHook g_dhFireProjectile;
+DynamicHook g_dhGrenadeGetDamageType;
 
 DynamicDetour g_dtGetMedigun;
 DynamicDetour g_dtRestart;
@@ -39,6 +40,8 @@ Handle g_sdkSendWeaponAnim;
 Handle g_sdkAttackIsCritical;
 Handle g_sdkPipebombCreate;
 Handle g_sdkBrickCreate;
+Handle g_sdkGetProjectileFireSetup;
+
 
 int g_iScrambleOffset = -1;
 int g_iRestartTimeOffset = -1;
@@ -85,6 +88,8 @@ public void OnPluginStart() {
 	PrepSDKCall_SetReturnInfo( SDKType_CBaseEntity, SDKPass_Pointer );
 	g_sdkPipebombCreate = EndPrepSDKCall();
 
+	g_dhGrenadeGetDamageType = DynamicHookFromConfSafe( hGameConf, "CTFBaseGrenade::GetDamageType" );
+
 	StartPrepSDKCall( SDKCall_Static );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFBrickProjectile::Create" );
 	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef );
@@ -107,6 +112,17 @@ public void OnPluginStart() {
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFWeaponBase::CalcAttackIsCritical" );
 	g_sdkAttackIsCritical = EndPrepSDKCall();
 
+	//CTFPlayer*, Vector, Vector*, QAngle*, bool, bool
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFWeaponBaseGun::GetProjectileFireSetup" );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByValue );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_Pointer, 0, VENCODE_FLAG_COPYBACK );
+	PrepSDKCall_AddParameter( SDKType_QAngle, SDKPass_Pointer, 0, VENCODE_FLAG_COPYBACK );
+	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_ByValue );
+	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_ByValue );
+	g_sdkGetProjectileFireSetup = EndPrepSDKCall();
+
 	g_dhVPhysCollide = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::VPhysicsCollision" );
 	//g_dhShouldExplode = DynamicHook.FromConf( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
 	/*g_dhOnTakeDamage = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::OnTakeDamage" );
@@ -127,14 +143,26 @@ public void OnPluginStart() {
 	g_iSniperDotOffset = GameConfGetOffsetSafe( hGameConf, "CTFSniperRifle::m_hSniperDot" );
 	//g_iPhysEventEntityOffset = GameConfGetOffset( hGameConf, "gamevcollisionevent_t.pEntities" );
 
-	if( g_bLateLoad ) {
+	//todo: fix this
+	/*if( g_bLateLoad ) {
 		int iIndex = MaxClients + 1;
 		while( ( iIndex = FindEntityByClassname( iIndex, "tf_weapon_sniperrifle" ) ) != -1 ) {
 			Frame_CheckSniper( EntIndexToEntRef( iIndex ) );
 		}
-	}
+	}*/
+
+	HookEvent( "post_inventory_application", Event_FixChargeCond, EventHookMode_Post );
 
 	delete hGameConf;
+}
+
+public void Event_FixChargeCond( Event hEvent, const char[] sName, bool bDontBroadcast ) {
+	int iPlayer = hEvent.GetInt( "userid" );
+	iPlayer = GetClientOfUserId( iPlayer );
+
+	if( iPlayer != -1 ) {
+		TF2_RemoveCondition( iPlayer, TFCond_Charging );
+	}
 }
 
 public void OnMapStart() {
@@ -147,15 +175,18 @@ public void OnEntityCreated( int iEntity ) {
 
 	if( StrContains( szEntityName, "tf_weapon_" ) == 0 )
 		RequestFrame( Frame_CheckWeapon, EntIndexToEntRef( iEntity ) );
-
-	if( HasEntProp( iEntity, Prop_Send, "m_flChargedDamage" ) )
-		RequestFrame( Frame_CheckSniper, EntIndexToEntRef( iEntity ) );
 }
 
 void Frame_CheckWeapon( int iWeaponRef ) {
 	int iWeapon = EntRefToEntIndex( iWeaponRef );
 	if( iWeapon == -1 )
 		return;
+
+	//test this
+	if( AttribHookFloat( 0.0, iWeapon, "custom_sniper_laser" ) != 0.0 ) {
+		g_dhItemPostFrame.HookEntity( Hook_Post, iWeapon, Hook_SniperPostFrame );
+		g_dhWeaponHolster.HookEntity( Hook_Post, iWeapon, Hook_SniperHolster );
+	}
 
 	if( AttribHookFloat( 0.0, iWeapon, "custom_hurt_on_fire" ) != 0.0 )
 		g_dhPrimaryFire.HookEntity( Hook_Pre, iWeapon, Hook_CursedPrimaryFire );
@@ -166,17 +197,6 @@ void Frame_CheckWeapon( int iWeaponRef ) {
 	static char szBuffer[256];
 	if( AttribHookString( szBuffer, sizeof(szBuffer), iWeapon, "custom_accuracy_scales_damage" ) )
 		g_dhFireProjectile.HookEntity( Hook_Pre, iWeapon, Hook_FireProjectile );
-}
-void Frame_CheckSniper( int iWeaponRef ) {
-	int iWeapon = EntRefToEntIndex( iWeaponRef );
-	if( iWeapon == -1 )
-		return;
-	
-	if( AttribHookFloat( 0.0, iWeapon, "custom_sniper_laser" ) == 0.0 )
-		return;
-
-	g_dhItemPostFrame.HookEntity( Hook_Post, iWeapon, Hook_SniperPostFrame );
-	g_dhWeaponHolster.HookEntity( Hook_Post, iWeapon, Hook_SniperHolster );
 }
 
 public void OnTakeDamageAliveTF( int iTarget, Address aDamageInfo ) {
@@ -246,9 +266,10 @@ void CheckAccuracyScalesDamage( TFDamageInfo tfInfo ) {
 
 	static char szSplit[3][256];
 	ExplodeString( szBuffer, " ", szSplit, 3, 256 );
-	
+
 	float flMin = StringToFloat( szSplit[0] );
 	float flMax = StringToFloat( szSplit[1] );
+	//int flTarget = 5;
 
 	g_iShotsHit[iAttacker]++;
 
@@ -285,17 +306,19 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 
 	ConsumeAmmo( iThis, iOwner, iCost, true );
 
-	SetEntPropFloat( iThis, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + 0.7 );
-	SetEntPropFloat( iThis, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() + 0.7 );
+	float flInterval = AttribHookFloat( 0.7, iThis, "custom_unfortunate_son_speed_mult" );
+
+	SetEntPropFloat( iThis, Prop_Send, "m_flNextPrimaryAttack", GetGameTime() + flInterval );
+	SetEntPropFloat( iThis, Prop_Send, "m_flNextSecondaryAttack", GetGameTime() + flInterval );
 
 	SDKCall( g_sdkSendWeaponAnim, iThis, 181 ); //ACT_VM_SECONDARYATTACK
 	SetEntProp( iThis, Prop_Send, "m_iWeaponMode", 1 );
 	//adding latentcy prevents animation bugs
-	SetEntPropFloat( iThis, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + 0.7 - GetClientAvgLatency( iOwner, NetFlow_Both ) );
+	SetEntPropFloat( iThis, Prop_Send, "m_flTimeWeaponIdle", GetGameTime() + flInterval - GetClientAvgLatency( iOwner, NetFlow_Both ) );
 	
 	EmitSoundToAll( g_szUnderbarrelFireSound, iOwner, SNDCHAN_WEAPON );
 
-	float vecSrc[3], vecEyeAng[3], vecVel[3], vecImpulse[3];
+	/*float vecSrc[3], vecEyeAng[3], vecVel[3], vecImpulse[3];
 	GetClientEyePosition( iOwner, vecSrc );
 
 	float vecForward[3], vecRight[3], vecUp[3];
@@ -311,9 +334,31 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 	AddVectors( vecVel, vecUp, vecVel );
 	AddVectors( vecVel, vecRight, vecVel );
 
+	vecImpulse[0] = 600.0;*/
+
+	float vecEyeAng[3], vecVel[3], vecImpulse[3];
 	vecImpulse[0] = 600.0;
 
+	float vecForward[3], vecRight[3], vecUp[3];
+	GetClientEyeAngles( iOwner, vecEyeAng );
+	GetAngleVectors( vecEyeAng, vecForward, vecRight, vecUp );
+
+	float flVelScaleHorz = AttribHookFloat( 1.0, iThis, "custom_unfortunate_son_vel_horz" );
+	float flVelScaleVert = AttribHookFloat( 1.0, iThis, "custom_unfortunate_son_vel_vert" );
+
+	ScaleVector( vecForward, 960.0 * flVelScaleHorz );
+	ScaleVector( vecUp, 200.0 * flVelScaleVert );
+	AddVectors( vecVel, vecForward, vecVel );
+	AddVectors( vecVel, vecUp, vecVel );
+	AddVectors( vecVel, vecRight, vecVel );
+
+	float angForward[3], vecSrc[3];
+	float vecOffset[3] = { 16.0, 8.0, -6.0 };
+	SDKCall( g_sdkGetProjectileFireSetup, iThis, iOwner, vecOffset, vecSrc, angForward, false, true );
+
 	SDKCall( g_sdkAttackIsCritical, iThis );
+
+	//PrintToServer("%i %i %i", vecSrc[0], vecSrc[1], vecSrc[2]);
 
 	int iProjectile = -1;
 	switch( RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_unfortunate_son" ) ) ) {
@@ -321,22 +366,21 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 			iProjectile = SDKCall( g_sdkPipebombCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
 		case 2:
 			iProjectile = SDKCall( g_sdkBrickCreate, vecSrc, vecEyeAng, vecVel, vecImpulse, iOwner, iThis, 0 );
-			
+		default: {
+			PrintToServer("invalid projectile type for custom alt fire");
+			return MRES_Ignored;
+		}		
 	}
 
-	if( iProjectile == -1 ) {
-		PrintToServer("invalid projectile type for custom alt fire");
-		return MRES_Ignored;
-	}
-		
-	static char szModelString[128];
+	static char szModelString[256];
 	if( AttribHookString( szModelString, sizeof(szModelString), iThis, "custom_unfortunate_son_model_override" ) ) {
-		int result = 0;
-		if( !IsModelPrecached( szModelString ) )
+		static int result = 0;
+		if( result == 0 )
 			result = PrecacheModel( szModelString );
 
-		if( result != 0 )
+		if( result != 0 ) {
 			SetEntityModel( iProjectile, szModelString );
+		}
 		else
 			PrintToServer( "invalid model string for alt fire projectile %s", szModelString );
 	}
@@ -348,6 +392,14 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 	StoreToEntity( iProjectile, 1212, AttribHookFloat( 80.0, iThis, "custom_unfortunate_son_damage" ) ); //damage
 	StoreToEntity( iProjectile, 1216, AttribHookFloat( 120.0, iThis, "custom_unfortunate_son_radius" ) ); //radius
 
+	if( RoundToFloor( AttribHookFloat( 0.0, iThis, "custom_unfortunate_son_no_ramp" ) ) )
+		g_dhGrenadeGetDamageType.HookEntity( Hook_Pre, iProjectile, Hook_GrenadeGetDamageType );
+
+	return MRES_Supercede;
+}
+
+MRESReturn Hook_GrenadeGetDamageType( int iThis, DHookReturn hReturn ) {
+	hReturn.Value = hReturn.Value & DMG_NOCLOSEDISTANCEMOD;
 	return MRES_Supercede;
 }
 
@@ -442,7 +494,7 @@ void Frame_HurtPlayer( int iPlayer ) {
 	eHealEvent.SetInt( "entindex", iPlayer );
 	eHealEvent.SetInt( "amount", iDiff );
 	eHealEvent.FireToClient( iPlayer );
-	CancelCreatedEvent( eHealEvent );
+	eHealEvent.Cancel();
 
 	g_flHurtMe[ iPlayer ] = 0.0;
 }
@@ -586,6 +638,7 @@ MRESReturn Hook_PipebombVPhysCollide( int iThis, DHookParam hParams ) {
 	bool bOldTouched = GetCustomProp( iThis, "m_bTouched" );
 
 	if( bTouched && !bOldTouched ) {
+		//load from gamedata
 		float flDamage = LoadFromEntity( iThis, 1212 );
 		StoreToEntity( iThis, 1212, flDamage * 0.7 );
 		SetCustomProp( iThis, "m_bTouched", true );

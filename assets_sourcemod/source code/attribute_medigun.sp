@@ -15,11 +15,10 @@
 #define MP_CONCEPT_HEALTARGET_CHARGEDEPLOYED 55
 
 //hydro pump
-//REMEMBER TO CHANGE THE PRECALCS (FUCK SOURCEPAWN)
 #define HYDRO_PUMP_HEAL_RATE 30.0
 #define HYDRO_PUMP_AFTERHEAL_RATE 6.0
 #define HYDRO_PUMP_AFTERHEAL_MAX_LENGTH 4.0
-#define HYDRO_PUMP_CHARGE_TIME 35.0
+#define HYDRO_PUMP_CHARGE_TIME 25.0
 static char g_szHydropumpTrackerName[32]	= "Ubercharge";
 static char g_szHydropumpHealSound[]		= "weapons/HPump_Hit.wav";
 static char g_szHydropumpChargedSound[]		= "weapons/HPump_Charged.wav";
@@ -37,7 +36,7 @@ static char g_szHydropumpDropChargeParticles[][] = {
 	"mediflame_charged_death_yellow"
 };
 
-static char g_szPaintballHitSound[] = "weapons/Paintball_Hit.wav";
+static char g_szPaintballHitSound[] = "weapons/paintball_hit_v2.wav";
 static char g_szPaintballHealEffect[][] = {
 	"paintball_hit_red",
 	"paintball_hit_blue",
@@ -114,7 +113,7 @@ public Plugin myinfo =
 	name = "Attribute: Mediguns",
 	author = "Noclue",
 	description = "Atributes for Mediguns.",
-	version = "1.5",
+	version = "1.5.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -604,8 +603,7 @@ MRESReturn Detour_FireTouch( Address aFlame, DHookParam hParams ) {
 }
 
 void FireTouchHeal( Address aFlame, int iCollide, int iOwner, int iWeapon ) {
-	//float flRate = ( HYDRO_PUMP_HEAL_RATE * FLAMETHROWER_FIRING_INTERVAL );
-	float flRate = 1.44; //precalculated
+	float flRate = ( HYDRO_PUMP_HEAL_RATE * FLAMETHROWER_FIRING_INTERVAL );
 	
 	flRate = AttribHookFloat( flRate, iOwner, "mult_medigun_healrate" );
 
@@ -625,9 +623,7 @@ void FireTouchHeal( Address aFlame, int iCollide, int iOwner, int iWeapon ) {
 
 	AddCustomCond( iCollide, TFCC_HYDROPUMPHEAL, iOwner, iWeapon );
 	
-	//precalculated
-	//float flNewDuration = FloatClamp( GetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL ) + ( FLAMETHROWER_FIRING_INTERVAL * 2.5 ), 0.5, HYDRO_PUMP_AFTERHEAL_MAX_LENGTH );
-	float flNewDuration = FloatClamp( GetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL ) + 0.1, 0.5, HYDRO_PUMP_AFTERHEAL_MAX_LENGTH );
+	float flNewDuration = FloatClamp( GetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL ) + ( FLAMETHROWER_FIRING_INTERVAL * 2.5 ), 0.5, HYDRO_PUMP_AFTERHEAL_MAX_LENGTH );
 	float flNewLevel = MaxFloat( HYDRO_PUMP_AFTERHEAL_RATE, GetCustomCondLevel( iCollide, TFCC_HYDROPUMPHEAL ) );
 
 	SetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL, flNewDuration, false );
@@ -642,9 +638,7 @@ void FireTouchHeal( Address aFlame, int iCollide, int iOwner, int iWeapon ) {
 
 #define UBER_REDUCTION_TIME 0.2
 void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
-	//float flChargeAmount = (FLAMETHROWER_FIRING_INTERVAL / HYDRO_PUMP_CHARGE_TIME) * 100.0;
-	float flChargeAmount = 0.1142857143; //precalculated version of above because the compiler does not precalculate float constants (not a constant expression?)
-	//float flChargeAmount = 100.0; //for testing
+	float flChargeAmount = (FLAMETHROWER_FIRING_INTERVAL / HYDRO_PUMP_CHARGE_TIME) * 100.0;
 
 	int iTargetMaxBuffedHealth = SDKCall( g_sdkGetBuffedMaxHealth, GetSharedFromPlayer( iTarget ) );
 	if( GetClientHealth( iTarget ) >= RoundToFloor( iTargetMaxBuffedHealth * 0.95 ) )
@@ -898,7 +892,7 @@ void Frame_CreatePaintballFx( DataPack pack ) {
 	ActivateEntity( iEmitter );
 	AcceptEntityInput( iEmitter, "Start" );
 
-	CreateTimer( 1.0, Timer_RemovePaintballHealFX, EntRefToEntIndex( iEmitter ), TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( 1.0, Timer_RemovePaintballHealFX, EntIndexToEntRef( iEmitter ), TIMER_FLAG_NO_MAPCHANGE );
 }
 
 Action Timer_RemovePaintballHealFX( Handle hTimer, int iParticle ) {

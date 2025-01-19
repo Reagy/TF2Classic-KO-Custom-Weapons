@@ -305,10 +305,6 @@ MRESReturn Hook_FinishUpgrade( int iThis ) {
 //called when a building is picked up
 MRESReturn Hook_MakeCarry( int iThis ) {
 	int iType = 	GetEntProp( iThis, Prop_Send, "m_iObjectType" );
-	int iMode =	GetEntProp( iThis, Prop_Send, "m_iObjectMode" );
-
-	int iModel = g_iBuildingBlueprints[ iType ][ iMode ];
-	SetEntProp( iThis, Prop_Send, "m_nModelIndexOverrides", iModel, 4, 0 );
 
 	int iPlayer = GetEntPropEnt( iThis, Prop_Send, "m_hBuilder" );
 	if( iType == OBJ_SENTRYGUN && g_iBuildingTypes[ iPlayer ][ iType ] == SENTRY_MINI )
@@ -481,6 +477,9 @@ bool IsBuildingMini( int iBuilding ) {
 
 void UpdateBuilding( int iBuilding, bool bHeal = false ) {
 	int iPlayer = GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" );
+	if( !IsValidPlayer(iPlayer) )
+		return;
+
 	int iType = GetEntProp( iBuilding, Prop_Send, "m_iObjectType" );
 
 	UpdateBuildingHealth( iPlayer, iBuilding, bHeal );
@@ -543,6 +542,8 @@ void UpdateBuildingCost( int iPlayer, int iBuilding, int iType ) {
 
 void SetBuildingModel( int iBuilding, bool bIsUpgrading ) {
 	int iBuilder =	GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" );
+	if( !IsValidPlayer(iBuilder) )
+		return;
 	int iType = 	GetEntProp( iBuilding, Prop_Send, "m_iObjectType");
 	int iLevel =	GetEntProp( iBuilding, Prop_Send, "m_iUpgradeLevel" );
 
