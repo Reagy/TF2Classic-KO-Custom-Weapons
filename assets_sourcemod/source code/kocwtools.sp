@@ -60,12 +60,14 @@ Handle g_sdkStopHealing;
 Handle g_sdkPlayerHealedOther;
 Handle g_sdkPlayerLeachedHealth;
 
+int g_iMiniCritOffset = -1;
+
 public Plugin myinfo =
 {
 	name = "KOCW Tools",
 	author = "Noclue",
 	description = "Standard functions for custom weapons.",
-	version = "1.8",
+	version = "1.9",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -315,6 +317,8 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
 	g_sdkHealTimed = EndPrepSDKCallSafe( "CTFPlayerShared::HealTimed" );
+
+	g_iMiniCritOffset = GameConfGetOffsetSafe( hGameConf, "CTFPlayer::m_bMiniCrit" );
 
 	delete hGameConf;
 
@@ -749,9 +753,7 @@ MRESReturn Detour_ApplyOnDamageModifyRulesPost( Address aThis, DHookReturn hRetu
 
 	if( tfInfo.iCritType == CT_MINI ) {
 		tfInfo.iFlags = tfInfo.iFlags & ~( 1 << 20 );
-		//todo: move to gamedata
-		StoreToEntity( iTarget, 6049, 1, NumberType_Int8 ); //6248?
-		StoreToEntity( iTarget, 6502, 1, NumberType_Int32 ); //6252?
+		StoreToEntity( iTarget, g_iMiniCritOffset, 1, NumberType_Int8 );
 	}
 
 	return MRES_Handled;

@@ -73,10 +73,7 @@ Handle		g_sdkGetBuffedMaxHealth;
 Handle		g_sdkSpeakIfAllowed;
 
 int 		g_iRefEHandleOffset = -1;
-int 		g_iFlameBurnedVectorOffset = -1;
 int 		g_iFlameOwnerOffset = -1;
-int 		g_iCUtlVectorSizeOffset = -1;
-//int g_iHealerVecOffset = -1;
 
 PlayerFlags 	g_pfIsPlayingSound;
 float 		g_flHealSoundEndTime[MAXPLAYERS+1] = { 0.0, ... };
@@ -192,10 +189,8 @@ public void OnPluginStart() {
 	g_dtPaintballRifleHitAlly.Enable( Hook_Post, Detour_PaintballRifleHitAlly );
 
 	g_iRefEHandleOffset = GameConfGetOffsetSafe( hGameConf, "CBaseEntity::m_RefEHandle" );
-	//g_iHealerVecOffset = GameConfGetOffsetSafe( hGameConf, "CTFPlayerShared::m_vecHealers" );
-	g_iFlameBurnedVectorOffset = GameConfGetOffsetSafe( hGameConf, "CTFFlameEntity::m_hEntitiesBurnt" );
 	g_iFlameOwnerOffset = GameConfGetOffsetSafe( hGameConf, "CTFFlameEntity::m_hOwner" );
-	g_iCUtlVectorSizeOffset = GameConfGetOffsetSafe( hGameConf, "CUtlVector::m_Size" );
+
 	g_pCTFGameRules = GameConfGetAddress( hGameConf, "CTFGameRules" );
 	g_iSetupOffset = FindSendPropInfo( "CTFGameRulesProxy", "m_bInSetup" );
 
@@ -604,10 +599,7 @@ MRESReturn Detour_FireTouch( Address aFlame, DHookParam hParams ) {
 }
 
 void FireTouchHeal( Address aFlame, int iCollide, int iOwner, int iWeapon ) {
-	//float flRate = ( HYDRO_PUMP_HEAL_RATE * FLAMETHROWER_FIRING_INTERVAL );
-	float flRate = 1.44; //precalculated
-	
-	flRate = AttribHookFloat( flRate, iOwner, "mult_medigun_healrate" );
+	float flRate = AttribHookFloat( HYDRO_PUMP_HEAL_RATE * FLAMETHROWER_FIRING_INTERVAL, iOwner, "mult_medigun_healrate" );
 
 	if( g_iMedigunCritBoostVal ) {
 		if( g_iMedigunCritBoostVal == 2 && IsPlayerCritBoosted( iOwner ) )
@@ -632,18 +624,11 @@ void FireTouchHeal( Address aFlame, int iCollide, int iOwner, int iWeapon ) {
 
 	SetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL, flNewDuration, false );
 	SetCustomCondLevel( iCollide, TFCC_HYDROPUMPHEAL, flNewLevel );
-
-	//this appends to the flame's internal list that keeps track of who it has hit
-	SDKCall( g_sdkAddFlameTouchList, 
-		aFlame + view_as<Address>( g_iFlameBurnedVectorOffset ),
-		LoadFromAddressOffset( aFlame, g_iFlameBurnedVectorOffset + g_iCUtlVectorSizeOffset ),
-		LoadFromEntity( iCollide, g_iRefEHandleOffset ) );
 }
 
 #define UBER_REDUCTION_TIME 0.2
 void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
-	//float flChargeAmount = (FLAMETHROWER_FIRING_INTERVAL / HYDRO_PUMP_CHARGE_TIME) * 100.0;
-	float flChargeAmount = 0.1142857143; //precalculated version of above because the compiler does not precalculate float constants (not a constant expression?)
+	float flChargeAmount = (FLAMETHROWER_FIRING_INTERVAL / HYDRO_PUMP_CHARGE_TIME) * 100.0;
 	//float flChargeAmount = 100.0; //for testing
 
 	int iTargetMaxBuffedHealth = SDKCall( g_sdkGetBuffedMaxHealth, GetSharedFromPlayer( iTarget ) );

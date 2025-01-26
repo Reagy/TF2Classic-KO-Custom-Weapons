@@ -15,8 +15,9 @@
 
 DynamicDetour hCheckJumpButton;
 
+int g_iMovementTFPlayerOffset = -1;
+
 float g_flDamageBuffer[ MAXPLAYERS + 1 ] = { 0.0, ... };
-//bool g_bPlayerJumpaction[ MAXPLAYERS + 1 ] = { false, ... };
 PlayerFlags g_pfJumpaction;
 
 public Plugin myinfo = {
@@ -30,8 +31,10 @@ public Plugin myinfo = {
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
-	hCheckJumpButton = DynamicDetour.FromConf( hGameConf, "CTFGameMovement::CheckJumpButton" );
+	hCheckJumpButton = DynamicDetourFromConfSafe( hGameConf, "CTFGameMovement::CheckJumpButton" );
 	hCheckJumpButton.Enable( Hook_Post, Detour_CheckJumpButton );
+
+	g_iMovementTFPlayerOffset = GameConfGetOffsetSafe( hGameConf, "CTFGameMovement::m_pTFPlayer" );
 
 	delete hGameConf;
 
@@ -72,7 +75,7 @@ public Action Event_PlayerDeath( Event hEvent, const char[] sName, bool bDontBro
 }	
 
 MRESReturn Detour_CheckJumpButton( Address aThis, DHookReturn hReturn ) {
-	int iPlayer = GetEntityFromAddress( DereferencePointer( aThis + address( 3752 ) ) ); //todo: move to gamedata
+	int iPlayer = GetEntityFromAddress( DereferencePointer( aThis + view_as<Address>( g_iMovementTFPlayerOffset ) ) ); //todo: move to gamedata
 	if( iPlayer == -1 )
 		return MRES_Ignored;
 

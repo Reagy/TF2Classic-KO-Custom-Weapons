@@ -700,10 +700,8 @@ void TickToxin( int iPlayer ) {
 	int iDamagePlayer = GetCondSourcePlayer( iPlayer, TFCC_TOXIN );
 	int iDamageWeapon = GetCondSourceWeapon( iPlayer, TFCC_TOXIN );
 
-	if( iDamagePlayer == -1 )
-		iDamagePlayer = 0;
-	if( iDamageWeapon == -1 )
-		iDamageWeapon = 0;
+	iDamagePlayer = iDamagePlayer == -1 ? 0 : iDamagePlayer;
+	iDamageWeapon = iDamageWeapon == -1 ? 0 : iDamageWeapon;
 	
 	//todo: prevent this from applying more toxin
 	SDKHooks_TakeDamage( iPlayer, iDamagePlayer, iDamagePlayer, g_flToxinDamage, DMG_GENERIC | DMG_PHYSGUN, iDamageWeapon, NULL_VECTOR, NULL_VECTOR, false );

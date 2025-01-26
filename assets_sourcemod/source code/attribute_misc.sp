@@ -29,6 +29,7 @@ DynamicDetour g_dtRestart;
 
 DynamicDetour g_dtGrenadeCreate;
 DynamicHook g_dhVPhysCollide;
+DynamicHook g_dhGrenadeGetDamageType;
 //DynamicHook g_dhShouldExplode;
 //DynamicHook g_dhOnTakeDamage;
 
@@ -44,6 +45,9 @@ int g_iScrambleOffset = -1;
 int g_iRestartTimeOffset = -1;
 //int g_iPhysEventEntityOffset = -1;
 int g_iSniperDotOffset = -1;
+int g_iGrenadeDamageOffset = -1;
+int g_iGrenadeRadiusOffset = -1;
+int g_iAttackIsCritOffset = -1;
 
 static char g_szUnderbarrelFireSound[] = "weapons/grenade_launcher_shoot.wav";
 
@@ -72,6 +76,8 @@ public void OnPluginStart() {
 
 	g_dtGrenadeCreate = DynamicDetourFromConfSafe( hGameConf, "CTFGrenadePipebombProjectile::Create" );
 	g_dtGrenadeCreate.Enable( Hook_Post, Detour_CreatePipebomb );
+
+	g_dhGrenadeGetDamageType = DynamicHookFromConfSafe( hGameConf, "CTFBaseGrenade::GetDamageType" );
 
 	StartPrepSDKCall( SDKCall_Static );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGrenadePipebombProjectile::Create" );
@@ -122,6 +128,9 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
 	EndPrepSDKCallSafe( "IPhysicsObject::EnableMotion" );*/
 
+	g_iAttackIsCritOffset = GameConfGetOffsetSafe( hGameConf, "CTFWeaponBase::m_bCurrentAttackIsCrit" );
+	g_iGrenadeDamageOffset = GameConfGetOffsetSafe( hGameConf, "CTFBaseGrenade::m_flDamage" );
+	g_iGrenadeRadiusOffset = GameConfGetOffsetSafe( hGameConf, "CTFBaseGrenade::m_flRadius" );
 	g_iScrambleOffset = GameConfGetOffsetSafe( hGameConf, "CTFGameRules::m_bScrambleTeams" );
 	g_iRestartTimeOffset = GameConfGetOffsetSafe( hGameConf, "CTFGameRules::m_flMapResetTime" );
 	g_iSniperDotOffset = GameConfGetOffsetSafe( hGameConf, "CTFSniperRifle::m_hSniperDot" );
@@ -338,12 +347,10 @@ MRESReturn Hook_UnfortunateSonAltFire( int iThis ) {
 			PrintToServer( "invalid model string for alt fire projectile %s", szModelString );
 	}
 
-	//todo: move to gamedata
-	SetEntProp( iProjectile, Prop_Send, "m_bCritical", LoadFromEntity( iThis, 1566, NumberType_Int8 ) );
+	SetEntProp( iProjectile, Prop_Send, "m_bCritical", LoadFromEntity( iThis, g_iAttackIsCritOffset, NumberType_Int8 ) );
 
-	//todo: move to gamedata
-	StoreToEntity( iProjectile, 1212, AttribHookFloat( 80.0, iThis, "custom_unfortunate_son_damage" ) ); //damage
-	StoreToEntity( iProjectile, 1216, AttribHookFloat( 120.0, iThis, "custom_unfortunate_son_radius" ) ); //radius
+	StoreToEntity( iProjectile, g_iGrenadeDamageOffset, AttribHookFloat( 80.0, iThis, "custom_unfortunate_son_damage" ) ); //damage
+	StoreToEntity( iProjectile, g_iGrenadeRadiusOffset, AttribHookFloat( 120.0, iThis, "custom_unfortunate_son_radius" ) ); //radius
 
 	return MRES_Supercede;
 }
