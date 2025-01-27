@@ -245,6 +245,11 @@
 			{
 				"linux"		"1392"
 			}
+			
+			"CTFGameMovement::m_pTFPlayer"
+			{
+				"linux"		"3752"
+			}
             
             //buildings
             
@@ -1592,6 +1597,16 @@
 				"linux"		"@_ZN15CEconItemSchema17GetItemDefinitionEi"
 			}
 			
+			"CAttributeManager::AttribHookValue<float>"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CAttributeManager15AttribHookValueIfEET_S1_PKcPK11CBaseEntity"
+			}
+			"CAttributeManager::AttribHookValue<int>"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CAttributeManager15AttribHookValueIiEET_S1_PKcPK11CBaseEntity"
+			}
 			"CAttributeManager::AttribHookValue<string_t>"
 			{
 				"library"	"server"

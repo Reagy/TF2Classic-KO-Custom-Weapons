@@ -12,6 +12,9 @@ DynamicHook g_dhWantsLagCompensation;
 
 //inventory
 Handle g_sdkApplyAttributeFloat;
+Handle g_sdkAttribHookFloat;
+Handle g_sdkAttribHookInt;
+Handle g_sdkAttribHookString;
 Handle g_sdkIterateAttributes;
 
 Handle g_sdkGetEntitySlot;
@@ -153,6 +156,22 @@ public void OnPluginStart() {
 	/*
 		INVENTORY FUNCTIONS
 	*/
+
+	StartPrepSDKCall( SDKCall_Static );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAttributeManager::AttribHookValue<float>" );
+	PrepSDKCall_SetReturnInfo( SDKType_Float, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
+	g_sdkAttribHookFloat = EndPrepSDKCallSafe( "CAttributeManager::AttribHookValue<float>" );
+
+	StartPrepSDKCall( SDKCall_Static );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAttributeManager::AttribHookValue<int>" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
+	g_sdkAttribHookInt = EndPrepSDKCallSafe( "CAttributeManager::AttribHookValue<int>" );
 
 	//CAttributeManager::ApplyAttributeFloat( float flValue, const CBaseEntity *pEntity, string_t strAttributeClass )
 	StartPrepSDKCall( SDKCall_Raw );
@@ -490,7 +509,7 @@ public any Native_AllocPooledString( Handle hPlugin, int iParams ) {
 }
 
 //thanks tf2attributes, never would have figured this black magic out in a million years
-stock Address AllocPooledString( const char[] sValue ) {
+Address AllocPooledString( const char[] sValue ) {
 	Address aValue;
 	if ( g_smAllocPooledStringCache.GetValue( sValue, aValue ) ) {
 		return aValue;
@@ -504,24 +523,14 @@ stock Address AllocPooledString( const char[] sValue ) {
 	if ( iOffset <= 0 ) {
 		return Address_Null;
 	}
-	Address pOrig = address( GetEntData( iEntity, iOffset ) );
+	Address pOrig = view_as<Address>(GetEntData( iEntity, iOffset ));
 	DispatchKeyValue( iEntity, "targetname", sValue );
-	aValue = address( GetEntData( iEntity, iOffset ) );
+	aValue = view_as<Address>(GetEntData( iEntity, iOffset ));
 	SetEntData( iEntity, iOffset, pOrig );
 	
 	g_smAllocPooledStringCache.SetValue( sValue, aValue );
 	return aValue;
 }
-
-/*
-	ATTRIBUTE FLOAT FUNCTIONS
-
-	AttribHookValue is the function internally used to get float attribute data.
-	It simply locates the AttributeManager of the provided entity and calls it's ApplyAttributeFloat/ApplyAttributeString function.
-	The function is a template function, and every version except the string_t version was inlined by the compiler, so it's behavior has to be recreated manually.
-*/
-
-//todo: these appear to no longer be inlined
 
 //native float AttribHookFloat( float flValue, int iEntity, const char[] sAttributeClass );
 public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
@@ -530,31 +539,45 @@ public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
 	if( !IsValidEdict( iEntity ) )
 		return flValue;
 
-	int iManagerOffset = GetEntSendPropOffs( iEntity, "m_AttributeManager", true );
-	if( iManagerOffset == -1 )
+	//tired of trying to scan sentry guns and crashing the server
+	if( !HasEntProp( iEntity, Prop_Send, "m_AttributeManager" ) )
 		return flValue;
 	
 	int iBuffer;
 	GetNativeStringLength( 3, iBuffer );
-	char[] sAttributeClass = new char[ ++iBuffer ];
-	GetNativeString( 3, sAttributeClass, iBuffer );
+	char[] szAttributeClass = new char[ ++iBuffer ];
+	GetNativeString( 3, szAttributeClass, iBuffer );
 
-	Address aStringAlloc = AllocPooledString( sAttributeClass ); //string needs to be allocated before the function will recognize it
-	Address aManager = GetEntityAddress( iEntity ) + view_as<Address>( iManagerOffset );
-		
-	return SDKCall( g_sdkApplyAttributeFloat, aManager, flValue, iEntity, aStringAlloc );
+	return SDKCall( g_sdkAttribHookFloat, flValue, szAttributeClass, iEntity );
 }
 
+public any Native_AttribHookInt( Handle hPlugin, int iParams ) {
+	float iValue = GetNativeCell( 1 );
+	int iEntity = GetNativeCell( 2 );
+	if( !IsValidEdict( iEntity ) )
+		return iValue;
 
-/*
-	i tried for several hours to try and read string attributes like a normal person but it always had bizarre issues i couldn't figure out
-	so we're down to the most basic level and manually scanning the attribute list
-	honestly this was a hail-mary last resort so i'm glad it works
-	this will probably break if you try to scan a non-string attribute and it can't be used on the player but whatever it works
-*/
+	//tired of trying to scan sentry guns and crashing the server
+	if( !HasEntProp( iEntity, Prop_Send, "m_AttributeManager" ) )
+		return iValue;
+	
+	int iBuffer;
+	GetNativeStringLength( 3, iBuffer );
+	char[] szAttributeClass = new char[ ++iBuffer ];
+	GetNativeString( 3, szAttributeClass, iBuffer );
+
+	return SDKCall( g_sdkAttribHookInt, iValue, szAttributeClass, iEntity );
+}
+
+//gcc 14 acutally fucked up AttribHookValue<string_t> so badly it can't be called from sdktools
+//because it returns in the EAX register
+
+public any Native_AttribHookString( Handle hPlugin, int iParams ) {
+
+}
 
 //native int AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
-public any Native_AttribHookString( Handle hPlugin, int iParams ) {
+/*public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 	int iEntity = GetNativeCell( 3 );
 	
 	int iBufferLength;
@@ -584,7 +607,7 @@ public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 
 	SetNativeString( 1, szValue, GetNativeCell( 2 ) );
 	return 1;
-}
+}*/
 
 public any Native_GetEntitySlot( Handle hPlugin, int iParams ) {
 	int iEntity = GetNativeCell( 1 );
