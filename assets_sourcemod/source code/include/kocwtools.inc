@@ -12,7 +12,7 @@
 #define address(%1) view_as<Address>(%1)
 
 native float 	AttribHookFloat( float fValue, int iEntity, const char[] sAttributeClass );
-native int	AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
+native bool	AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
 native int	AttribHookInt( int iValue, int iEntity, const char[] szAttributeClass )
 
 native float	GetMedigunCharge( int iPlayer );

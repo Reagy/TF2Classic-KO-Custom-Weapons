@@ -1607,11 +1607,6 @@
 				"library"	"server"
 				"linux"		"@_ZN17CAttributeManager15AttribHookValueIiEET_S1_PKcPK11CBaseEntity"
 			}
-			"CAttributeManager::AttribHookValue<string_t>"
-			{
-				"library"	"server"
-				"linux"		"@_ZN17CAttributeManager15AttribHookValueI8string_tEET_S2_PKcPK11CBaseEntity"
-			}
 		
             //other
         
@@ -1785,6 +1780,17 @@
 			{
 				"library"	"server"
 				"linux"		"@_Z21MapEntity_ParseEntityRP11CBaseEntityPKcP16IMapEntityFilter"
+			}
+			
+			"CAttributeManager::ApplyAttributeString"
+			{
+				"library"	"server"
+				"linux"		"@_ZN17CAttributeManager20ApplyAttributeStringE8string_tPK11CBaseEntityS0_"
+			}
+			"CAttributeContainer::ApplyAttributeString"
+			{
+				"library"	"server"
+				"linux"		"@_ZN19CAttributeContainer20ApplyAttributeStringE8string_tPK11CBaseEntityS0_"
 			}
 		}
     }

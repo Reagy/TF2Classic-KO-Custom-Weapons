@@ -50,15 +50,18 @@ public Action Event_Inventory( Event hEvent, const char[] sName, bool bDontBroad
 
 	if( IsValidPlayer( iPlayer ) ) {
 		float flVal = AttribHookFloat( 0.0, iPlayer, "custom_jumpaction" );
-		PrintToServer("%f", flVal);
 
-		static char szTest[64] = "";
-		int wpn = GetEntPropEnt(iPlayer,Prop_Send,"m_hActiveWeapon");
+		
 		static char szBuffer[64];
-		GetEntityClassname(wpn, szBuffer, sizeof(szBuffer));
+		int wpn = GetEntPropEnt( iPlayer, Prop_Send, "m_hActiveWeapon" );
+		GetEntityClassname( wpn, szBuffer, sizeof(szBuffer) );
 		PrintToServer(szBuffer);
+		
 
+		char szTest[64] = "";
+		//AttribHookString( szTest, sizeof(szTest), wpn, "custom_projectile_model" );
 		AttribHookString( szTest, sizeof(szTest), wpn, "custom_projectile_model" );
+		PrintToServer("output %s", szTest);
 
 		if( flVal != 0.0 ) {
 			Tracker_Create( iPlayer, szJumpKeyName, false );

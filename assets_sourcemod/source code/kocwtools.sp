@@ -11,10 +11,10 @@
 DynamicHook g_dhWantsLagCompensation;
 
 //inventory
-Handle g_sdkApplyAttributeFloat;
+Handle g_sdkManagerApplyAttributeString;
+Handle g_sdkContainerApplyAttributeString;
 Handle g_sdkAttribHookFloat;
 Handle g_sdkAttribHookInt;
-Handle g_sdkAttribHookString;
 Handle g_sdkIterateAttributes;
 
 Handle g_sdkGetEntitySlot;
@@ -85,6 +85,7 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 
 	//inventory functions
 	CreateNative( "AttribHookFloat", Native_AttribHookFloat );
+	CreateNative( "AttribHookInt", Native_AttribHookInt );
 	CreateNative( "AttribHookString", Native_AttribHookString );
 
 	CreateNative( "GetMedigunCharge", Native_GetMedigunCharge );
@@ -173,14 +174,28 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
 	g_sdkAttribHookInt = EndPrepSDKCallSafe( "CAttributeManager::AttribHookValue<int>" );
 
-	//CAttributeManager::ApplyAttributeFloat( float flValue, const CBaseEntity *pEntity, string_t strAttributeClass )
-	StartPrepSDKCall( SDKCall_Raw );
-	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CAttributeManager::ApplyAttributeFloat" );
-	PrepSDKCall_SetReturnInfo(SDKType_Float, SDKPass_Plain);
-	PrepSDKCall_AddParameter(SDKType_Float, SDKPass_Plain); //flvalue
-	PrepSDKCall_AddParameter(SDKType_CBaseEntity, SDKPass_Pointer); //pentity
-	PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain); //strattributeclass
-	g_sdkApplyAttributeFloat = EndPrepSDKCallSafe( "CAttributeManager::ApplyAttributeFloat" );
+	//set up as a static because the compiler absolutely mangled the stack
+	//CAttributeManager::ApplyAttributeString( string_t strValue, const CBaseEntity *pEntity, string_t strAttributeClass )
+	StartPrepSDKCall( SDKCall_Static );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAttributeManager::ApplyAttributeString" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer ); //stack bullshit
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //this
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //strin
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer ); //pentity
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //strattrib
+	g_sdkManagerApplyAttributeString = EndPrepSDKCallSafe( "CAttributeManager::ApplyAttributeString" );
+
+	//CAttributeContainer::ApplyAttributeString( string_t strValue, const CBaseEntity *pEntity, string_t strAttributeClass )
+	StartPrepSDKCall( SDKCall_Static );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAttributeContainer::ApplyAttributeString" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer ); //stack bullshit
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //this
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //strin
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer ); //pentity
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //strattrib
+	g_sdkContainerApplyAttributeString = EndPrepSDKCallSafe( "CAttributeContainer::ApplyAttributeString" );
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CEconItemView::IterateAttributes" );
@@ -570,10 +585,34 @@ public any Native_AttribHookInt( Handle hPlugin, int iParams ) {
 }
 
 //gcc 14 acutally fucked up AttribHookValue<string_t> so badly it can't be called from sdktools
-//because it returns in the EAX register
 
+//native bool AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
 public any Native_AttribHookString( Handle hPlugin, int iParams ) {
+	int iEntity = GetNativeCell( 3 );
+	if( !IsValidEdict( iEntity ) )
+		return false;
 
+	int iAttribOffset = GetEntSendPropOffs( iEntity, "m_AttributeManager", true );
+	if( iAttribOffset == -1 )
+		return false;
+
+	int iBuffer;
+	GetNativeStringLength( 4, iBuffer );
+	char[] szAttributeClass = new char[ ++iBuffer ];
+	GetNativeString( 4, szAttributeClass, iBuffer );
+	
+	Address aInputString = AllocPooledString( "" );
+	Address aPooledAttribute = AllocPooledString( szAttributeClass );
+
+	Address aAttributePointer = GetEntityAddress(iEntity) + view_as<Address>(iAttribOffset);
+
+	Address aLiterallyNothing;
+	Address aResult = SDKCall( IsValidPlayer(iEntity) ? g_sdkManagerApplyAttributeString : g_sdkContainerApplyAttributeString, aLiterallyNothing, aAttributePointer, aInputString, iEntity, aPooledAttribute );
+
+	static char szBuffer[256];
+	LoadStringFromAddress( DereferencePointer(aResult), szBuffer, sizeof(szBuffer) );
+	SetNativeString( 1, szBuffer, GetNativeCell( 2 ) );
+	return true;
 }
 
 //native int AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
