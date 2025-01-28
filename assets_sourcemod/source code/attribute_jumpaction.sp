@@ -8,7 +8,7 @@
 #include <dhooks>
 #include <hudframework>
 
-//todo: convert to string var
+//convert to convars?
 #define MAX_JUMPS 10.0
 #define DAMAGE_TO_JUMP 40.0
 #define JUMPS_PER_KILL 2.0
@@ -49,21 +49,7 @@ public Action Event_Inventory( Event hEvent, const char[] sName, bool bDontBroad
 	iPlayer = GetClientOfUserId( iPlayer );
 
 	if( IsValidPlayer( iPlayer ) ) {
-		float flVal = AttribHookFloat( 0.0, iPlayer, "custom_jumpaction" );
-
-		
-		static char szBuffer[64];
-		int wpn = GetEntPropEnt( iPlayer, Prop_Send, "m_hActiveWeapon" );
-		GetEntityClassname( wpn, szBuffer, sizeof(szBuffer) );
-		PrintToServer(szBuffer);
-		
-
-		char szTest[64] = "";
-		//AttribHookString( szTest, sizeof(szTest), wpn, "custom_projectile_model" );
-		AttribHookString( szTest, sizeof(szTest), wpn, "custom_projectile_model" );
-		PrintToServer("output %s", szTest);
-
-		if( flVal != 0.0 ) {
+		if( AttribHookInt( 0, iPlayer, "custom_jumpaction" ) ) {
 			Tracker_Create( iPlayer, szJumpKeyName, false );
 			Tracker_SetFlags( iPlayer, szJumpKeyName, RTF_CLEARONSPAWN );
 			Tracker_SetMax( iPlayer, szJumpKeyName, MAX_JUMPS );
