@@ -1224,6 +1224,32 @@
 				"this"			"entity"
 				"return"		"void"
 			}
+			
+			"CTFFlameEntity::FlameThink"
+			{
+				"signature"		"CTFFlameEntity::FlameThink"
+				"callconv"		"thiscall"
+				"this"			"address"
+				"return"		"bool"
+			}
+			"CTFFlameEntity::CheckCollision"
+			{
+				"signature"		"CTFFlameEntity::CheckCollision"
+				"callconv"		"thiscall"
+				"this"			"address"
+				"return"		"void"
+				"arguments"
+				{
+					"other"
+					{
+						"type"	"cbaseentity"
+					}
+					"dontcare"
+					{
+						"type"	"int"
+					}
+				}
+			}
 			"CTFFlameEntity::OnCollide"
 			{
 				"signature"		"CTFFlameEntity::OnCollide"
@@ -1576,6 +1602,16 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN14CTFFlameEntity21OnCollideWithTeammateEP9CTFPlayer"
+			}
+			"CTFFlameEntity::FlameThink"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CTFFlameEntity10FlameThinkEv"
+			}
+			"CTFFlameEntity::CheckCollision"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CTFFlameEntity14CheckCollisionEP11CBaseEntityPb"
 			}
 			
             //econ

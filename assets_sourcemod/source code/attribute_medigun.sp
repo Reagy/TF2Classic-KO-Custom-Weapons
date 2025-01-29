@@ -9,13 +9,13 @@
 #include <condhandler>
 #include <hudframework>
 #include <midhook>
+#include <sm_anymap>
 
 #define MP_CONCEPT_MEDIC_CHARGEREADY 36
 #define MP_CONCEPT_MEDIC_CHARGEDEPLOYED 38
 #define MP_CONCEPT_HEALTARGET_CHARGEDEPLOYED 55
 
 //hydro pump
-//REMEMBER TO CHANGE THE PRECALCS (FUCK SOURCEPAWN)
 #define HYDRO_PUMP_HEAL_RATE 30.0
 #define HYDRO_PUMP_AFTERHEAL_RATE 6.0
 #define HYDRO_PUMP_AFTERHEAL_MAX_LENGTH 4.0
@@ -45,6 +45,8 @@ static char g_szPaintballHealEffect[][] = {
 	"paintball_hit_yellow"
 };
 
+AnyMap g_amFlameTouchMap;
+
 #define FLAMETHROWER_FIRING_INTERVAL 0.04
 
 //guardian angel
@@ -68,11 +70,9 @@ DynamicHook	g_dhWeaponDeploy;
 
 MidHook		g_mhPaintballUberFix;
 
-Handle		g_sdkAddFlameTouchList;
 Handle		g_sdkGetBuffedMaxHealth;
 Handle		g_sdkSpeakIfAllowed;
 
-int 		g_iRefEHandleOffset = -1;
 int 		g_iFlameOwnerOffset = -1;
 
 PlayerFlags 	g_pfIsPlayingSound;
@@ -111,7 +111,7 @@ public Plugin myinfo =
 	name = "Attribute: Mediguns",
 	author = "Noclue",
 	description = "Atributes for Mediguns.",
-	version = "1.5",
+	version = "1.5.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -151,13 +151,6 @@ public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
 	StartPrepSDKCall( SDKCall_Raw );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "m_hEntitiesBurnt::InsertBefore" );
-	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_ByRef );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
-	g_sdkAddFlameTouchList = EndPrepSDKCallSafe( "m_hEntitiesBurnt::InsertBefore" );
-
-	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFPlayerShared::GetBuffedMaxHealth" );
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	g_sdkGetBuffedMaxHealth = EndPrepSDKCallSafe( "CTFPlayerShared::GetBuffedMaxHealth" );
@@ -188,7 +181,6 @@ public void OnPluginStart() {
 	g_dtPaintballRifleHitAlly = DynamicDetourFromConfSafe( hGameConf, "CTFPaintballRifle::HitAlly" );
 	g_dtPaintballRifleHitAlly.Enable( Hook_Post, Detour_PaintballRifleHitAlly );
 
-	g_iRefEHandleOffset = GameConfGetOffsetSafe( hGameConf, "CBaseEntity::m_RefEHandle" );
 	g_iFlameOwnerOffset = GameConfGetOffsetSafe( hGameConf, "CTFFlameEntity::m_hOwner" );
 
 	g_pCTFGameRules = GameConfGetAddress( hGameConf, "CTFGameRules" );
@@ -249,6 +241,8 @@ public void OnMapStart() {
 
 	g_pfIsPlayingSound.SetDirect( 0, 0 );
 	g_pfIsPlayingSound.SetDirect( 1, 0 );
+
+	g_amFlameTouchMap = new AnyMap();
 
 	for( int i = 1; i < MAXPLAYERS+1; i++ ) {
 		g_flHealSoundEndTime[i] = 0.0;
@@ -312,7 +306,7 @@ void HandleUberStacks( int iOwner ) {
 }
 
 int GetCustomMedigunType( int iTarget ) {
-	return RoundToFloor( AttribHookFloat( 0.0, iTarget, "custom_medigun_type" ) );
+	return AttribHookInt( 0, iTarget, "custom_medigun_type" );
 }
 
 public void OnEntityCreated( int iThis, const char[] szClassname ) {
@@ -581,6 +575,59 @@ MRESReturn Detour_SimulateFlamesPost( int iFlamethrower ) {
 	return MRES_Handled;
 }
 
+void SetFlameHasTouchedEnt( Address aFlame, int iEntity ) {
+	AnyMap amTouchedMap;
+	if( g_amFlameTouchMap.GetValue( aFlame, amTouchedMap ) ) {
+		amTouchedMap.SetValue( iEntity, true );
+		return;
+	}
+
+	FlameCreateTouchMap( aFlame );
+	SetFlameHasTouchedEnt( aFlame, iEntity );
+}
+bool FlameHasTouchedEnt( Address aFlame, int iEntity ) {
+	AnyMap amTouchedMap;
+	if( g_amFlameTouchMap.GetValue( aFlame, amTouchedMap ) )
+		return amTouchedMap.ContainsKey( iEntity );
+
+	FlameCreateTouchMap( aFlame );
+	return false;
+}
+void FlameCreateTouchMap( Address aFlame ) {
+	if( g_amFlameTouchMap.ContainsKey( aFlame ) )
+		return;
+
+	AnyMap amTouchedMap = new AnyMap();
+	g_amFlameTouchMap.SetValue( aFlame, amTouchedMap );
+}
+
+//literally do not care about anything in this function except knowing when the flame stops existing
+MRESReturn Detour_FlameThink( Address aFlame, DHookReturn hReturn, DHookParam hParams ) {
+	 bool bReturn = hReturn.Value;
+	 if( bReturn )
+	 	return MRES_Ignored;
+
+	int iOwner = LoadEntityHandleFromAddress( aFlame + view_as<Address>( g_iFlameOwnerOffset ) );
+	if( !IsValidPlayer( iOwner ) )
+		return MRES_Ignored;
+
+	int iWeapon = GetEntityInSlot( iOwner, 1 );
+	if( GetCustomMedigunType( iWeapon ) != CMEDI_FLAME )
+		return MRES_Ignored;
+
+	AnyMap amTouchedMap;
+	if( g_amFlameTouchMap.GetValue( aFlame, amTouchedMap ) )
+		CloseHandle(amTouchedMap);
+
+	return MRES_Handled;
+}
+
+MRESReturn Detour_FireCheckCollision( Address aFlame, DHookParam hParams ) {
+	int iEntity = hParams.Get( 1 );
+	if( FlameHasTouchedEnt(aFlame, iEntity) )
+		return MRES_Supercede;
+}
+
 //apparently tf2c flame particles aren't even derived from cbaseentity so they're passed by address instead
 MRESReturn Detour_FireTouch( Address aFlame, DHookParam hParams ) {
 	int iTarget = hParams.Get( 1 );
@@ -617,23 +664,24 @@ void FireTouchHeal( Address aFlame, int iCollide, int iOwner, int iWeapon ) {
 
 	AddCustomCond( iCollide, TFCC_HYDROPUMPHEAL, iOwner, iWeapon );
 	
-	//precalculated
-	//float flNewDuration = FloatClamp( GetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL ) + ( FLAMETHROWER_FIRING_INTERVAL * 2.5 ), 0.5, HYDRO_PUMP_AFTERHEAL_MAX_LENGTH );
-	float flNewDuration = FloatClamp( GetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL ) + 0.1, 0.5, HYDRO_PUMP_AFTERHEAL_MAX_LENGTH );
+	float flNewDuration = FloatClamp( GetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL ) + ( FLAMETHROWER_FIRING_INTERVAL * 2.5 ), 0.5, HYDRO_PUMP_AFTERHEAL_MAX_LENGTH );
 	float flNewLevel = MaxFloat( HYDRO_PUMP_AFTERHEAL_RATE, GetCustomCondLevel( iCollide, TFCC_HYDROPUMPHEAL ) );
 
 	SetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL, flNewDuration, false );
 	SetCustomCondLevel( iCollide, TFCC_HYDROPUMPHEAL, flNewLevel );
+
+	SetFlameHasTouchedEnt( aFlame, iCollide );
 }
 
 #define UBER_REDUCTION_TIME 0.2
 void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	float flChargeAmount = (FLAMETHROWER_FIRING_INTERVAL / HYDRO_PUMP_CHARGE_TIME) * 100.0;
-	//float flChargeAmount = 100.0; //for testing
 
 	int iTargetMaxBuffedHealth = SDKCall( g_sdkGetBuffedMaxHealth, GetSharedFromPlayer( iTarget ) );
 	if( GetClientHealth( iTarget ) >= RoundToFloor( iTargetMaxBuffedHealth * 0.95 ) )
 		flChargeAmount *= 0.5;
+
+	//todo: double rate in 4team modes
 
 	bool bIsInSetup;
 	Address g_aCTFGameRules = LoadFromAddress( g_pCTFGameRules, NumberType_Int32 );
@@ -695,8 +743,6 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 	float flMult = alList.Length > 1 ? Pow( 0.9, float( alList.Length ) ) : 1.0;
 	flChargeAmount *= flMult;
 
-	//PrintToServer("%f %i", flChargeAmount, alList.Length);
-
 	float flOldCharge = Tracker_GetValue( iOwner, g_szHydropumpTrackerName );
 	float flNewCharge = flOldCharge + flChargeAmount;
 	if( flOldCharge < 100.0 && flNewCharge >= 100.0 ) {
@@ -706,17 +752,6 @@ void HydroPumpBuildUber( int iOwner, int iTarget, int iWeapon ) {
 
 	Tracker_SetValue( iOwner, g_szHydropumpTrackerName, flNewCharge );
 }
-
-/*MRESReturn Detour_UpdateChargeLevel( int iThis ) {
-	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" );
-	if( iOwner == -1 || GetCustomMedigunType( iOwner ) != CMEDI_FLAME )
-		return MRES_Ignored;
-
-	PrintToServer( "%f", GetEntPropFloat( iThis, Prop_Send, "m_flChargeLevel" ) );
-	SetEntPropFloat( iThis, Prop_Send, "m_flChargeLevel", Tracker_GetValue( iOwner, g_szHydropumpTrackerName ) * 0.01 );
-
-	return MRES_Supercede;
-}*/
 
 void SetFlameHealSoundTime( int iOwner, int iWeapon ) {
 	g_flHealSoundEndTime[ iOwner ] = GetGameTime() + 0.1;
@@ -793,7 +828,7 @@ public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3
 
 		static char szWeaponName[256];
 		GetEntityClassname( iWeapon, szWeaponName, sizeof( szWeaponName ) );
-		if( StrEqual( szWeaponName, "tf_weapon_paintballrifle" ) && AttribHookFloat( 0.0, client, "unimplemented_mod_sniper_no_charge" ) != 0.0 )
+		if( StrEqual( szWeaponName, "tf_weapon_paintballrifle" ) && AttribHookInt( 0, client, "unimplemented_mod_sniper_no_charge" ) )
 			buttons = ( buttons | IN_ATTACK3 ) & ~IN_ATTACK2;
 	}
 
