@@ -88,7 +88,6 @@ enum struct EffectProps {
 
 DynamicHook g_dhTakeHealth;
 DynamicDetour g_dtHealConds;
-DynamicDetour g_dtApplyOnHit;
 DynamicDetour g_dtApplyPushForce;
 DynamicDetour g_dtAirblastPlayer;
 
@@ -150,10 +149,7 @@ public void OnPluginStart() {
 
 	g_dhTakeHealth = DynamicHookFromConfSafe( hGameConf, "CTFPlayer::TakeHealth" );
 	g_dtHealConds = DynamicDetourFromConfSafe( hGameConf, "CTFPlayerShared::HealNegativeConds" );
-	g_dtHealConds.Enable( Hook_Post, Detour_HealNegativeConds );
-
-	g_dtApplyOnHit = DynamicDetourFromConfSafe( hGameConf, "CTFWeaponBase::ApplyOnHitAttributes" );
-	g_dtApplyOnHit.Enable( Hook_Post, Detour_ApplyOnHitAttributes );
+	//g_dtHealConds.Enable( Hook_Post, Detour_HealNegativeConds );
 
 	g_dhOnKill = DynamicHookFromConfSafe( hGameConf, "CTFPlayer::Event_KilledOther" );
 
@@ -530,23 +526,10 @@ MRESReturn Detour_HealNegativeConds( Address aThis, DHookReturn hReturn ) {
 	return MRES_ChangedOverride;
 }
 
-MRESReturn Detour_ApplyOnHitAttributes( int iWeapon, DHookParam hParams ) {
-	if( hParams.IsNull( 1 ) )
-		return MRES_Ignored;
-
-	//int iAttacker = hParams.Get( 1 );
-	int iVictim = hParams.Get( 2 );
-
-	TFDamageInfo tfInfo =  TFDamageInfo( hParams.GetAddress( 3 ) );
-
-	CheckOnHitCustomCond( iVictim, iWeapon, tfInfo );
-
-	return MRES_Handled;
-}
-
 public void OnTakeDamageTF( int iTarget, TFDamageInfo tfDamageInfo ) {
 	//CheckMultDamageAttrib( iTarget, tfInfo );
 	CheckMultDamageAttribCustom( iTarget, tfDamageInfo );
+	CheckOnHitCustomCond( iTarget, tfDamageInfo );
 
 	if( HasCond( iTarget, TFCC_ANGELSHIELD ) )
 		AngelShieldTakeDamage( iTarget, tfDamageInfo );
@@ -566,7 +549,7 @@ void CheckMultDamageAttribCustom( int iTarget, TFDamageInfo tfDamageInfo ) {
 		return;
 
 	static char szAttribute[64];
-	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_resist_customcond" ) == 0 ) {
+	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_resist_customcond" ) ) {
 		return;
 	}
 		
@@ -604,12 +587,14 @@ void CheckMultDamageAttribCustom( int iTarget, TFDamageInfo tfDamageInfo ) {
 	}	
 }*/
 
-void CheckOnHitCustomCond( int iVictim, int iWeapon, TFDamageInfo tfInfo ) {
+void CheckOnHitCustomCond( int iVictim, TFDamageInfo tfInfo ) {
 	if( !IsValidPlayer( iVictim ) )
 		return;
 
+	int iWeapon = tfInfo.iWeapon;
+
 	static char szAttribute[64];
-	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_inflictcustom_onhit" ) == 0 )
+	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_inflictcustom_onhit" ) )
 		return;
 
 	static char szExplode[2][64];
@@ -630,7 +615,7 @@ void CheckOnHitCustomCond( int iVictim, int iWeapon, TFDamageInfo tfInfo ) {
 
 void CheckOnKillCond( int iAttacker, int iWeapon ) {
 	static char szAttribute[64];
-	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_addcond_onkill" ) == 0 )
+	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_addcond_onkill" ) )
 		return;
 
 	static char szExplode[2][64];

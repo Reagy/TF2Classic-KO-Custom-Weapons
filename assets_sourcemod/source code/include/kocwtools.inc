@@ -8,12 +8,12 @@
 #include <stocksoup/memory>
 #include <sdkhooks>
 
-//functional-style typecasting
-#define address(%1) view_as<Address>(%1)
-
 native float 	AttribHookFloat( float fValue, int iEntity, const char[] sAttributeClass );
-native bool	AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
-native int	AttribHookInt( int iValue, int iEntity, const char[] szAttributeClass )
+native bool	AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttributeClass );
+
+stock int AttribHookInt( int iValue, int iEntity, const char[] szAttributeClass ) {
+	return RoundToFloor( AttribHookFloat( float(iValue), iEntity, szAttributeClass ) );
+}
 
 native float	GetMedigunCharge( int iPlayer );
 native int	GetEntityInSlot( int iPlayer, int iSlot );
@@ -329,10 +329,10 @@ stock float SimpleSplineRemapValClamped( float flVal, float flA, float flB, floa
 */
 
 stock any LoadFromAddressOffset( Address aAddress, int iOffset, NumberType eNumberType = NumberType_Int32 ) {
-	return LoadFromAddress( aAddress + address( iOffset ), eNumberType );
+	return LoadFromAddress( aAddress + view_as<Address>( iOffset ), eNumberType );
 }
 stock void StoreToAddressOffset( Address aAddress, int iOffset, any aValue, NumberType eNumberType = NumberType_Int32 ) {
-	StoreToAddress( aAddress + address( iOffset ), aValue, eNumberType );
+	StoreToAddress( aAddress + view_as<Address>( iOffset ), aValue, eNumberType );
 }
 
 stock any LoadFromEntity( int iEntity, int iOffset, NumberType iSize = NumberType_Int32 ) {
@@ -444,70 +444,70 @@ methodmap TFDamageInfo {
 	}
 
 	property int iInflictor {
-		public get() { return LoadEntityHandleFromAddress( address( this ) + address( DMGInfoOffset( DI_INFLICTOR ) ) ); }
-		public set( int iEntity ) { StoreEntityHandleToAddress( address( this ) + address( DMGInfoOffset( DI_INFLICTOR ) ), iEntity ); }
+		public get() { return LoadEntityHandleFromAddress( view_as<Address>( this ) + view_as<Address>( DMGInfoOffset( DI_INFLICTOR ) ) ); }
+		public set( int iEntity ) { StoreEntityHandleToAddress( view_as<Address>( this ) + view_as<Address>( DMGInfoOffset( DI_INFLICTOR ) ), iEntity ); }
 	}
 	property int iAttacker {
-		public get() { return LoadEntityHandleFromAddress( address( this ) + address( DMGInfoOffset( DI_ATTACKER ) ) ); }
-		public set( int iEntity ) { StoreEntityHandleToAddress( address( this ) + address( DMGInfoOffset( DI_ATTACKER ) ), iEntity ); }
+		public get() { return LoadEntityHandleFromAddress( view_as<Address>( this ) + view_as<Address>( DMGInfoOffset( DI_ATTACKER ) ) ); }
+		public set( int iEntity ) { StoreEntityHandleToAddress( view_as<Address>( this ) + view_as<Address>( DMGInfoOffset( DI_ATTACKER ) ), iEntity ); }
 	}
 	property int iWeapon {
-		public get() { return LoadEntityHandleFromAddress( address( this ) + address( DMGInfoOffset( DI_WEAPON ) ) ); }
-		public set( int iEntity ) { StoreEntityHandleToAddress( address( this ) + address( DMGInfoOffset( DI_WEAPON ) ), iEntity ); }
+		public get() { return LoadEntityHandleFromAddress( view_as<Address>( this ) + view_as<Address>( DMGInfoOffset( DI_WEAPON ) ) ); }
+		public set( int iEntity ) { StoreEntityHandleToAddress( view_as<Address>( this ) + view_as<Address>( DMGInfoOffset( DI_WEAPON ) ), iEntity ); }
 	}
 
 	property float flDamage {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ) ); }
-		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGE ), iValue); }
+		public get() { return LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_DAMAGE ) ); }
+		public set( float iValue ) { StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_DAMAGE ), iValue); }
 	}
 	property float flBaseDamage {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE )); }
-		public set( float iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_BASEDAMAGE ), iValue ); }
+		public get() { return LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_BASEDAMAGE )); }
+		public set( float iValue ) { StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_BASEDAMAGE ), iValue ); }
 	}
 
 	property int iFlags {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ) ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGEFLAGS ), iValue ); }
+		public get() { return LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_DAMAGEFLAGS ) ); }
+		public set( int iValue ) { StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_DAMAGEFLAGS ), iValue ); }
 	}
 	property int iCustom {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ) ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_DAMAGECUSTOM ), iValue ); }
+		public get() { return LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_DAMAGECUSTOM ) ); }
+		public set( int iValue ) { StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_DAMAGECUSTOM ), iValue ); }
 	}
 
 	property int iCritType {
-		public get() { return LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ) ); }
-		public set( int iValue ) { StoreToAddressOffset( address( this ), DMGInfoOffset( DI_CRITTYPE ), iValue ); }
+		public get() { return LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_CRITTYPE ) ); }
+		public set( int iValue ) { StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_CRITTYPE ), iValue ); }
 	}
 
 	public void GetDamageForce( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ) );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ) );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ) );
+		flBuffer[0] = LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_FORCEX ) );
+		flBuffer[1] = LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_FORCEY ) );
+		flBuffer[2] = LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_FORCEZ ) );
 	}
 	public void SetDamageForce( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEX ), flX );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEY ), flY );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_FORCEZ ), flZ );
+		StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_FORCEX ), flX );
+		StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_FORCEY ), flY );
+		StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_FORCEZ ), flZ );
 	}
 	public void GetDamageSource( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ) );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ) );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ) );
+		flBuffer[0] = LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_SOURCEX ) );
+		flBuffer[1] = LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_SOURCEY ) );
+		flBuffer[2] = LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_SOURCEZ ) );
 	}
 	public void SetDamageSource( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEX ), flX );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEY ), flY );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_SOURCEZ ), flZ );
+		StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_SOURCEX ), flX );
+		StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_SOURCEY ), flY );
+		StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_SOURCEZ ), flZ );
 	}
 	public void GetDamageReported( float flBuffer[3] ) {
-		flBuffer[0] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ) );
-		flBuffer[1] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ) );
-		flBuffer[2] = LoadFromAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ) );
+		flBuffer[0] = LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_REPORTX ) );
+		flBuffer[1] = LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_REPORTY ) );
+		flBuffer[2] = LoadFromAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_REPORTZ ) );
 	}
 	public void SetDamageReported( float flX, float flY, float flZ ) {
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTX ), flX );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTY ), flY );
-		StoreToAddressOffset( address( this ), DMGInfoOffset( DI_REPORTZ ), flZ );
+		StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_REPORTX ), flX );
+		StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_REPORTY ), flY );
+		StoreToAddressOffset( view_as<Address>( this ), DMGInfoOffset( DI_REPORTZ ), flZ );
 	}
 }
 

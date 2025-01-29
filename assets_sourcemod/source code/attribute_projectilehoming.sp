@@ -43,7 +43,7 @@ public Action OnPlayerRunCmd(int iClient, int& iButtons, int& impulse, float vel
 		return Plugin_Continue;
 
 	int iWeapon = GetEntPropEnt( iClient, Prop_Send, "m_hActiveWeapon" );
-	if( !( iWeapon != -1 && CanThisWeaponHome( iWeapon ) ) )
+	if( iWeapon == -1 || !CanThisWeaponHome( iWeapon ) )
 		return Plugin_Continue;
 
 	if( iButtons & IN_ATTACK2 && !( g_iOldButtons[iClient] & IN_ATTACK2 ) ) {
@@ -148,7 +148,9 @@ bool GetPlayerEye(int iClient, float flPos[3]) {
 	GetClientEyePosition( iClient, flOrigin );
 	GetClientEyeAngles( iClient, flAngles );
 
+	StartLagCompensation( iClient );
 	Handle hTrace = TR_TraceRayFilterEx( flOrigin, flAngles, MASK_SHOT, RayType_Infinite, TraceEntityFilterPlayer, iClient );
+	FinishLagCompensation( iClient );
 
 	if ( TR_DidHit( hTrace ) ) {
 		TR_GetEndPosition( flPos, hTrace );
@@ -167,13 +169,12 @@ bool GetPlayerEye(int iClient, float flPos[3]) {
  * @param data             Other crap
  * @return                 Returns if the trace should continue
  */
-bool TraceEntityFilterPlayer( int iEntity, int iContentsMask, any data )
-{
+bool TraceEntityFilterPlayer( int iEntity, int iContentsMask, any data ) {
 	if ( iEntity <= 0 ) return true;
 	if ( iEntity == data ) return false;
 
 	if( iEntity <= MaxClients && TF2_GetClientTeam( data ) == TF2_GetClientTeam( iEntity ) )
-			return false;
+		return false;
 
 	static char sClassname[128];
 	GetEdictClassname( iEntity, sClassname, sizeof(sClassname) );
@@ -182,11 +183,12 @@ bool TraceEntityFilterPlayer( int iEntity, int iContentsMask, any data )
 
 float GetProjectileAccuracy( int iEntity ) {
 	int iWeaponIndex =  GetEntPropEnt( iEntity, Prop_Send, "m_hLauncher" );
-	if( !IsValidEntity( iWeaponIndex ) ) return 0.0;
+	if( !IsValidEntity( iWeaponIndex ) )
+		return 0.0;
+
 	return AttribHookFloat( 0.0, iWeaponIndex, "custom_rocket_homing_rate" );
 }
 
-bool CanThisWeaponHome( int iWeaponIndex )
-{
-	return AttribHookFloat( 0.0, iWeaponIndex, "custom_rocket_homing" ) != 0.0;
+bool CanThisWeaponHome( int iWeaponIndex ) {
+	return AttribHookInt( 0, iWeaponIndex, "custom_rocket_homing" );
 }

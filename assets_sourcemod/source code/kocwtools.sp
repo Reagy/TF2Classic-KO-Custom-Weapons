@@ -13,8 +13,7 @@ DynamicHook g_dhWantsLagCompensation;
 //inventory
 Handle g_sdkManagerApplyAttributeString;
 Handle g_sdkContainerApplyAttributeString;
-Handle g_sdkAttribHookFloat;
-Handle g_sdkAttribHookInt;
+Handle g_sdkApplyAttributeFloat;
 Handle g_sdkIterateAttributes;
 
 Handle g_sdkGetEntitySlot;
@@ -85,7 +84,6 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 
 	//inventory functions
 	CreateNative( "AttribHookFloat", Native_AttribHookFloat );
-	CreateNative( "AttribHookInt", Native_AttribHookInt );
 	CreateNative( "AttribHookString", Native_AttribHookString );
 
 	CreateNative( "GetMedigunCharge", Native_GetMedigunCharge );
@@ -120,8 +118,6 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 	RegPluginLibrary( "kocwtools" );
 
 	return APLRes_Success;
-
-	
 }
 
 public void OnPluginStart() {
@@ -158,21 +154,13 @@ public void OnPluginStart() {
 		INVENTORY FUNCTIONS
 	*/
 
-	StartPrepSDKCall( SDKCall_Static );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAttributeManager::AttribHookValue<float>" );
+	StartPrepSDKCall( SDKCall_Raw );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CAttributeManager::ApplyAttributeFloat" );
 	PrepSDKCall_SetReturnInfo( SDKType_Float, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
-	g_sdkAttribHookFloat = EndPrepSDKCallSafe( "CAttributeManager::AttribHookValue<float>" );
-
-	StartPrepSDKCall( SDKCall_Static );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAttributeManager::AttribHookValue<int>" );
-	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
-	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
-	g_sdkAttribHookInt = EndPrepSDKCallSafe( "CAttributeManager::AttribHookValue<int>" );
+	g_sdkApplyAttributeFloat = EndPrepSDKCallSafe( "CAttributeManager::ApplyAttributeFloat" );
 
 	//set up as a static because the compiler absolutely mangled the stack
 	//CAttributeManager::ApplyAttributeString( string_t strValue, const CBaseEntity *pEntity, string_t strAttributeClass )
@@ -471,7 +459,7 @@ public any Native_SetSolid( Handle hPlugin, int iParams ) {
 	iEntity = GetNativeCell( 1 );
 	iSolid = GetNativeCell( 2 );
 
-	Address aCollision = GetEntityAddress( iEntity ) + address( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
+	Address aCollision = GetEntityAddress( iEntity ) + view_as<Address>( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
 	SDKCall( g_sdkSetSolid, aCollision, iSolid );
 
 	return 0;
@@ -482,7 +470,7 @@ public any Native_SetSolidFlags( Handle hPlugin, int iParams ) {
 	iEntity = GetNativeCell( 1 );
 	iFlags = GetNativeCell( 2 );
 
-	Address aCollision = GetEntityAddress( iEntity ) + address( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
+	Address aCollision = GetEntityAddress( iEntity ) + view_as<Address>( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
 	SDKCall( g_sdkSetSolidFlags, aCollision, iFlags );
 
 	return 0;
@@ -548,40 +536,24 @@ Address AllocPooledString( const char[] sValue ) {
 }
 
 //native float AttribHookFloat( float flValue, int iEntity, const char[] sAttributeClass );
-public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
+any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
 	float flValue = GetNativeCell( 1 );
 	int iEntity = GetNativeCell( 2 );
 	if( !IsValidEdict( iEntity ) )
 		return flValue;
 
-	//tired of trying to scan sentry guns and crashing the server
-	if( !HasEntProp( iEntity, Prop_Send, "m_AttributeManager" ) )
+	int iManagerOffset = GetEntSendPropOffs( iEntity, "m_AttributeManager", true );
+	if( iManagerOffset == -1 )
 		return flValue;
-	
+
 	int iBuffer;
 	GetNativeStringLength( 3, iBuffer );
 	char[] szAttributeClass = new char[ ++iBuffer ];
 	GetNativeString( 3, szAttributeClass, iBuffer );
 
-	return SDKCall( g_sdkAttribHookFloat, flValue, szAttributeClass, iEntity );
-}
+	Address aManager = GetEntityAddress( iEntity ) + view_as<Address>( iManagerOffset );
 
-public any Native_AttribHookInt( Handle hPlugin, int iParams ) {
-	float iValue = GetNativeCell( 1 );
-	int iEntity = GetNativeCell( 2 );
-	if( !IsValidEdict( iEntity ) )
-		return iValue;
-
-	//tired of trying to scan sentry guns and crashing the server
-	if( !HasEntProp( iEntity, Prop_Send, "m_AttributeManager" ) )
-		return iValue;
-	
-	int iBuffer;
-	GetNativeStringLength( 3, iBuffer );
-	char[] szAttributeClass = new char[ ++iBuffer ];
-	GetNativeString( 3, szAttributeClass, iBuffer );
-
-	return SDKCall( g_sdkAttribHookInt, iValue, szAttributeClass, iEntity );
+	return SDKCall( g_sdkApplyAttributeFloat, aManager, flValue, iEntity, AllocPooledString( szAttributeClass ) );
 }
 
 //gcc 14 acutally fucked up AttribHookValue<string_t> so badly it can't be called from sdktools
@@ -707,7 +679,7 @@ public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
 
 static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 	Address aOffs = view_as<Address>( GameConfGetOffset( hGamedata, sKey ) );
-	if ( aOffs == address( -1 ) ) {
+	if ( aOffs == view_as<Address>(-1) ) {
 		SetFailState( "Failed to get member offset %s", sKey );
 	}
 	return aOffs;

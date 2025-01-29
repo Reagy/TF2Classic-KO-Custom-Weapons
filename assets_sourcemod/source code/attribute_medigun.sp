@@ -57,9 +57,9 @@ static char g_szAngelShieldChargedSound[] = "weapons/healing/medigun_overheal_ma
 
 DynamicDetour	g_dtFireCollide;
 DynamicDetour	g_dtFireCollideTeam;
-DynamicDetour	g_dtApplyOnHitAttributes;
+DynamicDetour	g_dtFireThink;
+
 DynamicDetour	g_dtPaintballRifleHitAlly;
-DynamicDetour	g_dtAddBurstHealer;
 DynamicDetour	g_dtSimulateFlames;
 
 DynamicHook	g_dhWeaponPostframe;
@@ -69,11 +69,13 @@ DynamicHook	g_dhWeaponHolster;
 DynamicHook	g_dhWeaponDeploy;
 
 MidHook		g_mhPaintballUberFix;
+MidHook		g_mhBurstHealFixRate;
 
 Handle		g_sdkGetBuffedMaxHealth;
 Handle		g_sdkSpeakIfAllowed;
 
 int 		g_iFlameOwnerOffset = -1;
+int		g_iSharedPlayerOffset = -1;
 
 PlayerFlags 	g_pfIsPlayingSound;
 float 		g_flHealSoundEndTime[MAXPLAYERS+1] = { 0.0, ... };
@@ -123,6 +125,8 @@ public APLRes AskPluginLoad2( Handle myself, bool bLate, char[] error, int err_m
 }
 
 public void OnPluginStart() {
+	g_amFlameTouchMap = new AnyMap();
+
 	for( int i = 1; i < MAXPLAYERS+1; i++ ) {
 		g_iHydroPumpBarrelChargedEmitters[i][0] = INVALID_ENT_REFERENCE;
 		g_iHydroPumpBarrelChargedEmitters[i][1] = INVALID_ENT_REFERENCE;
@@ -174,14 +178,14 @@ public void OnPluginStart() {
 	g_dtFireCollide.Enable( Hook_Pre, Detour_FireTouch );
 	g_dtFireCollideTeam = DynamicDetourFromConfSafe( hGameConf, "CTFFlameEntity::OnCollideWithTeammate" );
 	g_dtFireCollideTeam.Enable( Hook_Pre, Detour_FireTouch );
-
-	g_dtApplyOnHitAttributes = DynamicDetourFromConfSafe( hGameConf, "CTFWeaponBase::ApplyOnHitAttributes" );
-	g_dtApplyOnHitAttributes.Enable( Hook_Post, Detour_ApplyOnHitAttributes );
+	g_dtFireThink = DynamicDetourFromConfSafe( hGameConf, "CTFFlameEntity::FlameThink" );
+	g_dtFireThink.Enable( Hook_Post, Detour_FlameThink );
 
 	g_dtPaintballRifleHitAlly = DynamicDetourFromConfSafe( hGameConf, "CTFPaintballRifle::HitAlly" );
 	g_dtPaintballRifleHitAlly.Enable( Hook_Post, Detour_PaintballRifleHitAlly );
 
 	g_iFlameOwnerOffset = GameConfGetOffsetSafe( hGameConf, "CTFFlameEntity::m_hOwner" );
+	g_iSharedPlayerOffset = GameConfGetOffsetSafe( hGameConf, "CTFPlayerShared::m_pOuter" );
 
 	g_pCTFGameRules = GameConfGetAddress( hGameConf, "CTFGameRules" );
 	g_iSetupOffset = FindSendPropInfo( "CTFGameRulesProxy", "m_bInSetup" );
@@ -195,8 +199,8 @@ public void OnPluginStart() {
 	g_mhPaintballUberFix = new MidHook( GameConfGetAddress( hGameConf, "CTFPaintballRifle::TertiaryAttack_StartLagCompensation" ), MidHook_PaintballRifleUber, false );
 	g_mhPaintballUberFix.Enable();
 	
-	g_dtAddBurstHealer = DynamicDetourFromConfSafe( hGameConf, "CTFPlayerShared::AddBurstHealer" );
-	g_dtAddBurstHealer.Enable( Hook_Pre, Detour_AddBurstHealer );
+	g_mhBurstHealFixRate = new MidHook( GameConfGetAddress( hGameConf, "CTFPlayerShared::AddBurstHealer_HealRateFix" ), Midhook_BurstHealFixRate );
+	g_mhBurstHealFixRate.Enable();
 
 	g_dtSimulateFlames = DynamicDetourFromConfSafe( hGameConf, "CTFFlameThrower::SimulateFlames" );
 	g_dtSimulateFlames.Enable( Hook_Pre, Detour_SimulateFlamesPre );
@@ -242,8 +246,6 @@ public void OnMapStart() {
 	g_pfIsPlayingSound.SetDirect( 0, 0 );
 	g_pfIsPlayingSound.SetDirect( 1, 0 );
 
-	g_amFlameTouchMap = new AnyMap();
-
 	for( int i = 1; i < MAXPLAYERS+1; i++ ) {
 		g_flHealSoundEndTime[i] = 0.0;
 		if( g_alHydroPumpHealing[i] != INVALID_HANDLE )
@@ -266,12 +268,9 @@ void OnUberStackExpireChange( ConVar cvChanged, char[] szOld, char[] szNew ) {
 	g_flUberStackExpireTime = flNew;
 }
 
-MRESReturn Detour_ApplyOnHitAttributes( int iWeapon, DHookParam hParams ) {
-	if( hParams.IsNull( 1 ) )
-		return MRES_Ignored;
-
-	int iAttacker = hParams.Get( 1 );
-	//int iVictim = hParams.Get( 2 );
+public void OnTakeDamageTF( int iTarget, TFDamageInfo tfDamageInfo ) {
+	int iAttacker = tfDamageInfo.iAttacker;
+	int iWeapon = tfDamageInfo.iWeapon;
 
 	if( GetCustomMedigunType( iAttacker ) == CMEDI_FLAME ) {
 		float flUberOnHit = AttribHookFloat( 0.0, iWeapon, "add_onhit_ubercharge" );
@@ -285,8 +284,6 @@ MRESReturn Detour_ApplyOnHitAttributes( int iWeapon, DHookParam hParams ) {
 			AddUberStacks( iAttacker, flBuildUberOnHit );
 		}
 	}
-
-	return MRES_Handled;	
 }
 
 void AddUberStacks( int iOwner, float flRate ) {
@@ -382,6 +379,7 @@ MRESReturn Hook_MedigunHolster( int iMedigun ) {
 }
 
 MRESReturn Hook_MedigunSecondaryPre( int iMedigun ) {
+	PrintToServer("%i", GetCustomMedigunType( iMedigun ));
 	switch( GetCustomMedigunType( iMedigun ) ) {
 	case CMEDI_ANGEL: {
 		AngelGunUber( iMedigun );
@@ -449,6 +447,8 @@ void AngelGunUber( int iMedigun ) {
 	float flChargeLevel = GetEntPropFloat( iMedigun, Prop_Send, "m_flChargeLevel" );
 	if( flChargeLevel < ANGEL_UBER_COST )
 		return;
+
+	PrintToServer("fuck");
 
 	SetEntProp( iMedigun, Prop_Send, "m_bChargeRelease", false );
 	
@@ -577,7 +577,7 @@ MRESReturn Detour_SimulateFlamesPost( int iFlamethrower ) {
 
 void SetFlameHasTouchedEnt( Address aFlame, int iEntity ) {
 	AnyMap amTouchedMap;
-	if( g_amFlameTouchMap.GetValue( aFlame, amTouchedMap ) ) {
+	if( g_amFlameTouchMap.GetValue( aFlame, amTouchedMap ) && amTouchedMap ) {
 		amTouchedMap.SetValue( iEntity, true );
 		return;
 	}
@@ -587,11 +587,11 @@ void SetFlameHasTouchedEnt( Address aFlame, int iEntity ) {
 }
 bool FlameHasTouchedEnt( Address aFlame, int iEntity ) {
 	AnyMap amTouchedMap;
-	if( g_amFlameTouchMap.GetValue( aFlame, amTouchedMap ) )
+	if( g_amFlameTouchMap.GetValue( aFlame, amTouchedMap )  && amTouchedMap )
 		return amTouchedMap.ContainsKey( iEntity );
 
 	FlameCreateTouchMap( aFlame );
-	return false;
+	return FlameHasTouchedEnt( aFlame, iEntity );
 }
 void FlameCreateTouchMap( Address aFlame ) {
 	if( g_amFlameTouchMap.ContainsKey( aFlame ) )
@@ -616,16 +616,12 @@ MRESReturn Detour_FlameThink( Address aFlame, DHookReturn hReturn, DHookParam hP
 		return MRES_Ignored;
 
 	AnyMap amTouchedMap;
-	if( g_amFlameTouchMap.GetValue( aFlame, amTouchedMap ) )
+	if( g_amFlameTouchMap.GetValue( aFlame, amTouchedMap ) && amTouchedMap ) {
 		CloseHandle(amTouchedMap);
+		g_amFlameTouchMap.Remove( aFlame );
+	}	
 
 	return MRES_Handled;
-}
-
-MRESReturn Detour_FireCheckCollision( Address aFlame, DHookParam hParams ) {
-	int iEntity = hParams.Get( 1 );
-	if( FlameHasTouchedEnt(aFlame, iEntity) )
-		return MRES_Supercede;
 }
 
 //apparently tf2c flame particles aren't even derived from cbaseentity so they're passed by address instead
@@ -638,6 +634,9 @@ MRESReturn Detour_FireTouch( Address aFlame, DHookParam hParams ) {
 	int iWeapon = GetEntityInSlot( iOwner, 1 );
 	if( GetCustomMedigunType( iWeapon ) != CMEDI_FLAME )
 		return MRES_Ignored;
+
+	if( FlameHasTouchedEnt( aFlame, iTarget ) )
+		return MRES_Supercede;
 
 	if( IsValidPlayer( iTarget ) && GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) == TeamSeenBy( iOwner, iTarget ) )
 		FireTouchHeal( aFlame, iTarget, iOwner, iWeapon );
@@ -835,21 +834,20 @@ public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3
 	return Plugin_Continue;
 }
 
-MRESReturn Detour_AddBurstHealer( Address aShared, DHookParam hParams ) {
-	int iPlayer = GetPlayerFromShared( aShared );
-	int iSource = hParams.Get( 1 );
+void Midhook_BurstHealFixRate( MidHookRegisters hRegisters ) {
+	Address aShared = hRegisters.Load( DHookRegister_EBP, 8, NumberType_Int32 );
+	int iPlayer = GetEntityFromAddress( LoadFromAddress( aShared + view_as<Address>( g_iSharedPlayerOffset ), NumberType_Int32 ) );
+	int iSource = GetEntityFromAddress( hRegisters.Load( DHookRegister_EBP, 12, NumberType_Int32 ) );
 
-	if( !( IsValidPlayer(iSource) && TF2_GetPlayerClass(iSource) == TFClass_Medic ) )
-		return MRES_Ignored;
+	if( !IsValidPlayer( iSource ) || TF2_GetPlayerClass( iSource ) != TFClass_Medic )
+		return;
 
-	float flRate = hParams.Get( 2 );
-	float flNewRate = AttribHookFloat( flRate, iPlayer, "mult_healing_from_medics" );
-	if( flRate != flNewRate ) {
-		hParams.Set( 2, flNewRate );
-		return MRES_ChangedHandled;
-	}
+	float flValueBuffer[1]; //lmao
+	hRegisters.GetXmmWord( DHookRegister_XMM1, flValueBuffer, 1 );
 
-	return MRES_Ignored;
+	flValueBuffer[0] = AttribHookFloat( flValueBuffer[0], iPlayer, "mult_healing_from_medics" );
+
+	hRegisters.SetXmmWord( DHookRegister_XMM1, flValueBuffer, 1 );
 }
 
 MRESReturn Hook_PaintballPrimaryAttackPre( int iWeapon, DHookParam hParams ) {
@@ -876,7 +874,7 @@ MRESReturn Detour_PaintballRifleHitAlly( int iWeapon, DHookParam hParams ) {
 	RequestFrame( Frame_CreatePaintballFx, pack );
 
 	//emit sound to owner from their pov
-	EmitSoundToClient( iOwner, g_szPaintballHitSound, .volume=0.7 );
+	//EmitSoundToClient( iOwner, g_szPaintballHitSound, .volume=0.7 );
 
 	//emit sound to everyone else from the receiver
 	int iPlayers[MAXPLAYERS+1];
