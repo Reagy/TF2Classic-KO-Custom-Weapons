@@ -17,6 +17,7 @@ AnyMap g_amHandles;
 
 public void OnPluginStart() {
 	g_amEntities = new AnyMap();
+	g_amHandles = new AnyMap();
 }
 
 public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_max ) {

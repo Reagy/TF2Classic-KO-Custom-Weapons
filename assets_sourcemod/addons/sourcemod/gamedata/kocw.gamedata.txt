@@ -51,6 +51,15 @@
 					"offset"			"0x25E"
 				}
 			}
+			
+			"CTFPlayerShared::AddBurstHealer_HealRateFix"
+			{
+				"linux"
+				{
+					"signature"		"CTFPlayerShared::AddBurstHealer"
+					"offset"		"0x6D"
+				}
+			}
 		}
         "Offsets"
         {
@@ -973,28 +982,6 @@
 				
 			//weapons
 			
-			"CTFWeaponBase::ApplyOnHitAttributes"
-			{
-				"signature"		"CTFWeaponBase::ApplyOnHitAttributes"
-				"callconv"		"thiscall"
-				"return"		"void"
-				"this"			"entity"
-				"arguments"
-				{
-					"inflictor"
-					{
-						"type"	"cbaseentity"
-					}
-					"player"
-					{
-						"type"	"cbaseentity"
-					}
-					"takedamageinfo"
-					{
-						"type"	"objectptr"
-					}
-				}
-			}
 			"CTFWeaponBase::ItemPostFrame"
 			{
 				"offset"		"CTFWeaponBase::ItemPostFrame"
@@ -1232,24 +1219,6 @@
 				"this"			"address"
 				"return"		"bool"
 			}
-			"CTFFlameEntity::CheckCollision"
-			{
-				"signature"		"CTFFlameEntity::CheckCollision"
-				"callconv"		"thiscall"
-				"this"			"address"
-				"return"		"void"
-				"arguments"
-				{
-					"other"
-					{
-						"type"	"cbaseentity"
-					}
-					"dontcare"
-					{
-						"type"	"int"
-					}
-				}
-			}
 			"CTFFlameEntity::OnCollide"
 			{
 				"signature"		"CTFFlameEntity::OnCollide"
@@ -1314,6 +1283,16 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN14CBaseAnimating13ResetSequenceEi"
+			}
+			"CBaseAnimating::LookupAttachment"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CBaseAnimating16LookupAttachmentEPKc"
+			}
+			"CBaseAnimating::GetAttachment"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CBaseAnimating13GetAttachmentEiR6VectorR6QAngle"
 			}
 		
 			"CTFGameRules::ResetMapTime"
@@ -1496,12 +1475,6 @@
 			}
             
             //weapons
-            
-            "CTFWeaponBase::ApplyOnHitAttributes"
-			{
-				"library"	"server"
-				"linux"		"@_ZN13CTFWeaponBase20ApplyOnHitAttributesEP11CBaseEntityS1_RK15CTakeDamageInfo"
-			}
 			
 			"CTFPaintballRifle::HitAlly"
 			{
@@ -1608,11 +1581,6 @@
 				"library"	"server"
 				"linux"		"@_ZN14CTFFlameEntity10FlameThinkEv"
 			}
-			"CTFFlameEntity::CheckCollision"
-			{
-				"library"	"server"
-				"linux"		"@_ZN14CTFFlameEntity14CheckCollisionEP11CBaseEntityPb"
-			}
 			
             //econ
 			
@@ -1633,15 +1601,10 @@
 				"linux"		"@_ZN15CEconItemSchema17GetItemDefinitionEi"
 			}
 			
-			"CAttributeManager::AttribHookValue<float>"
+			"CAttributeManager::ApplyAttributeFloat"
 			{
 				"library"	"server"
 				"linux"		"@_ZN17CAttributeManager15AttribHookValueIfEET_S1_PKcPK11CBaseEntity"
-			}
-			"CAttributeManager::AttribHookValue<int>"
-			{
-				"library"	"server"
-				"linux"		"@_ZN17CAttributeManager15AttribHookValueIiEET_S1_PKcPK11CBaseEntity"
 			}
 		
             //other

@@ -24,10 +24,8 @@ DynamicHook g_dhItemPostFrame;
 DynamicHook g_dhWeaponHolster;
 DynamicHook g_dhFireProjectile;
 
-DynamicDetour g_dtGetMedigun;
 DynamicDetour g_dtRestart;
 
-DynamicDetour g_dtGrenadeCreate;
 DynamicHook g_dhVPhysCollide;
 DynamicHook g_dhGrenadeGetDamageType;
 //DynamicHook g_dhShouldExplode;
@@ -43,10 +41,10 @@ Handle g_sdkBrickCreate;
 
 int g_iScrambleOffset = -1;
 int g_iRestartTimeOffset = -1;
-//int g_iPhysEventEntityOffset = -1;
 int g_iSniperDotOffset = -1;
 int g_iGrenadeDamageOffset = -1;
 int g_iGrenadeRadiusOffset = -1;
+int g_iGrenadeTouchedOffset = -1;
 int g_iAttackIsCritOffset = -1;
 
 static char g_szUnderbarrelFireSound[] = "weapons/grenade_launcher_shoot.wav";
@@ -67,15 +65,9 @@ public void OnPluginStart() {
 	g_dhWeaponHolster = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::Holster" );
 	g_dhFireProjectile = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBaseGun::FireProjectile" );
 
-	g_dtGetMedigun = DynamicDetourFromConfSafe( hGameConf, "CTFPlayer::GetMedigun" );
-	g_dtGetMedigun.Enable( Hook_Pre, Hook_GetMedigun );
-
 	g_dtRestart = DynamicDetourFromConfSafe( hGameConf, "CTFGameRules::ResetMapTime" );
 	g_dtRestart.Enable( Hook_Pre, Detour_ResetMapTimePre );
 	g_dtRestart.Enable( Hook_Post, Detour_ResetMapTimePost );
-
-	g_dtGrenadeCreate = DynamicDetourFromConfSafe( hGameConf, "CTFGrenadePipebombProjectile::Create" );
-	g_dtGrenadeCreate.Enable( Hook_Post, Detour_CreatePipebomb );
 
 	g_dhGrenadeGetDamageType = DynamicHookFromConfSafe( hGameConf, "CTFBaseGrenade::GetDamageType" );
 
@@ -114,19 +106,6 @@ public void OnPluginStart() {
 	g_sdkAttackIsCritical = EndPrepSDKCall();
 
 	g_dhVPhysCollide = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::VPhysicsCollision" );
-	//g_dhShouldExplode = DynamicHook.FromConf( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
-	/*g_dhOnTakeDamage = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::OnTakeDamage" );
-
-	StartPrepSDKCall( SDKCall_Entity );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseEntity::VPhysicsCollision" );
-	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer ); //convert to plain?
-	EndPrepSDKCallSafe( "CBaseEntity::VPhysicsCollision" );
-
-	StartPrepSDKCall( SDKCall_Raw );
-	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "IPhysicsObject::EnableMotion" );
-	PrepSDKCall_AddParameter( SDKType_Bool, SDKPass_Plain );
-	EndPrepSDKCallSafe( "IPhysicsObject::EnableMotion" );*/
 
 	g_iAttackIsCritOffset = GameConfGetOffsetSafe( hGameConf, "CTFWeaponBase::m_bCurrentAttackIsCrit" );
 	g_iGrenadeDamageOffset = GameConfGetOffsetSafe( hGameConf, "CTFBaseGrenade::m_flDamage" );
@@ -134,7 +113,7 @@ public void OnPluginStart() {
 	g_iScrambleOffset = GameConfGetOffsetSafe( hGameConf, "CTFGameRules::m_bScrambleTeams" );
 	g_iRestartTimeOffset = GameConfGetOffsetSafe( hGameConf, "CTFGameRules::m_flMapResetTime" );
 	g_iSniperDotOffset = GameConfGetOffsetSafe( hGameConf, "CTFSniperRifle::m_hSniperDot" );
-	//g_iPhysEventEntityOffset = GameConfGetOffset( hGameConf, "gamevcollisionevent_t.pEntities" );
+	g_iGrenadeTouchedOffset = GameConfGetOffsetSafe( hGameConf, "CTFGrenadePipebombProjectile::m_bTouched" );
 
 	if( g_bLateLoad ) {
 		int iIndex = MaxClients + 1;
@@ -154,11 +133,20 @@ public void OnEntityCreated( int iEntity ) {
 	static char szEntityName[ 32 ];
 	GetEntityClassname( iEntity, szEntityName, sizeof( szEntityName ) );
 
-	if( StrContains( szEntityName, "tf_weapon_" ) == 0 )
+	if( StrContains( szEntityName, "tf_weapon_" ) == 0 ) {
 		RequestFrame( Frame_CheckWeapon, EntIndexToEntRef( iEntity ) );
 
-	if( HasEntProp( iEntity, Prop_Send, "m_flChargedDamage" ) )
-		RequestFrame( Frame_CheckSniper, EntIndexToEntRef( iEntity ) );
+		if( HasEntProp( iEntity, Prop_Send, "m_flChargedDamage" ) )
+			RequestFrame( Frame_CheckSniper, EntIndexToEntRef( iEntity ) );
+
+		return;
+	}
+
+	if( StrEqual( szEntityName, "tf_projectile_pipe" ) ) {
+		RequestFrame( Frame_SetupPipebomb, EntIndexToEntRef( iEntity ) );
+		return;
+	}
+
 }
 
 void Frame_CheckWeapon( int iWeaponRef ) {
@@ -384,22 +372,6 @@ MRESReturn Detour_ResetMapTimePost( Address aThis ) {
 }
 
 /*
-	BUGFIX:
-	todo: check if 2.1.4 fixed this
-	todo: there seems to be a similar issue with CTFPaintballRifle::WeaponReset()
-	Fix segmentation fault when a player disconnects while healing someone with a paintball rifle.
-*/
-
-MRESReturn Hook_GetMedigun( int iPlayer, DHookReturn hReturn ) {
-	if( iPlayer == -1 ) {
-		hReturn.Value = INVALID_ENT_REFERENCE;
-		return MRES_Supercede;
-	}
-
-	return MRES_Ignored;
-}
-
-/*
 	WEAPON: Broken Mann's Legacy
 	Hurts the player, and then heals them for the damage dealt.
 	Will not kill the player if self damage is counteracted by received healing.
@@ -547,10 +519,6 @@ void CreateSniperLaser( int iOwner, int iDot ) {
 	SetEntPropEnt( iEmitter, Prop_Send, "m_hOwnerEntity", iOwner );
 	SetEntPropEnt( iEmitter, Prop_Send, "m_hControlPointEnts", iDot, 0 );
 	SetEntPropEnt( iEmitter, Prop_Send, "m_hControlPointEnts", iPoint, 1 );
-
-	//don't need this anymore because of "control point to disable rendering if it is the camera" on the particle
-	//SDKHook( iEmitter, SDKHook_SetTransmit, Hook_TransmitIfNotOwner );
-	//SetEdictFlags( iEmitter, 0 );
 }
 void DeleteSniperLaser( int iOwner ) {
 	int iEmitter = EntRefToEntIndex( g_iSniperLaserEmitters[iOwner] );
@@ -570,108 +538,34 @@ void DeleteSniperLaser( int iOwner ) {
 	Junkrat pipes
 */
 
-MRESReturn Detour_CreatePipebomb( DHookReturn hReturn, DHookParam hParams ) {
-	int iBomb = hReturn.Value;
-	if( !IsValidEntity( iBomb ) )
-		return MRES_Ignored;
+void Frame_SetupPipebomb( int iBombRef ) {
+	int iBomb = EntRefToEntIndex( iBombRef );
+	if( iBomb == -1 )
+		return;
 
 	int iWeapon = GetEntPropEnt( iBomb, Prop_Send, "m_hLauncher" );
 	if( iWeapon == -1 )
-		return MRES_Ignored;
+		return;
 
-	float flAttrib = AttribHookFloat( 0.0, iWeapon, "custom_junkrat_pipes" );
-	if( flAttrib == 0.0 )
-		return MRES_Ignored;
+	if( !AttribHookInt( 0, iWeapon, "custom_junkrat_pipes" ) )
+		return;
 
 	g_dhVPhysCollide.HookEntity( Hook_Post, iBomb, Hook_PipebombVPhysCollide );
-	//g_dhShouldExplode.HookEntity( Hook_Pre, iBomb, Hook_PipebombShouldExplode );
-
-	return MRES_Handled;
 }
 
 MRESReturn Hook_PipebombVPhysCollide( int iThis, DHookParam hParams ) {
 	//load from gamedata
-	bool bTouched = LoadFromEntity( iThis, 1260 );
-	bool bOldTouched = GetCustomProp( iThis, "m_bTouched" );
+	bool bTouched = LoadFromEntity( iThis, g_iGrenadeTouchedOffset );
+	bool bOldTouched;
+	GetCustomProp( iThis, "m_bTouched", bOldTouched );
 
 	if( bTouched && !bOldTouched ) {
-		float flDamage = LoadFromEntity( iThis, 1212 );
-		StoreToEntity( iThis, 1212, flDamage * 0.7 );
+		float flDamage = LoadFromEntity( iThis, g_iGrenadeDamageOffset );
+		StoreToEntity( iThis, g_iGrenadeDamageOffset, flDamage * 0.7 );
 		SetCustomProp( iThis, "m_bTouched", true );
 	}
 	//load from gamedata
-	StoreToEntity( iThis, 1260, 0 );
+	StoreToEntity( iThis, g_iGrenadeTouchedOffset, false );
 
 	return MRES_Handled;
 }
-
-/*
-	Sticky pipebombs
-*/
-
-/*
-MRESReturn Detour_CreatePipebomb( int iThis, DHookParam hParams ) {
-	int iWeapon = GetEntPropEnt( iThis, Prop_Send, "m_hLauncher" );
-	if( iWeapon == -1 )
-		return MRES_Ignored;
-
-	float flAttrib = AttribHookFloat( 0.0, iWeapon, "custom_sticky_pipes" );
-	if( flAttrib == 0.0 )
-		return MRES_Ignored;
-
-	g_dhGrenadeVPhysCollide.HookEntity( Hook_Pre, iThis, Hook_PipebombVPhysCollide );
-	//g_dhOnTakeDamage.HookEntity( Hook_Pre, iThis, Hook_PipebombTakeDamage );
-
-	return MRES_Handled;
-}
-
-MRESReturn Hook_PipebombVPhysCollide( int iThis, DHookParam hParams ) {
-}
-
-
-//obligatory move to gamedata
-#define PHYSOBJ_OFFSET 520
-#define USEIMPACTNORMAL 1220
-#define VECIMPACTNORMAL 1224
-
-//fuuuuuuuuuuck
-MRESReturn Hook_PipebombVPhysCollide( int iThis, DHookParam hParams ) {
-	int iGrenadeIndex = hParams.Get( 1 );
-	int iIndex = hParams.Get( 2 );
-	Address pCollisionEventPtr = hParams.Get( 3 );
-	Address aCollisionEvent = LoadFromAddress( pCollisionEventPtr, NumberType_Int32 );
-
-	SDKCall( g_sdkCBaseEntityVPhysCollide, iGrenadeIndex, iIndex, pCollisionEventPtr );
-
-	int iOtherIndex = iThis == 0;
-	Address pHitEntPtr = LoadFromAddressOffset( aCollisionEvent, g_iPhysEventEntityOffset + ( iOtherIndex * 4 ) );
-	if( pHitEntPtr == Address_Null )
-		return MRES_Supercede;
-
-	//die if skybox goes here
-
-	int iHitEnt = GetEntityFromAddress( LoadFromAddress( pHitEntPtr, NumberType_Int32 ) );
-	static char szEntName[32];
-	GetEntityClassname( iHitEnt, szEntName, sizeof( szEntName ) );
-	if( iHitEnt == 0 || StrEqual( szEntName, "prop_dynamic", true ) ) {
-		//m_bTouched = true;
-		StoreToEntity( iThis, GRENADE_TOUCHED, true );
-
-		//VPhysicsGetObject()->EnableMotion( false );
-		Address pPhysicsObject = LoadFromEntity( iThis, PHYSOBJ_OFFSET );
-		SDKCall( g_sdkPhysEnableMotion, pPhysicsObject, false );
-		
-		//m_bUseImpactNormal = true;
-		StoreToEntity( iThis, USEIMPACTNORMAL, true );
-
-	} else if( IsValidPlayer( iHitEnt ) || StrContains( szEntName, "obj_" ) == 0 ) {
-		//stick to player/building
-	}
-
-	return MRES_Supercede;
-}
-
-MRESReturn Hook_PipebombTakeDamage( int iThis, DHookParam hParams ) {
-	return MRES_Ignored;
-}
-*/

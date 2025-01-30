@@ -837,16 +837,14 @@ public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3
 void Midhook_BurstHealFixRate( MidHookRegisters hRegisters ) {
 	Address aShared = hRegisters.Load( DHookRegister_EBP, 8, NumberType_Int32 );
 	int iPlayer = GetEntityFromAddress( LoadFromAddress( aShared + view_as<Address>( g_iSharedPlayerOffset ), NumberType_Int32 ) );
-	int iSource = GetEntityFromAddress( hRegisters.Load( DHookRegister_EBP, 12, NumberType_Int32 ) );
+	int iSource = GetEntityFromAddress( hRegisters.Load( DHookRegister_EBP, 12 ) );
 
 	if( !IsValidPlayer( iSource ) || TF2_GetPlayerClass( iSource ) != TFClass_Medic )
 		return;
 
 	float flValueBuffer[1]; //lmao
 	hRegisters.GetXmmWord( DHookRegister_XMM1, flValueBuffer, 1 );
-
 	flValueBuffer[0] = AttribHookFloat( flValueBuffer[0], iPlayer, "mult_healing_from_medics" );
-
 	hRegisters.SetXmmWord( DHookRegister_XMM1, flValueBuffer, 1 );
 }
 
