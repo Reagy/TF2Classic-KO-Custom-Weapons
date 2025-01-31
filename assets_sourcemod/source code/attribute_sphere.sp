@@ -7,7 +7,6 @@
 #include <dhooks>
 #include <kocwtools>
 #include <hudframework>
-
 public Plugin myinfo =
 {
 	name = "Attribute: Sphere",
@@ -31,6 +30,9 @@ int g_iSphereShields[ MAXPLAYERS+1 ] = { INVALID_ENT_REFERENCE, ... };
 int g_iMaterialManager[ MAXPLAYERS+1 ] = { INVALID_ENT_REFERENCE, ... };
 float g_flShieldCooler[ MAXPLAYERS+1 ];
 float g_flLastDamagedShield[ MAXPLAYERS+1 ];
+
+//huge waste of memory but this needs to look up fast
+bool g_bIsShield[2048] = { false, ... };
 
 static char g_szShieldModel[] = "models/props_mvm/kocw_player_shield.mdl";
 static char g_szShieldDeploySnd[] = "weapons/medi_shield_deploy.wav";
@@ -67,16 +69,21 @@ static char szSoundNames[][] = {
 	"player/resistance_heavy4.wav"
 };
 
+DynamicDetour test;
+
 public void OnPluginStart() {
 	HookEvent( "post_inventory_application", Event_PostInventory );
 
 	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
-	hSimpleTrace = DynamicDetourFromConfSafe( hGameConf, "CTraceFilterSimple::ShouldHitEntity" );
+	test = DynamicDetourFromConfSafe( hGameConf, "PassServerEntityFilter" );
+	test.Enable( Hook_Post, Detour_Test );
+
+	/*hSimpleTrace = DynamicDetourFromConfSafe( hGameConf, "CTraceFilterSimple::ShouldHitEntity" );
 	hSimpleTrace.Enable( Hook_Post, Detour_ShouldHitEntitySimple );
 
 	hSentryTrace = DynamicDetourFromConfSafe( hGameConf, "CTraceFilterIgnoreTeammatesExceptEntity::ShouldHitEntity" );
-	hSentryTrace.Enable( Hook_Post, Detour_ShouldHitEntitySentry );
+	hSentryTrace.Enable( Hook_Post, Detour_ShouldHitEntitySentry );*/
 
 	hShouldCollide = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::ShouldCollide" );
 	hTouch = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::Touch" );
@@ -125,10 +132,10 @@ MRESReturn Hook_PostFrame( int iThis ) {
 
 	int iWeaponState = GetEntProp( iThis, Prop_Send, "m_iWeaponState" );
 	float flTrackerValue = Tracker_GetValue( iWeaponOwner, g_szShieldKeyName );
-	if( !( iWeaponState == 3 ) || flTrackerValue <= 0.0 ) { //spinning
-		RemoveShield( iWeaponOwner );
-		return MRES_Handled;
-	}
+	//if( !( iWeaponState == 3 ) || flTrackerValue <= 0.0 ) { //spinning
+		//RemoveShield( iWeaponOwner );
+		//return MRES_Handled;
+	//}
 
 	int iShield = EntRefToEntIndex( g_iSphereShields[ iWeaponOwner ] );
 	if( iShield == -1 && flTrackerValue > 10.0 )
@@ -214,6 +221,7 @@ void SpawnShield( int iOwner ) {
 	EmitSoundToAll( g_szShieldDeploySnd, iShield, SNDCHAN_AUTO, 95 );
 
 	g_iSphereShields[ iOwner ] = EntIndexToEntRef( iShield );
+	g_bIsShield[iShield] = true;
 
 	int iManager = CreateEntityByName( "material_modify_control" );
 
@@ -233,6 +241,7 @@ void RemoveShield( int iOwner ) {
 	if( iShield != -1 ) {
 		EmitSoundToAll( g_szShieldRetractSnd, iShield, SNDCHAN_AUTO, 95, 0, 0.8 );
 		RemoveEntity( iShield );
+		g_bIsShield[iShield] = false;
 		g_iSphereShields[ iOwner ] = INVALID_ENT_REFERENCE;
 		g_flShieldCooler[ iOwner ] = GetGameTime() + 2.0;
 	}
@@ -384,63 +393,25 @@ void BuildShieldCharge( TFDamageInfo tfDamageInfo ) {
 	Tracker_SetValue( iOwner, g_szShieldKeyName, flNewValue );
 }
 
-//offset 4: pass entity
-//offset 16: pass team
-//offset 20: except entity
-
-
-//todo: offsets will probably never change but should move to gamedata anyway
-
-//todo: flame particle collision?
-MRESReturn Detour_ShouldHitEntitySimple( Address aTrace, DHookReturn hReturn, DHookParam hParams ) {
-	//we only care about ignoring the shield so if we weren't going to hit it to begin with than ignore
-	if( hReturn.Value == false )
-		return MRES_Ignored;
-	
-	Address aLoad = LoadFromAddressOffset( aTrace, 4 ); //offset of m_pPassEnt
-	if( aLoad == Address_Null )
-		return MRES_Ignored;
-
-	int iPassEntity = GetEntityFromAddress( aLoad );
-	if( !IsValidPlayer( iPassEntity ) )
-		return MRES_Ignored;
-
-	int iTouched = GetEntityFromAddress( hParams.GetAddress( 1 ) );
-	int iOwner = GetEntPropEnt( iTouched, Prop_Send, "m_hOwnerEntity" );
-	if( !IsValidPlayer( iOwner ) )
-		return MRES_Ignored;
-
-	if( iTouched == EntRefToEntIndex( g_iSphereShields[ iOwner ] ) && GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) == GetEntProp( iPassEntity, Prop_Send, "m_iTeamNum" ) ) {
-		hReturn.Value = false;
-		return MRES_Supercede;
-	}
-
-	return MRES_Ignored;
-}
-
-//this is only ever called by sentry guns
-MRESReturn Detour_ShouldHitEntitySentry( Address aTrace, DHookReturn hReturn, DHookParam hParams ) {
-	//we only care about ignoring the shield so if we weren't going to hit it to begin with than ignore
+MRESReturn Detour_Test( DHookReturn hReturn, DHookParam hParams ) {
 	if( hReturn.Value == false )
 		return MRES_Ignored;
 
-	Address aLoad = LoadFromAddressOffset( aTrace, 20 ); //offset of m_pExceptionEntity
-	if( aLoad == Address_Null )
+	int iTouch = GetEntityFromAddress( hParams.Get(1) );
+	int iPass = GetEntityFromAddress( hParams.Get(2) );
+
+	if( !g_bIsShield[iTouch] )
 		return MRES_Ignored;
 
-	int iExcept = GetEntityFromAddress( aLoad );
-	if( !IsValidPlayer( iExcept ) )
+	int iOwner = GetEntPropEnt( iTouch, Prop_Send, "m_hOwnerEntity" );
+	if( iOwner == -1 )
 		return MRES_Ignored;
 
-	int iTouched = GetEntityFromAddress( hParams.GetAddress( 1 ) );
-	int iOwner = GetEntPropEnt( iTouched, Prop_Send, "m_hOwnerEntity" );
-	if( !IsValidPlayer( iOwner ) )
-		return MRES_Ignored;
-
-	if( iTouched == EntRefToEntIndex( g_iSphereShields[ iOwner ] ) && GetEntProp( iTouched, Prop_Send, "m_iTeamNum" ) == GetEntProp( iExcept, Prop_Send, "m_iTeamNum" ) ) {
+	if( HasEntProp( iPass, Prop_Send, "m_iTeamNum" ) && GetEntProp( iPass, Prop_Send, "m_iTeamNum" ) == GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) ) {
 		hReturn.Value = false;
-		return MRES_ChangedOverride;
+		return MRES_Override;
 	}
 
+	//;
 	return MRES_Ignored;
 }

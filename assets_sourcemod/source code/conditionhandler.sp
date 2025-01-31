@@ -594,7 +594,7 @@ void CheckOnHitCustomCond( int iVictim, TFDamageInfo tfInfo ) {
 	int iWeapon = tfInfo.iWeapon;
 
 	static char szAttribute[64];
-	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_inflictcustom_onhit" ) )
+	if( !AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_inflictcustom_onhit" ) )
 		return;
 
 	static char szExplode[2][64];

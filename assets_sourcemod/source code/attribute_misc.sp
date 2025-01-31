@@ -130,7 +130,7 @@ public void OnMapStart() {
 }
 
 public void OnEntityCreated( int iEntity ) {
-	static char szEntityName[ 32 ];
+	static char szEntityName[ 64 ];
 	GetEntityClassname( iEntity, szEntityName, sizeof( szEntityName ) );
 
 	if( StrContains( szEntityName, "tf_weapon_" ) == 0 ) {
@@ -198,6 +198,9 @@ int g_iShotsHit[MAXPLAYERS+1] = { 0, ... };
 int g_iShotsFired[MAXPLAYERS+1] = { 0, ... };
 
 MRESReturn Hook_FireProjectile( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	if( hParams.IsNull( 1 ) )
+		return MRES_Ignored;
+
 	int iOwner = hParams.Get(1);
 	if( !IsValidPlayer(iOwner) )
 		return MRES_Ignored;

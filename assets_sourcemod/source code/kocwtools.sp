@@ -584,7 +584,7 @@ public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 	static char szBuffer[256];
 	LoadStringFromAddress( DereferencePointer(aResult), szBuffer, sizeof(szBuffer) );
 	SetNativeString( 1, szBuffer, GetNativeCell( 2 ) );
-	return true;
+	return !StrEqual( szBuffer, "" );
 }
 
 //native int AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
