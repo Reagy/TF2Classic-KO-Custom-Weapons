@@ -48,9 +48,9 @@ static char	g_szHydroPumpHealParticles[][] = {
 };
 int		g_iHydroPumpEmitters[MAXPLAYERS+1] = { INVALID_ENT_REFERENCE, ... };
 
-const float	g_flHydroUberHealRate	= 24.0;
-const float	g_flHydroUberDuration	= 10.0;
-const float	g_flHydroUberRange	= 500.0;
+const float	g_flHydroUberHealRate	= 36.0;
+const float	g_flHydroUberDuration	= 12.0;
+const float	g_flHydroUberRange	= 540.0;
 const float	g_flHydroUberFrequency	= 0.2;
 static char	g_szHydroUberSound[]	= "weapons/HPump_Uber.wav";
 static char	g_szHydroUberParticles[][] = {
@@ -1012,7 +1012,7 @@ void AngelShieldTakeDamage( int iTarget, TFDamageInfo tfInfo ) {
 	Event eFakeDamage = CreateEvent( "player_hurt", true );
 	eFakeDamage.SetInt( "userid", GetClientUserId( iTarget ) );
 	eFakeDamage.SetInt( "health", 300 );
-	eFakeDamage.SetInt( "attacker", GetClientUserId( tfInfo.iAttacker ) );
+	eFakeDamage.SetInt( "attacker", tfInfo.iAttacker != -1 ? 0 : GetClientUserId( tfInfo.iAttacker ) );
 	eFakeDamage.SetInt( "damageamount", iNewDamage );
 	eFakeDamage.SetInt( "bonuseffect", 2 );
 	eFakeDamage.Fire();

@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_ak74u/c_ak74u_large"
+	"$translucent" 1
+	$vertexcolor 1
+}
