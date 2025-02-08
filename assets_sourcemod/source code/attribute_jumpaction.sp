@@ -8,15 +8,18 @@
 #include <dhooks>
 #include <hudframework>
 
-#define JUMPKEYNAME "Jumps"
+//convert to convars?
 #define MAX_JUMPS 10.0
 #define DAMAGE_TO_JUMP 40.0
 #define JUMPS_PER_KILL 2.0
 
+static char szJumpKeyName[] = "Jumps";
+
 DynamicDetour hCheckJumpButton;
 
+int g_iMovementTFPlayerOffset = -1;
+
 float g_flDamageBuffer[ MAXPLAYERS + 1 ] = { 0.0, ... };
-//bool g_bPlayerJumpaction[ MAXPLAYERS + 1 ] = { false, ... };
 PlayerFlags g_pfJumpaction;
 
 public Plugin myinfo = {
@@ -30,8 +33,10 @@ public Plugin myinfo = {
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
-	hCheckJumpButton = DynamicDetour.FromConf( hGameConf, "CTFGameMovement::CheckJumpButton" );
+	hCheckJumpButton = DynamicDetourFromConfSafe( hGameConf, "CTFGameMovement::CheckJumpButton" );
 	hCheckJumpButton.Enable( Hook_Post, Detour_CheckJumpButton );
+
+	g_iMovementTFPlayerOffset = GameConfGetOffsetSafe( hGameConf, "CTFGameMovement::m_pTFPlayer" );
 
 	delete hGameConf;
 
@@ -44,14 +49,14 @@ public Action Event_Inventory( Event hEvent, const char[] sName, bool bDontBroad
 	iPlayer = GetClientOfUserId( iPlayer );
 
 	if( IsValidPlayer( iPlayer ) ) {
-		if( AttribHookFloat( 0.0, iPlayer, "custom_jumpaction" ) != 0.0 ) {
-			Tracker_Create( iPlayer, JUMPKEYNAME, false );
-			Tracker_SetFlags( iPlayer, JUMPKEYNAME, RTF_CLEARONSPAWN );
-			Tracker_SetMax( iPlayer, JUMPKEYNAME, MAX_JUMPS );
+		if( AttribHookInt( 0, iPlayer, "custom_jumpaction" ) ) {
+			Tracker_Create( iPlayer, szJumpKeyName, false );
+			Tracker_SetFlags( iPlayer, szJumpKeyName, RTF_CLEARONSPAWN );
+			Tracker_SetMax( iPlayer, szJumpKeyName, MAX_JUMPS );
 			g_pfJumpaction.Set( iPlayer, true );
 		}
 		else {
-			Tracker_Remove( iPlayer, JUMPKEYNAME );
+			Tracker_Remove( iPlayer, szJumpKeyName );
 			g_pfJumpaction.Set( iPlayer, false );
 		}
 	}
@@ -66,13 +71,13 @@ public Action Event_PlayerDeath( Event hEvent, const char[] sName, bool bDontBro
 	iKilled = GetClientOfUserId( iKilled );
 
 	if( iPlayer != iKilled && IsValidPlayer( iPlayer ) )
-		Tracker_SetValue( iPlayer, JUMPKEYNAME, FloatClamp( Tracker_GetValue( iPlayer, JUMPKEYNAME ) + JUMPS_PER_KILL, 0.0, MAX_JUMPS ) );
+		Tracker_SetValue( iPlayer, szJumpKeyName, FloatClamp( Tracker_GetValue( iPlayer, szJumpKeyName ) + JUMPS_PER_KILL, 0.0, MAX_JUMPS ) );
 
 	return Plugin_Continue;
 }	
 
 MRESReturn Detour_CheckJumpButton( Address aThis, DHookReturn hReturn ) {
-	int iPlayer = GetEntityFromAddress( DereferencePointer( aThis + address( 3752 ) ) ); //todo: move to gamedata
+	int iPlayer = GetEntityFromAddress( DereferencePointer( aThis + view_as<Address>( g_iMovementTFPlayerOffset ) ) ); //todo: move to gamedata
 	if( iPlayer == -1 )
 		return MRES_Ignored;
 
@@ -83,22 +88,20 @@ MRESReturn Detour_CheckJumpButton( Address aThis, DHookReturn hReturn ) {
 		return MRES_Ignored;
 
 	bool bOldDash = view_as< bool >( GetEntProp( iPlayer, Prop_Send, "m_bAirDash" ) );
-	float flJumps = Tracker_GetValue( iPlayer, JUMPKEYNAME );
+	int iJumps = RoundToFloor( Tracker_GetValue( iPlayer, szJumpKeyName ) );
 
-	SetEntProp( iPlayer, Prop_Send, "m_bAirDash", flJumps == 0.0 );
+	SetEntProp( iPlayer, Prop_Send, "m_bAirDash", iJumps == 0 );
 
-	if( flJumps != 0.0 && bOldDash) {
-		Tracker_SetValue( iPlayer, JUMPKEYNAME, flJumps - 1.0 );
+	if( iJumps != 0 && bOldDash) {
+		Tracker_SetValue( iPlayer, szJumpKeyName, float( iJumps - 1 ) );
 	}
 		
 
 	return MRES_Handled;
 }
 
-public void OnTakeDamageTF( int iTarget, Address aDamageInfo ) {
-	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
-
-	int iAttacker = tfInfo.iAttacker;
+public void OnTakeDamageTF( int iTarget, TFDamageInfo tfDamageInfo ) {
+	int iAttacker = tfDamageInfo.iAttacker;
 
 	if( !IsValidPlayer( iAttacker ) )
 		return;
@@ -106,11 +109,12 @@ public void OnTakeDamageTF( int iTarget, Address aDamageInfo ) {
 	if( !g_pfJumpaction.Get( iAttacker ) )
 		return;
 
-	g_flDamageBuffer[ iAttacker ] += tfInfo.flDamage;
+	g_flDamageBuffer[ iAttacker ] += tfDamageInfo.flDamage;
 
 	float flJumps = float( RoundToFloor( g_flDamageBuffer[ iAttacker ] / DAMAGE_TO_JUMP ) );
 	if( flJumps > 0.0 ) {
-		Tracker_SetValue( iAttacker, JUMPKEYNAME,  FloatClamp( Tracker_GetValue( iAttacker, JUMPKEYNAME ) + flJumps, 0.0, MAX_JUMPS )  );
+		float flNewVal = FloatClamp( Tracker_GetValue( iAttacker, szJumpKeyName ) + flJumps, 0.0, MAX_JUMPS );
+		Tracker_SetValue( iAttacker, szJumpKeyName, flNewVal );
 		g_flDamageBuffer[ iAttacker ] -= ( flJumps * DAMAGE_TO_JUMP );
 	}
 }

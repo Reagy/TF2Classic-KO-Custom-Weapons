@@ -118,7 +118,6 @@ DynamicHook hFinishUpgrade;
 DynamicHook hOnGoActive;
 DynamicHook hMakeCarry;
 DynamicHook hCanUpgrade;
-DynamicDetour hDispHeal;
 
 bool bLateLoad = false;
 public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] error, int err_max ) {
@@ -159,9 +158,6 @@ public void OnPluginStart() {
 	hStartUpgrade =		DynamicHook.FromConf( hGameConf, "CBaseObject::StartUpgrading" );
 	hFinishUpgrade =	DynamicHook.FromConf( hGameConf, "CBaseObject::FinishUpgrading" );
 	hMakeCarry =		DynamicHook.FromConf( hGameConf, "CBaseObject::MakeCarriedObject" );
-
-	hDispHeal = DynamicDetour.FromConf( hGameConf, "CObjectDispenser::GetHealRate" );
-	hDispHeal.Enable( Hook_Post, Detour_GetHealRate );
 
 	g_iGoalBuildOffset = GameConfGetOffset( hGameConf, "CBaseObject::m_iGoalUpgradeLevel" );
 
@@ -305,6 +301,10 @@ MRESReturn Hook_FinishUpgrade( int iThis ) {
 //called when a building is picked up
 MRESReturn Hook_MakeCarry( int iThis ) {
 	int iType = 	GetEntProp( iThis, Prop_Send, "m_iObjectType" );
+	int iMode =	GetEntProp( iThis, Prop_Send, "m_iObjectMode" );
+
+	int iModel = g_iBuildingBlueprints[ iType ][ iMode ];
+	SetEntProp( iThis, Prop_Send, "m_nModelIndexOverrides", iModel, 4, 0 );
 
 	int iPlayer = GetEntPropEnt( iThis, Prop_Send, "m_hBuilder" );
 	if( iType == OBJ_SENTRYGUN && g_iBuildingTypes[ iPlayer ][ iType ] == SENTRY_MINI )
@@ -317,31 +317,6 @@ MRESReturn Hook_CanBeUpgraded( int iThis, DHookReturn hReturn ) {
 	if( IsBuildingMini( iThis ) ) {
 		hReturn.Value = false;
 		return MRES_ChangedOverride;
-	}
-	return MRES_Ignored;
-}
-
-//returns the health per second of a dispenser
-MRESReturn Detour_GetHealRate( int iThis, DHookReturn hReturn ) {
-	int iChanged = false;
-	float flNewValue = hReturn.Value;
-	if( IsBuildingMini( iThis ) ) {
-		flNewValue = 15.0;
-		iChanged++;
-	}
-	
-	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hBuilder" );
-	if( IsValidPlayer( iOwner ) ) {
-		float flOldValue = flNewValue;
-		flNewValue = AttribHookFloat( flNewValue, iOwner, "custom_dispenser_healrate" );
-
-		if( flNewValue != flOldValue )
-			iChanged++;
-	}
-	
-	if( iChanged ) {
-		hReturn.Value = flNewValue;
-		return MRES_Supercede;
 	}
 	return MRES_Ignored;
 }
@@ -477,9 +452,6 @@ bool IsBuildingMini( int iBuilding ) {
 
 void UpdateBuilding( int iBuilding, bool bHeal = false ) {
 	int iPlayer = GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" );
-	if( !IsValidPlayer(iPlayer) )
-		return;
-
 	int iType = GetEntProp( iBuilding, Prop_Send, "m_iObjectType" );
 
 	UpdateBuildingHealth( iPlayer, iBuilding, bHeal );
@@ -544,6 +516,7 @@ void SetBuildingModel( int iBuilding, bool bIsUpgrading ) {
 	int iBuilder =	GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" );
 	if( !IsValidPlayer(iBuilder) )
 		return;
+
 	int iType = 	GetEntProp( iBuilding, Prop_Send, "m_iObjectType");
 	int iLevel =	GetEntProp( iBuilding, Prop_Send, "m_iUpgradeLevel" );
 
