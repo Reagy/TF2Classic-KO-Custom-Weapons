@@ -39,7 +39,7 @@
 				"linux"
 				{
 					"signature"		"CBaseObject::CheckUpgradeOnHit"
-					"offset"		"0x8D"
+					"offset"		"0xAA"
 				}
 			}
 			"CTFPaintballRifle::TertiaryAttack_StartLagCompensation"
@@ -56,15 +56,6 @@
 				{
 					"signature"		"CTFPlayerShared::AddBurstHealer"
 					"offset"		"0x6D"
-				}
-			}
-			
-			"CTraceFilterSimple::ShouldHitEntity_Sphere"
-			{
-				"linux"
-				{
-					"signature"		"CTraceFilterSimple::ShouldHitEntity_Sphere"
-					"offset"		"0xE6"
 				}
 			}
 		}
@@ -873,6 +864,28 @@
 			
             //buildings
             
+			"CBaseObject::InputWrenchHit"
+			{
+				"signature"		"CBaseObject::InputWrenchHit"
+				"callconv"		"thiscall"
+				"return"		"bool"
+				"this"			"entity"
+				"arguments"
+				{
+					"player"
+					{
+						"type"	"cbaseentity"
+					}
+					"wrench"
+					{
+						"type"	"cbaseentity"
+					}
+					"hitpos"
+					{
+						"type"	"vectorptr"
+					}
+				}
+			}
 			"CBaseObject::Killed"
 			{
 				"offset"		"CBaseObject::Killed"
@@ -1492,6 +1505,11 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN11CBaseObject17CheckUpgradeOnHitEP9CTFPlayer"
+			}
+			"CBaseObject::InputWrenchHit"
+			{
+				"library"	"server"
+				"linux"		"@_ZN11CBaseObject14InputWrenchHitEP9CTFPlayerP9CTFWrench6Vector"
 			}
 			"CObjectDispenser::GetHealRate"
 			{

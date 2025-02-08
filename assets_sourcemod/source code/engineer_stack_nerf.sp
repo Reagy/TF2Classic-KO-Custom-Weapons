@@ -20,23 +20,23 @@ float g_flRepairPenaltyValue;
 ConVar g_cvUpgradePenalty;
 float g_flUpgradePenaltyValue;
 
-DynamicDetour g_dtOnFriendlyBuildingHit;
 DynamicDetour g_dtGetConstructionValue;
 DynamicDetour g_dtGetRepairValue;
+DynamicDetour g_dtInputWrenchHit;
 
 MidHook g_mhMetalPerHit;
 
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile("kocw.gamedata");
 
-	g_dtOnFriendlyBuildingHit = DynamicDetour.FromConf( hGameConf, "CTFWrench::OnFriendlyBuildingHit" );
-	g_dtOnFriendlyBuildingHit.Enable( Hook_Pre, Detour_OnFriendlyBuildingHitPre );
-
-	g_dtGetConstructionValue = DynamicDetour.FromConf( hGameConf, "CTFWrench::GetConstructionValue" );
+	g_dtGetConstructionValue = DynamicDetourFromConfSafe( hGameConf, "CTFWrench::GetConstructionValue" );
 	g_dtGetConstructionValue.Enable( Hook_Post, Detour_GetConstructionValue );
 
-	g_dtGetRepairValue = DynamicDetour.FromConf( hGameConf, "CTFWrench::GetRepairValue" );
+	g_dtGetRepairValue = DynamicDetourFromConfSafe( hGameConf, "CTFWrench::GetRepairValue" );
 	g_dtGetRepairValue.Enable( Hook_Post, Detour_GetRepairValue );
+
+	g_dtInputWrenchHit = DynamicDetourFromConfSafe( hGameConf, "CBaseObject::InputWrenchHit" );
+	g_dtInputWrenchHit.Enable( Hook_Pre, Detour_InputWrenchHit );
 
 	g_mhMetalPerHit = new MidHook( GameConfGetAddress( hGameConf, "CBaseObject::CheckUpgradeOnHit_MetalPerHit" ), Midhook_MetalPerHit, false );
 	g_mhMetalPerHit.Enable();
@@ -73,19 +73,17 @@ public void Midhook_MetalPerHit( MidHookRegisters hRegs ) {
 
 	int iPlayer = GetEntityFromAddress( aPlayer );
 	int iBuilding = GetEntityFromAddress( hRegs.Load( DHookRegister_EBP, 8, NumberType_Int32 ) );
+	PrintToServer("%i %i", iPlayer, iBuilding);
 	if( GetEntProp( iBuilding, Prop_Send, "m_iObjectType" ) == 2 && GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" ) != iPlayer ) {
-		int iAmountToAdd = hRegs.Get( DHookRegister_EAX, NumberType_Int32 );
-		hRegs.Set( DHookRegister_EAX, RoundToNearest( float( iAmountToAdd ) * g_flUpgradePenaltyValue ) );
+		float flAmountToAdd = hRegs.GetFloat( DHookRegister_ESI );
+		hRegs.SetFloat( DHookRegister_ESI, flAmountToAdd * g_flUpgradePenaltyValue );
 	}
 }
 
-//doing heirarchal detour nonsense
-int g_iBuilding = -1;
-MRESReturn Detour_OnFriendlyBuildingHitPre( int iWrench, DHookParam hParams ) {
-	int iBuilding = hParams.Get( 1 );
-	g_iBuilding = !hParams.IsNull( 1 ) && GetEntProp( iBuilding, Prop_Send, "m_iObjectType" ) == 2 ? EntIndexToEntRef(iBuilding) : INVALID_ENT_REFERENCE;
-
-	return MRES_Ignored;
+int g_iBuilding = INVALID_ENT_REFERENCE;
+MRESReturn Detour_InputWrenchHit( int iThis, DHookReturn hReturn, DHookParam hParams ) {
+	g_iBuilding = GetEntProp( iThis, Prop_Send, "m_iObjectType" ) == 2 ? EntIndexToEntRef( iThis ) : INVALID_ENT_REFERENCE;
+	return MRES_Handled;
 }
 
 MRESReturn Detour_GetConstructionValue( int iWrench, DHookReturn hReturn, DHookParam hParam ) {

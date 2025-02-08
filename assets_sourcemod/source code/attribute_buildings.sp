@@ -278,6 +278,8 @@ MRESReturn Hook_OnGoActive( int iThis ) {
 		return MRES_Handled;
 
 	int iPlayer = GetEntPropEnt( iThis, Prop_Send, "m_hBuilder" );
+	if( iPlayer == -1 )
+		return MRES_Ignored;
 
 	if( iType == OBJ_SENTRYGUN && g_iBuildingTypes[ iPlayer ][ iType ] == SENTRY_MINI )
 		CreateSirenParticle( iThis );
