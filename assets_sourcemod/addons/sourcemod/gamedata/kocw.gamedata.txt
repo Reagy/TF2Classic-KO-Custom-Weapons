@@ -42,7 +42,6 @@
 					"offset"		"0x8D"
 				}
 			}
-			
 			"CTFPaintballRifle::TertiaryAttack_StartLagCompensation"
 			{
 				"linux"
@@ -51,13 +50,21 @@
 					"offset"			"0x25E"
 				}
 			}
-			
 			"CTFPlayerShared::AddBurstHealer_HealRateFix"
 			{
 				"linux"
 				{
 					"signature"		"CTFPlayerShared::AddBurstHealer"
 					"offset"		"0x6D"
+				}
+			}
+			
+			"CTraceFilterSimple::ShouldHitEntity_Sphere"
+			{
+				"linux"
+				{
+					"signature"		"CTraceFilterSimple::ShouldHitEntity_Sphere"
+					"offset"		"0xE6"
 				}
 			}
 		}
@@ -380,9 +387,26 @@
 			}
         }
 		
-		//2.2 compiler changes broke a bunch of the calling conventions, most are probably wrong now
 		"Functions"
 		{
+			"PassServerEntityFilter"
+			{
+				"signature"		"PassServerEntityFilter"
+				"callconv"		"cdecl"
+				"return"		"bool"
+				"arguments"
+				{
+					"touch"
+					{
+						"type"	"int"
+					}
+					"pass"
+					{
+						"type"	"int"
+					}
+				}
+			}
+		
 			"CTFGameRules::ResetMapTime"
 			{
 				"signature"		"CTFGameRules::ResetMapTime"
@@ -1273,6 +1297,12 @@
 		
 		"Signatures"
 		{
+			"PassServerEntityFilter"
+			{
+				"library"	"server"
+				"linux"		"@_Z22PassServerEntityFilterPK13IHandleEntityS1_"
+			}
+		
 			"CGlobalEntityList::FindEntityInSphere"
 			{
 				"library"	"server"

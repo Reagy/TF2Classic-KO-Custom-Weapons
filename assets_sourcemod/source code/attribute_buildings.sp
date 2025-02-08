@@ -118,7 +118,6 @@ DynamicHook hFinishUpgrade;
 DynamicHook hOnGoActive;
 DynamicHook hMakeCarry;
 DynamicHook hCanUpgrade;
-DynamicDetour hDispHeal;
 
 bool bLateLoad = false;
 public APLRes AskPluginLoad2( Handle hMyself, bool bLate, char[] error, int err_max ) {
@@ -159,9 +158,6 @@ public void OnPluginStart() {
 	hStartUpgrade =		DynamicHook.FromConf( hGameConf, "CBaseObject::StartUpgrading" );
 	hFinishUpgrade =	DynamicHook.FromConf( hGameConf, "CBaseObject::FinishUpgrading" );
 	hMakeCarry =		DynamicHook.FromConf( hGameConf, "CBaseObject::MakeCarriedObject" );
-
-	hDispHeal = DynamicDetour.FromConf( hGameConf, "CObjectDispenser::GetHealRate" );
-	hDispHeal.Enable( Hook_Post, Detour_GetHealRate );
 
 	g_iGoalBuildOffset = GameConfGetOffset( hGameConf, "CBaseObject::m_iGoalUpgradeLevel" );
 
@@ -321,31 +317,6 @@ MRESReturn Hook_CanBeUpgraded( int iThis, DHookReturn hReturn ) {
 	if( IsBuildingMini( iThis ) ) {
 		hReturn.Value = false;
 		return MRES_ChangedOverride;
-	}
-	return MRES_Ignored;
-}
-
-//returns the health per second of a dispenser
-MRESReturn Detour_GetHealRate( int iThis, DHookReturn hReturn ) {
-	int iChanged = false;
-	float flNewValue = hReturn.Value;
-	if( IsBuildingMini( iThis ) ) {
-		flNewValue = 15.0;
-		iChanged++;
-	}
-	
-	int iOwner = GetEntPropEnt( iThis, Prop_Send, "m_hBuilder" );
-	if( IsValidPlayer( iOwner ) ) {
-		float flOldValue = flNewValue;
-		flNewValue = AttribHookFloat( flNewValue, iOwner, "custom_dispenser_healrate" );
-
-		if( flNewValue != flOldValue )
-			iChanged++;
-	}
-	
-	if( iChanged ) {
-		hReturn.Value = flNewValue;
-		return MRES_Supercede;
 	}
 	return MRES_Ignored;
 }

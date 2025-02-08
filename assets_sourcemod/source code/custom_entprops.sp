@@ -43,9 +43,11 @@ public void OnEntityDestroyed( int iEntity ) {
 
 	//close all handles inside the list
 	if( g_amHandles.GetValue( iEntity, smEntProps ) && smEntProps ) {
-		AnyMapSnapshot snap = g_amHandles.Snapshot();
+		StringMapSnapshot snap = smEntProps.Snapshot();
 		for( int i = 0; i < snap.Length; i++ ) {
-			Handle hData = view_as<Handle>( snap.GetKey( i ) );
+			static char szBuffer[64];
+			snap.GetKey( i, szBuffer, sizeof(szBuffer) );
+			Handle hData = view_as<Handle>( StringToInt( szBuffer ) );
 			if( hData )
 				CloseHandle( hData );
 		}

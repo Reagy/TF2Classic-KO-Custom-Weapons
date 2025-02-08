@@ -248,6 +248,9 @@ MRESReturn Hook_Secondary( int iWeapon ) {
 
 	int iCollider = CreateEntityByName( "prop_dynamic_override" );
 	SetEntityModel( iCollider, g_szColliderModel );
+
+	//DispatchKeyValue( iCollider, "modelname", g_szColliderModel );
+
 	g_dhOnTakeDamage.HookEntity( Hook_Pre, iCollider, Hook_DamageCollider );
 
 	DispatchSpawn( iCollider );

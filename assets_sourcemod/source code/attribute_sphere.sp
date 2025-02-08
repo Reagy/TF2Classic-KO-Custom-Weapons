@@ -12,18 +12,17 @@ public Plugin myinfo =
 	name = "Attribute: Sphere",
 	author = "Noclue",
 	description = "Attributes for The Sphere.",
-	version = "1.2",
+	version = "1.2.1",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
-DynamicDetour hSimpleTrace;
-DynamicDetour hSentryTrace;
-DynamicHook hShouldCollide;
-DynamicHook hTouch;
-DynamicHook hPostFrame;
-DynamicHook hTakeDamage;
+DynamicHook g_dhShouldCollide;
+DynamicHook g_dhTouch;
+DynamicHook g_dhPostFrame;
+DynamicHook g_dhTakeDamage;
+DynamicDetour g_dtServerPassFilter;
 
-Handle hTouchCall;
+Handle g_sdkTouchCall;
 
 PlayerFlags g_HasSphere;
 int g_iSphereShields[ MAXPLAYERS+1 ] = { INVALID_ENT_REFERENCE, ... };
@@ -69,32 +68,24 @@ static char szSoundNames[][] = {
 	"player/resistance_heavy4.wav"
 };
 
-DynamicDetour test;
-
 public void OnPluginStart() {
 	HookEvent( "post_inventory_application", Event_PostInventory );
 
 	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
-	test = DynamicDetourFromConfSafe( hGameConf, "PassServerEntityFilter" );
-	test.Enable( Hook_Post, Detour_Test );
+	g_dtServerPassFilter = DynamicDetourFromConfSafe( hGameConf, "PassServerEntityFilter" );
+	g_dtServerPassFilter.Enable( Hook_Post, Detour_ServerPassFilter );
 
-	/*hSimpleTrace = DynamicDetourFromConfSafe( hGameConf, "CTraceFilterSimple::ShouldHitEntity" );
-	hSimpleTrace.Enable( Hook_Post, Detour_ShouldHitEntitySimple );
+	g_dhShouldCollide = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::ShouldCollide" );
+	g_dhTouch = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::Touch" );
 
-	hSentryTrace = DynamicDetourFromConfSafe( hGameConf, "CTraceFilterIgnoreTeammatesExceptEntity::ShouldHitEntity" );
-	hSentryTrace.Enable( Hook_Post, Detour_ShouldHitEntitySentry );*/
-
-	hShouldCollide = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::ShouldCollide" );
-	hTouch = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::Touch" );
-
-	hPostFrame = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::ItemPostFrame" );
-	hTakeDamage = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::OnTakeDamage" );
+	g_dhPostFrame = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::ItemPostFrame" );
+	g_dhTakeDamage = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::OnTakeDamage" );
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CBaseEntity::Touch" );
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
-	hTouchCall = EndPrepSDKCallSafe( "CBaseEntity::Touch" );
+	g_sdkTouchCall = EndPrepSDKCallSafe( "CBaseEntity::Touch" );
 
 	delete hGameConf;
 }
@@ -122,7 +113,7 @@ void SetupMinigun( int iMinigun ) {
 	if( iMinigun == -1 || AttribHookFloat( 0.0, iMinigun, "custom_sphere" ) == 0.0 )
 		return;
 
-	hPostFrame.HookEntity( Hook_Post, iMinigun, Hook_PostFrame );
+	g_dhPostFrame.HookEntity( Hook_Post, iMinigun, Hook_PostFrame );
 }
 
 MRESReturn Hook_PostFrame( int iThis ) {
@@ -132,10 +123,10 @@ MRESReturn Hook_PostFrame( int iThis ) {
 
 	int iWeaponState = GetEntProp( iThis, Prop_Send, "m_iWeaponState" );
 	float flTrackerValue = Tracker_GetValue( iWeaponOwner, g_szShieldKeyName );
-	//if( !( iWeaponState == 3 ) || flTrackerValue <= 0.0 ) { //spinning
-		//RemoveShield( iWeaponOwner );
-		//return MRES_Handled;
-	//}
+	if( !( iWeaponState == 3 ) || flTrackerValue <= 0.0 ) { //spinning
+		RemoveShield( iWeaponOwner );
+		return MRES_Handled;
+	}
 
 	int iShield = EntRefToEntIndex( g_iSphereShields[ iWeaponOwner ] );
 	if( iShield == -1 && flTrackerValue > 10.0 )
@@ -214,9 +205,9 @@ void SpawnShield( int iOwner ) {
 
 	//SetEntProp( iShield, Prop_Data, "m_takedamage", DAMAGE_EVENTS_ONLY );
 	
-	hShouldCollide.HookEntity( Hook_Post, iShield, Hook_ShieldShouldCollide );
-	hTouch.HookEntity( Hook_Post, iShield, Hook_ShieldTouch );
-	hTakeDamage.HookEntity( Hook_Pre, iShield, Hook_ShieldTakeDamage );
+	g_dhShouldCollide.HookEntity( Hook_Post, iShield, Hook_ShieldShouldCollide );
+	g_dhTouch.HookEntity( Hook_Post, iShield, Hook_ShieldTouch );
+	g_dhTakeDamage.HookEntity( Hook_Pre, iShield, Hook_ShieldTakeDamage );
 
 	EmitSoundToAll( g_szShieldDeploySnd, iShield, SNDCHAN_AUTO, 95 );
 
@@ -312,7 +303,7 @@ MRESReturn Hook_ShieldTouch( int iThis, DHookParam hParams ) {
 	int iTouchTeam = GetEntProp( iOther, Prop_Send, "m_iTeamNum" );
 
 	if( iShieldTeam != iTouchTeam ) {
-		SDKCall( hTouchCall, iOther, GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" ) );
+		SDKCall( g_sdkTouchCall, iOther, GetEntPropEnt( iThis, Prop_Send, "m_hOwnerEntity" ) );
 		EmitSoundToAll( szSoundNames[ GetRandomInt(0, 3) ], iThis, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEPITCH, 1.0, GetRandomInt( 90, 110 ) );
 		//RemoveEntity( iOther );
 		return MRES_Handled;
@@ -393,7 +384,7 @@ void BuildShieldCharge( TFDamageInfo tfDamageInfo ) {
 	Tracker_SetValue( iOwner, g_szShieldKeyName, flNewValue );
 }
 
-MRESReturn Detour_Test( DHookReturn hReturn, DHookParam hParams ) {
+MRESReturn Detour_ServerPassFilter( DHookReturn hReturn, DHookParam hParams ) {
 	if( hReturn.Value == false )
 		return MRES_Ignored;
 
