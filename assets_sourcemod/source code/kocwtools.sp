@@ -578,10 +578,11 @@ public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 
 	Address aAttributePointer = GetEntityAddress(iEntity) + view_as<Address>(iAttribOffset);
 
+	//c++ compilers return structs as a second hidden pointer on the stack when they are returned by value so we need this aids
 	Address aLiterallyNothing;
 	Address aResult = SDKCall( IsValidPlayer(iEntity) ? g_sdkManagerApplyAttributeString : g_sdkContainerApplyAttributeString, aLiterallyNothing, aAttributePointer, aInputString, iEntity, aPooledAttribute );
 
-	static char szBuffer[256];
+	char szBuffer[128];
 	LoadStringFromAddress( DereferencePointer(aResult), szBuffer, sizeof(szBuffer) );
 	SetNativeString( 1, szBuffer, GetNativeCell( 2 ) );
 	return !StrEqual( szBuffer, "" );
