@@ -58,6 +58,14 @@
 					"offset"		"0x6D"
 				}
 			}
+			"CTFFlameEntity::OnCollideWithTeammate_DHookMachineBroke"
+			{
+				"linux"
+				{
+					"signature"		"CTFFlameEntity::OnCollideWithTeammate"
+					"offset"		"0x155"
+				}
+			}
 		}
         "Offsets"
         {

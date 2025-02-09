@@ -73,7 +73,6 @@ public void Midhook_MetalPerHit( MidHookRegisters hRegs ) {
 
 	int iPlayer = GetEntityFromAddress( aPlayer );
 	int iBuilding = GetEntityFromAddress( hRegs.Load( DHookRegister_EBP, 8, NumberType_Int32 ) );
-	PrintToServer("%i %i", iPlayer, iBuilding);
 	if( GetEntProp( iBuilding, Prop_Send, "m_iObjectType" ) == 2 && GetEntPropEnt( iBuilding, Prop_Send, "m_hBuilder" ) != iPlayer ) {
 		float flAmountToAdd = hRegs.GetFloat( DHookRegister_ESI );
 		hRegs.SetFloat( DHookRegister_ESI, flAmountToAdd * g_flUpgradePenaltyValue );
