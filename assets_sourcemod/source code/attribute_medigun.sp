@@ -56,7 +56,6 @@ static char g_szAngelShieldSound[] = "weapons/angel_shield_on.wav";
 static char g_szAngelShieldChargedSound[] = "weapons/healing/medigun_overheal_max.wav";
 
 DynamicDetour	g_dtFireCollide;
-DynamicDetour	g_dtFireCollideTeam;
 DynamicDetour	g_dtFireThink;
 
 DynamicDetour	g_dtPaintballRifleHitAlly;
@@ -70,6 +69,7 @@ DynamicHook	g_dhWeaponDeploy;
 
 MidHook		g_mhPaintballUberFix;
 MidHook		g_mhBurstHealFixRate;
+MidHook		g_mhFireCollideTeam;
 
 Handle		g_sdkGetBuffedMaxHealth;
 Handle		g_sdkSpeakIfAllowed;
@@ -176,10 +176,11 @@ public void OnPluginStart() {
 
 	g_dtFireCollide = DynamicDetourFromConfSafe( hGameConf, "CTFFlameEntity::OnCollide" );
 	g_dtFireCollide.Enable( Hook_Pre, Detour_FireTouch );
-	g_dtFireCollideTeam = DynamicDetourFromConfSafe( hGameConf, "CTFFlameEntity::OnCollideWithTeammate" );
-	g_dtFireCollideTeam.Enable( Hook_Pre, Detour_FireTouch );
 	g_dtFireThink = DynamicDetourFromConfSafe( hGameConf, "CTFFlameEntity::FlameThink" );
 	g_dtFireThink.Enable( Hook_Post, Detour_FlameThink );
+
+	g_mhFireCollideTeam = new MidHook( GameConfGetAddress( hGameConf, "CTFFlameEntity::OnCollideWithTeammate_DHookMachineBroke" ), Midhook_FireCollideTeam, false );
+	g_mhFireCollideTeam.Enable();
 
 	g_dtPaintballRifleHitAlly = DynamicDetourFromConfSafe( hGameConf, "CTFPaintballRifle::HitAlly" );
 	g_dtPaintballRifleHitAlly.Enable( Hook_Post, Detour_PaintballRifleHitAlly );
@@ -561,7 +562,7 @@ MRESReturn Detour_SimulateFlamesPre( int iFlamethrower ) {
 	if( !IsValidPlayer(iOwner) )
 		return MRES_Ignored;
 
-	SetForceLagCompensation(true);
+	SetForceLagCompensation( true );
 
 	return MRES_Handled;
 }
@@ -570,11 +571,18 @@ MRESReturn Detour_SimulateFlamesPost( int iFlamethrower ) {
 	if( !IsValidPlayer(iOwner) )
 		return MRES_Ignored;
 
-	SetForceLagCompensation(false);
+	SetForceLagCompensation( false );
 
 	return MRES_Handled;
 }
 
+void FlameCreateTouchMap( Address aFlame ) {
+	if( g_amFlameTouchMap.ContainsKey( aFlame ) )
+		return;
+
+	AnyMap amTouchedMap = new AnyMap();
+	g_amFlameTouchMap.SetValue( aFlame, amTouchedMap );
+}
 void SetFlameHasTouchedEnt( Address aFlame, int iEntity ) {
 	AnyMap amTouchedMap;
 	if( g_amFlameTouchMap.GetValue( aFlame, amTouchedMap ) && amTouchedMap ) {
@@ -593,13 +601,6 @@ bool FlameHasTouchedEnt( Address aFlame, int iEntity ) {
 	FlameCreateTouchMap( aFlame );
 	return FlameHasTouchedEnt( aFlame, iEntity );
 }
-void FlameCreateTouchMap( Address aFlame ) {
-	if( g_amFlameTouchMap.ContainsKey( aFlame ) )
-		return;
-
-	AnyMap amTouchedMap = new AnyMap();
-	g_amFlameTouchMap.SetValue( aFlame, amTouchedMap );
-}
 
 //literally do not care about anything in this function except knowing when the flame stops existing
 MRESReturn Detour_FlameThink( Address aFlame, DHookReturn hReturn, DHookParam hParams ) {
@@ -617,11 +618,30 @@ MRESReturn Detour_FlameThink( Address aFlame, DHookReturn hReturn, DHookParam hP
 
 	AnyMap amTouchedMap;
 	if( g_amFlameTouchMap.GetValue( aFlame, amTouchedMap ) && amTouchedMap ) {
-		CloseHandle(amTouchedMap);
+		CloseHandle( amTouchedMap );
 		g_amFlameTouchMap.Remove( aFlame );
 	}	
 
 	return MRES_Handled;
+}
+
+void Midhook_FireCollideTeam( MidHookRegisters hRegisters ) {
+	Address aThis = hRegisters.Load( DHookRegister_EBP, 8, NumberType_Int32 );
+	int iTarget = GetEntityFromAddress( hRegisters.Load( DHookRegister_EBP, 12, NumberType_Int32 ) );
+	int iOwner = LoadEntityHandleFromAddress( aThis + view_as<Address>( g_iFlameOwnerOffset ) );
+
+	if( !IsValidPlayer( iOwner ) )
+		return;
+
+	int iWeapon = GetEntityInSlot( iOwner, 1 );
+	if( GetCustomMedigunType( iWeapon ) != CMEDI_FLAME )
+		return;
+
+	//horrible horrible stack manipulation to prevent sniper's arrows from being set on fire
+	hRegisters.Store( DHookRegister_ESP, -1, 4, NumberType_Int32 );
+
+	if( IsValidPlayer( iTarget ) )
+		FireTouchHeal( aThis, iTarget, iOwner, iWeapon );
 }
 
 //apparently tf2c flame particles aren't even derived from cbaseentity so they're passed by address instead
@@ -638,8 +658,10 @@ MRESReturn Detour_FireTouch( Address aFlame, DHookParam hParams ) {
 	if( FlameHasTouchedEnt( aFlame, iTarget ) )
 		return MRES_Supercede;
 
-	if( IsValidPlayer( iTarget ) && GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) == TeamSeenBy( iOwner, iTarget ) )
+	if( IsValidPlayer( iTarget ) && GetEntProp( iOwner, Prop_Send, "m_iTeamNum" ) == TeamSeenBy( iOwner, iTarget ) ) {
 		FireTouchHeal( aFlame, iTarget, iOwner, iWeapon );
+		SetFlameHasTouchedEnt( aFlame, iTarget );
+	}
 
 	return MRES_Supercede;
 }
@@ -668,8 +690,6 @@ void FireTouchHeal( Address aFlame, int iCollide, int iOwner, int iWeapon ) {
 
 	SetCustomCondDuration( iCollide, TFCC_HYDROPUMPHEAL, flNewDuration, false );
 	SetCustomCondLevel( iCollide, TFCC_HYDROPUMPHEAL, flNewLevel );
-
-	SetFlameHasTouchedEnt( aFlame, iCollide );
 }
 
 #define UBER_REDUCTION_TIME 0.2
