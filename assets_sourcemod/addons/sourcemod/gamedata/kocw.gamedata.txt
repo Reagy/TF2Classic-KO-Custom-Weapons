@@ -314,15 +314,15 @@
 			
 			"CBaseCombatWeapon::SendWeaponAnim"
 			{
-				"linux"		"250"
+				"linux"		"272"
 			}
 			"CTFWeaponBase::Deploy"
 			{
-				"linux"		"284"
+				"linux"		"285"
 			}
 			"CTFWeaponBase::Holster"
 			{
-				"linux"		"285"
+				"linux"		"286"
 			}
 			"CTFWeaponBase::ItemPostFrame"
 			{
