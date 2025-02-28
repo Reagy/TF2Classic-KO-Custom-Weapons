@@ -540,6 +540,8 @@ public void OnTakeDamageAlivePostTF( int iTarget, TFDamageInfo tfDamageInfo ) {
 
 void CheckMultDamageAttribCustom( int iTarget, TFDamageInfo tfDamageInfo ) {
 	int iAttacker = tfDamageInfo.iAttacker;
+	if( !IsValidPlayer( iAttacker ) )
+		return;
 
 	if( !HasEntProp( iTarget, Prop_Send, "m_hActiveWeapon" ) )
 		return;
