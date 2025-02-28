@@ -551,7 +551,7 @@ void CheckMultDamageAttribCustom( int iTarget, TFDamageInfo tfDamageInfo ) {
 		return;
 
 	static char szAttribute[64];
-	if( AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_resist_customcond" ) ) {
+	if( !AttribHookString( szAttribute, sizeof( szAttribute ), iWeapon, "custom_resist_customcond" ) ) {
 		return;
 	}
 		
