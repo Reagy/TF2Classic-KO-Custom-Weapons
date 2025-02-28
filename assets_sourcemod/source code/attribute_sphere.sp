@@ -388,11 +388,13 @@ MRESReturn Detour_ServerPassFilter( DHookReturn hReturn, DHookParam hParams ) {
 	if( hReturn.Value == false )
 		return MRES_Ignored;
 
-	if( hParams.IsNull(1) || hParams.IsNull(2) )
+
+	Address pTouch = hParams.Get(1), pPass = hParams.Get(2);
+	if( pTouch == Address_Null || pPass == Address_Null )
 		return MRES_Ignored;
 
-	int iTouch = GetEntityFromAddress( hParams.Get(1) );
-	int iPass = GetEntityFromAddress( hParams.Get(2) );
+	int iTouch = GetEntityFromAddress( pTouch );
+	int iPass = GetEntityFromAddress( pPass );
 
 	if( !g_bIsShield[iTouch] )
 		return MRES_Ignored;
