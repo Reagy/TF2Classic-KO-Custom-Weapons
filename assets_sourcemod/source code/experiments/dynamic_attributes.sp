@@ -34,8 +34,6 @@ Handle g_sdkProvideTo;
 Handle g_sdkAddToTail;
 Handle g_sdkGetAttributeManager;
 
-MidHook g_mhVTable;
-
 #define ECONITEMVIEW_SIZE 72
 #define ECONITEMATTRIBUTE_SIZE 272
 
@@ -82,9 +80,6 @@ public void OnPluginStart() {
 	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
 	g_sdkGetAttributeManager = EndPrepSDKCall();
 
-	g_mhVTable = new MidHook( GameConfGetAddress( hGameConf, "CEconItemSchema::ParseItemRec_VTable" ), Midhook_FindVTable, false );
-	g_mhVTable.Enable();
-
 	delete hGameConf;
 
 	for( int i = 1; i < MAXPLAYERS; i++ ) {
@@ -99,12 +94,9 @@ public void OnPluginStart() {
 }
 
 Address g_aAttributeVTable = Address_Null;
-public void Midhook_FindVTable( MidHookRegisters hRegs ) {
-	g_aAttributeVTable = hRegs.Load( DHookRegister_EDI );
-	PrintToServer( "%i", g_aAttributeVTable );
-}
 
-public void OnEntityCreated( int iClient ) {
+/*public void OnEntityCreated( int iClient ) {
+	
 	if( !IsValidPlayer( iClient ) )
 		return;
 
@@ -157,20 +149,23 @@ void AddAttributeFloat( int iPlayer, float flValue, int iAttribID, const char[] 
 
 	PrintToServer("%i %i", g_mbEconItemViews[iPlayer].Address, LoadFromEntity( EntRefToEntIndex( g_iDummyRefs[iPlayer] ), 1168 ) );
 
-	//bool bTest = SDKCall( g_sdkAddAttribute, g_mbEconItemViews[iPlayer].Address, mbAttribute.Address );
-	SDKCall( g_sdkAddToTail, g_mbEconItemViews[iPlayer].Address + view_as<Address>(56), g_mbEconItemViews[iPlayer].LoadFromOffset( 68, NumberType_Int32 ), mbAttribute.Address );
-	PrintToServer("%i", g_mbEconItemViews[iPlayer].LoadFromOffset( 68, NumberType_Int32 ));
+	int iWeapon = GetEntPropEnt( iPlayer, Prop_Send, "m_hActiveWeapon" );
+
+	bool bTest = SDKCall( g_sdkAddAttribute, GetEntityAddress( iWeapon ) + view_as<Address>( 1168 ), mbAttribute.Address );
+	PrintToServer("%i", bTest );
+	//SDKCall( g_sdkAddToTail,  GetEntityAddress( iWeapon ) + view_as<Address>( 1168 ) + view_as<Address>( 56 ), g_mbEconItemViews[iPlayer].LoadFromOffset( 68, NumberType_Int32 ), mbAttribute.Address );
+	//PrintToServer("%i", g_mbEconItemViews[iPlayer].LoadFromOffset( 68, NumberType_Int32 ));
 }
 
 void RemoveAttribute( int iPlayer, const char[] szAttribClass ) {
 
-}
+}*/
 
 
 Action Command_Add( int iClient, int iArgs ) {
 	//if(iArgs < 1) return Plugin_Handled;
 	
-	AddAttributeFloat( iClient, 10.0, 6, "mult_postfiredelay" );
+	//AddAttributeFloat( iClient, 10.0, 6, "mult_postfiredelay" );
 
 	return Plugin_Handled;
 }

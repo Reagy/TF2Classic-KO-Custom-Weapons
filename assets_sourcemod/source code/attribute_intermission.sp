@@ -75,7 +75,6 @@ enum struct ThrownSapper {
 ThrownSapper g_esPlayerSappers[MAXPLAYERS+1];
 ArrayList g_alBuildingList; //contains a list of building reference ids to iterate
 
-
 PlayerFlags g_pfHasIntermission;
 
 int g_hEffectSprite;                                                    // Handle for the lightning shockwave sprite.
@@ -514,13 +513,11 @@ MRESReturn Hook_IntermissionTakeDamage( int iEntity, DHookReturn hReturn, DHookP
 	return MRES_Supercede;
 }
 
-public void OnTakeDamageBuilding( int iBuilding, Address aDamageInfo ) {
-	TFDamageInfo tfInfo = TFDamageInfo( aDamageInfo );
-
+public void OnTakeDamageBuilding( int iBuilding, TFDamageInfo tfDamageInfo ) {
 	if( GetEntProp( iBuilding, Prop_Send, "m_iObjectType" ) != 2 ) //sentry gun
 		return;
 	
-	int iAttacker = tfInfo.iAttacker;
+	int iAttacker = tfDamageInfo.iAttacker;
 	if( !IsValidPlayer( iAttacker ) )
 		return;
 
@@ -533,7 +530,7 @@ public void OnTakeDamageBuilding( int iBuilding, Address aDamageInfo ) {
 	if( g_esPlayerSappers[iAttacker].alSapping.FindValue( iBuildingRef ) == -1 )
 		return;
 
-	tfInfo.flDamage *= INTERMISSION_SELF_DAMAGE_MULT;
+	tfDamageInfo.flDamage *= INTERMISSION_SELF_DAMAGE_MULT;
 }
 static int g_iRingColors[6][4] = {
 	{ 0, 0, 0, 0 }, //spectator
@@ -621,7 +618,7 @@ void TakeSpySapper( int iPlayer ) {
 	}
 }
 
-public void Tracker_OnRecharge( int iPlayer, const char szTrackerName[32], float flNewValue ) {
+public void Tracker_OnRecharge( int iPlayer, const char[] szTrackerName, float flNewValue ) {
 	if( !StrEqual( szTrackerName, SAPPERKEYNAME ) )
 		return;
 

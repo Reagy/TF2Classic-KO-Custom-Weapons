@@ -31,6 +31,10 @@ static char g_szStickybombModel[]	= "models/weapons/w_models/w_stickyrifle/c_sti
 static char g_szFireSound[]		= "weapons/stickybomblauncher_shoot.wav";
 static char g_szColliderModel[]		= "models/props_gameplay/ball001.mdl";
 
+int g_iGrenadeDamageOffset = -1;
+int g_iGrenadeRadiusOffset = -1;
+int g_iAttackIsCritOffset = -1;
+
 #define BOMBHISTORYSIZE 16
 enum struct BombLagComp {
 	int iBombRef;
@@ -50,8 +54,8 @@ int g_iBombUnlag = -1;
 public void OnPluginStart() {
 	Handle hGameConf = LoadGameConfigFile( "kocw.gamedata" );
 
-	g_dhPrimaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::PrimaryAttack" );
-	g_dhSecondaryFire = DynamicHook.FromConf( hGameConf, "CTFWeaponBase::SecondaryAttack" );
+	g_dhPrimaryFire = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::PrimaryAttack" );
+	g_dhSecondaryFire = DynamicHookFromConfSafe( hGameConf, "CTFWeaponBase::SecondaryAttack" );
 
 	StartPrepSDKCall( SDKCall_Static );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFGrenadePipebombProjectile::Create" );
@@ -63,29 +67,33 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	PrepSDKCall_SetReturnInfo( SDKType_CBaseEntity, SDKPass_Pointer );
-	g_sdkPipebombCreate = EndPrepSDKCall();
+	g_sdkPipebombCreate = EndPrepSDKCallSafe( "CTFGrenadePipebombProjectile::Create" );
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseEntity::SetCollisionGroup" );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	g_sdkSetCollisionGroup = EndPrepSDKCall();
+	g_sdkSetCollisionGroup = EndPrepSDKCallSafe( "CBaseEntity::SetCollisionGroup" );
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CTFBaseGrenade::Detonate" );
-	g_sdkDetonate = EndPrepSDKCall();
+	g_sdkDetonate = EndPrepSDKCallSafe( "CTFBaseGrenade::Detonate" );
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CTFWeaponBase::CalcAttackIsCritical" );
-	g_sdkAttackIsCritical = EndPrepSDKCall();
+	g_sdkAttackIsCritical = EndPrepSDKCallSafe( "CTFWeaponBase::CalcAttackIsCritical" );
 
 	StartPrepSDKCall( SDKCall_Entity );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CBaseCombatWeapon::SendWeaponAnim" );
 	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
 	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
-	g_sdkSendWeaponAnim = EndPrepSDKCall();
+	g_sdkSendWeaponAnim = EndPrepSDKCallSafe( "CBaseCombatWeapon::SendWeaponAnim" );
 
-	g_dhShouldExplode = DynamicHook.FromConf( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
-	g_dhOnTakeDamage = DynamicHook.FromConf( hGameConf, "CBaseEntity::OnTakeDamage" );
+	g_dhShouldExplode = DynamicHookFromConfSafe( hGameConf, "CTFGrenadePipebombProjectile::ShouldExplodeOnEntity" );
+	g_dhOnTakeDamage = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::OnTakeDamage" );
+
+	g_iGrenadeDamageOffset = GameConfGetOffsetSafe( hGameConf, "CTFBaseGrenade::m_flDamage" );
+	g_iGrenadeRadiusOffset = GameConfGetOffsetSafe( hGameConf, "CTFBaseGrenade::m_flRadius" );
+	g_iAttackIsCritOffset = GameConfGetOffsetSafe( hGameConf, "CTFWeaponBase::m_bCurrentAttackIsCrit" );
 
 	g_hLagCompensation = new ArrayList( sizeof( BombLagComp ) );
 
@@ -231,17 +239,18 @@ MRESReturn Hook_Secondary( int iWeapon ) {
 	g_dhShouldExplode.HookEntity( Hook_Pre, iGrenade, Hook_ShouldExplode );
 	SetEntityModel( iGrenade, g_szStickybombModel );
 
-	//todo: move to gamedata
-	SetEntProp( iGrenade, Prop_Send, "m_bCritical", LoadFromEntity( iWeapon, 1566, NumberType_Int8 ) );
+	SetEntProp( iGrenade, Prop_Send, "m_bCritical", LoadFromEntity( iWeapon, g_iAttackIsCritOffset, NumberType_Int8 ) );
 
 	SetEntPropFloat( iGrenade, Prop_Send, "m_flModelScale", 1.5 );
 
-	//todo: move to gamedata
-	StoreToEntity( iGrenade, 1212, 60.0 ); //damage
-	StoreToEntity( iGrenade, 1216, 75.0 ); //radius
+	StoreToEntity( iGrenade, g_iGrenadeDamageOffset, 60.0 ); //damage
+	StoreToEntity( iGrenade, g_iGrenadeRadiusOffset, 75.0 ); //radius
 
 	int iCollider = CreateEntityByName( "prop_dynamic_override" );
 	SetEntityModel( iCollider, g_szColliderModel );
+
+	//DispatchKeyValue( iCollider, "modelname", g_szColliderModel );
+
 	g_dhOnTakeDamage.HookEntity( Hook_Pre, iCollider, Hook_DamageCollider );
 
 	DispatchSpawn( iCollider );
@@ -298,9 +307,8 @@ MRESReturn Hook_DamageCollider( int iCollider, DHookReturn hReturn, DHookParam h
 
 	//PrintToServer("fldamage %f", flDamage);
 
-	//todo: move to gamedata
-	StoreToEntity( iBomb, 1212, flDamage, NumberType_Int32 ); //damage
-	StoreToEntity( iBomb, 1216, 150.0 ); //radius
+	StoreToEntity( iBomb, g_iGrenadeDamageOffset, flDamage, NumberType_Int32 ); //damage
+	StoreToEntity( iBomb, g_iGrenadeRadiusOffset, 150.0 ); //radius
 
 	float vecColliderCoords[3];
 	GetEntPropVector( iCollider, Prop_Send, "m_vecOrigin", vecColliderCoords );
