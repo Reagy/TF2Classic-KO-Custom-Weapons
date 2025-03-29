@@ -1,4 +1,4 @@
-"VertexLitGeneric"
+SDK_VertexLitGeneric
 {
 	"$basetexture" "models/weapons/v_bfg/glass"
 	"$translucent" 1
@@ -9,6 +9,13 @@
 	"$glowcolor" 		"1"
 	"$cloakPassEnabled" 	"1"
 	"$yellow" 		"0"
+	"$sheenPassEnabled" "1"
+
+	"$sheenmap" 		"cubemaps/cubemap_sheen001"
+	"$sheenmapmask" 		"Effects/AnimatedSheen/animatedsheen0"
+	"$sheenmaptint" 		"[ 1 1 1 ]"
+	"$sheenmapmaskframe" 	"0"
+	"$sheenindex" 		"0"
 
 	"Proxies"
 	{
@@ -38,6 +45,12 @@
 			"srcVar1" 	"$color2"
 			"srcVar2" 	"$yellow"
 			"resultVar" 	"$color2"
+		}
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
 		}
 	}
 }
