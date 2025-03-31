@@ -4794,21 +4794,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"blast_dmg_to_self"
 					"value" 			"0"
 				}
-				"Set DamageType Ignite"												
-				{
-					"attribute_class"	"set_dmgtype_ignite"
-					"value" 			"1"
-				}	
-				"weapon burn dmg increased"
-				{
-					"attribute_class"	"mult_wpn_burndmg"
-					"value" 			"0.66666666667"
-				}	
-				"weapon_stattrak_module_scale"	
-				{
-					"attribute_class"	"mult_wpn_burntime"
-					"value" 			"0.7"
-				}	
 				"damage force increase hidden"												
 				{
 					"attribute_class"	"mult_dmgself_push_force"
@@ -7791,6 +7776,11 @@ Alt-Fire: Detonate all Mini-Dispensers
 				{
 					"attribute_class"	"mod_health_regen_hurt_delay"
 					"value"				"3"
+				}	
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
 				}	
 				"linked item id"
 				{
