@@ -1,9 +1,5 @@
 // ------------------------------------------------------------------------------------ //
-// Knockout Custom Weapons V6r1
-// ------------------------------------------------------------------------------------ //
-// Combo pack of New Old Weapons Pack V2.1.5 & Tangerine Paint & Grunt's Weapon Addons V2
-// ------------------------------------------------------------------------------------ //
-// Some of this is not needed, too lazy to cleanup atm
+// Knockout Custom Weapons V7
 // ------------------------------------------------------------------------------------ //
 
 // ------------------------------------------------------------------------------------ //
@@ -8071,7 +8067,7 @@
 	"volume"	"1.0"
 	"pitch"		"92, 100"
 	
-	"wave"		"weapons/AK74U_Fire.wav"
+	"wave"		"weapons/AK74U_NewFire.wav"
 }
 
 "Weapon_AK74U.SingleCrit"
@@ -8081,7 +8077,7 @@
 	"volume"	"1.0"
 	"pitch"		"92, 100"
 	
-	"wave"		"weapons/AK74U_FireCrit.wav"
+	"wave"		"weapons/AK74U_NewFireCrit.wav"
 }
 
 
@@ -17707,44 +17703,37 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// TRICKSHOT
+// CHEMIST CIV RAY GUN
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_BigFifty.Single"
+"Weapon_Alien_Gun.Single"
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 
-	"wave"		")weapons\MannCannon_FireRedux.wav"
+	"wave"		")weapons\ChemistCivRayGun_Fire.wav"
 
 }
-"Weapon_BigFifty.SingleCrit"
+"Weapon_Alien_Gun.SingleCrit"
 {
 	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"		"1.0"
 
-	"wave"			")weapons/MannCannon_FireRedux_Crit.wav"
+	"wave"			")weapons/ChemistCivRayGun_FireCrit.wav"
 }
 
-"Weapon_BigFifty.BoltBack"
+"Weapon_Alien_Gun.Reload"
 {
 	"channel"	"CHAN_STATIC"
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"	".67"
 	"pitch"		"98, 102"
-	"wave"		"weapons/MannCannon_BoltPull.wav"
+	"wave"		"weapons/ChemistCivRayGun_Reload.wav"
 }
 
-"Weapon_BigFifty.BoltForward"
-{
-	"channel"	"CHAN_STATIC"
-	"soundlevel"	"SNDLVL_74dB"
-	"volume"	".67"
-	"pitch"		"98, 102"
-	"wave"		"weapons/MannCannon_BoltReturn.wav"
-}
+
 
 // ------------------------------------------------------------------------------------ //
 // DAVIE CROCKET
@@ -17776,4 +17765,18 @@
 	"volume"	"1.0"
 	"pitch"		"92, 98"
 	"wave"		")weapons/nuke_explode.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// MANNHEIM MEDICATOR
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_MedicatorNader.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"		"1.0"
+
+	"wave"		")weapons\MedicatorNader_Fire.wav"
+
 }
