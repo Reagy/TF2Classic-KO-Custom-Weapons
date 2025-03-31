@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_pocket_boomstick\c_pocket_boomstick_large"
+	$translucent 1
+}

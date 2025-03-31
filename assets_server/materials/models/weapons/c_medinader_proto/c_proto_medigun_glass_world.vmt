@@ -1,0 +1,39 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models/weapons/c_medinader_proto/c_proto_medigun_glass"
+
+	"$yellow" "0"
+	"$additive" "1"
+
+	"$phong" "1"
+	"$phongexponent" "20"
+	"$phongboost" "10"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.3 1 8]"
+	"$halflambert" "0"
+
+
+ 	"$blendtintbybasealpha" "1"
+	"$colortint_base" "{166 134 103}" 
+	"$color2" "{69 53 48}" 
+
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "4"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "2"		"$cloakPassEnabled" "1"
+
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Equals"
+		{
+			"srcVar1" "$yellow"
+			"resultVar" "$color2"
+		}
+	}
+}
