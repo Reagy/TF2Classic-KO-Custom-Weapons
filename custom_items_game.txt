@@ -22341,6 +22341,11 @@ Weapon by: 'Colrot'"
 					"attribute_class"	"mult_dmg"
 					"value"				"0.30333"
 				}
+				"crit mod disabled"															
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
 			}
 			"visuals"
 			{
@@ -26511,6 +26516,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	    "mult_wpn_burntime"
+					"value" 				"0.01"
 				}				
 			}
 			"visuals"																			
