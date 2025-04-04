@@ -1860,10 +1860,10 @@ Weapon from: New Old Weapons Pack"
 					"attribute_class"		"add_civ_aura_override"
 					"value" 				"111"
 				}	
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -1934,10 +1934,10 @@ Weapon from: New Old Weapons Pack"
 					"attribute_class"		"add_civ_aura_override"
 					"value" 				"111"
 				}	
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -2069,10 +2069,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"umbrella_recharge_rate"
 					"value"				"0.1875"
 				}
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 			    "civ boost aura override"
 				{
@@ -2151,10 +2151,10 @@ Weapon by: 'Reagy'"
 					"attribute_class"		"add_civ_aura_override"
 					"value" 				"111"
 				}
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -2304,10 +2304,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"cannot_pick_up_intelligence"
 					"value"				"1"
 				}
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
                 "strange restriction type 1"
 				{
@@ -4460,10 +4460,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
 				}
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"weapon_stattrak_module_scale"											
 				{
@@ -6020,10 +6020,10 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"mult_postfiredelay_with_reduced_health"
 					"value"				"0.5"
 				}
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -7374,6 +7374,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"add_maxhealth"
 					"value"				"50"
+				}
+				"weapon_stattrak_module_scale"		
+				{
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -11822,10 +11827,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_always_draw_tracer_effect"
 					"value"				"1"
 				}	
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -13091,10 +13096,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_always_draw_tracer_effect"
 					"value"				"1"
 				}	
-                "strange restriction type 1"
+                "weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -16063,10 +16068,10 @@ Weapon by: 'Majro'"
 					"value"				"1"
 				}
 				
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -16629,10 +16634,10 @@ Edited by: 'Reagy'"
 					"attribute_class"	"mod_always_draw_tracer_effect"
 					"value"				"1"
 				}
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -17018,10 +17023,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_reload_time"
 					"value" 			"1.2"
 				}
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -19176,10 +19181,10 @@ Weapon by: 'The One Of Wonders'"
                     "attribute_class"    "mult_reload_time_noanimmod"
                     "value"              "1.5"
                 }	
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -20176,7 +20181,7 @@ Weapon from: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.5"
+					"value"				"1.1"
 				}	
 				"weapon_stattrak_module_scale"
 				{
@@ -20303,7 +20308,7 @@ Weapon from: 'The One Of Wonders'"
 				"ubercharge rate penalty on wearer"
 				{
 					"attribute_class"	"mult_medigun_uberchargerate_wearer"
-					"value" 			"0.3"
+					"value" 			"0.67"
 				}
 				"strange restriction type 1"
 				{
@@ -24600,10 +24605,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"custom_projectile_origin_offset"
 					"value"				"2 2 2"
 				}
-				"strange restriction type 1"
+				"weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" 			"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"decrease player capture value"
 				{
@@ -24840,7 +24845,7 @@ Weapon by: 'The One Of Wonders'"
 				"apply heal on explosion"
 				{
 					"attribute_class"	"apply_heal_explosion"
-					"value"				"20"
+					"value"				"50"
 				}
 				"explode on world"
 				{
@@ -24850,7 +24855,7 @@ Weapon by: 'The One Of Wonders'"
 				"residual heal rate"
 				{
 					"attribute_class"	"residual_heal_rate"
-					"value"				"10"
+					"value"				"20"
 				}
 				"residual heal duration"
 				{
@@ -24865,12 +24870,12 @@ Weapon by: 'The One Of Wonders'"
 				"adjust burst healing when stacking"
 				{
 					"attribute_class"	"apply_heal_explosion_stacking_adjust"
-					"value"				"3"
+					"value"				"5"
 				}
 				"adjust residual healing when stacking"
 				{
 					"attribute_class"	"apply_heal_explosion_residual_adjust"
-					"value"				"2"
+					"value"				"5"
 				}
 				"fuse bonus"
 				{
@@ -24890,7 +24895,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_medigun_uberchargerate"
-					"value"				"0.5"
+					"value"				"0.75"
 				}
                 "Reload time no anim speed mod"
                 {
@@ -26877,10 +26882,10 @@ Weapon from: 'The One Of Wonders'"
 					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
 				}
-			    "max health additive bonus"		
+			    "weapon_stattrak_module_scale"		
 				{
-					"attribute_class"	"add_maxhealth"
-					"value"				"-25"
+					"attribute_class"	"mult_patient_overheal_penalty"
+					"value"				"0.1"
 				}
 				"fire rate bonus"
 				{
@@ -28886,7 +28891,7 @@ Wearable by: 'The One Of Wonders'"
 				"maxammo metal reduced"
 				{
 					"attribute_class"	"mult_maxammo_metal"
-					"value"				"0.5"
+					"value"				"0.25"
 				}
 				// weapon shenanigans
 			    "strange restriction type 1"
@@ -28949,12 +28954,7 @@ Wearable by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_always_draw_tracer_effect"
 					"value"				"1"
-				}		
-                "strange restriction type 1"
-				{
-					"attribute_class"	"custom_sentry_type"
-					"value" 			"4" 
-				}				
+				}					
 			}
 			"visuals"
 			{
@@ -40195,7 +40195,7 @@ Flip 'em off with a high-power shot to the chest"
 		{
 			"name"					"Loadout Weapon: Haste Melee"
 			"description_string"	"Derby Cane (Melee)
-Alt-Fire (Mouse2): Buff an ally with Haste for 8 seconds! (16 sec cooldown)"												
+Alt-Fire (Mouse2): Buff an ally with Haste for 8 seconds! (14 sec cooldown)"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"neutral"
 		}
