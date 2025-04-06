@@ -20237,7 +20237,7 @@ Weapon from: 'The One Of Wonders'"
 			"name"						"TF_WEAPON_SYRINGEGUN_HEALER"
 			"prefab"					"weapon_syringegun"
 			"item_class"                "tf_weapon_paintballrifle"
-			"show_in_armory"			"1"
+			"show_in_armory"			"0"
 			
 			"item_slot"                 "primary"
 			"anim_slot"                 "primary"
@@ -24822,17 +24822,12 @@ Weapon by: 'The One Of Wonders'"
 				"nader residual heal complete bonus"
 				{
 					"attribute_class"	"VISUALONLY"
-					"value"				"2.5"
+					"value"				"11.0"
 				}
 				"nader direct hit heal penalty"
 				{
 					"attribute_class"	"VISUALONLY"
-					"value"				"0.55"
-				}
-				"blast radius decreased"
-				{
-					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.5"
+					"value"				"0.75"
 				}
 				"clip size penalty"
 				{
@@ -24845,7 +24840,7 @@ Weapon by: 'The One Of Wonders'"
 				"apply heal on explosion"
 				{
 					"attribute_class"	"apply_heal_explosion"
-					"value"				"50"
+					"value"				"30"
 				}
 				"explode on world"
 				{
@@ -24860,7 +24855,7 @@ Weapon by: 'The One Of Wonders'"
 				"residual heal duration"
 				{
 					"attribute_class"	"residual_heal_duration"
-					"value"				"5"
+					"value"				"4"
 				}
 				"reduce healing on indirect hit"
 				{
