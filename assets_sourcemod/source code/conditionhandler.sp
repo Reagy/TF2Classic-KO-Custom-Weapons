@@ -1011,19 +1011,23 @@ void AngelShieldTakeDamage( int iTarget, TFDamageInfo tfInfo ) {
 	int iBubbleSource = GetCondSourcePlayer( iTarget, TFCC_ANGELSHIELD );
 	int iNewDamage = RoundToFloor( flNewDamage );
 
+	int iTargetID = IsValidPlayer( iTarget ) ? GetClientUserId( iTarget ) : -1;
+	int iAttackerID = IsValidPlayer( tfInfo.iAttacker ) ? GetClientUserId( tfInfo.iAttacker ) : -1;
+	int iSourceID = IsValidPlayer( iBubbleSource ) ? GetClientUserId( iBubbleSource ) : -1;
+
 	Event eFakeDamage = CreateEvent( "player_hurt", true );
-	eFakeDamage.SetInt( "userid", GetClientUserId( iTarget ) );
+	eFakeDamage.SetInt( "userid", iTargetID );
 	eFakeDamage.SetInt( "health", 300 );
-	eFakeDamage.SetInt( "attacker", tfInfo.iAttacker != -1 ? 0 : GetClientUserId( tfInfo.iAttacker ) );
+	eFakeDamage.SetInt( "attacker", iAttackerID );
 	eFakeDamage.SetInt( "damageamount", iNewDamage );
 	eFakeDamage.SetInt( "bonuseffect", 2 );
 	eFakeDamage.Fire();
 	SDKCall( g_sdkPlayerDamage, g_iCTFGameStats, iTarget, tfInfo, iNewDamage );
 
 	Event eBlockedDamage = CreateEvent( "damage_blocked", true );
-	eBlockedDamage.SetInt( "provider", GetClientUserId( iBubbleSource ) );
-	eBlockedDamage.SetInt( "victim", GetClientUserId( iTarget ) );
-	eBlockedDamage.SetInt( "attacker", GetClientUserId( tfInfo.iAttacker ) );
+	eBlockedDamage.SetInt( "provider", iSourceID );
+	eBlockedDamage.SetInt( "victim", iTargetID );
+	eBlockedDamage.SetInt( "attacker", iAttackerID );
 	eBlockedDamage.SetInt( "amount", iNewDamage );
 	eBlockedDamage.Fire();
 	SDKCall( g_sdkPlayerBlockedDamage, g_iCTFGameStats, iBubbleSource, iNewDamage );
