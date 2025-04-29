@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials\advancedweaponiser\derringer\v_derringer.vmt"
-	
-	insert
-	{
-	"$baseTexture" "advancedweaponiser\derringer\v_derringer_blue"
-	}
-}
