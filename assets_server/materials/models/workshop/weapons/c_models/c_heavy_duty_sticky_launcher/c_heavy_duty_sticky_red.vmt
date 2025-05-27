@@ -18,15 +18,14 @@
 	"$rimlightexponent" "10"	
 	"$rimlightboost" "6"
 	
-"Proxies"
+	"Proxies"
 	{
-
-"Sine"
+		"Sine"
 		{
 			"resultVar" $selfillumtint
 			"sinemin" .6
 			"sinemax" 2.1
 			"sineperiod" 3
-			}
+		}
 	}
-
+}

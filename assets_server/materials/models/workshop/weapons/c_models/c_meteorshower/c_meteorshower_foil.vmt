@@ -4,7 +4,7 @@
 
 	"$bumpmap" "models\workshop\weapons\c_models\c_meteorshower\c_meteorshower_normal"
 
-	"$PhongExponentTexture" "models\workshop\weapons\c_models\c_meteorshower\c_meteorshower_exponent"
+	"$PhongExponentTexture" "models\workshop\weapons\c_models\cosmonaut\c_cosmonaut_exponent"
 
 
 
@@ -24,7 +24,7 @@
 
 
 
-	"$lightwarptexture"		"models\workshop\weapons\c_models\c_meteorshower\foil_lightwarp"
+	"$lightwarptexture"		"models\workshop\weapons\c_models\cosmonaut\foil_lightwarp"
 	"$phongfresnelranges"	"[1 1 115]"
 
 	"$rimlight" "1"
@@ -33,7 +33,7 @@
 
 
 
-	"$envmap" "models\workshop\weapons\c_models\c_meteorshower\foil_cubemap"
+	"$envmap" "models\workshop\weapons\c_models\cosmonaut\foil_cubemap"
 
 
 

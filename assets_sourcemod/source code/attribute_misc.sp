@@ -107,13 +107,13 @@ public void OnPluginStart() {
 
 	g_dhVPhysCollide = DynamicHookFromConfSafe( hGameConf, "CBaseEntity::VPhysicsCollision" );
 
-	g_iAttackIsCritOffset = GameConfGetOffsetSafe( hGameConf, "CTFWeaponBase::m_bCurrentAttackIsCrit" );
-	g_iGrenadeDamageOffset = GameConfGetOffsetSafe( hGameConf, "CTFBaseGrenade::m_flDamage" );
-	g_iGrenadeRadiusOffset = GameConfGetOffsetSafe( hGameConf, "CTFBaseGrenade::m_flRadius" );
-	g_iScrambleOffset = GameConfGetOffsetSafe( hGameConf, "CTFGameRules::m_bScrambleTeams" );
-	g_iRestartTimeOffset = GameConfGetOffsetSafe( hGameConf, "CTFGameRules::m_flMapResetTime" );
-	g_iSniperDotOffset = GameConfGetOffsetSafe( hGameConf, "CTFSniperRifle::m_hSniperDot" );
-	g_iGrenadeTouchedOffset = GameConfGetOffsetSafe( hGameConf, "CTFGrenadePipebombProjectile::m_bTouched" );
+	g_iAttackIsCritOffset =		GameConfGetOffsetSafe( hGameConf, "CTFWeaponBase::m_bCurrentAttackIsCrit" );
+	g_iGrenadeDamageOffset =	GameConfGetOffsetSafe( hGameConf, "CTFBaseGrenade::m_flDamage" );
+	g_iGrenadeRadiusOffset =	GameConfGetOffsetSafe( hGameConf, "CTFBaseGrenade::m_flRadius" );
+	g_iScrambleOffset =		GameConfGetOffsetSafe( hGameConf, "CTFGameRules::m_bScrambleTeams" );
+	g_iRestartTimeOffset =		GameConfGetOffsetSafe( hGameConf, "CTFGameRules::m_flMapResetTime" );
+	g_iSniperDotOffset =		GameConfGetOffsetSafe( hGameConf, "CTFSniperRifle::m_hSniperDot" );
+	g_iGrenadeTouchedOffset =	GameConfGetOffsetSafe( hGameConf, "CTFGrenadePipebombProjectile::m_bTouched" );
 
 	if( g_bLateLoad ) {
 		int iIndex = MaxClients + 1;
