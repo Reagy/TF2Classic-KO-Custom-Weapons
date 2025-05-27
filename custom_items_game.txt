@@ -7484,7 +7484,7 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------------
 //-------------------------------
 //--MARKET GARDENER TEST - 3445-- THIS WEAPON IS IN AN INCOMPLETE STATE AND I'LL WORK ON IT MORE- No you won't.
-Consider this loose end tied up, 621. V6.9.9 Post 2.2 REMOVED AND NEVER RETURNING LET'S GO!
+//Consider this loose end tied up, 621. V6.9.9 Post 2.2 REMOVED AND NEVER RETURNING LET'S GO!
 //-------------------------------
 //-------------------------------
 		"3445"
@@ -39974,7 +39974,8 @@ Reserve Energy: 3 seconds of auto-reload"
 			"description_string"	"%s1% increased residual heal rate and duration"
 			"description_format"	"value_is_percentage"
 			"effect_type"			"positive"
-		}"7746"
+		}
+		"7746"
 		{
 			"name"	                "nader residual heal bonus"
 			"description_string"	"%s1% increased residual heal rate"
