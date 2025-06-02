@@ -46,8 +46,8 @@
 			{
 				"linux"
 				{
-					"signature"			"CTFPaintballRifle::TertiaryAttack"
-					"offset"			"0x25E"
+					"signature"		"CTFPaintballRifle::TertiaryAttack"
+					"offset"		"0x266"
 				}
 			}
 			"CTFPlayerShared::AddBurstHealer_HealRateFix"
@@ -63,7 +63,7 @@
 				"linux"
 				{
 					"signature"		"CTFFlameEntity::OnCollideWithTeammate"
-					"offset"		"0x155"
+					"offset"		"0x14D"
 				}
 			}
 		}
