@@ -1039,7 +1039,7 @@
 				"max pipebombs decreased"
 				{
 					"attribute_class"	"add_max_pipebombs"
-					"value" 			"-2"
+					"value" 			"-5"
 				}
 				"clip size penalty"
 				{
