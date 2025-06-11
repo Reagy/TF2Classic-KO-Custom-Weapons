@@ -305,6 +305,9 @@ MRESReturn Hook_MakeCarry( int iThis ) {
 	int iType = 	GetEntProp( iThis, Prop_Send, "m_iObjectType" );
 	int iMode =	GetEntProp( iThis, Prop_Send, "m_iObjectMode" );
 
+	if( iType == OBJ_JUMPPAD )
+		return MRES_Ignored;
+
 	int iModel = g_iBuildingBlueprints[ iType ][ iMode ];
 	SetEntProp( iThis, Prop_Send, "m_nModelIndexOverrides", iModel, 4, 0 );
 
