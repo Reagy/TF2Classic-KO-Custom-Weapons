@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_subnautical_stickylauncher/c_subnautical_stickylauncher_large"
+	$translucent 1
+	$vertexcolor 1
+}

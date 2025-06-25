@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_anchor_arms/c_anchor_arms_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}
