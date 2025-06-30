@@ -18174,3 +18174,23 @@
 		"wave"		")weapons/CoralFurnace_SecretReload.wav"
 	}
 }
+
+// ------------------------------------------------------------------------------------ //
+// FLOTSAM
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_AnchorCrossbow.Shoot"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/Flotsam_Fire.wav"
+}
+
+"Weapon_AnchorCrossbow.ShootCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/Flotsam_FireCrit.wav"
+}

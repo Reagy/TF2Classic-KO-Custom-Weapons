@@ -22175,7 +22175,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 		    "name"						"TF_WEAPON_SYRINGEGUN_XBOW"
 			"prefab"					"weapon_syringegun"
-			"show_in_armory"			"0"
+			"show_in_armory"			"1"
 			
 			"propername"				"0"
 			"item_name_color"           "190 200 233 255"
@@ -22185,12 +22185,13 @@ Weapon by: 'The One Of Wonders'"
 Self-defense is an important aspect to survival... make no compromises!
 
 Model by: 'MrOakRidge'
-Weapon from: 'The One Of Wonders'"
+Animation Edits by: 'Raptor Dan'
+Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Flotsam Fix-Up"	
 			"item_iconname"				"Flotsam Fix-Up"	
-			"image_inventory"			"backpack/weapons/c_models/c_tactical_syringegun/c_tactical_syringegun"
+			"image_inventory"			"backpack/weapons/c_models/c_anchorcrossbow/c_anchorcrossbow"
 			"model_world"				"models/weapons/c_models/c_anchor_crossbow/c_anchor_crossbow.mdl"
-			"model_player"				"models/weapons/v_models/v_anchor_crossbow_medic.mdl"
+			"model_player"				"models/weapons/v_models/v_anchorcrossbow_medic.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -22198,26 +22199,21 @@ Weapon from: 'The One Of Wonders'"
 			}
 			"static_attrs"
 			{
-				"override projectile type"				"29"
-				"apply look velocity on damage"         "80"
-				"apply z velocity on damage"            "80"
+				"override projectile type"				"30"
+				"apply look velocity on damage"         "50"
+				"apply z velocity on damage"            "50"
 			}
 			"attributes"
 			{
-			    "Increased knockback"
+			    "Hunter Killer Special"														
 				{
-					"attribute_class"	"DMMUY"
+					"attribute_class"	"DISPLAY_ONLY"
 					"value"				"1"
-				}	
-			    "fire rate bonus with reduced health"													
+				}
+				"add uber charge on hit"
 				{
-					"attribute_class"	"mult_postfiredelay_with_reduced_health"
-					"value"				"0.75"
-				}	
-				"drop health pack on kill"													
-				{
-					"attribute_class"	"drop_health_pack_on_kill"
-					"value"				"1"
+					"attribute_class"	"add_onhit_ubercharge"
+					"value" 			"0.05"
 				}
 			    "crit mod disabled"
 				{
@@ -22227,35 +22223,80 @@ Weapon from: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"1.1"
+					"value"				"3.0"
 				}	
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"0.75"
+					"value"				"0.02"
 				}	
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_maxammo_primary"
-					"value"				"0.6"
+					"value"				"0.2"
 				}				
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.5"
+					"value"				"0.01"
 				}	
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_falloff"
+					"value"				"1.0"
+				}		
+                "strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"0.333333333"
+				}
+                "longer damage falloff distance"
+				{
+					"attribute_class"	"mult_falloff_distance"
+					"value"				"2.5"
+				}	
+                "weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"7.5"
+				}				
+				"Reload time no anim speed mod"
+                {
+                    "attribute_class"    "mult_reload_time_noanimmod"
+                    "value"              "1.2"
+                }	
                 "custom projectile origin offset"
 				{
 					"attribute_class"	"custom_projectile_origin_offset"
-					"value"				"0 0 2"
+					"value"				"0 -5 0"
+				}	
+                "weapon_stattrak_module_scale"											
+				{
+					"attribute_class"	"mult_dmg_crit_multiplier"
+					"value"				"0.66666666666666666667"
+				}					
+                "custom projectile model"
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/w_models/w_harpoon.mdl"
 				}				
 			}
 			"visuals"
 			{
-				"sound_single_shot"		"Weapon_Suppressed_Pistol.Single"
-				"sound_burst"			"Weapon_Suppressed_Pistol.SingleCrit"
+				"sound_single_shot"		"Weapon_AnchorCrossbow.Shoot"
+				"sound_burst"			"Weapon_AnchorCrossbow.ShootCrit"
 				"tracer_effect"         "bullet_pistol_tracer01"
 		    }
+			"visuals_red"
+			{
+			    "trail_effect"          "throwable_trail_red"
+				"trail_effect_crit"		"throwable_trail_red_crit"
+			}
+			"visuals_blu"
+			{ 
+			    "trail_effect"          "throwable_trail_blue"
+				"trail_effect_crit"		"throwable_trail_blue_crit"
+			}
 			"mouse_pressed_sound"		"#ui/item_light_gun_pickup.wav"
 			"drop_sound"				"#ui/item_light_gun_drop.wav"
 		}
@@ -22278,7 +22319,7 @@ Weapon from: 'The One Of Wonders'"
 Self-defense is an important aspect to survival... make no compromises!
 
 Model by: 'Griefyn'
-Weapon from: 'The One Of Wonders'"
+Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Stuttgart Sharpshooter"
 			"item_iconname"				"Stuttgart Sharpshooter"
 			"image_inventory"			"backpack/weapons/c_models/c_tactical_syringegun/c_tactical_syringegun"
@@ -27265,7 +27306,7 @@ Weapon by: 'Noclue'"
 I will continue to thrive even in war, my oath is not over!
 
 Model by: 'svdl'
-Weapon from: 'The One Of Wonders'"
+Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Medical Administration"
 			"item_iconname"				"Medical Administration"
 			"image_inventory"			"backpack/weapons/c_models/c_defensesyringe/c_defensesyringe"
