@@ -26110,6 +26110,105 @@ Weapon by: 'The One Of Wonders'"
 //-------------------------------------		
 		"9124"
 		{
+		    "name"						"TF_WEAPON_MINIGUN_UNUSUAL"
+			"prefab"					"weapon_minigun"
+			"show_in_armory"			"1"	
+			
+			"item_name_color"           "190 200 233 255"
+			
+			"propername"				"0"
+			"item_name"				    "Veles"
+			"item_type_name"			"Master-Crafted Minigun"
+			"item_description"			"
+This weapon is rumoured to have been behind one of the largest Russian genocides in history.
+
+Model by: 'Hau, Kibblenight, The One Of Wonders'
+Weapon by: 'The One Of Wonders'"
+			"item_logname" 				"Veles"
+			"item_iconname" 			"Veles"
+			"image_inventory"			"backpack/weapons/c_models/c_velesremaster/c_velesremaster"
+			"model_world"				"models/weapons/c_models/c_velesremaster/c_velesremaster.mdl"
+			"model_player"				"models/weapons/v_models/v_veles_remaster.mdl"
+			"attach_to_hands"			"2"
+			"used_by_classes"
+			{
+				"heavy"					"1"
+			}
+			"attributes"
+			{
+			    "add ammo on hit"
+				{
+					"attribute_class"	"add_ammo_on_hit"
+					"value"				"1" 
+				}
+				"add ammo on kill"
+				{
+					"attribute_class"	"add_ammo_on_kill"
+					"value" 			"20"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"2.222222222222222"
+				}
+                "fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.5" 
+				}				
+				"minigun spinup time increased"
+				{
+					"attribute_class"	"mult_minigun_spinup_time"
+					"value"				"1.25"
+				}
+				"minigun spindown time decreased HIDDEN"
+				{
+					"attribute_class"	"mult_minigun_spindown_time"
+					"value"				"1.25"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.25"
+				}
+				"aiming movespeed decreased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"				"0.75"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"				"0"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mod_always_draw_tracer_effect"
+					"value"				"1"
+				}
+                "punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_mod"
+					"value" 			"0.380"
+				}
+                "punch angle mod add hidden"
+				{
+					"attribute_class"	"punch_angle_is_constant"
+					"value"				"1"
+				}					
+			}
+			"visuals"
+			{
+			    "sound_empty"		    "Weapon_Veles.Spin"	
+				"sound_double_shot"		"Weapon_Veles.Fire"	
+				"sound_burst"			"Weapon_Veles.FireCrit"	
+				"sound_single_shot"		"Weapon_Veles.WindUp"	
+				"sound_special2"		"Weapon_Velese.WindDown"	
+				"sound_special3"		"Weapon_Veles.Spin"	
+				"tracer_effect"			"d3_tracer"
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}	
 //-----------------------------------
 //-----------------------------------
