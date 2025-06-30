@@ -26123,6 +26123,7 @@ Weapon by: 'The One Of Wonders'"
 This weapon is rumoured to have been behind one of the largest Russian genocides in history.
 
 Model by: 'Hau, Kibblenight, The One Of Wonders'
+Animations by: 'Paysus'
 Weapon by: 'The One Of Wonders'"
 			"item_logname" 				"Veles"
 			"item_iconname" 			"Veles"
@@ -26146,15 +26147,25 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"add_ammo_on_kill"
 					"value" 			"20"
 				}
+				"minicrits become crits"
+				{
+					"attribute_class"	"minicrits_become_crits"
+					"value"				"1"
+				}
+				"increase player capture value"
+				{
+					"attribute_class"	"add_player_capturevalue"
+					"value"				"1"
+				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
 					"value"				"2.222222222222222"
 				}
-                "fire rate bonus"
+                "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.5" 
+					"value"				"0.4166666666666667" 
 				}				
 				"minigun spinup time increased"
 				{
@@ -26176,6 +26187,16 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_player_aiming_movespeed"
 					"value"				"0.75"
 				}
+				"Crit damage penalty"
+				{
+					"attribute_class"	"dmmuy"
+					"value"				"0.67"
+				}	
+				"Crits have fall-off"
+				{
+					"attribute_class"	"crit_dmg_falloff"
+					"value"				"1"
+				}	
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -26195,7 +26216,17 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"punch_angle_is_constant"
 					"value"				"1"
-				}					
+				}		
+                "ragdolls become ash"
+				{
+					"attribute_class"	"ragdolls_become_ash"
+					"value"				"1"
+				}
+                "weapon_stattrak_module_scale"											
+				{
+					"attribute_class"	"mult_dmg_crit_multiplier"
+					"value"				"0.6666666666667"
+				}			
 			}
 			"visuals"
 			{
@@ -38598,6 +38629,7 @@ Weapon by: 'The One Of Wonders'"
 She fires twenty-two point eight six centimeter industrial grade steel nails, at over ten thousand rounds per minute
 
 Model by: 'Hau, Kibbleknight'
+Animations by: 'Paysus'
 Weapon by: 'The One Of Wonders'"
 			"item_logname" 				"Jezebel"
 			"item_iconname"				"Jezebel"
@@ -41933,9 +41965,9 @@ Reserve Energy: 3 seconds of auto-reload"
 	    }
 		"7726"
 		{
-			"name"					"Outcast Engineer"
-			"description_string"	"You cannot build sentry guns with this augmentation equipped"
-			"description_format"	"value_is_additive"
+			"name"					"Crit damage penalty"
+			"description_string"	"%s1% reduced critical hit damage"
+			"description_format"	"value_is_percentage"
 			"hidden"				"0"
 			"effect_type"			"negative"
 	    }
