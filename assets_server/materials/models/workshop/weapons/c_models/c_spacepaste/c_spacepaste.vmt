@@ -3,7 +3,7 @@
 	"$basetexture"	"models\workshop\weapons\c_models\c_spacepaste\c_spacepaste"
 	"$bumpmap" "models\workshop\weapons\c_models\c_spacepaste\c_spacepaste_normal"
 
-	"$PhongExponentTexture" "models\workshop\weapons\c_models\c_spacepaste\c_spacepaste_exponent"
+	"$PhongExponentTexture" "models\workshop\weapons\c_models\cosmonaut\c_cosmonaut_exponent"
 
 
 

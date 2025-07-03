@@ -4,6 +4,6 @@
 	
 	insert
 	{
-	"$baseTexture" "models\maxxy\female_sniper\femsniperbody_diffuse_invun"
+	"$baseTexture" "models\maxxy\female_sniper\femsniperbody_diffuse"
 	}
 }

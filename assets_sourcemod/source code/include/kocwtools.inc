@@ -15,6 +15,8 @@ stock int AttribHookInt( int iValue, int iEntity, const char[] szAttributeClass 
 	return RoundToFloor( AttribHookFloat( float(iValue), iEntity, szAttributeClass ) );
 }
 
+native Address	AllocPooledString( const char[] szString );
+
 native float	GetMedigunCharge( int iPlayer );
 native int	GetEntityInSlot( int iPlayer, int iSlot );
 
