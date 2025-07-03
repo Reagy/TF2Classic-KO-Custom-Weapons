@@ -3916,10 +3916,40 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"DORO"
 					"value"				"0.8"
 				}
-				"Move Speed Penalty Active"
+				"Heavy Weapon Downside"
 				{
-					"attribute_class"	"mult_player_movespeed_active"
-					"value"				"0.7"
+					"attribute_class"	"dmmuy"
+					"value" 			"1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value" 			"0.7"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value" 			"1.33"
+				}
+				"override mult deploy weapon time animation"
+				{
+					"attribute_class"	"override_mult_deploy_time_anim"
+					"value"				"1.5"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value" 			"1.67"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mod_jump_height"
+					"value" 			"0.85"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"gravity_mod_wearer"
+					"value" 			"1.15"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -3949,7 +3979,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value" 			"1.5"
+					"value" 			"1.67"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -4009,7 +4039,7 @@ Weapon by: 'The One Of Wonders'"
 				"Reload time no anim speed mod"
                 {
                     "attribute_class"    "mult_reload_time_noanimmod"
-                    "value"              "2.33"
+                    "value"              "2.4"
                 }	
                 "crit mod disabled"
 				{
@@ -6814,40 +6844,35 @@ Weapon by: 'NotClue'"
 			}
 			"attributes"
 			{
-		        "combatant unique"
-		        {
-			        "attribute_class"	"dmmuy"
-			        "value"				"1"
-		        }
-				"combatant unique2"
-		        {
-			        "attribute_class"	"dmmuy"
-			        "value"				"1"
-		        }
-				"dmg bonus vs buildings"
+			    "provide on active"
 				{
-					"attribute_class"	"mult_dmg_vs_buildings"
-					"value" 			"1.25"
+					"attribute_class"	"provide_on_active"
+					"value" 			"1"
 				}
-				"Projectile speed decreased"
+				"combatant unique2" 
+				{
+					"attribute_class"	"bleh"
+					"value" 			"1"
+				}
+				"damage bonus" 
+				{
+					"attribute_class"	"bleh"
+					"value" 			"1.1"
+				}
+				"Projectile speed increased"
 				{
 					"attribute_class"	"mult_projectile_speed"
-					"value"				"0.7"
+					"value"				"1.3"
 				}
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"0.25"
 				}
-				"Reload Time Increased"
-				{
-					"attribute_class"	"mult_reload_time"
-					"value"				"1.5"
-				}
 				"Blast radius decreased"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"0.05"
+					"value"				"0.4"
 				}
 				"crit mod disabled"													
 				{
@@ -6864,36 +6889,26 @@ Weapon by: 'NotClue'"
 					"attribute_class"	"mult_dmgself_push_force"
 					"value" 			"0.9"
 				}
-				"longer damage falloff distance"
+				"custom rampup"
 				{
-					"attribute_class"	"mult_falloff_distance"
-					"value"				"3.0"
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.0"
 				}
-				"strange restriction type 1"
+                "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_falloff"
 					"value"				"1.0"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"110"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_custom_rampup"
-					"value"				"0.5"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" 			"2.5"
-				}
+				}	
 				// Attribute for homing
 				"strange restriction type 1"
 				{
 					"attribute_class"	"custom_rocket_homing"
 					"value" 			"1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"1.111111111111111111"
 				}
 				"strange restriction type 1"
 				{
@@ -7702,15 +7717,23 @@ Weapon by: 'The One Of Wonders'"
 			{
 				"engineer"				"1"
 			}
-			"static_attrs"
-			{		
-				// Dispenser
-				"engineer dispenser build rate multiplier" 	"3.0"
-				// General
-				"building cost reduction" 				"0.8"									
-			}
             "attributes"
             {
+			    "Mini-Dispenser"
+				{
+					"attribute_class"	"weh"								
+					"value"				"1"
+				}
+				"engineer dispenser build rate multiplier"
+				{
+					"attribute_class"	"dispenser_build_rate_multiplier"								
+					"value"				"3.0"
+				}
+				"building cost reduction"
+				{
+					"attribute_class"	"building_cost_reduction"								
+					"value"				"0.8"
+				}
 				"engy building health penalty"
 				{
 					"attribute_class"	"mult_engy_building_health"								
@@ -11618,10 +11641,25 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"set_silent_killer_no_scream"
 					"value"				"1" 
 				}
+				"dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"1.75"
+				}
 				"crit vs disguised players"
 				{
 					"attribute_class"	"or_crit_vs_playercond"
 					"value"				"16" 
+				}
+				"minicrit vs burning player"
+				{
+					"attribute_class"	"single_minicrit_vs_playercond_no_dot"
+					"value"				"23"
+				}	
+				"single wep deploy time decreased"												
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"				"0.67"
 				}
 				"damage penalty"
 				{
@@ -11632,6 +11670,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"				"0"
+				}
+				"override mult deploy weapon time animation"
+				{
+					"attribute_class"	"override_mult_deploy_time_anim"
+					"value"				"0.5"
 				}
 			}
 			"visuals"
@@ -18910,10 +18953,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg"
 					"value" 			"4.0"
 				}
+				"longer damage falloff distance"
+				{
+					"attribute_class"	"mult_falloff_distance"
+					"value"				"1.5"
+				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value" 			"0.5"
+					"value" 			"0.55"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -18928,7 +18976,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.75" 
+					"value"				"0.625" 
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -19057,16 +19105,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"DISPLAY_ONLY"
 					"value"				"1" 
-				}
-				"strange restriction type 1"
-                {
-                    "attribute_class"    "crit_airborne_simple"
-                    "value"              "1"
-                }
-                "mod crit airborne simple min height"
-				{
-					"attribute_class"	"crit_airborne_simple_min_height"
-					"value"				"256"
 				}
 				"Haste killer"
 				{
@@ -19248,6 +19286,11 @@ Weapon by: 'The One Of Wonders"
 					"attribute_class"	"mult_explosion_radius"
 					"value" 			"1.2"
 				}
+				"stickybomb charge rate"
+				{
+					"attribute_class"	"stickybomb_charge_rate"
+					"value" 			"0.67"
+				}
 				"fire rate penalty"															
 				{
 					"attribute_class"	"mult_postfiredelay"
@@ -19286,12 +19329,12 @@ Weapon by: 'The One Of Wonders"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_proxymine_radius"
-					"value" 			"3.0"
+					"value" 			"2.4"
 				}				
                 "weapon_stattrak_module_scale"											
 				{
 					"attribute_class"	"mult_proxymine_detonate_time"
-					"value" 			"2.0"
+					"value" 			"1.6"
 				}
 				"Hell Beneath Penalty"											
 				{
@@ -19558,7 +19601,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"31.0"
+					"value"				"26.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -19613,7 +19656,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"30.0"
+					"value"				"25.0"
 				}
                 "strange restriction type 1"
 				{
@@ -19993,7 +20036,7 @@ Weapon by 'The One Of Wonders"
 			    "dmg bonus vs buildings"
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"				"4.0"
+					"value"				"3.25"
 				}
 				"strange restriction type 1"
 				{
@@ -20048,13 +20091,18 @@ Weapon by 'The One Of Wonders"
 				"longer damage falloff distance"
 				{
 					"attribute_class"	"mult_falloff_distance"
-					"value"				"8.0"
+					"value"				"7.2"
 				}	
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
 					"value"				"2.0"
-				}					
+				}		
+                "mult dmg crit multiplier"
+				{
+					"attribute_class"	"mult_dmg_crit_multiplier"
+					"value"				"1.3333333333"
+				}				
 			}
 			"visuals"
 			{
@@ -38022,7 +38070,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.9"
+					"value"				"1.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -41809,8 +41857,8 @@ Reserve Energy: 3 seconds of auto-reload"
 		}
 		"7710"
 		{
-			"name"					"Like the Founding Fathers Intended"
-			"description_string"	"Founding-Father Intended Modification: This Musket is loaded with high-density shot"
+			"name"					"Mini-Dispenser"
+			"description_string"	"Replaces your Dispenser with a Mini-Dispenser"
 			"description_format"	"value_is_additive"
 			"hidden"				"0"
 			"custom_color"			"225 215 0 255"	
@@ -42150,7 +42198,7 @@ Toxin reduces healing from healers by 75%"
 		"7752"
 		{
 			"name"					"combatant unique2" 
-			"description_string"	"Missile Specialist: Damage increases over distance"										
+			"description_string"	"Missile Specialist: Rockets have no damage ramp-up or fall-off"										
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
 		}
