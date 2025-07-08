@@ -3378,7 +3378,7 @@ Let me show you how to cook!"
 			"item_description"			"
 Watch what comes outta that mouth, before I get sent to shut you up.
 
-Model by: 'Hau'
+Model by: 'Hau. renim_g, Iron Fox'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Executive's Dealbreaker"
 			"item_iconname"				"Executive's Dealbreaker"
@@ -5108,6 +5108,7 @@ Alt-Fire (Mouse2): Rev the weapon without firing
 For when the pyromaniac gets bored of fire... and wants to see the blood flow in its stead.
 
 Model by: 'Zoey, Square'
+Wearable by: 'Con'
 Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
 			"item_logname" 				"Maniac's Massacre Machine"
@@ -5300,7 +5301,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 Put up fists they said, but they never said bring gun fists to fight.
   
-Model by: 'Hau, Kibbleknight'
+Model by: 'Hau, Kibbleknight, renim_g'
 Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Gun-Show"
@@ -5572,7 +5573,7 @@ Weapon by: 'The One Of Wonders'"
 				"sound_single_shot"		"Weapon_HeavyFlameMG.WindUp"
 				"sound_special2"		"Weapon_HeavyFlameMG.WindDown"
 				"sound_special3"		"Weapon_HeavyFlameMG.Spin"	
-				"tracer_effect"         "db_tracer01"
+				"tracer_effect"         "tracer_bigballs"
 				"animation_replacement" 													
 				{
 					//The Attacking Animations
@@ -5733,7 +5734,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 A quality piece, this one is, let's see how much blood she'll make ya lose.
 
-Model by: 'Hau'
+Model by: 'Hau, Bushranger, IamOctopii'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Great Divider"
 			"item_iconname"				"Great Divider"
@@ -5962,7 +5963,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 'Hey knucklehead, you ain't gonna win.'
 
-Model by: 'G o a t K i n g'
+Model by: 'G o a t K i n g, CoryP2001, Skyrim'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Standard Issue"
 			"item_iconname"				"Standard Issue"
@@ -6955,6 +6956,7 @@ Weapon by: 'NotClue'"
 For optimal effect, place barrels within ass-kicking distance of your enemy.
 
 Weapon from: Open Fortress - openfortress.fun
+Wearable by: 'trev0r04021'
 Weapon edited by: 'Reagy'"
 			"item_logname"				"Double-Barrel Shotgun"
 			"item_iconname"				"Double-Barrel Shotgun"
@@ -7178,7 +7180,7 @@ Weapon by: 'The One Of Wonders'"
 				"Bazooka Payload"
 				{
                     "attribute_class"      "display_only"
-                    "value"                "5"
+                    "value"                "3"
                 }
 				"max health additive penalty"
 				{
@@ -7213,7 +7215,7 @@ Weapon by: 'The One Of Wonders'"
                 "add condition on kill"
 				{
 					"attribute_class"	"add_onkill_addcond_self"							
-					"value" 			"111 5"
+					"value" 			"111 3"
 				}				
 			}
 			"visuals"
@@ -8195,6 +8197,7 @@ Weapon by: 'Reagy'"
 You have 5 seconds to run from tiny base,
 or else Heavy will make you regret choice...
 
+Model by: 'BenH, Weyland'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Eviction Notice"
 			"item_iconname"				"Eviction Notice"
@@ -8320,7 +8323,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 You messed with the wrong scout tonight, dumbass!
 
-Model by: 'Hau'
+Model by: 'Hau, The3F4K3'
 Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
 
@@ -8461,6 +8464,7 @@ Gain damage resistance while charging (8 sec cooldown)
 
 You had best start running, laddie.
 
+Model by: 'Toad'
 Original Weapon by: Valve
 Reworked by: 'The One Of Wonders'"
 			"item_logname"				"The Tide-Turner"
@@ -10559,6 +10563,7 @@ Weapon by: 'The One Of Wonders'"
 Propain and Propane accessories
 
 Model by: 'Glitch'
+Wearable by: 'Progg'
 Weapon by: 'Reagy'"
 			"item_logname"				"Propain"
 			"item_iconname"				"Propain"
@@ -12252,7 +12257,7 @@ Remastered by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.75" 
+					"value"				"0.9" 
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -12374,7 +12379,7 @@ Remastered by: 'The One Of Wonders'"
 			"item_description"			"
 Only Heavy can use such an outrageously heavy thing...
 
-Model by: 'boomsta'
+Model by: 'boomsta, Elbagast'
 Cosmetic by: 'Jukebox' 'Sync'
 Animations by: 'Raptor Dan'
 Weapon by: 'Reagy'"
@@ -12533,7 +12538,7 @@ Weapon by: 'Reagy'"
 			"item_description"			"
 I don't need two eyes to be fast on the shooting! what do ya mean that's not how gunslinging works!?!
   
-Model by: 'FiveEyes, Kibbleknight'
+Model by: 'FiveEyes, Gadget, Kibbleknight'
 Animation edit by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Drunkard's Wrath"
@@ -12806,7 +12811,7 @@ Flare Gun, but primary. Shoots flares fast and crits flaming targets.
 
 Mmphh mmph mppph!
 
-Model by: 'Hau'
+Model by: 'Hau, renim_g, The One Of Wonders'
 Animations by: 'Raptor Dan'
 Weapon by: 'Zadrave'"
 			"propername"				"0"
@@ -12901,7 +12906,7 @@ Weapon by: 'Zadrave'"
 			"item_description"			"
 A heirloom from an age long past, still good for killing little men.
 
-Model by: 'Haau'
+Model by: 'Haau, Mr. Gibbly'
 Weapon by: 'The One Of Wonders'"
 			"item_logname" 				"Molotok"
 			"item_iconname" 			"Molotok"
@@ -13558,7 +13563,7 @@ Weapon by: 'Reagy'"
 				"weapon spread bonus"
 				{
 					"attribute_class"	"dmmuy"
-					"value"				"0.6"
+					"value"				"0.75"
 				}
 				"fire rate penalty"
 				{
@@ -13588,12 +13593,12 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.666666666667"
+					"value"				"0.64"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.533328"
+					"value"				"0.6375"
 				}
 			}
 			"visuals"
@@ -13649,7 +13654,7 @@ Weapon by: 'Reagy'"
 				"weapon spread bonus"
 				{
 					"attribute_class"	"dmmuy"
-					"value"				"0.6"
+					"value"				"0.75"
 				}
 				"fire rate penalty"
 				{
@@ -13679,12 +13684,12 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.666666666667"
+					"value"				"0.64"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.533328"
+					"value"				"0.6375"
 				}
 			}
 			"visuals"
@@ -13740,7 +13745,7 @@ Weapon by: 'Reagy'"
 				"weapon spread bonus"
 				{
 					"attribute_class"	"dmmuy"
-					"value"				"0.6"
+					"value"				"0.75"
 				}
 				"fire rate penalty"
 				{
@@ -13770,12 +13775,12 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.666666666667"
+					"value"				"0.64"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.533328"
+					"value"				"0.6375"
 				}
 			}
 			"visuals"
@@ -13833,7 +13838,7 @@ Weapon by: 'Reagy'"
 				"weapon spread bonus"
 				{
 					"attribute_class"	"dmmuy"
-					"value"				"0.6"
+					"value"				"0.75"
 				}
 				"fire rate penalty"
 				{
@@ -13863,12 +13868,12 @@ Weapon by: 'Reagy'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.666666666667"
+					"value"				"0.64"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"0.533328"
+					"value"				"0.6375"
 				}
 			}
 			"visuals"
@@ -14486,7 +14491,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_type_name"			"Riot Shield"
 			"item_description"			"Alt-Fire: Perform a short charge to deal high impact damage! (15 sec cooldown)
   
-Model by: 'Elbagast'
+Model by: 'Elbagast, boomsta'
 Wearable by: 'Reagy'"
 			"image_inventory"			"backpack/weapons/c_models/c_democop_shield"
 			"model_player"				"models/player/items/custom/demo/democop_shield.mdl"
@@ -15561,7 +15566,7 @@ Weapon by: 'Reagy'"
 			"item_description"			"
 This is how they used to do sniping back before scopes were invented, risks of being shot at and everything!
 
-Original model by: 'Hau'
+Original model by: 'Hau, just_noey_here'
 Model edit by: 'Raptor Dan'
 Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
@@ -15716,6 +15721,7 @@ Weapon by: 'The One Of Wonders'"
 Everything's so simple when you have a destructive device like this bloody thing!
 
 Model by: 'cobalt'
+Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Combat Control"
 			"item_iconname"				"Combat Control"
@@ -16260,7 +16266,7 @@ Weapon by: 'Majro'"
 
 The hell's this Baseball knock-off?
 
-Model by: 'Haau'
+Model by: 'Haau, IamOctopii, FoodEater, Star Magician'
 Weapon by: 'Majro'"
 			"item_logname"				"Sandmate"
 			"item_iconname"				"Sandmate"
@@ -18908,7 +18914,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 You're going to need bigger babies.
 
-Model by: 'Hau, OverlordLettuce'
+Model by: 'Hau, OverlordLettuce, LuckyGator'
 Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
 			"item_logname" 				"Hull-Breacher"
@@ -19062,12 +19068,9 @@ Weapon by: 'The One Of Wonders'"
 		"9018"
 		{
 		    "name"						"TF_WEAPON_HARPOON_RIFLE"
-			"prefab"					"weapon_sniperrifle"
-			"item_class"                "tf_weapon_coilgun"
+			"prefab"					"weapon_huntsman"
 			"item_slot"                 "primary"
 			"anim_slot"                 "primary"
-			"bucket"                    "0"
-			"bucket_position"           "0"
 			"show_in_armory"			"1"
 
 			"item_name_color"           "190 200 233 255"
@@ -19078,7 +19081,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 Perfect for stabbing holes into whales and whale-sized men from afar
   
-Model by: 'Hau, OverlordLettuce'
+Model by: 'Hau, OverlordLettuce, LuckyGator, Iron Fox'
 Animations by: 'Hau'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Spearfisher"
@@ -19087,6 +19090,7 @@ Weapon by: 'The One Of Wonders'"
 			"model_world"				"models/workshop/weapons/c_models/c_spearfisher/c_spearfisher.mdl"
 			"model_player"				"models/weapons/v_models/v_harpoon_gun.mdl"
 			"attach_to_hands"			"2"
+			"flip_viewmodel"			"0"
 			"used_by_classes"
 			{
 				"sniper"				"1"
@@ -19097,30 +19101,31 @@ Weapon by: 'The One Of Wonders'"
 				"allowed in medieval mode"				"1"
 				"mod max primary clip override"			"-1"
 				"min_viewmodel_offset"					"10 0 -6"
-				"damage bonus hidden"					"2.0"
+				"damage bonus hidden"					"1.0"
+				"override projectile type"              "30"
 			}	
 			"attributes"
 			{
-				"Spearfisher Special"
+				"Hold fire for more damage"
 				{
 					"attribute_class"	"DISPLAY_ONLY"
 					"value"				"1" 
 				}
-				"Haste killer"
+				"Spearfisher Special"													
 				{
-					"attribute_class"	"dummy"							
-					"value" 			"5"
+					"attribute_class"	"single_minicrit_vs_playercond_no_dot"
+					"value" 			"1"
 				}
-				"add condition on kill"
-				{
-					"attribute_class"	"add_onkill_addcond_self"							
-					"value" 			"121 5"
-				}	
                 "heal on kill" 
 				{
 					"attribute_class"	"heal_on_kill"
 					"value"				"25"
-				}				
+				}	
+                "deploy time decreased"
+				{
+					"attribute_class"	"mult_deploy_time"
+					"value"				"0.75"
+				}					
 				"move speed bonus"
                 {
                     "attribute_class"    "mult_player_movespeed"
@@ -19133,39 +19138,24 @@ Weapon by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"		"mult_spread_scale"
-					"value"					"0.01"
-				}
-				"weapon_stattrak_module_scale"
-				{
 					"attribute_class"		"mult_projectile_speed"
-					"value"					"1.25"
+					"value"					"1.7"
 				}
 	            "hidden primary max ammo bonus"
 				{
 					"attribute_class"		"mult_maxammo_primary"
-					"value"					"1.5625"
+					"value"					"2.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"		"mult_postfiredelay"
-					"value"					"4.0"
+					"value"					"0.75"
 				}
                 "crit mod disabled"
 				{
 					"attribute_class"		"mult_crit_chance"
 					"value"					"0"
 				}	
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"0.01"
-				}
-                "mod use custom ammo type" // primary
-				{
-					"attribute_class"	"mod_use_custom_ammo_type"
-					"value" 			"1"
-				}
 				"punch angle is constant"
 				{
 					"attribute_class"	"punch_angle_is_constant"
@@ -19175,21 +19165,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_dmg_crit_multiplier"
 					"value"				"0.66666666666666667"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"blast_dmg_to_self"
-					"value"				"0.0001"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_dmgself_push_force"
-					"value"				"0.0001"
-				}
-				"mod coilgun explode time"
-				{
-					"attribute_class"	"mod_coilgun_explode_time"
-					"value" 			"-2.25"
 				}
 				"custom projectile model"
 				{
@@ -19251,7 +19226,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 If they're good for the sea then they should be as good anywhere bloody else!
 
-Model by: 'Hau, Kibbleknight'
+Model by: 'Hau, Kibbleknight, LuckyGator'
 Animations by: 'Kylul'
 Weapon by: 'The One Of Wonders"
 			"item_logname"				"Hell Beneath"
@@ -19334,7 +19309,7 @@ Weapon by: 'The One Of Wonders"
                 "weapon_stattrak_module_scale"											
 				{
 					"attribute_class"	"mult_proxymine_detonate_time"
-					"value" 			"1.6"
+					"value" 			"1.5"
 				}
 				"Hell Beneath Penalty"											
 				{
@@ -19388,7 +19363,7 @@ Weapon by: 'The One Of Wonders"
 
 With this antique I can now track you regardless of distance!
 
-Model by: 'Haau, Octopii'
+Model by: 'Haau, Octopii, LuckyGator'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Scoundrel's Spyglass"
 			"item_iconname"				"Scoundrel's Spyglass"
@@ -19530,7 +19505,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 Because doing those ship-sized welds requires one really big welding torch.. or so you think.
 
-Model by: 'Haau, Bitty3D'
+Model by: 'Haau, Bitty3D, Mac Ripley'
 Weapon by: 'The One Of Wonders'"
 			"item_logname" 				"Cremator's Catch"
 			"item_iconname"				"Cremator's Catch"
@@ -19756,7 +19731,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_slot"					"primary"
 			"item_name_color"           "190 200 233 255"
 
-			"propername"				"1"
+			"propername"				"0"
 			"item_name"					"Run A-Grounder"
 			"item_type_name"			"Torpedo Launcher"
 			"item_description"			"
@@ -19850,10 +19825,10 @@ Particles/model edit by: 'Panáček'"
 					"value"				"0.6"
 				}
                 "mod rocket gravity upward force"
-				{
-					"attribute_class"	"mod_rocket_gravity_upward_force"
-					"value"	            "-0.4"
-				}
+                {
+                    "attribute_class"    "mod_rocket_gravity_upward_force"
+                    "value"                "-0.3"
+                }
 				"rocket limited lifetime"
 				{
 					"attribute_class"	"rocket_lifetime"
@@ -19865,10 +19840,10 @@ Particles/model edit by: 'Panáček'"
 					"value"				"0"
 				}
 				"rocket gravity"
-				{
-					"attribute_class"	"mod_rocket_gravity"
-					"value"             "-0.5"
-				}	
+                {
+                    "attribute_class"    "mod_rocket_gravity"
+                    "value"             "-0.38"
+                }	
 			}
 			"visuals"
 			{
@@ -20166,11 +20141,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"dmmuy"
 					"value"				"1"
 				}
-				"instant reload all weapons on kill"												
-				{
-					"attribute_class"	"instant_reload_all_weapons_on_kill"
-					"value"				"1"
-				}
 				"BIG FIMBSH SPECIAL 2"
 				{
 					"attribute_class"	"dmmuy"
@@ -20204,7 +20174,7 @@ Weapon by: 'The One Of Wonders'"
 				"move speed penalty active"
 				{
 					"attribute_class"	"mult_player_movespeed_active"
-					"value"				"0.75"
+					"value"				"0.8"
 				}
 				"Demoknight Melee Negative"
 				{
@@ -20319,11 +20289,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"dmmuy"
 					"value"				"1"
 				}
-				"instant reload all weapons on kill"												
-				{
-					"attribute_class"	"instant_reload_all_weapons_on_kill"
-					"value"				"1"
-				}
 				"BIG FIMBSH SPECIAL 2"
 				{
 					"attribute_class"	"dmmuy"
@@ -20357,7 +20322,7 @@ Weapon by: 'The One Of Wonders'"
 				"move speed penalty active"
 				{
 					"attribute_class"	"mult_player_movespeed_active"
-					"value"				"0.75"
+					"value"				"0.8"
 				}
 				"Demoknight Melee Negative"
 				{
@@ -22091,7 +22056,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time_noanimmod"
-					"value"				"1.33"
+					"value"				"1.5"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -22127,11 +22092,16 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_use_custom_ammo_type"
 					"value"				"1"
-				}					
+				}
+                "scattergun no reload single"													
+				{
+					"attribute_class"	"set_scattergun_no_reload_single"
+					"value"				"1"
+				}				
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"1.1"
+					"value"				"1.25"
 				}	
                 "hide_attrib_percentage"
 				{
@@ -23079,7 +23049,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 I'll send your ass back to your country with one good shot from this bad boy!
 
-Model by: 'Haau, TwoTonMoon, Kibbleknight'
+Model by: 'Haau, TwoTonMoon, Kibbleknight, renim_g'
 Animations by: 'Domi'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Shellraiser"
@@ -23494,7 +23464,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"		"mult_projectile_speed"
-					"value"					"1.5"
+					"value"					"1.875"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -25055,8 +25025,11 @@ Weapon by: 'The One Of Wonders'"
 			"propername"				"0"
 			"item_name"					"Poacher's Pride"
 			"item_type_name"			"Double-Barrel Hunting Rifle"
-			"item_description"			"
-Professionals have standards."
+			"item_description"		    "
+Professionals have standards.
+
+Model by: 'Retromike, Questionablyinsane'
+Animations by: 'Raptor Dan'"
 			"item_logname"				"Poacher's Pride"
 			"item_iconname"				"Poacher's Pride"
 			"image_inventory"			"backpack/weapons/w_poacherspride/w_poacherspride"
@@ -25342,7 +25315,7 @@ Weapon by: 'Reagy'"
 			"item_description"			"
 Giant guns make Heavy slow, big gun makes Heavy faster and better killer of baby teams!
 
-Model by: 'Hau, Kibbleknight'
+Model by: 'Hau, Kibbleknight, TwoTonMoon'
 Animations by: 'Raptor Dan'
 Cosmetics by: 'Sky' 'Pie_Tony' 'Strno8' 'DJB2401'
 Weapon by: 'The One Of Wonders'"
@@ -26891,7 +26864,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 Shotgun is good.. but sometimes you must make babies go boom too!
 
-Model by: 'FiveEyes, Metaru, Kibbleknight'
+Model by: 'FiveEyes, Metaru, Kibbleknight, Square'
 Animations by: 'Kylul'
 Weapon by: 'The One Of Wonders'"
             "item_logname"				"Bolshevik Bomber"
@@ -27184,7 +27157,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 I'm gonna blow that smug look right off of your stupid face.
 
-Model by: 'Hau'
+Model by: 'Hau, Kibbleknight, The One Of Wonders'
 Animations by: 'Kylul'
 Weapon by: 'The One Of Wonders'"
 			"item_logname" 				"Great Equalizer"
@@ -27265,7 +27238,8 @@ Weapon by: 'The One Of Wonders'"
 
 You ain't looking so pretty now, are ya!
 
-Model by: 'boomsta'
+Model by: 'boomsta, ZombiePlasticClock, blaholtzen'
+Animations by: 'Paysus'
 Weapon by: 'The One Of Wonders'"
 			"propername"				"0"
 			"item_logname"				"Speedster's Six-Shooter"
@@ -27359,10 +27333,6 @@ Weapon by: 'The One Of Wonders'"
 //-------------------
 		"9135"
 		{
-		    "tags"
-			{
-				"bots_cant_use"			"1"														
-			}
 			"name"						"TF_WEAPON_DEFENSE_ANGEL"
 			"prefab"					"weapon_medigun"
 			"show_in_armory"			"1"
@@ -27545,7 +27515,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 Jet fuel is a versatile fuel, capable of flight and fight.
 
-Model by: 'Neodos'
+Model by: 'NeoDement'
 Weapon by: 'The One Of Wonders'"					
 			"item_logname"				"Afterburner"
 			"item_iconname"				"Afterburner"
@@ -27869,6 +27839,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mod_rocket_gravity"
 					"value"				"0.7"
+				}
+				"longer damage falloff distance"
+				{
+					"attribute_class"	"mult_falloff_distance"
+					"value"				"1.15"
 				}
 				"strange restriction type 1"													
 				{
@@ -30495,7 +30470,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 Alright knuckleheads, it's time to get huntin'!
 
-Weapon Model by: 'Corvalho'  
+Weapon Model by: 'Corvalho, Talez01'  
 Wearable Model by: 'GetGrenade'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Rifleman's Runt"
@@ -31026,7 +31001,7 @@ Weapon by: 'The One Of Wonders' 'Reagy'"
 I heard the Americans in 'Nam couldn't handle these so they were given to us.
 Dunno what their problem is, I can handle their recoil just fine.
 
-Model originally by: 'Rain*'
+Model originally by: 'Rain*, Sparkwire, Mr. Gibbly'
 Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Contractor's Exclusive"
@@ -31772,7 +31747,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 Now I can hit the bottle and throw the bottle! Hehe.. heh.. I can't bloody drink this...
 
-Model by: 'DanielAwesomo'
+Model by: 'DanielAwesomo, Sam 1-14'
 Weapon by: 'The One Of Wonders, Panáček'"
 			"item_logname"				"Alcoholic Armaments"
 			"item_iconname"				"Alcoholic Armaments"
@@ -32770,6 +32745,7 @@ You should've kept lying down, because now i'm gonna fill you full of holes.
 
 Model by: 'Colteh'
 Wearable by: 'ertz, kibbleknight'
+Animations by: 'MrPurplePigeon'
 Weapon by: 'The One Of Wonders'"
             "item_logname"				"Efficient Eliminator"
 			"item_iconname"				"Efficient Eliminator"
@@ -33356,7 +33332,7 @@ Weapon by: 'The One Of Wonders'"
 
 Bah, it's a bit rough around the edges but I'm certain it'll cut down those wankers just fine.
 
-Model by: 'Hau, Extra Ram'
+Model by: 'Hau, Extra Ram, renim_g'
 Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
 			"propername"				"0"
@@ -34158,7 +34134,7 @@ Weapon by: 'The One Of Wonders'"
 
 A simple solution to any problem in front of your path.
 
-Model by: 'Hau, OverlordLettuce'
+Model by: 'Hau, OverlordLettuce. Frontier Revengineer, Everik'
 Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders"
             "item_logname"				"Volatile Compound"
@@ -34219,7 +34195,7 @@ Weapon by: 'The One Of Wonders"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"9.0"
+					"value" 			"11.0"
 				}
 				"scattergun no reload single"
 				{
@@ -34239,7 +34215,7 @@ Weapon by: 'The One Of Wonders"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value" 			"0.25"
+					"value" 			"0.35"
 				}
 				"strange restriction type 1"
 				{
@@ -34321,6 +34297,7 @@ Weapon by: 'The One Of Wonders"
 Sometimes I don't get to negociate with what weapon I bring to a mission, if it kills then it'll work just fine.
 
 Model from: Open Fortress - Fortress.fun
+Animations by: 'Raptor Dan'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Assassin's Assailant"
 			"item_iconname"				"Assassin's Assailant"
@@ -34929,7 +34906,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 			For when you need to sweep a few dead bodies under the rug.
 
-Model by: 'Haau'
+Model by: 'Haau, Kibbleknight, Earl de Darkwood'
 Weapon by: 'Majro'"
 			"item_logname"				"Clean Sweep"
 			"item_iconname"				"Clean Sweep"
@@ -36243,7 +36220,7 @@ Weapon By: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_splash_damage" // coal go cramck
-					"value"				"2.0"													
+					"value"				"3.0"													
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -40971,7 +40948,7 @@ Fan-Fire: Hold fire button for maximum destruction!"
 		"7594"
 		{
 			"name"					"Spearfisher Special"
-			"description_string"	"Alt-Fire: Hold to increase damage and allow your harpoons to ricochet off surfaces"												
+			"description_string"	"100% mini-crits vs scoped and spun-up players"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
 		}
