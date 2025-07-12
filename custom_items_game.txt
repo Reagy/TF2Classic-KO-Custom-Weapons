@@ -3662,7 +3662,7 @@ Weapon by: 'The One Of Wonders'"
 				"engineer sentry build rate multiplier"										
 				{
 					"attribute_class"	"sentry_build_rate_multiplier"
-					"value" 			"1.75"
+					"value" 			"2.0"
 				}
 				"dispenser rate penalty"
 				{
@@ -7632,8 +7632,7 @@ Consider this loose end tied up, 621. V6.9.9 Post 2.2 REMOVED AND NEVER RETURNIN
 			"item_name_color"           "190 200 233 255"
 			"item_name"					"Glasgow Grinner"
 			"item_type_name"			"Combat knife"
-			"item_description"			"This weapon performs a rapid 2-hit combo per attack
-
+			"item_description"			"
 Blast off, and give 'em hell!
 
 Model by: 'svdl'
@@ -15516,6 +15515,11 @@ Weapon by: 'Reagy'"
 					"attribute_class"	"lifesteal"
 					"value"				"1"
 				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.85"
+				}
 				"mark self on miss"
 				{
 					"attribute_class"	"self_mark_for_death_on_miss"
@@ -15624,7 +15628,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"				"1.14"
+					"value"				"1.05"
 				}	
 				"weapon_stattrak_module_scale"
 				{
@@ -15679,7 +15683,7 @@ Weapon by: 'The One Of Wonders'"
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mult_reload_time_start"
-					"value"				"0.4"
+					"value"				"0.33"
 				}	
                 "Reload time no anim speed mod"
                 {
@@ -16435,6 +16439,11 @@ Reworked by:'Unconventional Healing Tactics'"
 				{
 					"attribute_class"	"mult_lunchbox_throwable_velocity"
 					"value"				"1.33"	
+				}
+				"hidden primary max ammo bonus"
+				{
+					"attribute_class"	"mult_maxammo_grenades1"
+					"value"				"3.0"
 				}
 			}
 			"mouse_pressed_sound"		"#ui/item_bottle_pickup.wav"
@@ -19101,7 +19110,7 @@ Weapon by: 'The One Of Wonders'"
 				"allowed in medieval mode"				"1"
 				"mod max primary clip override"			"-1"
 				"min_viewmodel_offset"					"10 0 -6"
-				"damage bonus hidden"					"1.0"
+				"damage bonus hidden"					"0.71"
 				"override projectile type"              "30"
 			}	
 			"attributes"
@@ -19304,12 +19313,12 @@ Weapon by: 'The One Of Wonders"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_proxymine_radius"
-					"value" 			"2.4"
+					"value" 			"2.5"
 				}				
                 "weapon_stattrak_module_scale"											
 				{
 					"attribute_class"	"mult_proxymine_detonate_time"
-					"value" 			"1.5"
+					"value" 			"1.6"
 				}
 				"Hell Beneath Penalty"											
 				{
@@ -19386,11 +19395,6 @@ Weapon by: 'The One Of Wonders'"
 				"override projectile type"              "3"
 			}
 			"attributes" {
-			    "strange restriction type 1"												
-				{
-					"attribute_class"	"provide_on_active"
-					"value"				"1"
-				}
 			    "Sandmate Special"
 				{
 					"attribute_class"	"dmmuy"
@@ -19419,7 +19423,7 @@ Weapon by: 'The One Of Wonders'"
 				"hidden secondary max ammo penalty"				//"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.1"
+					"value"				"0.15"
 				}
 				"Longer recharge time"												
 				{
@@ -19435,16 +19439,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"DISPLAY_ONLY"
 					"value"				"1" 
-				}
-				"weapon_stattrak_module_scale"												
-				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"				"1.5"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_deploy_time"
-					"value"				"1.5"
 				}
 				"crit mod disabled"
 				{
@@ -19566,7 +19560,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.09"
+					"value" 			"0.33333333333333"
 				}		
 				"weapon burn time reduced"
 				{
@@ -19576,7 +19570,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value"				"26.0"
+					"value"				"8.0"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -19631,7 +19625,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"25.0"
+					"value"				"7.5"
 				}
                 "strange restriction type 1"
 				{
@@ -24356,6 +24350,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"bleeding_duration"
 					"value"				"5"
 				}
+				"hit self on miss"
+				{
+					"attribute_class"	"hit_self_on_miss"
+					"value"				"1"
+				}
 				"Single wep deploy time increased fix"
 				{
 					"attribute_class"	"mult_single_wep_deploy_time"
@@ -24380,6 +24379,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"disable_airblasting_players"
 					"value"				"1"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_dmgself_push_force"
+					"value"				"0.2"
 				}
 				"mod melee crit swing custom damage" //GLORIOUS EXPLOSION! on crits
 				{
@@ -25221,12 +25225,17 @@ Weapon by: 'Reagy'"
 				"spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"1.7"
+					"value"				"2.0"
 				}
 				"reload time increased"	
 				{
 					"attribute_class"	"DISPLAY_ONLY"
-					"value"				"1.67"
+					"value"				"2.25"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"				"0.8"
 				}
 				"Reload time no anim speed mod"
                 {
@@ -26197,11 +26206,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
 					"value"				"0.25"
-				}
-				"spread penalty"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"1.1" 
 				}
 				"aiming movespeed decreased"
 				{
@@ -32838,7 +32842,7 @@ Weapon by: 'The One Of Wonders'"
 				"Reload time no anim speed mod"
                 {
                     "attribute_class"    "mult_reload_time_noanimmod"
-                    "value"              "1.15"
+                    "value"              "1.05"
                 }	
 				"longer damage falloff distance"
 				{
@@ -35992,7 +35996,7 @@ Weapon by: 'The One Of Wonders'"
 		"9904"
 		{
 			"name"						"TF_WEAPON_SCUBA_CANNON"
-			"item_class"				"tf_weapon_flaregun"
+			"item_class"				"tf_weapon_shotgun"
 			"item_quality"				"rarity3"
 			"show_in_armory"			"1"
 			"item_slot"					"secondary"
@@ -36023,8 +36027,9 @@ Sound by: 'Sevan'"
 			"static_attrs"
 			{
 				"override projectile type"				"2"										
-				"damage bonus"					        "2.0"
-				"min_viewmodel_offset"					"6 -2 -8"	
+				"hidden secondary max ammo penalty"     "0.5"
+				"min_viewmodel_offset"					"6 -2 -8"
+				
 			}
 			"attributes"
 			{
@@ -36032,6 +36037,11 @@ Sound by: 'Sevan'"
 				{
 					"attribute_class"	"explosive_bullets"
 					"value"				"1"
+				}
+				"damage bonus"					       
+				{
+					"attribute_class"	"DUMMY"
+					"value"				 "2.0"
 				}
 				"Targets Outlined on Hit"																
 				{
@@ -36077,12 +36087,12 @@ Sound by: 'Sevan'"
 				"self dmg push force hidden"				
 				{
 					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.7"
+					"value" 			"3.5"
 				}
 				
 				"reload time increased"
 				{
-					"attribute_class"	"mult_postfiredelay"
+					"attribute_class"	"DUMMY"
 					"value"				"1.2"
 				}
 				
@@ -36111,7 +36121,30 @@ Sound by: 'Sevan'"
                 {
                     "attribute_class"    "override_mult_deploy_time_anim"
                     "value"                "1.0"
-                }	
+                }
+				
+				"hidden separator"      "1"
+				
+				"mod max primary clip override"
+				{
+                    "attribute_class"    "mod_max_primary_clip_override"
+                    "value"                "-1"
+                }
+				"damage bonus"					       
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				 "10"
+				}
+				"weapon spread bonus"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value"				 "0"
+				}
+				"reload time increased"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"3.84"
+				}
 			}
 			"visuals"
 			{
@@ -39624,7 +39657,7 @@ Weapon by: 'Noclue'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.5"
+					"value"				"1.111111111111"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -39938,9 +39971,12 @@ Edited by: 'Reagy'"
 			}
 		    "name"						"TF_WEAPON_CROCKETLAUNCHER"
 			"prefab"					"weapon_rocketlauncher"
+			"item_class"                "tf_weapon_grenade_mirv2"
 			"show_in_armory"			"1"
 			"item_slot"					"primary"
 			"anim_slot"					"primary"
+			"bucket"                    "0"
+			"bucket_position"           "0"
 
 			"propername"				"1"
 			"item_name"					"Davie's Crocket"
@@ -39966,6 +40002,9 @@ Despised by: 'The One Of Wonders'"
 			"static_attrs"
 			{
 				"class select override vcd"				"taunt01_v2"
+				"mod max primary clip override"         "1"
+				"override projectile type"              "2"
+				"meter_label"                           "MADNESS"
 			}
 			"attributes"
 			{
@@ -39979,10 +40018,15 @@ Despised by: 'The One Of Wonders'"
 					"attribute_class"	"mod_rocket_gravity"
 					"value"				"0.25"
 				}
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.25" 
+				}
 				"blast splash damage increased"
 				{
 					"attribute_class"	"mult_explosion_splash_damage"
-					"value"				"1.5"
+					"value"				"1.25"
 				}
 				"Blast radius increased"
 				{
@@ -40019,19 +40063,14 @@ Despised by: 'The One Of Wonders'"
 				}
 				"weapon_stattrak_module_scale"
 				{
-					"attribute_class"	"mult_postfiredelay"
+					"attribute_class"	"mult_reload_time"
 					"value"				"2" 
 				}
-				"weapon_stattrak_module_scale"
+				"mod use custom ammo type" // primary
 				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"0.2" 
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_primary_ammo_from_ammo_packs"
-					"value"				"0" 
-				}
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value" 			"1"
+				}	
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_primary_ammo_from_dropped_weapons"
@@ -42199,7 +42238,8 @@ Toxin reduces healing from healers by 75%"
 		"7755"
 		{
 			"name"					"davie crocket negative" 
-			"description_string"	"Only holds 1 nuke at a time that can only be replenished through a resupply locker"												
+			"description_string"	"No ammo on spawn
+Requires an ammo pack to load a single warhead"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"negative"
 		}
