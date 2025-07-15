@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_loadout_icons/c_loadout_chef_large"
+	"$translucent" 1
+	$vertexcolor 1
+}

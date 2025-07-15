@@ -8,7 +8,7 @@ ArrayList	g_alActiveMapList;
 
 bool		g_bInChange;
 bool		g_bRTVAllowed = false;	// True if RTV is available to players. Used to delay rtv votes.
-int		g_iTotalVoters = 0;	// Total voters connected. Doesn't include fake clients.
+//int		g_iTotalVoters = 0;	// Total voters connected. Doesn't include fake clients.
 int		g_iVotesNeeded = 0;	// Necessary votes before map vote begins. (voters * percent_needed)
 int		g_iVotes = 0;		// Total number of "say rtv" votes
 bool		g_bVoted[MAXPLAYERS+1] = { false, ... };
@@ -31,20 +31,40 @@ public void OnPluginStart() {
 	OnMapEnd();
 	RegConsoleCmd( "sm_rtv", Command_RTV );
 
-	for( int i = 1; i <= MaxClients; i++ ) {
-		if( IsClientConnected( i ) )
-			OnClientConnected( i );		
-	}
+	UpdateClientCounts();
+	CreateTimer( 10.0, Timer_UpdateClientCounts, .flags=TIMER_FLAG_NO_MAPCHANGE|TIMER_REPEAT );
 }
 
 public void OnMapEnd() {
 	g_bRTVAllowed = false;
-	g_iTotalVoters = 0;
+	//g_iTotalVoters = 0;
 	g_iVotes = 0;
 	g_iVotesNeeded = 0;
 	g_bInChange = false;
 }
 
+Action Timer_UpdateClientCounts( Handle hTimer ) {
+	UpdateClientCounts();
+	return Plugin_Continue;
+}
+
+void UpdateClientCounts() {
+	/*g_iTotalVoters = 0;
+	for( int i = 1; i <= MaxClients; i++ ) {
+		if( IsFakeClient(i) || !IsClientInGame(i) )
+			continue;
+
+		g_iTotalVoters++;
+	}
+
+	g_iVotesNeeded = RoundToCeil( g_cvRTVPlayersNeeded.FloatValue * g_iTotalVoters );*/
+	int iTotalVoters = GetClientCount();
+	g_iVotesNeeded = RoundToCeil( g_cvRTVPlayersNeeded.FloatValue * iTotalVoters );
+	if ( g_iVotes > 0 && iTotalVoters > 0 && g_iVotes >= g_iVotesNeeded && g_bRTVAllowed )
+		StartRTV();
+}
+
+/*
 public void OnClientConnected( int iClient ) {
 	if( !IsFakeClient( iClient ) ) {
 		g_iTotalVoters++;
@@ -66,6 +86,7 @@ public void OnClientDisconnect( int iClient ) {
 	if ( g_iVotes && g_iTotalVoters && g_iVotes >= g_iVotesNeeded && g_bRTVAllowed )
 		StartRTV();
 }
+*/
 
 public void OnConfigsExecuted() {
 	int iMapListSerial = -1;
@@ -107,7 +128,6 @@ void ResetActiveMapList() {
 				iTries++;
 				continue;
 			} else { //if we run out of options just give up
-				PrintToServer( "breaking" );
 				break;
 			}
 		}
@@ -116,8 +136,6 @@ void ResetActiveMapList() {
 		g_alActiveMapList.PushString( szBuffer );
 		strcopy( szLastPrefix, sizeof( szLastPrefix ), szPrefixBuffer );
 		iTries = 0;
-
-		PrintToServer( "%s", szBuffer );
 	}
 
 	delete g_alTempList;

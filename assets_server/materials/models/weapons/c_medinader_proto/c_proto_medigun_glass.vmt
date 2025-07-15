@@ -1,0 +1,60 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models/weapons/c_medinader_proto/c_proto_medigun_glass"
+	"$surfaceprop"	"glass"
+	"$normalmapalphaenvmapmask" 1
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[3 3 3]"
+	"$envmapfresnel" 1
+	"$envMapFresnelMinMaxExp" "[2 1 4]"
+	"$baseAlphaEnvMapMaskMinMaxExp" "[0 1 1]"
+	"$translucent"	1
+
+	//phong properties
+	"$phong"	"1"
+	"$phongboost"	"5"
+	"$phongexponent"	"30"
+	"$phongfresnelranges"	"[.2 1 4]"
+	
+	"$rimlight" 1
+	"$rimboost" 8
+	
+
+	"$glowcolor" "1"
+	// Cloaking
+	"$cloakPassEnabled" "1"
+
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" 	"$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  	"$glowcolor"
+			"resultVar" 	"$color2"
+		}
+		"invis"
+		{
+		}
+		"YellowLevel"
+		{
+			"resultVar" 	"$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" 	"$color2"
+			"srcVar2" 	"$yellow"
+			"resultVar" 	"$color2"
+		}
+	}
+}

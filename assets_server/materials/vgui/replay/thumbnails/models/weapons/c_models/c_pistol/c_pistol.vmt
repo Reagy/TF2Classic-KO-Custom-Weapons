@@ -6,7 +6,7 @@
 	"$envmaptint" "[.15 .1 .1]"
 	"$basealphaenvmapmask"		"1"
 
-"$phong" "1"
+	"$phong" "1"
 	"$phongexponent" "6"
 	"$phongboost" "7"	
 	"$lightwarptexture" "models\lightwarps\softened_weapon_lightwarp"
@@ -82,8 +82,4 @@
 			"resultVar" "$color2"
 		}
 	}
-
-
-
-
-	
+}

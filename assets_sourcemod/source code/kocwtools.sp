@@ -11,6 +11,8 @@
 DynamicHook g_dhWantsLagCompensation;
 
 //inventory
+Handle g_sdkManagerApplyAttributeString;
+Handle g_sdkContainerApplyAttributeString;
 Handle g_sdkApplyAttributeFloat;
 Handle g_sdkIterateAttributes;
 
@@ -60,12 +62,14 @@ Handle g_sdkStopHealing;
 Handle g_sdkPlayerHealedOther;
 Handle g_sdkPlayerLeachedHealth;
 
+int g_iMiniCritOffset = -1;
+
 public Plugin myinfo =
 {
 	name = "KOCW Tools",
 	author = "Noclue",
 	description = "Standard functions for custom weapons.",
-	version = "1.8",
+	version = "1.9",
 	url = "https://github.com/Reagy/TF2Classic-KO-Custom-Weapons"
 }
 
@@ -114,8 +118,6 @@ public APLRes AskPluginLoad2( Handle myself, bool late, char[] error, int err_ma
 	RegPluginLibrary( "kocwtools" );
 
 	return APLRes_Success;
-
-	
 }
 
 public void OnPluginStart() {
@@ -152,14 +154,36 @@ public void OnPluginStart() {
 		INVENTORY FUNCTIONS
 	*/
 
-	//CAttributeManager::ApplyAttributeFloat( float flValue, const CBaseEntity *pEntity, string_t strAttributeClass )
 	StartPrepSDKCall( SDKCall_Raw );
-	PrepSDKCall_SetFromConf(hGameConf, SDKConf_Virtual, "CAttributeManager::ApplyAttributeFloat" );
-	PrepSDKCall_SetReturnInfo(SDKType_Float, SDKPass_Plain);
-	PrepSDKCall_AddParameter(SDKType_Float, SDKPass_Plain); //flvalue
-	PrepSDKCall_AddParameter(SDKType_CBaseEntity, SDKPass_Pointer); //pentity
-	PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain); //strattributeclass
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Virtual, "CAttributeManager::ApplyAttributeFloat" );
+	PrepSDKCall_SetReturnInfo( SDKType_Float, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_Float, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
 	g_sdkApplyAttributeFloat = EndPrepSDKCallSafe( "CAttributeManager::ApplyAttributeFloat" );
+
+	//set up as a static because the compiler absolutely mangled the stack
+	//CAttributeManager::ApplyAttributeString( string_t strValue, const CBaseEntity *pEntity, string_t strAttributeClass )
+	StartPrepSDKCall( SDKCall_Static );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAttributeManager::ApplyAttributeString" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer ); //stack bullshit
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //this
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //strin
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer ); //pentity
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //strattrib
+	g_sdkManagerApplyAttributeString = EndPrepSDKCallSafe( "CAttributeManager::ApplyAttributeString" );
+
+	//CAttributeContainer::ApplyAttributeString( string_t strValue, const CBaseEntity *pEntity, string_t strAttributeClass )
+	StartPrepSDKCall( SDKCall_Static );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CAttributeContainer::ApplyAttributeString" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Pointer ); //stack bullshit
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //this
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //strin
+	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer ); //pentity
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain ); //strattrib
+	g_sdkContainerApplyAttributeString = EndPrepSDKCallSafe( "CAttributeContainer::ApplyAttributeString" );
 
 	StartPrepSDKCall( SDKCall_Raw );
 	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CEconItemView::IterateAttributes" );
@@ -316,6 +340,8 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer, VDECODE_FLAG_ALLOWNULL );
 	g_sdkHealTimed = EndPrepSDKCallSafe( "CTFPlayerShared::HealTimed" );
 
+	g_iMiniCritOffset = GameConfGetOffsetSafe( hGameConf, "CTFPlayer::m_bMiniCrit" );
+
 	delete hGameConf;
 
 	g_fwdOnTakeDamageTF = new GlobalForward( "OnTakeDamageTF", ET_Ignore, Param_Cell, Param_Cell );
@@ -433,7 +459,7 @@ public any Native_SetSolid( Handle hPlugin, int iParams ) {
 	iEntity = GetNativeCell( 1 );
 	iSolid = GetNativeCell( 2 );
 
-	Address aCollision = GetEntityAddress( iEntity ) + address( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
+	Address aCollision = GetEntityAddress( iEntity ) + view_as<Address>( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
 	SDKCall( g_sdkSetSolid, aCollision, iSolid );
 
 	return 0;
@@ -444,7 +470,7 @@ public any Native_SetSolidFlags( Handle hPlugin, int iParams ) {
 	iEntity = GetNativeCell( 1 );
 	iFlags = GetNativeCell( 2 );
 
-	Address aCollision = GetEntityAddress( iEntity ) + address( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
+	Address aCollision = GetEntityAddress( iEntity ) + view_as<Address>( GetEntSendPropOffs( iEntity, "m_Collision", true ) );
 	SDKCall( g_sdkSetSolidFlags, aCollision, iFlags );
 
 	return 0;
@@ -486,7 +512,7 @@ public any Native_AllocPooledString( Handle hPlugin, int iParams ) {
 }
 
 //thanks tf2attributes, never would have figured this black magic out in a million years
-stock Address AllocPooledString( const char[] sValue ) {
+Address AllocPooledString( const char[] sValue ) {
 	Address aValue;
 	if ( g_smAllocPooledStringCache.GetValue( sValue, aValue ) ) {
 		return aValue;
@@ -500,27 +526,17 @@ stock Address AllocPooledString( const char[] sValue ) {
 	if ( iOffset <= 0 ) {
 		return Address_Null;
 	}
-	Address pOrig = address( GetEntData( iEntity, iOffset ) );
+	Address pOrig = view_as<Address>(GetEntData( iEntity, iOffset ));
 	DispatchKeyValue( iEntity, "targetname", sValue );
-	aValue = address( GetEntData( iEntity, iOffset ) );
+	aValue = view_as<Address>(GetEntData( iEntity, iOffset ));
 	SetEntData( iEntity, iOffset, pOrig );
 	
 	g_smAllocPooledStringCache.SetValue( sValue, aValue );
 	return aValue;
 }
 
-/*
-	ATTRIBUTE FLOAT FUNCTIONS
-
-	AttribHookValue is the function internally used to get float attribute data.
-	It simply locates the AttributeManager of the provided entity and calls it's ApplyAttributeFloat/ApplyAttributeString function.
-	The function is a template function, and every version except the string_t version was inlined by the compiler, so it's behavior has to be recreated manually.
-*/
-
-//todo: these appear to no longer be inlined
-
 //native float AttribHookFloat( float flValue, int iEntity, const char[] sAttributeClass );
-public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
+any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
 	float flValue = GetNativeCell( 1 );
 	int iEntity = GetNativeCell( 2 );
 	if( !IsValidEdict( iEntity ) )
@@ -529,28 +545,51 @@ public any Native_AttribHookFloat( Handle hPlugin, int iParams ) {
 	int iManagerOffset = GetEntSendPropOffs( iEntity, "m_AttributeManager", true );
 	if( iManagerOffset == -1 )
 		return flValue;
-	
+
 	int iBuffer;
 	GetNativeStringLength( 3, iBuffer );
-	char[] sAttributeClass = new char[ ++iBuffer ];
-	GetNativeString( 3, sAttributeClass, iBuffer );
+	char[] szAttributeClass = new char[ ++iBuffer ];
+	GetNativeString( 3, szAttributeClass, iBuffer );
 
-	Address aStringAlloc = AllocPooledString( sAttributeClass ); //string needs to be allocated before the function will recognize it
 	Address aManager = GetEntityAddress( iEntity ) + view_as<Address>( iManagerOffset );
-		
-	return SDKCall( g_sdkApplyAttributeFloat, aManager, flValue, iEntity, aStringAlloc );
+
+	return SDKCall( g_sdkApplyAttributeFloat, aManager, flValue, iEntity, AllocPooledString( szAttributeClass ) );
 }
 
+//gcc 14 acutally fucked up AttribHookValue<string_t> so badly it can't be called from sdktools
 
-/*
-	i tried for several hours to try and read string attributes like a normal person but it always had bizarre issues i couldn't figure out
-	so we're down to the most basic level and manually scanning the attribute list
-	honestly this was a hail-mary last resort so i'm glad it works
-	this will probably break if you try to scan a non-string attribute and it can't be used on the player but whatever it works
-*/
+//native bool AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
+public any Native_AttribHookString( Handle hPlugin, int iParams ) {
+	int iEntity = GetNativeCell( 3 );
+	if( !IsValidEdict( iEntity ) )
+		return false;
+
+	int iAttribOffset = GetEntSendPropOffs( iEntity, "m_AttributeManager", true );
+	if( iAttribOffset == -1 )
+		return false;
+
+	int iBuffer;
+	GetNativeStringLength( 4, iBuffer );
+	char[] szAttributeClass = new char[ ++iBuffer ];
+	GetNativeString( 4, szAttributeClass, iBuffer );
+	
+	Address aInputString = AllocPooledString( "" );
+	Address aPooledAttribute = AllocPooledString( szAttributeClass );
+
+	Address aAttributePointer = GetEntityAddress(iEntity) + view_as<Address>(iAttribOffset);
+
+	//c++ compilers return structs as a second hidden pointer on the stack when they are returned by value so we need this aids
+	Address aLiterallyNothing;
+	Address aResult = SDKCall( IsValidPlayer(iEntity) ? g_sdkManagerApplyAttributeString : g_sdkContainerApplyAttributeString, aLiterallyNothing, aAttributePointer, aInputString, iEntity, aPooledAttribute );
+
+	char szBuffer[128];
+	LoadStringFromAddress( DereferencePointer(aResult), szBuffer, sizeof(szBuffer) );
+	SetNativeString( 1, szBuffer, GetNativeCell( 2 ) );
+	return !StrEqual( szBuffer, "" );
+}
 
 //native int AttribHookString( char[] szOutput, int iMaxLen, int iEntity, const char[] szAttribute );
-public any Native_AttribHookString( Handle hPlugin, int iParams ) {
+/*public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 	int iEntity = GetNativeCell( 3 );
 	
 	int iBufferLength;
@@ -580,7 +619,7 @@ public any Native_AttribHookString( Handle hPlugin, int iParams ) {
 
 	SetNativeString( 1, szValue, GetNativeCell( 2 ) );
 	return 1;
-}
+}*/
 
 public any Native_GetEntitySlot( Handle hPlugin, int iParams ) {
 	int iEntity = GetNativeCell( 1 );
@@ -627,7 +666,7 @@ int GetPlayerFromSharedAddress( Address pShared ) {
 
 public any Native_GetSharedFromPlayer( Handle hPlugin, int iParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	return GetEntityAddress( iPlayer ) + address( offs_CTFPlayer_mShared );
+	return GetEntityAddress( iPlayer ) + view_as<Address>( offs_CTFPlayer_mShared );
 }
 
 public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
@@ -640,8 +679,8 @@ public any Native_ApplyPushFromDamage( Handle hPlugin, int iParams ) {
 } 
 
 static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
-	Address aOffs = address( GameConfGetOffset( hGamedata, sKey ) );
-	if ( aOffs == address( -1 ) ) {
+	Address aOffs = view_as<Address>( GameConfGetOffset( hGamedata, sKey ) );
+	if ( aOffs == view_as<Address>(-1) ) {
 		SetFailState( "Failed to get member offset %s", sKey );
 	}
 	return aOffs;
@@ -658,23 +697,7 @@ static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 //48: damage
 //52: some kind of "base damage"
 
-//72: appears to be unused
-//76: appears to be unused
-//80: appears to be unused
-//84: appears to be unused
 //88: m_flDamageBonus
-//92: some sort of consecutive hit detection
-//96: 0 always
-
-//104: null
-//108: ???
-
-//252/256/260: damage vectors
-//264/268/272: damage source?
-//276/280/284: damage vectors
-
-//288 ???
-//292/296/300: appears to be more coordinate data
 
 //player
 //6048:	bSeeCrit
@@ -683,11 +706,7 @@ static Address GameConfGetAddressOffset(Handle hGamedata, const char[] sKey) {
 
 //6502: effect types
 
-//TakeDamageInfo offsets
-
-#define DMB_CRITICAL 20
-
-//forward void OnTakeDamageTF( int iTarget, Address aTakeDamageInfo );
+//forward void OnTakeDamageTF( int iTarget, TFDamageInfo tfDamageInfo );
 MRESReturn Hook_OnTakeDamagePre( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
@@ -695,13 +714,13 @@ MRESReturn Hook_OnTakeDamagePre( int iThis, DHookReturn hReturn, DHookParam hPar
 	Call_StartForward( g_fwdOnTakeDamageTF );
 
 	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
+	Call_PushCell( TFDamageInfo( hParams.GetAddress( 1 ) ) );
 
 	Call_Finish();
 
 	return MRES_Handled;
 }
-//forward void OnTakeDamagePostTF( int iTarget, Address aTakeDamageInfo );
+//forward void OnTakeDamagePostTF( int iTarget, TFDamageInfo tfDamageInfo );
 MRESReturn Hook_OnTakeDamagePost( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
@@ -709,13 +728,13 @@ MRESReturn Hook_OnTakeDamagePost( int iThis, DHookReturn hReturn, DHookParam hPa
 	Call_StartForward( g_fwdOnTakeDamagePostTF );
 
 	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
+	Call_PushCell( TFDamageInfo( hParams.GetAddress( 1 ) ) );
 
 	Call_Finish();
 
 	return MRES_Handled;
 }
-//forward void OnTakeDamageAliveTF( int iTarget, Address aTakeDamageInfo );
+//forward void OnTakeDamageAliveTF( int iTarget, TFDamageInfo tfDamageInfo );
 MRESReturn Hook_OnTakeDamageAlivePre( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
@@ -723,13 +742,13 @@ MRESReturn Hook_OnTakeDamageAlivePre( int iThis, DHookReturn hReturn, DHookParam
 	Call_StartForward( g_fwdOnTakeDamageAliveTF );
 
 	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
+	Call_PushCell( TFDamageInfo( hParams.GetAddress( 1 ) ) );
 
 	Call_Finish();
 
 	return MRES_Handled;
 }
-//forward void OnTakeDamageAlivePostTF( int iTarget, Address aTakeDamageInfo );
+//forward void OnTakeDamageAlivePostTF( int iTarget, TFDamageInfo tfDamageInfo );
 MRESReturn Hook_OnTakeDamageAlivePost( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	if( !IsValidPlayer( iThis ) )
 		return MRES_Handled;
@@ -737,19 +756,19 @@ MRESReturn Hook_OnTakeDamageAlivePost( int iThis, DHookReturn hReturn, DHookPara
 	Call_StartForward( g_fwdOnTakeDamageAlivePostTF );
 
 	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
+	Call_PushCell( TFDamageInfo( hParams.GetAddress( 1 ) ) );
 
 	Call_Finish();
 
 	return MRES_Handled;
 }
 
-//forward void OnTakeDamageBuilding( int iBuilding, Address aTakeDamageInfo );
+//forward void OnTakeDamageBuilding( int iBuilding, TFDamageInfo tfDamageInfo );
 MRESReturn Hook_OnTakeDamageBuilding( int iThis, DHookReturn hReturn, DHookParam hParams ) {
 	Call_StartForward( g_fwdOnTakeDamageBuilding );
 
 	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
+	Call_PushCell( TFDamageInfo( hParams.GetAddress( 1 ) ) );
 
 	Call_Finish();
 
@@ -769,9 +788,7 @@ MRESReturn Detour_ApplyOnDamageModifyRulesPost( Address aThis, DHookReturn hRetu
 
 	if( tfInfo.iCritType == CT_MINI ) {
 		tfInfo.iFlags = tfInfo.iFlags & ~( 1 << 20 );
-		//todo: move to gamedata
-		StoreToEntity( iTarget, 6049, 1, NumberType_Int8 ); //6248?
-		StoreToEntity( iTarget, 6502, 1, NumberType_Int32 ); //6252?
+		StoreToEntity( iTarget, g_iMiniCritOffset, 1, NumberType_Int8 );
 	}
 
 	return MRES_Handled;

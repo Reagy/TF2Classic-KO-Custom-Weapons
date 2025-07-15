@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_heavy_sniper_lmg/c_heavy_sniper_lmg_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}

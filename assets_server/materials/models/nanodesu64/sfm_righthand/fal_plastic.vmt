@@ -1,7 +1,7 @@
 "VertexlitGeneric"
 {
 	"$basetexture" "models/Nanodesu64/sfm_righthand/fal_plastic"
-		"$nocull" 1
+	"$nocull" 1
 
 	"$basemapalphaphongmask" "1.5"
 	"$phong" "1.5"
@@ -9,3 +9,4 @@
 	"$phongboost" "5"	
 	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
 	"$phongfresnelranges"	"[.25 .5 1]"
+}

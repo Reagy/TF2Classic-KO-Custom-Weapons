@@ -19,6 +19,8 @@ public Plugin myinfo =
 Handle hDroppedTouch;
 Handle hAmmoPackTouch;
 Handle hDispenseAmmo;
+Handle hLookupAttachment;
+Handle hGetAttachment;
 
 float g_flGrabCooler[ MAXPLAYERS+1 ] = { 0.0, ... };
 bool g_bHasMagnetWrench[ MAXPLAYERS+1 ] = { false, ... };
@@ -52,6 +54,20 @@ public void OnPluginStart() {
 	PrepSDKCall_AddParameter( SDKType_CBaseEntity, SDKPass_Pointer );
 	hDispenseAmmo = EndPrepSDKCall();
 
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseAnimating::LookupAttachment" );
+	PrepSDKCall_SetReturnInfo( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_String, SDKPass_Pointer );
+	hLookupAttachment = EndPrepSDKCallSafe( "CBaseAnimating::LookupAttachment" );
+
+	StartPrepSDKCall( SDKCall_Entity );
+	PrepSDKCall_SetFromConf( hGameConf, SDKConf_Signature, "CBaseAnimating::GetAttachment" );
+	PrepSDKCall_SetReturnInfo( SDKType_Bool, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_PlainOldData, SDKPass_Plain );
+	PrepSDKCall_AddParameter( SDKType_Vector, SDKPass_ByRef, 0, VENCODE_FLAG_COPYBACK );
+	PrepSDKCall_AddParameter( SDKType_QAngle, SDKPass_ByRef, 0, VENCODE_FLAG_COPYBACK  );
+	hGetAttachment = EndPrepSDKCallSafe( "CBaseAnimating::GetAttachment" );
+
 	g_iAmmoSearchTable = new ArrayList( 2 );
 
 	delete hGameConf;
@@ -69,7 +85,7 @@ Action Event_PostInventory( Event hEvent, const char[] szName, bool bDontBroadca
 	if( !IsValidPlayer( iPlayer ) )
 		return Plugin_Continue;
 
-	g_bHasMagnetWrench[ iPlayer ] = AttribHookFloat( 0.0, iPlayer, "custom_magnet_grab_ammo" ) != 0.0;
+	g_bHasMagnetWrench[ iPlayer ] = AttribHookInt( 0, iPlayer, "custom_magnet_grab_ammo" ) != 0;
 
 	return Plugin_Continue;
 }
@@ -147,7 +163,7 @@ public Action OnPlayerRunCmd(int client, int& buttons, int& impulse, float vel[3
 		return Plugin_Continue;
 
 	if( buttons & IN_RELOAD && !( oldButtons[client] & IN_RELOAD ) ) {
-		if( AttribHookFloat( 0.0, iWeapon, "custom_magnet_grab_ammo" ) != 0.0 )
+		if( AttribHookInt( 0, iWeapon, "custom_magnet_grab_ammo" ) )
 			TryGrabAmmo( client );
 	}
 
@@ -356,41 +372,44 @@ static char g_szTeleportParticles[][] = {
 void CreateParticles( int iOrigin, int iTarget, int iType = 0 ) {
 	int iTeam = GetEntProp( iOrigin, Prop_Send, "m_iTeamNum" ) - 2;
 
-	int iParticles[2];
-	iParticles[0] = CreateEntityByName( "info_particle_system" );
-	iParticles[1] = CreateEntityByName( "info_particle_system" );
+	int iBeamParticle = CreateEntityByName( "info_particle_system_coordinate" );
+	int iTeleportParticle = CreateEntityByName( "info_particle_system" );
 
-	DispatchKeyValue( iParticles[0], "effect_name", g_szBeamParticles[ iTeam ] );
-	DispatchKeyValue( iParticles[1], "effect_name", g_szTeleportParticles[ iTeam ] );
+	DispatchKeyValue( iBeamParticle, "effect_name", g_szBeamParticles[ iTeam ] );
+	DispatchKeyValue( iTeleportParticle, "effect_name", g_szTeleportParticles[ iTeam ] );
 
+	float vecSource[3];
 	float vecTarget[3];
-	GetEntPropVector( iTarget, Prop_Data, "m_vecAbsOrigin", vecTarget );
-
-	if( iType == AMMO_DISPENSER ) {
-		ParentModel( iParticles[0], iTarget, "build_point_0" );
-	}
-	else if( iType == AMMO_WORLD ) {
+	
+	
+	switch(iType) {
+	case AMMO_DISPENSER: {
+		SDKCall( hGetAttachment, iTarget, SDKCall( hLookupAttachment, iTarget, "build_point_0" ), vecTarget, vecSource );
+	}	
+	case AMMO_WORLD: {
+		GetEntPropVector( iTarget, Prop_Data, "m_vecAbsOrigin", vecTarget );
 		vecTarget[2] += 25.0;
-		TeleportEntity( iParticles[0], vecTarget );
 	}
-	else {
-		TeleportEntity( iParticles[0], vecTarget );
+	case AMMO_DROPPED: {
+		GetEntPropVector( iTarget, Prop_Data, "m_vecAbsOrigin", vecTarget );
 	}
+	}
+	GetEntPropVector( iOrigin, Prop_Data, "m_vecAbsOrigin", vecSource );
 
-	SetEntPropEnt( iParticles[0], Prop_Send, "m_hControlPointEnts", iOrigin, 0 );
-	DispatchSpawn( iParticles[0] );
-	ActivateEntity( iParticles[0] );
-	AcceptEntityInput( iParticles[0], "Start" );
+	SetEntPropVector( iBeamParticle, Prop_Send, "m_vecOrigin", vecSource );
+	DispatchSpawn( iBeamParticle );
+	ActivateEntity( iBeamParticle );
+	AcceptEntityInput( iBeamParticle, "Start" );
+	SetEntPropVector( iBeamParticle, Prop_Send, "m_vControlPointVecs", vecTarget, 0 );
 
-	DispatchSpawn( iParticles[1] );
-	ActivateEntity( iParticles[1] );
-	AcceptEntityInput( iParticles[1], "Start" );
-	TeleportEntity( iParticles[1], vecTarget );
+	SetEntPropVector( iTeleportParticle, Prop_Send, "m_vecOrigin", vecTarget );
+	DispatchSpawn( iTeleportParticle );
+	ActivateEntity( iTeleportParticle );
+	AcceptEntityInput( iTeleportParticle, "Start" );
+	
 
-	GetEntPropVector( iParticles[1], Prop_Data, "m_vecAbsOrigin", vecTarget );
-
-	CreateTimer( 0.1, DeletThis, EntIndexToEntRef( iParticles[0] ), TIMER_FLAG_NO_MAPCHANGE );
-	CreateTimer( 0.1, DeletThis, EntIndexToEntRef( iParticles[1] ), TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( 0.1, DeletThis, EntIndexToEntRef( iBeamParticle ), TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( 0.1, DeletThis, EntIndexToEntRef( iTeleportParticle ), TIMER_FLAG_NO_MAPCHANGE );
 
 	EmitSoundToAll( "weapons/teleporter_send.wav", iTarget );
 	EmitSoundToAll( "weapons/teleporter_receive.wav", iOrigin );

@@ -18,4 +18,6 @@ particles_manifest
 	file    "!particles/healbomb.pcf"
 	file    "!particles/energy_ball.pcf"
 	file	"!particles/db_tracers.pcf"
+    file    "!particles/mushroomcloud.pcf" 
+	file    "!particles/pancake_particles.pcf"
 }

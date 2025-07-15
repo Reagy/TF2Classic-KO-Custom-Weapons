@@ -1,0 +1,10 @@
+"Unlitgeneric"
+{
+	"$basetexture"	"Effects/tracer_pissy"
+	"$surfaceprop"	"no_decal"
+	"$translucent"	1
+	"$additive"	1
+	"$vertexcolor"	1
+	"$vertexalpha"	1
+	$srgbtint		"[5 2 0]"
+}

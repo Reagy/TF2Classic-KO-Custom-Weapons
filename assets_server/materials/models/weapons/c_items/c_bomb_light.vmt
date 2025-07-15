@@ -1,0 +1,94 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/c_bomb_light"
+
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "10"
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	"$phongfresnelranges"	"[.5 .5 3]"
+	"$halflambert" "1"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.1 .1 .1]"
+
+	
+	"$selfillum" "1"
+	"$selfillumtint" "[2 2 2]"
+
+	"$rimlight" "1"		
+	"$rimlightexponent" "4"				
+	"$rimlightboost" "1.5"
+	
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"$sheenPassEnabled" "1"
+
+	"$sheenmap" 		"cubemaps/cubemap_sheen001"
+	"$sheenmapmask" 		"Effects/AnimatedSheen/animatedsheen0"
+	"$sheenmaptint" 		"[ 1 1 1 ]"
+	"$sheenmapmaskframe" 	"0"
+	"$sheenindex" 		"0"
+
+	"$yellow" "0"
+
+	"Proxies"
+	{
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+		"Sine"
+		{
+			"sineperiod" ".5"
+			"sinemin" 0.5
+			"sinemax" 1
+			"resultVar" "$selfillumtint"
+		}
+		"Sine"
+		{
+			"sineperiod" "1"
+			"sinemin" 0.7
+			"sinemax" 1.5
+			"resultVar" "$selfillumtint"
+		}
+		"Sine"
+		{
+			"sineperiod" "2"
+			"sinemin" 1
+			"sinemax" 2
+			"resultVar" "$selfillumtint"
+
+		}
+	}
+}

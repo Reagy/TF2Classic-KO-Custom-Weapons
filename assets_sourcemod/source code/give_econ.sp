@@ -57,10 +57,71 @@ public void OnPluginStart() {
 		g_alPlayerBuffRefs[i] = new ArrayList();
 	}
 
+	RegConsoleCmd( "sm_devwep_give", Command_DevWep, "thanmks and haveasd fun" );
+
 #if defined DEBUG
 	RegConsoleCmd( "sm_attr_add", Command_Add, "test" );
 	RegConsoleCmd( "sm_attr_remove", Command_Remove, "test" );
 #endif
+}
+
+static char g_szDevList[][] = {
+	"76561198069525597", //clue
+	"76561198124781832", //vror (mentioned)
+	"76561197973074856", //reagy
+	"76561198045208572", //dan
+	"76561198947729988", //daffy
+	"76561198149855325", //colrot
+	"76561198031608022", //kibbleknight
+	"76561198071599417", //haau
+	"76561198071732989", //majro
+	"76561198302570978", //gabe
+	"76561198167640066", //wonders
+
+	"76561198038214360", //negative_chill
+	"76561198014234943", //fluffypaws
+
+	"76561197993638233", //trotim
+	"76561198825918211", //azzy
+
+	"76561198082886322", //panacek (for the funny)
+};
+
+Action Command_DevWep( int iClient, int iArgs ) {
+	if( !IsValidPlayer( iClient ) || iArgs < 1 ) return Plugin_Handled;
+
+	static char szAuthID[128];
+	if( !GetClientAuthId( iClient, AuthId_SteamID64, szAuthID, sizeof(szAuthID) ) ) {
+		PrintToConsole( iClient, "Authorization failed." );
+		return Plugin_Continue;
+	}	
+
+	bool bIsDev = false;
+	for( int i = 0; i < sizeof(g_szDevList); i++ ) {
+		if( StrEqual( szAuthID, g_szDevList[i] ) ) {
+			bIsDev = true;
+			break;
+		}
+	}
+
+	if( !bIsDev ) {
+		PrintToConsole( iClient, "Authorization failed." );
+		return Plugin_Handled;
+	}
+
+	int iItemID = GetCmdArgInt( 1 );
+
+	Address aDefinition = SDKCall( g_sdkGetItemDefinition, SDKCall( g_sdkGetItemSchema ), iItemID );
+	if( aDefinition == Address_Null ) {
+		PrintToConsole( iClient, "Could not find item definition for ID %i.", iItemID );
+		return Plugin_Handled;
+	}
+
+	static char szItemName[128];
+	LoadStringFromAddress( LoadFromAddress( aDefinition + view_as<Address>( 4 ), NumberType_Int32 ), szItemName, sizeof( szItemName ) );
+	SDKCall( g_hGiveEcon, iClient, szItemName, 0, -1 );
+
+	return Plugin_Handled;
 }
 
 //native int GiveEconItem( int iPlayer, int iItemID );

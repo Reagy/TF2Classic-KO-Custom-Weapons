@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture"		"backpack\weapons\c_models\c_stunstick\c_stunstick_large"
+	"$translucent"		"1"
+}

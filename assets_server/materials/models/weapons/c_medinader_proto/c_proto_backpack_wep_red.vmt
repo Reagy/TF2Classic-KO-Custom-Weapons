@@ -1,0 +1,9 @@
+"Patch"
+{
+	include "materials\models\weapons\c_medinader_proto\c_proto_backpack_red.vmt"
+	
+	insert
+	{
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	}
+}

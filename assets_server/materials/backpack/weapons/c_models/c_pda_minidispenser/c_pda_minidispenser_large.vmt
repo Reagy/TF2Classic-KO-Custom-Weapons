@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_pda_minidispenser/c_pda_minidispenser_large"
+	"$translucent" 1
+	$vertexcolor 1
+}

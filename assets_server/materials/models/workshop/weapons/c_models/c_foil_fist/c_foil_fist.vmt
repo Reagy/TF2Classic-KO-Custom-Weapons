@@ -4,7 +4,7 @@
 
 	"$bumpmap" "models\workshop\weapons\c_models\c_foil_fist\c_foil_fist_normal"
 
-	"$PhongExponentTexture" "models\workshop\weapons\c_models\c_foil_fist\c_foil_fist_exponent"
+	"$PhongExponentTexture" "models\workshop\weapons\c_models\cosmonaut\c_cosmonaut_exponent"
 
 
 
@@ -21,7 +21,7 @@
 
 
 
-	"$lightwarptexture"		"models\workshop\weapons\c_models\c_foil_fist\foil_lightwarp"
+	"$lightwarptexture"		"models\workshop\weapons\c_models\cosmonaut\foil_lightwarp"
 	"$phongfresnelranges"	"[1 1 115]"
 
 	"$rimlight" "1"
@@ -30,7 +30,7 @@
 
 
 
-	"$envmap" "models\workshop\weapons\c_models\c_foil_fist\foil_cubemap"
+	"$envmap" "models\workshop\weapons\c_models\cosmonaut\foil_cubemap"
 
 	"$envmaptint"		"[0.002 0.00078 0.0003921569]"    // INGAME NEW CUBEMAP
 

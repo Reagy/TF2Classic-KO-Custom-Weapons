@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_harpooncannon/c_harpooncannon_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}

@@ -21,7 +21,7 @@
 
 	// Cloaking
 	"$cloakPassEnabled" "1"
-"Proxies"
+	"Proxies"
 	{
 		"AnimatedWeaponSheen"
 		{
@@ -57,4 +57,4 @@
 			"resultVar" "$color2"
 		}
 	}
-
+}

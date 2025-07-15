@@ -1,0 +1,26 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\weapons\w_rocketlauncher\w_crocket01"
+	
+	"$phong" "1"
+	"$phongexponent" "12.5"
+	"$phongboost" ".25"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[2 1 4]"
+	"$halflambert" "1"
+
+	"$basemapalphaphongmask" "1"
+	
+	"$rimlight" "0"						
+	"$rimlightexponent" "4"				
+	"$rimlightboost" "2"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+	}
+}

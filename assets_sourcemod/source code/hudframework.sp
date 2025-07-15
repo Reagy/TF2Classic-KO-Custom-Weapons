@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name = "HUD Framework",
 	author = "Noclue",
 	description = "HUD Framework for Custom Weapons.",
-	version = "1.2",
+	version = "1.2.1",
 	url = "no"
 }
 
@@ -27,8 +27,9 @@ enum {
 	RTF_FORWARDONFULL = 1 << 6,	//send a global forward when recharged
 }
 
+#define TRACKER_MAX_LENGTH 64
 enum struct ResourceTracker {
-	char szName[32];
+	char szName[TRACKER_MAX_LENGTH];
 	float flValue;
 	int iFlags;
 	float flMax;
@@ -38,7 +39,6 @@ enum struct ResourceTracker {
 		return ( this.iFlags & iCheckFlags ) == iCheckFlags;
 	}
 }
-#define TRACKERMAXSIZE sizeof(ResourceTracker)
 #define UPDATEINTERVAL 0.2
 
 GlobalForward g_OnRecharge;
@@ -52,7 +52,7 @@ public void OnPluginStart() {
 		if( g_rtResources[i] )
 			g_rtResources[i].Clear();
 			
-		g_rtResources[i] = new ArrayList(TRACKERMAXSIZE);
+		g_rtResources[i] = new ArrayList( sizeof(ResourceTracker) );
 	}
 
 	g_OnRecharge = new GlobalForward( "Tracker_OnRecharge", ET_Ignore, Param_Cell, Param_String, Param_Float );
@@ -84,7 +84,7 @@ public void OnMapStart() {
 		if( g_rtResources[i] )
 			g_rtResources[i].Clear();
 
-		g_rtResources[i] = new ArrayList(TRACKERMAXSIZE);
+		g_rtResources[i] = new ArrayList( sizeof(ResourceTracker) );
 	}
 }
 
@@ -121,14 +121,14 @@ Action Timer_TrackerThink( Handle hTimer ) {
 //Tracker_Create
 public any Native_TrackerCreate( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	static char szName[32]; GetNativeString( 2, szName, 32 );
+	static char szName[64]; GetNativeString( 2, szName, sizeof(szName) );
 	bool bOverwrite = GetNativeCell( 3 );
 
 	Tracker_Create( iPlayer, szName, bOverwrite );
 
 	return 0;
 }
-void Tracker_Create( int iPlayer, const char szName[32], bool bOverwrite = true ) {
+void Tracker_Create( int iPlayer, const char szName[TRACKER_MAX_LENGTH], bool bOverwrite = true ) {
 	ResourceTracker hTracker;
 
 	hTracker.iFlags = 0;
@@ -146,13 +146,13 @@ void Tracker_Create( int iPlayer, const char szName[32], bool bOverwrite = true 
 //Tracker_Remove
 public any Native_TrackerRemove( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	static char szName[32]; GetNativeString( 2, szName, 32 );
+	static char szName[TRACKER_MAX_LENGTH]; GetNativeString( 2, szName, sizeof(szName) );
 
 	Tracker_Remove( iPlayer, szName );
 
 	return 0;
 }
-void Tracker_Remove( int iPlayer, const char szName[32] ) {
+void Tracker_Remove( int iPlayer, const char szName[TRACKER_MAX_LENGTH] ) {
 	int iLoc = Tracker_Find( iPlayer, szName );
 	if( iLoc == -1 ) return;
 
@@ -162,11 +162,11 @@ void Tracker_Remove( int iPlayer, const char szName[32] ) {
 //Tracker_GetValue
 public any Native_TrackerGetValue( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	static char szName[32]; GetNativeString( 2, szName, 32 );
+	static char szName[TRACKER_MAX_LENGTH]; GetNativeString( 2, szName, sizeof(szName) );
 
 	return Tracker_GetValue( iPlayer, szName );
 }
-float Tracker_GetValue( int iPlayer, const char szName[32] ) {
+float Tracker_GetValue( int iPlayer, const char szName[TRACKER_MAX_LENGTH] ) {
 	int iLoc = Tracker_Find( iPlayer, szName );
 	if( iLoc == -1 ) return 0.0;
 
@@ -179,7 +179,7 @@ float Tracker_GetValue( int iPlayer, const char szName[32] ) {
 //Tracker_SetMax( int iPlayer, const char szName[32], float flMax );
 public any Native_TrackerSetMax( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	static char szName[32]; GetNativeString( 2, szName, sizeof( szName ) );
+	static char szName[TRACKER_MAX_LENGTH]; GetNativeString( 2, szName, sizeof(szName) );
 	float flValue = GetNativeCell( 3 );
 
 	int iLoc = Tracker_Find( iPlayer, szName );
@@ -200,7 +200,7 @@ void Tracker_SetMaxIndex( int iPlayer, int iIndex, float flNewMax ) {
 //Tracker_SetFlags( int iPlayer, const char szName[32], int iFlags );
 public any Native_TrackerSetFlags( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	static char szName[32]; GetNativeString( 2, szName, sizeof( szName ) );
+	static char szName[TRACKER_MAX_LENGTH]; GetNativeString( 2, szName, sizeof(szName) );
 	int iFlags = GetNativeCell( 3 );
 
 	int iLoc = Tracker_Find( iPlayer, szName );
@@ -220,7 +220,7 @@ void Tracker_SetFlagsIndex( int iPlayer, int iIndex, int iFlags ) {
 //Tracker_SetRechargeRate( int iPlayer, const char szName[32], float flRechargeRate );
 public any Native_TrackerSetRechargeRate( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	static char szName[32]; GetNativeString( 2, szName, sizeof( szName ) );
+	static char szName[TRACKER_MAX_LENGTH]; GetNativeString( 2, szName, sizeof(szName) );
 	float flRechargeRate = GetNativeCell( 3 );
 
 	int iLoc = Tracker_Find( iPlayer, szName );
@@ -240,13 +240,13 @@ void Tracker_SetRechargeRateIndex( int iPlayer, int iIndex, float flRechargeRate
 //Tracker_SetValue( int iPlayer, const char sName[32], float flValue );
 public any Native_TrackerSetValue( Handle hPlugin, int iNumParams ) {
 	int iPlayer = GetNativeCell( 1 );
-	static char szName[32]; GetNativeString( 2, szName, 32 );
+	static char szName[TRACKER_MAX_LENGTH]; GetNativeString( 2, szName, sizeof(szName) );
 	float flValue = GetNativeCell( 3 );
 
 	Tracker_SetValue( iPlayer, szName, flValue );
 	return 0;
 }
-void Tracker_SetValue( int iPlayer, const char szName[32], float flValue ) {
+void Tracker_SetValue( int iPlayer, const char szName[TRACKER_MAX_LENGTH], float flValue ) {
 	int iLoc = Tracker_Find( iPlayer, szName );
 	if( iLoc == -1 ) return;
 
@@ -267,7 +267,7 @@ void Tracker_SetValueIndex( int iPlayer, int iIndex, float flNewValue ) {
 	g_rtResources[ iPlayer ].SetArray( iIndex, rtTracker );
 }
 
-int Tracker_Find( int iPlayer, const char szName[32] ) {
+int Tracker_Find( int iPlayer, const char szName[TRACKER_MAX_LENGTH] ) {
 	for( int i = 0 ; i < g_rtResources[ iPlayer ].Length; i++ ) {
 		ResourceTracker hTracker;
 		g_rtResources[ iPlayer ].GetArray( i, hTracker );
@@ -280,8 +280,8 @@ int Tracker_Find( int iPlayer, const char szName[32] ) {
 
 //performs final batching and display of player's trackers
 void Tracker_Display( int iPlayer ) {
-	static char sFinal[256];
-	static char sBuffer[64];
+	static char sFinal[1024];
+	static char sBuffer[TRACKER_MAX_LENGTH];
 	sFinal = "";
 
 	for( int i = 0; i < g_rtResources[iPlayer].Length; i++ ) {
@@ -313,21 +313,10 @@ void Tracker_Recharge( int iPlayer, int iIndex ) {
 }
 
 //generates the string for a single tracker entry
-void Tracker_CreateString( ResourceTracker hTracker, char sBuffer[64] ) {
-	Format( sBuffer, sizeof( sBuffer ), "%s: %-.0f", hTracker.szName, hTracker.flValue );
-	if( hTracker.HasFlags(RTF_PERCENTAGE) ) StrCat( sBuffer, sizeof( sBuffer ), "%%");
+void Tracker_CreateString( ResourceTracker hTracker, char sBuffer[TRACKER_MAX_LENGTH] ) {
+	Format( sBuffer, sizeof(sBuffer), "%s: %-.0f", hTracker.szName, hTracker.flValue );
+	if( hTracker.HasFlags(RTF_PERCENTAGE) ) StrCat( sBuffer, sizeof(sBuffer), "%%");
 }
-
-
-/*
-Call_StartForward( g_OnTakeDamageTF );
-
-	Call_PushCell( iThis );
-	Call_PushCell( hParams.GetAddress( 1 ) );
-
-	Call_Finish();
-*/
-
 
 #if defined DEBUG
 Action Command_Test(int client, int args)
@@ -343,7 +332,7 @@ Action Command_Test(int client, int args)
 #endif
 
 //forward void Tracker_OnRecharge( int iPlayer, const char szTrackerName[32], float flValue );
-void Tracker_OnRecharge( int iPlayer, char szName[32], float flNewValue ) {
+void Tracker_OnRecharge( int iPlayer, char szName[TRACKER_MAX_LENGTH], float flNewValue ) {
 	Call_StartForward( g_OnRecharge );
 
 	Call_PushCell( iPlayer );
