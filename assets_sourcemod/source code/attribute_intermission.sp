@@ -31,7 +31,6 @@ static char g_szSndscrSapperDestroy[] =	"Weapon_Grenade_Mirv.Disarm";
 #define EFFECT_FLASH            "sapper_flash"
 #define EFFECT_FLASHUP          "sapper_flashup"
 #define EFFECT_FLYINGEMBERS     "sapper_flyingembers"
-#define EFFECT_SMOKE            "sapper_smoke"
 
 #define SPRITE_ELECTRIC_WAVE    "sprites/laser.vmt"
 
@@ -70,6 +69,7 @@ enum struct ThrownSapper {
 	int iReference;
 	float flRemoveTime;
 	ArrayList alSapping;
+	Handle hThink;
 }
 
 ThrownSapper g_esPlayerSappers[MAXPLAYERS+1];
@@ -274,8 +274,8 @@ int CreateIntermission( int iOwner ) {
 
 	g_dhOnTakeDamage.HookEntity( Hook_Pre, iSapper, Hook_IntermissionTakeDamage );
 
-	int iRef = EntIndexToEntRef( iSapper );
-	CreateTimer( INTERMISSION_THINK, Timer_IntermissionThink, iOwner, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
+	
+	
 
 	EmitSoundToAll( g_szSoundSapperBoot, iSapper, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_CHANGEPITCH, 0.4, 30 );
 	EmitSoundToAll( g_szSoundSapperThrow, iOwner );
@@ -299,15 +299,18 @@ int CreateIntermission( int iOwner ) {
 
 	TeleportEntity( iSapper, vecPlayerPos, vecPlayerAngle, vecThrowVel );
 
+	int iRef = EntIndexToEntRef( iSapper );
+
 	g_esPlayerSappers[iOwner].iReference = iRef;
 	g_esPlayerSappers[iOwner].flRemoveTime = GetGameTime() + INTERMISSION_DURATION;
 	g_esPlayerSappers[iOwner].alSapping.Clear();
+	g_esPlayerSappers[iOwner].hThink = CreateTimer( INTERMISSION_THINK, Timer_IntermissionThink, iOwner, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE );
 
 	return iRef;
 }
 
 void RemoveIntermission( int iOwner, int iRemoveType = 0 ) {
-	int iSapper = EntRefToEntIndex( g_esPlayerSappers[iOwner].iReference );
+	
 	for( int i = 0; i < g_esPlayerSappers[iOwner].alSapping.Length; i++ ) {
 		int iBuilding = EntRefToEntIndex( g_esPlayerSappers[iOwner].alSapping.Get( i ) );
 		if( iBuilding == -1 )
@@ -319,6 +322,12 @@ void RemoveIntermission( int iOwner, int iRemoveType = 0 ) {
 	g_esPlayerSappers[iOwner].iReference = INVALID_ENT_REFERENCE;
 	g_esPlayerSappers[iOwner].alSapping.Clear();
 
+	if( g_esPlayerSappers[iOwner].hThink != INVALID_HANDLE ) {
+		KillTimer( g_esPlayerSappers[iOwner].hThink );
+		g_esPlayerSappers[iOwner].hThink = INVALID_HANDLE;
+	}
+
+	int iSapper = EntRefToEntIndex( g_esPlayerSappers[iOwner].iReference );
 	if( iSapper == -1 )
 		return;
 
