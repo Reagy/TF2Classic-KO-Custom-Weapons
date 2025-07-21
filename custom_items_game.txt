@@ -4501,6 +4501,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_patient_overheal_penalty"
 					"value"				"0.1"
 				}
+				"weapon_stattrak_module_scale"		
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"				"2.0"
+				}
 				"weapon_stattrak_module_scale"											
 				{
 					"attribute_class"	"mult_health_frompacks_active"
@@ -5459,15 +5464,15 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"dmmuy"
 					"value" 			"1"
 				}	
-				"Set DamageType Ignite"												
+				"strange restriction type 1"												
 				{
 					"attribute_class"	"set_dmgtype_ignite"
 					"value" 			"1"
 				}
-				"Medical Administration Defense"
+				"Plasma Burn"
 				{
 					"attribute_class"	"dmmuy"
-					"value"				"1"
+			    	"value"				"1"
 				}
                 "Torcher Special"												
 				{
@@ -5509,7 +5514,7 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg_vs_buildings"
 					"value" 			"1.5"
 				}
-				 "max health additive bonus"		
+				"max health additive bonus"		
 				{
 					"attribute_class"	"add_maxhealth"
 					"value"				"25"
@@ -5522,7 +5527,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon burn time reduced"
 				{
 					"attribute_class"	"mult_wpn_burntime"
-					"value"				"0.5"
+					"value"				"0.05"
 				}
 				"move speed penalty"
 				{
@@ -5559,11 +5564,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_custom_falloff"
 					"value"				"2.0"
 				}
-				"add condition on hit"															
-				{
-					"attribute_class"	"add_onhit_addcond_self_weapon"
-					"value"				"111 1"
-				}	
 			}
 			"visuals"
 			{
@@ -16415,11 +16415,6 @@ Reworked by:'Unconventional Healing Tactics'"
 					"attribute_class"	"lunchbox_addcond"
 					"value"				"32 8.0"
 				}
-				"MEAT Cooldown Timer"
-				{
-					"attribute_class"	"lunchbox_force_cooldown"
-					"value"				"1"
-				}
 				"lunchbox healing decreased" //No attribute for increasing it, go figure.
 				{
 					"attribute_class"	"lunchbox_healing_scale"
@@ -19821,7 +19816,7 @@ Particles/model edit by: 'Panáček'"
                 "mod rocket gravity upward force"
                 {
                     "attribute_class"    "mod_rocket_gravity_upward_force"
-                    "value"                "-0.3"
+                    "value"                "-0.15"
                 }
 				"rocket limited lifetime"
 				{
@@ -19836,7 +19831,7 @@ Particles/model edit by: 'Panáček'"
 				"rocket gravity"
                 {
                     "attribute_class"    "mod_rocket_gravity"
-                    "value"             "-0.38"
+                    "value"             "-0.19"
                 }	
 			}
 			"visuals"
@@ -20021,6 +20016,11 @@ Weapon by 'The One Of Wonders"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"0.25"
+				}
+				"dmg taken from sentry increased"
+				{
+					"attribute_class"	"dmg_from_sentry_reduced"
+					"value"				"1.5"
 				}
 				"custom projectile model"
 				{
@@ -22187,6 +22187,7 @@ Weapon by: 'The One Of Wonders'"
 		{
 		    "name"						"TF_WEAPON_SYRINGEGUN_XBOW"
 			"prefab"					"weapon_syringegun"
+			"item_class"                "tf_weapon_tranq"
 			"show_in_armory"			"1"
 			
 			"propername"				"0"
@@ -22235,12 +22236,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"3.0"
-				}	
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"0.02"
+					"value"				"1.0"
 				}	
 				"weapon_stattrak_module_scale"
 				{
@@ -22270,7 +22266,7 @@ Weapon by: 'The One Of Wonders'"
                 "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"7.5"
+					"value"				"4.5"
 				}				
 				"Reload time no anim speed mod"
                 {
@@ -26167,6 +26163,16 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
+			    "Veles Special"
+				{
+					"attribute_class"	"gweh"
+					"value"				"1" 
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mod_pierce_resists_absorbs"
+					"value"				"1"
+				}
 			    "add ammo on hit"
 				{
 					"attribute_class"	"add_ammo_on_hit"
@@ -40031,7 +40037,7 @@ Despised by: 'The One Of Wonders'"
 				"Blast radius increased"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"2.0" 
+					"value"				"1.75" 
 				}
 				"blast dmg to self increased"
 				{
@@ -40075,6 +40081,11 @@ Despised by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_primary_ammo_from_dropped_weapons"
 					"value"				"0" 
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_primary_ammo_from_ammo_packs"
+					"value"				"101.0" 
 				}
 				"strange restriction type 1"													
 				{
@@ -42358,6 +42369,21 @@ Requires an ammo pack to load a single warhead"
 			"custom_color"            "225 215 0 255"
             "effect_type"             "positive"
         }	
+		"7771"
+		{
+            "name"                    "dmg taken from sentry increased"	
+            "description_string"      "%s1% increased damage taken from sentry guns on wearer"
+			"description_format"	  "value_is_percentage"
+            "effect_type"             "negative"
+        }
+		"7772"
+		{
+            "name"                    "Veles Special"
+            "description_string"      "Fires high-power rounds that ignore damage resistances and vulnerabilities"
+			"description_format"	  "value_is_percentage"
+			"custom_color"            "225 215 0 255"
+            "effect_type"             "negative"
+        }
 // Civvie Loadout nonsense BLEGH
        
 	    "8000"
