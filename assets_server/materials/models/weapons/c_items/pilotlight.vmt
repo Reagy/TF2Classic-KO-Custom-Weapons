@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/weapons/c_items/pilotlight"
+	"$surfaceprop" "Default"
+	"$additive" 1
+	"$translucent" 1
+	"$selfillum"		"1"
+}
