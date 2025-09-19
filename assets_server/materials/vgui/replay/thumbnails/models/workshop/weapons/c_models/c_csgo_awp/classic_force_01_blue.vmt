@@ -1,0 +1,81 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "vgui\replay\thumbnails\models/workshop/weapons/c_models/c_csgo_awp/classic_force_01_blue"
+	
+	"$teamcolors" "2"	
+	
+		 "$phong" "1"
+		 "$phongexponent" "15"
+		 "$phongboost" "5"	
+	     "$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+         "$phongfresnelranges"	"[.5 .5 .5]"
+        "$bumpmap" "vgui\replay\thumbnails\models/workshop/weapons/c_models/c_csgo_awp/normal_01"
+
+
+	"$phongExponentTexture" "vgui\replay\thumbnails\models/workshop/weapons/c_models/c_csgo_awp/specular_03s"
+	$phongAlbedoTint 1
+	
+	"$rimlight" "1"						
+	"$rimlightexponent" "3"				
+	"$rimlightboost" "0.4"
+
+
+"$glowcolor" "1"
+
+
+"$tempvar" "0"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"$sheenPassEnabled" "1"
+
+	"$sheenmap" 		"cubemaps/cubemap_sheen001"
+	"$sheenmapmask" 		"Effects/AnimatedSheen/animatedsheen0"
+	"$sheenmaptint" 		"[ 1 1 1 ]"
+	"$sheenmapmaskframe" 	"0"
+	"$sheenindex" 		"0"
+
+	"$yellow" "0"
+
+	"Proxies"
+	{
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+	
+	
+		"WeaponSkin" {
+		}
+	}
+}
+
