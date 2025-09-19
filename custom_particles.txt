@@ -19,5 +19,7 @@ particles_manifest
 	file    "!particles/energy_ball.pcf"
 	file	"!particles/db_tracers.pcf"
     file    "!particles/mushroomcloud.pcf" 
-	file    "!particles/pancake_particles.pcf"
+	file    "!particles/pancake_particles_2.pcf"
+	file    "!particles/criticaltransmissionbeam.pcf"
+        file    "!particles/gasthrower.pcf"
 }
