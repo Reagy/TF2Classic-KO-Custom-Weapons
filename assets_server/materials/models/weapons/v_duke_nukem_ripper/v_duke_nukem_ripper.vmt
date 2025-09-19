@@ -1,0 +1,43 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models\weapons\v_duke_nukem_ripper\v_duke_nukem_ripper"
+	"$phong" "1"
+	"$phongexponent" "11"
+	"$phongboost" "1.5"	
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	"$phongfresnelranges"	"[1.5 .5 3]"
+	"$halflambert" "1"
+
+	"$basemapalphaphongmask" "1"
+	
+	"$rimlight" "1"
+	"$rimlightexponent" "4"				
+	"$rimlightboost" "0.5"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+
+	"Proxies"
+	{
+		"ModelGlowColor"
+		{
+			"resultVar""$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"	"$glowcolor"
+			"resultVar"	"$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"	"$glowcolor"
+			"resultVar"	"$color2"
+		}
+		"spy_invis"
+		{
+		}
+	}
+}
+
