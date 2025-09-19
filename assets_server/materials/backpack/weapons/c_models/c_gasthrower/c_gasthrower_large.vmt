@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_gasthrower\c_gasthrower_large"
+	$translucent 1
+	$vertexcolor 1
+}

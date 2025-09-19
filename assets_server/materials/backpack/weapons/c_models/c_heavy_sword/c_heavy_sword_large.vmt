@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_heavy_sword\c_heavy_sword_large"
+	$translucent 1
+	$vertexcolor 1
+}

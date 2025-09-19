@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_mafia_rings/c_mafia_rings_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}

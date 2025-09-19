@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack\weapons\c_models\c_demo_bomblauncher\c_demo_bomblauncher_large"
+	$translucent 1
+	$vertexcolor 1
+}
