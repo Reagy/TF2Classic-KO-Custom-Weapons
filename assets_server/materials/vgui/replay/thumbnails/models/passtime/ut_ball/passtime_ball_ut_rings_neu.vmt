@@ -1,0 +1,17 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui/replay/thumbnails/models/passtime/ut_ball/passtime_ball_ut_rings_neu"
+
+	"$translucent" "1"
+	"$nocull" "1"
+
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" 0.5
+			"texturescrollangle" 0
+		}
+	}
+}

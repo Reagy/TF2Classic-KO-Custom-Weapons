@@ -1,0 +1,14 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui/replay/thumbnails/models/passtime/ut_ball/passtime_ball_ut_screen_red"
+
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" 0.75
+			"texturescrollangle" 0
+		}
+	}
+}
