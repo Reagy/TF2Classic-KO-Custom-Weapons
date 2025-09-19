@@ -1,0 +1,36 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/workshop/weapons/c_items/c_spicy_sauce/c_spicy_sauce"
+	"$bumpmap" "models/workshop/weapons/c_items/c_spicy_sauce/c_spicy_sauce_phong"
+	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+       	 "$decal" 1
+	"$decalscale" "0.25"
+	"$vertexcolor" "1"
+	"$vertexalpha" "1"
+	"$halflambert" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+
+	"$sheenPassEnabled" "1"
+
+	"$sheenmap" 		"cubemaps\cubemap_sheen001"
+	"$sheenmapmask" 		"Effects\AnimatedSheen\animatedsheen0"
+	"$sheenmaptint" 		"[ 1 1 1 ]"
+	"$sheenmapmaskframe" 	"0"
+	"$sheenindex" 		"0"
+
+	"Proxies"
+	{
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
+		"invis"
+		{
+		}
+	}
+}
+
