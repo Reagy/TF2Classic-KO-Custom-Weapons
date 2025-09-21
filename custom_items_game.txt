@@ -25638,7 +25638,7 @@ Weapon by: 'The One Of Wonders'"
                 "strange restriction type 1"													
 				{
 					"attribute_class"	"mod_custom_rampup"
-					"value"				"0."
+					"value"				"0.8"
 				}
 				"strange restriction type 1"
 				{
