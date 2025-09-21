@@ -10644,6 +10644,7 @@ You have 5 seconds to run from tiny base,
 or else Heavy will make you regret choice...
 
 Model by: 'Pie_Savvy, patrezak'
+Animations by: 'Kylul'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Ring Leader"
 			"item_iconname"				"Ring Leader"
@@ -18138,6 +18139,11 @@ Weapon by: 'Reagy'"
 				{
 					"attribute_class"	"mult_falloff_distance"
 					"value"				"1.75"
+				}	
+                "mod use custom ammo type" // primary
+				{
+					"attribute_class"	"mod_use_custom_ammo_type"
+					"value" 			"1"
 				}					
 			}
 			"visuals"
@@ -22792,7 +22798,10 @@ Weapon by 'The One Of Wonders"
 		"9025"
 		{
 		    "name"						"TF_WEAPON_SWORD_FISH"
-			"prefab"					"weapon_bottle"					
+			"prefab"					"weapon_bottle"
+            "item_class"                "tf_weapon_club"
+            "item_slot"                 "melee"
+            "anim_slot"                 "melee"			
 			"show_in_armory"			"1"
 
 			"item_name_color"           "190 200 233 255"
@@ -30406,7 +30415,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"Speedster's Six-Shooter"
 			"image_inventory"			"backpack/workshop/weapons/c_models/c_bigiron/c_bigiron"
 			"model_world"				"models/weapons/c_models/c_bigiron/c_bigiron.mdl"
-			"model_player"				"models/weapons/v_models/v_big_iron.mdl"
+			"model_player"				"models/weapons/v_models/v_big_iron_fix.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
 			{
@@ -31010,7 +31019,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_iconname"				"Barrakada"
 			"image_inventory"			"backpack/weapons/c_models/c_barrakada/c_barrakada"
 			"model_world"				"models/weapons/c_models/c_barrakada/c_barrakada.mdl"
-			"model_player"				"models/weapons/v_models/v_barrakada/v_barrakada.mdl"
+			"model_player"				"models/weapons/v_models/v_barrakada/v_barrakada_fix.mdl"
 			"extra_wearable"			"models/player/items/heavy_buckshot_ammobelt.mdl"
 			"attach_to_hands"			"2"
 			"used_by_classes"
@@ -44032,7 +44041,7 @@ Fan-Fire: Hold fire button for maximum destruction!"
 		"7658"
 		{
 			"name"					"No cloak ability"	
-			"description_string"	"No cloaking ability"												
+			"description_string"	"No cloaking ability while this weapon is active"												
 			"description_format"	"value_is_additive"
 			"effect_type"			"negative"
 		}
