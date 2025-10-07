@@ -15759,7 +15759,7 @@ Weapon by: 'The One Of Wonders'"
 				"custom bullet impact collision mode"
 				{
 					"attribute_class"	"mod_bullet_impact_collision_mode"
-					"value"				"4"
+					"value"				"5"
 				}
 				"mod mini-crit airborne on direct DISPLAY ONLY KOCW VER"
 				{
@@ -21732,7 +21732,7 @@ Weapon by: 'The One Of Wonders'"
 				"custom bullet impact collision mode"
 				{
 					"attribute_class"	"mod_bullet_impact_collision_mode"
-					"value"				"4"
+					"value"				"5"
 				}
                 "add condition on hit"															
 				{
@@ -25752,7 +25752,7 @@ Weapon by: 'The One Of Wonders'"
 				"custom bullet impact collision mode"
 				{
 					"attribute_class"	"mod_bullet_impact_collision_mode"
-					"value"				"4"
+					"value"				"5"
 				}
 				"punch angle is constant"
 				{
@@ -41874,7 +41874,7 @@ Weapon by: 'The One Of Wonders'"
                 "custom bullet impact collision mode"
 				{
 					"attribute_class"	"mod_bullet_impact_collision_mode"
-					"value"				"4"
+					"value"				"5"
 				}				
 			}
 			"visuals"																			
