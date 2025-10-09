@@ -5180,11 +5180,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"dmg_from_sentry_reduced"
 					"value"				"0.25"
 				}
-				"heal on hit for rapidfire"											
-				{
-					"attribute_class"	"add_onhit_addhealth"
-					"value"				"1"
-				}
 				"aiming movespeed increased"
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
@@ -5283,7 +5278,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 Sometimes you just have to sit back and watch their heads roll...
   
-Model by: 'Greifyn'
+Model by: 'Griefyn'
 Animations by: 'Kylul'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Classic Force"
@@ -5916,10 +5911,20 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"dmmuy"
 					"value"				"1"
 				}
+				"Move Speed Bonus Active"
+				{
+					"attribute_class"	"mult_player_movespeed_active"
+					"value"				"1.25"
+				}
 			    "add condition on kill"
 				{
 					"attribute_class"	"add_onkill_addcond_self"
 					"value"				"4 100"
+				}
+				"self mark for death"
+				{
+					"attribute_class"	"self_mark_for_death"
+					"value" 			"1"
 				}
 				"cloak blink time percentage penalty"
 				{
@@ -9422,18 +9427,13 @@ Weapon by: 'The One Of Wonders'"
 				"heal on kill on crit"
 				{
 					"attribute_class"	"heal_on_kill_crit"
-					"value"				"80"
+					"value"				"100"
 				}
 				"patient overheal bonus"
 				{
 					"attribute_class"	"dmmuy"
 					"value"				"1.3"
 				}
-				"Bazooka Payload"
-				{
-                    "attribute_class"      "display_only"
-                    "value"                "3"
-                }
 				"max health additive penalty"
 				{
 					"attribute_class"	"add_maxhealth"
@@ -9463,12 +9463,7 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_patient_overheal_penalty"
 					"value" 			"4.0"
-				}	
-                "add condition on kill"
-				{
-					"attribute_class"	"add_onkill_addcond_self"							
-					"value" 			"111 3"
-				}				
+				}					
 			}
 			"visuals"
             {
@@ -14841,15 +14836,10 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"set_detonate_mode"
 					"value"				"3"
 				}
-				"dmg bonus vs buildings"
-				{
-					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"				"2.0"
-				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"				"1.25"
+					"value"				"1.2"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -14894,7 +14884,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"		"mult_maxammo_primary"
-					"value"					"0.34"
+					"value"					"0.4"
 				}	
 				"weapon_stattrak_module_scale"
 				{
@@ -14909,7 +14899,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"		"mult_clipsize"
-					"value"					"0.25"
+					"value"					"1.5"
 				}	
 				"hidden separator"
 				{
@@ -14986,8 +14976,8 @@ Weapon by: 'The One Of Wonders'"
 			{
 			    "sound_single_shot"		"Weapon_MvMGrenadeLauncher.Single"
 				"sound_burst"			"Weapon_MvMGrenadeLauncher.SingleCrit"
-				"sound_special1"		"Weapon_Nuke.Explode"
-				"explosion_effect"		"1_CRAPSPLOSION_MAIN"
+				"sound_special1"		"Weapon_BoomTube.Explode"
+				"explosion_effect"		"explosion_shrapnel_PARENT"
 				"animation_replacement"
 				{
 					"ACT_MP_ATTACK_STAND_PRIMARY"				"ACT_MP_ATTACK_STAND_SECONDARY"
@@ -16320,9 +16310,7 @@ Weapon by: 'The One Of Wonders, Vror'"
 		}
 //-------------------------------------
 //-------------------------------------
-// Combat Crossbow
-// V5.3.4 New weapon
-// V5.3.5 Fixed marked for death bleeding to other weapons
+// PUMP SHOTGUN FOR SCOUT
 //-------------------------------------
 //-------------------------------------	
 		"7062"																			
@@ -21679,11 +21667,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_dmg"
 					"value" 			"4.0"
 				}
-				"longer damage falloff distance"
-				{
-					"attribute_class"	"mult_falloff_distance"
-					"value"				"1.5"
-				}
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_explosion_radius"
@@ -21713,6 +21696,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"punch_angle_is_constant"
 					"value" 			"1"
+				}
+				"medigun healing received penalty"
+				{
+					"attribute_class"	"mult_healing_received"
+					"value"				"0.8"
 				}
 				"patient overheal penalty"		
 				{
@@ -25583,11 +25571,6 @@ Weapon by: 'The One Of Wonders'"
 			}
 			"attributes"
 			{
-			    "Crowd Controller Shotgun"
-				{
-					"attribute_class"	"dmmuy"
-					"value"				"1"
-				}
 				"health regen"
 				{
 					"attribute_class"	"add_health_regen"
@@ -25607,7 +25590,7 @@ Weapon by: 'The One Of Wonders'"
 				"punch angle mod add hidden"
 				{
 					"attribute_class"	"punch_angle_mod"
-					"value"				"-1.0"
+					"value"				"-0.005"
 				}
 				"punch angle is constant"
 				{
@@ -25617,7 +25600,12 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.66666667"
+					"value"				"0.8"
+				}
+				"weapon_stattrak_module_scale"
+				{
+					"attribute_class"	"mult_bullets_per_shot"
+					"value"				"0.8"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -25634,6 +25622,11 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_maxammo_primary"
 					"value"				"3.125"
 				}
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mod_custom_rampup"
+					"value"				"1.75"
+				}	
 				"scattergun no reload single"
 				{
 					"attribute_class"		"set_scattergun_no_reload_single"
@@ -25647,22 +25640,7 @@ Weapon by: 'The One Of Wonders'"
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_spread_scale"
-					"value"				"2.0"
-				}
-				"strange restriction type 1"													
-				{
-					"attribute_class"	"mod_custom_falloff"
-					"value"				"0.8"
-				}		
-                "strange restriction type 1"													
-				{
-					"attribute_class"	"mod_custom_rampup"
-					"value"				"0.8"
-				}
-				"strange restriction type 1"
-				{
-					"attribute_class"	"mod_horizontal_spread"
-					"value"				"1"
+					"value"				"0.3675"
 				}
 				"strange restriction type 1"
 				{
@@ -26468,7 +26446,7 @@ Weapon by: 'Reagy'"
 				"damage force increase hidden"
 				{
 					"attribute_class"	"mult_dmgself_push_force"
-					"value" 			"0.35"
+					"value" 			"0.25"
 				}
 			}
 			"visuals"
@@ -26734,7 +26712,7 @@ Weapon from: Renaissance Revival"
 			"bucket_position"           "0"
 			"item_quality"              "rarity3"
 			"item_logname"				"Whiff of Olde Brimstone"
-			"item_iconname"				"Whiff O Btimstone"
+			"item_iconname"				"Whiff O Brimstone"
 			"image_inventory"			"backpack/weapons/w_grenade_bombs_demoman/bombs"
 			
 			"model_world"				"models/weapons/w_models/w_grenade_cannonball_demoman/w_grenade_cannonball.mdl"
@@ -27411,7 +27389,7 @@ Weapon by: 'The One Of Wonders'"
                 "custom bullet impact collision mode"
 				{
 					"attribute_class"	"mod_bullet_impact_collision_mode"
-					"value"				"5"
+					"value"				"4"
 				}				
 			}
 			"visuals"
@@ -27728,12 +27706,12 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_pierce_resists_absorbs"
 					"value"				"1"
 				}
-                "Focus Mode"
+                "Overclock Mode"
 				{
 					"attribute_class"	"dumme"
 					"value"				"10"
 				}
-                "Focus Mode Description" 
+                "Overclock Mode Description" 
 				{
 					"attribute_class"	"dumme"
 					"value"				"10"
@@ -27741,17 +27719,17 @@ Weapon by: 'The One Of Wonders'"
 			    "Building Break Buff 2"
 				{
 					"attribute_class"	"dumme"
-					"value"				"10"
+					"value"				"20"
 				}	
 			    "building add condition on death"
 				{
 					"attribute_class"	"building_maxlvl_lost_addcond"
-					"value"				"33 10"
+					"value"				"111 20"
 				}	
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" 			"0.308"
+					"value" 			"0.385"
 				}
 				"weapon_stattrak_module_scale"
 				{
@@ -27778,11 +27756,6 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mult_spread_scale"
 					"value"				"0.0308"
 				}
-				"Crits have fall-off"
-				{
-					"attribute_class"	"crit_dmg_falloff"
-					"value"				"1"
-				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -27793,20 +27766,25 @@ Weapon by: 'The One Of Wonders'"
 					"attribute_class"	"mod_custom_falloff"
 					"value"				"0.75"
 				}	
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"no_headshot"
+					"value"				"1"
+				}	
 				"weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay_scoped"
-					"value" 			"0.5"
-				}
-				"weapon_stattrak_module_scale"
-				{
-					"attribute_class"	"headshot_damage_modify"
-					"value" 			"1.5"
+					"value" 			"0.175"
 				}
 				"strange restriction type 1"													
 				{
 					"attribute_class"	"mod_sniper_zoom_fov_override"
-					"value"				"65"
+					"value"				"80"
+				}
+				"strange restriction type 1"													
+				{
+					"attribute_class"	"mod_spread_scale_scoped_override"
+					"value"				"0.06"
 				}
 				"mod zoomed dont hide viewmodel"
 				{
@@ -27832,11 +27810,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_falloff_distance"
 					"value"				"1.762"
-				}	
-                "Reload time no anim speed mod"
-				{
-					"attribute_class"	"mult_dmg_vs_buildings"
-					"value" 			"1.762"
 				}				
 			}
 			"visuals"
@@ -29242,7 +29215,7 @@ Weapon by: 'The One Of Wonders'"
         }	
 //-------------------------------------
 //-------------------------------------
-// MUSKET TOO - 9123 -  // V7.1 REMOVED
+// MUSKET TOO - 9123 -  
 //-------------------------------------
 //-------------------------------------		
 		"9123"
@@ -30495,11 +30468,6 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
 					"value"				"1.33"
-				}
-				"fire rate bonus"
-				{
-					"attribute_class"	"dmmuy"
-					"value"				"0.75"
 				}	
 				"damage penalty"
 				{
@@ -30519,7 +30487,7 @@ Weapon by: 'The One Of Wonders'"
 			    "weapon_stattrak_module_scale"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"				"0.2"
+					"value"				"0.3333333333333333"
 				}	
 				"weapon_stattrak_module_scale"
 				{
@@ -33516,7 +33484,7 @@ Weapon by: 'The One Of Wonders'"
 			"item_description"			"
 Alright knuckleheads, it's time to get huntin'!
 
-Weapon Model by: 'Corvalho, Talez01'  
+Weapon Model by: 'Hau, Kibbleknight'  
 Wearable Model by: 'GetGrenade'
 Weapon by: 'The One Of Wonders'"
 			"item_logname"				"Rifleman's Runt"
@@ -34973,8 +34941,8 @@ Weapon by: 'The One Of Wonders'"
 				}
 			    "damage bonus"															
 				{
-					"attribute_class"	"mult_dmg"
-					"value"				"2.0"
+					"attribute_class"	"dmmuy"
+					"value"				"1.9"
 				}
 				"Hammer Sweep Bonus"											
 				{
@@ -35035,6 +35003,11 @@ Weapon by: 'The One Of Wonders'"
 				{
 					"attribute_class"	"hide_extra_wearable_active"
 					"value"				"1"
+				}
+				"strange restriction type 1"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" 			"55"														
 				}
 				"strange restriction type 1"
 				{
@@ -43008,7 +42981,7 @@ Weapon by: 'Reagy'"
 		"7519"
 		{
 			"name"					"Building Break Buff 2"
-			"description_string"	"On level 3 building killed by enemy: gain crits for %s1 seconds"													
+			"description_string"	"On level 3 building killed by enemy: gain damage resistance and health regen for %s1 seconds"													
 			"description_format"	"value_is_additive"
 			"effect_type"			"positive"
 		}
@@ -43371,10 +43344,10 @@ Sword pierces resistances."
 		}		
 		"7568"
 		{
-			"name"					"Haste Boost on Hit"		
-			"description_string"	"On Hit: Move and attack faster for %s1 seconds"												
+			"name"					"Wide Spread when Rapid-Fired"	
+			"description_string"	"Spread dramatically increases when fired rapidly"												
 			"description_format"	"value_is_additive"
-			"effect_type"			"positive"
+			"effect_type"			"negative"
 		}	
 		"7569"
 		{
@@ -44272,8 +44245,8 @@ Reserve Energy: 3 seconds of auto-reload"
 		}	
         "7690"
 		{
-			"name"					"Focus Mode"
-			"description_string"	"Alt-Fire: Enter Focus Mode"
+			"name"					"Overclock Mode"
+			"description_string"	"Alt-Fire: Enter Overclock Mode"
 			"description_format"	"value_is_additive"
 			"hidden"				"0"
 			"effect_type"			"neutral"
@@ -44325,8 +44298,8 @@ Reserve Energy: 3 seconds of auto-reload"
 		}
 		"7696"
 		{
-			"name"					"Focus Mode Description"
-			"description_string"	"Focus Mode: Gain perfect accuracy and crits on headshot with reduced firing speed and move speed"
+			"name"					"Overclock Mode Description"
+			"description_string"	"Overclock Mode: Dramatically increased fire rate at a cost of reduced accuracy and move speed"
 			"description_format"	"value_is_additive"
 			"hidden"				"0"
 			"custom_color"			"225 215 0 255"	
